@@ -27,7 +27,14 @@ export default new Router({
                 {
                     path: 'performer/:id',
                     name: 'Performer',
-                    component: Performer
+                    component: Performer,
+                    children: [
+                        {
+                            path: '/profile',
+                            name: 'Profile',
+                            // component: Profile
+                        }
+                    ]
                 }
             ]
         }

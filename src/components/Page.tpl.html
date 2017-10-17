@@ -4,4 +4,10 @@
     <p>Page layer {{ prop }}</p>
     <p>Language {{language}}</p>
     <p>Translation: {{ $t("test") }}</p>
+
+    <input :placeholder="$t('test')">
+
+    <p v-t="'test'"></p>
+
+    <img src="../assets/logo.png" alt="">
 </div>

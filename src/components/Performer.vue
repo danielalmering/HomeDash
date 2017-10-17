@@ -1,6 +1,8 @@
 <template>
     <div class="performer">
         <p>Performer {{id}}</p>
+
+        <img src="../assets/logo.png" alt="">
     </div>
 </template>
 
