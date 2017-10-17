@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import localization from './localization';
 import modals from './modals';
+import authentication from './authentication';
 
 Vue.use(Vuex);
 
@@ -18,7 +19,8 @@ const store = new Vuex.Store<RootState>({
     },
     modules: {
         localization: localization,
-        modals: modals
+        modals: modals,
+        authentication: authentication
     }
 });
 

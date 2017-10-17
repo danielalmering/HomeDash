@@ -16,4 +16,8 @@ export default class ModalWrapper extends Vue {
     get activeModal(){
         return this.$store.state.modals.activeModal;
     }
+
+    mounted(){
+        this.$store.dispatch('displayModal', 'login');
+    }
 }
