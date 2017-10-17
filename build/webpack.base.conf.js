@@ -29,7 +29,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|vue)$/,
+        test: /\.(js|vue|ts)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
@@ -47,8 +47,11 @@ module.exports = {
         loader: 'ts-loader',
         // include: [resolve('src')],
         options: {
-          transpileOnly: true,
-          appendTsSuffixTo: ['\\.vue$'],
+          // transpileOnly: true,
+          appendTsSuffixTo: [/\.vue$/],
+          ignoreDiagnostics: [
+            2307
+          ]
         }
       },
       {

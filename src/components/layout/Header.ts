@@ -1,17 +1,12 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import Header from './layout/Header';
-
-import './Page.scss';
+import './Header.scss';
 
 @Component({
-    template: require('./Page.tpl.html'),
-    components: {
-        pageheader: Header
-    }
+    template: require('./Header.tpl.html')
 })
-export default class Page extends Vue {
+export default class Header extends Vue {
 
     get language(){
         return this.$store.state.localization.language;
