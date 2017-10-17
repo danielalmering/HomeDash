@@ -1,0 +1,165 @@
+//
+// Header nav
+// --------------------------------------------------
+
+// Imports
+
+@import "../../../../styles/_mixins.scss";
+@import "../../../../styles/_settings.scss";
+
+// Styling
+
+.nav {
+    background: $pallete-3;
+
+    &__search {
+        &-form {
+            width: 100%;
+            height: 36px;
+            line-height: 35px;
+            background: $pallete-9;
+            @include border-radius(50px);
+            @include rem(margin, 6px 0px);
+            @include rem(padding, 2px);
+            @include rem(font-size, 13px);
+
+            input {
+                display: inline-block;
+                float: left;
+                height: 32px;
+                @include rem(padding, 0px 8px);
+                color:$pallete-2;
+                background: none;
+                border: none;
+                outline: none;
+            }
+
+            button {
+                display: inline-block;
+                height: 32px;
+                width: 35px;
+                color: rgba(255,255,255,0.6);
+                @include rem(font-size, 16px);
+                line-height: 30px;
+                float: right;
+                background: none;
+                border: none;
+                outline: none;
+            }
+        }
+    }
+
+    &__info {
+        margin: 0;
+        @include rem(padding, 5px 0px);
+        padding: 5px 0 !important;
+
+        &-item {
+            position: relative;
+            display: inline-block;
+            float: right;
+            list-style: none;
+
+            a {
+                position: relative;
+                text-decoration: none;
+                display: block;
+                z-index: 2;
+                @include rem(padding, 5px 6px);
+                line-height: 26px;
+                color: $pallete-9;
+                @include border-radius(2px);
+                border: 1px solid transparent;
+                @include rem(font-size, 13px);
+
+                span {
+                    @include rem(padding, 0px 0px 0px 5px);
+                }
+
+                &:hover, &:active {
+                    background: $pallete-8;
+                    color: $pallete-1;
+                }
+            }
+
+            i {
+                padding: 0;
+                vertical-align: top;
+                @include rem(margin, 4px 0);
+                @include rem(font-size, 18px);
+                color: $pallete-9;
+                &.only {
+                    @include rem(margin, 4px 0 0 0);
+                }
+            }
+
+            &--last {
+                &:hover {
+                    a {
+                        position: relative;
+                        @include border-radius(0px);
+                        border: 1px solid $pallete-10;
+                        border-bottom-color: $pallete-4;
+                        color: $palette-0;
+                        background: $pallete-4;
+                    }
+
+                    .nav__info-subitems {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        &-subitems {
+            position: absolute;
+            display: none;
+            top: 36px;
+            right: 0px;
+            min-width: 160px;
+            z-index: 0;
+            list-style: none;
+            margin: 0;
+            @include rem(padding, 3px);
+            background: $pallete-4;
+            color: $pallete-1;
+            border: 1px solid $pallete-10;
+
+            .subitem {
+                @include rem(padding, 8px);
+                @include rem(font-size, 12px);
+                @include border-radius(2px);
+                cursor: pointer;
+
+                &:hover {
+                    background: $pallete-10;
+                    color: $pallete-1;
+                }
+            }
+        }
+    }
+
+    &__filters {
+        display: table;
+        width: 100%;
+        background: $pallete-8;
+
+        a {
+            display: inline-block;
+            @include rem(padding, 7px 10px);
+            color: $pallete-2;
+            font-weight: 300;
+            @include rem(font-size, 13px);
+            cursor: pointer;
+
+            &:hover {
+                background: $pallete-10;
+                color: $pallete-2;
+            }
+
+            &.active {
+                font-weight: 600;
+            }
+        }
+    }
+}

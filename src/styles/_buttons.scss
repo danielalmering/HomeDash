@@ -1,0 +1,43 @@
+//
+// Buttons
+// --------------------------------------------------
+
+// Btn
+.btn {
+    color: $pallete-2;
+    @include rem(font-size, 13px);
+    background: $pallete-14;
+    @include border-radius(3px)
+    @include rem(padding, 8px 25px);
+    @include rem(margin, 5px 5px 0px 0px);
+    border: none;
+
+    &.orange {
+        background: $pallete-3;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+
+// Btn as link
+.link {
+    display: inline-block;
+    @include rem(font-size, 13px);
+    color: $pallete-7;
+    text-decoration: underline;
+    @include rem(padding, 8px 5px);
+
+    &:active, &:hover, &:focus {
+        color: $pallete-3;
+        text-decoration: underline;
+    }
+}
+
+// Spacings
+.mt { @include rem(margin-top, 10px); }
+.mb { @include rem(margin-bottom, 10px); }
+.ml { @include rem(margin-left, 10px); }
+.mr { @include rem(margin-right, 10px); }

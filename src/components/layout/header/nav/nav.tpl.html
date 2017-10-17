@@ -1,0 +1,60 @@
+<div class="nav">
+    <div class="container-fluid">
+        <ul class="nav__info hidden-xs col-sm-1">
+            <li class="nav__info-item pull-left"><a href="/"><i class="fa fa-home only"></i></a></li>
+        </ul>
+
+        <div class="nav__search col-xs-6 col-sm-5 nopad">
+            <form class="nav__search-form">
+                <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('nav.search.input')">
+                <button class="fa fa-search"></button>
+            </form>
+        </div>
+
+        <ul class="nav__info col-xs-6 col-sm-6">
+            <li class="nav__info-item nav__info-item--last">
+                <a>
+                    <span class="flag flag-nl"></span>
+                </a>
+                <ul class="nav__info-subitems">
+                    <li class="subitem"><span class="flag flag-nl"></span> NL</li>
+                    <li class="subitem"><span class="flag flag-uk"></span> UK</li>
+                </ul>
+            </li>
+            <li class="nav__info-item nav__info-item--last">
+                <a ng-click="vm.login()">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs" v-t="$t('nav.info.login')"></span>
+                </a>
+                <!-- <a>
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs">dycati</span>
+                </a> -->
+                <ul class="nav__info-subitems">
+                    <li class="subitem" v-t="$t('nav.info.editdata')"></li>
+                    <li class="subitem" v-t="$t('nav.info.inbox')"></li>
+                    <li class="subitem" v-t="$t('nav.info.upgradebalance')"></li>
+                    <li class="subitem"  v-t="$t('nav.info.logout')"></li>
+                </ul>
+            </li>
+            <li class="nav__info-item">
+                <a href="#"><i class="fa fa-star"></i><span class="hidden-xs" v-t="$t('nav.info.favourites')"></span></a>
+            </li>
+            <li class="nav__info-item">
+                <a href="#"><i class="fa fa-bullhorn"></i><span class="hidden-xs" v-t="$t('nav.info.actions')"></span></a>
+            </li>
+            <li class="nav__info-item">
+                <a href="#"><i class="fa fa-eye"></i><span class="hidden-xs" v-t="$t('nav.info.voyeur')"></span></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="nav__filters">
+        <div class="container-fluid">
+            <a>Bel dames</a>
+            <a>Milfs</a>
+            <a>Jonge vrouwen</a>
+            <a>SM</a>
+        </div>
+    </div>
+</div>

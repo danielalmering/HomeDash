@@ -1,0 +1,109 @@
+//
+// Components
+// --------------------------------------------------
+
+// Pagination
+.pager {
+    display: table;
+    width: 100%;
+    background: $pallete-11;
+    @include border-radius(3px);
+    border: solid 1px rgba(255,255,255,0.1);
+    @include rem(margin, 10px 0);
+
+    &__page {
+        color: $pallete-7;
+        @include rem(padding, 15px 15px);
+        @include rem(font-size, 13px);
+    }
+
+    &__number {
+        color: $pallete-7;
+        @include rem(padding, 15px 15px);
+        @include rem(font-size, 13px);
+
+        select{
+            float: right;
+            background: $pallete-13;
+            border-color: $pallete-7;
+            @include border-radius(3px);
+            &:focus{
+                outline: none;
+            }
+        }
+    }
+
+    .pagination {
+        @include rem(margin, 10px 0);
+        background: $pallete-13;
+        .page {
+            display: inline-block;
+            color: $pallete-7;
+            @include rem(font-size, 13px);
+            @include rem(padding, 6px 12px);
+            cursor: pointer;
+            &.active {
+                color: $pallete-2;
+                background: $pallete-3;
+                border: 1px solid rgba(251,89,0,0.9);
+            }
+        }
+    }
+}
+
+// Ng-scrollbar
+.ngsb-wrap .ngsb-scrollbar { width: 24px; }
+.ngsb-wrap .ngsb-scrollbar { @include rem(margin, 10px 0px);  }
+.ngsb-wrap .ngsb-thumb { background: $pallete-3 !important; }
+.ngsb-wrap .ngsb-scrollbar .ngsb-track { background: none; box-shadow: none; }
+
+// Toaster
+.toast {
+    width: 200px !important;
+    box-shadow: none !important;
+    @include rem(font-size, 12px);
+    background: $pallete-8;
+    padding: 10px 10px 10px 50px !important;
+}
+.toast-title {
+    @include rem(font-size, 13px);
+}
+.toast-success { border: 1px solid $pallete-12; }
+.toast-error   { border: 1px solid $pallete-15; }
+
+.ng-cloak {
+    display: none;
+}
+
+// 5 Col grid
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.col-xs-15 {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+.col-sm-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}

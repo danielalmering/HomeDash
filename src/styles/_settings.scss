@@ -1,0 +1,45 @@
+//
+// Project variables
+// --------------------------------------------------
+
+// Fonts ( old font crap )
+$fallback--fonts: Arial, Verdana, sans-serif;
+$default-font--regular: 'Open Sans', $fallback--fonts;
+
+// old
+$default-font--bold: 'Roboto-Bold', $fallback--fonts;
+$default-font--black: 'Roboto-Black', $fallback--fonts;
+$special-font--regular: 'Panton', $fallback--fonts;
+$special-font--black: 'Panton-Black', $fallback--fonts;
+$icons-font: 'CamCammer-Icomoon';
+
+// Colors
+$palette-0: #1e1e1e;
+$pallete-1: #141414;
+$pallete-2: #fff; // white
+$pallete-3: rgba(251,89,0,0.9);
+$pallete-4: #cb4800; // dark orange
+$pallete-7: #c9c9c9; // grey
+$pallete-8: rgba(0,0,0,0.15); // light black shadow
+$pallete-9: rgba(0,0,0,0.9); // lighter black shadow
+$pallete-10: rgba(0,0,0,0.1); // lightst black shadow
+$pallete-11: rgba(0,0,0,0.4); // lighter black shadow
+$pallete-12: #60c119; // green
+$pallete-13: #000; // black
+$pallete-14: #424242; // greyer
+$pallete-15: #e30613; // red
+$pallete-16: #1d1d1d; // dark black
+$pallete-17: #121212; // darker black
+$pallete-18: #5a5a5c; // grey font
+$pallete-19: #e2aa04; // geel
+
+// Color ( old color crap )
+$palette-color-0: #fff;
+$palette-color-1: #7d6a6d;
+$palette-color-2: #dc2b58;
+$palette-color-3: #fff;
+$palette-color-4: #d3d0d0;
+$palette-color-5: #f2f2f2;
+$palette-color-6: #bf254d;
+
+// Flags

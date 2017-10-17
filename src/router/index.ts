@@ -19,10 +19,7 @@ export default new Router({
                 {
                     path: '',
                     name: 'Page',
-                    component: Page,
-                    children: [
-
-                    ]
+                    component: Page
                 },
                 {
                     path: 'performer/:id',
