@@ -20,6 +20,7 @@
 
     &__block {
         position: relative;
+        display: block;
         @include border-radius(1px);
         overflow: hidden;
     }

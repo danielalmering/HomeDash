@@ -2,17 +2,17 @@
     <div class="container-fluid">
         <div class="performers">
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
-                <div class="performers__block">
-                    <div class="performers__info">
+                <router-link :to="{ name: 'Profile', params: { id: performer.advert_numbers[0].advertNumber }}" class="performers__block">
+                    <div class="performers__info" >
                         <div class="performers__info-personal">
                             {{ performer.username }}
                             <span></span>
                         </div>
                         <div class="performers__info-services">
-                            <i title="" class="fa-video-camera" v-if="hasService(performer.id, 'cam')"></i>
-                            <i title="" class="fa fa-phone" v-if="hasService(performer.id, 'phone')"></i>
-                            <i title="" class="fa fa-mobile" v-if="hasService(performer.id, 'sms')"></i>
-                            <i title="" class="fa fa-envelope-o" v-if="hasService(performer.id, 'email')"></i>
+                            <i class="fa-video-camera" v-if="hasService(performer.id, 'cam')"></i>
+                            <i class="fa fa-phone" v-if="hasService(performer.id, 'phone')"></i>
+                            <i class="fa fa-mobile" v-if="hasService(performer.id, 'sms')"></i>
+                            <i class="fa fa-envelope-o" v-if="hasService(performer.id, 'email')"></i>
                         </div>
                     </div>
                     <div class="performers__misc">
@@ -22,7 +22,7 @@
                     <div class="performers__image" v-if="performer.avatar">
                         <img :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
                     </div>
-                </div>
+                </router-link>
             </div>
         </div>
 
