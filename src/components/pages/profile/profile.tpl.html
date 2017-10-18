@@ -1,3 +1,48 @@
-<div class="profile">
-    <p style="color: white;">Profile page</p>
-</div>
+ <main>
+    <tsidebar></tsidebar>
+
+    <div class="profile">
+
+        <div class="profile__info">
+
+            <div class="profile__info-image col-sm-12 col-md-3">
+                <div class="image" style="background-image: url('//img.thuis.nl/files/pimg/12271/medium/3c9fbcc1047b6c8f356a4da1c89b251508236551.jpg');"></div>
+            </div>
+
+            <div class="profile__info-content col-sm-12 col-md-9">
+
+                <div class="profile__content col-sm-12 col-md-6">
+                    <h2 class="profile__content-nick">JOVANNE</h2>
+                    <a class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> Purmerend</a>
+                    <a class="profile__content-favorite"><i class="fa fa-star" aria-hidden="true"></i>  {{ $t('profile.favorite') }}</a>
+                    <p class="profile__content-description">Hey schatje Hai, Mijn naam is jovanna Ben een half bloedje, Ik ben 24 en kom uit purmerend, Ik wil graag nieuwe contacten opbouwen, En graag m'n ondeugende kant laten zien, Maak ik je nieuwsgierig , bel me dan Hele dikke Kus DUS KOM GAAN WE GENIETEN.. KUSKUS p.s download app magic motion dan kan jij bepalen hoe snel mij speeltje in mijn poesje mag gaan.. ZO GEIL.</p>
+                </div>
+
+                <ul class="profile__property col-sm-12 col-md-4 col-lg-3">
+                    <li><h2 translate="profile.property"></h2></li>
+                    <li><span v-t="$t('profile.age')"></span>25</li>
+                    <li><span v-t="$t('profile.height')"></span>65</li>
+                    <li><span v-t="$t('profile.weight')"></span>165</li>
+                    <li><span v-t="$t('profile.cupsize')"></span>E</li>
+                    <li><span v-t="$t('profile.eyecolor')"></span>Bruin</li>
+                </ul>
+
+            </div>
+
+            <div class="profile__info-gallery">
+                <ul class="profile__gallery">
+                    <li>
+                        <div class="col-xs-2">
+                            <img src="//img.thuis.nl/files/pimg/12271/medium/3c9fbcc1047b6c8f356a4da1c89b251508236551.jpg">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="profile__services">
+        </div>
+
+    </div>
+</main>
