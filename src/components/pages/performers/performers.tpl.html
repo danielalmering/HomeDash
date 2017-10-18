@@ -19,12 +19,14 @@
                         <span class="performers__misc-advert">{{ performer.advert_numbers[0].advertNumber }}</span>
                         <span class="performers__misc-favorite"><i class="fa fa-star"></i></span>
                     </div>
-                    <div class="performers__image">
+                    <div class="performers__image" v-if="performer.avatar">
                         <img :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
                     </div>
                 </router-link>
             </div>
         </div>
+
+        <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" v-on:pageChange="pageChanged"></pagination>
 
         <div class="pager">
             <div class="pager__page col-xs-3">

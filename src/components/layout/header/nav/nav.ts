@@ -9,7 +9,7 @@ import './nav.scss';
 export default class Nav extends Vue {
 
     get authenticated(){
-        return this.$store.state.authentication.loggedIn;
+        return this.$store.getters.isLoggedIn;
     }
 
     get user(){

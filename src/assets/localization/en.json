@@ -61,5 +61,8 @@
         "weight": "Gewicht",
         "cupsize": "Cup maat",
         "eyecolor": "Kleur ogen"
+    },
+    "pagination": {
+        "pageOf": "Page {page} of {total}"
     }
 }
