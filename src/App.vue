@@ -6,14 +6,17 @@
     </div>
 </template>
 
-<script>
+<script language="ts">
 import modalWrapper from './components/modal/modal-wrapper';
 
 export default {
     components: {
         modalWrapper: modalWrapper
     },
-    name: 'app'
+    name: 'app',
+    created: function(){
+        this.$store.dispatch('getSession');
+    }
 };
 </script>
 
