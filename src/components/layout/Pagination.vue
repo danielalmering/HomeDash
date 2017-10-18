@@ -58,6 +58,7 @@ export default {
         },
         setPage: function(page){
             this.$emit('update:offset', (page - 1) * this.limit);
+            this.$emit('pageChange');
         }
     },
     computed: {
