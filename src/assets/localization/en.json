@@ -10,7 +10,7 @@
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
-            "buyment": "bij aankoop v.a €120"
+            "purchase": "bij aankoop v.a €120"
         }
     },
     "nav": {
@@ -19,20 +19,16 @@
         },
         "info": {
             "voyeur": "Voyeur",
-            "actions": "Acties",
-            "editdata": "Bewerk profiel",
-            "favourites": "Favorieten",
+            "actions": "Actions",
+            "editdata": "Edit profiel",
+            "favourites": "Favorites",
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
-            "logout": "Uitloggen",
+            "logout": "Logout",
             "login": "Login"
         }
     },
     "performers": {
-        "age": "jaar",
-        "page": "Pagina",
-        "from": "van",
-        "countofpage": "aantal per pagina"
     },
     "auth": {
         "accountlogin": "Gebruiker login",
@@ -63,6 +59,7 @@
         "eyecolor": "Kleur ogen"
     },
     "pagination": {
-        "pageOf": "Page {page} of {total}"
+        "pageOf": "Page {page} of {total}",
+        "amountPerPage": "Amount per page"
     }
 }

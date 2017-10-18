@@ -1,7 +1,7 @@
 <template>
     <div class="pagination col-md-12">
         <div class="pagination__previous"><i v-if="showPrevious" v-on:click="previous" class="fa fa-arrow-left"></i></div>
-        <div class="pagination__middle">{{ $t('pagination.pageOf', { page: currentPage, total: total }) }}</div>
+        <div class="pagination__middle">{{ $t('pagination.pageOf', { page: currentPage, total: totalPages }) }}</div>
         <div class="pagination__buttons" v-if="pageButtons">
             <div v-for="page in pages" :key="page" :class="{ highlight: page === currentPage }" v-on:click="setPage(page)">
                 {{ page }}
@@ -58,6 +58,7 @@ export default {
         },
         setPage: function(page){
             this.$emit('update:offset', (page - 1) * this.limit);
+            this.$emit('pageChange');
         }
     },
     computed: {

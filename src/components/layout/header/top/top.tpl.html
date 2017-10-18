@@ -29,20 +29,10 @@
             </div>-->
 
             <div class="top__banner-credits">
-                <div class="discount">
-                    <span class="discount__percent">15<i>%</i></span>
-                    <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="$t('top.banner.credits')"></i></span></span>
-                    <span class="discount__buy" v-t="$t('top.banner.buyment')"></span>
-                </div>
-                <div class="discount">
-                    <span class="discount__percent">10<i>%</i></span>
-                    <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="$t('top.banner.credits')"></i></span></span>
-                    <span class="discount__buy" v-t="$t('top.banner.buyment')"></span>
-                </div>
-                <div class="discount">
-                    <span class="discount__percent">5<i>%</i></span>
-                    <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="$t('top.banner.credits')"></i></span></span>
-                    <span class="discount__buy" v-t="$t('top.banner.buyment')"></span>
+                <div class="discount" v-for="percentage in [15, 10, 5]"> <!-- Compressed this into 1 v-for instead of 3 copy pastes -->
+                    <span class="discount__percent">{{ percentage }}<i>%</i></span>
+                    <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="'top.banner.credits'"></i></span></span>
+                    <span class="discount__buy" v-t="'top.banner.purchase'"></span>
                 </div>
             </div>
         </div>

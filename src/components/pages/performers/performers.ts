@@ -23,7 +23,7 @@ export default class Performers extends Vue {
     total: number = 0;
 
     query: { limit: number, offset: number } = {
-        limit: 20,
+        limit: 40,
         offset: 0
     }
 
