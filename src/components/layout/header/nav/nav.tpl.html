@@ -14,11 +14,12 @@
         <ul class="nav__info col-xs-12 col-sm-6">
             <li class="nav__info-item nav__info-item--last">
                 <a>
-                    <span :class="'flag flag-' + language"></span> {{ language }}
+                    <span :class="'flag flag-' + language"></span> {{ language.toUpperCase() }}
                 </a>
-                <ul class="nav__info-subitems"> <!-- Only display accepted languages for the country here -->
-                    <li class="subitem"><span class="flag flag-nl"></span> NL</li>
-                    <li class="subitem"><span class="flag flag-en"></span> EN</li>
+                <ul class="nav__info-subitems">
+                    <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
+                        <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
+                    </li>
                 </ul>
             </li>
             <li class="nav__info-item nav__info-item--last">

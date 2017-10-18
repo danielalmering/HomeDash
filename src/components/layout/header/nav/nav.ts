@@ -8,6 +8,9 @@ import './nav.scss';
 })
 export default class Nav extends Vue {
 
+    // TODO: Populate this based on country
+    acceptedLanguages: string[] = ['nl', 'en'];
+
     get authenticated(){
         return this.$store.getters.isLoggedIn;
     }
@@ -18,6 +21,10 @@ export default class Nav extends Vue {
 
     get language(){
         return this.$store.state.localization.language;
+    }
+
+    changeLanguage(language: string){
+        this.$store.dispatch('setLanguage', language);
     }
 
     login(){

@@ -19,12 +19,12 @@
         },
         "info": {
             "voyeur": "Voyeur",
-            "actions": "Acties",
-            "editdata": "Bewerk profiel",
-            "favourites": "Favorieten",
+            "actions": "Actions",
+            "editdata": "Edit profiel",
+            "favourites": "Favorites",
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
-            "logout": "Uitloggen",
+            "logout": "Logout",
             "login": "Login"
         }
     },
