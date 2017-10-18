@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Page from '../components/Page';
-import Performer from '@/components/Performer';
-// import Profile from '@/components/Profile';
+import Page from '../components/pages/page';
+import Performer from '../components/pages/performer';
+import Profile from '../components/pages/profile/profile';
 
 import { countryInterceptor } from './localization';
 
@@ -33,7 +33,7 @@ export default new Router({
                         {
                             path: '/profile',
                             name: 'Profile',
-                            // component: Profile
+                            component: Profile
                         }
                     ]
                 }
