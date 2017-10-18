@@ -1,0 +1,97 @@
+//
+// Performers
+// --------------------------------------------------
+
+// Imports
+
+@import "../../styles/_mixins.scss";
+@import "../../styles/_settings.scss";
+
+// Styling
+
+.grid {
+    @include rem(padding, 6px);
+}
+
+.performers {
+    display: block;
+    @include rem(margin, 25px 0 0 0);
+    cursor: pointer;
+
+    &__block {
+        position: relative;
+        @include border-radius(1px);
+        overflow: hidden;
+    }
+
+    &__info {
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+        &-personal {
+            background: $pallete-1;
+            width: 100%;
+            color: $pallete-2;
+            @include rem(font-size, 12px);
+            @include rem(padding, 8px 10px);
+
+            span {
+                display: block;
+                @include rem(margin, 2px 0);
+                float: right;
+                width: 14px;
+                height: 14px;
+                background: $pallete-12;
+                @include border-radius(14px);
+            }
+        }
+
+        &-services {
+            width: 100%;
+            background: $pallete-11;
+
+            i {
+                color: $pallete-2;
+                @include rem(font-size, 16px);
+                @include rem(padding, 5px 2px);
+                @include rem(margin, auto 4px);
+            }
+        }
+    }
+
+    &__image {
+        img { width: 100%; @include border-radius(1px); }
+    }
+
+    &__misc {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+
+        &-advert {
+            display: inline-block;
+            float: left;
+            background: $pallete-9;
+            color: $pallete-3;
+            font-weight: 600;
+            @include rem(font-size, 20px);
+            @include rem(padding, 4px 10px);
+            @include rem(margin, 4px);
+            @include border-radius(3px);
+        }
+
+        &-favorite {
+            display: inline-block;
+            float: right;
+            background: $pallete-9;
+            @include rem(padding, 8px 10px);
+            @include rem(margin, 4px);
+            @include border-radius(3px);
+            i {
+                color: $pallete-7;
+                @include rem(font-size, 20px);
+            }
+        }
+    }
+}

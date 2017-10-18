@@ -23,14 +23,14 @@
     }
 
     &__numbers {
-        @include rem(margin, 15px 0px);
+        @include rem(margin, 14px 0px 8px 0px);
         @include rem(padding, 0px 0px 0px 10px);
         &-number {
             color: $pallete-3;
             padding: 0;
-            @include rem(font-size, 22px);
+            @include rem(font-size, 30px);
             font-weight: 700;
-            line-height: 90%;
+            line-height: 60%;
 
             b {
                 color: $pallete-2;
@@ -43,6 +43,12 @@
                 color: $pallete-2;
                 @include rem(font-size, 11px);
             }
+
+            .flag {
+                float: left;
+                @include rem(margin, -6px 10px -6px 0px);
+            }
+            
         }
     }
 
@@ -56,6 +62,7 @@
                 width: 100px;
                 height: 47px;
                 margin-top: -5px;
+                line-height: 90%;
                 &__percent {
                     display: inline-block;
                     height: 33px;
@@ -81,7 +88,7 @@
                     font-style: italic;
                     font-weight: 700;
                     text-transform: uppercase;
-                    line-height: 90%;
+                    line-height: 100%;
 
                     i {
                         color: $pallete-3;
@@ -92,9 +99,10 @@
                     clear: both;
                     line-height: 0%;
                     @include rem(font-size, 10.5px);
-                    color: $pallete-7;
+                    color: $pallete-20;
                     text-transform: uppercase;
                     font-style: italic;
+                    font-weight: 600;
                     letter-spacing: -1px;
                 }
             }

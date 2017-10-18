@@ -1,14 +1,24 @@
 <div class="top">
     <div class="container-fluid">
-        <div class="top__logo col-xs-3 col-md-2">
+        <div class="top__logo col-xs-12 col-sm-3 col-md-2">
             <img alt="logo" src="./assets/logo.png">
         </div>
 
-        <div class="top__numbers col-xs-9 col-sm-4 col-md-5">
+        <div class="top__numbers col-xs-12 col-sm-4 col-md-5">
+            <div class="row">
+                <div class="top__numbers-number">
+                    <span class="flag flag-nl"></span>  
+                    0906-0901 <i>80 CPM {{ $t('top.numbers.cpm') }}</i>
+                </div>
+                <div class="top__numbers-number">
+                    <span class="flag flag-be"></span>  
+                    0907-23000 <i>125 CPM {{ $t('top.numbers.cpm') }}</i>
+                </div>
+            </div>
         </div>
 
-        <div class="top__banner hidden-xs col-xs-6 col-sm-5 nopad">
-            <div class="top__banner-happyhour">
+        <div class="top__banner hidden-xs col-xs-12 col-sm-5 nopad">
+            <!--<div class="top__banner-happyhour">
                 <div class="col-1">
                     <span class="h1" v-t="$t('top.banner.happyhour')"></span>
                     <span class="h2" v-t="$t('top.banner.happyhournr')"></span>
@@ -16,13 +26,23 @@
                 <div class="col-2">
                     <span class="h3" v-t="$t('top.banner.seeactionpage')"></span>
                 </div>
-            </div>
+            </div>-->
 
             <div class="top__banner-credits">
                 <div class="discount">
-                    <span class="discount__percent"><i>%</i></span>
-                    <span class="discount__text"><span> <i></i></span></span>
-                    <span class="discount__buy"></span>
+                    <span class="discount__percent">15<i>%</i></span>
+                    <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="$t('top.banner.credits')"></i></span></span>
+                    <span class="discount__buy" v-t="$t('top.banner.buyment')"></span>
+                </div>
+                <div class="discount">
+                    <span class="discount__percent">10<i>%</i></span>
+                    <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="$t('top.banner.credits')"></i></span></span>
+                    <span class="discount__buy" v-t="$t('top.banner.buyment')"></span>
+                </div>
+                <div class="discount">
+                    <span class="discount__percent">5<i>%</i></span>
+                    <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="$t('top.banner.credits')"></i></span></span>
+                    <span class="discount__buy" v-t="$t('top.banner.buyment')"></span>
                 </div>
             </div>
         </div>

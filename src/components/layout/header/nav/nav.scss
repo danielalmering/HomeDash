@@ -63,29 +63,29 @@
             a {
                 position: relative;
                 text-decoration: none;
-                display: block;
+                display: table;
                 z-index: 2;
-                @include rem(padding, 5px 6px);
+                @include rem(padding, 5px 3px);
                 line-height: 26px;
                 color: $pallete-9;
                 @include border-radius(2px);
                 border: 1px solid transparent;
                 @include rem(font-size, 13px);
 
-                span {
-                    @include rem(padding, 0px 0px 0px 5px);
-                }
-
                 &:hover, &:active {
                     background: $pallete-8;
                     color: $pallete-1;
                 }
+
+                &:focus {
+                     color: $pallete-1;
+                }
             }
 
             i {
-                padding: 0;
                 vertical-align: top;
-                @include rem(margin, 4px 0);
+                @include rem(margin, 4px 5px);
+                @include rem(padding, 0);
                 @include rem(font-size, 18px);
                 color: $pallete-9;
                 &.only {
@@ -107,6 +107,10 @@
                     .nav__info-subitems {
                         display: block;
                     }
+                }
+
+                .flag {
+                    @include rem(margin, -10px 0px);
                 }
             }
         }
@@ -134,6 +138,11 @@
                 &:hover {
                     background: $pallete-10;
                     color: $pallete-1;
+                }
+
+                .flag {
+                    float: left;
+                    @include rem(margin, -8px 8px -8px 0px);
                 }
             }
         }
