@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Page from '../components/Page';
-import Performer from '@/components/Performer';
+import Profiler from '@/components/Profile';
 
 import { countryInterceptor } from './localization';
 
@@ -19,16 +19,14 @@ export default new Router({
                 {
                     path: '',
                     name: 'Page',
-                    component: Page,
-                    children: [
-
-                    ]
-                },
-                {
-                    path: 'performer/:id',
-                    name: 'Performer',
-                    component: Performer
+                    component: Page
                 }
+                // },
+                // {
+                //     path: 'performer/:id',
+                //     name: 'Profile',
+                //     component: Profile
+                // }
             ]
         }
     ]

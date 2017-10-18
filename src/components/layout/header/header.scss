@@ -1,0 +1,15 @@
+//
+// Header
+// --------------------------------------------------
+
+// Imports
+
+@import "../../../styles/_settings.scss";
+
+// Styling
+
+header {
+    background: $pallete-1;
+    position: relative;
+    z-index: 1;
+}
