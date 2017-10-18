@@ -1,46 +1,26 @@
 <main>
     <div class="container-fluid">
         <div class="performers">
-            <div class="col-xs-6 col-sm-3 col-lg-15 grid">
+            <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
                 <div class="performers__block">
                     <div class="performers__info">
                         <div class="performers__info-personal">
-                            Jade
+                            {{ performer.username }}
                             <span></span>
                         </div>
                         <div class="performers__info-services">
-                            <i title="" class="fa-video-camera"></i>
-                            <i title="" class="fa fa-phone"></i>
-                            <i title="" class="fa fa-mobile"></i>
-                            <i title="" class="fa fa-envelope-o"></i>
+                            <i title="" class="fa-video-camera" v-if="hasService(performer.id, 'cam')"></i>
+                            <i title="" class="fa fa-phone" v-if="hasService(performer.id, 'phone')"></i>
+                            <i title="" class="fa fa-mobile" v-if="hasService(performer.id, 'sms')"></i>
+                            <i title="" class="fa fa-envelope-o" v-if="hasService(performer.id, 'email')"></i>
                         </div>
                     </div>
                     <div class="performers__misc">
-                        <span class="performers__misc-advert">1765</span>
+                        <span class="performers__misc-advert">{{ performer.advert_numbers[0].advertNumber }}</span>
                         <span class="performers__misc-favorite"><i class="fa fa-star"></i></span>
                     </div>
                     <div class="performers__image">
-                        <img src="//img.thuis.nl/files/pimg/14071/medium/444cc13e1715341f0f54e3e9b1c0801504686082.jpg">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-3 col-lg-15 grid">
-                <div class="performers__block">
-                    <div class="performers__info">
-                        <div class="performers__info-personal">
-                            JOVANNA
-                            <span></span>
-                        </div>
-                        <div class="performers__info-services">
-                            <i title="" class="fa-video-camera"></i>
-                        </div>
-                    </div>
-                    <div class="performers__misc">
-                        <span class="performers__misc-advert">6354</span>
-                        <span class="performers__misc-favorite"><i class="fa fa-star"></i></span>
-                    </div>
-                    <div class="performers__image">
-                        <img src="//img.thuis.nl/files/pimg/12271/medium/3c9fbcc1047b6c8f356a4da1c89b251508236551.jpg">
+                        <img :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
                     </div>
                 </div>
             </div>

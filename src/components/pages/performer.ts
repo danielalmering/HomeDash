@@ -1,12 +1,12 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import Profile from './profile/profile';
+import Sidebar from './profile/sidebar/sidebar';
 
 @Component({
     template: require('./performer.tpl.html'),
         components: {
-        tprofile: Profile
+        tsidebar: Sidebar
     }
 })
 export default class Performer extends Vue {

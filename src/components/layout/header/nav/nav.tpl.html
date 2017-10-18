@@ -14,27 +14,23 @@
         <ul class="nav__info col-xs-12 col-sm-6">
             <li class="nav__info-item nav__info-item--last">
                 <a>
-                    <span class="flag flag-nl"></span>
+                    <span :class="'flag flag-' + language"></span> {{ language }}
                 </a>
-                <ul class="nav__info-subitems">
+                <ul class="nav__info-subitems"> <!-- Only display accepted languages for the country here -->
                     <li class="subitem"><span class="flag flag-nl"></span> NL</li>
                     <li class="subitem"><span class="flag flag-en"></span> EN</li>
                 </ul>
             </li>
             <li class="nav__info-item nav__info-item--last">
-                <a ng-click="vm.login()">
+                <a v-on:click="login">
                     <i class="fa fa-user"></i>
-                    <span class="hidden-xs" v-t="$t('nav.info.login')"></span>
+                    <span class="hidden-xs" v-t="">{{ authenticated ? user.username : $t('nav.info.login') }}</span>
                 </a>
-                <!-- <a>
-                    <i class="fa fa-user"></i>
-                    <span class="hidden-xs">dycati</span>
-                </a> -->
-                <ul class="nav__info-subitems">
+                <ul class="nav__info-subitems" v-if="authenticated">
                     <li class="subitem" v-t="$t('nav.info.editdata')"></li>
                     <li class="subitem" v-t="$t('nav.info.inbox')"></li>
                     <li class="subitem" v-t="$t('nav.info.upgradebalance')"></li>
-                    <li class="subitem"  v-t="$t('nav.info.logout')"></li>
+                    <li class="subitem"  v-t="$t('nav.info.logout')" v-on:click="logout"></li>
                 </ul>
             </li>
             <li class="nav__info-item">
