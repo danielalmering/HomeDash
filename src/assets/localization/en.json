@@ -10,7 +10,7 @@
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
-            "buyment": "bij aankoop v.a €120"
+            "purchase": "bij aankoop v.a €120"
         }
     },
     "nav": {
@@ -29,10 +29,6 @@
         }
     },
     "performers": {
-        "age": "jaar",
-        "page": "Pagina",
-        "from": "van",
-        "countofpage": "aantal per pagina"
     },
     "auth": {
         "accountlogin": "Gebruiker login",
@@ -63,6 +59,7 @@
         "eyecolor": "Kleur ogen"
     },
     "pagination": {
-        "pageOf": "Page {page} of {total}"
+        "pageOf": "Page {page} of {total}",
+        "amountPerPage": "Amount per page"
     }
 }
