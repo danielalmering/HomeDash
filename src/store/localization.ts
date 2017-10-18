@@ -10,6 +10,8 @@ export interface LocalizationState {
     language: string;
 };
 
+type LocalizationContext = ActionContext<LocalizationState, RootState>;
+
 const defaultLanguages: { [country: string]: string } = {
     uk: 'en',
     de: 'de',
@@ -36,12 +38,12 @@ const localizationStore: Module<LocalizationState, RootState> = {
         }
     },
     actions: {
-        async setCountry(store: ActionContext<LocalizationState, any>, country: string){
+        async setCountry(store: LocalizationContext, country: string){
             store.commit('setCountry', country);
 
             store.dispatch('setLanguage', defaultLanguages[country]);
         },
-        async setLanguage(store: ActionContext<LocalizationState, any>, language: string){
+        async setLanguage(store: LocalizationContext, language: string){
             i18n.locale = language;
 
             store.commit('setLanguage', language);

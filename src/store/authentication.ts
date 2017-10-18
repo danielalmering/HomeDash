@@ -8,14 +8,33 @@ export interface AuthState {
     user: User | undefined;
 };
 
-export interface User {
+export interface AnonymousUser {
+    id: number;
+    socketToken: string;
 
+    country: string;
+    language: string;
+}
+
+export interface User extends AnonymousUser {
+    username: string;
+    email: string;
+
+    status: string; // Enum
+    roles: string[]; //Transform to single
+    registerDate: number;
+    credits: number;
+    mobile_number: string;
+
+    credits_ivr_code: number;
 }
 
 export interface LoginPayload {
     email: string;
     password: string;
 }
+
+type AuthContext = ActionContext<AuthState, RootState>;
 
 const authenticationStore: Module<AuthState, RootState> = {
     state: {
@@ -29,17 +48,26 @@ const authenticationStore: Module<AuthState, RootState> = {
         }
     },
     actions: {
-        async login(store: ActionContext<AuthState, any>, payload: LoginPayload){
-            let loginResult = await fetch('https://www.thuis.nl/auth/login', {
+        async login(store: AuthContext, payload: LoginPayload){
+            const loginResult = await fetch('https://www.thuis.nl/auth/login', {
                 method: 'POST',
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                headers: {
+                    role: 'ROLE_CLIENT'
+                }
             });
 
-            let loginData: User = await loginResult.json();
+            const loginData: User = await loginResult.json();
 
             store.commit('setUser', loginData);
         },
-        async register(store: ActionContext<AuthState, any>){
+        async logout(store: AuthContext){
+            const logoutResult = await fetch('https://www.thuis.nl/auth/logout', {
+            });
+
+            store.commit('setUser', undefined);
+        },
+        async register(store: AuthContext){
 
         }
     }

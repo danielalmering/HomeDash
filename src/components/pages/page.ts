@@ -15,14 +15,4 @@ import './page.scss';
     }
 })
 export default class Page extends Vue {
-
-    get language(){
-        return this.$store.state.localization.language;
-    }
-
-    prop: string = 'Value';
-
-    mounted(){
-        this.prop = 'UpdatedValue';
-    }
 }

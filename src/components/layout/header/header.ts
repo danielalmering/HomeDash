@@ -14,14 +14,4 @@ import './header.scss';
     }
 })
 export default class Header extends Vue {
-
-    get language(){
-        return this.$store.state.localization.language;
-    }
-
-    prop: string = 'Value';
-
-    mounted(){
-        this.prop = 'UpdatedValue';
-    }
 }
