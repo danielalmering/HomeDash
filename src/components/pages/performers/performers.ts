@@ -1,6 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
+import Pagination from '../../layout/Pagination';
 
 import './performers.scss';
 
@@ -10,11 +11,21 @@ interface Performer {
 };
 
 @Component({
-    template: require('./performers.tpl.html')
+    template: require('./performers.tpl.html'),
+    components: {
+        pagination: Pagination
+    }
 })
 export default class Performers extends Vue {
 
     performers: Performer[] = [];
+
+    total: number = 0;
+
+    query: { limit: number, offset: number } = {
+        limit: 20,
+        offset: 0
+    }
 
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
@@ -26,9 +37,15 @@ export default class Performers extends Vue {
         this.loadPerformers();
     }
 
-    async loadPerformers(){
-        const performerResults = await fetch('https://www.thuis.nl/api/performer/performer_accounts?limit=40&offset=0');
+    pageChanged(){
+        this.loadPerformers();
+    }
 
-        this.performers = (await performerResults.json()).performerAccounts;
+    async loadPerformers(){
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}`);
+        const data = await performerResults.json();
+
+        this.performers = data.performerAccounts;
+        this.total = data.total;
     }
 }
