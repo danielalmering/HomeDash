@@ -1,0 +1,150 @@
+//
+// Header top
+// --------------------------------------------------
+
+// Imports
+
+@import "../../../../styles/_mixins.scss";
+@import "../../../../styles/_settings.scss";
+
+// Styling
+
+.top {
+    display: table;
+    width: 100%;
+
+    &__logo {
+        @include rem(padding, 22px 0px);
+
+        img {
+            width: 100%;
+            max-width: 146px;
+        }
+    }
+
+    &__numbers {
+        @include rem(margin, 14px 0px 8px 0px);
+        @include rem(padding, 0px 0px 0px 10px);
+        &-number {
+            color: $pallete-3;
+            padding: 0;
+            @include rem(font-size, 30px);
+            font-weight: 700;
+            line-height: 60%;
+
+            b {
+                color: $pallete-2;
+                @include rem(font-size, 18px);
+            }
+
+            i {
+                font-style: normal;
+                font-weight: 300;
+                color: $pallete-2;
+                @include rem(font-size, 11px);
+            }
+
+            .flag {
+                float: left;
+                @include rem(margin, -6px 10px -6px 0px);
+            }
+            
+        }
+    }
+
+    &__banner {
+        @include rem(margin, 15px 0px);
+
+        &-credits {
+            float: right;
+            .discount {
+                float: left;
+                width: 100px;
+                height: 47px;
+                margin-top: -5px;
+                line-height: 90%;
+                &__percent {
+                    display: inline-block;
+                    height: 33px;
+                    line-height: 33px;
+                    width: 47px;
+                    color: $pallete-7;
+                    @include rem(font-size, 39px);
+                    letter-spacing: -5.5px;
+                    font-style: italic;
+
+
+                    i {
+                        @include rem(font-size, 15px);
+                        @include rem(padding, 10px 0px 0px 5px);
+                    }
+                }
+                &__text {
+                    display: inline-block;
+                    height: 23px;
+                    width: 43px;
+                    color: $pallete-7;
+                    @include rem(font-size, 14px);
+                    font-style: italic;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    line-height: 100%;
+
+                    i {
+                        color: $pallete-3;
+                        @include rem(font-size, 11px);
+                    }
+                }
+                &__buy {
+                    clear: both;
+                    line-height: 0%;
+                    @include rem(font-size, 10.5px);
+                    color: $pallete-20;
+                    text-transform: uppercase;
+                    font-style: italic;
+                    font-weight: 600;
+                    letter-spacing: -1px;
+                }
+            }
+        }
+
+
+        &-happyhour {
+            float: right;
+            width: 235px;
+            .col-1 {
+                float: left;
+                width: 65%;
+            }
+            .col-2 {
+                float: right;
+                width: 30%;
+            }
+            .h1 {
+                text-transform: uppercase;
+                font-style: italic;
+                @include rem(font-size, 26px);
+                color: $pallete-2;
+                line-height: 70%;
+            }
+            .h2 {
+                text-transform: uppercase;
+                font-style: italic;
+                @include rem(font-size, 31px);
+                color: $pallete-3;
+                line-height: 70%;
+            }
+            .h3 {
+                display: block;
+                text-transform: uppercase;
+                font-style: italic;
+                border-left: 1px solid rgba(255,255,255,0.2);
+                @include rem(padding-left, 10px);
+                @include rem(font-size, 15px);
+                color: $pallete-2;
+                line-height: 105%;
+                width: 10%
+            }
+        }
+    }
+}

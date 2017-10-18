@@ -1,5 +1,5 @@
 <template>
-    <div class="performer">
+    <div class="profile">
         <p>Performer {{id}}</p>
 
         <img src="../assets/logo.png" alt="">
@@ -8,7 +8,7 @@
 
 <script lang="ts">
 export default {
-    name: 'Performer',
+    name: 'Profile',
     data () {
         return {
             id: 0

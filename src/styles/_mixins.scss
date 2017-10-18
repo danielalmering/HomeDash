@@ -1,0 +1,143 @@
+//
+// Mixins
+// --------------------------------------------------
+
+/* Rem  */
+@function parseInt($n) { /* 2 */
+  @return $n / ($n * 0 + 1);
+}
+
+@mixin rem($property, $values) {
+  $px : (); /* 3 */
+  $rem: (); /* 3 */
+
+  @each $value in $values { /* 4 */
+
+    @if $value == 0 or $value == auto { /* 5 */
+      $px : append($px , $value);
+      $rem: append($rem, $value);
+    }
+
+    @else {
+      $unit: unit($value);    /* 6 */
+      $val: parseInt($value); /* 6 */
+
+      @if $unit == "px" {  /* 7 */
+        $px : append($px,  $value);
+        $rem: append($rem, ($val / 10 + rem));
+      }
+
+      @if $unit == "rem" { /* 7 */
+        $px : append($px,  ($val * 10 + px));
+        $rem: append($rem, $value);
+      }
+    }
+  }
+
+  @if $px == $rem {     /* 8 */
+    #{$property}: $px;  /* 9 */
+  } @else {
+    #{$property}: $px;  /* 9 */
+    #{$property}: $rem; /* 9 */
+  }
+}
+
+/* Border radius */
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+}
+@mixin border-top-radius($radius) {
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+}
+@mixin border-top-left-radius($radius)  { border-top-left-radius: $radius; }
+@mixin border-top-right-radius($radius) { border-top-right-radius: $radius; }
+
+@mixin border-bottom-radius($radius) {
+  border-bottom-left-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+@mixin border-bottom-left-radius($radius) {
+  border-bottom-left-radius: $radius;
+}
+@mixin border-left-radius($radius) {
+  border-bottom-left-radius: $radius;
+  border-top-left-radius: $radius;
+}
+@mixin border-bottom-right-radius($radius) {
+  border-bottom-right-radius: $radius;
+}
+@mixin border-right-radius($radius) {
+  border-bottom-right-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+/* Box shadow */
+@mixin box-shadow($top, $left, $blur, $color, $inset:"") {
+    -webkit-box-shadow:$top $left $blur $color #{$inset};
+    -moz-box-shadow:$top $left $blur $color #{$inset};
+    box-shadow:$top $left $blur $color #{$inset};
+}
+
+/* CSS gradient */
+@mixin gradient($startColor, $endColor, $orientation) {
+    background: $startColor;
+    @if $orientation == 'vertical' {
+      background: -webkit-linear-gradient(top, $startColor, $endColor);
+      background: linear-gradient(to bottom, $startColor, $endColor);
+    } @else if $orientation == 'horizontal' {
+      background: -webkit-linear-gradient(left, $startColor, $endColor);
+      background: linear-gradient(to right, $startColor, $endColor);
+    } @else if $orientation == '45deg' {
+      background: -webkit-linear-gradient(45deg, $startColor, $endColor);
+      background: linear-gradient(45deg, $startColor, $endColor);
+    } @else if $orientation == '-45deg' {
+      background: -webkit-linear-gradient(-45deg, $startColor, $endColor);
+      background: linear-gradient(135deg, $startColor, $endColor);
+    } @else {
+      background: -webkit-radial-gradient(center, ellipse cover, $startColor, $endColor);
+      background: radial-gradient(ellipse at center, $startColor, $endColor);
+    }
+}
+
+/* Transitions */
+@mixin transition($trans) {
+    -webkit-transition: $trans;
+    -moz-transition: $trans;
+    -o-transition: $trans;
+    transition: $trans;
+}
+
+@mixin transform($trans){
+    -ms-transform: $trans;
+    -webkit-transform: $trans;
+    -o-transform: $trans;
+    transform: $trans;
+}
+
+/* Media queries */
+@mixin breakpoint($class) {
+  @if $class == xs {
+    @media (max-width: 767px) { @content; }
+  }
+
+  @else if $class == sm {
+    @media (min-width: 768px) { @content; }
+  }
+
+  @else if $class == md {
+    @media (min-width: 992px) { @content; }
+  }
+
+  @else if $class == lg {
+    @media (min-width: 1200px) { @content; }
+  }
+
+  @else {
+    @warn "Breakpoint mixin supports: xs, sm, md, lg";
+  }
+}

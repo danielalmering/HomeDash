@@ -1,0 +1,97 @@
+//
+// Forms
+// --------------------------------------------------
+
+.form {
+
+    input[type=text], input[type=password], input[type=email], input[type=name] {
+        color: $palette-color-1;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: $pallete-11;
+        @include rem(font-size, 13px);
+        @include rem(padding,8px 21px);
+        @include border-radius(3px);
+        width: 100%;
+        @include rem(margin, 5px 0px);
+        &:focus {
+            outline: none;
+        }
+    }
+
+    // Old mess
+
+    select {
+        color: $palette-color-1;
+        border: 2px solid rgba(125, 106, 109, 0.12);
+        background: $palette-color-3;
+        font-family: $special-font--regular;
+        @include rem(font-size, 25px);
+        @include rem(padding,3px 10px);
+        @include border-radius(20px);
+        width: 100%;
+        @include rem(margin, 5px 0px);
+        &:focus {
+            outline: none;
+        }
+        &.small {
+            @include rem(padding,9px 21px);
+            @include rem(font-size, 17px);
+        }
+    }
+
+    textarea {
+        color: $palette-color-1;
+        border: 2px solid rgba(125, 106, 109, 0.12);
+        background: $palette-color-3;
+        font-family: $special-font--regular;
+        @include rem(font-size, 25px);
+        @include rem(padding,15px 21px);
+        @include border-radius(20px);
+        min-height: 200px;
+        width: 100%;
+        @include rem(margin, 5px 0px);
+        resize: none;
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .checkbox {
+        position:relative;
+        cursor:pointer;
+        margin: 0;
+        padding: 0;
+        input[type="checkbox"] {
+            display: none;
+        }
+        span {
+            position: relative;
+            display: table;
+            height: 24px;
+        }
+        span:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid $palette-color-2;
+            background: #fff;
+            @include border-radius(2px);
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.01) inset;
+            @include border-radius(5px);
+        }
+        input:checked + span:after {
+            content: '✔';
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            font-size: 19px;
+            line-height: 1.4;
+            color: #e22d42;
+            transition: all .2s;
+        }
+    }
+
+}

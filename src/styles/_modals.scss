@@ -1,0 +1,31 @@
+//
+// Modals
+// --------------------------------------------------
+
+.modal {
+    .modal-backdrop {
+        background: $pallete-11;
+    }
+    .modal-dialog {
+        padding-top: 100px;
+        .modal-content {
+            margin: 0 auto;
+            color: $pallete-2;
+            background: $palette-0;
+        }
+        .modal-backdrop {
+            background: none;
+        }
+    }
+}
+
+.modal-close {
+    float: right;
+    color: $pallete-3;
+    background: none;
+    border: none;
+    @include rem(font-size, 25px);
+    &:focus {
+        outline: none;
+    }
+}

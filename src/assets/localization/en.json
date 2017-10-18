@@ -1,3 +1,65 @@
 {
-    "test": "Hello EN"
+    "top": {
+        "numbers": {
+            "callnow": "BEL NU",
+            "cpm": "CT"
+        },
+        "banner": {
+            "happyhour": "HappyHour",
+            "happyhournr": "0906-0225",
+            "seeactionpage": "Zie actie pagina",
+            "extra": "extra",
+            "credits": "credits",
+            "buyment": "bij aankoop v.a €120"
+        }
+    },
+    "nav": {
+        "search": {
+            "input": "Zoeken..."
+        },
+        "info": {
+            "voyeur": "Voyeur",
+            "actions": "Acties",
+            "editdata": "Bewerk profiel",
+            "favourites": "Favorieten",
+            "inbox": "Inbox",
+            "upgradebalance": "Saldo Opwaarderen",
+            "logout": "Uitloggen",
+            "login": "Login"
+        }
+    },
+    "performers": {
+        "age": "jaar",
+        "page": "Pagina",
+        "from": "van",
+        "countofpage": "aantal per pagina"
+    },
+    "auth": {
+        "accountlogin": "Gebruiker login",
+        "registeraccount": "Registeer gebruiker",
+        "login": "Login",
+        "register": "Registeer",
+        "email": "Email",
+        "lostpassword": "Wachtwoord vergeten?",
+        "successlogin": "succesvol ingelogd",
+        "missingfields": "Niet alle velden ingevuld",
+        "errorlogin": "Foutieve logingegevens"
+    },
+    "sidebar": {
+        "age": "jaar",
+        "view": "Bekijken",
+        "recommended": "Aanbevolen",
+        "peek": "Meekijken",
+        "favorite": "Favoriet",
+        "noperformers": "Geen performers"
+    },
+    "profile": {
+        "favorite": "Maak favoriet",
+        "property": "Kenmerken",
+        "age": "leeftijd",
+        "height": "Lenghte",
+        "weight": "Gewicht",
+        "cupsize": "Cup maat",
+        "eyecolor": "Kleur ogen"
+    }
 }
