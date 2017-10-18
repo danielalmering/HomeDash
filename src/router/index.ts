@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
 import Profile from '../components/pages/profile/profile';
+import Performers from '../components/pages/performers/performers';
 
 import { countryInterceptor } from './localization';
 
@@ -19,10 +20,13 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    name: 'Page',
                     component: Page,
                     children: [
-
+                        {
+                            path: '',
+                            name: 'Performers',
+                            component: Performers
+                        }
                     ]
                 },
                 {
@@ -31,7 +35,7 @@ export default new Router({
                     component: Performer,
                     children: [
                         {
-                            path: '/profile',
+                            path: 'profile',
                             name: 'Profile',
                             component: Profile
                         }
