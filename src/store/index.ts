@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import localization from './localization';
-import { LocalizationState } from './localization';
+import modals from './modals';
+import authentication from './authentication';
 
 Vue.use(Vuex);
 
@@ -17,7 +18,9 @@ const store = new Vuex.Store<RootState>({
     mutations: {
     },
     modules: {
-        localization: localization
+        localization: localization,
+        modals: modals,
+        authentication: authentication
     }
 });
 

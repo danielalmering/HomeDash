@@ -1,9 +1,17 @@
 <div class="page">
     <theader></theader>
-    <tperformers></tperformers>
+
+    <router-view/>
 
     <p>Page layer {{ prop }}</p>
     <p>Language {{language}}</p>
     <p>Translation: {{ $t("test") }}</p>
+
+    <input :placeholder="$t('test')">
+
+    <p v-t="'test'"></p>
+
+    <img src="../../assets/logo.png" alt="">
+
     <tfooter></tfooter>
 </div>

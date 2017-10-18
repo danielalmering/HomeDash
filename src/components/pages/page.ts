@@ -1,9 +1,8 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import Header from './layout/header/header';
-import Performers from './performers/performers';
-import Footer from './layout/footer/footer';
+import Header from '../layout/header/header';
+import Footer from '../layout/footer/footer';
 
 import './page.scss';
 
@@ -12,7 +11,6 @@ import './page.scss';
     template: require('./page.tpl.html'),
     components: {
         theader: Header,
-        tperformers: Performers,
         tfooter: Footer
     }
 })
