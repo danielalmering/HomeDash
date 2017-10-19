@@ -2,6 +2,60 @@
 // Footer
 // --------------------------------------------------
 
+// Imports
+
+@import "../../../styles/_mixins.scss";
+@import "../../../styles/_settings.scss";
+
+// Styling
+
 .footer {
-    
+    &__primary {
+        @include rem(padding, 40px 30px);
+        text-align: center;
+        color: $pallete-7;
+        h1 {
+            font-weight: 600;
+        }
+
+        a {
+            color: $pallete-3;
+        }
+    }
+
+    &__copyright {
+        display: block;
+        background: $pallete-1;
+
+        ul {
+            display: block;
+            @include rem(padding, 5px);
+            text-align: center;
+            li {
+                list-style: none;
+                display: inline-block;
+
+                a {
+                    display: block;
+                    @include rem(font-size, 13px);
+                    @include rem(padding, 10px);
+                    color: $pallete-14;
+                    text-transform: uppercase;
+                    &:hover {
+                        color: $pallete-20;
+                    }
+                }
+            }
+        }
+
+        span {
+            display: block;
+            width: 100%;
+            text-align: center;
+            color: $pallete-14;
+            @include rem(font-size, 13px);
+            text-transform: uppercase;
+            @include rem(padding, 0px 0px 10px 0px);
+        }
+    }
 }
