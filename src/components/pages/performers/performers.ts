@@ -22,9 +22,10 @@ export default class Performers extends Vue {
 
     total: number = 0;
 
-    query: { limit: number, offset: number } = {
+    query: { limit: number, offset: number, category: string } = {
         limit: 40,
-        offset: 0
+        offset: 0,
+        category: ''
     }
 
     hasService(performerId: number, service: string){
@@ -34,7 +35,11 @@ export default class Performers extends Vue {
     }
 
     mounted(){
+        this.query.category = this.$route.params.category ? this.$route.params.category : '';
+
         this.loadPerformers();
+
+        console.log(this.$route);
     }
 
     pageChanged(){
@@ -42,7 +47,7 @@ export default class Performers extends Vue {
     }
 
     async loadPerformers(){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}`);
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}`);
         const data = await performerResults.json();
 
         this.performers = data.performerAccounts;

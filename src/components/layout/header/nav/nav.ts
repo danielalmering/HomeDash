@@ -23,6 +23,10 @@ export default class Nav extends Vue {
         return this.$store.state.localization.language;
     }
 
+    get categories(){
+        return this.$store.state.info ? this.$store.state.info.categories : [];
+    }
+
     changeLanguage(language: string){
         this.$store.dispatch('setLanguage', language);
     }
