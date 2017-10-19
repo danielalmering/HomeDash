@@ -80,5 +80,15 @@
             "passwordconfirm": "Bevestig wachtwoord",
             "register": "Registreer"
         }
+    },
+    "footer": {
+        "contact": "Contact",
+        "privacypolicy": "Privacybeleid",
+        "terms": "Algemene voorwaarden",
+        "information": "Informatie",
+        "promos": "Acties",
+        "webcam": "Webcammodel worden?",
+        "webcamurl": "http://www.club-sense.nl",
+        "copyright": "Copyright 2017"
     }
 }
