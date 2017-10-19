@@ -12,10 +12,10 @@
         </div>
         <div class="pager__quantity hidden-xs col-sm-3">
             <span v-t="'pagination.amountPerPage'"></span>
-            <select>
-                <option value="1">40</option>
-                <option value="2">80</option>
-                <option value="3">120</option>
+            <select v-model="updatedLimit">
+                <option value="40">40</option>
+                <option value="80">80</option>
+                <option value="120">120</option>
             </select>
         </div>
     </div>
@@ -55,6 +55,7 @@ export default {
 
     data () {
         return {
+            updatedLimit: 40
         };
     },
     methods: {
@@ -68,6 +69,17 @@ export default {
         },
         setPage: function(page){
             this.$emit('update:offset', (page - 1) * this.limit);
+            this.$emit('pageChange');
+        }
+    },
+    watch: {
+        updatedLimit: function(limit){
+            const currentPage = Math.floor((this.offset / limit));
+
+            console.log(currentPage);
+
+            this.$emit('update:limit', parseInt(limit));
+            this.$emit('update:offset', currentPage * limit);
             this.$emit('pageChange');
         }
     },
