@@ -1,7 +1,7 @@
  <main>
     <div class="profile">
 
-        <div class="profile__info">
+        <div class="profile__info" v-if="performer">
 
             <div class="profile__info-image col-sm-12 col-md-3">
                 <div class="image" :style="{ 'background-image': `url('//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}')` }"></div>
@@ -28,16 +28,7 @@
 
             </div>
 
-            <div class="profile__info-gallery">
-                <ul class="profile__gallery">
-                    <li v-for="photo in perfphotos">
-                        <div class="col-xs-2">
-                            <img :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${photo.name}`">
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
+            <photo-slider :performer="performer.id" :photos="perfphotos"></photo-slider>
         </div>
 
         <div class="profile__services">
