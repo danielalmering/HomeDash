@@ -19,9 +19,9 @@
         },
         "info": {
             "voyeur": "Voyeur",
-            "actions": "Actions",
-            "editdata": "Edit profiel",
-            "favourites": "Favorites",
+            "actions": "Acties",
+            "editdata": "Bewerk profiel",
+            "favourites": "Favorieten",
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
             "logout": "Logout",
@@ -59,7 +59,26 @@
         "eyecolor": "Kleur ogen"
     },
     "pagination": {
-        "pageOf": "Page {page} of {total}",
-        "amountPerPage": "Amount per page"
+        "pageOf": "Pagina {page} van {total}",
+        "amountPerPage": "Aantal per pagina"
+    },
+    "modals": {
+        "login":{
+            "title": "Account login",
+            "email": "E-mail",
+            "password": "Wachtwoord",
+            "login": "Login",
+            "register": "Registreer"
+        },
+        "register":{
+            "title": "Registreer account",
+            "email": "E-mail",
+            "username": "Gebruikersnaam",
+            "language": "Taal",
+            "country": "Land",
+            "password": "Wachtwoord",
+            "passwordconfirm": "Bevestig wachtwoord",
+            "register": "Registreer"
+        }
     }
 }

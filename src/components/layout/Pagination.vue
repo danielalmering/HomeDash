@@ -1,13 +1,23 @@
 <template>
-    <div class="pagination col-md-12">
-        <div class="pagination__previous"><i v-if="showPrevious" v-on:click="previous" class="fa fa-arrow-left"></i></div>
-        <div class="pagination__middle">{{ $t('pagination.pageOf', { page: currentPage, total: totalPages }) }}</div>
-        <div class="pagination__buttons" v-if="pageButtons">
-            <div v-for="page in pages" :key="page" :class="{ highlight: page === currentPage }" v-on:click="setPage(page)">
-                {{ page }}
+    <div class="pager col-md-12">
+        <div class="pager__page hidden-xs col-sm-3">{{ $t('pagination.pageOf', { page: currentPage, total: totalPages }) }}</div>
+        <div class="pager__numbers col-xs-12 col-sm-6" v-if="pageButtons">
+            <div class="pager__numbers-items">
+                <div class="pager__numbers-item" v-if="showPrevious" v-on:click="previous"><i class="fa fa-arrow-left"></i></div>
+                <div class="pager__numbers-item" v-for="page in pages" :key="page" :class="{ active: page === currentPage }" v-on:click="setPage(page)">
+                    {{ page }}
+                </div>
+                <div class="pager__numbers-item" v-if="showNext" v-on:click="next"><i class="fa fa-arrow-right"></i></div>
             </div>
         </div>
-        <div class="pagination__next"><i v-if="showNext" v-on:click="next" class="fa fa-arrow-right"></i></div>
+        <div class="pager__quantity hidden-xs col-sm-3">
+            <span v-t="'pagination.amountPerPage'"></span>
+            <select>
+                <option value="1">40</option>
+                <option value="2">80</option>
+                <option value="3">120</option>
+            </select>
+        </div>
     </div>
 </template>
 
@@ -103,61 +113,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-
-.pagination {
-    border: 2px solid #f9f9f9;
-    color: #808080;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 0;
-
-    &__middle {
-        float: left;
-        width: 25%;
-        text-align: center;
-        padding: 10px;
-        margin: 0;
-        height: 37px;
-    }
-
-    &__previous {
-        float: left;
-        width: 25%;
-        cursor: pointer;
-        height: 37px;
-        .fa { float: left; }
-    }
-
-    &__next {
-        float: left;
-        width: 25%;
-        cursor: pointer;
-        height: 37px;
-        .fa { float: right; }
-    }
-
-    &__buttons {
-        float: left;
-        width: 25%;
-
-        div {
-            float: left;
-            margin: 10px;
-        }
-
-        .highlight {
-            color: green;
-        }
-    }
-
-    .fa {
-        display: table;
-        height: 100%;
-        padding: 10px;
-        width: auto;
-    }
-}
-
-</style>
