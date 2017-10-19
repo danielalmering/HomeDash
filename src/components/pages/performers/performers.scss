@@ -93,6 +93,10 @@
                 color: $pallete-7;
                 @include rem(font-size, 20px);
             }
+
+            .is-favourite {
+                color: #ffb400;
+            }
         }
     }
 }
