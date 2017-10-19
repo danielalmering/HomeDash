@@ -13,7 +13,7 @@
 
         <ul class="nav__info col-xs-12 col-sm-6">
             <li class="nav__info-item nav__info-item--last">
-                <a>
+                <a class="link">
                     <span :class="'flag flag-' + language"></span> {{ language.toUpperCase() }}
                 </a>
                 <ul class="nav__info-subitems">
@@ -23,25 +23,27 @@
                 </ul>
             </li>
             <li class="nav__info-item nav__info-item--last">
-                <a v-on:click="login">
+                <a class="link" v-on:click="login">
                     <i class="fa fa-user"></i>
                     <span class="hidden-xs">{{ authenticated ? user.username : $t('nav.info.login') }}</span>
                 </a>
                 <ul class="nav__info-subitems" v-if="authenticated">
-                    <li class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.editdata'"></li>
+                    <li class="subitem"><router-link :to="{ name: 'Account'}" v-t="'nav.info.editdata'"></router-link></li>
                     <li class="subitem" v-t="'nav.info.inbox'"></li>
+                    <li class="subitem" v-t="'nav.info.history'"></li>
+                    <li class="subitem" v-t="'nav.info.giftvoucher'"></li>
                     <li class="subitem" v-t="'nav.info.upgradebalance'"></li>
                     <li class="subitem"  v-t="'nav.info.logout'" v-on:click="logout"></li>
                 </ul>
             </li>
             <li class="nav__info-item">
-                <router-link :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span class="hidden-xs" v-t="'nav.info.favourites'"></span></router-link>
+                <router-link class="link" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span class="hidden-xs" v-t="'nav.info.favourites'"></span></router-link>
             </li>
             <li class="nav__info-item">
-                <a href="#"><i class="fa fa-bullhorn"></i><span class="hidden-xs" v-t="'nav.info.actions'"></span></a>
+                <a class="link" href="#"><i class="fa fa-bullhorn"></i><span class="hidden-xs" v-t="'nav.info.actions'"></span></a>
             </li>
             <li class="nav__info-item">
-                <a href="#"><i class="fa fa-eye"></i><span class="hidden-xs" v-t="'nav.info.voyeur'"></span></a>
+                <a class="link" href="#"><i class="fa fa-eye"></i><span class="hidden-xs" v-t="'nav.info.voyeur'"></span></a>
             </li>
         </ul>
     </div>

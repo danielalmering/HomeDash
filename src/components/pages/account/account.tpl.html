@@ -1,7 +1,23 @@
 <div class="account">
-    <div class="account__sidebar">
-        <h1 style="color: white">Hoi Daniel</h1>
-    </div>
+    <div class="container-fluid">
+        <div class="account__sidebar col-xs-12 col-sm-3">
+            <div class="account__sidebar-welcome">
+                Welkom Clubsense
+            </div>
+            <div class="account__sidebar-credits">
+                <span v-t="'account.currentcredits'"></span>
+                <p>72040</p>
+            </div>
 
-    <router-view/>
+            <ul class="account__sidebar-list">
+                <li class="subitem"><router-link :to="'home'"><i class="fa fa-pencil"></i><span v-t="'nav.info.editdata'"></span></router-link></li>
+                <li class="subitem"><router-link :to="'home'"><i class="fa fa-envelope-o"></i><span v-t="'nav.info.inbox'"></span></router-link></li>
+                <li class="subitem"><router-link :to="'home'"><i class="fa fa-clock-o"></i><span v-t="'nav.info.history'"></span></router-link></li>
+                <li class="subitem"><router-link :to="'home'"><i class="fa fa-gift"></i><span v-t="'nav.info.giftvoucher'"></span></router-link></li>
+                <li class="subitem"><router-link :to="'home'"><i class="fa fa-suitcase"></i><span v-t="'nav.info.upgradebalance'"></span></router-link></li>
+            </ul>
+        </div>
+
+        <router-view/>
+    </div>
 </div>
