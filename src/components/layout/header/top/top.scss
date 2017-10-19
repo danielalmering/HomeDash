@@ -17,8 +17,13 @@
         @include rem(padding, 22px 0px);
 
         img {
+            display: table;
             width: 100%;
             max-width: 146px;
+            @include rem(margin, 0 auto);
+            @include breakpoint(xs) {
+                max-width: 180px;
+            }
         }
     }
 

@@ -28,20 +28,5 @@
 
         <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" v-on:pageChange="pageChanged"></pagination>
 
-        <div class="pager">
-            <div class="pager__page col-xs-3">
-                {{ $t('performers.page') }} 1 {{ $t('performers.from') }} 72
-            </div>
-            <div class="pager__pagination col-xs-6">
-            </div>
-            <div class="pager__number col-xs-3">
-                <span class="hidden-xs">{{ $t('performers.countofpage') }}</span>
-                <select>
-                    <option value="1" ng-selected="true">40</option>
-                    <option value="2">80</option>
-                    <option value="3">120</option>
-                </select>
-            </div>
-        </div>
     </div>
 </main>
