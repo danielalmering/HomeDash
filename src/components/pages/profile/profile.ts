@@ -1,6 +1,8 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
+import PhotoSlider from './photo-slider';
+
 import './profile.scss';
 
 interface Performer {
@@ -11,12 +13,13 @@ interface Performer {
 
 @Component({
     template: require('./profile.tpl.html'),
+    components: {
+        photoSlider: PhotoSlider
+    }
 })
 export default class Profile extends Vue {
-
-    performer: Performer[] = [];
+    performer: Performer | boolean = false;
     perfphotos : any[] = [];
-
 
     mounted(){
         this.loadPerformer();
@@ -28,6 +31,7 @@ export default class Profile extends Vue {
         const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/performer_number/${this.$route.params.id}?limit=10`);
 
         const data = await performerResults.json();
+
         this.performer = data.performerAccount;
         this.perfphotos = data.photos.approved.photos;
 

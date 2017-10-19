@@ -84,38 +84,4 @@
             }
         }
     }
-
-    &__gallery {
-        width: 100%;
-        max-width: none;
-        height: 300px;
-        font-size:0;
-        @include rem(padding, 0px);
-
-        &.standard li {
-            text-align: center;
-            padding: 20px;
-            font-size: 20px;
-        }
-
-        li {
-            font-size:30px;
-            position:relative;
-            background-size: 100%;
-            background-repeat: no-repeat;
-            list-style: none;
-            img { width: 100%; }
-        }
-
-        .debug {
-            position: absolute;
-            bottom: 0;
-            height: 50px;
-            background: rgba(0,0,0,0.7);
-            color:white;
-            font-size: 12px;
-            width: 100%;
-            padding: 5px;
-        }
-    }
 }
