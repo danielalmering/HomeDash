@@ -16,6 +16,7 @@ export default {
     name: 'app',
     created: function(){
         this.$store.dispatch('getSession');
+        this.$store.dispatch('loadInfo');
     }
 };
 </script>
