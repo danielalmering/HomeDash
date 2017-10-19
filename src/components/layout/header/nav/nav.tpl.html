@@ -37,7 +37,7 @@
                 </ul>
             </li>
             <li class="nav__info-item">
-                <a class="link" href="#"><i class="fa fa-star"></i><span class="hidden-xs" v-t="'nav.info.favourites'"></span></a>
+                <router-link class="link" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span class="hidden-xs" v-t="'nav.info.favourites'"></span></router-link>
             </li>
             <li class="nav__info-item">
                 <a class="link" href="#"><i class="fa fa-bullhorn"></i><span class="hidden-xs" v-t="'nav.info.actions'"></span></a>

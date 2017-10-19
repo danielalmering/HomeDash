@@ -25,3 +25,11 @@ export function countryInterceptor(to: Router.Route, from: Router.Route, next: (
         next();
     }
 }
+export function authenticatedInterceptor(to: Router.Route, from: Router.Route, next: (to?: string | Router.Location) => void){
+    if(!store.getters.isLoggedIn){
+        //TODO: Show unauthenticated error message
+        next({ path: '/' });
+    } else {
+        next();
+    }
+}

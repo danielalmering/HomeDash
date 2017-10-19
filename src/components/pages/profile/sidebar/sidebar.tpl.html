@@ -5,20 +5,22 @@
     </div>
 
     <div class="sidebar__search form">
-        <input type="text" class="searching" name="search" :placeholder="$t('nav.search.input')">
-        <button class="fa fa-search"></button>
+        <form v-on:submit.prevent="search()">
+            <input type="text" class="searching" name="search" v-model="query.search" :placeholder="$t('nav.search.input')">
+            <button class="fa fa-search"></button>
+        </form>
     </div>
 
     <ul class="sidebar__filters">
-        <li v-t="$t('sidebar.recommended')"></li>
-        <li v-t="$t('sidebar.peek')"></li>
-        <li v-t="$t('sidebar.favorite')"></li>
+        <li v-t="$t('sidebar.recommended')" v-on:click="setCategory('recommended')"></li>
+        <li v-t="$t('sidebar.peek')" v-on:click="setCategory('peek')"></li>
+        <li v-t="$t('sidebar.favorite')" v-on:click="setCategory('favourites')"></li>
     </ul>
 
     <ul class="sidebar__performers nomar nopad">
-        <li class="sidebar__performer">
+        <li class="sidebar__performer" v-for="performer in performers">
             <div class="sidebar__performer-image col-xs-5 nopad">
-                <img src="//img.thuis.nl/files/pimg/12271/medium/3c9fbcc1047b6c8f356a4da1c89b251508236551.jpg">
+                <img v-if="performer.avatar" :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
                 <span></span>
                 <div class="sidebar__performer-services">
                     <i title="" class="fa fa-video-camera"></i>
@@ -29,8 +31,8 @@
             </div>
             <div class="sidebar__performer-info col-xs-7">
                 <h3 ng-bind="performer.nickname"></h3>
-                <p>19 {{ $t('sidebar.age') }}</p>
-                <p>Amsterdam</p>
+                <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
+                <p>{{ performer.location.split('/')[2] }}</p>
                 <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
             </div>
         </li>

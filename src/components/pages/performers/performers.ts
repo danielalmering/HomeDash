@@ -41,10 +41,6 @@ export default class Performers extends Vue {
         this.query.category = to.params.category ? to.params.category : '';
         this.query.search = to.query.search ? to.query.search : '';
 
-        console.log('Route change');
-        console.log(to);
-        console.log(this.$route.query.search);
-
         this.loadPerformers();
     }
 
@@ -60,7 +56,9 @@ export default class Performers extends Vue {
     }
 
     async loadPerformers(){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}&search=${this.query.search}`);
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}&search=${this.query.search}`, {
+            credentials: 'include'
+        });
         const data = await performerResults.json();
 
         this.performers = data.performerAccounts;

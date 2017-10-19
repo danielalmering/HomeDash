@@ -4,9 +4,10 @@ import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
 import Profile from '../components/pages/profile/profile';
 import Performers from '../components/pages/performers/performers';
+import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 
-import { countryInterceptor } from './localization';
+import { countryInterceptor, authenticatedInterceptor } from './interceptors';
 
 Vue.use(Router);
 
@@ -26,7 +27,13 @@ export default new Router({
                         {
                             path: 'my-account',
                             name: 'Account',
-                            component: Account
+                            component: Account,
+                            beforeEnter: authenticatedInterceptor
+                        },
+                        {
+                            path: 'favourites',
+                            name: 'Favourites',
+                            component: Favourites
                         },
                         {
                             path: ':category?',
