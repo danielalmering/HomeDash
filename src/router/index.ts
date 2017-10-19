@@ -23,11 +23,6 @@ export default new Router({
                     component: Page,
                     children: [
                         {
-                            path: 'my-account/:id',
-                            name: 'Account',
-                            component: Profile
-                        },
-                        {
                             path: ':category?',
                             name: 'Performers',
                             component: Performers
