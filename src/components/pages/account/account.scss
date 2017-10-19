@@ -1,0 +1,70 @@
+//
+// Account
+// --------------------------------------------------
+
+// Imports
+
+@import "../../../styles/_mixins.scss";
+@import "../../../styles/_settings.scss";
+
+// Styling
+
+.account {
+    &__sidebar {
+        display: block;
+        @include rem(margin, 40px 0px);
+        padding: 0 !important;
+        border: 1px solid $pallete-13;
+
+        &-welcome {
+            @include rem(font-size, 24px);
+            @include rem(padding, 10px);
+            font-weight: 700;
+            color: $pallete-2;
+            background: $pallete-13;
+            border-bottom: 1px solid $pallete-14;
+        }
+
+        &-credits {
+            display: table;
+            width: 100%;
+            color: $pallete-2;
+            background: $pallete-13;
+            text-align: right;
+
+            span {
+                display: block;
+                @include rem(font-size, 13px);
+                color: $pallete-2;
+                width: 100%;
+                @include rem(padding, 10px 10px 0px 0px);
+            }
+            p {
+                display: block;
+                @include rem(font-size, 24px);
+                font-weight: 700;
+                color: $pallete-3;
+                @include rem(padding, 0px 10px 8px 0px);
+                @include rem(margin, 0px);
+            }
+        }
+
+        &-list {
+            @include rem(margin, 0px);
+            @include rem(padding, 0px);
+            li {
+                list-style: none;
+                border-bottom: 1px solid $pallete-13;
+                @include rem(padding, 10px);
+                a {
+                    @include rem(font-size, 13px);
+                    color: $pallete-2;
+
+                    i {
+                        @include rem(padding, 0px 10px 0px 0px);
+                    }
+                }
+            }
+        }
+    }
+}
