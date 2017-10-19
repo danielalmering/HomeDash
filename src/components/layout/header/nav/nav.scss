@@ -60,7 +60,7 @@
             float: right;
             list-style: none;
 
-            a {
+            .link {
                 position: relative;
                 text-decoration: none;
                 display: table;
@@ -75,6 +75,7 @@
                 &:hover, &:active {
                     background: $pallete-8;
                     color: $pallete-1;
+                    text-decoration: none;
                 }
 
                 &:focus {
@@ -95,13 +96,22 @@
 
             &--last {
                 &:hover {
-                    a {
+                    .link {
                         position: relative;
                         @include border-radius(0px);
                         border: 1px solid $pallete-10;
                         border-bottom-color: $pallete-4;
                         color: $palette-0;
                         background: $pallete-4;
+                        &:hover, &:active {
+                            background: $pallete-8;
+                            color: $pallete-1;
+                            text-decoration: none;
+                        }
+
+                        &:focus {
+                            color: $pallete-1;
+                        }
                     }
 
                     .nav__info-subitems {
@@ -130,6 +140,9 @@
             border: 1px solid $pallete-10;
 
             .subitem {
+                a {
+                    color: $pallete-1;
+                }
                 @include rem(padding, 8px);
                 @include rem(font-size, 12px);
                 @include border-radius(2px);

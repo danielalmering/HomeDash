@@ -25,7 +25,9 @@
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
             "logout": "Logout",
-            "login": "Login"
+            "login": "Login",
+            "history": "Account historie",
+            "giftvoucher": "Cadeaubon"
         }
     },
     "performers": {
@@ -80,6 +82,9 @@
             "passwordconfirm": "Bevestig wachtwoord",
             "register": "Registreer"
         }
+    },
+    "account": {
+        "currentcredits": "Huidige saldo"
     },
     "footer": {
         "contact": "Contact",
