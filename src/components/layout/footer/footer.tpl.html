@@ -1,8 +1,20 @@
 <footer>
     <div class="footer">
         <div class="container-fluid">
-            <div class="row">
-                
+            <div class="footer__primary" v-html="seo.texts[0].description">
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="container-fluid">
+                <ul>
+                    <li><a v-t="'footer.contact'"></a></li>
+                    <li><a v-t="'footer.privacypolicy'"></a></li>
+                    <li><a v-t="'footer.terms'"></a></li>
+                    <li><a v-t="'footer.promos'"></a></li>
+                    <li><a v-t="'footer.webcam'"></a></li>
+                </ul>
+
+                <span v-t="'footer.copyright'"></span>
             </div>
         </div>
     </div>
