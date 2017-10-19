@@ -7,7 +7,7 @@ import Performers from '../components/pages/performers/performers';
 import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 
-import { countryInterceptor } from './localization';
+import { countryInterceptor, authenticatedInterceptor } from './interceptors';
 
 Vue.use(Router);
 
@@ -27,7 +27,8 @@ export default new Router({
                         {
                             path: 'my-account',
                             name: 'Account',
-                            component: Account
+                            component: Account,
+                            beforeEnter: authenticatedInterceptor
                         },
                         {
                             path: 'favourites',
