@@ -1,7 +1,11 @@
 <footer>
     <div class="footer">
         <div class="container-fluid">
-            <div class="footer__primary" v-html="seo.texts[0].description">
+            <div class="footer__primary" v-if="seoMain" v-html="seoMain.description">
+            </div>
+
+            <div v-for="seoTab in seoTabs" v-html="seoTab.description">
+
             </div>
         </div>
         <div class="footer__copyright">

@@ -4,6 +4,7 @@ import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
 import Profile from '../components/pages/profile/profile';
 import Performers from '../components/pages/performers/performers';
+import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 
 import { countryInterceptor } from './localization';
@@ -27,6 +28,11 @@ export default new Router({
                             path: 'my-account',
                             name: 'Account',
                             component: Account
+                        },
+                        {
+                            path: 'favourites',
+                            name: 'Favourites',
+                            component: Favourites
                         },
                         {
                             path: ':category?',

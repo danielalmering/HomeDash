@@ -41,10 +41,6 @@ export default class Performers extends Vue {
         this.query.category = to.params.category ? to.params.category : '';
         this.query.search = to.query.search ? to.query.search : '';
 
-        console.log('Route change');
-        console.log(to);
-        console.log(this.$route.query.search);
-
         this.loadPerformers();
     }
 
