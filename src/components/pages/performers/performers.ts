@@ -1,4 +1,5 @@
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import Pagination from '../../layout/Pagination';
@@ -22,10 +23,11 @@ export default class Performers extends Vue {
 
     total: number = 0;
 
-    query: { limit: number, offset: number, category: string } = {
+    query: { limit: number, offset: number, category?: string, search?: string } = {
         limit: 40,
         offset: 0,
-        category: ''
+        category: '',
+        search: ''
     }
 
     hasService(performerId: number, service: string){
@@ -34,12 +36,23 @@ export default class Performers extends Vue {
         return !performer ? false : performer.performer_services[service];
     }
 
-    mounted(){
-        this.query.category = this.$route.params.category ? this.$route.params.category : '';
+    @Watch('$route')
+    onRouteChange(to: Route, from: Route){
+        this.query.category = to.params.category ? to.params.category : '';
+        this.query.search = to.query.search ? to.query.search : '';
+
+        console.log('Route change');
+        console.log(to);
+        console.log(this.$route.query.search);
 
         this.loadPerformers();
+    }
 
-        console.log(this.$route);
+    mounted(){
+        this.query.category = this.$route.params.category ? this.$route.params.category : '';
+        this.query.search = this.$route.query.search ? this.$route.query.search : '';
+
+        this.loadPerformers();
     }
 
     pageChanged(){
@@ -47,7 +60,7 @@ export default class Performers extends Vue {
     }
 
     async loadPerformers(){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}`);
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}&search=${this.query.search}`);
         const data = await performerResults.json();
 
         this.performers = data.performerAccounts;
