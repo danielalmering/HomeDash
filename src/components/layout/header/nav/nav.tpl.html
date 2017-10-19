@@ -5,8 +5,8 @@
         </ul>
 
         <div class="nav__search col-xs-12 col-sm-5 nopad">
-            <form class="nav__search-form">
-                <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('nav.search.input')">
+            <form class="nav__search-form" v-on:submit.prevent="search">
+                <input type="text" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
                 <button class="fa fa-search"></button>
             </form>
         </div>
@@ -48,10 +48,7 @@
 
     <div class="nav__filters">
         <div class="container-fluid">
-            <a>Bel dames</a>
-            <a>Milfs</a>
-            <a>Jonge vrouwen</a>
-            <a>SM</a>
+            <router-link v-for="category in categories" :key="category.slug" :to="{ name: 'Performers', params: { category: category.slug } }">{{ category.title }}</router-link>
         </div>
     </div>
 </div>

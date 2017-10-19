@@ -24,14 +24,14 @@ export default new Router({
                     component: Page,
                     children: [
                         {
-                            path: '',
-                            name: 'Performers',
-                            component: Performers
-                        },
-                        {
                             path: 'my-account',
                             name: 'Account',
                             component: Account
+                        },
+                        {
+                            path: ':category?',
+                            name: 'Performers',
+                            component: Performers
                         }
                     ]
                 },

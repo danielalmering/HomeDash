@@ -11,6 +11,8 @@ export default class Nav extends Vue {
     // TODO: Populate this based on country
     acceptedLanguages: string[] = ['nl', 'en'];
 
+    searchQuery: string = '';
+
     get authenticated(){
         return this.$store.getters.isLoggedIn;
     }
@@ -23,8 +25,16 @@ export default class Nav extends Vue {
         return this.$store.state.localization.language;
     }
 
+    get categories(){
+        return this.$store.state.info ? this.$store.state.info.categories : [];
+    }
+
     changeLanguage(language: string){
         this.$store.dispatch('setLanguage', language);
+    }
+
+    search(){
+        this.$router.push({ name: 'Performers', query: { search: this.searchQuery } });
     }
 
     login(){

@@ -13,13 +13,15 @@ interface Performer {
     template: require('./profile.tpl.html'),
 })
 export default class Profile extends Vue {
-    
+
     performer: Performer[] = [];
     perfphotos : any[] = [];
 
 
     mounted(){
         this.loadPerformer();
+
+        console.log(this.$route);
     }
 
     async loadPerformer(){
