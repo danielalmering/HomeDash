@@ -1,8 +1,4 @@
 {
-    "header": {
-        "camon": "Cam on",
-        "camoff": "Cam off"
-    },
     "top": {
         "numbers": {
             "callnow": "BEL NU",
@@ -28,7 +24,7 @@
             "favourites": "Favorieten",
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
-            "logout": "Uitloggen",
+            "logout": "Logout",
             "login": "Login"
         }
     },
@@ -57,7 +53,7 @@
         "favorite": "Maak favoriet",
         "property": "Kenmerken",
         "age": "leeftijd",
-        "height": "Lenghte",
+        "height": "Lengte",
         "weight": "Gewicht",
         "cupsize": "Cup maat",
         "eyecolor": "Kleur ogen"
@@ -65,5 +61,17 @@
     "pagination": {
         "pageOf": "Pagina {page} van {total}",
         "amountPerPage": "Aantal per pagina"
+    },
+    "modals": {
+        "login":{
+            "title": "Account login",
+            "email": "E-mail",
+            "password": "Wachtwoord",
+            "login": "Login",
+            "register": "Registreer"
+        },
+        "register:":{
+            "title": "Registreer account"
+        }
     }
 }

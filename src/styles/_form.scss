@@ -4,12 +4,24 @@
 
 .form {
 
+    &__group {
+        @include rem(padding, 5px 0);
+
+        label {
+            display: inline-block;
+            max-width: 100%;
+            font-weight: bold;
+            @include rem(font-size, 13px);
+        }
+    }
+    
+
     input[type=text], input[type=password], input[type=email], input[type=name] {
-        color: $palette-color-1;
+        color: $pallete-2;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background: $pallete-11;
         @include rem(font-size, 13px);
-        @include rem(padding,8px 21px);
+        @include rem(padding,10px 11px);
         @include border-radius(3px);
         width: 100%;
         @include rem(margin, 5px 0px);
@@ -18,26 +30,23 @@
         }
     }
 
-    // Old mess
-
     select {
-        color: $palette-color-1;
+        color: $pallete-2;
         border: 2px solid rgba(125, 106, 109, 0.12);
-        background: $palette-color-3;
-        font-family: $special-font--regular;
-        @include rem(font-size, 25px);
-        @include rem(padding,3px 10px);
-        @include border-radius(20px);
+        background: $pallete-11;
+        @include rem(font-size, 13px);
+        @include rem(padding,10px 11px);
+        @include border-radius(3px);
         width: 100%;
         @include rem(margin, 5px 0px);
+
         &:focus {
             outline: none;
         }
-        &.small {
-            @include rem(padding,9px 21px);
-            @include rem(font-size, 17px);
-        }
     }
+
+    // Old mess
+
 
     textarea {
         color: $palette-color-1;

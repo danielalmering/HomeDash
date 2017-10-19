@@ -1,8 +1,7 @@
 <template>
     <div id="app">
-        <router-view/>
-
         <modal-wrapper></modal-wrapper>
+        <router-view/>
     </div>
 </template>
 

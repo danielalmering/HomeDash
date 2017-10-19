@@ -4,20 +4,31 @@
 
 // Btn
 .btn {
+    display: block;
     color: $pallete-2;
     @include rem(font-size, 13px);
     background: $pallete-14;
+    font-weight: 700;
     @include border-radius(3px)
     @include rem(padding, 8px 25px);
     @include rem(margin, 5px 5px 0px 0px);
     border: none;
+    text-align: center;
 
-    &.orange {
-        background: $pallete-3;
+    &-large {
+        @include rem(padding, 11px 35px);
     }
+
+    &-full {  width: 100%; }
+
+    &-orange { background: $pallete-3; }
 
     &:focus {
         outline: none;
+    }
+
+    &:hover {
+        opacity: 0.9;
     }
 }
 
