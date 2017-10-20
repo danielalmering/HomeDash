@@ -1,51 +1,48 @@
 <div class="nav">
     <div class="container-fluid">
-        <ul class="nav__info hidden-xs col-sm-1">
-            <li class="nav__info-item pull-left"><a href="/"><i class="fa fa-home only"></i></a></li>
-        </ul>
+        <div class="nav__info hidden-xs col-sm-1">
+            <router-link class="nav__info-item" :to="{ path: '/' }"><i class="fa fa-home only"></i></router-link>
+        </div>
 
-        <div class="nav__search col-xs-12 col-sm-5 nopad">
+        <div class="nav__search col-xs-12 col-sm-5">
             <form class="nav__search-form" v-on:submit.prevent="search">
                 <input type="text" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
                 <button class="fa fa-search"></button>
             </form>
         </div>
 
-        <ul class="nav__info col-xs-12 col-sm-6">
-            <li class="nav__info-item nav__info-item--last">
-                <a class="link">
-                    <span :class="'flag flag-' + language"></span> {{ language.toUpperCase() }}
-                </a>
+        <div class="nav__info col-xs-12 col-sm-6">
+            <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-eye"></i><span class="text hidden-xs" v-t="'nav.info.voyeur'"></span></router-link>   
+            <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span class="hidden-xs" v-t="'nav.info.favourites'"></span></router-link>
+            <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-bullhorn"></i><span class="hidden-xs" v-t="'nav.info.actions'"></span></router-link>
+            
+            <a class="nav__info-item nav__info-item--last">
+                <span v-on:click="login">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs">{{ authenticated ? user.username : $t('nav.info.login') }}</span>
+                </span>
+                <div class="nav__info-subitems" v-if="authenticated">
+                    <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.editdata'"></router-link>
+                    <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.inbox'"></router-link>
+                    <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.history'"></router-link>
+                    <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.giftvoucher'"></router-link>
+                    <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.upgradebalance'"></router-link>
+                    <a class="subitem" href="#" v-t="'nav.info.logout'" v-on:click="logout"></a>
+                </div>
+            </a>
+            
+            <a class="nav__info-item nav__info-item--last">
+                <span>
+                    <i :class="'flag flag-' + language"></i> 
+                    {{ language.toUpperCase() }}
+                </span>
                 <ul class="nav__info-subitems">
                     <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
                         <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
                     </li>
                 </ul>
-            </li>
-            <li class="nav__info-item nav__info-item--last">
-                <a class="link" v-on:click="login">
-                    <i class="fa fa-user"></i>
-                    <span class="hidden-xs">{{ authenticated ? user.username : $t('nav.info.login') }}</span>
-                </a>
-                <ul class="nav__info-subitems" v-if="authenticated">
-                    <li class="subitem"><router-link :to="{ name: 'Account'}" v-t="'nav.info.editdata'"></router-link></li>
-                    <li class="subitem" v-t="'nav.info.inbox'"></li>
-                    <li class="subitem" v-t="'nav.info.history'"></li>
-                    <li class="subitem" v-t="'nav.info.giftvoucher'"></li>
-                    <li class="subitem" v-t="'nav.info.upgradebalance'"></li>
-                    <li class="subitem"  v-t="'nav.info.logout'" v-on:click="logout"></li>
-                </ul>
-            </li>
-            <li class="nav__info-item">
-                <router-link class="link" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span class="hidden-xs" v-t="'nav.info.favourites'"></span></router-link>
-            </li>
-            <li class="nav__info-item">
-                <a class="link" href="#"><i class="fa fa-bullhorn"></i><span class="hidden-xs" v-t="'nav.info.actions'"></span></a>
-            </li>
-            <li class="nav__info-item">
-                <a class="link" href="#"><i class="fa fa-eye"></i><span class="hidden-xs" v-t="'nav.info.voyeur'"></span></a>
-            </li>
-        </ul>
+            </a>
+        </div>
     </div>
 
     <div class="nav__filters">

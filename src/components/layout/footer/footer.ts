@@ -31,9 +31,14 @@ export default class Footer extends Vue {
 
     seoMain: SeoText | boolean = false;
     seoTabs : SeoText[] = [];
+    selectedTab: number = 0;
 
     mounted(){
         this.loadSeo('home');
+    }
+
+    tabSelect(tab: number){
+        this.selectedTab = tab;
     }
 
     @Watch('$route')
@@ -49,5 +54,6 @@ export default class Footer extends Vue {
 
         this.seoMain = data.texts[0];
         this.seoTabs = data.texts.slice(1);
+        this.selectedTab = 0 ;
     }
 }
