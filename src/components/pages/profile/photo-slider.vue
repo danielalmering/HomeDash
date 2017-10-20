@@ -1,15 +1,15 @@
 <template>
-    <div class="profile__info-gallery">
+    <div class="profile__footer-gallery">
         <ul class="gallery" :style="{ left: position + 'px' }">
             <li class="gallery__item" v-for="photo in photos" :key="photo.id">
                 <img :src="`//img.thuis.nl/files/pimg/${performer}/medium/${photo.name}`">
             </li>
         </ul>
         <div class="gallery__right" v-on:mouseenter="move(true, 1)" v-on:mouseleave="move(false)">
-            RIGHT
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="gallery__left" v-on:mouseenter="move(true, -1)" v-on:mouseleave="move(false)">
-            LEFT
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </div>
     </div>
 </template>
@@ -67,52 +67,45 @@ export default {
 @import "../../../styles/_settings.scss";
 
 .gallery {
-    display: flex;
-    flex-direction: row;
+    display: block;
     position: absolute;
     left: calc(250px + -100px);
+    overflow: hidden;
 
-    width: 100%;
+    width: 99999px;
     max-width: none;
     height: 300px;
     font-size:0;
     @include rem(padding, 0px);
 
-    &__right {
+    &__right, &__left {
         position: absolute;
-        background-color: green;
+        display: table;
+        top: 0px;
+        right: 0px;
+        height: 300px;
+        width: 50px;
+        background-color: $pallete-11;
+        text-align: center;
+        cursor: pointer;
+
+        i {
+            @include rem(font-size,25px);
+            display: table-cell;
+            vertical-align: middle;
+            color:$pallete-2;
+        }
     }
 
     &__left {
-        position: absolute;
-        top: 500px;
-        background-color: green;
-    }
-
-    &.standard li {
-        text-align: center;
-        padding: 20px;
-        font-size: 20px;
+        left: 0px;
     }
 
     li {
-        font-size:30px;
-        position:relative;
-        background-size: 100%;
-        background-repeat: no-repeat;
+        float: left;
+        width: 225px;
         list-style: none;
         img { width: 100%; }
-    }
-
-    .debug {
-        position: absolute;
-        bottom: 0;
-        height: 50px;
-        background: rgba(0,0,0,0.7);
-        color:white;
-        font-size: 12px;
-        width: 100%;
-        padding: 5px;
     }
 }
 </style>
