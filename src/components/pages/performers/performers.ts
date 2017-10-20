@@ -22,6 +22,9 @@ export default class Performers extends Vue {
 
     getAvatarImage = getAvatarImage;
 
+    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+
     query: { limit: number, offset: number, category?: string, search?: string } = {
         limit: 40,
         offset: 0,

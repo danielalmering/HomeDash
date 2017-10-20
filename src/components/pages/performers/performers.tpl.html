@@ -17,7 +17,9 @@
                     </div>
                     <div class="performers__misc">
                         <span class="performers__misc-advert">{{ performer.advert_numbers[0].advertNumber }}</span>
-                        <span class="performers__misc-favorite"><i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i></span>
+                        <span class="performers__misc-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
+                            <i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i>
+                        </span>
                     </div>
                     <div class="performers__image">
                         <img :src="getAvatarImage(performer)" />

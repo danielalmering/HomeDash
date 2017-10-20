@@ -20,6 +20,9 @@ export default class Profile extends Vue {
 
     getAvatarImage = getAvatarImage;
 
+    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
     }
@@ -30,7 +33,9 @@ export default class Profile extends Vue {
     }
 
     async loadPerformer(id: number){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/performer_number/${id}?limit=10`);
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/performer_number/${id}?limit=10`, {
+            credentials: 'include'
+        });
 
         const data = await performerResults.json();
 

@@ -7,6 +7,7 @@ import localization from './localization';
 import modals from './modals';
 import authentication from './authentication';
 import socket from './socket';
+import performers from './performers';
 
 import { Info } from '../models/Info';
 
@@ -15,6 +16,8 @@ Vue.use(Vuex);
 export interface RootState {
     info: Info | undefined;
     safeMode: boolean;
+
+    authentication?: any;
 }
 
 type RootContext = ActionContext<RootState, RootState>
@@ -44,7 +47,8 @@ const store = new Vuex.Store<RootState>({
         localization: localization,
         modals: modals,
         authentication: authentication,
-        socket: socket
+        socket: socket,
+        performers: performers
     }
 });
 
