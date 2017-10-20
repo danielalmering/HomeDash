@@ -28,6 +28,15 @@ export default class Sidebar extends Vue {
         this.loadRecommended();
     }
 
+    goToPerformer(id: number){
+        this.$router.push({
+            name: 'Profile',
+            params: {
+                id: id.toString()
+            }
+        });
+    }
+
     search(){
         if(this.query.search === ''){
             return;
