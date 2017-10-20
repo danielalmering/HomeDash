@@ -2,7 +2,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer } from '../../../models/Performer';
+import { Performer, Avatar } from '../../../models/Performer';
+import { getAvatarImage } from '../../../util';
 import PhotoSlider from './photo-slider';
 
 import './profile.scss';
@@ -15,7 +16,9 @@ import './profile.scss';
 })
 export default class Profile extends Vue {
     performer: Performer | boolean = false;
-    perfphotos : any[] = [];
+    perfphotos : Avatar[] = [];
+
+    getAvatarImage = getAvatarImage;
 
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
@@ -32,7 +35,11 @@ export default class Profile extends Vue {
         const data = await performerResults.json();
 
         this.performer = data.performerAccount;
-        this.perfphotos = data.photos.approved.photos;
 
+        if(this.$store.state.safeMode){
+            this.perfphotos = data.photos.approved.photos.filter((photo: Avatar) => photo.safe_version);
+        } else {
+            this.perfphotos = data.photos.approved.photos;
+        }
     }
 }

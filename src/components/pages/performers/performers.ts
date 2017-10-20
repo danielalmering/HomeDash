@@ -5,6 +5,8 @@ import Vue from 'vue';
 import Pagination from '../../layout/Pagination';
 import { Performer } from '../../../models/Performer';
 
+import { getAvatarImage } from '../../../util';
+
 import './performers.scss';
 
 @Component({
@@ -16,8 +18,9 @@ import './performers.scss';
 export default class Performers extends Vue {
 
     performers: Performer[] = [];
-
     total: number = 0;
+
+    getAvatarImage = getAvatarImage;
 
     query: { limit: number, offset: number, category?: string, search?: string } = {
         limit: 40,
@@ -49,6 +52,10 @@ export default class Performers extends Vue {
 
     pageChanged(){
         this.loadPerformers();
+    }
+
+    isSafeMode(){
+        return this.$store.state.safeMode;
     }
 
     async loadPerformers(){

@@ -19,8 +19,8 @@
                         <span class="performers__misc-advert">{{ performer.advert_numbers[0].advertNumber }}</span>
                         <span class="performers__misc-favorite"><i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i></span>
                     </div>
-                    <div class="performers__image" v-if="performer.avatar">
-                        <img :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
+                    <div class="performers__image">
+                        <img :src="getAvatarImage(performer)" />
                     </div>
                 </router-link>
             </div>

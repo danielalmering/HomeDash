@@ -13,20 +13,23 @@ import { Info } from '../models/Info';
 Vue.use(Vuex);
 
 export interface RootState {
-    test: string;
     info: Info | undefined;
+    safeMode: boolean;
 }
 
 type RootContext = ActionContext<RootState, RootState>
 
 const store = new Vuex.Store<RootState>({
     state: {
-        test: 'something',
-        info: undefined
+        info: undefined,
+        safeMode: false
     },
     mutations: {
         setInfo: function(state: RootState, info: Info){
             state.info = info;
+        },
+        activateSafeMode: function(state: RootState){
+            state.safeMode = true;
         }
     },
     actions: {
