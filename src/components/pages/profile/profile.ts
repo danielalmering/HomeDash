@@ -1,15 +1,10 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
+import { Performer } from '../../../models/Performer';
 import PhotoSlider from './photo-slider';
 
 import './profile.scss';
-
-interface Performer {
-    id: number;
-    name: string;
-    performer_services: { [key: string]: boolean }
-};
 
 @Component({
     template: require('./profile.tpl.html'),

@@ -1,9 +1,9 @@
 import { Component, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import './sidebar.scss';
+import { Performer } from '../../../../models/Performer';
 
-interface Performer {};
+import './sidebar.scss';
 
 type SidebarCategory = 'recommended' | 'peek' | 'favourites';
 
@@ -12,7 +12,7 @@ type SidebarCategory = 'recommended' | 'peek' | 'favourites';
 })
 export default class Sidebar extends Vue {
 
-    performers: Performer = [];
+    performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
 
     query: any = {

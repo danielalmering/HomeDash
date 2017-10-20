@@ -3,13 +3,9 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import Pagination from '../../layout/Pagination';
+import { Performer } from '../../../models/Performer';
 
 import './performers.scss';
-
-interface Performer {
-    id: number;
-    performer_services: { [key: string]: boolean }
-};
 
 @Component({
     template: require('./performers.tpl.html'),
