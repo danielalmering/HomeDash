@@ -2,7 +2,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer } from '../../../models/Performer';
+import { Performer, Avatar } from '../../../models/Performer';
+import { getAvatarImage } from '../../../util';
 import PhotoSlider from './photo-slider';
 
 import './profile.scss';
@@ -15,7 +16,12 @@ import './profile.scss';
 })
 export default class Profile extends Vue {
     performer: Performer | boolean = false;
-    perfphotos : any[] = [];
+    perfphotos : Avatar[] = [];
+
+    getAvatarImage = getAvatarImage;
+
+    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
 
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
@@ -27,12 +33,18 @@ export default class Profile extends Vue {
     }
 
     async loadPerformer(id: number){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/performer_number/${id}?limit=10`);
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/performer_number/${id}?limit=10`, {
+            credentials: 'include'
+        });
 
         const data = await performerResults.json();
 
         this.performer = data.performerAccount;
-        this.perfphotos = data.photos.approved.photos;
 
+        if(this.$store.state.safeMode){
+            this.perfphotos = data.photos.approved.photos.filter((photo: Avatar) => photo.safe_version);
+        } else {
+            this.perfphotos = data.photos.approved.photos;
+        }
     }
 }

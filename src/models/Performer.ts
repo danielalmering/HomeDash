@@ -11,6 +11,7 @@ export interface Performer {
     description: string;
     eyeColor: string;
     height: string;
+    isFavourite: boolean;
     language: string;
     location: string;
     mediaId: number;
