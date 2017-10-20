@@ -13,6 +13,7 @@
     background: $pallete-3;
 
     &__search {
+        padding: 0px 5px !important;
         &-form {
             width: 100%;
             height: 36px;
@@ -57,36 +58,26 @@
         &-item {
             position: relative;
             display: inline-block;
-            float: right;
-            list-style: none;
+            @include rem(padding, 5px 5px);
+            @include border-radius(2px);
+            line-height: 200%;
+            border: 1px solid transparent;
+            @include rem(font-size, 13px);
+            color: $pallete-1;
 
-            .link {
-                position: relative;
+            &:hover, &:active {
+                background: $pallete-8;
+                color: $pallete-1;
                 text-decoration: none;
-                display: table;
-                z-index: 2;
-                @include rem(padding, 5px 3px);
-                line-height: 26px;
-                color: $pallete-9;
-                @include border-radius(2px);
-                border: 1px solid transparent;
-                @include rem(font-size, 13px);
+            }
 
-                &:hover, &:active {
-                    background: $pallete-8;
-                    color: $pallete-1;
-                    text-decoration: none;
-                }
-
-                &:focus {
-                     color: $pallete-1;
-                }
+            &:focus {
+                 color: $pallete-1;
             }
 
             i {
-                vertical-align: top;
-                @include rem(margin, 4px 5px);
-                @include rem(padding, 0);
+                display: inline-block;
+                @include rem(padding, 0px 2.5px 0px 2.5px);
                 @include rem(font-size, 18px);
                 color: $pallete-9;
                 &.only {
@@ -96,22 +87,18 @@
 
             &--last {
                 &:hover {
-                    .link {
-                        position: relative;
-                        @include border-radius(0px);
-                        border: 1px solid $pallete-10;
-                        border-bottom-color: $pallete-4;
-                        color: $palette-0;
+                    position: relative;
+                    @include border-radius(0px);
+                    color: $palette-0;
+                    background: $pallete-4;
+                    &:hover, &:active {
                         background: $pallete-4;
-                        &:hover, &:active {
-                            background: $pallete-8;
-                            color: $pallete-1;
-                            text-decoration: none;
-                        }
+                        color: $pallete-1;
+                        text-decoration: none;
+                    }
 
-                        &:focus {
-                            color: $pallete-1;
-                        }
+                    &:focus {
+                        color: $pallete-1;
                     }
 
                     .nav__info-subitems {
@@ -129,23 +116,21 @@
             position: absolute;
             display: none;
             top: 36px;
-            right: 0px;
+            right: -1px;
             min-width: 160px;
             z-index: 0;
             list-style: none;
             margin: 0;
             @include rem(padding, 3px);
             background: $pallete-4;
-            color: $pallete-1;
-            border: 1px solid $pallete-10;
 
             .subitem {
-                a {
-                    color: $pallete-1;
-                }
+                display: block;
                 @include rem(padding, 8px);
                 @include rem(font-size, 12px);
                 @include border-radius(2px);
+                line-height: 220%;
+                color: $pallete-1;
                 cursor: pointer;
 
                 &:hover {
@@ -155,7 +140,7 @@
 
                 .flag {
                     float: left;
-                    @include rem(margin, -8px 8px -8px 0px);
+                    @include rem(margin, -5px 8px 0px 0px);
                 }
             }
         }
