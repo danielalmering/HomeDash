@@ -1,14 +1,14 @@
 <template>
     <div class="profile__footer-gallery">
         <ul class="gallery" :style="{ left: position + 'px' }">
-            <li class="gallery__item" v-for="photo in photos" :key="photo.id">
+            <li class="gallery__item" v-for="photo in photos" :key="photo.id" v-on:click="onClick(photo.id)">
                 <img :src="`//img.thuis.nl/files/pimg/${performer}/medium/${photo.name}`">
             </li>
         </ul>
-        <div class="gallery__right" v-on:mouseenter="move(true, 1)" v-on:mouseleave="move(false)">
+        <div class="gallery__right" v-on:mouseenter="move(true, -2)" v-on:mouseleave="move(false)">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
-        <div class="gallery__left" v-on:mouseenter="move(true, -1)" v-on:mouseleave="move(false)">
+        <div class="gallery__left" v-on:mouseenter="move(true, 2)" v-on:mouseleave="move(false)">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </div>
     </div>
@@ -17,8 +17,13 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import FullSlider from './photo-slider-fullscreen';
+
 export default {
     name: 'photo-slider',
+    components: {
+        photoSliderFull: FullSlider
+    },
     props: {
         photos: {
             required: true,
@@ -45,12 +50,18 @@ export default {
 
             if(toggle && speed){
                 this.$data.moveInterval = setInterval(function(){
+                    if(self.$data.position >= 0 && speed > 0){
+                        return;
+                    }
+
                     self.$data.position += speed;
                 }, 10);
             } else {
                 clearInterval(this.$data.moveInterval);
             }
-
+        },
+        onClick: function(photo: number){
+            this.$emit('photoSelected', photo);
         }
     },
     watch: {
@@ -69,7 +80,7 @@ export default {
 .gallery {
     display: block;
     position: absolute;
-    left: calc(250px + -100px);
+    left: 150px;
     overflow: hidden;
 
     width: 99999px;

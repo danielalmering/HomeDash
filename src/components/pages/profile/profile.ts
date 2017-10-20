@@ -4,19 +4,25 @@ import Vue from 'vue';
 
 import { Performer, Avatar } from '../../../models/Performer';
 import { getAvatarImage } from '../../../util';
+
 import PhotoSlider from './photo-slider';
+import FullSlider from './photo-slider-fullscreen';
 
 import './profile.scss';
 
 @Component({
     template: require('./profile.tpl.html'),
     components: {
-        photoSlider: PhotoSlider
+        photoSlider: PhotoSlider,
+        photoSliderFull: FullSlider
     }
 })
 export default class Profile extends Vue {
     performer: Performer | boolean = false;
     perfphotos : Avatar[] = [];
+
+    fullSliderVisible: boolean = false;
+    displayPic: number = 0;
 
     getAvatarImage = getAvatarImage;
 
@@ -30,6 +36,11 @@ export default class Profile extends Vue {
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
         this.loadPerformer(parseInt(to.params.id));
+    }
+
+    openFullSlider(id: number){
+        this.fullSliderVisible = true;
+        this.displayPic = id;
     }
 
     async loadPerformer(id: number){
