@@ -33,8 +33,8 @@
         </div>
 
         <div class="profile__footer">
-            <photo-slider :performer="performer.id" :photos="perfphotos"></photo-slider>
-            
+            <photo-slider :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
+
             <ul class="profile__footer-servicetitles">
                 <li class="active"><i class="fa fa-video-camera"></i>Webcammen</li>
                 <li><i class="fa fa-video-camera"></i>Beeldbellen</li>
@@ -47,9 +47,10 @@
 
             </div>
             <div class="profile__footer-userinfo col-xs-12">
-                    
+
             </div>
         </div>
 
+        <photo-slider-full :visible.sync="fullSliderVisible" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
     </div>
 </main>
