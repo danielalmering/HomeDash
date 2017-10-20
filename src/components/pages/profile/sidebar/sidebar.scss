@@ -109,7 +109,7 @@
         top: 160px;
         list-style: none;
         overflow: auto;
-        height: 100%;
+        height: calc(100% - 160px);
         width: 100%;
         background: $pallete-17;
     }
