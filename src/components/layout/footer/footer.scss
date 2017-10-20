@@ -23,6 +23,64 @@
         }
     }
 
+    &__tabs {
+        display: table;
+        width: 100%;
+        border-top: 1px solid $pallete-20;
+        @include rem(margin-bottom, 35px);
+
+        &-items {
+            padding: 0px !important;
+            @include rem(margin, 0px);
+            border-left: 1px solid $pallete-20;
+            li {
+                color: $pallete-7;
+                @include rem(padding, 10px);
+                @include rem(font-size, 12px);
+                list-style: none;
+                border-bottom: 1px solid $pallete-20;
+                border-right: 1px solid $pallete-20;
+                background: $pallete-9;
+                cursor: pointer;
+
+                &:hover { color: $pallete-2; }
+
+                &.active {
+                    background: none;
+                    border-right: none;
+                    @include breakpoint(xs) {
+                        border-right: 1px solid $pallete-20;
+                    }
+                }
+            }
+        }
+
+        &-desc {
+            @include rem(font-size, 13px);
+            color: $pallete-7;
+
+            @include breakpoint(xs) {
+                padding: 0px !important;
+            }
+
+            h2 {
+                font-weight: 600;
+            }
+
+            a {
+                color: $pallete-3;
+            }
+
+            img {
+                @include rem(margin, 35px 0px);
+                width: 100%;
+                border: 2px solid $pallete-20;
+                @include border-radius(3px);
+            }
+        }
+        
+    }
+
     &__copyright {
         display: block;
         background: $pallete-1;
