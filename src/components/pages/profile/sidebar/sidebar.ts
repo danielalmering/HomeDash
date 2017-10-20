@@ -60,10 +60,6 @@ export default class Sidebar extends Vue {
     }
 
     search(){
-        if(this.query.search === ''){
-            return;
-        }
-
         this.query.offset = 0;
         this.loadPerformers();
     }
