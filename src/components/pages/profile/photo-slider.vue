@@ -50,6 +50,10 @@ export default {
 
             if(toggle && speed){
                 this.$data.moveInterval = setInterval(function(){
+                    if(self.$data.position >= 0 && speed > 0){
+                        return;
+                    }
+
                     self.$data.position += speed;
                 }, 10);
             } else {
@@ -76,7 +80,7 @@ export default {
 .gallery {
     display: block;
     position: absolute;
-    left: calc(250px + -100px);
+    left: 150px;
     overflow: hidden;
 
     width: 99999px;
