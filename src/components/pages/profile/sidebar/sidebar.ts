@@ -22,10 +22,16 @@ export default class Sidebar extends Vue {
         search: ''
     }
 
+    categoryLoads = {
+        'recommended': this.loadRecommended,
+        'favourites': this.loadFavorites,
+        'peek': this.loadPeek
+    };
+
     mounted(){
         this.query.performer = this.$route.params.id;
 
-        this.loadRecommended();
+        this.loadPerformers();
     }
 
     goToPerformer(id: number){
@@ -37,11 +43,28 @@ export default class Sidebar extends Vue {
         });
     }
 
+    onScroll(event: Event){
+        if(!event.srcElement){
+            return;
+        }
+
+        const element = event.srcElement;
+
+        const isAtBottom = (element.scrollTop + element.clientHeight) === element.scrollHeight;
+
+        if(isAtBottom){
+            this.query.offset += 20;
+
+            this.loadPerformers(true);
+        }
+    }
+
     search(){
         if(this.query.search === ''){
             return;
         }
 
+        this.query.offset = 0;
         this.loadPerformers();
     }
 
@@ -52,45 +75,43 @@ export default class Sidebar extends Vue {
 
         this.category = category;
 
+        this.query.offset = 0;
         this.loadPerformers();
     }
 
-    loadPerformers(){
-        if(this.category === 'recommended'){
-            this.loadRecommended();
-        } else if(this.category === 'favourites'){
-            this.loadFavorites();
+    async loadPerformers(loadMore: boolean = false){
+        var data = await this.categoryLoads[this.category]();
+
+        if(loadMore){
+            this.performers = this.performers.concat(data.performerAccounts);
         } else {
-            this.loadPeek();
+            this.performers = data.performerAccounts;
         }
     }
 
-    async loadRecommended(){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/recommended?limit=20&offset=0&performer=${this.query.performer}&search=${this.query.search}`, {
+    async loadRecommended() {
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
             credentials: 'include'
         });
-        const data = await performerResults.json();
 
-        this.performers = data.performerAccounts;
+        return performerResults.json();
     }
 
     async loadFavorites(){
         const userId = this.$store.state.authentication.user.id;
 
-        const performerResults = await fetch(`https://www.thuis.nl/api/client/client_accounts/${userId}/favorite_performers?limit=20&offset=0&performer=${this.query.performer}&search=${this.query.search}`, {
+        const performerResults = await fetch(`https://www.thuis.nl/api/client/client_accounts/${userId}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
             credentials: 'include'
         });
-        const data = await performerResults.json();
 
-        this.performers = data.performerAccounts;
+        return performerResults.json();
     }
 
     async loadPeek(){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/busy?limit=20&offset=0&performer=${this.query.performer}&search=${this.query.search}`, {
+        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
             credentials: 'include'
         });
-        const data = await performerResults.json();
 
-        this.performers = data.performerAccounts;
+        return performerResults.json();
     }
 }
