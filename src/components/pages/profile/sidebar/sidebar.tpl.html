@@ -18,7 +18,7 @@
     </ul>
 
     <ul class="sidebar__performers nomar nopad">
-        <li class="sidebar__performer" v-for="performer in performers">
+        <li class="sidebar__performer" v-for="performer in performers" v-on:click="goToPerformer(performer.advert_numbers[0].advertNumber)">
             <div class="sidebar__performer-image col-xs-5 nopad">
                 <img v-if="performer.avatar" :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
                 <span></span>

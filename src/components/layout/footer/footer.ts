@@ -54,6 +54,6 @@ export default class Footer extends Vue {
 
         this.seoMain = data.texts[0];
         this.seoTabs = data.texts.slice(1);
-        this.selectedTab = 0 ;
+        this.selectedTab = this.seoTabs[0].id;
     }
 }

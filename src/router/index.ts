@@ -6,6 +6,7 @@ import Profile from '../components/pages/profile/profile';
 import Performers from '../components/pages/performers/performers';
 import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
+import VideoChat from '../components/pages/videochat/videochat';
 
 import { countryInterceptor, authenticatedInterceptor } from './interceptors';
 
@@ -51,6 +52,11 @@ export default new Router({
                             path: 'profile',
                             name: 'Profile',
                             component: Profile
+                        },
+                        {
+                            path: 'chat',
+                            name: 'Videochat',
+                            component: VideoChat
                         }
                     ]
                 }

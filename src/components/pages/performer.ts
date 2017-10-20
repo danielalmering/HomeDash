@@ -5,7 +5,7 @@ import Sidebar from './profile/sidebar/sidebar';
 
 @Component({
     template: require('./performer.tpl.html'),
-        components: {
+    components: {
         tsidebar: Sidebar
     }
 })
