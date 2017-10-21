@@ -32,25 +32,15 @@
 
         </div>
 
-        <div class="profile__footer">
-            <photo-slider v-if="performer" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
-
-            <ul class="profile__footer-servicetitles">
-                <li class="active"><i class="fa fa-video-camera"></i>Webcammen</li>
-                <li><i class="fa fa-video-camera"></i>Beeldbellen</li>
-                <li><i class="fa fa-eye"></i>Voyeur</li>
-                <li><i class="fa fa-phone"></i>Bellen</li>
-                <li><i class="fa fa-envelope"></i>E-mail</li>
-                <li><i class="fa fa-mobile"></i>SMS</li>
-            </ul>
-            <div class="profile__footer-servicecontent col-xs-12">
-
-            </div>
-            <div class="profile__footer-userinfo col-xs-12">
-
+        <div class="profile__slider">
+            <div class="slider">
+                <photo-slider v-if="performer" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
+                <photo-slider-full v-if="performer" :visible.sync="fullSliderVisible" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
             </div>
         </div>
 
-        <photo-slider-full v-if="performer" :visible.sync="fullSliderVisible" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
+        <div class="profile__tabs">
+            <tabs></tabs>
+        </div>
     </div>
 </main>

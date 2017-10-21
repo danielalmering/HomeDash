@@ -7,14 +7,17 @@ import { getAvatarImage } from '../../../util';
 
 import PhotoSlider from './photo-slider';
 import FullSlider from './photo-slider-fullscreen';
+import Tabs from './tabs/tabs';
 
 import './profile.scss';
+import './photo-slider.scss';
 
 @Component({
     template: require('./profile.tpl.html'),
     components: {
         photoSlider: PhotoSlider,
-        photoSliderFull: FullSlider
+        photoSliderFull: FullSlider,
+        tabs: Tabs
     }
 })
 export default class Profile extends Vue {

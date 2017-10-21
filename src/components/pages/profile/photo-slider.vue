@@ -1,14 +1,14 @@
 <template>
-    <div class="profile__footer-gallery">
-        <ul class="gallery" :style="{ left: position + 'px' }">
-            <li class="gallery__item" v-for="photo in photos" :key="photo.id" v-on:click="onClick(photo.id)">
+    <div class="slider__small">
+        <ul class="slider__small-list" :style="{ left: position + 'px' }">
+            <li v-for="photo in photos" :key="photo.id" v-on:click="onClick(photo.id)">
                 <img :src="`//img.thuis.nl/files/pimg/${performer}/medium/${photo.name}`">
             </li>
         </ul>
-        <div class="gallery__right" v-on:mouseenter="move(true, -2)" v-on:mouseleave="move(false)">
+        <div class="slider__small-right" v-on:mouseenter="move(true, -2)" v-on:mouseleave="move(false)">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
-        <div class="gallery__left" v-on:mouseenter="move(true, 2)" v-on:mouseleave="move(false)">
+        <div class="slider__small-left" v-on:mouseenter="move(true, 2)" v-on:mouseleave="move(false)">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </div>
     </div>
@@ -72,51 +72,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-@import "../../../styles/_mixins.scss";
-@import "../../../styles/_settings.scss";
-
-.gallery {
-    display: block;
-    position: absolute;
-    left: 150px;
-    overflow: hidden;
-
-    width: 99999px;
-    max-width: none;
-    height: 300px;
-    font-size:0;
-    @include rem(padding, 0px);
-
-    &__right, &__left {
-        position: absolute;
-        display: table;
-        top: 0px;
-        right: 0px;
-        height: 300px;
-        width: 50px;
-        background-color: $pallete-11;
-        text-align: center;
-        cursor: pointer;
-
-        i {
-            @include rem(font-size,25px);
-            display: table-cell;
-            vertical-align: middle;
-            color:$pallete-2;
-        }
-    }
-
-    &__left {
-        left: 0px;
-    }
-
-    li {
-        float: left;
-        width: 225px;
-        list-style: none;
-        img { width: 100%; }
-    }
-}
-</style>
