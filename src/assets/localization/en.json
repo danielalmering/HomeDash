@@ -52,7 +52,8 @@
         "noperformers": "Geen performers"
     },
     "profile": {
-        "favorite": "Maak favoriet",
+        "favorite-add": "Maak favoriet",
+        "favorite-remove": "Bye bye bye",
         "property": "Kenmerken",
         "age": "leeftijd",
         "height": "Lengte",

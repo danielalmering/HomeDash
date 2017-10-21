@@ -4,7 +4,7 @@
         <div class="profile__info" v-if="performer">
 
             <div class="profile__info-image col-sm-12 col-md-3">
-                <div class="image" :style="{ 'background-image': `url('//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}')` }"></div>
+                <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer)}')` }"></div>
             </div>
 
 
@@ -13,7 +13,9 @@
                 <div class="profile__content col-sm-12 col-md-8">
                     <h2 class="profile__content-nick">{{ performer.nickname }}</h2>
                     <a class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</a>
-                    <a class="profile__content-favorite"><i class="fa fa-star" aria-hidden="true"></i>  {{ $t('profile.favorite') }}</a>
+                    <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
+                        <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
+                    </a>
                     <p class="profile__content-description">{{ performer.description }}</p>
                 </div>
 
@@ -30,35 +32,15 @@
 
         </div>
 
-        <div class="profile__footer">
-            <photo-slider :performer="performer.id" :photos="perfphotos"></photo-slider>
-            
-            <ul class="profile__footer-servicetitles">
-                <li class="active"><i class="fa fa-video-camera"></i>Webcammen</li>
-                <li><i class="fa fa-video-camera"></i>Beeldbellen</li>
-                <li><i class="fa fa-eye"></i>Voyeur</li>
-                <li><i class="fa fa-phone"></i>Bellen</li>
-                <li><i class="fa fa-envelope"></i>E-mail</li>
-                <li><i class="fa fa-mobile"></i>SMS</li>
-            </ul>
-            <div class="col-xs-9 profile__footer-servicecontent">
-                <div class="servicecontent">
-                    <div class="col-xs-6 servicecontent__method">
-                        <div class="servicecontent__method-item">
-                            <h2>Betalen met telefoon</h2>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 servicecontent__method">
-                        <div class="servicecontent__method-item">
-                            <h2>Betalen met credits</h2>
-                            <p>Hieronder kunt u webcammen en deze sessie betalen met credits, de kosten zijn (€0.80 per minuut)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile__footer-userinfo col-xs-3">
+        <div class="profile__slider">
+            <div class="slider">
+                <photo-slider v-if="performer" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
+                <photo-slider-full v-if="performer" :visible.sync="fullSliderVisible" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
             </div>
         </div>
 
+        <div class="profile__tabs">
+            <tabs></tabs>
+        </div>
     </div>
 </main>

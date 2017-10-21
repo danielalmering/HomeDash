@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { Route } from 'vue-router';
 import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
 import Profile from '../components/pages/profile/profile';
@@ -8,11 +9,11 @@ import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 import VideoChat from '../components/pages/videochat/videochat';
 
-import { countryInterceptor, authenticatedInterceptor } from './interceptors';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     base: '/',
     routes: [
@@ -64,3 +65,7 @@ export default new Router({
         }
     ]
 });
+
+router.beforeEach(safeInterceptor);
+
+export default router;

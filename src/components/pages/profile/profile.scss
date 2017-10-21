@@ -21,9 +21,10 @@
     }
 
     &__info {
-        display: table;
-        height: calc(100% - 350px);
-        @include rem(padding, 100px 0);
+        display: block;
+        float: left;
+        width: 100%;
+        @include rem(padding, 70px 0px 49px 0px);
 
         &-image {
             .image {
@@ -81,101 +82,9 @@
         }
     }
 
-    &__footer {
-        position: absolute;
-        bottom: 0;
-        height: 650px;
+    &__slider, &__tabs {
+        display: block;
+        float: left;
         width: 100%;
-        background: $pallete-13;
-
-        &-gallery {
-            display: block;
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-        }
-
-        &-servicetitles {
-            display: block;
-            width: 100%;
-            height: 50px;
-            margin: 0;
-            @include rem(padding, 5px 5px 0px 0px);
-            @include gradient($pallete-16, $pallete-17, vertical);
-            box-shadow: 0 4px 4px $pallete-11 inset;
-
-            li {
-                color: $pallete-7;
-                @include rem(font-size,13px);
-                display: inline-block;
-                @include rem(padding, 13px 20px 15px 20px);
-                cursor: pointer;
-                @include border-top-radius(5px);
-
-                i {
-                    @include rem(font-size,16px);
-                    color: $pallete-2;
-                    @include rem(margin, 0px 10px 0px 0px);
-                }
-
-                &:hover {
-                    background: $pallete-17;
-                }
-
-                &.active {
-                    i { color: $pallete-3; }
-                    background: $pallete-16;
-                }
-            }
-        }
-
-        &-servicecontent {
-            display: table;
-            width: 100%;
-            height: 300px;
-            background: $pallete-16;
-            @include border-top-right-radius(5px);
-            padding: 5px !important;
-
-
-            .servicecontent {
-
-                &__method {
-                    @include rem(padding, 5px);
-
-                    &-item {
-                        display: table;
-                        float: left;
-                        width: 100%;
-                        height: 280px;
-                        border: 3px solid $pallete-17;
-                        @include rem(padding, 15px);
-                        @include border-radius(5px);
-
-                        h2 {
-                            color: $pallete-2;
-                            font-weight: 600;
-                            @include rem(font-size,16px);
-                            margin: 0;
-                            @include rem(padding-bottom, 10px);
-                            border-bottom: 1px solid $pallete-11;
-                        }
-
-                        p {
-                            @include rem(font-size,12px);
-                            color: $pallete-2;
-                        }
-                    }
-                }
-            }
-        }
-
-        &-userinfo {
-            display: table;
-            width: 100%;
-            height: 300px;
-            background: $pallete-17;
-        }
     }
 }

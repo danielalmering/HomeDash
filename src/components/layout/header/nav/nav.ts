@@ -34,7 +34,12 @@ export default class Nav extends Vue {
     }
 
     search(){
-        this.$router.push({ name: 'Performers', query: { search: this.searchQuery } });
+        //If the search query is empty we dont need an empty search query at the end of the url
+        if(this.searchQuery === ''){
+            this.$router.push({ name: 'Performers' });
+        } else {
+            this.$router.push({ name: 'Performers', query: { search: this.searchQuery } });
+        }
     }
 
     login(){
