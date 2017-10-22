@@ -1,21 +1,38 @@
 <div class="tabs">
     <ul class="tabs__services">
-        <li class="active"><i class="fa fa-video-camera"></i>Webcammen</li>
-        <li><i class="fa fa-video-camera"></i>Beeldbellen</li>
-        <li><i class="fa fa-eye"></i>Voyeur</li>
-        <li><i class="fa fa-phone"></i>Bellen</li>
-        <li><i class="fa fa-envelope"></i>E-mail</li>
-        <li><i class="fa fa-mobile"></i>SMS</li>
+        <li class="active"><i class="fa fa-video-camera"></i><span v-t="'tabs.service-webcam'"></span></li>
+        <li><i class="fa fa-video-camera"></i><span v-t="'tabs.service-videochat'"></span></li>
+        <li><i class="fa fa-eye"></i><span v-t="'tabs.service-voyeur'"></span></li>
+        <li><i class="fa fa-phone"></i><span v-t="'tabs.service-call'"></span></li>
+        <li><i class="fa fa-envelope"></i><span v-t="'tabs.service-mail'"></span></li>
+        <li><i class="fa fa-mobile"></i><span v-t="'tabs.service-sms'"></span></li>
     </ul>
-    <div class="tabs__servicescontent col-xs-9">
+    <div class="tabs__servicescontent col-xs-12 col-sm-9">
         <div class="tabs__servicescontent-method">
-            <h2>Betalen met telefoon</h2>
+            <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
+            <div class="numbers"><i class="flag flag-nl"></i> 0906-0225 <span>(€0.55 pm)</span></div>
+            <div class="numbers"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
+            <form class="form">
+                <p v-t="'tabs.webcamwithphonedesc'"></p>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="row rowpad">
+                        <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.accesscode')">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="row rowpad">
+                        <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.username')">
+                    </div>
+                </div>
+                <button class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></button>
+            </form>
         </div>
         <div class="tabs__servicescontent-method">
-            <h2>Betalen met credits</h2>
-            <p>Hieronder kunt u webcammen en deze sessie betalen met credits, de kosten zijn (€0.80 per minuut)</p>
+            <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
+            <p><span v-t="'tabs.webcamwithcreditsdesc'"></span> (€0.80 per minuut)</p>
+            <aton class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></a>
         </div>
     </div>
-    <div class="tabs__userinfo col-xs-3">
+    <div class="tabs__userinfo col-xs-12 col-sm-3">
     </div>
 </div>
