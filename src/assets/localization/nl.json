@@ -20,14 +20,15 @@
         "info": {
             "voyeur": "Voyeur",
             "actions": "Acties",
-            "editdata": "Bewerk profiel",
+            "editdata": "Bewerk account",
             "favourites": "Favorieten",
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
             "logout": "Logout",
             "login": "Login",
             "history": "Account historie",
-            "giftvoucher": "Cadeaubon"
+            "giftvoucher": "Cadeaubon",
+            "welcome": "Welkom"
         }
     },
     "performers": {
@@ -116,7 +117,13 @@
         }
     },
     "account": {
-        "currentcredits": "Huidige saldo"
+        "currentcredits": "Huidige saldo",
+        "username": "Gebruikersnaam:",
+        "password": "Wachtwoord:",
+        "email": "E-mail",
+        "mobilenumber": "Mobiel nummer",
+        "confirmpassword": "Bevestig wachtwoord:",
+        "editdatabtn": "Wijzigingen opslaan"
     },
     "footer": {
         "contact": "Contact",

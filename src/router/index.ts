@@ -7,6 +7,7 @@ import Profile from '../components/pages/profile/profile';
 import Performers from '../components/pages/performers/performers';
 import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
+import Editdata from '../components/pages/account/editdata/editdata';
 import VideoChat from '../components/pages/videochat/videochat';
 
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
@@ -30,7 +31,14 @@ const router = new Router({
                             path: 'my-account',
                             name: 'Account',
                             component: Account,
-                            beforeEnter: authenticatedInterceptor
+                            beforeEnter: authenticatedInterceptor,
+                            children: [
+                                {
+                                    path: 'edit-data',
+                                    name: 'Editdata',
+                                    component: Editdata
+                                }
+                            ]
                         },
                         {
                             path: 'favourites',
