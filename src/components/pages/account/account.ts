@@ -7,4 +7,9 @@ import './account.scss';
     template: require('./account.tpl.html')
 })
 export default class Account extends Vue {
+
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
 }

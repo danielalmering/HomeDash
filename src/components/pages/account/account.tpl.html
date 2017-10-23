@@ -2,15 +2,15 @@
     <div class="container-fluid">
         <div class="account__sidebar col-xs-12 col-sm-3">
             <div class="account__sidebar-welcome">
-                Welkom Clubsense
+                {{ $t('nav.info.welcome') }} {{ user.username }}
             </div>
             <div class="account__sidebar-credits">
                 <span v-t="'account.currentcredits'"></span>
-                <p>72040</p>
+                <p>{{ user.credits }}</p>
             </div>
 
             <ul class="account__sidebar-list">
-                <li class="subitem"><router-link :to="'home'"><i class="fa fa-pencil"></i><span v-t="'nav.info.editdata'"></span></router-link></li>
+                <li class="subitem"><router-link :to="{ name: 'Editdata'}"><i class="fa fa-pencil"></i><span v-t="'nav.info.editdata'"></span></router-link></li>
                 <li class="subitem"><router-link :to="'home'"><i class="fa fa-envelope-o"></i><span v-t="'nav.info.inbox'"></span></router-link></li>
                 <li class="subitem"><router-link :to="'home'"><i class="fa fa-clock-o"></i><span v-t="'nav.info.history'"></span></router-link></li>
                 <li class="subitem"><router-link :to="'home'"><i class="fa fa-gift"></i><span v-t="'nav.info.giftvoucher'"></span></router-link></li>
@@ -18,6 +18,8 @@
             </ul>
         </div>
 
-        <router-view/>
+        <div class="account__view col-xs-12 col-sm-9">
+            <router-view/>
+        </div>
     </div>
 </div>

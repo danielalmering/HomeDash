@@ -12,7 +12,7 @@
 .account {
     &__sidebar {
         display: block;
-        @include rem(margin, 40px 0px);
+        @include rem(margin, 40px 0px 0px 0px);
         padding: 0 !important;
         border: 1px solid $pallete-13;
 
@@ -39,6 +39,7 @@
                 width: 100%;
                 @include rem(padding, 10px 10px 0px 0px);
             }
+
             p {
                 display: block;
                 @include rem(font-size, 24px);
@@ -64,6 +65,20 @@
                         @include rem(padding, 0px 10px 0px 0px);
                     }
                 }
+            }
+        }
+    }
+
+    &__view {
+        h1 {
+            @include rem(font-size, 24px);
+            font-weight: 500;
+            @include rem(padding, 10px);
+            color: $pallete-2;
+            border-bottom: 1px solid $pallete-18;
+            i { 
+                color: $pallete-3;
+                @include rem(margin-right, 10px);
             }
         }
     }
