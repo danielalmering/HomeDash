@@ -65,6 +65,21 @@
         "pageOf": "Pagina {page} van {total}",
         "amountPerPage": "Aantal per pagina"
     },
+    "tabs": {
+        "service-webcam": "Webcammen",
+        "service-videochat": "Beeldbellen",
+        "service-voyeur": "Voyeur",
+        "service-call": "Bellen",
+        "service-mail": "E-mail",
+        "service-sms": "SMS",
+        "paymentwithtelephone": "Betalen met <span>telefoon</span>",
+        "paymentwithcredits": "Betalen met <span>credits</span>",
+        "accesscode": "Toegangscode",
+        "username": "Gebruikersnaam",
+        "webcambtn": "Webcammen",
+        "webcamwithphonedesc": "Toets # in het hoofdmenu voor de toegangscode",
+        "webcamwithcreditsdesc": "Hieronder kunt u webcammen en deze sessie betalen met credits, de kosten zijn"
+    },
     "modals": {
         "login":{
             "title": "Account login",

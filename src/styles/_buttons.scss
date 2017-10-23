@@ -14,6 +14,7 @@
     @include rem(margin, 5px 5px 0px 0px);
     border: none;
     text-align: center;
+    cursor: pointer;
 
     &-large {
         @include rem(padding, 11px 35px);
@@ -22,6 +23,7 @@
     &-full {  width: 100%; }
 
     &-orange { background: $pallete-3; }
+    &-green  { background: $pallete-21; }
 
     &:focus {
         outline: none;

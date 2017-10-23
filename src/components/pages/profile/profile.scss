@@ -16,7 +16,7 @@
     background: $pallete-16;
     position: relative;
 
-    @include breakpoint(sm) {
+    @include breakpoint(md) {
         width: calc(100% - 250px);
     }
 
