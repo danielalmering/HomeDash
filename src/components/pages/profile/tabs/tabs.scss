@@ -73,6 +73,12 @@
                 width: calc(100% - 8px);
             }
 
+            &.full { width: calc(100% - 8px); border: none; background: $pallete-17; padding-bottom: 15px; }
+            
+            @include breakpoint(xs) {
+                width: calc(100% - 8px);
+            }
+
             h2 {
                 color: $pallete-2;
                 font-weight: 600;
@@ -82,10 +88,44 @@
                 border-bottom: 1px solid $pallete-11;
                 span { color: $pallete-3; }
             }
+            
+            h3 {
+                color: $pallete-2;
+                font-weight: 600;
+                margin: 0;
+                @include rem(font-size, 20px);
+            }
 
             p {
                 @include rem(font-size,12px);
                 color: $pallete-2;
+                i { font-style: normal; color: $pallete-3; }
+            }
+
+            .numbers {
+                display: block;
+                line-height: 160%;
+                color: $pallete-3;
+                font-weight: 600;
+                @include rem(font-size,20px);
+
+                i { 
+                    float: left; 
+                    @include rem(margin, 0px 10px 0px 0px);
+                }
+
+                span {
+                    font-weight: 400;
+                    color: $pallete-2;
+                    @include rem(font-size,12px);
+                }
+            }
+
+            .btn {
+                position: absolute;
+                bottom: 15px;
+                width: calc(100% - 30px);
+                @include rem(margin-top, 3px);
             }
 
             .numbers {
