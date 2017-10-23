@@ -30,6 +30,8 @@
         }
     }
 
+    
+
     select {
         color: $pallete-2;
         border: 2px solid rgba(125, 106, 109, 0.12);
@@ -45,18 +47,14 @@
         }
     }
 
-    // Old mess
-
-
     textarea {
-        color: $palette-color-1;
+        color: $pallete-2;
         border: 2px solid rgba(125, 106, 109, 0.12);
-        background: $palette-color-3;
-        font-family: $special-font--regular;
-        @include rem(font-size, 25px);
-        @include rem(padding,15px 21px);
-        @include border-radius(20px);
-        min-height: 200px;
+        background: $pallete-11;
+        @include rem(font-size, 13px);
+        @include rem(padding,10px 11px);
+        @include border-radius(3px);
+        min-height: 100px;
         width: 100%;
         @include rem(margin, 5px 0px);
         resize: none;
@@ -64,6 +62,9 @@
             outline: none;
         }
     }
+
+    // Old mess
+
 
     .checkbox {
         position:relative;

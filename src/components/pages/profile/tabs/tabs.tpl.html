@@ -1,0 +1,110 @@
+<div class="tabs">
+    <ul class="tabs__services">
+        <li class="active"><i class="fa fa-video-camera"></i><span v-t="'tabs.service-webcam'"></span></li>
+        <li><i class="fa fa-video-camera"></i><span v-t="'tabs.service-videochat'"></span></li>
+        <li><i class="fa fa-eye"></i><span v-t="'tabs.service-voyeur'"></span></li>
+        <li><i class="fa fa-phone"></i><span v-t="'tabs.service-call'"></span></li>
+        <li><i class="fa fa-envelope"></i><span v-t="'tabs.service-mail'"></span></li>
+        <li><i class="fa fa-mobile"></i><span v-t="'tabs.service-sms'"></span></li>
+    </ul>
+
+
+    <!-- Tab - Webcam -->
+    <div class="tabs__servicescontent webcam col-xs-12 col-sm-9">
+        <div class="tabs__servicescontent-method">
+            <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
+            <div class="numbers"><i class="flag flag-nl"></i> 0906-0225 <span>(€0.55 pm)</span></div>
+            <div class="numbers"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
+            <form class="form">
+                <p v-t="'tabs.webcamwithphonedesc'"></p>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="row rowpad">
+                        <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.accesscode')">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="row rowpad">
+                        <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.username')">
+                    </div>
+                </div>
+                <button class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></button>
+            </form>
+        </div>
+        <div class="tabs__servicescontent-method">
+            <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
+            <p><span v-t="'tabs.webcamwithcreditsdesc'"></span> (€0.80 per minuut)</p>
+            <a class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></a>
+        </div>
+    </div>
+
+    <!-- Tab - Videochat -->
+    <!-- <div class="tabs__servicescontent videochat col-xs-12 col-sm-9">
+        <div class="tabs__servicescontent-method">
+            <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
+            <div class="numbers"><i class="flag flag-nl"></i> 0906-0225 <span>(€0.55 pm)</span></div>
+            <div class="numbers"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
+            <form class="form">
+                <p v-t="'tabs.webcamwithphonedesc'"></p>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="row rowpad">
+                        <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.accesscode')">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="row rowpad">
+                        <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.username')">
+                    </div>
+                </div>
+                <button class="btn btn-full btn-large btn-green" v-t="'tabs.videochatbtn'"></button>
+            </form>
+        </div>
+        <div class="tabs__servicescontent-method">
+            <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
+            <div class="numbers">036-3103100 <span>(Local )</span></div>
+            <p><span v-t="'tabs.videochatwithcreditsdesc1'"></span> <i>49600</i> <span v-t="'tabs.videochatwithcreditsdesc2'"></span></p>
+            <a class="btn btn-full btn-large btn-green" v-t="'tabs.videochatbtn'"></a>
+        </div>
+    </div> -->
+
+    <!-- Tab - Call -->
+    <!-- <div class="tabs__servicescontent call col-xs-12 col-sm-9">
+        <div class="tabs__servicescontent-method full">
+            <h2>{{ $t('tabs.calltitle') }} <span>Naughty Patty</span></h2>
+            <p v-t="'tabs.calldesc'"></p>
+            <div class="numbers"><i class="flag flag-nl"></i> 0906-0225 <span>(€0.55 pm)</span></div>
+            <div class="numbers"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
+            <p><span v-html="$t('tabs.callmenu1')"></span> <i>4348</i> <span v-t="'tabs.callmenu2'"></span></p>
+            <h3>{{ $t('tabs.callbyebye') }} <span>Naughty Patty</span></h3>
+        </div>
+    </div> -->
+
+    <!-- Tab - Mail -->
+    <!-- <div class="tabs__servicescontent mail col-xs-12 col-sm-9">
+        <div class="tabs__servicescontent-method full">
+            <h2>{{ $t('tabs.calltitle') }} <span>Naughty Patty</span> {{ $t('tabs.mailtitle') }}</h2>
+            <form class="form">
+                <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.mailsubject')">
+                <textarea class="col-xs-7 col-sm-9" rows="4" :placeholder="$t('tabs.mailmessage')" ></textarea>
+                <p><i class="fa fa-info" aria-hidden="true"></i>  {{ $t('tabs.mailinfo') }}</p>
+                <button class="btn btn-full btn-large btn-orange" v-t="'tabs.mailsend'"></button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- Tab - SMS -->
+    <!-- <div class="tabs__servicescontent sms col-xs-12 col-sm-9">
+        <div class="tabs__servicescontent-method full">
+            <h2>{{ $t('tabs.calltitle') }} <span>Naughty Patty</span></h2>
+            <div class="col-xs-12 col-sm-6">
+                <p><span v-html="$t('tabs.smsdesc')"></span> <i>4348</i> <span v-html="$t('tabs.smsdesc1')"></span> <i>4500</i> (€ 1,50 per ontvangen bericht*)</p>
+                <h3>{{ $t('tabs.callbyebye') }} <span>Naughty Patty</span></h3>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <p><span v-html="$t('tabs.smsterms')"></span></p>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="tabs__userinfo col-xs-12 col-sm-3">
+    </div>
+</div>

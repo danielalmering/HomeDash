@@ -16,8 +16,6 @@ export function countryInterceptor(to: Router.Route, from: Router.Route, next: (
 
         next({ name: to.name, params: newParams });
     } else {
-        console.log(to.params.category);
-
         if(currentCountry) {
             store.dispatch('setCountry', currentCountry);
         }
@@ -25,6 +23,7 @@ export function countryInterceptor(to: Router.Route, from: Router.Route, next: (
         next();
     }
 }
+
 export function authenticatedInterceptor(to: Router.Route, from: Router.Route, next: (to?: string | Router.Location) => void){
     if(!store.getters.isLoggedIn){
         //TODO: Show unauthenticated error message
@@ -32,4 +31,12 @@ export function authenticatedInterceptor(to: Router.Route, from: Router.Route, n
     } else {
         next();
     }
+}
+
+export function safeInterceptor(to: Router.Route, from: Router.Route, next: (to?: string | Router.Location) => void){
+    if(to.query.safe !== undefined){
+        store.commit('activateSafeMode');
+    }
+
+    next();
 }

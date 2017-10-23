@@ -5,6 +5,8 @@ import Vue from 'vue';
 import Pagination from '../../layout/Pagination';
 import { Performer } from '../../../models/Performer';
 
+import { getAvatarImage } from '../../../util';
+
 import './performers.scss';
 
 @Component({
@@ -16,8 +18,12 @@ import './performers.scss';
 export default class Performers extends Vue {
 
     performers: Performer[] = [];
-
     total: number = 0;
+
+    getAvatarImage = getAvatarImage;
+
+    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
 
     query: { limit: number, offset: number, category?: string, search?: string } = {
         limit: 40,
@@ -51,10 +57,19 @@ export default class Performers extends Vue {
         this.loadPerformers();
     }
 
+    isSafeMode(){
+        return this.$store.state.safeMode;
+    }
+
     async loadPerformers(){
         const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}&search=${this.query.search}`, {
             credentials: 'include'
         });
+
+        if(performerResults.status !== 200){
+            this.$router.push({ name: 'Performers' });
+        }
+
         const data = await performerResults.json();
 
         this.performers = data.performerAccounts;

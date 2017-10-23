@@ -24,7 +24,7 @@
         left: 0px;
     }
 
-    @include breakpoint(sm) {
+    @include breakpoint(md) {
         position: relative;
         z-index: 999;
         float: left;
@@ -112,6 +112,7 @@
         height: calc(100% - 160px);
         width: 100%;
         background: $pallete-17;
+        padding-right: 15px;
     }
 
     &__performer {
@@ -186,4 +187,8 @@
             .sidebar__performer-info p.view { color: $pallete-3; }
         }
     }
+}
+
+.sidebar__performers::-webkit-scrollbar { 
+    display: none; 
 }
