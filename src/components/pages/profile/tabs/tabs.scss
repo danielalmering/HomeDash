@@ -11,8 +11,9 @@
 
 .tabs {
     &__services {
-        display: table;
+        display: block;
         width: 100%;
+        height: 50px;
         margin: 0;
         @include rem(padding, 5px 5px 0px 0px);
         @include gradient($pallete-16, $pallete-17, vertical);
@@ -40,12 +41,6 @@
             &.active {
                 i { color: $pallete-3; }
                 background: $pallete-16;
-            }
-
-            @include breakpoint(xs) {
-                width: 100%;
-
-                &.active { background: none; }
             }
         }
     }
