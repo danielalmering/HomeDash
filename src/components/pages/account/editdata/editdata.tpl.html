@@ -1,11 +1,11 @@
 <div class="container-fluid">
     <h1><i class="fa fa-pencil"></i><span v-t="'nav.info.editdata'"></span></h1>
     <div class="form">
-        <form class="row">
+        <form class="row" v-on:submit.prevent="updateUser">
             <div class="col-xs-12 col-sm-6">
                 <div class="form__group">
                     <label v-t="'account.username'"></label>
-                    <input type="text" class="col-xs-12">
+                    <input type="text" v-model="user.username" class="col-xs-12">
                 </div>
                 <div class="form__group">
                     <label v-t="'account.password'"></label>
@@ -19,11 +19,11 @@
             <div class="col-xs-12 col-sm-6">
                 <div class="form__group">
                     <label v-t="'account.email'"></label>
-                    <input type="text" class="col-xs-12">
+                    <input type="text" v-model="user.email" class="col-xs-12">
                 </div>
                 <div class="form__group">
                     <label v-t="'account.mobilenumber'"></label>
-                    <input type="text" class="col-xs-12">
+                    <input type="text" v-model="user.mobile_number" class="col-xs-12">
                 </div>
             </div>
             <div class="col-xs-12">
