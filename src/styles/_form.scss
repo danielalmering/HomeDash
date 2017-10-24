@@ -5,7 +5,7 @@
 .form {
 
     &__group {
-        @include rem(padding, 5px 0);
+        @include rem(padding, 10px 0);
 
         label {
             color: $pallete-2;
@@ -21,8 +21,8 @@
         color: $pallete-2;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background: $pallete-11;
-        @include rem(font-size, 13px);
-        @include rem(padding,10px 11px);
+        @include rem(font-size, 14px);
+        @include rem(padding,12px 13px);
         @include border-radius(3px);
         width: 100%;
         @include rem(margin, 5px 0px);
@@ -37,8 +37,8 @@
         color: $pallete-2;
         border: 2px solid rgba(125, 106, 109, 0.12);
         background: $pallete-11;
-        @include rem(font-size, 13px);
-        @include rem(padding,10px 11px);
+        @include rem(font-size, 14px);
+        @include rem(padding,12px 13px);
         @include border-radius(3px);
         width: 100%;
         @include rem(margin, 5px 0px);
@@ -52,8 +52,8 @@
         color: $pallete-2;
         border: 2px solid rgba(125, 106, 109, 0.12);
         background: $pallete-11;
-        @include rem(font-size, 13px);
-        @include rem(padding,10px 11px);
+        @include rem(font-size, 14px);
+        @include rem(padding,12px 13px);
         @include border-radius(3px);
         min-height: 100px;
         width: 100%;

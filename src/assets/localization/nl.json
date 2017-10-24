@@ -123,7 +123,16 @@
         "email": "E-mail",
         "mobilenumber": "Mobiel nummer",
         "confirmpassword": "Bevestig wachtwoord:",
-        "editdatabtn": "Wijzigingen opslaan"
+        "editdatabtn": "Wijzigingen opslaan",
+        "newmessage": "Nieuw bericht",
+        "removemessage": "Verwijder bericht",
+        "historydesc": "Hier vindt u een uitgebreid overzicht van uw uitgevoerde acties binnen het platform",
+        "date": "Datum",
+        "paymentmethod": "Betaalmethode",
+        "amount": "Bedrag",
+        "historymethod": "Betaalmethode",
+        "historystartdate": "Startdatum",
+        "historyenddate": "Einddatum"
     },
     "footer": {
         "contact": "Contact",
