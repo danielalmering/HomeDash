@@ -3,8 +3,8 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import Pagination from '../../layout/Pagination';
+import notificationSocket from '../../../socket';
 import { Performer } from '../../../models/Performer';
-
 import { getAvatarImage } from '../../../util';
 
 import './performers.scss';
@@ -31,6 +31,9 @@ export default class Performers extends Vue {
         category: '',
         search: ''
     }
+    
+    serviceEventId: number;
+    statusEventId: number;
 
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
@@ -51,6 +54,32 @@ export default class Performers extends Vue {
         this.query.search = this.$route.query.search ? this.$route.query.search : '';
 
         this.loadPerformers();
+
+        this.serviceEventId = notificationSocket.subscribe('service', (data) => {
+            const performer = this.performers.find(p => p.id === data.performerId);
+
+            if(!performer){
+                return;
+            }
+
+            performer.performer_services[data.serviceName] = data.serviceStatus;
+        });
+
+        this.statusEventId = notificationSocket.subscribe('status', (data) => {
+            const performer = this.performers.find(p => p.id === data.performerId);
+
+            if(!performer){
+                return;
+            }
+
+            performer.performerStatus = data.status;
+        });
+    }
+
+    destroyed(){
+        notificationSocket.unsubscribe(this.serviceEventId);
+        notificationSocket.unsubscribe(this.statusEventId);
+        console.log('Destroyed');
     }
 
     pageChanged(){

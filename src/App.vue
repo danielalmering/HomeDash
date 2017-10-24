@@ -7,6 +7,7 @@
 
 <script language="ts">
 import modalWrapper from './components/modal/modal-wrapper';
+import notificationSocket from './socket';
 
 export default {
     components: {
@@ -14,7 +15,11 @@ export default {
     },
     name: 'app',
     created: function(){
-        this.$store.dispatch('getSession');
+        this.$store.dispatch('getSession').then(() => {
+            // this.$store.dispatch('socketConnect');
+            notificationSocket.connect();
+        });
+
         this.$store.dispatch('loadInfo');
     }
 };

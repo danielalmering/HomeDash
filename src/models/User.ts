@@ -19,3 +19,9 @@ export interface User extends AnonymousUser {
 
     credits_ivr_code: number;
 }
+
+export enum UserRole {
+    Performer   = 'ROLE_PERFORMER',
+    Client      = 'ROLE_CLIENT',
+    Admin       = 'ROLE_ADMIN'
+}
