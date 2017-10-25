@@ -1,12 +1,14 @@
 <template>
     <div class="pager col-md-12">
         <div class="pager__page hidden-xs col-sm-3">{{ $t('pagination.pageOf', { page: currentPage, total: totalPages }) }}</div>
-        <div class="pager__numbers col-xs-12 col-sm-6" v-if="pageButtons">
+        <div class="pager__numbers col-xs-12 col-sm-6">
             <div class="pager__numbers-items">
                 <div class="pager__numbers-item" v-if="showPrevious" v-on:click="previous"><i class="fa fa-arrow-left"></i></div>
-                <div class="pager__numbers-item" v-for="page in pages" :key="page" :class="{ active: page === currentPage }" v-on:click="setPage(page)">
-                    {{ page }}
-                </div>
+                <span v-if="pageButtons">
+                    <div class="pager__numbers-item" v-for="page in pages" :key="page" :class="{ active: page === currentPage }" v-on:click="setPage(page)">
+                        {{ page }}
+                    </div>
+                </span>
                 <div class="pager__numbers-item" v-if="showNext" v-on:click="next"><i class="fa fa-arrow-right"></i></div>
             </div>
         </div>

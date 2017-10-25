@@ -8,6 +8,8 @@ import store from './store';
 import router from './router';
 import i18n from './localization';
 
+require('./filters/date');
+
 import './styles/main.scss';
 
 Vue.config.productionTip = false;

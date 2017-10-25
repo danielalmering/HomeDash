@@ -4,8 +4,9 @@
         <p v-t="'account.historydesc'"></p>
         <div class="row">
             <div class="col-xs-12 col-sm-4">
-                <select>
-                    <option v-t="'account.historymethod'"></option>
+                <select v-model="query.filter">
+                    <option v-t="'account.historymethod'" value=""></option>
+                    <option v-for="service in services" :value="service">{{ $t(`services.${service}`) }}</option>
                 </select>
             </div>
             <div class="col-xs-12 col-sm-4">
@@ -15,7 +16,7 @@
             </div>
             <div class="col-xs-12 col-sm-4">
                 <select>
-                        <option v-t="'account.historyenddate'"></option>
+                    <option v-t="'account.historyenddate'"></option>
                 </select>
             </div>
         </div>
@@ -25,28 +26,19 @@
                 <th><h3 v-t="'account.paymentmethod'"></h3></th>
                 <th><h3 v-t="'account.amount'"></h3></th>
             </tr>
-            <tr class="even">
+            <tr v-for="(historyItem, index) in history" :key="historyItem.date" :class="{ 'even': index % 2 === 0 }">
                 <td>
-                    <p>24-10-2017 | 13:24</p>
+                    <p>{{ historyItem.date | date }}</p>
                 </td>
                 <td>
-                    <p>Handmatig</p>
+                    <p>{{ $t(`services.${historyItem.service}`) }}</p>
                 </td>
                 <td>
-                    <p>€22.40</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>27-10-2017 | 13:24</p>
-                </td>
-                <td>
-                    <p>Video</p>
-                </td>
-                <td>
-                    <p>€0.80</p>
+                    <p>{{ historyItem.amount }}</p>
                 </td>
             </tr>
         </table>
+        
+        <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="false" v-on:pageChange="pageChanged"></pagination>
     </div>
 </div>
