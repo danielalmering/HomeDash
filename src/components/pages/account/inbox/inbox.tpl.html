@@ -11,15 +11,15 @@
     </h1>
     <div class="account__view">
         <table class="account__view-table">
-            <tr class="even">
+            <tr v-for="(notification, index) in notifications" :key="notification.id" :class="{ 'even': index % 2 === 0 }">
                 <td>
-                    <i class="fa fa-square-o"></i> <p>E-mail</p
+                    <i class="fa fa-square-o"></i> <p>{{ notification.type }}</p>
                 </td>
                 <td>
-                    <p>RE : Dit is een bericht..</p>
+                    <p>{{ notification.subject }}</p>
                 </td>
                 <td>
-                    <p>05-01-2017 | 15:05</p>
+                    <p>{{ notification.date | date }}</p>
                 </td>
             </tr>
             <tr>
@@ -34,6 +34,8 @@
                 </td>
             </tr>
         </table>
+
+        <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="false" v-on:pageChange="pageChanged"></pagination>
     </div>
 </div>
 
