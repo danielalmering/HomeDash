@@ -11,6 +11,11 @@ import performers from './performers';
 
 import { Info } from '../models/Info';
 
+import { AuthState } from './authentication';
+import { LocalizationState } from './localization';
+import { ModalsState } from './modals';
+import { SocketState } from './socket';
+
 Vue.use(Vuex);
 
 export interface RootState {
@@ -18,6 +23,9 @@ export interface RootState {
     safeMode: boolean;
 
     authentication?: any;
+    localization?: any;
+    modals?: any;
+    socket?: any;
 }
 
 type RootContext = ActionContext<RootState, RootState>
