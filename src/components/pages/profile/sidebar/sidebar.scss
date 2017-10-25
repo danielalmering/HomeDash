@@ -10,11 +10,11 @@
 // Styling
 
 .sidebar {
-    position: absolute;
+    position: fixed;
     z-index: 999;
     left: -250px;
     float: none;
-    background: $pallete-13;
+    background: $pallete-17;
     width: 250px;
     height: 100vh;
     box-shadow: 0 10px 10px 5px rgba(0,0,0,0.2);
@@ -67,13 +67,14 @@
         input[type=text] {
             @include border-radius(5px);
             @include rem(padding, 8px 10px);
+            background: $pallete-13 !important;
         }
 
         button {
             position: absolute;
             color: $pallete-14;
             right: 15px;
-            top: 12px;
+            top: 15px;
             border: none;
             background: none;
             @include rem(font-size, 20px);
@@ -85,7 +86,7 @@
 
     &__filters {
         list-style: none;
-        @include rem(margin, 0);
+        @include rem(margin, 0px 0px 10px 0px);
         @include rem(padding, 0 10px);
         li {
             color: $pallete-7;
@@ -95,6 +96,7 @@
             @include border-radius(5px);
             @include rem(padding, 8px 6.8px);
             border: 1px solid $pallete-16;
+            background: $pallete-13;
             cursor: pointer;
 
             &.active {
@@ -106,10 +108,10 @@
 
     &__performers {
         position: absolute;
-        top: 160px;
+        top: 165px;
         list-style: none;
         overflow: auto;
-        height: calc(100% - 160px);
+        height: calc(100% - 165px);
         width: 100%;
         background: $pallete-17;
         padding-right: 15px;
@@ -122,6 +124,8 @@
         border-top: 1px solid $pallete-16;
         border-bottom: 1px solid $pallete-13;
         cursor: pointer;
+
+        &:first-child { border-top: none; }
 
         &-services {
             position: absolute;

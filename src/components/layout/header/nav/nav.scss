@@ -17,7 +17,7 @@
         position: relative;
         z-index: 1;
         @include gradient($pallete-3, $pallete-5, vertical);
-        border-bottom: 1px solid rgba(251,89,0,0.4);
+        border-bottom: 1px solid #ec5401;
         @include breakpoint(xs) {
             height: 130px;
         }
@@ -216,7 +216,7 @@
             @include rem(font-size, 13px);
             cursor: pointer;
 
-            &:hover {
+            &:hover, &:focus {
                 background: $pallete-10;
                 color: $pallete-2;
             }

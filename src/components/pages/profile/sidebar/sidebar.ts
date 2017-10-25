@@ -14,6 +14,7 @@ export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
+    showSidebar: boolean = false;
 
     query: any = {
         limit: 20,
