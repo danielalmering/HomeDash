@@ -1,7 +1,7 @@
 <template>
     <div class="slider__large" :class="{ 'visible': visible }">
         <ul class="slider__large-list">
-            <li v-for="(photo, index) in photos" :key="photo.id" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }">
+            <li v-for="(photo, index) in photos" :key="photo.id" v-on:drag="onDrag" v-on:dragend="onDragEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }">
                 <img :src="`//img.thuis.nl/files/pimg/${performer}/${photo.name}`">
             </li>
         </ul>
@@ -19,7 +19,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { ComponentOptions } from 'vue';
+
+interface PhotoSliderFullscreen extends Vue {
+    currentSelected: number;
+}
 
 export default {
     name: 'photo-slider-fullscreen',
@@ -53,12 +57,18 @@ export default {
     methods: {
         close(){
             this.$emit('update:visible', false);
+        },
+        onDrag(evt: DragEvent){
+            console.log(evt.offsetX + ' ' + evt.clientX + ' ' + evt.screenX + ' ' + evt.movementX);
+        },
+        onDragEnd(evt: DragEvent){
+            console.log(evt.offsetX + ' ' + evt.clientX + ' ' + evt.screenX + ' ' + evt.movementX);
         }
     },
     watch: {
         displayPic: function(newValue: number){
-            for(var i = 0; i < this.photos.length; i++){
-                if(this.photos[i].id === newValue){
+            for(var i = 0; i < this.$props.photos.length; i++){
+                if(this.$props.photos[i].id === newValue){
                     this.currentSelected = i;
                 }
             }
@@ -67,5 +77,5 @@ export default {
     computed: {
 
     }
-};
+} as ComponentOptions<PhotoSliderFullscreen>
 </script>
