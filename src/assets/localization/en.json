@@ -18,16 +18,21 @@
             "input": "Zoeken..."
         },
         "info": {
+            "home": "Home",
+            "menu": "Menu",
+            "lang": "Taal",
+            "account": "Account",
             "voyeur": "Voyeur",
             "actions": "Acties",
-            "editdata": "Bewerk profiel",
-            "favourites": "Favorieten",
+            "editdata": "Bewerk account",
+            "favourites": "Favo",
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
             "logout": "Logout",
             "login": "Login",
             "history": "Account historie",
-            "giftvoucher": "Cadeaubon"
+            "giftvoucher": "Cadeaubon",
+            "welcome": "Welkom"
         }
     },
     "performers": {
