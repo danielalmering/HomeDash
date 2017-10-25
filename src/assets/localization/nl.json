@@ -143,5 +143,16 @@
         "webcam": "Webcammodel worden?",
         "webcamurl": "http://www.club-sense.nl",
         "copyright": "Copyright 2017"
+    },
+    "services": {
+        "VOYEURCLIENT": "Voyeur",
+        "PEEK": "Meekijken",
+        "MANUAL": "Handmatig",
+        "VIDEO": "Video",
+        "SMS": "Sms",
+        "EMAIL": "E-mail",
+        "VOICEMAIL": "Voicemail",
+        "IVR": "Bellen",
+        "CREDIT_PURCHASE": "Credit Aankoop"
     }
 }
