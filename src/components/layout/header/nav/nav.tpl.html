@@ -2,11 +2,15 @@
     <div class="nav__wrap">
         <div class="container-fluid">
             <div class="nav__info hidden-xs col-sm-1">
-                <router-link class="nav__info-item hidden-xs" :to="{ path: '/' }"><i class="fa fa-home only"></i></router-link>
+                <router-link class="nav__info-item hidden-xs" :to="{ path: '/' }">
+                    <i class="fa fa-home only"></i>
+                </router-link>
             </div>
 
             <div class="nav__logo visible-xs col-xs-4">
-                <img alt="logo" src="../../../../assets/images/logo-dark.png">
+                <router-link :to="{ path: '/' }">
+                    <img alt="logo" src="../../../../assets/images/logo-dark.png">
+                </router-link>
             </div>
 
             <div class="nav__search col-xs-8 col-sm-4">

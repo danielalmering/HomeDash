@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar" :class="{ 'collapse': showSidebar }">
 
     <div class="sidebar__logo">
         <router-link :to="{ path: '/'}"><img src="../../../../assets/images/logo.png" alt=""></router-link>
@@ -12,9 +12,9 @@
     </div>
 
     <ul class="sidebar__filters">
-        <li v-t="'sidebar.recommended'" v-on:click="setCategory('recommended')"></li>
-        <li v-t="'sidebar.peek'" v-on:click="setCategory('peek')"></li>
-        <li v-t="'sidebar.favorite'" v-on:click="setCategory('favourites')"></li>
+        <li v-t="'sidebar.recommended'" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
+        <li v-t="'sidebar.peek'" :class="{ 'active': category === 'peek' }" v-on:click="setCategory('peek')"></li>
+        <li v-t="'sidebar.favorite'" :class="{ 'active': category === 'favourites' }" v-on:click="setCategory('favourites')"></li>
     </ul>
 
     <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll">
@@ -30,18 +30,17 @@
                 </div>
             </div>
             <div class="sidebar__performer-info col-xs-7">
-                <h3 ng-bind="performer.nickname"></h3>
+                <h3>{{ performer.nickname }}</h3>
                 <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
-                <p>{{ performer.location.split('/')[2] }}</p>
                 <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
             </div>
         </li>
-        <!--<li class="sidebar__performer">
+        <li class="sidebar__performer" v-if="performers.length === 0">
             <h3 class="text-center" v-t="$t('sidebar.noperformers')"></h3>
-        </li>-->
+        </li>
     </ul>
 
-    <div class="sidebar__toggle visible-xs">
+    <div class="sidebar__toggle hidden-md hidden-lg" v-on:click="showSidebar = !showSidebar">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
     </div>
 
