@@ -70,10 +70,11 @@
     }
 
     &__view {
+
         h1 {
             @include rem(font-size, 24px);
             font-weight: 500;
-            @include rem(padding, 10px);
+            @include rem(padding, 10px 0px);
             color: $pallete-2;
             border-bottom: 1px solid $pallete-18;
             i { 
@@ -81,5 +82,50 @@
                 @include rem(margin-right, 10px);
             }
         }
+
+        h3 {
+            @include rem(font-size, 14px);
+            color: $pallete-2;
+            @include rem(padding, 0px 0px);
+        }
+
+        p {
+            display: inline-block;
+            color: $pallete-7; 
+        }
+
+        &-table {
+            width: 100%;
+            tr {
+                cursor: pointer;
+                &.even {
+                    background: $pallete-17;
+                }
+            }
+            th {
+                @include rem(padding, 0px 10px);
+                text-align: left;
+                &:last-child {
+                    text-align: right;
+                }
+            }
+
+            td {
+                i { 
+                    @include rem(font-size, 18px);
+                    color: $pallete-3; 
+                    @include rem(padding, 0px 10px 0px 5px);
+                }
+                @include rem(padding, 0px 10px);
+                &:last-child {
+                    text-align: right;
+                }
+            }
+        }
+
+        @include breakpoint(xs) {
+            padding: 0 !important;
+        }
     }
+    
 }

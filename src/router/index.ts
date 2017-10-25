@@ -8,6 +8,8 @@ import Performers from '../components/pages/performers/performers';
 import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 import Editdata from '../components/pages/account/editdata/editdata';
+import History from '../components/pages/account/history/history';
+import Inbox from '../components/pages/account/inbox/inbox';
 import VideoChat from '../components/pages/videochat/videochat';
 
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
@@ -37,6 +39,16 @@ const router = new Router({
                                     path: 'edit-data',
                                     name: 'Editdata',
                                     component: Editdata
+                                },
+                                {
+                                    path: 'account-history',
+                                    name: 'History',
+                                    component: History
+                                },
+                                {
+                                    path: 'notifications',
+                                    name: 'Inbox',
+                                    component: Inbox
                                 }
                             ]
                         },

@@ -4,23 +4,33 @@
 
 // Btn
 .btn {
-    display: block;
+    display: inline-block;
     color: $pallete-2;
     @include rem(font-size, 13px);
     background: $pallete-14;
-    font-weight: 700;
+    font-weight: 400;
     @include border-radius(3px)
-    @include rem(padding, 8px 25px);
-    @include rem(margin, 5px 5px 0px 0px);
+    @include rem(padding, 12px 25px);
+    @include rem(margin, 0px 5px);
     border: none;
     text-align: center;
     cursor: pointer;
 
-    &-large {
-        @include rem(padding, 11px 35px);
-    }
+    &-large     { @include rem(padding, 11px 35px); }
+    &-full      {  width: 100%; }
+    &-right     { float: right; }
+    &-left      { float: left; }
 
-    &-full {  width: 100%; }
+    &-fa {
+        @include rem(padding, 12px 15px 12px 15px);
+        &:before { 
+            color: $pallete-2;
+            font: normal normal normal 16px/1 FontAwesome; 
+        }
+        span {
+            @include rem(margin-left, 10px);
+        }
+    }
 
     &-orange { background: $pallete-3; }
     &-green  { background: $pallete-21; }

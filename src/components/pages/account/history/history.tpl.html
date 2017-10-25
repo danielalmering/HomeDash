@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <h1><i class="fa fa-clock-o"></i><span v-t="'nav.info.history'"></span></h1>
+    <div class="account__view form">
+        <p v-t="'account.historydesc'"></p>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <select>
+                    <option v-t="'account.historymethod'"></option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <select>
+                    <option v-t="'account.historystartdate'"></option>
+                </select>  
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <select>
+                        <option v-t="'account.historyenddate'"></option>
+                </select>
+            </div>
+        </div>
+        <table class="account__view-table">
+            <tr>
+                <th><h3 v-t="'account.date'"></h3></th>
+                <th><h3 v-t="'account.paymentmethod'"></h3></th>
+                <th><h3 v-t="'account.amount'"></h3></th>
+            </tr>
+            <tr class="even">
+                <td>
+                    <p>24-10-2017 | 13:24</p>
+                </td>
+                <td>
+                    <p>Handmatig</p>
+                </td>
+                <td>
+                    <p>€22.40</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>27-10-2017 | 13:24</p>
+                </td>
+                <td>
+                    <p>Video</p>
+                </td>
+                <td>
+                    <p>€0.80</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
