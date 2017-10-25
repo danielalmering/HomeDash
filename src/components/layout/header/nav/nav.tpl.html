@@ -1,54 +1,62 @@
 <div class="nav">
-    <div class="container-fluid">
-        <div class="nav__info hidden-xs col-sm-1">
-            <router-link class="nav__info-item" :to="{ path: '/' }"><i class="fa fa-home only"></i></router-link>
-        </div>
+    <div class="nav__wrap">
+        <div class="container-fluid">
+            <div class="nav__info hidden-xs col-sm-1">
+                <router-link class="nav__info-item hidden-xs" :to="{ path: '/' }"><i class="fa fa-home only"></i></router-link>
+            </div>
 
-        <div class="nav__search col-xs-12 col-sm-5">
-            <form class="nav__search-form" v-on:submit.prevent="search">
-                <input type="text" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
-                <button class="fa fa-search"></button>
-            </form>
-        </div>
+            <div class="nav__logo visible-xs col-xs-4">
+                <img alt="logo" src="../../../../assets/images/logo-dark.png">
+            </div>
 
-        <div class="nav__info col-xs-12 col-sm-6">
-            <div class="nav__info-container">
-                <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-eye"></i><span class="text hidden-xs" v-t="'nav.info.voyeur'"></span></router-link>   
-                <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span class="hidden-xs" v-t="'nav.info.favourites'"></span></router-link>
-                <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-bullhorn"></i><span class="hidden-xs" v-t="'nav.info.actions'"></span></router-link>
-                
-                <a class="nav__info-item nav__info-item--last">
-                    <span v-on:click="login">
-                        <i class="fa fa-user"></i>
-                        <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
-                        <!-- <span class="hidden-xs">{{ authenticated ? user.username : $t('nav.info.login') }}</span> -->
-                    </span>
-                    <div class="nav__info-subitems" v-if="authenticated">
-                        <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>
-                        <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'"></router-link>
-                        <router-link class="subitem" :to="{ name: 'History'}" v-t="'nav.info.history'"></router-link>
-                        <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.giftvoucher'"></router-link>
-                        <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.upgradebalance'"></router-link>
-                        <a class="subitem" href="#" v-t="'nav.info.logout'" v-on:click="logout"></a>
-                    </div>
-                </a>
-                
-                <a class="nav__info-item nav__info-item--last">
-                    <span>
-                        <i :class="'flag flag-' + language"></i> 
-                        <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
-                    </span>
-                    <ul class="nav__info-subitems">
-                        <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
-                            <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
-                        </li>
-                    </ul>
-                </a>
+            <div class="nav__search col-xs-8 col-sm-4">
+                <form class="nav__search-form" v-on:submit.prevent="search">
+                    <input type="text" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
+                    <button class="fa fa-search"></button>
+                </form>
+            </div>
+
+            <div class="nav__info col-xs-12 col-sm-7">
+                <div class="nav__info-container">
+                    <!-- <a class="nav__info-item visible-xs" href="#"><i class="fa fa-home only"></i><span v-t="'nav.info.home'"></span></a>   -->
+                    <a class="nav__info-item visible-xs" v-on:click="showMenu = !showMenu"><i class="fa fa-bars"></i><span v-t="'nav.info.menu'"></span></a>
+                    <router-link class="nav__info-item hidden-xs" :to="{ name: 'Favourites' }"><i class="fa fa-eye"></i><span v-t="'nav.info.voyeur'"></span></router-link>   
+                    <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
+                    <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
+                    
+                    <a class="nav__info-item nav__info-item--last">
+                        <span v-on:click="login">
+                            <i class="fa fa-user"></i>
+                            <span v-t="'nav.info.account'"></span>
+                            <!-- <span class="hidden-xs">{{ authenticated ? user.username : $t('nav.info.login') }}</span> -->
+                        </span>
+                        <div class="nav__info-subitems" v-if="authenticated">
+                            <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>
+                            <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'"></router-link>
+                            <router-link class="subitem" :to="{ name: 'History'}" v-t="'nav.info.history'"></router-link>
+                            <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.giftvoucher'"></router-link>
+                            <router-link class="subitem" :to="{ name: 'Account'}" v-t="'nav.info.upgradebalance'"></router-link>
+                            <a class="subitem" href="#" v-t="'nav.info.logout'" v-on:click="logout"></a>
+                        </div>
+                    </a>
+                    
+                    <a class="nav__info-item nav__info-item--last">
+                        <span>
+                            <i :class="'flag flag-' + language"></i> 
+                            <span class="visible-xs" v-t="'nav.info.lang'"></span>
+                        </span>
+                        <ul class="nav__info-subitems">
+                            <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
+                                <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
+                            </li>
+                        </ul>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="nav__filters">
+    <div class="nav__filters" :class="{ 'visible': showMenu }">
         <div class="container-fluid">
             <router-link v-for="category in categories" :key="category.slug" :to="{ name: 'Performers', params: { category: category.slug } }">{{ category.title }}</router-link>
         </div>

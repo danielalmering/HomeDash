@@ -13,6 +13,8 @@ export default class Nav extends Vue {
 
     searchQuery: string = '';
 
+    showMenu: boolean = false;
+
     get authenticated(){
         return this.$store.getters.isLoggedIn;
     }

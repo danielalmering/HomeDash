@@ -18,10 +18,14 @@
             "input": "Zoeken..."
         },
         "info": {
+            "home": "Home",
+            "menu": "Menu",
+            "lang": "Taal",
+            "account": "Account",
             "voyeur": "Voyeur",
             "actions": "Acties",
             "editdata": "Bewerk account",
-            "favourites": "Favorieten",
+            "favourites": "Favo",
             "inbox": "Inbox",
             "upgradebalance": "Saldo Opwaarderen",
             "logout": "Logout",
