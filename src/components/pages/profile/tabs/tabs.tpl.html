@@ -33,7 +33,7 @@
         <div class="tabs__servicescontent-method">
             <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
             <p><span v-t="'tabs.webcamwithcreditsdesc'"></span> (€0.80 per minuut)</p>
-            <a class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></a>
+            <a class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'" v-on:click="startSession"></a>
         </div>
     </div>
 

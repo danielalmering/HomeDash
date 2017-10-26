@@ -4,6 +4,8 @@ import Vue from 'vue';
 
 import { Performer, Avatar } from '../../../models/Performer';
 import { getAvatarImage } from '../../../util';
+import { RequestPayload } from '../../../store/session';
+import { SessionType, State } from '../../../models/Session';
 
 import PhotoSlider from './photo-slider';
 import FullSlider from './photo-slider-fullscreen';
@@ -21,7 +23,7 @@ import './photo-slider.scss';
     }
 })
 export default class Profile extends Vue {
-    performer: Performer | boolean = false;
+    performer: Performer | null = null;
     perfphotos : Avatar[] = [];
 
     fullSliderVisible: boolean = false;
@@ -44,6 +46,30 @@ export default class Profile extends Vue {
     openFullSlider(id: number){
         this.fullSliderVisible = true;
         this.displayPic = id;
+    }
+
+    startSession(){
+        if(!this.performer){
+            return;
+        }
+
+        const self = this;
+
+        this.$store.dispatch<RequestPayload>({
+            type: 'startRequest',
+            performer: this.performer,
+            sessionType: SessionType.Video,
+        }).then(() => {
+            this.$store.watch((state) => state.session.activeState, (newValue: State) => {
+                if(newValue === State.Canceling || newValue === State.Ending){
+                    //Kill session loader
+                }
+
+                if(newValue === State.Accepted){
+                    this.$store.dispatch('initiate');
+                }
+            });
+        });
     }
 
     async loadPerformer(id: number){

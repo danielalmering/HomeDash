@@ -9,6 +9,8 @@
 import modalWrapper from './components/modal/modal-wrapper';
 import notificationSocket from './socket';
 
+console.log(notificationSocket);
+
 export default {
     components: {
         modalWrapper: modalWrapper

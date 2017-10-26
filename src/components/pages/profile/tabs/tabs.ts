@@ -8,5 +8,7 @@ import './tabs.scss';
 })
 export default class Tabs extends Vue {
 
-    
+    startSession(){
+        this.$emit('startSession');
+    }
 }
