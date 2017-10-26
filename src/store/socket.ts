@@ -21,7 +21,7 @@ const socketStore: Module<SocketState, RootState> = {
     mutations: {
     },
     actions: {
-        async socketMessage(store: ActionContext<SocketState, any>, name: string){
+        sendMessage(store: ActionContext<SocketState, any>, name: string){
             
         },
         async socketConnect(store: ActionContext<SocketState, RootState>){

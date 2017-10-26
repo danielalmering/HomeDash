@@ -283,4 +283,6 @@ export class NotificationSocket {
     }
 }
 
-export default new NotificationSocket();
+const notificationSocket = new NotificationSocket();
+
+export default notificationSocket;

@@ -3,18 +3,15 @@ import Vuex from 'vuex';
 
 import { ActionContext } from 'vuex';
 
-import localization from './localization';
-import modals from './modals';
-import authentication from './authentication';
-import socket from './socket';
-import performers from './performers';
+import localization, { LocalizationState } from './localization';
+import modals, { ModalsState } from './modals';
+import authentication, { AuthState } from './authentication';
+import socket, { SocketState } from './socket';
+import performers, { PerformersState } from './performers';
+import session, { SessionState } from './session';
+import alerts, { AlertsState } from './alerts';
 
 import { Info } from '../models/Info';
-
-import { AuthState } from './authentication';
-import { LocalizationState } from './localization';
-import { ModalsState } from './modals';
-import { SocketState } from './socket';
 
 Vue.use(Vuex);
 
@@ -56,7 +53,9 @@ const store = new Vuex.Store<RootState>({
         modals: modals,
         authentication: authentication,
         socket: socket,
-        performers: performers
+        performers: performers,
+        session: session,
+        alerts: alerts
     }
 });
 
