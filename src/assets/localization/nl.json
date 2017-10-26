@@ -136,7 +136,10 @@
         "amount": "Bedrag",
         "historymethod": "Betaalmethode",
         "historystartdate": "Startdatum",
-        "historyenddate": "Einddatum"
+        "historyenddate": "Einddatum",
+        "giftvoucherdesc": "Heb je een cadeaucode gekregen? Leuk! Voer hier de code van de cadeaubon in en klik op ‘activeren’. De credits worden meteen bijgeschreven op je account. Elke code is éénmalig te gebruiken. <br /><br />Heb je geen cadeaucode? Niet getreurd. Houd ons in de gaten op Twitter via @ThuisNL, soms geven we iets weg.",
+        "savegiftvoucher": "Cadeaubon activeren",
+        "giftvouchercode": "Code"
     },
     "footer": {
         "contact": "Contact",

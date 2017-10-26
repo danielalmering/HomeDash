@@ -134,7 +134,7 @@
             &--last {
                 &:hover {
                     position: relative;
-                    @include border-radius(0px);
+                    @include border-top-radius(3px);
                     color: $pallete-0;
                     background: $pallete-4;
                     &:hover, &:active {
@@ -154,6 +154,9 @@
 
                 .flag {
                     @include rem(margin, -10px 0px);
+                    @include breakpoint(xs) {
+                        @include rem(margin, -5px 0px);
+                    }
                 }
             }
         }
@@ -180,6 +183,10 @@
             margin: 0;
             @include rem(padding, 3px);
             background: $pallete-4;
+
+            @include breakpoint(xs) {
+                top: 72px;
+            }
 
             .subitem {
                 display: block;
