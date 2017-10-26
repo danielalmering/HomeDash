@@ -48,27 +48,34 @@ export default class Profile extends Vue {
         this.displayPic = id;
     }
 
-    startSession(){
+    async startSession(){
         if(!this.performer){
             return;
         }
 
         const self = this;
 
-        this.$store.dispatch<RequestPayload>({
+        await this.$store.dispatch<RequestPayload>({
             type: 'startRequest',
             performer: this.performer,
             sessionType: SessionType.Video,
-        }).then(() => {
-            this.$store.watch((state) => state.session.activeState, (newValue: State) => {
-                if(newValue === State.Canceling || newValue === State.Ending){
-                    //Kill session loader
+        });
+
+        this.$store.watch((state) => state.session.activeState, async (newValue: State) => {
+            if(newValue === State.Canceling || newValue === State.Ending){
+                //Kill session loader
+            }
+
+            if(newValue === State.Accepted){
+                await this.$store.dispatch('initiate');
+
+                //Remove this when I find a way to not have double types
+                if(!self.performer){
+                    return;
                 }
 
-                if(newValue === State.Accepted){
-                    this.$store.dispatch('initiate');
-                }
-            });
+                this.$router.push({ name: 'Videochat', params: { id: self.performer.advert_numbers[0].advertNumber .toString() } })
+            }
         });
     }
 

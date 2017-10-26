@@ -3,11 +3,12 @@ import { Module, ActionContext } from 'vuex';
 
 import rootState, { RootState } from './index';
 import { Performer } from '../models/Performer';
+import { UserRole } from '../models/User';
 import { SessionType, State } from '../models/Session';
 
 import notificationSocket from '../socket';
 
-interface SessionData {
+export interface SessionData {
     playStream: string;
     publishStream: string;
     streamTransportType: string;
@@ -171,6 +172,27 @@ const sessionStore: Module<SessionState, RootState> = {
             const data = await initiateResult.json();
 
             store.state.activeSessionData = data;
+
+            console.log('VideoChat data loaded')
+        },
+        setActive(store: ActionContext<SessionState, RootState>){
+            store.commit('setState', State.Active);
+
+            if(!store.state.activePerformer) return;
+
+            notificationSocket.sendEvent({
+                receiverType: UserRole.Performer,
+                receiverId: store.state.activePerformer.id,
+                event: 'videoChat',
+                content: {
+                    type: 'START_TIMER_DEVICE',
+                    clientId: store.rootState.authentication.user.id,
+                    performerId: store.state.activePerformer.id,
+                    value: null
+                }
+            });
+
+            //"{"event": "videoChat","receiverId":"152","receiverType":"ROLE_PERFORMER","content":"%7B%22type%22%3A%22START_TIMER_DEVICE%22%2C%22clientId%22%3A5789%2C%22performerId%22%3A152%2C%22value%22%3Anull%7D"}"
         },
         handleVideoEventSocket(store: ActionContext<SessionState, RootState>, content: VideoEventSocketMessage){
             if(store.state.activeState === State.Idle || !store.state.activePerformer){
