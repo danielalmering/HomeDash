@@ -9,6 +9,7 @@ import authentication, { AuthState } from './authentication';
 import socket, { SocketState } from './socket';
 import performers, { PerformersState } from './performers';
 import session, { SessionState } from './session';
+import alerts, { AlertsState } from './alerts';
 
 import { Info } from '../models/Info';
 
@@ -53,7 +54,8 @@ const store = new Vuex.Store<RootState>({
         authentication: authentication,
         socket: socket,
         performers: performers,
-        session: session
+        session: session,
+        alerts: alerts
     }
 });
 
