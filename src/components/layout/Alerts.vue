@@ -1,7 +1,7 @@
 <template>
     <div class="alerts">
         <transition v-for="alert in alerts" :key="alert.id" name="slide-fade">
-            <div class="alerts__alert alerts__alert-info">
+            <div class="alerts__alert" :class="`alerts__alert-${alert.class}`">
                 {{alert.content}}
             </div>
         </transition>
