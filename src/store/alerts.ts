@@ -1,4 +1,5 @@
 import Vuex, { Module, ActionContext, Payload } from 'vuex';
+import i18n from '../localization';
 
 import { RootState } from './index';
 
@@ -8,13 +9,16 @@ export interface AlertsState {
 
 export interface MessagePayload extends Payload {
     content: string;
+    translate?: boolean;
     displayTime?: number;
+    class?: string;
 }
 
 export interface Message {
     id: number;
     content: string;
     displayTime: number;
+    class: string;
 }
 
 const defaultMessageTime: number = 2500;
@@ -35,9 +39,11 @@ const alertsState: Module<AlertsState, RootState> = {
     },
     actions: {
         openMessage(store: ActionContext<AlertsState, RootState>, payload: MessagePayload){
-            const message: Message = Object.assign(payload, {
+            const message: Message = Object.assign({
                 id: Date.now(),
-                displayTime: payload.displayTime ? payload.displayTime : defaultMessageTime
+                displayTime: payload.displayTime ? payload.displayTime : defaultMessageTime,
+                class: payload.class ? payload.class : 'info',
+                content: payload.translate === undefined || payload.translate === true ? i18n.t(payload.content) : payload.content
             });
 
             //Add the message to the list
