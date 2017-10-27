@@ -11,6 +11,8 @@ import modalWrapper from './components/modal/modal-wrapper';
 import notificationSocket from './socket';
 import alerts from './components/layout/Alerts';
 
+import config from './config';
+
 export default {
     components: {
         modalWrapper: modalWrapper,
