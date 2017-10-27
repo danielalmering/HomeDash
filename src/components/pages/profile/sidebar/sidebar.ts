@@ -29,6 +29,10 @@ export default class Sidebar extends Vue {
         'peek': this.loadPeek
     };
 
+    get logo(){
+        return this.$store.getters.getLogoLight; 
+    }
+
     mounted(){
         this.query.performer = this.$route.params.id;
 
@@ -43,6 +47,7 @@ export default class Sidebar extends Vue {
             }
         });
     }
+    
 
     onScroll(event: Event){
         if(!event.srcElement){

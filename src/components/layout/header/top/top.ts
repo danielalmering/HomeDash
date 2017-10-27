@@ -7,4 +7,9 @@ import './top.scss';
     template: require('./top.tpl.html')
 })
 export default class Top extends Vue {
+
+    get logo(){
+        return this.$store.getters.getLogoLight; 
+    }
+
 }

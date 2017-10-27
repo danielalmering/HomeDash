@@ -31,6 +31,10 @@ export default class Nav extends Vue {
         return this.$store.state.info ? this.$store.state.info.categories : [];
     }
 
+    get logo(){
+        return this.$store.getters.getLogoDark; 
+    }
+
     changeLanguage(language: string){
         this.$store.dispatch('setLanguage', language);
     }
