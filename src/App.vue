@@ -23,23 +23,11 @@ export default {
         });
 
         this.$store.dispatch('loadInfo');
-        
-        this.$store.dispatch('openMessage', {
-            content: 'Heyy',
-            displayTime: 1000000
-        });
 
         this.$store.dispatch('openMessage', {
-            content: 'Second Message',
-            displayTime: 1000000
+            content: 'Welkom op het nieuwe thuis',
+            translate: false
         });
-
-        setTimeout(() => {
-
-            this.$store.dispatch('openMessage', {
-                content: 'Temporary Message'
-            });
-        }, 2000);
     }
 };
 </script>
