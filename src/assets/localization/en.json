@@ -44,7 +44,7 @@
         "register": "Registeer",
         "email": "Email",
         "lostpassword": "Wachtwoord vergeten?",
-        "successlogin": "succesvol ingelogd",
+        "successlogin": "Welkom, {username}",
         "missingfields": "Niet alle velden ingevuld",
         "errorlogin": "Foutieve logingegevens"
     },
