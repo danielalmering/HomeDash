@@ -64,7 +64,9 @@
         "height": "Lengte",
         "weight": "Gewicht",
         "cupsize": "Cup maat",
-        "eyecolor": "Kleur ogen"
+        "eyecolor": "Kleur ogen",
+        "expand": "Meer",
+        "hide": "Minder"
     },
     "pagination": {
         "pageOf": "Pagina {page} van {total}",
