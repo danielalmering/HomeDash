@@ -5,6 +5,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import { State } from '../../../models/session';
 import { SessionData } from '../../../store/Session';
 
+import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
 
 import './videochat.scss';
@@ -17,9 +18,21 @@ import './videochat.scss';
 })
 export default class VideoChat extends Vue {
 
-    player: any;
+    //Data
     isEnding: boolean = false;
+    chatMessages: any[] = [];
+    
+    player: any;
     intervalTimer: number;
+    chatSocketRef: number;
+
+    get performer(){
+        return this.$store.state.session.activePerformer;
+    }
+
+    get displayName(){
+        return this.$store.state.session.activeDisplayName;
+    }
 
     mounted(){
         const self = this;
@@ -53,6 +66,8 @@ export default class VideoChat extends Vue {
             }
         });
 
+        this.player = player;
+
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
             if(newValue === State.Ending && !this.isEnding){
                 //TODO: Show message
@@ -63,6 +78,10 @@ export default class VideoChat extends Vue {
         this.intervalTimer = setInterval(async () => {
             await fetch('https://www.thuis.nl/api/session/client_seen', { credentials: 'include' });
         }, 1000);
+
+        this.chatSocketRef = notificationSocket.subscribe('msg', (content) => {
+            this.chatMessages.push(content);
+        });
     }
 
     close(){
@@ -77,6 +96,8 @@ export default class VideoChat extends Vue {
 
         //Send end API call and update state to ending
         this.$store.dispatch('end', 'PLAYER_END');
+        
+        notificationSocket.unsubscribe(this.chatSocketRef);
 
         if(!this.player)
             return;

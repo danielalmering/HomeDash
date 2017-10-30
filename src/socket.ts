@@ -11,7 +11,9 @@ export interface ISocketMessage {
     event: string;
     receiverType: UserRole;
     content: any;
-    
+
+    message?: string;
+    senderType?: string;
     receiverId?: string|number;
 }
 
@@ -224,11 +226,20 @@ export class NotificationSocket {
 
         console.info('[NotificationSocket] Received the following event from the server: ', parsedData);
 
-        if(!parsedData.event || this.isPongEvent(parsedData.event) || !parsedData.content){
+        if(!parsedData.event || this.isPongEvent(parsedData.event) || (!parsedData.content && !parsedData.message)){
             return;
         }
 
-        parsedData.content = JSON.parse(decodeURIComponent(parsedData.content));
+        if(parsedData.event === 'msg'){
+            parsedData.content = {
+                receiverType: parsedData.receiverType,
+                senderType: parsedData.senderType,
+                message: parsedData.message
+            };
+        } else {
+            parsedData.content = JSON.parse(decodeURIComponent(parsedData.content));
+        }
+
 
         this.processEvent(parsedData.event, parsedData.content);
     }
