@@ -27,6 +27,11 @@ export function countryInterceptor(to: Router.Route, from: Router.Route, next: (
 export function authenticatedInterceptor(to: Router.Route, from: Router.Route, next: (to?: string | Router.Location) => void){
     if(!store.getters.isLoggedIn){
         //TODO: Show unauthenticated error message
+        store.dispatch('openMessage', {
+            class: 'error',
+            content: 'Error not logged in lalalala'
+        })
+
         next({ path: '/' });
     } else {
         next();

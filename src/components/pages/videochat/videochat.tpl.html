@@ -10,35 +10,11 @@
             <a class="close"><i class="fa fa-times"></i></a>
         </div>
         <ul class="videochat__chat-list">
-            <li>
-                <h3>Clubsense</h3>
-                <p>Wat een mooi verhaal</p>
-            </li>
-            <li>
-                <h3>Clubsense</h3>
-                <p>ja dat vind ik ook</p>
-            </li>
-            <li>
-                <h3>Clubsense</h3>
-                <p>wahahahah</p>
-            </li>
-            <li>
-                <h3>Clubsense</h3>
-                <p>dit is wel echt vette chat</p>
-            </li>
-            <li>
-                <h3>Clubsense</h3>
-                <p>wahahahah</p>
+            <li v-for="message in chatMessages">
+                <h3>{{ message.senderType === 'ROLE_PERFORMER' ? performer.nickname : displayName }}</h3>
+                <p>{{ message.message }}</p>
             </li>
         </ul>
-        <div class="videochat__chat-input">
-            <form>
-                <input type="text" name="text" class="searching">
-                <div class="btns">
-                    <a class="smilie fa fa-smile-o"></a>
-                    <a class="send fa fa-paper-plane-o"></a>
-                </div>
-            </form>
-        </div>
+        <chat></chat>
     </div>
 </div>
