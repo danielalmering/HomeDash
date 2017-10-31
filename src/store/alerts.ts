@@ -10,6 +10,7 @@ export interface AlertsState {
 export interface MessagePayload extends Payload {
     content: string;
     translate?: boolean;
+    translateParams?: { [key: string]:  string }
     displayTime?: number;
     class?: string;
 }
@@ -39,11 +40,15 @@ const alertsState: Module<AlertsState, RootState> = {
     },
     actions: {
         openMessage(store: ActionContext<AlertsState, RootState>, payload: MessagePayload){
+
+            const needsTranslation = payload.translate === undefined || payload.translate === true;
+            const content = needsTranslation ? i18n.t(payload.content, payload.translateParams) : payload.content;
+
             const message: Message = Object.assign({
                 id: Date.now(),
                 displayTime: payload.displayTime ? payload.displayTime : defaultMessageTime,
                 class: payload.class ? payload.class : 'info',
-                content: payload.translate === undefined || payload.translate === true ? i18n.t(payload.content) : payload.content
+                content: content
             });
 
             //Add the message to the list

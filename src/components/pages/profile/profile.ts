@@ -20,6 +20,11 @@ import './photo-slider.scss';
         photoSlider: PhotoSlider,
         photoSliderFull: FullSlider,
         tabs: Tabs
+    },
+    filters: {
+        truncate: function(text: string, displayFull: boolean){
+            return displayFull ? text : text.substr(0, 400);
+        }
     }
 })
 export default class Profile extends Vue {
@@ -28,6 +33,7 @@ export default class Profile extends Vue {
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
+    displayFullDescription: boolean = false;
 
     getAvatarImage = getAvatarImage;
 

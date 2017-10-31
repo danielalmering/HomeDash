@@ -44,7 +44,7 @@
         "register": "Registeer",
         "email": "Email",
         "lostpassword": "Wachtwoord vergeten?",
-        "successlogin": "succesvol ingelogd",
+        "successlogin": "Welkom, {username}",
         "missingfields": "Niet alle velden ingevuld",
         "errorlogin": "Foutieve logingegevens"
     },
@@ -64,7 +64,9 @@
         "height": "Lengte",
         "weight": "Gewicht",
         "cupsize": "Cup maat",
-        "eyecolor": "Kleur ogen"
+        "eyecolor": "Kleur ogen",
+        "expand": "Meer",
+        "hide": "Minder"
     },
     "tabs": {
         "service-webcam": "Webcammen",

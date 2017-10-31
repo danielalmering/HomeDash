@@ -18,7 +18,7 @@ export default {
         };
     },
     methods: {
-        
+
     },
     computed: {
         alerts: function(){
@@ -39,7 +39,7 @@ export default {
 
 .alerts {
     position: fixed;
-    z-index: 999;
+    z-index: 5000;
     right: 0;
     bottom: 0;
     @include rem(padding, 10px);
