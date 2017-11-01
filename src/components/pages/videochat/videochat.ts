@@ -2,7 +2,7 @@ import Vue from 'vue';
 import jsmpeg from 'jsmpeg';
 
 import { Component, Prop } from 'vue-property-decorator';
-import { State } from '../../../models/session';
+import { State } from '../../../models/Sessions';
 import { SessionData } from '../../../store/Session';
 
 import notificationSocket from '../../../socket';

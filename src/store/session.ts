@@ -4,7 +4,7 @@ import { Module, ActionContext } from 'vuex';
 import rootState, { RootState } from './index';
 import { Performer } from '../models/Performer';
 import { UserRole } from '../models/User';
-import { SessionType, State } from '../models/Session';
+import { SessionType, State } from '../models/Sessions';
 import config from '../config';
 
 import notificationSocket from '../socket';

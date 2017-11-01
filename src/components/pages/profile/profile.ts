@@ -5,7 +5,7 @@ import Vue from 'vue';
 import { Performer, Avatar } from '../../../models/Performer';
 import { getAvatarImage } from '../../../util';
 import { RequestPayload } from '../../../store/session';
-import { SessionType, State } from '../../../models/Session';
+import { SessionType, State } from '../../../models/Sessions';
 
 import PhotoSlider from './photo-slider';
 import FullSlider from './photo-slider-fullscreen';
