@@ -35,7 +35,7 @@ const authenticationStore: Module<AuthState, RootState> = {
     },
     actions: {
         async login(store: AuthContext, payload: LoginPayload){
-            const loginResult = await fetch('https://www.thuis.nl/auth/login', {
+            const loginResult = await fetch(`${config.BaseUrl}/auth/login`, {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(payload),
