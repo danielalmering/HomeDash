@@ -31,8 +31,7 @@
                     <a class="nav__info-item nav__info-item--last">
                         <span v-on:click="login">
                             <i class="fa fa-user"></i>
-                            <span v-t="'nav.info.account'"></span>
-                            <!-- <span class="hidden-xs">{{ authenticated ? user.username : $t('nav.info.login') }}</span> -->
+                            <span>{{ authenticated ? $t('nav.info.account') : $t('nav.info.login') }}</span>
                         </span>
                         <div class="nav__info-subitems" v-if="authenticated">
                             <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>

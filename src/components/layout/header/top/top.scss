@@ -35,7 +35,11 @@
             padding: 0;
             @include rem(font-size, 30px);
             font-weight: 700;
-            line-height: 60%;
+            line-height: 70%;
+
+            &.large {
+                @include rem(padding, 15px 10px);
+            }
 
             b {
                 color: $pallete-2;
@@ -131,6 +135,8 @@
                 @include rem(font-size, 26px);
                 color: $pallete-2;
                 line-height: 70%;
+                font-weight: 700;
+                letter-spacing: -1.5px;
             }
             .h2 {
                 text-transform: uppercase;
@@ -138,16 +144,15 @@
                 @include rem(font-size, 31px);
                 color: $pallete-3;
                 line-height: 70%;
+                font-weight: 700;
             }
             .h3 {
                 display: block;
-                text-transform: uppercase;
-                font-style: italic;
                 border-left: 1px solid rgba(255,255,255,0.2);
                 @include rem(padding-left, 10px);
-                @include rem(font-size, 15px);
-                color: $pallete-2;
-                line-height: 105%;
+                @include rem(font-size, 13px);
+                color: $pallete-7;
+                line-height: 122%;
                 width: 10%
             }
         }

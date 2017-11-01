@@ -12,4 +12,15 @@ export default class Top extends Vue {
         return this.$store.getters.getLogoLight; 
     }
 
+    get info(){
+        return this.$store.state.info;
+    }
+
+    branding(){
+        if(this.info.country != 'nl'){
+            return false;
+        }
+        return true
+    }
+
 }

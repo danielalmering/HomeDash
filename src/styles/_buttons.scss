@@ -11,7 +11,7 @@
     font-weight: 400;
     @include border-radius(3px)
     @include rem(padding, 12px 25px);
-    @include rem(margin, 0px 5px);
+    @include rem(margin, 5px 0px);
     border: none;
     text-align: center;
     cursor: pointer;

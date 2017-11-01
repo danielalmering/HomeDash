@@ -10,6 +10,7 @@ import Account from '../components/pages/account/account';
 import Editdata from '../components/pages/account/editdata/editdata';
 import History from '../components/pages/account/history/history';
 import Inbox from '../components/pages/account/inbox/inbox';
+import Readmessage from '../components/pages/account/inbox/readmessage/readmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Payment from '../components/pages/payment/payment';
 import VideoChat from '../components/pages/videochat/videochat';
@@ -51,6 +52,11 @@ const router = new Router({
                                     path: 'notifications',
                                     name: 'Inbox',
                                     component: Inbox
+                                },
+                                {
+                                    path: 'read-message',
+                                    name: 'Readmessage',
+                                    component: Readmessage
                                 },
                                 {
                                     path: 'gift-voucher',

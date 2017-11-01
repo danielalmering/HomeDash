@@ -14,6 +14,8 @@ export default class ModalLogin extends Vue {
             email: this.email,
             password: this.password
         });
+
+        this.$store.dispatch('displayModal', '');
     }
 
     register(){
