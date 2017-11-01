@@ -25,24 +25,13 @@
         overflow: hidden;
 
         &-fake {
-            animation: fadein 2s;
+            animation: fadein 1.5s;
 
             @keyframes fadein {
                 from { opacity: 0; }
                 to   { opacity: 1; }
             }
         }
-    }
-
-    &__fakeblock {
-        color: red;
-
-        animation: fadein 2s;
-
-                    @keyframes fadein {
-                        from { opacity: 0; }
-                        to   { opacity: 1; }
-                    }
     }
 
     &__info {
@@ -56,6 +45,7 @@
             color: $pallete-2;
             @include rem(font-size, 12px);
             @include rem(padding, 8px 10px);
+            min-height: 33px;
 
             span {
                 display: block;
