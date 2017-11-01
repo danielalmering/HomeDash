@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="top__banner hidden-xs col-xs-12 col-sm-5 nopad">
+        <div class="top__banner hidden-xs col-xs-12 col-sm-5 nopad" v-if="info">
             <div class="top__banner-happyhour" v-if="info.marketing.happy_hour.current">
                 <div class="col-1">
                     <span class="h1" v-t="$t('top.banner.happyhour')"></span>

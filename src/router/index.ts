@@ -54,7 +54,7 @@ const router = new Router({
                                     component: Inbox
                                 },
                                 {
-                                    path: 'read-message',
+                                    path: 'notifications/:performerid/:messageid',
                                     name: 'Readmessage',
                                     component: Readmessage
                                 },
