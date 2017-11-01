@@ -5,17 +5,17 @@ import Vue from 'vue';
     template: require('./modal-login.tpl.html')
 })
 export default class ModalLogin extends Vue {
-    @Provide() email = '';
-    @Provide() password: string = '';
+    email: string = '';
+    password: string = '';
 
-    login(){
+    async login(){
 
-        this.$store.dispatch('login', {
+        await this.$store.dispatch('login', {
             email: this.email,
             password: this.password
         });
 
-        this.$store.dispatch('displayModal', '');
+        this.close();
     }
 
     register(){
@@ -23,6 +23,6 @@ export default class ModalLogin extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', '');
+        this.$store.dispatch('closeModal');
     }
 }

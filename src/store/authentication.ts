@@ -21,7 +21,7 @@ const authenticationStore: Module<AuthState, RootState> = {
     },
     getters: {
         isLoggedIn: state => {
-            return state.user !== undefined && state.user.roles[0] === 'ROLE_CLIENT';
+            return state.user !== undefined && state.user.roles !== undefined && state.user.roles[0] === 'ROLE_CLIENT';
         },
         hasSession: state => {
             return state.user !== undefined;
@@ -44,6 +44,23 @@ const authenticationStore: Module<AuthState, RootState> = {
             });
 
             const loginData: User = await loginResult.json();
+
+            if(loginResult.ok){
+                store.dispatch('openMessage', {
+                    content: 'auth.successlogin',
+                    class: 'success',
+                    translateParams: {
+                        username: loginData.username
+                    }
+                });
+            } else {
+                store.dispatch('openMessage', {
+                    content: 'auth.errorlogin',
+                    class: 'error'
+                });
+
+                return;
+            }
 
             store.commit('setUser', loginData);
         },
@@ -68,6 +85,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 const annonConnectResult = await fetch('https://www.thuis.nl/api/client/client_accounts/annon_connect', {
                     credentials: 'include'
                 });
+
                 var sessionData: AnonymousUser = await annonConnectResult.json();
             } else {
                 var sessionData: AnonymousUser = await checkSessionResult.json();
