@@ -132,6 +132,7 @@
         "editdatabtn": "Wijzigingen opslaan",
         "newmessage": "Nieuw bericht",
         "removemessage": "Verwijder bericht",
+        "sendmessage": "Verstuur bericht",
         "historydesc": "Hier vindt u een uitgebreid overzicht van uw uitgevoerde acties binnen het platform",
         "date": "Datum",
         "paymentmethod": "Betaalmethode",
@@ -141,7 +142,9 @@
         "historyenddate": "Einddatum",
         "giftvoucherdesc": "Heb je een cadeaucode gekregen? Leuk! Voer hier de code van de cadeaubon in en klik op ‘activeren’. De credits worden meteen bijgeschreven op je account. Elke code is éénmalig te gebruiken. <br /><br />Heb je geen cadeaucode? Niet getreurd. Houd ons in de gaten op Twitter via @ThuisNL, soms geven we iets weg.",
         "savegiftvoucher": "Cadeaubon activeren",
-        "giftvouchercode": "Code"
+        "giftvouchercode": "Code",
+        "backinbox": "Terug naar inbox",
+        "by": "Door"
     },
     "footer": {
         "contact": "Contact",

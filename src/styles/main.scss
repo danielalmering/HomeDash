@@ -39,6 +39,10 @@ body {
 .text-left { text-align: left; }
 .text-right { text-align: right; }
 .rowpad { @include rem(padding, 0px 5px); }
+.rowmar { 
+    @include rem(margin-left, 10px); 
+    @include rem(margin-right, 10px); 
+}
 
 a {
     cursor: pointer;
@@ -52,6 +56,8 @@ a {
         text-decoration: none;
     }
 }
+
+img { width: 100%; }
 
 html, body, h1, h2, h3, h4, input, textarea, select, button {
   -webkit-font-smoothing: antialiased;

@@ -13,6 +13,8 @@ import alerts, { AlertsState } from './alerts';
 
 import { Info } from '../models/Info';
 
+import config from '../config';
+
 Vue.use(Vuex);
 
 export interface RootState {
@@ -32,6 +34,28 @@ const store = new Vuex.Store<RootState>({
         info: undefined,
         safeMode: false
     },
+    getters: {
+        getLogoLight: state => {
+            const thuis    = require('../assets/images/thuis.png');
+            const gigacams = require('../assets/images/gigacams.png');
+
+            if(!state.info){
+                return '';
+            }
+
+            return state.info.country === 'nl' ? thuis : gigacams;
+        },
+        getLogoDark: state => {
+            const thuis    = require('../assets/images/thuis-dark.png');
+            const gigacams = require('../assets/images/gigacams-dark.png');
+
+            if(!state.info){
+                return '';
+            }
+
+            return state.info.country === 'nl' ? thuis : gigacams;
+        }
+    },
     mutations: {
         setInfo: function(state: RootState, info: Info){
             state.info = info;
@@ -42,7 +66,7 @@ const store = new Vuex.Store<RootState>({
     },
     actions: {
         loadInfo: async function(store: RootContext){
-            const infoResult = await fetch('https://www.thuis.nl/api/client/client_accounts/info');
+            const infoResult = await fetch(config.BaseUrl + '/client/client_accounts/info');
             const infoData: Info = await infoResult.json();
 
             store.commit('setInfo', infoData);

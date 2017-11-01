@@ -72,13 +72,14 @@
     &__view {
 
         h1 {
+            display: table;
+            width: 100%;
             @include rem(font-size, 24px);
             font-weight: 500;
             @include rem(padding, 10px 0px);
             color: $pallete-2;
             border-bottom: 1px solid $pallete-18;
             i { 
-                color: $pallete-3;
                 @include rem(margin-right, 10px);
             }
         }
@@ -92,6 +93,20 @@
         p {
             display: inline-block;
             color: $pallete-7; 
+        }
+
+        i { 
+            font-style: normal;
+            color: $pallete-3; 
+        }
+
+        .colum {
+            display: table;
+            width: 100%;
+            background: $pallete-11;
+            color: $pallete-7;
+            @include rem(padding, 10px);
+            border: 2px solid rgba(125, 106, 109, 0.12);
         }
 
         &-table {
@@ -111,12 +126,26 @@
             }
 
             td {
+                vertical-align: middle;
+                @include rem(padding, 10px);
+
                 i { 
                     @include rem(font-size, 18px);
                     color: $pallete-3; 
                     @include rem(padding, 0px 10px 0px 5px);
                 }
-                @include rem(padding, 0px 10px);
+
+                span {
+                    display: block;
+                    width: 100%;
+                    color: $pallete-18; 
+                    @include rem(font-size, 13px);
+                }
+
+                p {
+                    margin: 0;
+                }
+
                 &:last-child {
                     text-align: right;
                 }
