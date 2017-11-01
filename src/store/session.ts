@@ -5,6 +5,7 @@ import rootState, { RootState } from './index';
 import { Performer } from '../models/Performer';
 import { UserRole } from '../models/User';
 import { SessionType, State } from '../models/Session';
+import config from '../config';
 
 import notificationSocket from '../socket';
 
@@ -71,7 +72,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             const displayName = payload.displayName || store.rootState.authentication.user.username;
 
-            const requestResult = await fetch('https://www.thuis.nl/api/session/request/chat', {
+            const requestResult = await fetch(`${config.BaseUrl}/session/request/chat`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -107,12 +108,12 @@ const sessionStore: Module<SessionState, RootState> = {
             if(reason === 'PERFORMER_REJECT'){
                 const performerId = store.state.activePerformer ? store.state.activePerformer.id : 0;
 
-                var result = await fetch(`https://www.thuis.nl/api/session/videochat_request/${performerId}`, {
+                var result = await fetch(`${config.BaseUrl}/session/videochat_request/${performerId}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
             } else {
-                var result = await fetch('https://www.thuis.nl/api/session/cancel', {
+                var result = await fetch(`${config.BaseUrl}/session/cancel`, {
                     method: 'POST',
                     credentials: 'include'
                 });
@@ -129,7 +130,7 @@ const sessionStore: Module<SessionState, RootState> = {
         async end(store: ActionContext<SessionState, RootState>, reason: string){
             store.commit('setState', State.Ending);
 
-            const endResult = await fetch('https://www.thuis.nl/api/session/end', {
+            const endResult = await fetch(`${config.BaseUrl}/session/end`, {
                 method: 'POST',
                 credentials: 'include'
             });
@@ -150,10 +151,10 @@ const sessionStore: Module<SessionState, RootState> = {
             if(store.state.activeSessionType === SessionType.Video || store.state.activeSessionType === SessionType.Peek){
                 var url = `/performer_account/performer_number/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videochat`;
             } else {
-                var url = `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;    
+                var url = `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;
             }
 
-            const initiateResult = await fetch('https://www.thuis.nl/api/session' + url, {
+            const initiateResult = await fetch(`${config.BaseUrl}/session${url}`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

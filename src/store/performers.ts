@@ -3,6 +3,7 @@ import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
 import store from './index';
+import config from '../config';
 
 export interface PerformersState {
 
@@ -18,7 +19,7 @@ const performersStore: Module<PerformersState, RootState> = {
         async addFavourite(store: ActionContext<PerformersState, RootState>, id: number){
             const userId = store.rootState.authentication.user.id;
 
-            const favoriteResult = await fetch(`https://www.thuis.nl/api/client/client_accounts/${userId}/favorite_performers/${id}`, {
+            const favoriteResult = await fetch(`${config.BaseUrl}/client/client_accounts/${userId}/favorite_performers/${id}`, {
                 credentials: 'include',
                 method: 'POST'
             });
@@ -28,7 +29,7 @@ const performersStore: Module<PerformersState, RootState> = {
         async removeFavourite(store: ActionContext<PerformersState, RootState>, id: number){
             const userId = store.rootState.authentication.user.id;
 
-            const favoriteResult = await fetch(`https://www.thuis.nl/api/client/client_accounts/${userId}/favorite_performers/${id}`, {
+            const favoriteResult = await fetch(`${config.BaseUrl}/client/client_accounts/${userId}/favorite_performers/${id}`, {
                 credentials: 'include',
                 method: 'DELETE'
             });

@@ -3,6 +3,7 @@ import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
 import { User, AnonymousUser } from '../models/User';
+import config from '../config';
 
 export interface AuthState {
     user: User | undefined;
@@ -65,7 +66,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             store.commit('setUser', loginData);
         },
         async logout(store: AuthContext){
-            const logoutResult = await fetch('https://www.thuis.nl/auth/logout', {
+            const logoutResult = await fetch(`${config.BaseUrl}/auth/logout`, {
                 credentials: 'include'
             });
 
@@ -75,14 +76,14 @@ const authenticationStore: Module<AuthState, RootState> = {
 
         },
         async getSession(store: AuthContext){
-            const checkSessionResult = await fetch('https://www.thuis.nl/check_session', {
+            const checkSessionResult = await fetch(`${config.BaseUrl}/check_session`, {
                 credentials: 'include'
             });
 
             if(checkSessionResult.status === 403){
                 console.log('Status shit');
 
-                const annonConnectResult = await fetch('https://www.thuis.nl/api/client/client_accounts/annon_connect', {
+                const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect`, {
                     credentials: 'include'
                 });
 

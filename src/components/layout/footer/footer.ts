@@ -4,6 +4,8 @@ import Vue from 'vue';
 
 import './footer.scss';
 
+import config from '../../../config';
+
 interface SeoText {
     id: number;
     description: string;
@@ -49,7 +51,7 @@ export default class Footer extends Vue {
     }
 
     async loadSeo(category: string){
-        const seoResults = await fetch(`https://www.thuis.nl/api/category/${category}`);
+        const seoResults = await fetch(`${config.BaseUrl}/category/${category}`);
         const data: SeoData = await seoResults.json();
 
         this.seoMain = data.texts[0];
