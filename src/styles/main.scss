@@ -32,6 +32,10 @@ body {
     @include rem(padding-right, 5px);
 }
 
+main, .account {
+    height: calc(100vh - 265px);
+}
+
 .nopad  { padding: 0; }
 .nomar { margin: 0; }
 .noposition { position: initial; }
@@ -57,7 +61,7 @@ a {
     }
 }
 
-img { width: 100%; }
+img.resize { width: 100%; }
 
 html, body, h1, h2, h3, h4, input, textarea, select, button {
   -webkit-font-smoothing: antialiased;
