@@ -4,7 +4,7 @@ import Vue from 'vue';
 
 import Pagination from '../../layout/Pagination';
 import notificationSocket from '../../../socket';
-import { Performer } from '../../../models/Performer';
+import { Performer, PerformerStatus } from '../../../models/Performer';
 import { getAvatarImage } from '../../../util';
 import config from '../../../config';
 
@@ -40,6 +40,19 @@ export default class Performers extends Vue {
         const performer = this.performers.find(p => p.id === performerId);
 
         return !performer ? false : performer.performer_services[service];
+    }
+
+    performerStatus(performer: Performer){
+        if(performer.performerStatus === PerformerStatus.Available){
+            return 'available';
+        }
+
+        if(performer.performerStatus === PerformerStatus.OnCall ||
+            performer.performerStatus === PerformerStatus.Busy){
+            return performer.performer_services['peek'] ? 'peek' : 'busy';
+        }
+
+        return 'offline';
     }
 
     @Watch('$route')
