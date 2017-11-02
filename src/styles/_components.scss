@@ -62,30 +62,6 @@
     }
 }
 
-// Ng-scrollbar
-.ngsb-wrap .ngsb-scrollbar { width: 24px; }
-.ngsb-wrap .ngsb-scrollbar { @include rem(margin, 10px 0px);  }
-.ngsb-wrap .ngsb-thumb { background: $pallete-3 !important; }
-.ngsb-wrap .ngsb-scrollbar .ngsb-track { background: none; box-shadow: none; }
-
-// Toaster
-.toast {
-    width: 200px !important;
-    box-shadow: none !important;
-    @include rem(font-size, 12px);
-    background: $pallete-8;
-    padding: 10px 10px 10px 50px !important;
-}
-.toast-title {
-    @include rem(font-size, 13px);
-}
-.toast-success { border: 1px solid $pallete-12; }
-.toast-error   { border: 1px solid $pallete-15; }
-
-.ng-cloak {
-    display: none;
-}
-
 // 5 Col grid
 .col-xs-15,
 .col-sm-15,

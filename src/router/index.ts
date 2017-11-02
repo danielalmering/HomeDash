@@ -12,6 +12,7 @@ import History from '../components/pages/account/history/history';
 import Inbox from '../components/pages/account/inbox/inbox';
 import Readmessage from '../components/pages/account/inbox/readmessage/readmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
+import Promos from '../components/pages/promos/promos';
 import Payment from '../components/pages/payment/payment';
 import VideoChat from '../components/pages/videochat/videochat';
 
@@ -64,6 +65,11 @@ const router = new Router({
                                     component: Giftvoucher
                                 }
                             ]
+                        },
+                        {
+                            path: 'promos',
+                            name: 'Promos',
+                            component: Promos
                         },
                         {
                             path: 'payment',

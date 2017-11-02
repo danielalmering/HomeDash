@@ -18,9 +18,9 @@
                     </a>
                     <p class="profile__content-description">{{ performer.description | truncate(displayFullDescription) }}</p>
 
-                    <span class="profile__content-expand" v-if="performer.description.length > 400" v-on:click="displayFullDescription = !displayFullDescription">
-                        {{ displayFullDescription ? $t('profile.hide') : $t('profile.expand') }}
-                    </span>
+                    <a class="btn btn-orange btn-fa" :class="{ 'fa-minus': displayFullDescription, 'fa-plus': !displayFullDescription }" v-if="performer.description.length > 400" v-on:click="displayFullDescription = !displayFullDescription">
+                        <span>{{ displayFullDescription ? $t('profile.hide') : $t('profile.expand') }}</span>
+                    </a>
                 </div>
 
                 <ul class="profile__property col-sm-12 col-md-4 col-lg-3">

@@ -1,0 +1,30 @@
+<div class="promos">
+    <div class="container-fluid">
+        <div class="col-xs-9 col-sm-11">
+            <h1><i class="fa fa-bullhorn hidden-xs"></i><span v-t="'nav.info.actions'"></span></h1>
+            <p v-t="'promos.intro'"></p>
+
+            <h3 v-t="'promos.currentactions'"></h3>
+        </div>
+        <div class="visible-lg col-md-1">
+            <br /><br />
+            <img class="resize" src="../../../assets/images/woman-silhouette-large.png" />
+        </div>
+        <div class="col-xs-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th v-t="'nav.info.actions'"></th>
+                        <th v-t="'promos.data'"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="promo in promos">
+                        <td v-html="promo.text1"></td>
+                        <td v-html="promo.text2"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
