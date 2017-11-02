@@ -144,7 +144,11 @@
         "savegiftvoucher": "Cadeaubon activeren",
         "giftvouchercode": "Code",
         "backinbox": "Terug naar inbox",
-        "by": "Door"
+        "by": "Door",
+        "voucher": {
+            "successMessage": "De code is geactiveerd en je hebt je credits ontvangen",
+            "errorMessage": "Deze code was onjuist of is al gebruikt, probeer het opnieuw"
+        }
     },
     "footer": {
         "contact": "Contact",

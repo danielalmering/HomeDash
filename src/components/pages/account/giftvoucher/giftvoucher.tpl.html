@@ -3,17 +3,17 @@
     <div class="account__view form">
         <img alt="voucher" src="../../../../assets/images/giftvoucher.png">
         <p v-html="$t('account.giftvoucherdesc')"></p>
-        <form class="row">
+        <form class="row" v-on:submit.prevent="activateVoucher">
             <div class="col-xs-12">
                 <div class="form__group">
                     <label v-t="'account.giftvouchercode'"></label>
-                    <input type="text" class="col-xs-12">
+                    <input type="text" v-model="voucherCode" class="col-xs-12">
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form__group">
                     <button class="btn btn-orange" v-t="'account.savegiftvoucher'"></button>
-                </div>    
+                </div>
             </div>
         </form>
     </div>
