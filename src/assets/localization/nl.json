@@ -150,6 +150,11 @@
             "errorMessage": "Deze code was onjuist of is al gebruikt, probeer het opnieuw"
         }
     },
+    "promos": {
+        "intro": "Welkom bij de actiepagina, middels deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen.",
+        "currentactions": "Lopende acties",
+        "data": "Data"
+    },
     "footer": {
         "contact": "Contact",
         "privacypolicy": "Privacybeleid",
