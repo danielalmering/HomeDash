@@ -1,6 +1,8 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
+import config from '../../../config';
+
 @Component({
     template: require('./promos.tpl.html')
 })
@@ -14,7 +16,7 @@ export default class Promo extends Vue {
     }
 
     async loadPromos(){
-        const promosResult = await fetch(`https://www.thuis.nl/api/cms/account`, {
+        const promosResult = await fetch(`${config.BaseUrl}/cms/account`, {
             credentials: 'include'
         });
 
