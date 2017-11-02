@@ -50,7 +50,7 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        const videoUrl = `wss://push02.thuis.nl/jsmpeg?stream=${sessionData.playStream}&token=${sessionData.wowza.split('?token=')[1]}&hash=5B9F45B17A77831EA6C5346464BD2`;
+        const videoUrl = `${config.JsmpegUrl}?stream=${sessionData.playStream}&token=${sessionData.wowza.split('?token=')[1]}&hash=5B9F45B17A77831EA6C5346464BD2`;
         const video = <HTMLCanvasElement>this.$el.getElementsByClassName('jsmpeg')[0];
 
         const player = new jsmpeg.Player(videoUrl, {

@@ -1,7 +1,7 @@
-import Router from 'vue-router';
+import Router, { Route, Location } from 'vue-router';
 import store from '../store';
 
-export function countryInterceptor(to: Router.Route, from: Router.Route, next: (to?: string | Router.Location) => void){
+export function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     const acceptedCountries = ['uk', 'nl', 'de'];
     const currentCountry = to.params.country;
 
@@ -24,21 +24,40 @@ export function countryInterceptor(to: Router.Route, from: Router.Route, next: (
     }
 }
 
-export function authenticatedInterceptor(to: Router.Route, from: Router.Route, next: (to?: string | Router.Location) => void){
-    if(!store.getters.isLoggedIn){
-        //TODO: Show unauthenticated error message
-        store.dispatch('openMessage', {
-            class: 'error',
-            content: 'Error not logged in lalalala'
-        })
+export function authenticatedInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
 
-        next({ path: '/' });
+    let routed = false;
+
+    if(store.state.authentication.user === undefined){
+        store.watch((state) => {
+            return state.authentication.user
+        }, (newValue, oldValue) => {
+            if(!routed){
+                routed = true;
+
+                continueRouting();
+            }
+        });
     } else {
-        next();
+        continueRouting();
+    }
+
+    function continueRouting (){
+        if(!store.getters.isLoggedIn){
+            //TODO: Show unauthenticated error message
+            store.dispatch('openMessage', {
+                class: 'error',
+                content: 'Error not logged in lalalala'
+            })
+
+            next({ path: '/' });
+        } else {
+            next();
+        }
     }
 }
 
-export function safeInterceptor(to: Router.Route, from: Router.Route, next: (to?: string | Router.Location) => void){
+export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     if(to.query.safe !== undefined){
         store.commit('activateSafeMode');
     }
