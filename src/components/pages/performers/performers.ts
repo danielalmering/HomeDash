@@ -18,7 +18,9 @@ import './performers.scss';
 })
 export default class Performers extends Vue {
 
-    performers: Performer[] = [];
+    performers: Performer[] = new Array(40).fill(undefined, 0, 40);
+    // performers: Performer[] = [];
+
     total: number = 0;
 
     getAvatarImage = getAvatarImage;
@@ -66,6 +68,8 @@ export default class Performers extends Vue {
     }
 
     mounted(){
+        console.log(this.performers);
+
         this.query.category = this.$route.params.category ? this.$route.params.category : '';
         this.query.search = this.$route.query.search ? this.$route.query.search : '';
 
