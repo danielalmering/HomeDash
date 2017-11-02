@@ -158,7 +158,9 @@
         "promos": "Acties",
         "webcam": "Webcammodel worden?",
         "webcamurl": "http://www.club-sense.nl",
-        "copyright": "Copyright 2017"
+        "copyright": "Copyright 2017",
+        "cookies": "De website werkt het beste met cookies. Zo kunnen we de website verbeteren en je instellingen onthouden.",
+        "cookiesAccept": "Oké, ik snap het"
     },
     "services": {
         "VOYEURCLIENT": "Voyeur",
