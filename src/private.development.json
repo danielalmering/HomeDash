@@ -1,4 +1,5 @@
 {
     "BaseUrl": "http://www.thuis.nl/api",
-    "SocketUrl": "wss://socket.thuis.nl/"
+    "SocketUrl": "wss://socket.thuis.nl/",
+    "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg"
 }
