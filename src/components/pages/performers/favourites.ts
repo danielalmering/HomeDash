@@ -5,6 +5,7 @@ import Vue from 'vue';
 import Pagination from '../../layout/Pagination';
 import Performers from './performers';
 import { Performer } from '../../../models/Performer';
+import config from '../../../config';
 
 import './performers.scss';
 
@@ -19,7 +20,7 @@ export default class Favourites extends Performers {
     async loadPerformers(){
         const userId = this.$store.state.authentication.user.id;
 
-        const performerResults = await fetch(`https://www.thuis.nl/api/client/client_accounts/${this.$store.state.authentication.user.id}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}`, {
+        const performerResults = await fetch(`${config.BaseUrl}/client/client_accounts/${this.$store.state.authentication.user.id}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}`, {
             credentials: 'include'
         });
         const data = await performerResults.json();

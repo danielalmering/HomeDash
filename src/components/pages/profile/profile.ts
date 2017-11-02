@@ -5,11 +5,12 @@ import Vue from 'vue';
 import { Performer, Avatar } from '../../../models/Performer';
 import { getAvatarImage } from '../../../util';
 import { RequestPayload } from '../../../store/session';
-import { SessionType, State } from '../../../models/Session';
+import { SessionType, State } from '../../../models/Sessions';
 
 import PhotoSlider from './photo-slider';
 import FullSlider from './photo-slider-fullscreen';
 import Tabs from './tabs/tabs';
+import config from '../../../config';
 
 import './profile.scss';
 import './photo-slider.scss';
@@ -86,7 +87,7 @@ export default class Profile extends Vue {
     }
 
     async loadPerformer(id: number){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/performer_number/${id}?limit=10`, {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/performer_number/${id}?limit=10`, {
             credentials: 'include'
         });
 

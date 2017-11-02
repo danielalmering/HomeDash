@@ -2,6 +2,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
+import config from '../../../../config';
+
 interface SeoText {
     id: number;
     description: string;
@@ -26,7 +28,7 @@ interface SeoData {
     template: require('./seo.tpl.html')
 })
 export default class Seo extends Vue {
-    
+
     seoMain: SeoText | boolean = false;
     seoTabs : SeoText[] = [];
     selectedTab: number = 0;
@@ -45,11 +47,11 @@ export default class Seo extends Vue {
     }
 
     async loadSeo(category: string){
-        const seoResults = await fetch(`https://www.thuis.nl/api/category/${category}`);
+        const seoResults = await fetch(`${config.BaseUrl}/category/${category}`);
         const data: SeoData = await seoResults.json();
 
         this.seoMain = data.texts[0];
         this.seoTabs = data.texts.slice(1);
-        this.selectedTab = this.seoTabs[0].id; 
+        this.selectedTab = this.seoTabs[0].id;
     }
 }

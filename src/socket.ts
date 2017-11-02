@@ -1,5 +1,6 @@
 import { UserRole, User } from './models/User';
 import store from './store';
+import config from './config';
 import io from 'socket.io-client';
 
 /**
@@ -56,7 +57,7 @@ export class NotificationSocket {
 
     constructor(){
 
-        this.SocketUrl = 'wss://socket.thuis.nl/';
+        this.SocketUrl = config.SocketUrl;
 
         this.pingMessage = 'tits';
         this.pongMessage = 'ass';
@@ -225,7 +226,7 @@ export class NotificationSocket {
 
         var parsedData: ISocketMessage = JSON.parse(data);
 
-        console.info('[NotificationSocket] Received the following event from the server: ', parsedData);
+        // console.info('[NotificationSocket] Received the following event from the server: ', parsedData);
 
         if(!parsedData.event || this.isPongEvent(parsedData.event) || (!parsedData.content && !parsedData.message)){
             return;

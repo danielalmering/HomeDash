@@ -2,11 +2,12 @@ import Vue from 'vue';
 import jsmpeg from 'jsmpeg';
 
 import { Component, Prop } from 'vue-property-decorator';
-import { State } from '../../../models/session';
+import { State } from '../../../models/Sessions';
 import { SessionData } from '../../../store/Session';
 
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
+import config from '../../../config';
 
 import './videochat.scss';
 
@@ -21,7 +22,7 @@ export default class VideoChat extends Vue {
     //Data
     isEnding: boolean = false;
     chatMessages: any[] = [];
-    
+
     player: any;
     intervalTimer: number;
     chatSocketRef: number;
@@ -76,7 +77,7 @@ export default class VideoChat extends Vue {
         });
 
         this.intervalTimer = setInterval(async () => {
-            await fetch('https://www.thuis.nl/api/session/client_seen', { credentials: 'include' });
+            await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
         }, 1000);
 
         this.chatSocketRef = notificationSocket.subscribe('msg', (content) => {
@@ -96,7 +97,7 @@ export default class VideoChat extends Vue {
 
         //Send end API call and update state to ending
         this.$store.dispatch('end', 'PLAYER_END');
-        
+
         notificationSocket.unsubscribe(this.chatSocketRef);
 
         if(!this.player)

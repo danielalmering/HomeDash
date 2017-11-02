@@ -18,7 +18,7 @@ export interface Info {
         }
     },
     phone_cpm: number;
-    phone_enabled: 1;
+    phone_enabled: number;
     phone_number: string;
     phone_number_free: string;
     sms_cpt: number;

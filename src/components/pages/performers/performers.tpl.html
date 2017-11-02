@@ -17,7 +17,7 @@
                     <div class="performers__info" >
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
-                            <span></span>
+                            <span :class="performerStatus(performer)"></span>
                         </div>
                         <div class="performers__info-services">
                             <i class="fa-video-camera" v-if="hasService(performer.id, 'cam')"></i>

@@ -1,7 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import { State } from '../../../../models/session';
+import { State } from '../../../../models/Sessions';
 import { SessionData } from '../../../../store/Session';
 
 import jsmpeg from 'jsmpeg';

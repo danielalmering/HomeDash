@@ -2,15 +2,17 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 import { User } from '../../../../models/User';
 
+import config from '../../../../config';
+
 @Component({
     template: require('./editdata.tpl.html')
 })
 export default class Editdata extends Vue {
-    
+
     user: User;
 
     async updateUser(){
-        const userResult = await fetch(`https://www.thuis.nl/api/client/client_accounts/${this.user.id}`, {
+        const userResult = await fetch(`${config.BaseUrl}/client/client_accounts/${this.user.id}`, {
             method: 'PUT',
             body: JSON.stringify(this.user),
             credentials: 'include'
