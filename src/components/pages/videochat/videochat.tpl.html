@@ -2,19 +2,11 @@
     <div class="videochat__screen">
         <div class="videochat__screen-object">
             <canvas class="jsmpeg"></canvas>
+            <!-- <jsmpeg></jsmpeg> -->
         </div>
     </div>
+
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
-    <div class="videochat__chat">
-        <div class="videochat__chat-top">
-            <a class="close"><i class="fa fa-times"></i></a>
-        </div>
-        <ul class="videochat__chat-list">
-            <li v-for="message in chatMessages">
-                <h3>{{ message.senderType === 'ROLE_PERFORMER' ? performer.nickname : displayName }}</h3>
-                <p>{{ message.message }}</p>
-            </li>
-        </ul>
-        <chat></chat>
-    </div>
+
+    <chat :performer-name="performer.nickname" :user-name="displayName"></chat>
 </div>
