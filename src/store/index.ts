@@ -6,7 +6,6 @@ import { ActionContext } from 'vuex';
 import localization, { LocalizationState } from './localization';
 import modals, { ModalsState } from './modals';
 import authentication, { AuthState } from './authentication';
-import socket, { SocketState } from './socket';
 import performers, { PerformersState } from './performers';
 import session, { SessionState } from './session';
 import alerts, { AlertsState } from './alerts';
@@ -24,7 +23,6 @@ export interface RootState {
     authentication?: any;
     localization?: any;
     modals?: any;
-    socket?: any;
 }
 
 type RootContext = ActionContext<RootState, RootState>
@@ -66,7 +64,7 @@ const store = new Vuex.Store<RootState>({
     },
     actions: {
         loadInfo: async function(store: RootContext){
-            const infoResult = await fetch(config.BaseUrl + '/client/client_accounts/info');
+            const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`);
             const infoData: Info = await infoResult.json();
 
             store.commit('setInfo', infoData);
@@ -76,7 +74,6 @@ const store = new Vuex.Store<RootState>({
         localization: localization,
         modals: modals,
         authentication: authentication,
-        socket: socket,
         performers: performers,
         session: session,
         alerts: alerts

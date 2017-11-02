@@ -53,8 +53,23 @@
                 float: right;
                 width: 14px;
                 height: 14px;
-                background: $pallete-12;
                 @include border-radius(14px);
+
+                &.available {
+                    background: $pallete-12;
+                }
+
+                &.busy {
+                    background: $pallete-15;
+                }
+
+                &.peek {
+                    background: $pallete-19;
+                }
+
+                &.offline {
+                    background: $pallete-20;
+                }
             }
         }
 

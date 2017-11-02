@@ -2,6 +2,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import { Performer } from '../../../../models/Performer';
+import config from '../../../../config';
 
 import './sidebar.scss';
 
@@ -30,7 +31,7 @@ export default class Sidebar extends Vue {
     };
 
     get logo(){
-        return this.$store.getters.getLogoLight; 
+        return this.$store.getters.getLogoLight;
     }
 
     mounted(){
@@ -47,7 +48,7 @@ export default class Sidebar extends Vue {
             }
         });
     }
-    
+
 
     onScroll(event: Event){
         if(!event.srcElement){
@@ -92,7 +93,7 @@ export default class Sidebar extends Vue {
     }
 
     async loadRecommended() {
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
             credentials: 'include'
         });
 
@@ -102,7 +103,7 @@ export default class Sidebar extends Vue {
     async loadFavorites(){
         const userId = this.$store.state.authentication.user.id;
 
-        const performerResults = await fetch(`https://www.thuis.nl/api/client/client_accounts/${userId}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
+        const performerResults = await fetch(`${config.BaseUrl}/client/client_accounts/${userId}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
             credentials: 'include'
         });
 
@@ -110,7 +111,7 @@ export default class Sidebar extends Vue {
     }
 
     async loadPeek(){
-        const performerResults = await fetch(`https://www.thuis.nl/api/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
             credentials: 'include'
         });
 

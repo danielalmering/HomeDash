@@ -1,3 +1,4 @@
 {
-    "BaseUrl": "http://www.thuis.nl/api"
+    "BaseUrl": "http://www.thuis.nl/api",
+    "SocketUrl": "wss://socket.thuis.nl/"
 }

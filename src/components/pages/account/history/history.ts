@@ -3,6 +3,8 @@ import Vue from 'vue';
 
 import Pagination from '../../../layout/Pagination';
 
+import config from '../../../../config';
+
 interface HistoryItem {
     date: number;
     amount: number;
@@ -58,7 +60,7 @@ export default class History extends Vue {
     }
 
     async loadHistory(){
-        const historyResult = await fetch(`https://www.thuis.nl/api/client/client_accounts/5789/history?limit=${this.query.limit}&offset=${this.query.offset}&filter=${this.query.filter}`, {
+        const historyResult = await fetch(`${config.BaseUrl}/client/client_accounts/5789/history?limit=${this.query.limit}&offset=${this.query.offset}&filter=${this.query.filter}`, {
             credentials: 'include'
         });
 

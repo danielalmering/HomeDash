@@ -1,0 +1,11 @@
+<div class="tabs__servicescontent mail col-xs-12 col-sm-9">
+    <div class="tabs__servicescontent-method full">
+        <h2>{{ $t('tabs.calltitle') }} <span>Naughty Patty</span> {{ $t('tabs.mailtitle') }}</h2>
+        <form class="form">
+            <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.mailsubject')">
+            <textarea class="col-xs-7 col-sm-9" rows="4" :placeholder="$t('tabs.mailmessage')" ></textarea>
+            <p><i class="fa fa-info" aria-hidden="true"></i>  {{ $t('tabs.mailinfo') }}</p>
+            <button class="btn btn-full btn-large btn-orange" v-t="'tabs.mailsend'"></button>
+        </form>
+    </div>
+</div>

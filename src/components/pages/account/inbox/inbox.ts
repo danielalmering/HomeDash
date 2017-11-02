@@ -3,6 +3,7 @@ import Vue from 'vue';
 
 import Pagination from '../../../layout/Pagination';
 import { User } from '../../../../models/User';
+import config from '../../../../config';
 
 interface Notification {
     id: number;
@@ -40,7 +41,7 @@ export default class Inbox extends Vue {
     async loadInbox(){
         const user: User = this.$store.state.authentication.user;
 
-        const inboxResults = await fetch(`https://www.thuis.nl/api/client/client_accounts/${user.id}/notifications?limit=${this.query.limit}&offset=${this.query.offset}`, {
+        const inboxResults = await fetch(`${config.BaseUrl}/client/client_accounts/${user.id}/notifications?limit=${this.query.limit}&offset=${this.query.offset}`, {
             credentials: 'include'
         });
 

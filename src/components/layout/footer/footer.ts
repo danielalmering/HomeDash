@@ -24,5 +24,4 @@ export default class Footer extends Vue {
     onRouteChange(to: Route, from: Route){
         this.seo = to.name === 'Performers';
     }
-
 }
