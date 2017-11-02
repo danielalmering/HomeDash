@@ -6,7 +6,6 @@
 @import "_flags.scss";
 @import "_icons.scss";
 @import "_mixins.scss";
-// @import "_sprites.scss";
 @import "_settings.scss";
 @import "_buttons.scss";
 @import "_form.scss";
@@ -32,7 +31,7 @@ body {
     @include rem(padding-right, 5px);
 }
 
-main, .account {
+main, .account, .promos {
     height: calc(100vh - 265px);
 }
 
@@ -50,15 +49,53 @@ main, .account {
 
 a {
     cursor: pointer;
-    color: $palette-color-2;
+    color: $pallete-3;
     &:hover {
-        color: $palette-color-1;
+        color: $pallete-3;
         text-decoration: none;
     }
     &:active, &:focus {
-        color: $palette-color-1;
+        color: $pallete-3;
         text-decoration: none;
     }
+}
+
+p {
+    color: $pallete-2;
+}
+
+h1, h3 {
+    font-weight: 400;
+    color: $pallete-2;
+    @include rem(font-size, 24px);
+    @include rem(padding, 20px 0 10px);
+
+    i {
+        color: $pallete-3;
+        @include rem(margin-right, 10px); 
+    }
+}
+
+h3 {
+    @include rem(padding, 0);
+    @include rem(font-size, 22px);
+}
+
+.table {
+    display: table;
+    width: 100%;
+    color: $pallete-2;
+    border: 1px solid rgba(255,255,255,0.1);
+
+    th, td {
+        text-align: left;
+        @include rem(padding, 10px);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-right: 1px solid rgba(255,255,255,0.1);
+        vertical-align: top;
+        i { color: $pallete-3; }
+    }
+
 }
 
 img.resize { width: 100%; }
