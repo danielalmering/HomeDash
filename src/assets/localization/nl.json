@@ -151,6 +151,27 @@
         "currentactions": "Lopende acties",
         "data": "Data"
     },
+    "payment": {
+        "pickpackage": "Kies een pakket",
+        "shoppingcart": "Winkelwagen",
+        "methods": "Betaalmethode",
+        "credits": "credits",
+        "product": "Product",
+        "quanity": "Aantal",
+        "creditscap": "Credits",
+        "price": "Prijs",
+        "paying": "Afrekenen",
+        "paywith": "Betaal met",
+        "subtotal": "Subtotaal",
+        "bonuscredits": "Bonus credits",
+        "subtotalcredits": "Sub credits",
+        "total": "Totaal",
+        "creditsandget": "credits en krijg",
+        "buy": "Koop nog",
+        "extra": "extra",
+        "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
+        "discountcode": "Kortingscode?"
+    },
     "footer": {
         "contact": "Contact",
         "privacypolicy": "Privacybeleid",
