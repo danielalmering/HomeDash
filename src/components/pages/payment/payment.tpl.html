@@ -1,3 +1,158 @@
 <div class="payment">
-    
+    <div class="container-fluid">
+
+        <div class="payment__title">
+            <i class="fa fa-check active"></i> 
+            <span v-t="'payment.pickpackage'"></span>
+        </div>
+
+        <div class="payment__package">
+            <ul >
+                <li class="col-xs-12 col-sm-3">
+                    <div class="payment__package-item">
+                        <h2>XXL</h2>
+                        <img src="../../../assets/images/paymenticon.png">
+                        <span class="time">50 min <i>cammen</i></span>
+                        <span class="credits">5000</span>
+                        <span v-t="'payment.credits'"></span>
+                        <span class="price">€50.00</span>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-3">
+                    <div class="payment__package-item">
+                        <h2>Dubbel</h2>
+                        <img src="../../../assets/images/paymenticon.png">
+                        <span class="time">20 min <i>cammen</i></span>
+                        <span class="credits">2000</span>
+                        <span v-t="'payment.credits'"></span>
+                        <span class="price">€20.00</span>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-3">
+                    <div class="payment__package-item">
+                        <h2>Basic</h2>
+                        <img src="../../../assets/images/paymenticon.png">
+                        <span class="time">10 min <i>cammen</i></span>
+                        <span class="credits">1000</span>
+                        <span v-t="'payment.credits'"></span>
+                        <span class="price">€10.00</span>
+                    </div>
+                </li>
+                <li class="col-xs-12 col-sm-3">
+                    <div class="payment__package-item special">
+                        <h2>Special</h2>
+                        <img src="../../../assets/images/paymenticon.png">
+                        <span class="time">200 min <i>cammen</i></span>
+                        <span class="credits">20000</span>
+                        <span v-t="'payment.credits'"></span>
+                        <span class="price">€20000</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="payment__title">
+            <i class="fa fa-shopping-cart"></i> 
+            <span v-t="'payment.shoppingcart'"></span>
+        </div>
+
+        <div class="payment__cart">
+            <table>
+                <tr>
+                    <th v-t="'payment.product'"></th>
+                    <th v-t="'payment.quanity'"></th>
+                    <th v-t="'payment.creditscap'"></th>
+                    <th v-t="'payment.price'"></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>XXL</td>
+                    <td>1</td>
+                    <td>5000</td>
+                    <td>€50.00</td>
+                    <td><i class="fa fa-times"></i></td>
+                </tr>
+                <tr>
+                    <td>Basic</td>
+                    <td>1</td>
+                    <td>1000</td>
+                    <td>€10.00</td>
+                    <td><i class="fa fa-times"></i></td>
+                </tr>
+            </table>
+
+            <div class="payment__cart-bonus">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <span>{{ $t('payment.buy') }} 2000 {{ $t('payment.creditsandget') }} 20% {{ $t('payment.extra') }}</span>
+            </div>
+
+            <div class="col-xs-12 col-sm-7">
+                <p v-t="'payment.bonusdiscountdesc'"></p>
+                <br />
+
+                <div class="payment__cart-form form">
+                    <input type="text" :placeholder="$t('payment.discountcode')">
+                    <i class="fa fa-share"></i>
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-5">
+                <div class="payment__cart-subtotal">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span v-t="'payment.subtotal'"></span>
+                            <span v-t="'payment.bonuscredits'"></span>
+                            <span v-t="'payment.subtotalcredits'"></span>
+                            <span v-t="'payment.total'"></span>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <span>€100,-</span>
+                            <span>-</span>
+                            <span>100000</span>
+                            <p>€100,-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="payment__title">
+            <i class="fa fa-money"></i> 
+            <span v-t="'payment.methods'"></span>
+        </div>
+
+        <div class="payment__method">
+            <ul>
+                <li class="col-xs-12 col-sm-4">
+                    <div class="payment__method-item" id="IDEAL">
+                        <i></i>
+                        <span></span>
+                    </div>
+                    <div class="payment__method-name">{{ $t('payment.paywith') }} IDeal</div>
+                </li>
+                <li class="col-xs-12 col-sm-4">
+                    <div class="payment__method-item" id="BCMC">
+                        <i></i>
+                        <span></span>
+                    </div>
+                    <div class="payment__method-name">{{ $t('payment.paywith') }} Minster Cash</div>
+                </li>
+                <li class="col-xs-12 col-sm-4">
+                    <div class="payment__method-item special" id="VXSBILL">
+                        <i></i>
+                        <span></span>
+                    </div>
+                    <div class="payment__method-name">{{ $t('payment.paywith') }} Creditcards *</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="payment__finish">
+            <a href="#" class="btn btn-xxl btn-orange" v-t="'payment.paying'"></a>
+        </div>
+
+    </div>
 </div>
