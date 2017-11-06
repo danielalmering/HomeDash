@@ -33,7 +33,6 @@ export default class Newmessage extends Vue {
 
     filterPerformers(){
         this.selectedperf = this.performers.filter((perf: any) => this.selectedusername.substr(0,4) === perf.username.substr(0,4));
-        console.log(this.selectedperf);
     }
 
     async loadPerformers() {
