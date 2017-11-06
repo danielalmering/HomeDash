@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <h1>
+        <div class="row">
+            <div class="col-xs-4 col-sm-3">
+                <i class="fa fa-envelope hidden-xs"></i><span v-t="'nav.info.inbox'"></span>
+            </div>
+            <div class="col-xs-8 col-sm-9">
+                <router-link :to="{ name: 'Inbox'}" class="btn btn-right btn-fa fa-arrow-left"><span class="hidden-xs" v-t="'account.backinbox'"></span></router-link>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </h1>
+    <div class="account__view">
+        <div class="form">
+            <form class="row" v-on:submit.prevent="sendMessage">
+                <div class="col-xs-12">
+                    <div class="form__group">
+                        <label v-t="'account.to'"></label>
+                        <input v-model="selectedusername" type="text" v-on:keyup="filterPerformers()" class="col-xs-12">
+                        <ul class="account__view-list" v-if="selectedperf.length !== 0">
+                            <li v-for="performer in selectedperf" v-on:click="selectPerformer(performer.id, performer.username)">{{ performer.username }}  <i>({{ performer.id }}</i></li>
+                        </ul>
+                    </div>
+                    <div class="form__group">
+                        <label v-t="'account.subject'"></label>
+                        <input v-model="message.subject" type="text" class="col-xs-12">
+                    </div>
+                    <div class="form__group">
+                        <label v-t="'account.message'"></label>
+                        <textarea v-model="message.content"></textarea>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form__group">
+                        <button class="btn btn-orange" v-t="'account.sendmessage'"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

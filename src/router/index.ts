@@ -11,6 +11,7 @@ import Editdata from '../components/pages/account/editdata/editdata';
 import History from '../components/pages/account/history/history';
 import Inbox from '../components/pages/account/inbox/inbox';
 import Readmessage from '../components/pages/account/inbox/readmessage/readmessage';
+import Newmessage from '../components/pages/account/inbox/newmessage/newmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Promos from '../components/pages/promos/promos';
 import Payment from '../components/pages/payment/payment';
@@ -58,6 +59,11 @@ const router = new Router({
                                     path: 'notifications/:performerid/:messageid',
                                     name: 'Readmessage',
                                     component: Readmessage
+                                },
+                                {
+                                    path: 'new-message',
+                                    name: 'Newmessage',
+                                    component: Newmessage
                                 },
                                 {
                                     path: 'gift-voucher',
