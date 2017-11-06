@@ -29,10 +29,10 @@
         </div>
 
         <div class="form">
-            <form class="row">
+            <form class="row" v-on:submit.prevent="sendMessage">
                 <div class="col-xs-12">
                     <div class="form__group">
-                        <textarea></textarea>
+                        <textarea v-model="reply"></textarea>
                     </div>
                 </div>
                 <div class="col-xs-12">
