@@ -144,7 +144,10 @@
         "savegiftvoucher": "Cadeaubon activeren",
         "giftvouchercode": "Code",
         "backinbox": "Terug naar inbox",
-        "by": "Door"
+        "by": "Door",
+        "to": "Versturen naar",
+        "subject": "Onderwerp",
+        "message": "Bericht"
     },
     "promos": {
         "intro": "Welkom bij de actiepagina, middels deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen.",

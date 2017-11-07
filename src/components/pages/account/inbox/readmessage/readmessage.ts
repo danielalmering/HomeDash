@@ -8,7 +8,8 @@ import config from '../../../../../config';
 })
 export default class Readmessage extends Vue {
 
-    message: any[] = [];
+    message: any = { client: { id: 0 }, performer_account: { id: 0 }, subject: "" };
+    reply: string = '';
 
     mounted(){
         this.loadMessage();
@@ -26,5 +27,31 @@ export default class Readmessage extends Vue {
 
         this.message = await messageResults.json();
 
+    }
+
+    async sendMessage(){
+
+        let replymessage = {
+            attachments: [],
+            clientid: { id: this.message.client.id  },
+            content: this.reply,
+            performer_account: { id: this.message.performer_account.id },
+            sent_by: "CLIENT",
+            status: "INBOX",
+            subject: this.message.subject
+        };
+
+        const newmessageResult = await fetch(`${config.BaseUrl}/performer/performer_account/${this.message.performer_account.id}/email`, {
+            method: 'POST',
+            body: JSON.stringify(replymessage),
+            credentials: 'include'
+        });
+
+        if(!newmessageResult.ok){
+            //Show error message
+            return;
+        } else {
+            this.reply = '';
+        }
     }
 }
