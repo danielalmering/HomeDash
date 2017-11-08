@@ -7,8 +7,8 @@ import { getAvatarImage } from '../../../util';
 import { RequestPayload } from '../../../store/session';
 import { SessionType, State } from '../../../models/Sessions';
 
-import PhotoSlider from './photo-slider';
-import FullSlider from './photo-slider-fullscreen';
+import PhotoSlider from './photo-slider.vue';
+import FullSlider from './photo-slider-fullscreen.vue';
 import Tabs from './tabs/tabs';
 import config from '../../../config';
 

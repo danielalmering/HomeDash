@@ -1,7 +1,7 @@
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import Pagination from '../../../layout/Pagination';
+import Pagination from '../../../layout/Pagination.vue';
 
 import config from '../../../../config';
 
