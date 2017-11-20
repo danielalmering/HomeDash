@@ -4,11 +4,307 @@
 
 // Imports
 
-@import "../../styles/_mixins.scss";
-@import "../../styles/_settings.scss";
+@import "../../../styles/_mixins.scss";
+@import "../../../styles/_settings.scss";
 
 // Styling
 
 .payment {
+
+    &__title {
+        display: table;
+        @include rem(padding, 45px 0 40px 0);
+        @include rem(margin, 0px auto );
+        width: auto;
+
+        span {
+            float: left;
+            color: $pallete-2;
+            @include rem(font-size,20px);
+            line-height: 200%;
+        }
+
+        i {
+            float: left;
+            display: table;
+            width: 40px;
+            text-align: center;
+            vertical-align: middle;
+            @include border-radius(5px);
+            color: $pallete-2;
+            border: 2px solid $pallete-3;
+            @include rem(font-size, 20px);
+            @include rem(padding, 8px 2px);
+            @include rem(margin, auto 20px);
+            &.active {
+                background: $pallete-3;
+            }
+        }
+    }
+
+    &__package {
+        display: block;
+        width: 100%;
+        background: $pallete-11;
+
+        ul {
+            display: table;
+            width: 100%;
+            @include rem(padding, 25px 10px 0px 10px);
+            @include rem(margin, 0);
+            list-style: none;
+        }
+        
+
+        &-item {
+            display: block;
+            width: 100%;
+            text-align: center;
+            @include gradient($pallete-0, $pallete-17, vertical);
+            border: 2px solid transparent;
+            border-bottom: 2px solid $pallete-13;
+            @include border-radius(3px);
+            @include rem(margin, 0px 0px 25px 0px);
+            cursor: pointer;
+            &:hover, &.special {
+                border-color: $pallete-3;
+            }
+
+            h2 { 
+                display: block;
+                width: 100%;
+                color: $pallete-20;
+                @include rem(margin, 0);
+                @include rem(padding, 10px 0px);
+                border-bottom: 1px solid $pallete-14;
+            }
+            
+            span {
+                color: $pallete-2;
+            }
+
+            .time {
+                display: block;
+                @include rem(padding, 15px 0px);
+                color: $pallete-3;
+                @include rem(font-size, 28px);
+                line-height: 100%;
+                i {
+                    display: block;
+                    width: 100%;
+                    color: $pallete-2;
+                    font-style: normal;
+                    @include rem(font-size, 20px);
+                }
+            }
+
+            .credits {
+                display: table;
+                @include rem(font-size, 28px);
+                color: $pallete-7;
+                font-weight: 700;
+                @include rem(margin, 0px auto 10px auto);
+                @include rem(padding, 1px 25px);
+                @include border-radius(5px);
+                @include gradient($pallete-17, $pallete-13, vertical);
+                border: 2px solid $pallete-13;
+            }
+
+            .price {
+                display: block;
+                width: 100%;
+                color: $pallete-3;
+                @include rem(font-size, 16px);
+                @include rem(padding, 0px 0px 15px 0px);
+            }
+        }
+    }
+
+    &__cart {
+        display: block;
+        width: 100%;
+        background: $pallete-1;
+
+        p {
+            color: $pallete-18;
+        }
+
+        table {
+            border: 15px solid $pallete-1;
+            width: 100%;
+
+            th {
+                color: $pallete-14;
+                text-align: left;
+                @include rem(font-size, 15px);
+                @include rem(padding, 10px 5px);
+                border-bottom: 2px solid $pallete-0;
+            }
+
+            td {
+                color: $pallete-2;
+                @include rem(padding, 15px 5px);
+                @include rem(font-size, 17px);
+                border-bottom: 2px solid $pallete-0;
+                white-space: nowrap;
+
+                i {
+                    float: right;
+                    color: $pallete-2;
+                    cursor: pointer;
+                    @include rem(font-size, 22px);
+                }
+            }
+        }
+
+        &-bonus {
+            display: table;
+            width: 100%;
+            border: 2px solid $pallete-3;
+            color: $pallete-2;
+            @include rem(font-size, 18px);
+            @include rem(padding, 20px 10px);
+
+            span {
+                display: table-cell;
+            }
+
+            i {
+                display: table-cell;
+                text-align: center;
+                color: $pallete-3;
+                @include rem(font-size, 22px);
+                @include rem(padding, 0px 15px 0px 10px);
+            }
+        }
+
+        &-form {
+            position: relative;
+            width: 50%;
+
+            @include breakpoint(xs) {
+                width: 100%;
+            }
+
+            input { margin: 0 !important;}
+
+            i {
+                position: absolute;
+                top: 0;
+                right: 0px;
+                float: left;
+                display: table;
+                width: 45px;
+                text-align: center;
+                vertical-align: middle;
+                @include border-radius(5px);
+                color: $pallete-2;
+                @include rem(font-size, 20px);
+                @include rem(padding, 12px 2px);
+                background: $pallete-3;
+                cursor: pointer;
+            }
+        }
+
+        &-subtotal {
+            display: table;
+            @include rem(padding, 15px 0px);
+            width: 100%;
+            line-height: 120%;
+
+            span {
+                display: block;
+                width: 100%;
+                color: $pallete-2;
+                @include rem(font-size, 18px);
+                @include rem(padding, 10px 0px);
+            }
+
+            p {
+                color: $pallete-3;
+                @include rem(padding, 0px);
+                @include rem(margin, 6px 0px);
+                @include rem(font-size, 25px);
+                font-weight: 700;
+            }
+        }
+    }
+
+    &__method {
+        display: block;
+        width: 100%;
+        background: $pallete-11;
+
+        ul {
+            display: table;
+            width: 100%;
+            @include rem(padding, 25px 10px 0px 10px);
+            @include rem(margin, 0);
+            list-style: none;
+        }
+
+        &-item {
+            display: block;
+            position: relative;
+            width: 100%;
+            min-height: 100px;
+            text-align: center;
+            @include rem(padding, 9.5px 0px);
+            @include gradient($pallete-0, $pallete-17, vertical);
+            border: 2px solid transparent;
+            border-bottom: 2px solid $pallete-13;
+            @include border-radius(3px);
+            cursor: pointer;
+            &:hover, &.special {
+                border-color: $pallete-3;
+                i {
+                    position: absolute;
+                    top: -20px;
+                    right: -20px;
+                    width: 40px;
+                    background: $pallete-3;
+                    @include border-radius(40px);
+                    @include rem(padding, 9.5px 0px);
+                    &:before {
+                        content: "\f00c";
+                        font: normal normal normal 18px/1 FontAwesome;
+                        color: $pallete-2;
+                    }
+                }
+            }
+
+            span {
+                display: block;
+                margin: 0 auto;
+                width: 120px;
+                height:75px;
+                background: url('../../../assets/images/paymentmethods.png');
+            }
+        }
+
+        #IDEAL span     { background-position: 0px 0px; }
+        #BCMC span      { background-position: 0px -75px; }
+        #VXSBILL span   { background-position: 0px -150px; }
+
+        &-name {
+            display: block;
+            width: 100%;
+            text-align: center;
+            color: $pallete-7;
+            @include rem(font-size, 13px);
+            @include rem(padding, 15px 0px);
+        }
+
+
+    }
+
+    &__finish {
+        display: block;
+        width: 100%;
+        text-align: center;
+        @include rem(margin-top, 35px);
+        border-top: 2px solid $pallete-13;
+        @include rem(padding, 35px 0px);
+    }
 
 }

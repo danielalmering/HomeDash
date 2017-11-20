@@ -6,7 +6,7 @@
             </div>
             <div class="col-xs-8 col-sm-9">
                 <a class="btn btn-right btn-fa fa-trash-o"><span class="hidden-xs" v-t="'account.removemessage'"></span></a>
-                <a class="btn btn-orange btn-right btn-fa fa-envelope-o rowmar"><span class="hidden-xs" v-t="'account.newmessage'"></span></a>
+                <router-link :to="{ name: 'Newmessage' }" class="btn btn-orange btn-right btn-fa fa-envelope-o rowmar"><span class="hidden-xs" v-t="'account.newmessage'"></span></router-link>
             </div>
             <div class="clearfix"></div>
         </div>

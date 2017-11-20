@@ -11,28 +11,23 @@
         </div>
     </h1>
     <div class="account__view">
-        <h3>{{ message.subject }}</h3>
-
-        <div class="colum"> 
-            <div class="col-xs-3 col-sm-1">
-                <div class="row">
-                    <img class="resize" :src="'//img.thuis.nl/files/pimg/152/medium/' + message.performer_account.avatar.name">
-                </div>
-            </div>
-            <div class="col-xs-9 col-sm-11">
-                <div class="row">
-                    <span class="col-xs-12 col-sm-6 text-left">{{ $t('account.by') }}: <i>{{ message.performer_account.nickname }}</i></span>
-                    <span class="col-xs-12 col-sm-6 text-left">{{ message.date | date }}</span>
-                    <p class="col-xs-12">{{ message.content }}</p>
-                </div>
-            </div>
-        </div>
-
         <div class="form">
             <form class="row" v-on:submit.prevent="sendMessage">
                 <div class="col-xs-12">
                     <div class="form__group">
-                        <textarea v-model="reply"></textarea>
+                        <label v-t="'account.to'"></label>
+                        <input v-model="selectedusername" type="text" v-on:keyup="filterPerformers()" class="col-xs-12">
+                        <ul class="account__view-list" v-if="selectedperf.length !== 0">
+                            <li v-for="performer in selectedperf" v-on:click="selectPerformer(performer.id, performer.username)">{{ performer.username }}  <i>({{ performer.id }}</i></li>
+                        </ul>
+                    </div>
+                    <div class="form__group">
+                        <label v-t="'account.subject'"></label>
+                        <input v-model="message.subject" type="text" class="col-xs-12">
+                    </div>
+                    <div class="form__group">
+                        <label v-t="'account.message'"></label>
+                        <textarea v-model="message.content"></textarea>
                     </div>
                 </div>
                 <div class="col-xs-12">
@@ -42,7 +37,6 @@
                 </div>
             </form>
         </div>
-
     </div>
 </div>
 

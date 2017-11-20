@@ -152,6 +152,26 @@
             }
         }
 
+        &-list {
+            float: left;
+            clear: both;
+            width: 100%;
+            list-style: none;
+            @include rem(padding, 0px 0px);
+            background: $pallete-11;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            li {
+                color: $pallete-18; 
+                @include rem(padding, 10px 10px 10px 10px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                &:last-child { border-bottom: none; }
+                cursor: pointer;
+                &:hover {
+                    color: $pallete-3; 
+                }
+            }
+        }
+
         @include breakpoint(xs) {
             padding: 0 !important;
         }
