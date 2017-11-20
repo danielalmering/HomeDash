@@ -147,7 +147,11 @@
         "by": "Door",
         "to": "Versturen naar",
         "subject": "Onderwerp",
-        "message": "Bericht"
+        "message": "Bericht",
+        "voucher": {
+            "successMessage": "De code is geactiveerd en je hebt je credits ontvangen",
+            "errorMessage": "Deze code was onjuist of is al gebruikt, probeer het opnieuw"
+        }
     },
     "promos": {
         "intro": "Welkom bij de actiepagina, middels deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen.",
@@ -183,7 +187,9 @@
         "promos": "Acties",
         "webcam": "Webcammodel worden?",
         "webcamurl": "http://www.club-sense.nl",
-        "copyright": "Copyright 2017"
+        "copyright": "Copyright 2017",
+        "cookies": "De website werkt het beste met cookies. Zo kunnen we de website verbeteren en je instellingen onthouden.",
+        "cookiesAccept": "Oké, ik snap het"
     },
     "services": {
         "VOYEURCLIENT": "Voyeur",
