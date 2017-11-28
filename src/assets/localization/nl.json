@@ -147,7 +147,9 @@
         "by": "Door",
         "to": "Versturen naar",
         "subject": "Onderwerp",
-        "message": "Bericht"
+        "message": "Bericht",
+        "successnewmessage": "Het bericht is succesvol verstuurd!",
+        "errornewmessage": "Het bericht is niet succesvol verstuurd!"
     },
     "promos": {
         "intro": "Welkom bij de actiepagina, middels deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen.",

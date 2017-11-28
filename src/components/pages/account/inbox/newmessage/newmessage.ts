@@ -46,6 +46,15 @@ export default class Newmessage extends Vue {
     async sendMessage(){
         const user: User = this.$store.state.authentication.user;
 
+        if(!this.message.content || !this.selectedid || !this.message.subject){
+            this.$store.dispatch('openMessage', {
+                content: 'account.errornewmessage',
+                class: 'error'
+            });
+
+            return;
+        }
+
         let message = {
             clientid: { id: user.id },
             content: this.message.content,
@@ -61,9 +70,13 @@ export default class Newmessage extends Vue {
             credentials: 'include'
         });
 
-        if(!newmessageResult.ok){
-            //Show error message
-            return;
+        if(newmessageResult.ok){
+            this.$store.dispatch('openMessage', {
+                content: 'account.successnewmessage',
+                class: 'success'
+            });
+
+            this.message = { subject: "", content: "" };
         }
     }
 
