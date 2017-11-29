@@ -40,17 +40,11 @@ export default class Inbox extends Vue {
     }
 
     async removeMessages(){
-        let deletedmessages = [];
-
-        for (var i in this.notifications) {
-            if (this.notifications[i].checked) {
-                deletedmessages.push(this.notifications[i]);
-            }
-        }
+        const deletedMessages = this.notifications.filter(n => n.checked);
 
         const deleteResult = await fetch(`${config.BaseUrl}/client/client_accounts/notifications/group`, {
             method: 'DELETE',
-            body: JSON.stringify({ notifications : deletedmessages }),
+            body: JSON.stringify({ notifications : deletedMessages }),
             credentials: 'include'
         });
 
@@ -59,8 +53,6 @@ export default class Inbox extends Vue {
                 content: 'account.messageremoval.errorRemove',
                 class: 'error'
             });
-
-            return;
         } else {
             this.$store.dispatch('openMessage', {
                 content: 'account.messageremoval.successRemove',
