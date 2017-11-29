@@ -12,6 +12,7 @@ interface Notification {
     status: string;
     subject: string;
     type: string;
+    checked: boolean;
 }
 
 @Component({
@@ -23,7 +24,6 @@ interface Notification {
 export default class Inbox extends Vue {
 
     notifications: Notification[] = [];
-    selectedMessages: any[] = [];
     total: number = 0;
 
     query = {
@@ -33,22 +33,42 @@ export default class Inbox extends Vue {
 
     mounted(){
         this.loadInbox();
-    }
+    }   
 
     pageChanged(){
         this.loadInbox();
     }
 
-    selectMessages(id: number){
-        // if(this.selectedMessages.indexOf(id) >= 0) == false){
+    async removeMessages(){
+        let deletedmessages = [];
 
-        // }
+        for (var i in this.notifications) {
+            if (this.notifications[i].checked) {
+                deletedmessages.push(this.notifications[i]);
+            }
+        }
 
-        console.log(this.selectedMessages);
-    }
+        const deleteResult = await fetch(`${config.BaseUrl}/client/client_accounts/notifications/group`, {
+            method: 'DELETE',
+            body: JSON.stringify({ notifications : deletedmessages }),
+            credentials: 'include'
+        });
 
-    removeMessage(){
+        if(!deleteResult.ok){
+            this.$store.dispatch('openMessage', {
+                content: 'account.messageremoval.errorRemove',
+                class: 'error'
+            });
 
+            return;
+        } else {
+            this.$store.dispatch('openMessage', {
+                content: 'account.messageremoval.successRemove',
+                class: 'success'
+            });
+
+            this.pageChanged();
+        }
     }
 
     async loadInbox(){
@@ -63,6 +83,8 @@ export default class Inbox extends Vue {
         }
 
         const data = await inboxResults.json();
+
+        data.notifications.forEach( (notification:Notification) => notification.checked = false );
 
         this.notifications = data.notifications;
         this.total = data.total;

@@ -48,7 +48,7 @@ export default class Newmessage extends Vue {
 
         if(!this.message.content || !this.selectedid || !this.message.subject){
             this.$store.dispatch('openMessage', {
-                content: 'account.errornewmessage',
+                content: 'account.newmessages.errorMessage',
                 class: 'error'
             });
 
@@ -72,7 +72,7 @@ export default class Newmessage extends Vue {
 
         if(newmessageResult.ok){
             this.$store.dispatch('openMessage', {
-                content: 'account.successnewmessage',
+                content: 'account.newmessages.successMessage',
                 class: 'success'
             });
 

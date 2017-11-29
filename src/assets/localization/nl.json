@@ -152,8 +152,14 @@
             "successMessage": "De code is geactiveerd en je hebt je credits ontvangen",
             "errorMessage": "Deze code was onjuist of is al gebruikt, probeer het opnieuw"
         },
-        "successnewmessage": "Het bericht is succesvol verstuurd!",
-        "errornewmessage": "Het bericht is niet succesvol verstuurd!"
+        "newmessages": {
+            "successMessage": "Het bericht is succesvol verstuurd!",
+            "errorMessage": "Het bericht is niet succesvol verstuurd!"
+        },
+        "messageremoval": {
+            "successRemove": "De geselecteerde berichten zijn succesvol verwijderd",
+            "errorRemove": "De geselecteerde berichten zijn niet verwijderd!"
+        }
     },
     "promos": {
         "intro": "Welkom bij de actiepagina, middels deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen.",

@@ -14,8 +14,8 @@
     <div class="account__view">
         <table class="account__view-table">
             <tr v-for="(notification, index) in notifications" :key="notification.id" :class="{ 'even': index % 2 === 0 }">
-                <td width="5%">
-                    <i v-on:click="selectMessages(notification.id)" class="fa fa-square-o"></i>
+                <td width="5%" v-on:click="notification.checked = !notification.checked">
+                    <i class="fa" :class="{ 'fa-square-o': !notification.checked, 'fa-check-square-o': notification.checked }"></i>
                 </td>
                 <td width="50%">
                     <router-link :to="{ name: 'Readmessage', params: { messageid: notification.id, performerid: notification.performer_id }}">
