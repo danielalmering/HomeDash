@@ -1,5 +1,6 @@
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
+import { Route } from 'vue-router';
 
 import './nav.scss';
 
@@ -14,6 +15,11 @@ export default class Nav extends Vue {
     searchQuery: string = '';
 
     showMenu: boolean = false;
+
+    @Watch('$route')
+    onRouteChange(to: Route, from: Route){
+        this.showMenu = false;
+    }
 
     get authenticated(){
         return this.$store.getters.isLoggedIn;
@@ -32,7 +38,7 @@ export default class Nav extends Vue {
     }
 
     get logo(){
-        return this.$store.getters.getLogoDark; 
+        return this.$store.getters.getLogoDark;
     }
 
     changeLanguage(language: string){

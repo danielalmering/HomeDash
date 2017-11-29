@@ -21,11 +21,9 @@ export default class VideoChat extends Vue {
 
     //Data
     isEnding: boolean = false;
-    chatMessages: any[] = [];
 
     player: any;
     intervalTimer: number;
-    chatSocketRef: number;
 
     get performer(){
         return this.$store.state.session.activePerformer;
@@ -79,10 +77,6 @@ export default class VideoChat extends Vue {
         this.intervalTimer = setInterval(async () => {
             await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
         }, 1000);
-
-        this.chatSocketRef = notificationSocket.subscribe('msg', (content) => {
-            this.chatMessages.push(content);
-        });
     }
 
     close(){
@@ -97,8 +91,6 @@ export default class VideoChat extends Vue {
 
         //Send end API call and update state to ending
         this.$store.dispatch('end', 'PLAYER_END');
-
-        notificationSocket.unsubscribe(this.chatSocketRef);
 
         if(!this.player)
             return;
