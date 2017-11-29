@@ -15,10 +15,13 @@ export default class Nav extends Vue {
     searchQuery: string = '';
 
     showMenu: boolean = false;
+    showAccount: boolean = false;
+    showLang: boolean = false;
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
         this.showMenu = false;
+        this.showAccount = false;
     }
 
     get authenticated(){
@@ -43,6 +46,7 @@ export default class Nav extends Vue {
 
     changeLanguage(language: string){
         this.$store.dispatch('setLanguage', language);
+        this.showLang = true;
     }
 
     search(){
@@ -54,12 +58,12 @@ export default class Nav extends Vue {
         }
     }
 
-    login(){
+    account(){
         if(this.authenticated){
-            return;
+            this.showAccount = !this.showAccount;
+        } else {
+            this.$store.dispatch('displayModal', 'login');            
         }
-
-        this.$store.dispatch('displayModal', 'login');
     }
 
     logout(){
