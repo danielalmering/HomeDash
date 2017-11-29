@@ -23,6 +23,7 @@ interface Notification {
 export default class Inbox extends Vue {
 
     notifications: Notification[] = [];
+    selectedMessages: any[] = [];
     total: number = 0;
 
     query = {
@@ -36,6 +37,18 @@ export default class Inbox extends Vue {
 
     pageChanged(){
         this.loadInbox();
+    }
+
+    selectMessages(id: number){
+        // if(this.selectedMessages.indexOf(id) >= 0) == false){
+
+        // }
+
+        console.log(this.selectedMessages);
+    }
+
+    removeMessage(){
+
     }
 
     async loadInbox(){
