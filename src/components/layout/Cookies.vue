@@ -1,10 +1,11 @@
 <template>
     <div class="cookies">
-        <div class="container">
-            <p class="cookies__text col-md-8" v-t="'footer.cookies'"></p>
-
-            <div class="col-md-4">
-                <button v-on:click="acceptCookie" class="btn btn-green">{{ $t('footer.cookiesAccept') }}</button>
+        <div class="container-fluid">
+            <div class="cookies__text">
+                <p v-t="'footer.cookies'"></p>
+            </div>
+            <div class="cookies__btn">
+                <a v-on:click="acceptCookie" class="btn btn-green btn-full">{{ $t('footer.cookiesAccept') }}</a>
             </div>
         </div>
     </div>
@@ -39,15 +40,44 @@ export default {
 
 .cookies {
     position: fixed;
+    display: table;
     bottom: 0;
     left: 0;
     width: 100%;
+    @include rem(padding, 0px 10px);
 
     background-color: $pallete-11;
-    height: 50px;
 
     &__text {
+        display: table-cell;
+        width: 70%;
         color: $pallete-2;
+        @include rem(padding, 5px 10px);
+
+        @include breakpoint(xs) {
+            display: table;
+            width: 100%;
+            @include rem(padding, 5px 10px 0px 10px);
+        }
+    }
+
+    &__btn {
+        display: table-cell;
+        width: 30%;
+        vertical-align: middle;
+        @include rem(padding, 5px 10px);
+
+        @include breakpoint(xs) {
+            display: table;
+            width: 100%;
+            @include rem(padding, 0px 10px 5px 10px);
+        }
+
+        .btn {
+            display: table;
+            @include rem(margin, 0 auto);
+            max-width: 250px;
+        }
     }
 }
 

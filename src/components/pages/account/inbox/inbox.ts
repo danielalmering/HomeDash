@@ -12,6 +12,7 @@ interface Notification {
     status: string;
     subject: string;
     type: string;
+    checked: boolean;
 }
 
 @Component({
@@ -32,10 +33,34 @@ export default class Inbox extends Vue {
 
     mounted(){
         this.loadInbox();
-    }
+    }   
 
     pageChanged(){
         this.loadInbox();
+    }
+
+    async removeMessages(){
+        const deletedMessages = this.notifications.filter(n => n.checked);
+
+        const deleteResult = await fetch(`${config.BaseUrl}/client/client_accounts/notifications/group`, {
+            method: 'DELETE',
+            body: JSON.stringify({ notifications : deletedMessages }),
+            credentials: 'include'
+        });
+
+        if(!deleteResult.ok){
+            this.$store.dispatch('openMessage', {
+                content: 'account.messageremoval.errorRemove',
+                class: 'error'
+            });
+        } else {
+            this.$store.dispatch('openMessage', {
+                content: 'account.messageremoval.successRemove',
+                class: 'success'
+            });
+
+            this.pageChanged();
+        }
     }
 
     async loadInbox(){
@@ -50,6 +75,8 @@ export default class Inbox extends Vue {
         }
 
         const data = await inboxResults.json();
+
+        data.notifications.forEach( (notification:Notification) => notification.checked = false );
 
         this.notifications = data.notifications;
         this.total = data.total;
