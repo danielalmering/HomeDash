@@ -3,7 +3,7 @@
         <modal-wrapper></modal-wrapper>
         <router-view/>
         <alerts></alerts>
-        <cookies v-on:close="displayCookies = false"></cookies>
+        <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
     </div>
 </template>
 
