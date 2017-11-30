@@ -15,6 +15,10 @@ export interface Info {
         happy_hour: {
             phone_number: string;
             phone_cpm: number;
+        },
+        happy_days: {
+            phone_number: string;
+            phone_cpm: number;
         }
     },
     phone_cpm: number;
