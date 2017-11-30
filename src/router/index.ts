@@ -15,6 +15,7 @@ import Newmessage from '../components/pages/account/inbox/newmessage/newmessage'
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Promos from '../components/pages/promos/promos';
 import Payment from '../components/pages/payment/payment';
+import Contact from '../components/pages/contact/contact';
 import VideoChat from '../components/pages/videochat/videochat';
 
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
@@ -81,6 +82,11 @@ const router = new Router({
                             path: 'payment',
                             name: 'Payment',
                             component: Payment
+                        },
+                        {
+                            path: 'contact',
+                            name: 'Contact',
+                            component: Contact
                         },
                         {
                             path: 'favourites',

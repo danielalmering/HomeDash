@@ -187,6 +187,17 @@
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
         "discountcode": "Kortingscode?"
     },
+    "contact": {
+        "title": "Contact",
+        "desc": "Als je een vraag of opmerking hebt over dit platform, vul deze dan hieronder in. Indien wenselijk dan nemen wij zo spoedig mogelijk contact met je op. Ook staan wij open voor tips en verbeteringen van onze dienstverlening. <br><br> Probeer daarin zo uitgebreid en zorgvuldig mogelijk te omschrijven wat er precies gebeurt met daarbij vermelding van de datum en het tijdstip. Probeer ook aan te geven met welke dame je contact hebt gehad (naam en advertentienummer). Probeer dan ook aan te geven welke internetprovider (bv KPN, UPC, enz), browser en versie (bv Internet Explorer 8, Chrome 23, enz), besturingssysteem  en versie (bv Windows XP, OS X, enz) en welke versie Flash player je gebruikt (bv Playerversie 11.3.376.12 bij IE 8, 11.5.31.2 bij Chrome, enz).",
+        "send": "Versturen",
+        "subject": "Onderwerp:*",
+        "email": "Email:*",
+        "name": "Name:*",
+        "message": "Bericht:*",
+        "errorSend": "Er is een Fout opgetreden bij het verzenden",
+        "successSend": "Bericht is met succes verzonden"
+    },
     "footer": {
         "contact": "Contact",
         "privacypolicy": "Privacybeleid",

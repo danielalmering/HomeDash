@@ -6,7 +6,7 @@
         <div class="footer__copyright">
             <div class="container-fluid">
                 <ul>
-                    <li><a v-t="'footer.contact'"></a></li>
+                    <li><router-link :to="{ name: 'Contact'}" v-t="'contact.title'"></router-link></a>
                     <li><a v-t="'footer.privacypolicy'"></a></li>
                     <li><a v-t="'footer.terms'"></a></li>
                     <li><a v-t="'footer.promos'"></a></li>
