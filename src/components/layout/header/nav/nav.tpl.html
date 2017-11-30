@@ -29,7 +29,7 @@
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
 
                     <a class="nav__info-item nav__info-item--last">
-                        <span v-on:click="account">
+                        <span v-on:click="authenticated ? toggleAccountMenu : login">
                             <i class="fa fa-user"></i>
                             <span v-t="authenticated ? 'nav.info.account' : 'nav.info.login'"></span>
                         </span>

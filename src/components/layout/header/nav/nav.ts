@@ -58,12 +58,12 @@ export default class Nav extends Vue {
         }
     }
 
-    account(){
-        if(this.authenticated){
-            this.showAccount = !this.showAccount;
-        } else {
-            this.$store.dispatch('displayModal', 'login');            
-        }
+    toggleAccountMenu(){
+        this.showAccount = !this.showAccount;
+    }
+
+    login(){
+        this.$store.dispatch('displayModal', 'login');  
     }
 
     logout(){
