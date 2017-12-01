@@ -4,6 +4,42 @@
             <canvas class="jsmpeg"></canvas>
         </div>
     </div>
+    <div class="videochat__broadcast">
+        <div class="videochat__broadcast-object">
+            <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
+            <broadcast v-if="broadcasting.cam"
+                v-on:stateChange="broadcastStateChange"
+                v-on:error="broadcastError"
+                :wowza="wowza" 
+                :publishStream="streamName" 
+                :mic="broadcasting.mic" 
+                :cam="broadcasting.cam" 
+                :quality="1" >
+            </broadcast>
+        </div>
+        <ul class="videochat__broadcast-buttons">
+            <li><a v-on:click="toggleCam" class="fa fa-video-camera" :class="{ active:broadcasting.cam }" ></a></li>
+            <li v-if="broadcasting.cam"><a v-on:click="toggleMic" class="fa fa-microphone" :class="{ active:broadcasting.mic }"></a></li>
+            <li v-if="broadcasting.cam"><a v-on:click="toggleSettings" class="fa fa-cogs" :class="{ active:broadcasting.settings }"></a></li>
+        </ul>
+    </div>
+    <div class="videochat__devices" v-if="broadcasting.settings">
+        {{$t('camera')}}:
+        <select v-model="broadcasting.cam" v-on:change="setCamera">
+            <option v-for="camera in cameras">
+                {{ camera.name }}
+            </option>
+        </select>
+        {{$t('microfoon')}}:
+        <select v-model="broadcasting.mic" v-on:change="setMicrophone">
+            <option v-for="mic in microphones">
+                {{ mic.name }}
+            </option>
+        </select>
+        <p>Waar worden status en fouten eigenlijk weergegeven?</p>
+        <p v-for="message in stateMessages">{{ message }}</p>
+    </div>
+
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
     <div class="videochat__chat">
         <div class="videochat__chat-top">
