@@ -34,10 +34,26 @@ export default class Sidebar extends Vue {
         return this.$store.getters.getLogoLight;
     }
 
+    get authenticated(){
+        return this.$store.getters.isLoggedIn;
+    }
+
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
     mounted(){
         this.query.performer = this.$route.params.id;
 
         this.loadPerformers();
+    }
+
+    login(){
+        this.$store.dispatch('displayModal', 'login');  
+    }
+
+    account(){
+        this.$router.push({ name: 'Editdata' });
     }
 
     goToPerformer(id: number){
