@@ -44,6 +44,64 @@
         }
     }
 
+    &__broadcast{
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        z-index: 1;
+
+        &-object{
+            width: 305px;
+            height: 229px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 5px;
+            float: left;
+            text-align: center;
+            overflow: hidden;
+
+            .btn{
+                margin-top: 30%;
+            }
+
+            div{
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        ul{
+            float: right;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        li{
+            list-style: none;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .fa{
+            font-size: 20px;
+            color: white;
+        }
+
+        .active{
+            color: $pallete-3;
+        }
+
+
+    }
+
+    &__devices{
+        background-color: greenyellow;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 3;
+        padding: 10px;
+    }
+
     &__close {
         position: absolute;
         z-index: 2;
