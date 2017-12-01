@@ -55,7 +55,8 @@
         "recommended": "Aanbevolen",
         "peek": "Meekijken",
         "favorite": "Favoriet",
-        "noperformers": "Geen performers"
+        "noperformers": "Geen performers",
+        "currentcredits": "Huidig saldo"
     },
     "profile": {
         "favorite-add": "Maak favoriet",

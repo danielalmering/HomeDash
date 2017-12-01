@@ -4,6 +4,12 @@
         <router-link :to="{ path: '/'}"><img :src="logo" alt=""></router-link>
     </div>
 
+    <div class="sidebar__user" v-on:click="authenticated ? account() : login()">
+        <span class="sidebar__user-name">{{ authenticated ? user.username : 'Anoniem' }}</span>
+        <span>{{ $t('sidebar.currentcredits') }}</span>
+        <span class="sidebar__user-credits">{{ authenticated ? user.credits : '0' }}</span>
+    </div>
+
     <div class="sidebar__search form">
         <form v-on:submit.prevent="search()">
             <input type="text" class="searching" name="search" v-model="query.search" :placeholder="$t('nav.search.input')">
