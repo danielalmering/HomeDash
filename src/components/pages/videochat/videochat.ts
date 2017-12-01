@@ -23,11 +23,9 @@ export default class VideoChat extends Vue {
 
     //Data
     isEnding: boolean = false;
-    chatMessages: any[] = [];
 
     player: jsmpeg.Player;
     intervalTimer: number;
-    chatSocketRef: number;
 
     broadcasting: {cam:boolean | string, mic:boolean | string, settings:boolean} = {cam:false, mic:false, settings:false};
     stateMessages:string[] = [];
@@ -102,10 +100,6 @@ export default class VideoChat extends Vue {
         this.intervalTimer = setInterval(async () => {
             await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
         }, 1000);
-
-        this.chatSocketRef = notificationSocket.subscribe('msg', (content) => {
-            this.chatMessages.push(content);
-        });
     }
 
     close(){
@@ -187,8 +181,6 @@ export default class VideoChat extends Vue {
 
         //Send end API call and update state to ending
         this.$store.dispatch('end', 'PLAYER_END');
-
-        notificationSocket.unsubscribe(this.chatSocketRef);
 
         if(!this.player)
             return;

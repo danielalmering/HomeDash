@@ -3,6 +3,7 @@
         <modal-wrapper></modal-wrapper>
         <router-view/>
         <alerts></alerts>
+        <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
     </div>
 </template>
 
@@ -10,13 +11,20 @@
 import modalWrapper from './components/modal/modal-wrapper';
 import notificationSocket from './socket';
 import alerts from './components/layout/Alerts';
+import cookies from './components/layout/Cookies';
 
 import config from './config';
 
 export default {
     components: {
         modalWrapper: modalWrapper,
-        alerts: alerts
+        alerts: alerts,
+        cookies: cookies
+    },
+    data: function(){
+        return {
+            displayCookies: true
+        };
     },
     name: 'app',
     created: function(){
@@ -30,6 +38,10 @@ export default {
             content: 'Welkom op het nieuwe thuis',
             translate: false
         });
+
+        const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
+
+        this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
     }
 };
 </script>

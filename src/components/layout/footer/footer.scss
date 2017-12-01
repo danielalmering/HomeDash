@@ -12,6 +12,7 @@
 .footer {
     @include rem(padding-top, 20px); 
     &__primary {
+        display: table;
         @include rem(padding, 40px 30px);
         text-align: center;
         color: $pallete-7;

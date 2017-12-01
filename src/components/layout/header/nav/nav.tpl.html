@@ -29,12 +29,11 @@
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
 
                     <a class="nav__info-item nav__info-item--last">
-                        <span v-on:click="login">
+                        <span v-on:click="authenticated ? toggleAccountMenu() : login()">
                             <i class="fa fa-user"></i>
                             <span v-t="authenticated ? 'nav.info.account' : 'nav.info.login'"></span>
-                            <!-- <span class="hidden-xs">{{ authenticated ? user.username : $t('nav.info.login') }}</span> -->
                         </span>
-                        <div class="nav__info-subitems" v-if="authenticated">
+                        <div class="nav__info-subitems" v-if="authenticated && showAccount">
                             <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'"></router-link>
                             <router-link class="subitem" :to="{ name: 'History'}" v-t="'nav.info.history'"></router-link>
@@ -44,12 +43,12 @@
                         </div>
                     </a>
 
-                    <a class="nav__info-item nav__info-item--last">
+                    <a class="nav__info-item nav__info-item--last" v-on:click="showLang = !showLang">
                         <span>
                             <i :class="'flag flag-' + language"></i>
                             <span class="visible-xs" v-t="'nav.info.lang'"></span>
                         </span>
-                        <ul class="nav__info-subitems">
+                        <ul class="nav__info-subitems" v-if="showLang">
                             <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
                                 <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
                             </li>

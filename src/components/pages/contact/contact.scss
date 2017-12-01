@@ -1,0 +1,48 @@
+//
+// Contact
+// --------------------------------------------------
+
+// Imports
+
+@import "../../../styles/_mixins.scss";
+@import "../../../styles/_settings.scss";
+
+// Styling
+
+.contact {
+
+    &__title {
+        display: table;
+        @include rem(padding, 45px 0 40px 0);
+        @include rem(margin, 0px auto );
+        width: auto;
+
+        span {
+            float: left;
+            color: $pallete-2;
+            @include rem(font-size,20px);
+            line-height: 200%;
+        }
+
+        i {
+            float: left;
+            display: table;
+            width: 40px;
+            text-align: center;
+            vertical-align: middle;
+            @include border-radius(5px);
+            color: $pallete-2;
+            border: 2px solid $pallete-3;
+            @include rem(font-size, 20px);
+            @include rem(padding, 8px 2px);
+            @include rem(margin, auto 20px);
+            &.active {
+                background: $pallete-3;
+            }
+        }
+    }
+
+    &__content {
+        @include rem(padding, 0px 10px);
+    }
+}
