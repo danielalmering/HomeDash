@@ -2,12 +2,13 @@ import Vue from 'vue';
 import jsmpeg from 'jsmpeg';
 
 import { Component, Prop } from 'vue-property-decorator';
-import { State } from '../../../models/Sessions';
+import { State, SessionType } from '../../../models/Sessions';
 import { SessionData } from '../../../store/Session';
 
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
 import Broadcast, { Caster } from './broadcast/broadcast';
+import View from './view/view';
 import config from '../../../config';
 
 import './videochat.scss';
@@ -16,7 +17,8 @@ import './videochat.scss';
     template: require('./videochat.tpl.html'),
     components: {
         chat: Chat,
-        broadcast: Broadcast
+        broadcast: Broadcast,
+        viewer:View
     }
 })
 export default class VideoChat extends Vue {
@@ -34,6 +36,18 @@ export default class VideoChat extends Vue {
     cameras:{name:string, selected:boolean}[];
     microphones:{name:string, selected:boolean}[];
 
+    get sessionType():SessionType{
+        return this.$store.state.session.activeSessionType
+    }
+
+    get streamTransportType():string | undefined{
+        if (!this.$store.state.session.activeSessionData){
+            return undefined;
+        }
+
+        return this.$store.state.session.activeSessionData.streamTransportType;  
+    }
+
     get wowza():string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
@@ -41,11 +55,18 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionData.wowza;
     }
 
-    get streamName():string | undefined{
+    get publishStream():string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
         return this.$store.state.session.activeSessionData.publishStream;
+    }
+
+    get playStream():string | undefined{
+        if (!this.$store.state.session.activeSessionData){
+            return undefined;
+        }
+        return this.$store.state.session.activeSessionData.playStream;
     }
 
     get performer(){
@@ -71,24 +92,24 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        const videoUrl = `${config.JsmpegUrl}?stream=${sessionData.playStream}&token=${sessionData.wowza.split('?token=')[1]}&hash=5B9F45B17A77831EA6C5346464BD2`;
-        const video = <HTMLCanvasElement>this.$el.getElementsByClassName('jsmpeg')[0];
+        // const videoUrl = `${config.JsmpegUrl}?stream=${sessionData.playStream}&token=${sessionData.wowza.split('?token=')[1]}&hash=5B9F45B17A77831EA6C5346464BD2`;
+        // const video = <HTMLCanvasElement>this.$el.getElementsByClassName('jsmpeg')[0];
 
-        const player = new jsmpeg.Player(videoUrl, {
-            canvas: video,
-            protocols: 'videoJSMPEG',
-            audio: true,
-            streaming: true,
-            pauseWhenHidden: false,
-            disableGl: false,
-            playingStateChange: function(val){
-                if(val === true){
-                    self.$store.dispatch('setActive');
-                }
-            }
-        });
+        // const player = new jsmpeg.Player(videoUrl, {
+        //     canvas: video,
+        //     protocols: 'videoJSMPEG',
+        //     audio: true,
+        //     streaming: true,
+        //     pauseWhenHidden: false,
+        //     disableGl: false,
+        //     playingStateChange: function(val){
+        //         if(val === true){
+        //             self.$store.dispatch('setActive');
+        //         }
+        //     }
+        // });
 
-        this.player = player;
+        // this.player = player;
 
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
             if(newValue === State.Ending && !this.isEnding){
@@ -151,6 +172,17 @@ export default class VideoChat extends Vue {
     broadcastError(message:string){
         this.stateMessages.push(message);
     }
+
+    viewerStateChange(state:string){
+        console.log(`yoyo dit is de state: ${state}`);
+        if (state == 'active'){
+            this.$store.dispatch('setActive');
+        }
+    }
+
+    viewerError(message:string){
+        console.log(message);
+    }
  
     toggleSettings(){
         this.broadcasting.settings = !this.broadcasting.settings;
@@ -165,7 +197,6 @@ export default class VideoChat extends Vue {
             }
 
             this.microphones = flash.getMicrophones();
-            console.log(this.microphones);
             selected = this.microphones.find( mic=>mic.selected);
             if (selected && this.broadcasting.mic && this.broadcasting.mic != selected.name){
                 this.broadcasting.mic = selected.name;
@@ -181,13 +212,5 @@ export default class VideoChat extends Vue {
 
         //Send end API call and update state to ending
         this.$store.dispatch('end', 'PLAYER_END');
-
-        if(!this.player)
-            return;
-
-        if(this.player.source)
-            this.player.source.destroy();
-
-        this.player.stop();
     }
 }
