@@ -2,7 +2,8 @@
     "top": {
         "numbers": {
             "callnow": "BEL NU",
-            "cpm": "CT"
+            "cpm": "CT",
+            "pm": "pm"
         },
         "banner": {
             "happyhour": "HappyHour",
