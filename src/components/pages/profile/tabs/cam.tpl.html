@@ -1,4 +1,4 @@
-<div class="tabs__servicescontent col-xs-12 col-sm-9">
+<div class="tabs__servicescontent col-xs-12">
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
 
@@ -22,7 +22,7 @@
     </div>
     <div class="tabs__servicescontent-method" v-if="$parent.authenticated">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
-        <p><span v-t="'tabs.webcamwithcreditsdesc'"></span> (€0.80 per minuut)</p>
+        <p><span v-t="'tabs.webcamwithcreditsdesc'"></span> ({{ $parent.info.credits_per_minute | euro }} {{ $t('top.numbers.pm') }})</p>
         <a class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'" v-on:click="$parent.startSession"></a>
     </div>
     <div class="tabs__servicescontent-method" v-if="!$parent.authenticated">

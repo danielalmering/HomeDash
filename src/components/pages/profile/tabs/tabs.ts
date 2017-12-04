@@ -70,6 +70,10 @@ export default class Tabs extends Vue {
         return this.$store.state.authentication.user;
     }
 
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
     get info(){
         return this.$store.state.info;
     }
