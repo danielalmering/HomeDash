@@ -29,6 +29,7 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
     let routed = false;
 
     if(store.state.authentication.user === undefined){
+        //Wait for the authenticated user to be loaded
         store.watch((state) => {
             return state.authentication.user
         }, (newValue, oldValue) => {

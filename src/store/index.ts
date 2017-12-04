@@ -9,6 +9,7 @@ import authentication, { AuthState } from './authentication';
 import performers, { PerformersState } from './performers';
 import session, { SessionState } from './session';
 import alerts, { AlertsState } from './alerts';
+import voyeur, { VoyeurState } from './voyeur';
 
 import { Info } from '../models/Info';
 
@@ -76,7 +77,8 @@ const store = new Vuex.Store<RootState>({
         authentication: authentication,
         performers: performers,
         session: session,
-        alerts: alerts
+        alerts: alerts,
+        voyeur: voyeur
     }
 });
 

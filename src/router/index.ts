@@ -16,6 +16,7 @@ import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Promos from '../components/pages/promos/promos';
 import Payment from '../components/pages/payment/payment';
 import VideoChat from '../components/pages/videochat/videochat';
+import Voyeur from '../components/pages/voyeur/voyeur';
 
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
 
@@ -95,6 +96,11 @@ const router = new Router({
                     ]
                 },
                 {
+                    path: 'voyeur',
+                    name: 'Voyeur',
+                    component: Voyeur
+                },
+                {
                     path: 'performer/:id',
                     name: 'Performer',
                     component: Performer,
@@ -110,7 +116,7 @@ const router = new Router({
                             component: VideoChat
                         }
                     ]
-                }
+                },
             ]
         }
     ]

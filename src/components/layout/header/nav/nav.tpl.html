@@ -24,7 +24,7 @@
                 <div class="nav__info-container">
                     <!-- <a class="nav__info-item visible-xs" href="#"><i class="fa fa-home only"></i><span v-t="'nav.info.home'"></span></a>   -->
                     <a class="nav__info-item visible-xs" v-on:click="showMenu = !showMenu"><i class="fa fa-bars"></i><span v-t="'nav.info.menu'"></span></a>
-                    <router-link class="nav__info-item hidden-xs" :to="{ name: 'Favourites' }"><i class="fa fa-eye"></i><span v-t="'nav.info.voyeur'"></span></router-link>
+                    <router-link class="nav__info-item" :to="{ name: 'Voyeur' }"><i class="fa fa-eye"></i><span v-t="'nav.info.voyeur'"></span></router-link>
                     <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
 
