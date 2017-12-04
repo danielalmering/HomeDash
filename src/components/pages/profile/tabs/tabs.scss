@@ -20,7 +20,7 @@
 
         li {
             float: left;
-            color: $pallete-7;
+            color: $pallete-14;
             @include rem(font-size,13px);
             display: inline-block;
             @include rem(padding, 12px 20px 15px 20px);
@@ -29,12 +29,17 @@
 
             i {
                 @include rem(font-size,16px);
-                color: $pallete-2;
+                color: $pallete-14;
                 @include rem(margin, 0px 10px 0px 0px);
             }
 
             &:hover {
                 background: $pallete-17;
+            }
+
+            &.enabled {
+                i { color: $pallete-2; }
+                color: $pallete-7;
             }
 
             &.active {

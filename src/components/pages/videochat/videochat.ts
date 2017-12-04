@@ -92,25 +92,6 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        // const videoUrl = `${config.JsmpegUrl}?stream=${sessionData.playStream}&token=${sessionData.wowza.split('?token=')[1]}&hash=5B9F45B17A77831EA6C5346464BD2`;
-        // const video = <HTMLCanvasElement>this.$el.getElementsByClassName('jsmpeg')[0];
-
-        // const player = new jsmpeg.Player(videoUrl, {
-        //     canvas: video,
-        //     protocols: 'videoJSMPEG',
-        //     audio: true,
-        //     streaming: true,
-        //     pauseWhenHidden: false,
-        //     disableGl: false,
-        //     playingStateChange: function(val){
-        //         if(val === true){
-        //             self.$store.dispatch('setActive');
-        //         }
-        //     }
-        // });
-
-        // this.player = player;
-
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
             if(newValue === State.Ending && !this.isEnding){
                 //TODO: Show message
@@ -145,7 +126,6 @@ export default class VideoChat extends Vue {
         if (this.broadcasting.settings && this.broadcasting.mic){
             const flash:Caster = this.$el.querySelector('#broadcastSWF') as any;
             this.microphones = flash.getMicrophones();
-            console.log(this.microphones);
             const selected = this.microphones.find( mic=>mic.selected);
             if (selected){
                 this.broadcasting.mic = selected.name;

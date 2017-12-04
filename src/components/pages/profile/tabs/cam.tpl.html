@@ -5,7 +5,7 @@
         <div class="numbers" v-if="$parent.info"><i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }} <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span></div>
         <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
 
-        <form class="form" v-on:submit="$parent.startSession(ivrCode, displayName)">
+        <form class="form" v-on:submit="$parent.startSession(ivrCode, displayName, 'VIDEO')">
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
@@ -20,9 +20,13 @@
             <button class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></button>
         </form>
     </div>
-    <div class="tabs__servicescontent-method">
+    <div class="tabs__servicescontent-method" v-if="$parent.authenticated">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
         <p><span v-t="'tabs.webcamwithcreditsdesc'"></span> (€0.80 per minuut)</p>
         <a class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'" v-on:click="$parent.startSession"></a>
     </div>
+    <div class="tabs__servicescontent-method" v-if="!$parent.authenticated">
+        <h2>Ga je NU registreren!!!</h2>
+        <p>Toe dan. Componentje hiervoor maken? </p>
+    </div> 
 </div>
