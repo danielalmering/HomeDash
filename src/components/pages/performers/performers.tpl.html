@@ -6,10 +6,13 @@
                     <div class="performers__info" v-if="performer">
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
-                            <span :class="performerStatus(performer)"></span>
+                            <span class="performers__info-personal-status" :class="performerStatus(performer)"></span>
+                            <span class="performers__info-personal-countries">
+                                <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
+                            </span>
                         </div>
                         <div class="performers__info-services">
-                            <i class="fa-video-camera" v-if="hasService(performer.id, 'cam')"></i>
+                            <i class="fa fa-video-camera" v-if="hasService(performer.id, 'cam')"></i>
                             <i class="fa fa-phone" v-if="hasService(performer.id, 'phone')"></i>
                             <i class="fa fa-mobile" v-if="hasService(performer.id, 'sms')"></i>
                             <i class="fa fa-envelope-o" v-if="hasService(performer.id, 'email')"></i>
