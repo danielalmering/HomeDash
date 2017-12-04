@@ -20,6 +20,22 @@ export default class Tabs extends Vue {
     ivrCode: string = '';
     displayName: string = '';
 
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
+    get info(){
+        return this.$store.state.info;
+    }
+
+    get activeCampaign(){
+        return this.$store.getters.getCampaignData;
+    }
+
+    get branding(){
+        return this.$store.getters.getBranding;
+    }
+
     selectTab(newTab: string){
         this.selectedTab = newTab;
     }

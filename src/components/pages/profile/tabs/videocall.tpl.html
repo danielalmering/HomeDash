@@ -1,8 +1,10 @@
-<div class="tabs__servicescontent videochat col-xs-12 col-sm-9">
+<div class="tabs__servicescontent col-xs-12">
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
-        <div class="numbers"><i class="flag flag-nl"></i> 0906-0225 <span>(€0.55 pm)</span></div>
-        <div class="numbers"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
+
+        <div class="numbers" v-if="$parent.info"><i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }} <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span></div>
+        <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
+
         <form class="form">
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
@@ -18,10 +20,13 @@
             <button class="btn btn-full btn-large btn-green" v-t="'tabs.videochatbtn'"></button>
         </form>
     </div>
+    
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
-        <div class="numbers">036-3103100 <span>(Local )</span></div>
-        <p><span v-t="'tabs.videochatwithcreditsdesc1'"></span> <i>49600</i> <span v-t="'tabs.videochatwithcreditsdesc2'"></span></p>
+
+        <div class="numbers" v-if="$parent.info">{{ $parent.info.phone_number_free }} <span>(Local )</span></div>
+
+        <p><span v-t="'tabs.videochatwithcreditsdesc1'"></span> <i>{{ $parent.user.credits_ivr_code }}</i> <span v-t="'tabs.videochatwithcreditsdesc2'"></span></p>
         <a class="btn btn-full btn-large btn-green" v-t="'tabs.videochatbtn'"></a>
     </div>
 </div>
