@@ -27,6 +27,7 @@
             height: 300px;
             font-size:0;
             @include rem(padding, 0px);
+            background: $pallete-11;
 
             li {
                 float: left;
