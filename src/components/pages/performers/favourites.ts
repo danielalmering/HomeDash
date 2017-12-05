@@ -2,7 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import Pagination from '../../layout/Pagination';
+import Pagination from '../../layout/Pagination.vue';
 import Performers from './performers';
 import { Performer } from '../../../models/Performer';
 import config from '../../../config';

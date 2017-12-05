@@ -16,8 +16,13 @@ interface Message {
     template: require('./contact.tpl.html')
 })
 export default class Contact extends Vue {
-    
-    contact: Message = {email: "", message: "", name: "", subject: ""};
+
+    contact: Message = {
+        email: '',
+        message: '',
+        name: '',
+        subject: ''
+    };
 
     async send(){
         const contactResult = await fetch(`${config.BaseUrl}/admin/contact_message`, {
@@ -39,7 +44,12 @@ export default class Contact extends Vue {
                 class: 'success'
             });
 
-            this.contact = {email: "", message: "", name: "", subject: ""};
+            this.contact = {
+                email: '',
+                message: '',
+                name: '',
+                subject: ''
+            };
         }
     }
 

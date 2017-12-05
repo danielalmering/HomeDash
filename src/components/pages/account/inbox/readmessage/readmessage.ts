@@ -8,7 +8,7 @@ import config from '../../../../../config';
 })
 export default class Readmessage extends Vue {
 
-    message: any = { client: { id: 0 }, performer_account: { id: 0 }, subject: "" };
+    message: any = { client: { id: 0 }, performer_account: { id: 0 }, subject: '' };
     reply: string = '';
 
     mounted(){
@@ -31,13 +31,13 @@ export default class Readmessage extends Vue {
 
     async sendMessage(){
 
-        let replymessage = {
+        const replymessage = {
             attachments: [],
             clientid: { id: this.message.client.id  },
             content: this.reply,
             performer_account: { id: this.message.performer_account.id },
-            sent_by: "CLIENT",
-            status: "INBOX",
+            sent_by: 'CLIENT',
+            status: 'INBOX',
             subject: this.message.subject
         };
 

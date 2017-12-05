@@ -5,12 +5,12 @@ import { RootState } from './index';
 
 export interface AlertsState {
     messages: Message[];
-};
+}
 
 export interface MessagePayload extends Payload {
     content: string;
     translate?: boolean;
-    translateParams?: { [key: string]:  string }
+    translateParams?: { [key: string]:  string };
     displayTime?: number;
     class?: string;
 }

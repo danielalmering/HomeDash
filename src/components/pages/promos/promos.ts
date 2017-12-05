@@ -26,7 +26,7 @@ export default class Promo extends Vue {
 
         this.promos = await promosResult.json();
 
-        let positionId = 1;
+        const positionId = 1;
         this.promoslist = this.promos.filter((promo: any) => promo.position === positionId);
         this.promos = this.promoslist;
 

@@ -27,21 +27,21 @@ export default class Broadcast extends Vue{
         this.onError = this.onError.bind(this);
     }
 
-    @Prop() streamType:string = 'RTMP';
+    @Prop() streamType: string = 'RTMP';
 
-    @Prop() wowza:string;
+    @Prop() wowza: string;
 
-    @Prop() publishStream:string;
+    @Prop() publishStream: string;
 
     @Prop() cam: boolean | string = true;
-    
+
     @Prop() mic: boolean | string = false;
 
-    @Prop() quality:Quality = Quality.MEDIUM;
+    @Prop() quality: Quality = Quality.MEDIUM;
 
     @Watch('mic') onMicChanged(value: boolean | string, oldValue: boolean | string) {
         if (typeof value === 'boolean'){
-            //a boolean turns the mic on or off..         
+            //a boolean turns the mic on or off..
             this.flash.toggleMicrophone(value);
         } else if (!value){
             //an empty string turns the mic off...
@@ -59,16 +59,16 @@ export default class Broadcast extends Vue{
         this.flash.setCamera(value);
     }
 
-    @Watch('quality') onQualityChanged(value:Quality, oldValue:Quality){
+    @Watch('quality') onQualityChanged(value: Quality, oldValue: Quality){
         this.flash.setQuality(value);
     }
 
-    get flash():Caster{
+    get flash(): Caster{
         return this.$el.querySelector('#broadcastSWF') as any;
     }
 
     mounted(){
-        const attrs = {'name' : 'swf', 'id':'broadcastSWF'};
+        const attrs = {'name': 'swf', 'id': 'broadcastSWF'};
         const params = {
             wmode : 'transparent',
             allowFullScreen : false
@@ -99,11 +99,11 @@ export default class Broadcast extends Vue{
     private listener: string;
 
     public onStateChange(value: string){
-        this.$emit("stateChange", value);
+        this.$emit('stateChange', value);
     }
 
     public onError(message: string){
-        this.$emit("error", message);
+        this.$emit('error', message);
     }
 
 }

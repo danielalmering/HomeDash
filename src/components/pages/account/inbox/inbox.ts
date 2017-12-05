@@ -1,7 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import Pagination from '../../../layout/Pagination';
+import Pagination from '../../../layout/Pagination.vue';
 import { User } from '../../../../models/User';
 import config from '../../../../config';
 
@@ -33,7 +33,7 @@ export default class Inbox extends Vue {
 
     mounted(){
         this.loadInbox();
-    }   
+    }
 
     pageChanged(){
         this.loadInbox();
@@ -76,7 +76,7 @@ export default class Inbox extends Vue {
 
         const data = await inboxResults.json();
 
-        data.notifications.forEach( (notification:Notification) => notification.checked = false );
+        data.notifications.forEach((notification: Notification) => notification.checked = false);
 
         this.notifications = data.notifications;
         this.total = data.total;

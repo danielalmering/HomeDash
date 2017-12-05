@@ -38,10 +38,15 @@ module.exports = {
       //   }
       // },
       {
-        test: /\.ts|vue$/,
+        test: /\.ts$/,
         enforce: 'pre',
         loader: 'tslint-loader',
-        options: { /* Loader options go here */ }
+        options: {
+          configFile: '.tslintrc.json',
+          tsConfigFile: 'tsconfig.json',
+          emitErrors: false,
+          failOnHint: false
+        }
       },
       {
         test: /\.vue$/,

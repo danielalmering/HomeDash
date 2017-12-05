@@ -8,10 +8,10 @@ export enum State {
     Active          = 'active',
     Ending          = 'ending',
     Canceling       = 'canceling'
-};
+}
 
 export enum SessionType {
     Video       = 'VIDEO',
     VideoCall   = 'VIDEOCALL',
     Peek        = 'PEEK'
-};
+}

@@ -22,7 +22,7 @@ export default class Sidebar extends Vue {
         offset: 0,
         performer: 0,
         search: ''
-    }
+    };
 
     categoryLoads = {
         'recommended': this.loadRecommended,
@@ -49,7 +49,7 @@ export default class Sidebar extends Vue {
     }
 
     login(){
-        this.$store.dispatch('displayModal', 'login');  
+        this.$store.dispatch('displayModal', 'login');
     }
 
     account(){
@@ -64,7 +64,6 @@ export default class Sidebar extends Vue {
             }
         });
     }
-
 
     onScroll(event: Event){
         if(!event.srcElement){
@@ -99,7 +98,7 @@ export default class Sidebar extends Vue {
     }
 
     async loadPerformers(loadMore: boolean = false){
-        var data = await this.categoryLoads[this.category]();
+        const data = await this.categoryLoads[this.category]();
 
         if(loadMore){
             this.performers = this.performers.concat(data.performerAccounts);

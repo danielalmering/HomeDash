@@ -15,7 +15,7 @@ export interface ISocketMessage {
 
     message?: string;
     senderType?: string;
-    receiverId?: string|number;
+    receiverId?: string | number;
 }
 
 /**
@@ -38,7 +38,7 @@ export class NotificationSocket {
 
     private SocketUrl: string;
 
-    private socket: SocketIOClient.Socket
+    private socket: SocketIOClient.Socket;
 
     private pingMessage: string;
     private pongMessage: string;
@@ -77,7 +77,7 @@ export class NotificationSocket {
      * Makes a connection to the socket server, registers your user account on it, and starts receiving events
      */
     connect() {
-        var options: SocketIOClient.ConnectOpts = {
+        const options: SocketIOClient.ConnectOpts = {
             forceNew: true,
             transports: ['polling', 'websocket']
         };
@@ -133,7 +133,7 @@ export class NotificationSocket {
      * @return number - Returns an unique id that can be used to unsubscribe from the event
      */
     subscribe(eventName: string, callback: (data: any) => void): number {
-        var uniqId = Date.now();
+        const uniqId = Date.now();
 
         this.subscribedEvents.push({
             id: uniqId,
@@ -216,7 +216,7 @@ export class NotificationSocket {
     }
 
     private socketDisconnect(reason: string) {
-        console.info('[NotificationSocket] Disconnect with reason: ' + reason);
+        console.info(`[NotificationSocket] Disconnect with reason: ${reason}`);
     }
 
     private socketReceivedEvent(data: string) {
@@ -224,7 +224,7 @@ export class NotificationSocket {
             return;
         }
 
-        var parsedData: ISocketMessage = JSON.parse(data);
+        const parsedData: ISocketMessage = JSON.parse(data);
 
         // console.info('[NotificationSocket] Received the following event from the server: ', parsedData);
 
@@ -253,11 +253,11 @@ export class NotificationSocket {
         }
 
 
-        var timeSinceLastPong = Date.now() - this.lastPongTime;
-        var timeSinceLastReconnect = Date.now() - this.lastReconnectTime;
+        const timeSinceLastPong = Date.now() - this.lastPongTime;
+        const timeSinceLastReconnect = Date.now() - this.lastReconnectTime;
 
         if(timeSinceLastPong > this.pingTimeout && timeSinceLastReconnect > this.reconnectTimeout){
-            console.info('[NotificationSocket] Attempting to reconnect. Last pong: ' + timeSinceLastPong + ' Last Reconnect: ' + timeSinceLastReconnect);
+            console.info(`[NotificationSocket] Attempting to reconnect. Last pong: ${timeSinceLastPong} Last Reconnect: ${timeSinceLastReconnect}`);
 
             this.disconnect();
             this.connect();
@@ -276,7 +276,7 @@ export class NotificationSocket {
     }
 
     private processEvent(evt: string, content: Object){
-        var matchingEvents = this.subscribedEvents.filter((subEvent) => subEvent.event === evt);
+        const matchingEvents = this.subscribedEvents.filter((subEvent) => subEvent.event === evt);
 
         matchingEvents.forEach((event) => event.callback(content));
     }
@@ -286,7 +286,7 @@ export class NotificationSocket {
             return;
         }
 
-        var firstMessage = this.messageQueue.shift();
+        const firstMessage = this.messageQueue.shift();
 
         if(!firstMessage){
             return;
