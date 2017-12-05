@@ -101,6 +101,10 @@ export default class Performers extends Vue {
         notificationSocket.unsubscribe(this.statusEventId);
     }
 
+    countriesList(countries: string){
+        return countries.split(";").slice(0,-1)
+    }
+
     pageChanged(){
         this.$router.push({ name: this.$route.name, query: { page: ((this.query.offset / this.query.limit) + 1).toString() } });
     }

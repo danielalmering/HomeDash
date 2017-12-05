@@ -10,7 +10,7 @@
 // Styling
 
 .grid {
-    @include rem(padding, 6px);
+    padding: 4px !important;
 }
 
 .performers {
@@ -45,28 +45,40 @@
             @include rem(padding, 8px 10px);
             min-height: 33px;
 
-            span {
-                display: block;
-                @include rem(margin, 2px 0);
-                float: right;
-                width: 14px;
-                height: 14px;
-                @include border-radius(14px);
+            &-status {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 0 12px 12px 0;
+                border-color: transparent transparent transparent transparent;
 
                 &.available {
-                    background: $pallete-12;
+                    border-color: transparent $pallete-12 transparent transparent;
                 }
 
                 &.busy {
-                    background: $pallete-15;
+                    border-color: transparent $pallete-15 transparent transparent;
                 }
 
                 &.peek {
-                    background: $pallete-19;
+                    border-color: transparent $pallete-19 transparent transparent;                    
                 }
 
                 &.offline {
-                    background: $pallete-20;
+                    border-color: transparent $pallete-20 transparent transparent;                    
+                }
+            }
+
+            &-countries {
+                position: absolute;
+                right: 4px;
+                height: 16px;
+                i {
+                    transform: scale(0.5);
+                    @include rem(margin, -8px -7px);
                 }
             }
         }
