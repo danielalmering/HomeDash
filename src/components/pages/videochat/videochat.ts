@@ -12,6 +12,12 @@ import config from '../../../config';
 
 import './videochat.scss';
 
+interface BroadcastConfiguration {
+    cam: boolean | string;
+    mic: boolean | string;
+    settings: boolean;
+}
+
 @Component({
     template: require('./videochat.tpl.html'),
     components: {
@@ -27,9 +33,13 @@ export default class VideoChat extends Vue {
     player: jsmpeg.Player;
     intervalTimer: number;
 
-    broadcasting: {cam:boolean | string, mic:boolean | string, settings:boolean} = {cam:false, mic:false, settings:false};
-    stateMessages:string[] = [];
+    broadcasting: BroadcastConfiguration = {
+        cam: false,
+        mic: false,
+        settings: false
+    };
 
+    stateMessages:string[] = [];
 
     cameras:{name:string, selected:boolean}[];
     microphones:{name:string, selected:boolean}[];
@@ -156,7 +166,7 @@ export default class VideoChat extends Vue {
         this.broadcasting.settings = !this.broadcasting.settings;
         //go get the list of devices if the "settings" will toggle to visible
         if (this.broadcasting.settings){
-            const flash:Caster = this.$el.querySelector('#broadcastSWF') as any;
+            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
 
             this.cameras = flash.getCameras();
             let selected = this.cameras.find( cam=>cam.selected );
