@@ -75,6 +75,10 @@ export default class Tabs extends Vue {
         return 'tabs.service-peek';
     }
 
+    get authenticated(){
+        return this.$store.getters.isLoggedIn;
+    }
+
     get user(){
         return this.$store.state.authentication.user;
     }
