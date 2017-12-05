@@ -20,13 +20,17 @@
             <button class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></button>
         </form>
     </div>
+
     <div class="tabs__servicescontent-method" v-if="$parent.authenticated">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
         <p><span v-t="'tabs.webcamwithcreditsdesc'"></span> ({{ $parent.info.credits_per_minute | euro }} {{ $t('top.numbers.pm') }})</p>
         <a class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'" v-on:click="$parent.startSession"></a>
     </div>
+
     <div class="tabs__servicescontent-method" v-if="!$parent.authenticated">
-        <h2>Ga je NU registreren!!!</h2>
-        <p>Toe dan. Componentje hiervoor maken? </p>
+        <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
+        <p><span v-t="'tabs.registeraccount'"></span></p>
+        <a class="btn btn-full btn-large btn-orange" v-t="'modals.login.login'" v-on:click="$parent.login"></a>
     </div> 
+
 </div>

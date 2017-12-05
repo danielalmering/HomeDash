@@ -1,5 +1,13 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import { User } from '../../../../models/User';
+
+import config from '../../../../config';
+
+interface EmailForm {
+    subject: string;
+    content: string;
+}
 
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
@@ -16,6 +24,7 @@ import { Performer, PerformerStatus } from '../../../../models/Performer';
 })
 export default class Tabs extends Vue {
 
+    emailForm: EmailForm = { subject: "", content: "" };
     selectedTab: string = 'cam';
 
     ivrCode: string = '';
@@ -93,7 +102,44 @@ export default class Tabs extends Vue {
         }
     }
 
+    login(){
+        this.$store.dispatch('displayModal', 'login');  
+    }
+
     startSession(ivrCode: string, displayName: string, service: string){
         this.$emit('startSession', { ivrCode, displayName, service });
+    }
+        
+    async sendMail(){
+        
+        let message = {
+            clientid: { id: this.user.id },
+            content: this.emailForm.content,
+            sent_by: "CLIENT",
+            status: "INBOX",
+            subject: this.emailForm.subject
+        };
+
+        const mailResult = await fetch(`${config.BaseUrl}/performer/performer_account/158/email`, {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(message)
+        });
+
+        const mailData = await mailResult.json();
+
+        if(!mailResult.ok){
+            this.$store.dispatch('openMessage', {
+                content: 'contact.errorSend',
+                class: 'error'
+            });
+        } else {
+            this.$store.dispatch('openMessage', {
+                content: 'contact.successSend',
+                class: 'success'
+            });
+
+            this.emailForm = {content: "", subject: ""};
+        }
     }
 }

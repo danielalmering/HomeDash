@@ -1,11 +1,11 @@
 <div class="tabs__servicescontent col-xs-12">
     <div class="tabs__servicescontent-method full">
         <h2>{{ $t('tabs.calltitle') }} <span>{{ $parent.performer.nickname }}</span> {{ $t('tabs.mailtitle') }}</h2>
-        <form class="form">
-            <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.mailsubject')">
-            <textarea class="col-xs-7 col-sm-9" rows="4" :placeholder="$t('tabs.mailmessage')" ></textarea>
+        <form class="form" v-on:submit.prevent="$parent.sendMail">
+            <input type="text" v-model="$parent.emailForm.subject" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.mailsubject')">
+            <textarea v-model="$parent.emailForm.content" class="col-xs-7 col-sm-9" cols="2" :placeholder="$t('tabs.mailmessage')" ></textarea>
             <p><i class="fa fa-info" aria-hidden="true"></i>  {{ $t('tabs.mailinfo') }}</p>
-            <button class="btn btn-full btn-large btn-orange" v-t="'tabs.mailsend'"></button>
+            <button class="btn btn-full btn-large btn-orange" type="submit">{{ $t('tabs.mailsend') }}</button>
         </form>
     </div>
 </div>

@@ -55,7 +55,7 @@
         @include rem(font-size, 14px);
         @include rem(padding,12px 13px);
         @include border-radius(3px);
-        min-height: 100px;
+        min-height: 90px;
         width: 100%;
         @include rem(margin, 5px 0px);
         resize: none;
