@@ -35,14 +35,14 @@ export interface PerformerTile extends Tile {
     streamData: {
         wowza: string;
         playStream: string;
-    }
+    };
 }
 
 export interface VoyeurState {
     performers: Performer[];    //Performers with voyeur activated
     activeTiles: Tile[];        //Tiles that are currently displayed on screen
     queue: number[];            //Id's of performers that are in the queue
-};
+}
 
 const mutations = {
 
@@ -59,7 +59,7 @@ const getters = {
     performer(state: VoyeurState){
         return (id: number) => {
             return state.performers.filter(p => p.id === id);
-        }
+        };
     }
 };
 

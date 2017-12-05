@@ -24,7 +24,7 @@ interface BroadcastConfiguration {
     components: {
         chat: Chat,
         broadcast: Broadcast,
-        viewer:View
+        viewer: View
     }
 })
 export default class VideoChat extends Vue {
@@ -41,38 +41,38 @@ export default class VideoChat extends Vue {
         settings: false
     };
 
-    stateMessages:string[] = [];
+    stateMessages: string[] = [];
 
-    cameras:{name:string, selected:boolean}[];
-    microphones:{name:string, selected:boolean}[];
+    cameras: {name: string, selected: boolean}[];
+    microphones: {name: string, selected: boolean}[];
 
-    get sessionType():SessionType{
-        return this.$store.state.session.activeSessionType
+    get sessionType(): SessionType{
+        return this.$store.state.session.activeSessionType;
     }
 
-    get streamTransportType():string | undefined{
+    get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
 
-        return this.$store.state.session.activeSessionData.streamTransportType;  
+        return this.$store.state.session.activeSessionData.streamTransportType;
     }
 
-    get wowza():string | undefined{
+    get wowza(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
         return this.$store.state.session.activeSessionData.wowza;
     }
 
-    get publishStream():string | undefined{
+    get publishStream(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
         return this.$store.state.session.activeSessionData.publishStream;
     }
 
-    get playStream():string | undefined{
+    get playStream(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
@@ -134,46 +134,46 @@ export default class VideoChat extends Vue {
         this.broadcasting.mic = !this.broadcasting.mic;
         //replace the boolean with the actual name if the selected mic is showing..
         if (this.broadcasting.settings && this.broadcasting.mic){
-            const flash:Caster = this.$el.querySelector('#broadcastSWF') as any;
+            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
             this.microphones = flash.getMicrophones();
-            const selected = this.microphones.find( mic=>mic.selected);
+            const selected = this.microphones.find(mic => mic.selected);
             if (selected){
                 this.broadcasting.mic = selected.name;
             }
         }
     }
 
-    setCamera(event:Event){
+    setCamera(event: Event){
         const camName = (<HTMLSelectElement>event.srcElement).value;
-        this.cameras.forEach( cam=> cam.selected = (cam.name==camName) );
+        this.cameras.forEach(cam => cam.selected = (cam.name === camName));
         this.broadcasting.cam = camName;
     }
 
-    setMicrophone(event:Event){
+    setMicrophone(event: Event){
         const micName = (<HTMLSelectElement>event.srcElement).value;
-        this.microphones.forEach( mic=>mic.selected = (mic.name == micName) );
+        this.microphones.forEach(mic => mic.selected = (mic.name === micName));
         this.broadcasting.mic = micName;
     }
 
-    broadcastStateChange(state:string){
+    broadcastStateChange(state: string){
         this.stateMessages.push(state);
     }
 
-    broadcastError(message:string){
+    broadcastError(message: string){
         this.stateMessages.push(message);
     }
 
-    viewerStateChange(state:string){
+    viewerStateChange(state: string){
         console.log(`yoyo dit is de state: ${state}`);
-        if (state == 'active'){
+        if (state === 'active'){
             this.$store.dispatch('setActive');
         }
     }
 
-    viewerError(message:string){
+    viewerError(message: string){
         console.log(message);
     }
- 
+
     toggleSettings(){
         this.broadcasting.settings = !this.broadcasting.settings;
         //go get the list of devices if the "settings" will toggle to visible
@@ -181,17 +181,17 @@ export default class VideoChat extends Vue {
             const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
 
             this.cameras = flash.getCameras();
-            let selected = this.cameras.find( cam=>cam.selected );
-            if (selected && this.broadcasting.cam != selected.name){
+            let selected = this.cameras.find(cam => cam.selected);
+            if (selected && this.broadcasting.cam !== selected.name){
                 this.broadcasting.cam = selected.name;
             }
 
             this.microphones = flash.getMicrophones();
-            selected = this.microphones.find( mic=>mic.selected);
-            if (selected && this.broadcasting.mic && this.broadcasting.mic != selected.name){
+            selected = this.microphones.find(mic => mic.selected);
+            if (selected && this.broadcasting.mic && this.broadcasting.mic !== selected.name){
                 this.broadcasting.mic = selected.name;
             }
-        }   
+        }
     }
 
     beforeDestroy(){

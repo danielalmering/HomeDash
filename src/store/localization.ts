@@ -8,7 +8,7 @@ import i18n from '../localization';
 export interface LocalizationState {
     country: string;
     language: string;
-};
+}
 
 type LocalizationContext = ActionContext<LocalizationState, RootState>;
 

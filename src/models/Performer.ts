@@ -12,14 +12,14 @@ export interface Performer {
     eyeColor: string;
     height: string;
     isFavourite: boolean;
-    isVoyeur:boolean;
+    isVoyeur: boolean;
     language: string;
     location: string;
     mediaId: number;
     nickname: string;
     performerLanguages: string;
     performerStatus: PerformerStatus;
-    performer_services: { [key: string]: boolean }
+    performer_services: { [key: string]: boolean };
     roles: Role[];
     safeDescription: string;
     safe_avatar: Avatar;
@@ -27,13 +27,13 @@ export interface Performer {
     userAgent: string;
     username: string;
     weight: string;
-};
+}
 
 export enum Role {
     Client      = 'ROLE_CLIENT',
     Performer   = 'ROLE_PERFORMER',
     Admin       = 'ROLE_ADMIN'
-};
+}
 
 export enum PerformerStatus {
     Available   = 'AVAILABLE',
@@ -49,4 +49,4 @@ export interface Avatar {
     safe_version: boolean;
     selected: boolean;
     wowza_sync?: boolean;
-};
+}

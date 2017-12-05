@@ -45,7 +45,7 @@ export default class History extends Vue {
         this.loadHistory();
 
         // Load in a list of all services
-        for(let item in Service){
+        for(const item in Service){
             this.services.push(Service[item]);
         }
     }

@@ -33,7 +33,7 @@ export default class Performers extends Vue {
         offset: 0,
         category: '',
         search: ''
-    }
+    };
 
     serviceEventId: number;
     statusEventId: number;
@@ -102,7 +102,7 @@ export default class Performers extends Vue {
     }
 
     countriesList(countries: string){
-        return countries.split(";").slice(0,-1)
+        return countries.split(';').slice(0, -1);
     }
 
     pageChanged(){

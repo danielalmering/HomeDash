@@ -9,5 +9,5 @@ Vue.filter('date', function(value: number){
 const leadingZero = (num: number) => `0${num}`.slice(-2);
 
 function formatDate(date: Date): string {
-    return `${leadingZero(date.getDate())}-${leadingZero(date.getMonth())}-${date.getFullYear()} | ${leadingZero(date.getHours())}:${leadingZero(date.getMinutes())}`
+    return `${leadingZero(date.getDate())}-${leadingZero(date.getMonth())}-${date.getFullYear()} | ${leadingZero(date.getHours())}:${leadingZero(date.getMinutes())}`;
 }

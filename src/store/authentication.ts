@@ -7,7 +7,7 @@ import config from '../config';
 
 export interface AuthState {
     user: User | undefined;
-};
+}
 
 export interface LoginPayload {
     email: string;
@@ -73,12 +73,14 @@ const authenticationStore: Module<AuthState, RootState> = {
             store.commit('setUser', undefined);
         },
         async register(store: AuthContext){
-
+            //Empty
         },
         async getSession(store: AuthContext){
             const checkSessionResult = await fetch(`${config.BaseUrl}/check_session`, {
                 credentials: 'include'
             });
+
+            let sessionData: AnonymousUser | undefined = undefined;
 
             if(checkSessionResult.status === 403){
                 console.log('Status shit');
@@ -87,9 +89,9 @@ const authenticationStore: Module<AuthState, RootState> = {
                     credentials: 'include'
                 });
 
-                var sessionData: AnonymousUser = await annonConnectResult.json();
+                sessionData = await annonConnectResult.json() as AnonymousUser;
             } else {
-                var sessionData: AnonymousUser = await checkSessionResult.json();
+                sessionData = await checkSessionResult.json() as AnonymousUser;
             }
 
             store.commit('setUser', sessionData);

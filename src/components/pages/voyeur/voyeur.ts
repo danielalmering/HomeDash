@@ -11,6 +11,6 @@ import './voyeur.scss';
 export default class Voyeur extends Vue {
 
     mounted(){
-
+        //Empty
     }
 }

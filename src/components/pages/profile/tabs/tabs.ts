@@ -20,9 +20,9 @@ export default class Tabs extends Vue {
 
     ivrCode: string = '';
 
-    @Prop() performer:Performer;
+    @Prop() performer: Performer;
 
-    enabled(service:string):boolean{
+    enabled(service: string): boolean{
         if (!this.performer){
             return false;
         }
@@ -30,33 +30,33 @@ export default class Tabs extends Vue {
         //services:
         //cam,email,peek,phone,sms,videocall,voicemail
         //voyeur is an exception..
-        if (service == "voyeur"){
+        if (service === 'voyeur'){
             return this.performer.isVoyeur;
         }
 
-        if (! (service in this.performer.performer_services) ){
-            throw new Error(`${service} ai't no service I ever heard of!`);
+        if (!(service in this.performer.performer_services) ){
+            throw new Error(`${service} ain't no service I ever heard of!`);
         }
 
-        if (this.performer.performer_services[ service ]){
+        if (this.performer.performer_services[service]){
             return true;
         }
 
         if (service === 'cam'){
-            return this.performer.performerStatus == PerformerStatus.Busy && 
+            return this.performer.performerStatus === PerformerStatus.Busy &&
             this.performer.performer_services['peek'];
         }
 
         return false;
     }
 
-    get camLabel():string{       
+    get camLabel(): string {
         if (!this.performer){
             return 'tabs.service-webcam';
         }
 
         if (this.performer.performer_services['cam']){
-            return 'tabs.service-webcam';    
+            return 'tabs.service-webcam';
         }
 
         if (this.performer.performer_services['peek']){
@@ -64,10 +64,6 @@ export default class Tabs extends Vue {
         }
 
         return 'tabs.service-peek';
-    }
-
-    get user(){
-        return this.$store.state.authentication.user;
     }
 
     get user(){
@@ -86,8 +82,8 @@ export default class Tabs extends Vue {
         return this.$store.getters.getBranding;
     }
 
-    get displayName():string{
-        return "Karel";
+    get displayName(): string {
+        return 'Karel';
     }
 
     selectTab(newTab: string){

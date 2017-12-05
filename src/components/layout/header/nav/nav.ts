@@ -63,7 +63,7 @@ export default class Nav extends Vue {
     }
 
     login(){
-        this.$store.dispatch('displayModal', 'login');  
+        this.$store.dispatch('displayModal', 'login');
     }
 
     logout(){

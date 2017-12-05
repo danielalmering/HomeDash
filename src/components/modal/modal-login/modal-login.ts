@@ -15,7 +15,9 @@ export default class ModalLogin extends Vue {
             password: this.password
         });
 
-        this.$store.getters.isLoggedIn ? this.close() : '';
+        if(this.$store.getters.isLoggedIn){
+            this.close();
+        }
     }
 
     register(){

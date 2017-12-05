@@ -26,9 +26,9 @@ export interface RootState {
     modals?: any;
 }
 
-type RootContext = ActionContext<RootState, RootState>
+type RootContext = ActionContext<RootState, RootState>;
 
-const store = new Vuex.Store<RootState>({
+const rootStore = new Vuex.Store<RootState>({
     state: {
         info: undefined,
         safeMode: false
@@ -59,7 +59,7 @@ const store = new Vuex.Store<RootState>({
                 return {
                     number: '',
                     cpm: ''
-                }
+                };
             }
 
             if(!state.info.marketing.current){
@@ -68,22 +68,17 @@ const store = new Vuex.Store<RootState>({
                     cpm: state.info.phone_cpm
                 };
             } else {
-                let activeCampaign = state.info.marketing.current.replace(" ", "_");
-                let marketing:any = state.info.marketing;
+                const activeCampaign = state.info.marketing.current.replace(' ', '_');
+                const marketing: any = state.info.marketing;
 
                 return {
                     number: marketing[activeCampaign].phone_number,
                     cpm: marketing[activeCampaign].phone_cpm
-                }
+                };
             }
         },
         getBranding: state => {
-            if(!state.info){
-                return false;
-            } else if(state.info.country != 'nl'){
-                return false;
-            }
-            return true
+            return state.info && state.info.country === 'nl';
         }
     },
     mutations: {
@@ -113,4 +108,4 @@ const store = new Vuex.Store<RootState>({
     }
 });
 
-export default store;
+export default rootStore;

@@ -29,14 +29,14 @@ import './photo-slider.scss';
     }
 })
 export default class Profile extends Vue {
-    performer: Performer | null = null;
+    performer: Performer | null =  null;
     perfphotos : Avatar[] = [];
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
     displayFullDescription: boolean = false;
 
-    get authenticated():boolean{
+    get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
     }
 
@@ -85,7 +85,12 @@ export default class Profile extends Vue {
                     return;
                 }
 
-                this.$router.push({ name: 'Videochat', params: { id: self.performer.advert_numbers[0].advertNumber .toString() } })
+                this.$router.push({
+                    name: 'Videochat',
+                    params: {
+                        id: self.performer.advert_numbers[0].advertNumber.toString()
+                    }
+                });
             }
         });
     }
@@ -98,11 +103,10 @@ export default class Profile extends Vue {
         const data = await performerResults.json();
 
         this.performer = data.performerAccount;
+        this.perfphotos = data.photos.approved.photos;
 
         if(this.$store.state.safeMode){
-            this.perfphotos = data.photos.approved.photos.filter((photo: Avatar) => photo.safe_version);
-        } else {
-            this.perfphotos = data.photos.approved.photos;
+            this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
         }
     }
 }
