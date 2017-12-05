@@ -33,7 +33,7 @@ export default class View extends Vue{
                 this.showJsMpeg();
                 break;
             case 'WEBRTC':
-                this.showWebRtc();
+                this.showJsMpeg();
                 break;
             default:
                 throw new Error(`${this.streamType} aint no format I ever heard of!`);

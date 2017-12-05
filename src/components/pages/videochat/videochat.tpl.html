@@ -10,7 +10,7 @@
             </viewer>
         </div>
     </div>
-    <div class="videochat__broadcast" v-if:"sessionType != 'PEEK'">
+    <div class="videochat__broadcast" v-if="sessionType != 'PEEK'">
         <div class="videochat__broadcast-object">
             <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
             <broadcast v-if="broadcasting.cam"
