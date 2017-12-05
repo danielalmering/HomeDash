@@ -9,24 +9,22 @@
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
-                    <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.accesscode')">
+                    <input type="text" class="col-xs-7 col-sm-9" v-model="$parent.ivrCode" :placeholder="$t('tabs.accesscode')">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
-                    <input type="text" class="col-xs-7 col-sm-9" :placeholder="$t('tabs.username')">
+                    <input type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')">
                 </div>
             </div>
-            <button class="btn btn-full btn-large btn-green" v-t="'tabs.videochatbtn'"></button>
+            <button class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></button>
         </form>
     </div>
 
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
-        <div class="numbers" v-if="$parent.info && $parent.authenticated">{{ $parent.info.phone_number_free }} <span>(Local )</span></div>
-
-        <p><span v-t="$parent.authenticated ? 'tabs.videochatwithcreditsdesc1' : 'tabs.registeraccount'"></span> <span v-if="$parent.authenticated"><i>{{ $parent.user.credits_ivr_code }}</i> <span v-t="'tabs.videochatwithcreditsdesc2'"></span></span></span></p>
-        <a class="btn btn-full btn-large" :class="$parent.authenticated ? 'btn-green' : 'btn-orange'" v-t="$parent.authenticated ? 'tabs.videochatbtn' : 'modals.login.login'" v-on:click="$parent.authenticated ? $parent.startSession() : $parent.login()"></a>
+        <p><span v-t="$parent.authenticated ? 'tabs.webcamwithcreditsdesc' : 'tabs.registeraccount'"></span> <span v-if="$parent.authenticated">({{ $parent.info.credits_per_minute | euro }} {{ $t('top.numbers.pm') }})</span></p>
+        <a class="btn btn-full btn-large" :class="$parent.authenticated ? 'btn-green' : 'btn-orange'" v-t="$parent.authenticated ? 'tabs.webcambtn' : 'modals.login.login'" v-on:click="$parent.authenticated ? $parent.startSession() : $parent.login()"></a>
     </div>
 
 </div>
