@@ -1,18 +1,24 @@
 <div class="videochat">
     <div class="videochat__screen">
         <div class="videochat__screen-object">
-            <canvas class="jsmpeg"></canvas>
-            <!-- <jsmpeg></jsmpeg> -->
+            <viewer
+                v-on:stateChange="viewerStateChange"
+                v-on:error="viewerError"
+                :streamType="streamTransportType"
+                :wowza="wowza"
+                :playStream="playStream" >
+            </viewer>
         </div>
     </div>
-    <div class="videochat__broadcast">
+    <div class="videochat__broadcast" v-if:"sessionType != 'PEEK'">
         <div class="videochat__broadcast-object">
             <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
             <broadcast v-if="broadcasting.cam"
                 v-on:stateChange="broadcastStateChange"
                 v-on:error="broadcastError"
+                :streamType="streamTransportType"
                 :wowza="wowza" 
-                :publishStream="streamName" 
+                :publishStream="publishStream" 
                 :mic="broadcasting.mic" 
                 :cam="broadcasting.cam" 
                 :quality="1" >

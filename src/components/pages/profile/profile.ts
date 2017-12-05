@@ -36,6 +36,10 @@ export default class Profile extends Vue {
     displayPic: number = 0;
     displayFullDescription: boolean = false;
 
+    get authenticated():boolean{
+        return this.$store.getters.isLoggedIn;
+    }
+
     getAvatarImage = getAvatarImage;
 
     addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
@@ -55,7 +59,7 @@ export default class Profile extends Vue {
         this.displayPic = id;
     }
 
-    async startSession(){
+    async startSession({}){
         if(!this.performer){
             return;
         }

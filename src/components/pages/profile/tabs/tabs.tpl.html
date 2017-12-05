@@ -1,12 +1,15 @@
 <div class="tabs">
     <ul class="tabs__services">
         <!-- TODO: Maybe make an array with all these, lots of boilerplate now -->
-        <li :class="{ active: selectedTab === 'videoChat' }" v-on:click="selectTab('videoChat')"><i class="fa fa-video-camera"></i><span v-t="'tabs.service-webcam'"></span></li>
-        <li :class="{ active: selectedTab === 'videoCall' }" v-on:click="selectTab('videoCall')"><i class="fa fa-video-camera"></i><span v-t="'tabs.service-videochat'"></span></li>
-        <!-- <li :class="{ active: selectedTab === 'Voyeur' }" v-on:click="selectTab('Voyeur')"><i class="fa fa-eye"></i><span v-t="'tabs.service-voyeur'"></span></li> -->
-        <li :class="{ active: selectedTab === 'call' }" v-on:click="selectTab('call')"><i class="fa fa-phone"></i><span v-t="'tabs.service-call'"></span></li>
-        <li :class="{ active: selectedTab === 'mail' }" v-on:click="selectTab('mail')"><i class="fa fa-envelope"></i><span v-t="'tabs.service-mail'"></span></li>
-        <li :class="{ active: selectedTab === 'sms' }" v-on:click="selectTab('sms')"><i class="fa fa-mobile"></i><span v-t="'tabs.service-sms'"></span></li>
+        <li :class="{ active: selectedTab === 'cam', enabled: enabled('cam') }" v-on:click="selectTab('cam')">
+            <i class="fa fa-video-camera"></i>
+            <span v-t="camLabel"></span>
+        </li>
+        <li :class="{ active: selectedTab === 'videocall', enabled: enabled('videocall') }" v-on:click="selectTab('videocall')"><i class="fa fa-video-camera"></i><span v-t="'tabs.service-videochat'"></span></li>
+        <!-- <li :class="{ active: selectedTab === 'voyeur' }" v-on:click="selectTab('voyeur')"><i class="fa fa-eye"></i><span v-t="'tabs.service-voyeur'"></span></li> -->
+        <li :class="{ active: selectedTab === 'phone', enabled: enabled('phone') }" v-on:click="selectTab('phone')"><i class="fa fa-phone"></i><span v-t="'tabs.service-phone'"></span></li>
+        <li :class="{ active: selectedTab === 'email', enabled: enabled('email') }" v-on:click="selectTab('email')"><i class="fa fa-envelope"></i><span v-t="'tabs.service-email'"></span></li>
+        <li :class="{ active: selectedTab === 'sms', enabled: enabled('sms') }" v-on:click="selectTab('sms')"><i class="fa fa-mobile"></i><span v-t="'tabs.service-sms'"></span></li>
     </ul>
 
     <component v-bind:is="selectedTab"></component>

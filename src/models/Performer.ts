@@ -12,6 +12,7 @@ export interface Performer {
     eyeColor: string;
     height: string;
     isFavourite: boolean;
+    isVoyeur:boolean;
     language: string;
     location: string;
     mediaId: number;
