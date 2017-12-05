@@ -74,10 +74,11 @@
     },
     "tabs": {
         "service-webcam": "Webcammen",
+        "service-peek": "Peek",
         "service-videochat": "Beeldbellen",
         "service-voyeur": "Voyeur",
-        "service-call": "Bellen",
-        "service-mail": "E-mail",
+        "service-phone": "Bellen",
+        "service-email": "E-mail",
         "service-sms": "SMS",
         "paymentwithtelephone": "Betalen met <span>telefoon</span>",
         "paymentwithcredits": "Betalen met <span>credits</span>",

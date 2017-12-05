@@ -27,6 +27,8 @@ export default class Broadcast extends Vue{
         this.onError = this.onError.bind(this);
     }
 
+    @Prop() streamType:string = 'RTMP';
+
     @Prop() wowza:string;
 
     @Prop() publishStream:string;
@@ -38,7 +40,7 @@ export default class Broadcast extends Vue{
     @Prop() quality:Quality = Quality.MEDIUM;
 
     @Watch('mic') onMicChanged(value: boolean | string, oldValue: boolean | string) {
-        if (typeof value === "boolean"){
+        if (typeof value === 'boolean'){
             //a boolean turns the mic on or off..         
             this.flash.toggleMicrophone(value);
         } else if (!value){
@@ -51,7 +53,7 @@ export default class Broadcast extends Vue{
     }
 
     @Watch('cam') onCamChanged(value: string, oldValue: string) {
-        if (typeof value !== "string"){
+        if (typeof value !== 'string'){
             return;
         }
         this.flash.setCamera(value);

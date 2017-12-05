@@ -21,7 +21,7 @@
         </form>
     </div>
     
-    <div class="tabs__servicescontent-method">
+    <div class="tabs__servicescontent-method" v-if="$parent.authenticated">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
 
         <div class="numbers" v-if="$parent.info">{{ $parent.info.phone_number_free }} <span>(Local )</span></div>
@@ -29,4 +29,11 @@
         <p><span v-t="'tabs.videochatwithcreditsdesc1'"></span> <i>{{ $parent.user.credits_ivr_code }}</i> <span v-t="'tabs.videochatwithcreditsdesc2'"></span></p>
         <a class="btn btn-full btn-large btn-green" v-t="'tabs.videochatbtn'"></a>
     </div>
+
+    <div class="tabs__servicescontent-method" v-if="!$parent.authenticated">
+        <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
+        <p><span v-t="'tabs.registeraccount'"></span></p>
+        <a class="btn btn-full btn-large btn-orange" v-t="'modals.login.login'" v-on:click="$parent.login"></a>
+    </div> 
+
 </div>
