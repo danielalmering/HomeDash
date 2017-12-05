@@ -126,6 +126,7 @@
                 width: 65%;
             }
             .col-2 {
+                position: relative;
                 float: right;
                 width: 30%;
             }
@@ -147,8 +148,25 @@
                 font-weight: 700;
             }
             .h3 {
+                position: absolute;
+                top: 15px;
+                left: -30px;
+                display: block;
+                -moz-transform: rotate(90.0deg);
+                -o-transform: rotate(90.0deg);
+                -webkit-transform: rotate(90.0deg);
+                transform: rotate(90.0deg);
+                @include rem(padding-left, 10px);
+                @include rem(font-size, 17px);
+                font-weight: 700;
+                color: $pallete-7;
+                line-height: 122%;
+                width: 100%;
+            }
+            .h4 {
                 display: block;
                 border-left: 1px solid rgba(255,255,255,0.2);
+                @include rem(margin-left, 20px);
                 @include rem(padding-left, 10px);
                 @include rem(font-size, 13px);
                 color: $pallete-7;

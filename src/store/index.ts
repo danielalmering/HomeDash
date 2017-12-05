@@ -9,6 +9,7 @@ import authentication, { AuthState } from './authentication';
 import performers, { PerformersState } from './performers';
 import session, { SessionState } from './session';
 import alerts, { AlertsState } from './alerts';
+import voyeur, { VoyeurState } from './voyeur';
 
 import { Info } from '../models/Info';
 
@@ -52,6 +53,37 @@ const store = new Vuex.Store<RootState>({
             }
 
             return state.info.country === 'nl' ? thuis : gigacams;
+        },
+        getCampaignData: state => {
+            if(!state.info){
+                return {
+                    number: '',
+                    cpm: ''
+                }
+            }
+
+            if(!state.info.marketing.current){
+                return {
+                    number: state.info.phone_number,
+                    cpm: state.info.phone_cpm
+                };
+            } else {
+                let activeCampaign = state.info.marketing.current.replace(" ", "_");
+                let marketing:any = state.info.marketing;
+
+                return {
+                    number: marketing[activeCampaign].phone_number,
+                    cpm: marketing[activeCampaign].phone_cpm
+                }
+            }
+        },
+        getBranding: state => {
+            if(!state.info){
+                return false;
+            } else if(state.info.country != 'nl'){
+                return false;
+            }
+            return true
         }
     },
     mutations: {
@@ -76,7 +108,8 @@ const store = new Vuex.Store<RootState>({
         authentication: authentication,
         performers: performers,
         session: session,
-        alerts: alerts
+        alerts: alerts,
+        voyeur: voyeur
     }
 });
 

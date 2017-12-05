@@ -1,0 +1,42 @@
+<div class="contact">
+    <div class="container-fluid">
+
+        <div class="contact__title">
+            <i class="fa fa-envelope"></i> 
+            <span v-t="'contact.title'"></span>
+        </div>
+
+        <div class="contact__content">
+            <p v-html="$t('contact.desc')"></p>
+        </div>
+
+        <div class="form">
+            <form v-on:submit.prevent="send">
+                <div class="col-xs-12">
+                    <div class="form__group">
+                        <label v-t="'contact.name'"></label>
+                        <input v-model="contact.name" type="text" class="col-xs-12" required>
+                    </div>
+                    <div class="form__group">
+                        <label v-t="'contact.email'"></label>
+                        <input v-model="contact.email" type="text" class="col-xs-12" required>
+                    </div>
+                    <div class="form__group">
+                        <label v-t="'contact.subject'"></label>
+                        <input v-model="contact.subject" type="text" class="col-xs-12" required>
+                    </div>
+                    <div class="form__group">
+                        <label v-t="'contact.message'"></label>
+                        <textarea rows="10" v-model="contact.message"></textarea>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form__group">
+                        <button class="btn btn-orange" v-t="'contact.send'"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

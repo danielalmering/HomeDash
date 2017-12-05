@@ -6,9 +6,9 @@
 
         <div class="top__numbers col-xs-12 col-sm-4 col-md-5" v-if="info && info.phone_enabled === 1">
             <div class="row">
-                <div class="top__numbers-number" v-bind:class="{ 'large': !branding }">
+                <div class="top__numbers-number" v-bind:class="{ 'large': !branding }" >
                     <span :class="'flag flag-' + info.country"></span>
-                    {{ info.phone_number }} <i>{{ info.phone_cpm }} {{ $t('top.numbers.cpm') }}</i>
+                    {{ activeCampaign.number }} <i>{{ activeCampaign.cpm }} {{ $t('top.numbers.cpm') }}</i>
                 </div>
                 <div class="top__numbers-number" v-if="branding">
                     <span class="flag flag-be"></span>
@@ -18,17 +18,18 @@
         </div>
 
         <div class="top__banner hidden-xs col-xs-12 col-sm-5 nopad" v-if="info">
-            <div class="top__banner-happyhour" v-if="info.marketing.happy_hour.current">
+            <div class="top__banner-happyhour" v-if="info.marketing.current">
                 <div class="col-1">
                     <span class="h1" v-t="$t('top.banner.happyhour')"></span>
-                    <span class="h2">{{ info.marketing.happy_hour.phone_number }}</span>
+                    <span class="h2">{{ activeCampaign.number }}</span>
                 </div>
                 <div class="col-2">
-                    <span class="h3" v-t="$t('top.banner.seeactionpage')"></span>
+                    <span class="h3">{{ activeCampaign.cpm }} {{ $t('top.numbers.cpm') }}</span>
+                    <span class="h4" v-t="$t('top.banner.seeactionpage')"></span>
                 </div>
             </div>
 
-            <div class="top__banner-credits" v-if="!info.marketing.happy_hour.current">
+            <div class="top__banner-credits"v-if="!info.marketing.current">
                 <div class="discount" v-for="percentage in [15, 10, 5]">
                     <span class="discount__percent">{{ percentage }}<i>%</i></span>
                     <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="'top.banner.credits'"></i></span></span>

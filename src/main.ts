@@ -9,6 +9,7 @@ import router from './router';
 import i18n from './localization';
 
 require('./filters/date');
+require('./filters/euro');
 
 import './styles/main.scss';
 

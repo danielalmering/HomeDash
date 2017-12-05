@@ -15,7 +15,11 @@ import Newmessage from '../components/pages/account/inbox/newmessage/newmessage'
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Promos from '../components/pages/promos/promos';
 import Payment from '../components/pages/payment/payment';
+import Contact from '../components/pages/contact/contact';
+import Terms from '../components/pages/textpages/terms';
+import Policy from '../components/pages/textpages/policy';
 import VideoChat from '../components/pages/videochat/videochat';
+import Voyeur from '../components/pages/voyeur/voyeur';
 
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
 
@@ -83,6 +87,21 @@ const router = new Router({
                             component: Payment
                         },
                         {
+                            path: 'contact',
+                            name: 'Contact',
+                            component: Contact
+                        },
+                        {
+                            path: 'privacy-policy',
+                            name: 'Policy',
+                            component: Policy
+                        },
+                        {
+                            path: 'terms',
+                            name: 'Terms',
+                            component: Terms
+                        },
+                        {
                             path: 'favourites',
                             name: 'Favourites',
                             component: Favourites
@@ -93,6 +112,11 @@ const router = new Router({
                             component: Performers
                         }
                     ]
+                },
+                {
+                    path: 'voyeur',
+                    name: 'Voyeur',
+                    component: Voyeur
                 },
                 {
                     path: 'performer/:id',
@@ -110,7 +134,7 @@ const router = new Router({
                             component: VideoChat
                         }
                     ]
-                }
+                },
             ]
         }
     ]

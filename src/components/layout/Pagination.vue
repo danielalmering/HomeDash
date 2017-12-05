@@ -12,7 +12,7 @@
                 <div class="pager__numbers-item" v-if="showNext" v-on:click="next"><i class="fa fa-arrow-right"></i></div>
             </div>
         </div>
-        <div class="pager__quantity hidden-xs col-sm-3">
+        <div class="pager__quantity hidden-xs col-sm-3" v-if="pageCount">
             <span v-t="'pagination.amountPerPage'"></span>
             <select v-model="updatedLimit">
                 <option value="40">40</option>
@@ -42,6 +42,10 @@ export default {
             type: Number
         },
         pageButtons: {
+            default: false,
+            type: Boolean
+        },
+        pageCount: {
             default: false,
             type: Boolean
         },
