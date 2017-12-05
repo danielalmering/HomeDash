@@ -2,12 +2,11 @@ import Vuex from 'vuex';
 import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
-import store from './index';
 import config from '../config';
 
 export interface PerformersState {
 
-};
+}
 
 const performersStore: Module<PerformersState, RootState> = {
     state: {

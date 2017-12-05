@@ -5,7 +5,7 @@ import { RootState } from './index';
 
 export interface ModalsState {
     activeModal: string | boolean;
-};
+}
 
 const localizationStore: Module<ModalsState, RootState> = {
     state: {

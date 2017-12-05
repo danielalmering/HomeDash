@@ -1,0 +1,33 @@
+
+{
+    "rules": {
+        "indent": [true, "spaces", 4],
+        "quotemark": [true, "single"],
+        "triple-equals": false,
+        "prefer-const": true,
+        "class-name": true,
+        "no-consecutive-blank-lines": [true, 2],
+        "no-irregular-whitespace": true,
+        "no-trailing-whitespace": true,
+        "one-line": [true, "check-catch", "check-finally", "check-else"],
+        "prefer-template": true,
+        "semicolon": [true, "always"],
+        "whitespace": [true, "check-separator", "check-operator", "check-decl", "check-rest-spread", "check-type", "check-type-operator"],
+        "no-duplicate-super": true,
+        "no-conditional-assignment": true,
+        "no-duplicate-variable": true,
+        "no-empty": true,
+        "no-floating-promises": true,
+        "no-unused-expression": true,
+        "no-null-keyword": true,
+        "no-shadowed-variable": true,
+        "no-sparse-arrays": true,
+        "no-unnecessary-class": true,
+        "no-unused-variable": true,
+        "no-use-before-declare": true,
+        "prefer-conditional-expression": true,
+        "restrict-plus-operands": true,
+        "strict-type-predicates": true,
+        "typeof-compare": true
+    }
+}

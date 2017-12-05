@@ -24,14 +24,14 @@ import { Performer, PerformerStatus } from '../../../../models/Performer';
 })
 export default class Tabs extends Vue {
 
-    emailForm: EmailForm = { subject: "", content: "" };
+    emailForm: EmailForm = { subject: '', content: '' };
     selectedTab: string = 'cam';
 
     ivrCode: string = '';
 
-    @Prop() performer:Performer;
+    @Prop() performer: Performer;
 
-    enabled(service:string):boolean{
+    enabled(service: string): boolean{
         if (!this.performer){
             return false;
         }
@@ -39,33 +39,33 @@ export default class Tabs extends Vue {
         //services:
         //cam,email,peek,phone,sms,videocall,voicemail
         //voyeur is an exception..
-        if (service == "voyeur"){
+        if (service === 'voyeur'){
             return this.performer.isVoyeur;
         }
 
-        if (! (service in this.performer.performer_services) ){
-            throw new Error(`${service} ai't no service I ever heard of!`);
+        if (!(service in this.performer.performer_services) ){
+            throw new Error(`${service} ain't no service I ever heard of!`);
         }
 
-        if (this.performer.performer_services[ service ]){
+        if (this.performer.performer_services[service]){
             return true;
         }
 
         if (service === 'cam'){
-            return this.performer.performerStatus == PerformerStatus.Busy && 
+            return this.performer.performerStatus === PerformerStatus.Busy &&
             this.performer.performer_services['peek'];
         }
 
         return false;
     }
 
-    get camLabel():string{       
+    get camLabel(): string {
         if (!this.performer){
             return 'tabs.service-webcam';
         }
 
         if (this.performer.performer_services['cam']){
-            return 'tabs.service-webcam';    
+            return 'tabs.service-webcam';
         }
 
         if (this.performer.performer_services['peek']){
@@ -91,8 +91,8 @@ export default class Tabs extends Vue {
         return this.$store.getters.getBranding;
     }
 
-    get displayName():string{
-        return "Karel";
+    get displayName(): string {
+        return 'Karel';
     }
 
     selectTab(newTab: string){
@@ -103,20 +103,20 @@ export default class Tabs extends Vue {
     }
 
     login(){
-        this.$store.dispatch('displayModal', 'login');  
+        this.$store.dispatch('displayModal', 'login');
     }
 
     startSession(ivrCode: string, displayName: string, service: string){
         this.$emit('startSession', { ivrCode, displayName, service });
     }
-        
+
     async sendMail(){
-        
-        let message = {
+
+        const message = {
             clientid: { id: this.user.id },
             content: this.emailForm.content,
-            sent_by: "CLIENT",
-            status: "INBOX",
+            sent_by: 'CLIENT',
+            status: 'INBOX',
             subject: this.emailForm.subject
         };
 
@@ -139,7 +139,7 @@ export default class Tabs extends Vue {
                 class: 'success'
             });
 
-            this.emailForm = {content: "", subject: ""};
+            this.emailForm = {content: '', subject: ''};
         }
     }
 }

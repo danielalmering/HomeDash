@@ -16,7 +16,7 @@ export default class Top extends Vue {
     campaign: Campaign = {number: 0, cpm: 0};
 
     get logo(){
-        return this.$store.getters.getLogoLight; 
+        return this.$store.getters.getLogoLight;
     }
 
     get info(){

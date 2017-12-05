@@ -19,6 +19,7 @@ import Contact from '../components/pages/contact/contact';
 import Terms from '../components/pages/textpages/terms';
 import Policy from '../components/pages/textpages/policy';
 import VideoChat from '../components/pages/videochat/videochat';
+import Voyeur from '../components/pages/voyeur/voyeur';
 
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
 
@@ -113,6 +114,11 @@ const router = new Router({
                     ]
                 },
                 {
+                    path: 'voyeur',
+                    name: 'Voyeur',
+                    component: Voyeur
+                },
+                {
                     path: 'performer/:id',
                     name: 'Performer',
                     component: Performer,
@@ -128,7 +134,7 @@ const router = new Router({
                             component: VideoChat
                         }
                     ]
-                }
+                },
             ]
         }
     ]

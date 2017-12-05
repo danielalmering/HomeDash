@@ -18,11 +18,11 @@ export default class View extends Vue{
         this.onError = this.onError.bind(this);
     }
 
-    @Prop() streamType:string;
-    
-    @Prop() wowza:string;
+    @Prop() streamType: string;
 
-    @Prop() playStream:string;
+    @Prop() wowza: string;
+
+    @Prop() playStream: string;
 
     mounted(){
         switch(this.streamType){
@@ -89,7 +89,7 @@ export default class View extends Vue{
             streaming: true,
             pauseWhenHidden: false,
             disableGl: false,
-            playingStateChange: (playing:boolean)=>playing ? this.onStateChange('active') : this.onStateChange('disconnected')
+            playingStateChange: (playing: boolean) => playing ? this.onStateChange('active') : this.onStateChange('disconnected')
         });
     }
 
@@ -99,14 +99,14 @@ export default class View extends Vue{
 
     private listener: string;
 
-    private player:jsmpeg.Player;
+    private player: jsmpeg.Player;
 
     public onStateChange(value: string){
-        this.$emit("stateChange", value);
+        this.$emit('stateChange', value);
     }
 
     public onError(message: string){
-        this.$emit("error", message);
+        this.$emit('error', message);
     }
 
 }

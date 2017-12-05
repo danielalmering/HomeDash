@@ -14,10 +14,10 @@ interface MessageForm {
 })
 export default class Newmessage extends Vue {
 
-    message: MessageForm = { subject: "", content: "" };
+    message: MessageForm = { subject: '', content: '' };
 
-    performers: any[] = [];    
-    selectedperf: any[] =[];
+    performers: any[] = [];
+    selectedperf: any[] = [];
     selectedusername: string = '';
     selectedid: number;
 
@@ -32,7 +32,7 @@ export default class Newmessage extends Vue {
     }
 
     filterPerformers(){
-        this.selectedperf = this.performers.filter((perf: any) => this.selectedusername.substr(0,4) === perf.username.substr(0,4));
+        this.selectedperf = this.performers.filter((perf: any) => this.selectedusername.substr(0, 4) === perf.username.substr(0, 4));
     }
 
     async loadPerformers() {
@@ -55,12 +55,12 @@ export default class Newmessage extends Vue {
             return;
         }
 
-        let message = {
+        const message = {
             clientid: { id: user.id },
             content: this.message.content,
             performer_account: { id: this.selectedid },
-            sent_by: "CLIENT",
-            status: "INBOX",
+            sent_by: 'CLIENT',
+            status: 'INBOX',
             subject: this.message.subject
         };
 
@@ -76,7 +76,7 @@ export default class Newmessage extends Vue {
                 class: 'success'
             });
 
-            this.message = { subject: "", content: "" };
+            this.message = { subject: '', content: '' };
         }
     }
 
