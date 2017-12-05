@@ -21,7 +21,7 @@ export interface RequestPayload extends Payload {
     sessionType: SessionType;
     ivrCode?: string;
     displayName?: string;
-};
+}
 
 export interface SessionState {
     activeState: State;
@@ -30,7 +30,7 @@ export interface SessionState {
     activeSessionData: SessionData | null;
     activeDisplayName: string;
     activeIvrCode: string;
-};
+}
 
 export interface VideoEventSocketMessage {
     clientId: number;
@@ -105,15 +105,17 @@ const sessionStore: Module<SessionState, RootState> = {
         async cancel(store: ActionContext<SessionState, RootState>, reason: string){
             store.commit('setState', State.Canceling);
 
+            let result;
+
             if(reason === 'PERFORMER_REJECT'){
                 const performerId = store.state.activePerformer ? store.state.activePerformer.id : 0;
 
-                var result = await fetch(`${config.BaseUrl}/session/videochat_request/${performerId}`, {
+                result = await fetch(`${config.BaseUrl}/session/videochat_request/${performerId}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
             } else {
-                var result = await fetch(`${config.BaseUrl}/session/cancel`, {
+                result = await fetch(`${config.BaseUrl}/session/cancel`, {
                     method: 'POST',
                     credentials: 'include'
                 });
@@ -148,11 +150,11 @@ const sessionStore: Module<SessionState, RootState> = {
                 return; //Do something else
             }
 
-            if(store.state.activeSessionType === SessionType.Video || store.state.activeSessionType === SessionType.Peek){
-                var url = `/performer_account/performer_number/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videochat`;
-            } else {
-                var url = `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;
-            }
+            const isVideoChat = store.state.activeSessionType === SessionType.Video || store.state.activeSessionType === SessionType.Peek;
+
+            const url = isVideoChat ?
+                `/performer_account/performer_number/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videochat` :
+                `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;
 
             const initiateResult = await fetch(`${config.BaseUrl}/session${url}`, {
                 method: 'POST',
@@ -174,7 +176,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             store.state.activeSessionData = data;
 
-            console.log('VideoChat data loaded')
+            console.log('VideoChat data loaded');
         },
         setActive(store: ActionContext<SessionState, RootState>){
             store.commit('setState', State.Active);
@@ -204,7 +206,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             if(content.clientId !== client.id ||
                 content.performerId !== store.state.activePerformer.id) {
-                throw new Error('Client shouldn\'t receive messages from client: ' + content.clientId + ' and performer: ' + content.performerId);
+                throw new Error(`Client shouldn\'t receive messages from client: ${content.clientId} and performer: ${content.performerId}`);
             }
 
             //Find a good way to do this shit, need it for testing now

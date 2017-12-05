@@ -24,7 +24,7 @@ import { Performer, PerformerStatus } from '../../../../models/Performer';
 })
 export default class Tabs extends Vue {
 
-    emailForm: EmailForm = { subject: "", content: "" };
+    emailForm: EmailForm = { subject: '', content: '' };
     selectedTab: string = 'cam';
 
     ivrCode: string = '';
@@ -103,20 +103,20 @@ export default class Tabs extends Vue {
     }
 
     login(){
-        this.$store.dispatch('displayModal', 'login');  
+        this.$store.dispatch('displayModal', 'login');
     }
 
     startSession(ivrCode: string, displayName: string, service: string){
         this.$emit('startSession', { ivrCode, displayName, service });
     }
-        
+
     async sendMail(){
-        
-        let message = {
+
+        const message = {
             clientid: { id: this.user.id },
             content: this.emailForm.content,
-            sent_by: "CLIENT",
-            status: "INBOX",
+            sent_by: 'CLIENT',
+            status: 'INBOX',
             subject: this.emailForm.subject
         };
 
@@ -139,7 +139,7 @@ export default class Tabs extends Vue {
                 class: 'success'
             });
 
-            this.emailForm = {content: "", subject: ""};
+            this.emailForm = {content: '', subject: ''};
         }
     }
 }
