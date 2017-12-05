@@ -45,9 +45,12 @@
         "register": "Registeer",
         "email": "Email",
         "lostpassword": "Wachtwoord vergeten?",
-        "successlogin": "Welkom, {username}",
         "missingfields": "Niet alle velden ingevuld",
-        "errorlogin": "Foutieve logingegevens"
+        "alerts": {
+            "successlogin": "Welkom, {username}",
+            "errorlogin": "Foutieve logingegevens",
+            "errorNotLoggedin": "Niet meer ingelogd!"
+        }
     },
     "sidebar": {
         "age": "jaar",
@@ -60,7 +63,7 @@
     },
     "profile": {
         "favorite-add": "Maak favoriet",
-        "favorite-remove": "Bye bye bye",
+        "favorite-remove": "Favoriet verwijderen",
         "property": "Kenmerken",
         "age": "leeftijd",
         "height": "Lengte",
@@ -152,23 +155,33 @@
         "to": "Versturen naar",
         "subject": "Onderwerp",
         "message": "Bericht",
-        "voucher": {
-            "successMessage": "De code is geactiveerd en je hebt je credits ontvangen",
-            "errorMessage": "Deze code was onjuist of is al gebruikt, probeer het opnieuw"
-        },
-        "newmessages": {
-            "successMessage": "Het bericht is succesvol verstuurd!",
-            "errorMessage": "Het bericht is niet succesvol verstuurd!"
-        },
-        "messageremoval": {
-            "successRemove": "De geselecteerde berichten zijn succesvol verwijderd",
-            "errorRemove": "De geselecteerde berichten zijn niet verwijderd!"
+        "alerts": {
+            "successEditData": "Uw account is succesvol bewerkt!",
+            "errorEditData": "Uw account is niet succesvol bewerkt!",
+            "successVoucher": "De code is geactiveerd en je hebt je credits ontvangen",
+            "errorVoucher": "Deze code was onjuist of is al gebruikt, probeer het opnieuw",
+            "errorInboxLoad": "Er is een fout opgetreden bij het laden van de inbox!",
+            "errorInboxMessageLoad": "Er is een fout opgetreden bij het laden van het bericht!",
+            "successInboxRemove": "De geselecteerde berichten zijn succesvol verwijderd",
+            "errorInboxRemove": "De geselecteerde berichten zijn niet verwijderd!",
+            "errorReplyMessage": "Er is een fout opgetreden bij het reageren!",
+            "successReplyMessage": "Uw reactie is succesvol verstuurt!",
+            "successNewMessage": "Het bericht is succesvol verstuurd!",
+            "errorNewMessage": "Het bericht is niet succesvol verstuurd!"
+        }
+    },
+    "videochat": {
+        "alerts": {
+            "successChatEnded": "Sessie is afgelopen!"
         }
     },
     "promos": {
         "intro": "Welkom bij de actiepagina, middels deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen.",
         "currentactions": "Lopende acties",
-        "data": "Data"
+        "data": "Data",
+        "alerts": {
+            "errorLoad": "Er is een fout opgetreden bij inladen van de promos!"
+        }
     },
     "payment": {
         "pickpackage": "Kies een pakket",
@@ -199,8 +212,10 @@
         "email": "Email:*",
         "name": "Name:*",
         "message": "Bericht:*",
-        "errorSend": "Er is een Fout opgetreden bij het verzenden",
-        "successSend": "Bericht is met succes verzonden"
+        "alerts": {
+            "errorSend": "Er is een Fout opgetreden bij het verzenden",
+            "successSend": "Bericht is met succes verzonden"
+        }
     },
     "textpages": {
         "termstitle": "Algemene voorwaarden",
