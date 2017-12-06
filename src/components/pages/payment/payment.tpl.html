@@ -7,45 +7,15 @@
         </div>
 
         <div class="payment__package">
-            <ul >
-                <li class="col-xs-12 col-sm-3">
+            <ul>
+                <li class="col-xs-12 col-sm-4" v-for="package in packages" v-on:click="addPackage(package)">
                     <div class="payment__package-item">
-                        <h2>XXL</h2>
+                        <h2>{{package.title}}</h2>
                         <img src="../../../assets/images/paymenticon.png">
-                        <span class="time">50 min <i>cammen</i></span>
-                        <span class="credits">5000</span>
+                        <span class="time" v-html="package.subtitle"></span>
+                        <span class="credits">{{ package.quantity }}</span>
                         <span v-t="'payment.credits'"></span>
-                        <span class="price">€50.00</span>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-3">
-                    <div class="payment__package-item">
-                        <h2>Dubbel</h2>
-                        <img src="../../../assets/images/paymenticon.png">
-                        <span class="time">20 min <i>cammen</i></span>
-                        <span class="credits">2000</span>
-                        <span v-t="'payment.credits'"></span>
-                        <span class="price">€20.00</span>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-3">
-                    <div class="payment__package-item">
-                        <h2>Basic</h2>
-                        <img src="../../../assets/images/paymenticon.png">
-                        <span class="time">10 min <i>cammen</i></span>
-                        <span class="credits">1000</span>
-                        <span v-t="'payment.credits'"></span>
-                        <span class="price">€10.00</span>
-                    </div>
-                </li>
-                <li class="col-xs-12 col-sm-3">
-                    <div class="payment__package-item special">
-                        <h2>Special</h2>
-                        <img src="../../../assets/images/paymenticon.png">
-                        <span class="time">200 min <i>cammen</i></span>
-                        <span class="credits">20000</span>
-                        <span v-t="'payment.credits'"></span>
-                        <span class="price">€20000</span>
+                        <span class="price">{{ package.price | euro }}</span>
                     </div>
                 </li>
             </ul>
@@ -65,19 +35,11 @@
                     <th v-t="'payment.price'"></th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>XXL</td>
-                    <td>1</td>
-                    <td>5000</td>
-                    <td>€50.00</td>
-                    <td><i class="fa fa-times"></i></td>
-                </tr>
-                <tr>
-                    <td>Basic</td>
-                    <td>1</td>
-                    <td>1000</td>
-                    <td>€10.00</td>
-                    <td><i class="fa fa-times"></i></td>
+                <tr v-for="(value, key) in selectedPackages" v-if="value > 0">
+                    <td>{{ package(key).title }}</td>
+                    <td>{{ value }}</td>
+                    <td>{{ package(key).quantity }}</td>
+                    <td>{{ package(key).price | euro }}</td>
                 </tr>
             </table>
 
@@ -90,8 +52,8 @@
                 <p v-t="'payment.bonusdiscountdesc'"></p>
                 <br />
 
-                <div class="payment__cart-form form">
-                    <input type="text" :placeholder="$t('payment.discountcode')">
+                <div class="payment__cart-form form" v-if="">
+                    <input type="text" :placeholder="$t('payment.discountcode')" v-model="promoCode">
                     <i class="fa fa-share"></i>
                 </div>
 
@@ -108,9 +70,9 @@
                         </div>
                         <div class="col-xs-6 text-right">
                             <span>€100,-</span>
-                            <span>-</span>
-                            <span>100000</span>
-                            <p>€100,-</p>
+                            <span>{{ bonusAmount(credits) }}</span>
+                            <span>{{ credits + bonusAmount(credits) }}</span>
+                            <p>{{ totalAmount | euro }}</p>
                         </div>
                     </div>
                 </div>
@@ -126,32 +88,21 @@
 
         <div class="payment__method">
             <ul>
-                <li class="col-xs-12 col-sm-4">
-                    <div class="payment__method-item" id="IDEAL">
+                <li class="col-xs-12 col-sm-4" v-for="paymentMethod in paymentMethods" v-on:click="selectPayment(paymentMethod.abbr)">
+                    <div class="payment__method-item" :class="{ 'special': paymentMethod.abbr === selectedPayment }" :id="paymentMethod.abbr">
                         <i></i>
                         <span></span>
                     </div>
-                    <div class="payment__method-name">{{ $t('payment.paywith') }} IDeal</div>
-                </li>
-                <li class="col-xs-12 col-sm-4">
-                    <div class="payment__method-item" id="BCMC">
-                        <i></i>
-                        <span></span>
+                    <div class="payment__method-name">
+                        {{ $t('payment.paywith', { title: paymentMethod.title }) }}
+                        <span v-if="!paymentMethod.addBonus">*</span>
                     </div>
-                    <div class="payment__method-name">{{ $t('payment.paywith') }} Minster Cash</div>
-                </li>
-                <li class="col-xs-12 col-sm-4">
-                    <div class="payment__method-item special" id="VXSBILL">
-                        <i></i>
-                        <span></span>
-                    </div>
-                    <div class="payment__method-name">{{ $t('payment.paywith') }} Creditcards *</div>
                 </li>
             </ul>
         </div>
 
         <div class="payment__finish">
-            <a href="#" class="btn btn-xxl btn-orange" v-t="'payment.paying'"></a>
+            <a v-on:click="submitPurchase" class="btn btn-xxl btn-orange" v-t="'payment.paying'"></a>
         </div>
 
     </div>
