@@ -22,7 +22,12 @@ export default class Readmessage extends Vue {
         });
 
         if(!messageResults.ok){
-            return; //TODO: Error message
+            this.$store.dispatch('openMessage', {
+                content: 'account.alerts.errorInboxMessageLoad',
+                class: 'error'
+            });
+
+            return;
         }
 
         this.message = await messageResults.json();
@@ -48,10 +53,19 @@ export default class Readmessage extends Vue {
         });
 
         if(!newmessageResult.ok){
-            //Show error message
+            this.$store.dispatch('openMessage', {
+                content: 'account.alerts.errorReplyMessage',
+                class: 'error'
+            });
+
             return;
-        } else {
-            this.reply = '';
         }
+        
+        this.$store.dispatch('openMessage', {
+            content: 'account.alerts.successReplyMessage',
+            class: 'success'
+        });
+        
+        this.reply = '';
     }
 }

@@ -19,9 +19,18 @@ export default class Editdata extends Vue {
         });
 
         if(!userResult.ok){
-            //Show error message
+            this.$store.dispatch('openMessage', {
+                content: 'account.alerts.errorEditData',
+                class: 'error'
+            });
+
             return;
         }
+
+        this.$store.dispatch('openMessage', {
+            content: 'account.alerts.successEditData',
+            class: 'success'
+        });
 
         const userData = await userResult.json();
 

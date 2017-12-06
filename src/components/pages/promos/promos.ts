@@ -21,7 +21,12 @@ export default class Promo extends Vue {
         });
 
         if(!promosResult.ok){
-            return; //TODO: Display error
+            this.$store.dispatch('openMessage', {
+                content: 'promos.alerts.errorLoad',
+                class: 'error'
+            });
+
+            return;
         }
 
         this.promos = await promosResult.json();

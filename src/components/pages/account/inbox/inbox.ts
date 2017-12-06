@@ -50,12 +50,12 @@ export default class Inbox extends Vue {
 
         if(!deleteResult.ok){
             this.$store.dispatch('openMessage', {
-                content: 'account.messageremoval.errorRemove',
+                content: 'account.alerts.errorInboxRemove',
                 class: 'error'
             });
         } else {
             this.$store.dispatch('openMessage', {
-                content: 'account.messageremoval.successRemove',
+                content: 'account.alerts.successInboxRemove',
                 class: 'success'
             });
 
@@ -71,7 +71,12 @@ export default class Inbox extends Vue {
         });
 
         if(!inboxResults.ok){
-            return; //TODO: Error message
+            this.$store.dispatch('openMessage', {
+                content: 'account.alerts.errorInboxLoad',
+                class: 'error'
+            });
+
+            return;
         }
 
         const data = await inboxResults.json();
