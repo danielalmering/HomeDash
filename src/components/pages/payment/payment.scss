@@ -13,28 +13,28 @@
 
     &__title {
         display: table;
-        @include rem(padding, 45px 0 40px 0);
+        @include rem(padding, 25px 0 20px 0);
         @include rem(margin, 0px auto );
         width: auto;
 
         span {
             float: left;
             color: $pallete-2;
-            @include rem(font-size,20px);
-            line-height: 200%;
+            @include rem(font-size,18px);
+            line-height: 220%;
         }
 
         i {
             float: left;
             display: table;
-            width: 40px;
+            width: 35px;
             text-align: center;
             vertical-align: middle;
             @include border-radius(5px);
             color: $pallete-2;
             border: 2px solid $pallete-3;
             @include rem(font-size, 20px);
-            @include rem(padding, 8px 2px);
+            @include rem(padding, 5px 2px);
             @include rem(margin, auto 20px);
             &.active {
                 background: $pallete-3;
@@ -57,6 +57,8 @@
         
 
         &-item {
+            position: relative;
+            z-index: 1;
             display: block;
             width: 100%;
             text-align: center;
@@ -66,6 +68,34 @@
             @include border-radius(3px);
             @include rem(margin, 0px 0px 25px 0px);
             cursor: pointer;
+            &:before {
+                content: "";
+                position: absolute;
+                z-index: 999;
+                top: 0;
+                left: 0;
+                width: 20px;
+                height: 100%;
+            }
+
+            &.Basic {
+                &:before {
+                    @include gradient(#ead8c4, #995f39, '');
+                }
+            }
+
+            &.Dubbel {
+                &:before {
+                    @include gradient(#e9e9e9, #b8b9bb, '');
+                }
+            }
+
+            &.XXXL {
+                &:before {
+                    @include gradient(#f0dc97, #c69634, '');
+                }
+            }
+
             &:hover, &.special {
                 border-color: $pallete-3;
             }
@@ -73,10 +103,9 @@
             h2 { 
                 display: block;
                 width: 100%;
-                color: $pallete-20;
+                color: $pallete-2;
                 @include rem(margin, 0);
                 @include rem(padding, 10px 0px);
-                border-bottom: 1px solid $pallete-14;
             }
             
             span {
@@ -86,9 +115,13 @@
             .time {
                 display: block;
                 @include rem(padding, 15px 0px);
+                @include rem(margin, 0px auto);
                 color: $pallete-3;
-                @include rem(font-size, 28px);
+                @include rem(font-size, 16px);
+                width: 50%;
+                height: 60px;
                 line-height: 100%;
+
                 i {
                     display: block;
                     width: 100%;
@@ -127,23 +160,26 @@
 
         p {
             color: $pallete-18;
+            @include rem(font-size, 13px);
         }
 
         table {
-            border: 15px solid $pallete-1;
+            border-top: 15px solid $pallete-1;
+            border-left: 15px solid $pallete-1;
+            border-right: 15px solid $pallete-1;
             width: 100%;
 
             th {
                 color: $pallete-14;
                 text-align: left;
                 @include rem(font-size, 15px);
-                @include rem(padding, 10px 5px);
+                @include rem(padding, 0px 5px 10px 5px);
                 border-bottom: 2px solid $pallete-0;
             }
 
             td {
                 color: $pallete-2;
-                @include rem(padding, 15px 5px);
+                @include rem(padding, 10px 5px);
                 @include rem(font-size, 17px);
                 border-bottom: 2px solid $pallete-0;
                 white-space: nowrap;
@@ -162,8 +198,8 @@
             width: 100%;
             border: 2px solid $pallete-3;
             color: $pallete-2;
-            @include rem(font-size, 18px);
-            @include rem(padding, 20px 10px);
+            @include rem(font-size, 16px);
+            @include rem(padding, 5px 5px);
 
             span {
                 display: table-cell;
@@ -208,7 +244,7 @@
 
         &-subtotal {
             display: table;
-            @include rem(padding, 15px 0px);
+            @include rem(padding, 10px 0px);
             width: 100%;
             line-height: 120%;
 
@@ -216,7 +252,7 @@
                 display: block;
                 width: 100%;
                 color: $pallete-2;
-                @include rem(font-size, 18px);
+                @include rem(font-size, 16px);
                 @include rem(padding, 10px 0px);
             }
 
@@ -224,7 +260,7 @@
                 color: $pallete-3;
                 @include rem(padding, 0px);
                 @include rem(margin, 6px 0px);
-                @include rem(font-size, 25px);
+                @include rem(font-size, 20px);
                 font-weight: 700;
             }
         }
