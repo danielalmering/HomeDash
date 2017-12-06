@@ -193,7 +193,7 @@
         "creditscap": "Credits",
         "price": "Prijs",
         "paying": "Afrekenen",
-        "paywith": "Betaal met",
+        "paywith": "Betaal met {title}",
         "subtotal": "Subtotaal",
         "bonuscredits": "Bonus credits",
         "subtotalcredits": "Sub credits",
