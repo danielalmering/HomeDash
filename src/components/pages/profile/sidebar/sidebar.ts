@@ -16,6 +16,7 @@ export default class Sidebar extends Vue {
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
     showSidebar: boolean = false;
+    services: string[] = ["cam", "phone", "sms", "email", "videocall"];    
 
     query: any = {
         limit: 20,
@@ -46,6 +47,12 @@ export default class Sidebar extends Vue {
         this.query.performer = this.$route.params.id;
 
         this.loadPerformers();
+    }
+
+    hasService(performerId: number, service: string){
+        const performer = this.performers.find(p => p.id === performerId);
+
+        return !performer ? false : performer.performer_services[service];
     }
 
     login(){
