@@ -1,4 +1,5 @@
 import { Component, Watch } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer } from '../../../../models/Performer';
@@ -48,11 +49,17 @@ export default class Sidebar extends Vue {
 
     mounted(){
         this.query.performer = this.$route.params.id;
-
         this.loadPerformers();
     }
 
-    toggleSidebar(){
+    @Watch('$route')
+    onRouteChange(to: Route, from: Route){
+        if(this.displaySidebar){
+            this.$store.commit('toggleSidebar');
+        }
+    }
+
+    toggleSidebar(check: boolean){
         this.$store.commit('toggleSidebar');
     }
 
@@ -109,6 +116,12 @@ export default class Sidebar extends Vue {
 
         this.query.offset = 0;
         this.loadPerformers();
+    }
+
+    beforeDestroy(){
+        if(this.displaySidebar){
+            this.$store.commit('toggleSidebar');
+        }
     }
 
     async loadPerformers(loadMore: boolean = false){

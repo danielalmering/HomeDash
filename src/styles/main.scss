@@ -32,13 +32,10 @@ body {
 }
 
 main {
-    display:flex;
+    &.profileview { display:flex; }
+    &.index, &.account, &.promos, &.payment { display: block; }
     min-height: 100vh;
 }
-
-// main, .account, .promos {
-//     height: calc(100vh - 265px);
-// }
 
 .nopad  { padding: 0; }
 .nomar { margin: 0; }
