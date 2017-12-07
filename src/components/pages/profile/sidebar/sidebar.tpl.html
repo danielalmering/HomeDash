@@ -1,53 +1,65 @@
-<div class="sidebar" :class="{ 'collapse': showSidebar }">
+<div class="sidebar" :class="{ 'collapse': displaySidebar  }">
 
-    <div class="sidebar__logo">
-        <router-link :to="{ path: '/'}"><img :src="logo" alt=""></router-link>
-    </div>
+    <div class="sidebar__content">
 
-    <div class="sidebar__user" v-on:click="authenticated ? account() : login()">
-        <span class="sidebar__user-name">{{ authenticated ? user.username : 'Anoniem' }}</span>
-        <span>{{ $t('sidebar.currentcredits') }}</span>
-        <span class="sidebar__user-credits">{{ authenticated ? user.credits : '0' }}</span>
-    </div>
+        <div class="sidebar__content-top">
 
-    <div class="sidebar__search form">
-        <form v-on:submit.prevent="search()">
-            <input type="text" class="searching" name="search" v-model="query.search" :placeholder="$t('nav.search.input')">
-            <button class="fa fa-search"></button>
-        </form>
-    </div>
-
-    <ul class="sidebar__filters">
-        <li v-t="'sidebar.recommended'" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
-        <li v-t="'sidebar.peek'" :class="{ 'active': category === 'peek' }" v-on:click="setCategory('peek')"></li>
-        <li v-t="'sidebar.favorite'" :class="{ 'active': category === 'favourites' }" v-on:click="setCategory('favourites')"></li>
-    </ul>
-
-    <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll">
-        <li class="sidebar__performer" v-for="performer in performers" v-on:click="goToPerformer(performer.advert_numbers[0].advertNumber)">
-            <div class="sidebar__performer-image col-xs-5 nopad">
-                <img v-if="performer.avatar" :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
-                <span></span>
-                <div class="sidebar__performer-services">
-                    <i title="" class="fa fa-video-camera"></i>
-                    <i title="" class="fa fa-phone"></i>
-                    <i title="" class="fa fa-mobile"></i>
-                    <i title="" class="fa fa-envelope-o"></i>
-                </div>
+            <div class="sidebar__content-logo">
+                <router-link :to="{ path: '/'}"><img :src="logo" alt=""></router-link>
             </div>
-            <div class="sidebar__performer-info col-xs-7">
-                <h3>{{ performer.nickname }}</h3>
-                <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
-                <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
-            </div>
-        </li>
-        <li class="sidebar__performer" v-if="performers.length === 0">
-            <h3 class="text-center" v-t="$t('sidebar.noperformers')"></h3>
-        </li>
-    </ul>
 
-    <div class="sidebar__toggle hidden-md hidden-lg" v-on:click="showSidebar = !showSidebar">
+            <div class="sidebar__content-user" v-on:click="authenticated ? account() : login()">
+                <span class="name">{{ authenticated ? user.username : 'Anoniem' }}</span>
+                <span>{{ $t('sidebar.currentcredits') }}</span>
+                <span class="credits">{{ authenticated ? user.credits : '0' }}</span>
+            </div>
+
+            <div class="sidebar__content-search form">
+                <form v-on:submit.prevent="search()">
+                    <input type="text" class="searching" name="search" v-model="query.search" :placeholder="$t('nav.search.input')">
+                    <button class="fa fa-search"></button>
+                </form>
+            </div>
+
+            <ul class="sidebar__content-filters">
+                <li v-t="'sidebar.recommended'" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
+                <li v-t="'sidebar.peek'" :class="{ 'active': category === 'peek' }" v-on:click="setCategory('peek')"></li>
+                <li v-t="'sidebar.favorite'" :class="{ 'active': category === 'favourites' }" v-on:click="setCategory('favourites')"></li>
+            </ul>
+
+        </div>
+
+        <div class="sidebar__content-bottom">
+
+            <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll">
+                <li class="sidebar__performer" v-for="performer in performers" v-on:click="goToPerformer(performer.advert_numbers[0].advertNumber)">
+                    <div class="sidebar__performer-image col-xs-5 nopad">
+                        <img v-if="performer.avatar" :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
+                        <span></span>
+                        <div class="sidebar__performer-services">
+                            <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
+                        </div>
+                    </div>
+                    <div class="sidebar__performer-info col-xs-7">
+                        <h3>{{ performer.nickname }}</h3>
+                        <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
+                        <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
+                    </div>
+                </li>
+                <li class="sidebar__performer" v-if="performers.length === 0">
+                    <h3 class="text-center" v-t="$t('sidebar.noperformers')"></h3>
+                </li>
+            </ul>
+            
+        </div>
+
+    </div>
+
+
+
+    
+
+    <div class="sidebar__toggle hidden-md hidden-lg" v-on:click="toggleSidebar">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
     </div>
-
 </div>

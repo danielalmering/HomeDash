@@ -22,6 +22,7 @@ export default class Performers extends Vue {
     // performers: Performer[] = [];
 
     total: number = 0;
+    services: string[] = ["cam", "phone", "sms", "email", "videocall"];
 
     getAvatarImage = getAvatarImage;
 

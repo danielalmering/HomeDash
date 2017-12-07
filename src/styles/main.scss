@@ -31,9 +31,14 @@ body {
     @include rem(padding-right, 5px);
 }
 
-main, .account, .promos {
-    height: calc(100vh - 265px);
+main {
+    display:flex;
+    min-height: 100vh;
 }
+
+// main, .account, .promos {
+//     height: calc(100vh - 265px);
+// }
 
 .nopad  { padding: 0; }
 .nomar { margin: 0; }

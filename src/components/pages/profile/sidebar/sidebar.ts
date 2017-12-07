@@ -15,7 +15,7 @@ export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
-    showSidebar: boolean = false;
+    services: string[] = ["cam", "phone", "sms", "email", "videocall"];    
 
     query: any = {
         limit: 20,
@@ -29,6 +29,10 @@ export default class Sidebar extends Vue {
         'favourites': this.loadFavorites,
         'peek': this.loadPeek
     };
+
+    get displaySidebar(){
+        return this.$store.state.displaySidebar;
+    }
 
     get logo(){
         return this.$store.getters.getLogoLight;
@@ -46,6 +50,16 @@ export default class Sidebar extends Vue {
         this.query.performer = this.$route.params.id;
 
         this.loadPerformers();
+    }
+
+    toggleSidebar(){
+        this.$store.commit('toggleSidebar');
+    }
+
+    hasService(performerId: number, service: string){
+        const performer = this.performers.find(p => p.id === performerId);
+
+        return !performer ? false : performer.performer_services[service];
     }
 
     login(){
