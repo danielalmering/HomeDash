@@ -6,6 +6,15 @@ import { RootState } from '../index';
 import config from '../../config';
 import Voyeur from '../../components/pages/voyeur/voyeur';
 import { setInterval } from 'timers';
+import notificationSocket from '../../socket';
+import rootState from '../index';
+
+interface SocketVoyeurEventArgs {
+    performerId: number;
+    type: string;
+    value: boolean;
+    message?: string;
+}
 
 type VoyeurContext = ActionContext<VoyeurState, RootState>;
 
@@ -18,7 +27,30 @@ const maxTilesAllowed = 5;
 //Time between the switching of tiles
 const tileSwitchDelay = 2000;
 
+//Switcheroo interval callback
 let switcherooCb: NodeJS.Timer | undefined = undefined;
+
+// TODO: Figure out how to remove this timeout
+setTimeout(() => {
+    notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
+
+        if(!data) return;
+
+        if(data.message && (data.message === 'BROKE' || data.message === 'HANGUP')){
+            //Show broke/hangup alert
+            //Route to performer page
+            
+            return;
+        }
+
+        if(!data.performerId) return;
+
+        if(data.type === 'STREAMING'){
+            rootState.dispatch('voyeur/updatePerformers', { performerId: data.performerId, value: data.value });
+            return;
+        }
+    });
+});
 
 export interface PerformerTile {
     iterationsAlive: number;
@@ -39,9 +71,16 @@ export interface VoyeurState {
 }
 
 const mutations = {
-    addPerformers(state: VoyeurState, payload: Performer[] | Performer){
+    addPerformers(state: VoyeurState, payload: Performer[]){
         state.performers = state.performers.concat(payload);
         state.queue = state.performers.map(p => p.id);
+    },
+    addPerformer(state: VoyeurState, performer: Performer){
+        state.performers.push(performer);
+        state.queue.unshift(performer.id);
+    },
+    removePerformer(state: VoyeurState, performerId: number){
+        state.performers = state.performers.filter(p => p.id !== performerId);
     },
     setTile(state: VoyeurState, payload: { tile: PerformerTile, position: number }){
         Vue.set(state.activeTiles, payload.position, payload.tile);
@@ -77,7 +116,7 @@ const mutations = {
 
 const actions = {
 
-    async startVoyeur({ state, rootState, commit, dispatch }: VoyeurContext, payload: { ivrCode?: string, performerId: number }){
+    async startVoyeur({ state, rootState, commit, dispatch, getters }: VoyeurContext, payload: { ivrCode?: string, performerId: number }){
         const userId = rootState.authentication.user.id;
 
         const voyeurResult = await fetch(`${config.BaseUrl}/session/initiate_voyeurclient`, {
@@ -128,7 +167,11 @@ const actions = {
                 return;
             }
 
-            dispatch('switcheroo', { performerId: state.queue.shift() });
+            const tileToReplace = getters.replacementTargetIndex;
+
+            console.log(getters.replacementTargetIndex);
+
+            dispatch('loadTile', { performerId: state.queue.shift(), position: tileToReplace });
         }, tileSwitchDelay);
     },
     async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
@@ -243,13 +286,31 @@ const actions = {
 
         commit('reset');
     },
-    async switcheroo({ dispatch, getters, state }: VoyeurContext, payload: { performerId: number }){
-        const tileToReplace = getters.replacementTarget;
+    async switcheroo({ dispatch, getters, state }: VoyeurContext, payload: { performerId: number, target: number }){
 
         await dispatch('loadTile', {
             performerId: payload.performerId,
-            location: state.activeTiles.indexOf(tileToReplace)
+            location: payload.target
         });
+    },
+    async updatePerformers({ commit }: VoyeurContext, payload: { performerId: number, value: boolean }){
+        if(!payload.value){
+            commit('removePerformer', payload.performerId);
+            return;
+        }
+
+        const performerResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/${payload.performerId}`, {
+            credentials: 'include'
+        });
+
+        if(!performerResult.ok){
+            console.log('Wtf? This api call never fails, get outta here');
+            return;
+        }
+
+        const data = await performerResult.json();
+
+        commit('addPerformer', data.performerAccount);
     }
 };
 
@@ -265,8 +326,23 @@ const getters = {
             return state.performers.find(p =>  p.id === id );
         };
     },
+    replacementTargetIndex(state: VoyeurState){
+        if(state.activeTiles.length < maxTilesAllowed){
+            return state.activeTiles.length;
+        }
+
+        // const emptyTile = state.activeTiles.findIndex(t => t === undefined);
+
+        // if(emptyTile > -1){
+        //     return emptyTile;
+        // }
+
+        return state.activeTiles.reduce((selected: number, current: PerformerTile, index: number) => {
+            return state.activeTiles[selected].iterationsAlive > current.iterationsAlive ? selected : index;
+        }, 0);
+    },
     replacementTarget(state: VoyeurState){
-        return state.activeTiles.reduce((current: PerformerTile, selected: PerformerTile) => {
+        return state.activeTiles.reduce((selected: PerformerTile, current: PerformerTile) => {
             return current.iterationsAlive > selected.iterationsAlive ? current : selected;
         }, state.activeTiles[0]);
     }

@@ -75,9 +75,9 @@ const sessionStore: Module<SessionState, RootState> = {
             const requestResult = await fetch(`${config.BaseUrl}/session/request/chat`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
+                headers: new Headers({
                     'Content-Type': 'application/json'
-                },
+                }),
                 body: JSON.stringify({
                     performerId: payload.performer.id,
                     clientId: store.rootState.authentication.user.id,
@@ -159,9 +159,9 @@ const sessionStore: Module<SessionState, RootState> = {
             const initiateResult = await fetch(`${config.BaseUrl}/session${url}`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
+                headers: new Headers({
                     'Content-Type': 'application/json'
-                },
+                }),
                 body: JSON.stringify({
                     clientId: store.rootState.authentication.user.id,
                     chatroomName: store.state.activeDisplayName
