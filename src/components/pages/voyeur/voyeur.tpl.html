@@ -1,5 +1,5 @@
 <div class="videochat">
-    <div class="videochat__screen">
+    <div class="videochat__screen" v-if="mainTile">
         <div class="videochat__screen-object">
             <jsmpeg
                 v-on:stateChange="viewerStateChange"
