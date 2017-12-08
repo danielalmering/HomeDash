@@ -44,7 +44,6 @@ $sidebar-top-height: 300px;
         }
 
         &-bottom { 
-            display: table;
             width: $sidebar-width;
             height: calc(100% - #{$sidebar-top-height});
         }
