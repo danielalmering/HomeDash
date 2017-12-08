@@ -24,6 +24,10 @@ export default class Voyeur extends Vue {
         return this.$store.getters['voyeur/favourites'];
     }
 
+    get reservations(){
+        return this.$store.getters['voyeur/reservations'];
+    }
+
     get performer(){
         return (id: number) => {
             console.log(this.$store.getters['voyeur/performer']);
