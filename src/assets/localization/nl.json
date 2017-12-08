@@ -179,6 +179,7 @@
     },
     "voyeur": {
         "reserve": "Reserveren",
+        "cancelReservation": "Annuleer reservering",
         "now1on1": "Nu 1op1",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"

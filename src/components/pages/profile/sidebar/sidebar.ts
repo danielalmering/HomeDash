@@ -59,6 +59,18 @@ export default class Sidebar extends Vue {
         return this.$store.state.voyeur.isActive;
     }
 
+    get performer(){
+        return (id: number) => {
+            return this.$store.getters['voyeur/performer'](id);
+        }
+    }
+
+    get isReserved(){
+        return (id: number) => {
+            this.$store.getters['voyeur/reservations'].indexOf(id) > -1;
+        }
+    }
+
     @Watch('isVoyeurActive')
     onVoyeurStateChange(newValue: boolean){
         //When voyeur gets activated switch the voyeur tab, when the session ends, switch back
@@ -93,6 +105,12 @@ export default class Sidebar extends Vue {
 
     account(){
         this.$router.push({ name: 'Editdata' });
+    }
+
+    reserve(performerId: number){
+        this.isReserved(performerId) ?
+            this.$store.commit('removeReservation', performerId) :
+            this.$store.commit('addReservation', performerId);
     }
 
     goToPerformer(id: number){
