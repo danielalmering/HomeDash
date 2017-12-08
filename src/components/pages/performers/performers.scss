@@ -52,33 +52,6 @@
             @include rem(padding, 8px 10px);
             min-height: 33px;
 
-            &-status {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 0;
-                height: 0;
-                border-style: solid;
-                border-width: 0 12px 12px 0;
-                border-color: transparent transparent transparent transparent;
-
-                &.available {
-                    border-color: transparent $pallete-12 transparent transparent;
-                }
-
-                &.busy {
-                    border-color: transparent $pallete-15 transparent transparent;
-                }
-
-                &.peek {
-                    border-color: transparent $pallete-19 transparent transparent;                    
-                }
-
-                &.offline {
-                    border-color: transparent $pallete-20 transparent transparent;                    
-                }
-            }
-
             &-countries {
                 position: absolute;
                 right: 4px;

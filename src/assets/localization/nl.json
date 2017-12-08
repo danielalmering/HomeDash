@@ -89,6 +89,7 @@
         "webcambtn": "Webcammen",
         "webcamwithphonedesc": "Toets # in het hoofdmenu voor de toegangscode",
         "webcamwithcreditsdesc": "Hieronder kunt u webcammen en deze sessie betalen met credits, de kosten zijn",
+        "voyeurbtn": "Voyeur",
         "videochatbtn": "Beeldbellen",
         "videochatwithcreditsdesc1": "Toets",
         "videochatwithcreditsdesc2": "en sluit af met een # en kies vervolgens de optie beeldbellen in het menu (#)",
@@ -172,6 +173,13 @@
         }
     },
     "videochat": {
+        "alerts": {
+            "successChatEnded": "Sessie is afgelopen!"
+        }
+    },
+    "voyeur": {
+        "reserve": "Reserveren",
+        "now1on1": "Nu 1op1",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"
         }

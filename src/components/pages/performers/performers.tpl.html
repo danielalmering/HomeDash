@@ -6,7 +6,7 @@
                     <div class="performers__info" v-if="performer">
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
-                            <span class="performers__info-personal-status" :class="performerStatus(performer)"></span>
+                            <span class="status" :class="performerStatus(performer)"></span>
                             <span class="performers__info-personal-countries">
                                 <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
                             </span>
