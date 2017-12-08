@@ -83,6 +83,10 @@ const mutations = {
         state.performers = state.performers.filter(p => p.id !== performerId);
     },
     setTile(state: VoyeurState, payload: { tile: PerformerTile, position: number }){
+        if(state.activeTiles[payload.position]){
+            state.queue.push(state.activeTiles[payload.position].performer);
+        }
+
         Vue.set(state.activeTiles, payload.position, payload.tile);
     },
     setMainTile(state: VoyeurState, tile: PerformerTile){
@@ -219,8 +223,6 @@ const actions = {
                     type: 'VOYEURPEEK'
                 })
             });
-
-            state.queue.push(state.activeTiles[payload.position].performer);
         }
 
         commit('setTile',  { tile, position: payload.position });
