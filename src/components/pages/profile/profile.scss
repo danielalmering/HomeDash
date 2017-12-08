@@ -7,23 +7,12 @@
 @import "../../../styles/_mixins.scss";
 @import "../../../styles/_settings.scss";
 
-$sidebar-width: 250px;
-
 // Styling
 
 .profile {
     width: 100%;
     background: $pallete-16;
     position: relative;
-    transition: all 0.5s ease-in-out;
-
-    @include breakpoint(md) {
-        width: calc(100% - 250px);
-    }
-
-    &.collapse {
-        margin-left: -$sidebar-width;
-    }
 
     &__info {
         display: table;
