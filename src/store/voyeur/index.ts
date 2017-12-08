@@ -5,6 +5,7 @@ import { RootState } from '../index';
 
 import config from '../../config';
 import Voyeur from '../../components/pages/voyeur/voyeur';
+import { setInterval } from 'timers';
 
 type VoyeurContext = ActionContext<VoyeurState, RootState>;
 
@@ -16,6 +17,8 @@ const maxTilesAllowed = 5;
 
 //Time between the switching of tiles
 const tileSwitchDelay = 2000;
+
+let switcherooCb: NodeJS.Timer | undefined = undefined;
 
 export interface PerformerTile {
     iterationsAlive: number;
@@ -119,6 +122,14 @@ const actions = {
 
             await dispatch('loadTile', { performerId: performerId, position: i });
         }
+
+        switcherooCb = setInterval(() => {
+            if(state.queue.length === 0){
+                return;
+            }
+
+            dispatch('switcheroo', { performerId: state.queue.shift() });
+        }, tileSwitchDelay);
     },
     async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
         const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
@@ -165,6 +176,8 @@ const actions = {
                     type: 'VOYEURPEEK'
                 })
             });
+
+            state.queue.push(state.activeTiles[payload.position].performer);
         }
 
         commit('setTile',  { tile, position: payload.position });
@@ -222,9 +235,21 @@ const actions = {
             })
         });
 
+        if(switcherooCb){
+            clearInterval(switcherooCb);
+        }
+
         console.log('Ended session');
 
         commit('reset');
+    },
+    async switcheroo({ dispatch, getters, state }: VoyeurContext, payload: { performerId: number }){
+        const tileToReplace = getters.replacementTarget;
+
+        await dispatch('loadTile', {
+            performerId: payload.performerId,
+            location: state.activeTiles.indexOf(tileToReplace)
+        });
     }
 };
 
@@ -232,10 +257,18 @@ const getters = {
     favourites(state: VoyeurState){
         return state.performers.filter(p => p.isFavourite);
     },
+    reservations(state: VoyeurState){
+        return state.performers.filter(p => state.reservations.indexOf(p.id) > -1);
+    },
     performer(state: VoyeurState){
         return (id: number) => {
             return state.performers.find(p =>  p.id === id );
         };
+    },
+    replacementTarget(state: VoyeurState){
+        return state.activeTiles.reduce((current: PerformerTile, selected: PerformerTile) => {
+            return current.iterationsAlive > selected.iterationsAlive ? current : selected;
+        }, state.activeTiles[0]);
     }
 };
   
