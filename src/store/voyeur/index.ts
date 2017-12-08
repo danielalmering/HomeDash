@@ -81,6 +81,11 @@ const mutations = {
     },
     removePerformer(state: VoyeurState, performerId: number){
         state.performers = state.performers.filter(p => p.id !== performerId);
+        state.activeTiles = state.activeTiles.filter(t => t.performer !== performerId);
+
+        if(state.mainTile && state.mainTile.performer === performerId){
+            state.mainTile = undefined;
+        }
     },
     setTile(state: VoyeurState, payload: { tile: PerformerTile, position: number }){
         if(state.activeTiles[payload.position]){
@@ -94,20 +99,21 @@ const mutations = {
         state.isActive = true;
     },
     swap(state: VoyeurState, performerId: number){
-        if(!state.mainTile){
-            return;
-        }
-
         const currentTile = state.activeTiles.find(p => p.performer === performerId);
 
         if(!currentTile){
             return;
         }
 
-        const mainTileClone = Object.assign({}, state.mainTile);
+        const currentTileClone = Object.assign({}, currentTile);
+        
+        if(state.mainTile){
+            Vue.set(state.activeTiles, state.activeTiles.indexOf(currentTile), state.mainTile);
+        } else {
+            state.activeTiles = state.activeTiles.filter(t => t.performer !== performerId);
+        }
 
-        state.mainTile = Object.assign({}, currentTile);
-        Vue.set(state.activeTiles, state.activeTiles.indexOf(currentTile), mainTileClone);
+        state.mainTile = Object.assign({}, currentTileClone);
     },
     reset(state: VoyeurState){
         state.activeTiles = [];
@@ -298,6 +304,7 @@ const actions = {
     async updatePerformers({ commit }: VoyeurContext, payload: { performerId: number, value: boolean }){
         if(!payload.value){
             commit('removePerformer', payload.performerId);
+
             return;
         }
 
