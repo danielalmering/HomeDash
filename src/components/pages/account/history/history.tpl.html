@@ -10,14 +10,10 @@
                 </select>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <select>
-                    <option v-t="'account.historystartdate'"></option>
-                </select>  
+                <input type="date" :placeholder="$t('account.historystartdate')">
             </div>
             <div class="col-xs-12 col-sm-4">
-                <select>
-                    <option v-t="'account.historyenddate'"></option>
-                </select>
+                <input type="date" :placeholder="$t('account.historyenddate')">
             </div>
         </div>
         <table class="account__view-table">
