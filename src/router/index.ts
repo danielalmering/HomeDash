@@ -114,11 +114,6 @@ const router = new Router({
                     ]
                 },
                 {
-                    path: 'voyeur',
-                    name: 'Voyeur',
-                    component: Voyeur
-                },
-                {
                     path: 'performer/:id',
                     name: 'Performer',
                     component: Performer,
@@ -132,6 +127,11 @@ const router = new Router({
                             path: 'chat',
                             name: 'Videochat',
                             component: VideoChat
+                        },
+                        {
+                            path: 'voyeur',
+                            name: 'Voyeur',
+                            component: Voyeur
                         }
                     ]
                 },

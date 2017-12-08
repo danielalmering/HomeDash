@@ -18,13 +18,14 @@
     </div>
 
     <ul class="sidebar__filters">
-        <li v-t="'sidebar.recommended'" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
+        <li v-t="'sidebar.recommended'" v-if="!isVoyeurActive" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
         <li v-t="'sidebar.peek'" :class="{ 'active': category === 'peek' }" v-on:click="setCategory('peek')"></li>
         <li v-t="'sidebar.favorite'" :class="{ 'active': category === 'favourites' }" v-on:click="setCategory('favourites')"></li>
+        <li v-t="'sidebar.voyeur'" v-if="isVoyeurActive" :class="{ 'active': category === 'voyeur' }" v-on:click="setCategory('voyeur')"></label>
     </ul>
 
     <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll">
-        <li class="sidebar__performer" v-for="performer in performers" v-on:click="goToPerformer(performer.advert_numbers[0].advertNumber)">
+        <li class="sidebar__performer" v-if="category !== 'voyeur'" v-for="performer in performers" v-on:click="goToPerformer(performer.advert_numbers[0].advertNumber)">
             <div class="sidebar__performer-image col-xs-5 nopad">
                 <img v-if="performer.avatar" :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
                 <span></span>
@@ -41,8 +42,15 @@
                 <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
             </div>
         </li>
-        <li class="sidebar__performer" v-if="performers.length === 0">
+        <li class="sidebar__performer" v-if="performers.length === 0 && category !== 'voyeur'">
             <h3 class="text-center" v-t="$t('sidebar.noperformers')"></h3>
+        </li>
+
+        <li class="sidebar_performer" v-if="category === 'voyeur'" v-for="tile in voyeurTiles" v-on:click="swap(tile.performer)">
+            <jsmpeg
+                :wowza="tile.streamData.wowza"
+                :playStream="tile.streamData.playStream">
+            </jsmpeg>
         </li>
     </ul>
 

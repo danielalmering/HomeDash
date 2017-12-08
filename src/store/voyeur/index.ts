@@ -1,35 +1,23 @@
+import Vue from 'vue';
 import Vuex, { Module, ActionContext, Payload } from 'vuex';
 import { Performer } from '../../models/Performer';
 import { RootState } from '../index';
 
-//Order for loading the tiles during initilization
-const initialTileOrder = [6, 1, 5, 8, 11, 12, 13, 7, 4, 3];
+import config from '../../config';
+import Voyeur from '../../components/pages/voyeur/voyeur';
+
+type VoyeurContext = ActionContext<VoyeurState, RootState>;
 
 //Time between loading each tile during initialization
 const initializationDelay = 1000;
 
-//Index of the tile in the center of the screen
-const centerTileIndex = 6;
-
 //Maximum amount of tiles that are allowed to be displayed at the same time
-const maxTilesAllowed = 13;
+const maxTilesAllowed = 5;
 
 //Time between the switching of tiles
 const tileSwitchDelay = 2000;
 
-export enum TileType {
-    Performer       = 'performer',
-    Reservations    = 'reservations',
-    Favorites       = 'favorites',
-    Search          = 'search'
-}
-
-export interface Tile {
-    position: number;
-    tileType: TileType;
-}
-
-export interface PerformerTile extends Tile {
+export interface PerformerTile {
     iterationsAlive: number;
     performer: number;
     streamData: {
@@ -39,17 +27,205 @@ export interface PerformerTile extends Tile {
 }
 
 export interface VoyeurState {
-    performers: Performer[];    //Performers with voyeur activated
-    activeTiles: Tile[];        //Tiles that are currently displayed on screen
-    queue: number[];            //Id's of performers that are in the queue
+    performers: Performer[];        //Performers with voyeur activated
+    mainTile?: PerformerTile;
+    activeTiles: PerformerTile[];   //Tiles that are currently displayed on screen
+    reservations: number[];
+    queue: number[];                //Id's of performers that are in the queue
+    isActive: boolean;
 }
 
 const mutations = {
+    addPerformers(state: VoyeurState, payload: Performer[] | Performer){
+        state.performers = state.performers.concat(payload);
+        state.queue = state.performers.map(p => p.id);
+    },
+    setTile(state: VoyeurState, payload: { tile: PerformerTile, position: number }){
+        Vue.set(state.activeTiles, payload.position, payload.tile);
+    },
+    setMainTile(state: VoyeurState, tile: PerformerTile){
+        state.mainTile = tile;
+        state.isActive = true;
+    },
+    swap(state: VoyeurState, performerId: number){
+        if(!state.mainTile){
+            return;
+        }
 
+        const currentTile = state.activeTiles.find(p => p.performer === performerId);
+
+        if(!currentTile){
+            return;
+        }
+
+        const mainTileClone = Object.assign({}, state.mainTile);
+
+        state.mainTile = Object.assign({}, currentTile);
+        Vue.set(state.activeTiles, state.activeTiles.indexOf(currentTile), mainTileClone);
+    },
+    reset(state: VoyeurState){
+        state.activeTiles = [];
+        state.queue = [];
+        state.performers = [];
+        state.mainTile = undefined;
+        state.isActive = false;
+    }
 };
 
 const actions = {
 
+    async startVoyeur({ state, rootState, commit, dispatch }: VoyeurContext, payload: { ivrCode?: string, performerId: number }){
+        const userId = rootState.authentication.user.id;
+
+        const voyeurResult = await fetch(`${config.BaseUrl}/session/initiate_voyeurclient`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                clientId: payload.ivrCode ? undefined : userId,
+                ivrCode: payload.ivrCode,
+                payment: payload.ivrCode ? 'IVR' : undefined
+            })
+        });
+
+        if(!voyeurResult.ok){
+            throw "Voyeur declined";
+        }
+
+        const performersResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=80&offset=0&voyeur=2`, {
+            credentials: 'include'
+        });
+
+        const performers = await performersResult.json();
+
+        commit('addPerformers', performers.performerAccounts);
+
+        if(state.performers.length === 0){
+            throw "No Performers";
+        }
+
+        await dispatch('loadMainTile', {
+            performerId: state.queue.splice(state.queue.indexOf(payload.performerId), 1)[0]
+        });
+
+        for(let i = 0; i < maxTilesAllowed; i++){
+            const performerId = state.queue.shift();
+
+            if(!performerId){
+                break;
+            }
+
+            await dispatch('loadTile', { performerId: performerId, position: i });
+        }
+    },
+    async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
+        const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
+        
+        const performerResult = await fetch(`${config.BaseUrl}/session/performer_account/performer_number/${advertId}/initiate_videochat`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                clientId: rootState.authentication.user.id,
+                performerId: payload.performerId,
+                type: 'VOYEURPEEK'
+            })
+        });
+
+        if(!performerResult.ok){
+            throw "Performer declined";
+        }
+
+        const data = await performerResult.json();
+
+        const tile: PerformerTile = {
+            iterationsAlive: 0,
+            performer: payload.performerId,
+            streamData: {
+                wowza: data.wowza,
+                playStream: data.playStream
+            }
+        };
+
+        if(state.activeTiles[payload.position]){
+
+            await fetch(`${config.BaseUrl}/session/end`, {
+                credentials: 'include',
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({
+                    clientId: rootState.authentication.user.id,
+                    performerId: state.activeTiles[payload.position].performer,
+                    type: 'VOYEURPEEK'
+                })
+            });
+        }
+
+        commit('setTile',  { tile, position: payload.position });
+    },
+    async loadMainTile({ commit, getters, rootState }: VoyeurContext, payload: { performerId: number }){
+        const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
+
+        const performerResult = await fetch(`${config.BaseUrl}/session/performer_account/performer_number/${advertId}/initiate_videochat`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                clientId: rootState.authentication.user.id,
+                performerId: payload.performerId,
+                type: 'VOYEUR'
+            })
+        });
+
+        if(!performerResult.ok){
+            throw "Performer declined";
+        }
+
+        const data = await performerResult.json();
+
+        const tile: PerformerTile = {
+            iterationsAlive: 0,
+            performer: payload.performerId,
+            streamData: {
+                wowza: data.wowza,
+                playStream: data.playStream
+            }
+        };
+
+        commit('setMainTile', tile);
+    },
+    async swap({ commit }: VoyeurContext, payload: { performerId: number }){
+        const result = await fetch(`/session/performer_account/${payload.performerId}/voyeur`);
+
+        if(result.ok){
+            commit('swap', payload.performerId);
+        }
+    },
+    async end({ commit, rootState, state }: VoyeurContext){
+        await fetch(`${config.BaseUrl}/session/end`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                clientId: rootState.authentication.user.id,
+                type: 'VOYEURCLIENT'
+            })
+        });
+
+        console.log('Ended session');
+
+        commit('reset');
+    }
 };
 
 const getters = {
@@ -58,11 +234,11 @@ const getters = {
     },
     performer(state: VoyeurState){
         return (id: number) => {
-            return state.performers.filter(p => p.id === id);
+            return state.performers.find(p =>  p.id === id );
         };
     }
 };
-
+  
 /**
  *  Open voyeur page
  *
@@ -175,13 +351,18 @@ const getters = {
 
 //Subscribe to status updates on the notification socket
 const voyeurState: Module<VoyeurState, RootState> = {
+    namespaced: true,
     state: {
         performers: [],
         queue: [],
-        activeTiles: []
+        activeTiles: [],
+        reservations: [],
+        mainTile: undefined,
+        isActive: false,
     },
     mutations,
-    actions
+    actions,
+    getters
 };
 
 export default voyeurState;

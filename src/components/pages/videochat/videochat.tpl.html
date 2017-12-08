@@ -1,13 +1,12 @@
 <div class="videochat">
     <div class="videochat__screen">
         <div class="videochat__screen-object">
-            <viewer
+            <component :is="type"
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
-                :streamType="streamTransportType"
                 :wowza="wowza"
-                :playStream="playStream" >
-            </viewer>
+                :playStream="playStream">
+            </component>
         </div>
     </div>
     <div class="videochat__broadcast" v-if="sessionType != 'PEEK'">
