@@ -22,10 +22,10 @@ type VoyeurContext = ActionContext<VoyeurState, RootState>;
 const initializationDelay = 1000;
 
 //Maximum amount of tiles that are allowed to be displayed at the same time
-const maxTilesAllowed = 5;
+const maxTilesAllowed = 1;
 
 //Time between the switching of tiles
-const tileSwitchDelay = 2000;
+const tileSwitchDelay = 5000;
 
 //Switcheroo interval callback
 let switcherooCb: NodeJS.Timer | undefined = undefined;
@@ -87,6 +87,12 @@ const mutations = {
             state.mainTile = undefined;
         }
     },
+    addReservation(state: VoyeurState, performerId: number){
+        state.reservations.push(performerId);
+    },
+    removeReservation(state: VoyeurState, performerId: number){
+        state.reservations = state.reservations.filter(r => r !== performerId);
+    },
     setTile(state: VoyeurState, payload: { tile: PerformerTile, position: number }){
         if(state.activeTiles[payload.position]){
             state.queue.push(state.activeTiles[payload.position].performer);
@@ -121,6 +127,9 @@ const mutations = {
         state.performers = [];
         state.mainTile = undefined;
         state.isActive = false;
+    },
+    increaseAlive(state: VoyeurState){
+        state.activeTiles.forEach(t => t.iterationsAlive++);
     }
 };
 
@@ -173,13 +182,13 @@ const actions = {
         }
 
         switcherooCb = setInterval(() => {
+            commit('increaseAlive');
+            
             if(state.queue.length === 0){
                 return;
             }
 
             const tileToReplace = getters.replacementTargetIndex;
-
-            console.log(getters.replacementTargetIndex);
 
             dispatch('loadTile', { performerId: state.queue.shift(), position: tileToReplace });
         }, tileSwitchDelay);
