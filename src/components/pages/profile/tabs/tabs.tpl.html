@@ -6,12 +6,11 @@
             <span v-t="camLabel"></span>
         </li>
         <li :class="{ active: selectedTab === 'videocall', enabled: enabled('videocall') }" v-on:click="selectTab('videocall')"><i class="fa fa-video-camera"></i><span v-t="'tabs.service-videochat'"></span></li>
-        <li :class="{ active: selectedTab === 'voyeur' }" v-on:click="selectTab('voyeur')"><i class="fa fa-eye"></i><span v-t="'tabs.service-voyeur'"></span></li>
+        <li :class="{ active: selectedTab === 'voyeur', enabled: enabled('voyeur') }" v-on:click="selectTab('voyeur')"><i class="fa fa-eye"></i><span v-t="'tabs.service-voyeur'"></span></li>
         <li :class="{ active: selectedTab === 'phone', enabled: enabled('phone') }" v-on:click="selectTab('phone')"><i class="fa fa-phone"></i><span v-t="'tabs.service-phone'"></span></li>
         <li :class="{ active: selectedTab === 'email', enabled: enabled('email') }" v-on:click="selectTab('email')"><i class="fa fa-envelope"></i><span v-t="'tabs.service-email'"></span></li>
         <li :class="{ active: selectedTab === 'sms', enabled: enabled('sms') }" v-on:click="selectTab('sms')"><i class="fa fa-mobile"></i><span v-t="'tabs.service-sms'"></span></li>
     </ul>
 
     <component v-bind:is="selectedTab"></component>
-
 </div>
