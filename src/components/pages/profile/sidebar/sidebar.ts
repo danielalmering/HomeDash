@@ -1,4 +1,5 @@
 import { Component, Watch } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer } from '../../../../models/Performer';
@@ -19,7 +20,7 @@ export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
-    showSidebar: boolean = false;
+    services: string[] = ["cam", "phone", "sms", "email", "videocall"];    
 
     query: any = {
         limit: 20,
@@ -33,6 +34,10 @@ export default class Sidebar extends Vue {
         'favourites': this.loadFavorites,
         'peek': this.loadPeek
     };
+
+    get displaySidebar(){
+        return this.$store.state.displaySidebar;
+    }
 
     get logo(){
         return this.$store.getters.getLogoLight;
@@ -62,8 +67,24 @@ export default class Sidebar extends Vue {
 
     mounted(){
         this.query.performer = this.$route.params.id;
-
         this.loadPerformers();
+    }
+
+    @Watch('$route')
+    onRouteChange(to: Route, from: Route){
+        if(this.displaySidebar){
+            this.$store.commit('toggleSidebar');
+        }
+    }
+
+    toggleSidebar(check: boolean){
+        this.$store.commit('toggleSidebar');
+    }
+
+    hasService(performerId: number, service: string){
+        const performer = this.performers.find(p => p.id === performerId);
+
+        return !performer ? false : performer.performer_services[service];
     }
 
     login(){
@@ -119,6 +140,12 @@ export default class Sidebar extends Vue {
         this.$store.dispatch('voyeur/swap', {
             performerId: performerId
         });
+    }
+    
+    beforeDestroy(){
+        if(this.displaySidebar){
+            this.$store.commit('toggleSidebar');
+        }
     }
 
     async loadPerformers(loadMore: boolean = false){

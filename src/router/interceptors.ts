@@ -45,10 +45,10 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
 
     function continueRouting (){
         if(!store.getters.isLoggedIn){
-            //TODO: Show unauthenticated error message
+
             store.dispatch('openMessage', {
                 class: 'error',
-                content: 'Error not logged in lalalala'
+                content: 'auth.alerts.errorNotLoggedin'
             });
 
             next({ path: '/' });

@@ -48,7 +48,7 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             if(loginResult.ok){
                 store.dispatch('openMessage', {
-                    content: 'auth.successlogin',
+                    content: 'auth.alerts.successlogin',
                     class: 'success',
                     translateParams: {
                         username: loginData.username
@@ -56,7 +56,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 });
             } else {
                 store.dispatch('openMessage', {
-                    content: 'auth.errorlogin',
+                    content: 'auth.alerts.errorlogin',
                     class: 'error'
                 });
 
@@ -83,7 +83,6 @@ const authenticationStore: Module<AuthState, RootState> = {
             let sessionData: AnonymousUser | undefined = undefined;
 
             if(checkSessionResult.status === 403){
-                console.log('Status shit');
 
                 const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect`, {
                     credentials: 'include'

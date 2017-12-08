@@ -65,7 +65,7 @@ export default class History extends Vue {
         });
 
         if(!historyResult.ok){
-            return; //TODO: Display error
+            return;
         }
 
         const data = await historyResult.json();

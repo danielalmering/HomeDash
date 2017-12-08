@@ -18,6 +18,7 @@ import config from '../config';
 Vue.use(Vuex);
 
 export interface RootState {
+    displaySidebar: boolean;
     info: Info | undefined;
     safeMode: boolean;
 
@@ -30,6 +31,7 @@ type RootContext = ActionContext<RootState, RootState>;
 
 const rootStore = new Vuex.Store<RootState>({
     state: {
+        displaySidebar: false,
         info: undefined,
         safeMode: false
     },
@@ -82,6 +84,9 @@ const rootStore = new Vuex.Store<RootState>({
         }
     },
     mutations: {
+        toggleSidebar: function(state: RootState){
+            state.displaySidebar = !state.displaySidebar;
+        },
         setInfo: function(state: RootState, info: Info){
             state.info = info;
         },

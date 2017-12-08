@@ -19,7 +19,7 @@ export default class Giftvoucher extends Vue {
 
         if(!voucherResult.ok){
             this.$store.dispatch('openMessage', {
-                content: 'account.voucher.errorMessage',
+                content: 'account.alerts.errorVoucher',
                 class: 'error'
             });
 
@@ -27,7 +27,7 @@ export default class Giftvoucher extends Vue {
         }
 
         this.$store.dispatch('openMessage', {
-            content: 'account.voucher.successMessage',
+            content: 'account.alerts.successVoucher',
             class: 'success'
         });
     }

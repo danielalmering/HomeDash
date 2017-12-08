@@ -112,7 +112,11 @@ export default class VideoChat extends Vue {
 
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
             if(newValue === State.Ending && !this.isEnding){
-                //TODO: Show message
+                this.$store.dispatch('openMessage', {
+                    content: 'video.alerts.successChatEnded',
+                    class: 'success'
+                });
+
                 this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
             }
         });

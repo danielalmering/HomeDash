@@ -35,12 +35,12 @@ export default class Contact extends Vue {
 
         if(!contactResult.ok){
             this.$store.dispatch('openMessage', {
-                content: 'contact.errorSend',
+                content: 'contact.alerts.errorSend',
                 class: 'error'
             });
         } else {
             this.$store.dispatch('openMessage', {
-                content: 'contact.successSend',
+                content: 'contact.alerts.successSend',
                 class: 'success'
             });
 

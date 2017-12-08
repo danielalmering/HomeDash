@@ -9,6 +9,12 @@
 
 // Styling
 
+$semi-transparent-bg: rgba(0, 0, 0, 0.6);
+$streamback-width: 305px;
+$streamback-height: 229px;
+$streamback-width-small: calc(#{$streamback-width} / 2);
+$streamback-height-small: calc(#{$streamback-height} / 2);
+
 .videochat {
     position: fixed;
     z-index: 2;
@@ -55,11 +61,16 @@
         z-index: 1;
 
         &-object{
-            width: 305px;
-            height: 229px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 5px;
             float: left;
+            width: $streamback-width;
+            height: $streamback-height;
+            @include breakpoint(xs) {
+                width: $streamback-width-small;
+                height: $streamback-height-small;
+            }
+            @include rem(margin, 0px 0px 5px 0px);
+            background: $semi-transparent-bg;
+            border-radius: 5px;
             text-align: center;
             overflow: hidden;
 
@@ -73,37 +84,67 @@
             }
         }
 
-        ul{
-            float: right;
-            padding: 0px;
-            margin: 0px;
+        &-buttons {
+            float: left;
+            display: table;
+            background: $semi-transparent-bg;
+            @include border-radius(5px);
+            @include rem(padding,0);
+            @include rem(margin, 0px 5px 5px 5px);
+
+            li{
+                list-style: none;
+                margin: 10px;
+                text-align: center;
+
+                .fa{
+                    font-size: 20px;
+                    color: $pallete-2;
+                    &.active {
+                        color: $pallete-3;
+                    }
+                }
+            }
+
         }
-
-        li{
-            list-style: none;
-            margin: 10px;
-            text-align: center;
-        }
-
-        .fa{
-            font-size: 20px;
-            color: white;
-        }
-
-        .active{
-            color: $pallete-3;
-        }
-
-
     }
 
     &__devices{
-        background-color: greenyellow;
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        z-index: 3;
-        padding: 10px;
+        float: left;
+        clear: both;
+        background: $semi-transparent-bg;
+        @include border-radius(5px);
+        @include rem(padding,10px 10px 0px 10px);
+        width: $streamback-width;
+        @include breakpoint(xs) {
+            width: $streamback-width-small;
+        }
+
+        &-item {
+            display: table;
+            width: 100%;
+            @include rem(margin,0px 0px 10px 0px);
+
+            i {
+                display: table-cell;
+                width: 35px;
+                font-size: 20px; 
+                color: $pallete-2; 
+                @include rem(padding, 0px 5px);
+            }
+            select {
+                display: table-cell;
+                width: calc(100% - 35px);
+                @include rem(font-size, 14px);
+                background: $pallete-16;
+                @include rem(padding,8px 8px);
+                border: none;
+                color: $pallete-2;
+                @include border-radius(3px);
+                &:focus { outline: none; }
+                width: 100%;
+            }
+        }
     }
 
     &__close {

@@ -1,4 +1,4 @@
-<div class="payment">
+<main class="payment">
     <div class="container-fluid">
 
         <div class="payment__title">
@@ -9,9 +9,8 @@
         <div class="payment__package">
             <ul>
                 <li class="col-xs-12 col-sm-4" v-for="package in packages" v-on:click="addPackage(package)">
-                    <div class="payment__package-item">
+                    <div class="payment__package-item" :class="package.title">
                         <h2>{{package.title}}</h2>
-                        <img src="../../../assets/images/paymenticon.png">
                         <span class="time" v-html="package.subtitle"></span>
                         <span class="credits">{{ package.quantity }}</span>
                         <span v-t="'payment.credits'"></span>
@@ -40,13 +39,9 @@
                     <td>{{ value }}</td>
                     <td>{{ package(key).quantity }}</td>
                     <td>{{ package(key).price | euro }}</td>
+                    <td></td>
                 </tr>
             </table>
-
-            <div class="payment__cart-bonus">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                <span>{{ $t('payment.buy') }} 2000 {{ $t('payment.creditsandget') }} 20% {{ $t('payment.extra') }}</span>
-            </div>
 
             <div class="col-xs-12 col-sm-7">
                 <p v-t="'payment.bonusdiscountdesc'"></p>
@@ -73,6 +68,12 @@
                             <span>{{ bonusAmount(credits) }}</span>
                             <span>{{ credits + bonusAmount(credits) }}</span>
                             <p>{{ totalAmount | euro }}</p>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="payment__cart-bonus">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <span>{{ $t('payment.buy') }} 2000 {{ $t('payment.creditsandget') }} 20% {{ $t('payment.extra') }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,4 +107,4 @@
         </div>
 
     </div>
-</div>
+</main>

@@ -1,4 +1,4 @@
-<main>
+<main class="index">
     <div class="container-fluid">
         <div class="performers">
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
@@ -12,10 +12,7 @@
                             </span>
                         </div>
                         <div class="performers__info-services">
-                            <i class="fa fa-video-camera" v-if="hasService(performer.id, 'cam')"></i>
-                            <i class="fa fa-phone" v-if="hasService(performer.id, 'phone')"></i>
-                            <i class="fa fa-mobile" v-if="hasService(performer.id, 'sms')"></i>
-                            <i class="fa fa-envelope-o" v-if="hasService(performer.id, 'email')"></i>
+                            <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
                     </div>
                     <div class="performers__misc" v-if="performer">

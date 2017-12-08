@@ -1,54 +1,52 @@
- <main>
-    <div class="profile">
+<div class="profile" :class="{ 'collapse': displaySidebar }">
 
-        <div class="profile__info" v-if="performer">
+    <div class="profile__info" v-if="performer">
 
-            <div class="profile__info-image col-sm-12 col-md-3">
-                <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer)}')` }"></div>
+        <div class="profile__info-image col-sm-12 col-md-3">
+            <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer)}')` }"></div>
+        </div>
+
+
+        <div class="profile__info-content col-sm-12 col-md-9">
+
+            <div class="profile__content col-sm-12 col-md-8">
+                <h2 class="profile__content-nick">{{ performer.nickname }}</h2>
+                <a class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</a>
+                <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
+                    <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
+                </a>
+                <p class="profile__content-description">{{ performer.description | truncate(displayFullDescription) }}</p>
+
+                <a class="btn btn-orange btn-fa" :class="{ 'fa-minus': displayFullDescription, 'fa-plus': !displayFullDescription }" v-if="performer.description.length > 400" v-on:click="displayFullDescription = !displayFullDescription">
+                    <span>{{ displayFullDescription ? $t('profile.hide') : $t('profile.expand') }}</span>
+                </a>
             </div>
 
-
-            <div class="profile__info-content col-sm-12 col-md-9">
-
-                <div class="profile__content col-sm-12 col-md-8">
-                    <h2 class="profile__content-nick">{{ performer.nickname }}</h2>
-                    <a class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</a>
-                    <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
-                        <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
-                    </a>
-                    <p class="profile__content-description">{{ performer.description | truncate(displayFullDescription) }}</p>
-
-                    <a class="btn btn-orange btn-fa" :class="{ 'fa-minus': displayFullDescription, 'fa-plus': !displayFullDescription }" v-if="performer.description.length > 400" v-on:click="displayFullDescription = !displayFullDescription">
-                        <span>{{ displayFullDescription ? $t('profile.hide') : $t('profile.expand') }}</span>
-                    </a>
-                </div>
-
-                <ul class="profile__property col-sm-12 col-md-4 col-lg-3">
-                    <li><h2 v-t="'profile.property'"></h2></li>
-                    <li><span v-t="'profile.age'"></span>{{ performer.age }}</li>
-                    <li><span v-t="'profile.height'"></span>{{ performer.height }}</li>
-                    <li><span v-t="'profile.weight'"></span>{{ performer.weight }}</li>
-                    <li><span v-t="'profile.cupsize'"></span>{{ performer.cupSize }}</li>
-                    <li><span v-t="'profile.eyecolor'"></span>{{ performer.eyeColor }}</li>
-                </ul>
-
-            </div>
+            <ul class="profile__property col-sm-12 col-md-4 col-lg-3">
+                <li><h2 v-t="'profile.property'"></h2></li>
+                <li><span v-t="'profile.age'"></span>{{ performer.age }}</li>
+                <li><span v-t="'profile.height'"></span>{{ performer.height }}</li>
+                <li><span v-t="'profile.weight'"></span>{{ performer.weight }}</li>
+                <li><span v-t="'profile.cupsize'"></span>{{ performer.cupSize }}</li>
+                <li><span v-t="'profile.eyecolor'"></span>{{ performer.eyeColor }}</li>
+            </ul>
 
         </div>
 
-        <div class="profile__sticky">
-
-            <div class="profile__slider">
-                <div class="slider">
-                    <photo-slider v-if="performer" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
-                    <photo-slider-full v-if="performer" :visible.sync="fullSliderVisible" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
-                </div>
-            </div>
-
-            <div class="profile__tabs">
-                <tabs :performer="performer" v-on:startSession="startSession" v-on:startVoyeur="startVoyeur"></tabs>
-            </div>
-
-        </div>
     </div>
-</main>
+
+    <div class="profile__sticky">
+
+        <div class="profile__slider">
+            <div class="slider">
+                <photo-slider v-if="performer" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
+                <photo-slider-full v-if="performer" :visible.sync="fullSliderVisible" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
+            </div>
+        </div>
+
+        <div class="profile__tabs">
+            <tabs :performer="performer" v-on:startSession="startSession" v-on:startVoyeur="startVoyeur"></tabs>
+        </div>
+
+    </div>
+</div>

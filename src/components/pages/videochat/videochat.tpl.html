@@ -28,23 +28,27 @@
             <li v-if="broadcasting.cam"><a v-on:click="toggleMic" class="fa fa-microphone" :class="{ active:broadcasting.mic }"></a></li>
             <li v-if="broadcasting.cam"><a v-on:click="toggleSettings" class="fa fa-cogs" :class="{ active:broadcasting.settings }"></a></li>
         </ul>
+        <div class="videochat__devices" v-if="broadcasting.settings">
+            <div class="videochat__devices-item">
+                <i class="fa fa-video-camera"></i>
+                <select v-model="broadcasting.cam" v-on:change="setCamera">
+                    <option v-for="camera in cameras">
+                        {{ camera.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="videochat__devices-item">
+                <i class="fa fa-microphone"></i>
+                <select v-model="broadcasting.mic" v-on:change="setMicrophone">
+                    <option v-for="mic in microphones">
+                        {{ mic.name }}
+                    </option>
+                </select>
+            </div>
+            <p style="display: none" v-for="message in stateMessages">{{ message }}</p>
+        </div>
     </div>
-    <div class="videochat__devices" v-if="broadcasting.settings">
-        {{$t('camera')}}:
-        <select v-model="broadcasting.cam" v-on:change="setCamera">
-            <option v-for="camera in cameras">
-                {{ camera.name }}
-            </option>
-        </select>
-        {{$t('microfoon')}}:
-        <select v-model="broadcasting.mic" v-on:change="setMicrophone">
-            <option v-for="mic in microphones">
-                {{ mic.name }}
-            </option>
-        </select>
-        <p>Waar worden status en fouten eigenlijk weergegeven?</p>
-        <p v-for="message in stateMessages">{{ message }}</p>
-    </div>
+    
 
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
 

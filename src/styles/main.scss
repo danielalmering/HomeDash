@@ -31,8 +31,10 @@ body {
     @include rem(padding-right, 5px);
 }
 
-main, .account, .promos {
-    height: calc(100vh - 265px);
+main {
+    &.profileview { display:flex; }
+    &.index, &.account, &.promos, &.payment { display: block; }
+    min-height: 100vh;
 }
 
 .nopad  { padding: 0; }
