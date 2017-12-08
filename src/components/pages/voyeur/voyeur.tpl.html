@@ -1,6 +1,6 @@
-<div class="videochat">
-    <div class="videochat__screen" v-if="mainTile">
-        <div class="videochat__screen-object">
+<div class="voyeur">
+    <div class="voyeur__screen" v-if="mainTile">
+        <div class="voyeur__screen-object">
             <jsmpeg
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
@@ -10,15 +10,21 @@
         </div>
     </div>
 
-    <div class="voyeur__favorites">
-        <ul>
+    <div class="voyeur__block">
+        <div class="voyeur__block-title"><i class="fa fa-star"></i> {{ $t("voyeur.favorites") }}<span></span></div>
+        <ul class="voyeur__block-list">
             <li v-for="favorite in favoritePerformers">
-                {{ favorite.nickname }}
+                {{ favorite.nickname }} <i>(2233)</i>
             </li>
         </ul>
     </div>
 
-    <div class="voyeur__reservations">
-
+    <div class="voyeur__block">
+        <div class="voyeur__block-title"><i class="fa fa-clock-o"></i> {{ $t("voyeur.reserving") }}<span></span></div>
+        <ul class="voyeur__block-list">
+            <li v-for="favorite in favoritePerformers">
+                {{ favorite.nickname }} <i>(2233)</i>
+            </li>
+        </ul>
     </div>
 </div>

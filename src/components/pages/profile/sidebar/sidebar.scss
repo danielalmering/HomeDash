@@ -20,11 +20,6 @@ $sidebar-top-height: 300px;
     background: $pallete-17;
     width: $sidebar-width;
     box-shadow: 0 10px 10px 5px rgba(0,0,0,0.2);
-    transition: all 0.5s ease-in-out;
-
-    &.collapse {
-        margin-left: 0px;
-    }
 
     @include breakpoint(md) {
         margin-left: 0px;
@@ -261,6 +256,7 @@ $sidebar-top-height: 300px;
 
         &-misc {
             position: absolute;
+            z-index: 2;
             display: block;
             bottom:3px;
             width: 100%;
@@ -297,8 +293,9 @@ $sidebar-top-height: 300px;
 
         &-hover {
             position: absolute;
+            z-index: 1;
             bottom:0px;
-            display: none;
+            display: block;
             height: 50px;
             width: 100%;
             background: rgba(0,0,0, 0.4);
@@ -329,7 +326,7 @@ $sidebar-top-height: 300px;
         }
 
         &:hover {
-            .sidebar__voyeur-misc { display: none; }
+            //.sidebar__voyeur-misc { display: none; }
             .sidebar__voyeur-hover { display: block; }
         }
     }

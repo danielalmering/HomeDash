@@ -15,7 +15,7 @@ import './voyeur.scss';
 export default class Voyeur extends Vue {
 
     intervalTimer: number;
-
+    
     get mainTile(){
         return this.$store.state.voyeur.mainTile;
     }

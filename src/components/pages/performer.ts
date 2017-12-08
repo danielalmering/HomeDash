@@ -11,4 +11,8 @@ import Sidebar from './profile/sidebar/sidebar';
 })
 export default class Performer extends Vue {
 
+    get displaySidebar(){
+        return this.$store.state.displaySidebar;
+    }
+
 }
