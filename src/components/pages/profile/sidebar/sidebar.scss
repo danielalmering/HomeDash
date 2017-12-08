@@ -217,19 +217,6 @@ $sidebar-top-height: 300px;
             border: 2px solid transparent;
 
             img { width: 100%; }
-
-            span {
-                position: absolute;
-                bottom: 5px;
-                right: 10px;
-                display: block;
-                @include rem(margin, 2px 0);
-                float: right;
-                width: 14px;
-                height: 14px;
-                background: $pallete-12;
-                @include border-radius(14px);
-            }
         }
 
         &-info {
@@ -258,6 +245,92 @@ $sidebar-top-height: 300px;
 
             .sidebar__performer-image { border: 2px solid $pallete-3; }
             .sidebar__performer-info p.view { color: $pallete-3; }
+        }
+    }
+
+    &__voyeur {
+        position: relative;
+        display: table;
+        width: calc(100% - 20px);
+        @include rem(margin, 10px);
+        cursor: pointer;
+
+        canvas {
+            width: 230px;
+        }
+
+        &-misc {
+            position: absolute;
+            display: block;
+            bottom:3px;
+            width: 100%;
+
+            &-advert {
+                display: inline-block;
+                float: left;
+                background: $pallete-9;
+                color: $pallete-3;
+                font-weight: 700;
+                @include rem(font-size, 16px);
+                @include rem(padding, 2px 5px);
+                @include rem(margin, 4px);
+                @include border-radius(3px);
+            }
+
+            &-favorite {
+                display: inline-block;
+                float: right;
+                background: $pallete-9;
+                @include rem(padding, 4px 6px);
+                @include rem(margin, 4px);
+                @include border-radius(3px);
+                i {
+                    color: $pallete-7;
+                    @include rem(font-size, 16px);
+                }
+
+                .is-favourite {
+                    color: #ffb400;
+                }
+            }
+        }
+
+        &-hover {
+            position: absolute;
+            bottom:0px;
+            display: none;
+            height: 50px;
+            width: 100%;
+            background: rgba(0,0,0, 0.4);
+
+            .btn {
+                &.btn-icon {
+                    position: relative;
+                    display: table;
+                    @include rem(padding, 9px 10px 9px 35px);
+                    @include rem(margin, 5px auto);
+
+                    i {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 25px;
+                        height: 36px;
+                        @include rem(padding, 13px 4px);
+                        background: black;
+                        font: normal normal normal 12px/1 FontAwesome; 
+                        @include border-left-radius(3px);
+
+                        &.reserve { background: $pallete-19; &:before { content: "\f017"; } }
+                        &.online { background: $pallete-12; &:before { content: "\f03d"; } }
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            .sidebar__voyeur-misc { display: none; }
+            .sidebar__voyeur-hover { display: block; }
         }
     }
 }

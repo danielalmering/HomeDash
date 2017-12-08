@@ -25,7 +25,7 @@
                 <li v-t="'sidebar.recommended'"  v-if="!isVoyeurActive" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
                 <li v-t="'sidebar.peek'" :class="{ 'active': category === 'peek' }" v-on:click="setCategory('peek')"></li>
                 <li v-t="'sidebar.favorite'" :class="{ 'active': category === 'favourites' }" v-on:click="setCategory('favourites')"></li>
-                <li v-t="'sidebar.voyeur'" v-if="isVoyeurActive" :class="{ 'active': category === 'voyeur' }" v-on:click="setCategory('voyeur')"></label>
+                <li v-t="'sidebar.voyeur'" v-if="isVoyeurActive" :class="{ 'active': category === 'voyeur' }" v-on:click="setCategory('voyeur')"></label></li>
             </ul>
 
         </div>
@@ -33,10 +33,12 @@
         <div class="sidebar__content-bottom">
 
             <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll">
+                
+                <!-- Performerlist -->
                 <li class="sidebar__performer" v-if="category !== 'voyeur'" v-for="performer in performers" v-on:click="goToPerformer(performer.advert_numbers[0].advertNumber)">
                     <div class="sidebar__performer-image col-xs-5 nopad">
                         <img v-if="performer.avatar" :src="`//img.thuis.nl/files/pimg/${performer.id}/medium/${performer.avatar.name}`">
-                        <span></span>
+                        <span class="status busy"></span>
                         <div class="sidebar__performer-services">
                             <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
@@ -47,12 +49,27 @@
                         <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
                     </div>
                 </li>
-                <li class="sidebar_performer" v-if="category === 'voyeur'" v-for="tile in voyeurTiles" v-on:click="swap(tile.performer)">
+                
+                <!-- Voyeurlist -->
+                <li class="sidebar__voyeur" v-if="category === 'voyeur'" v-for="tile in voyeurTiles" v-on:click="swap(tile.performer)">
+                    <span class="status busy"></span>
                     <jsmpeg
                         :wowza="tile.streamData.wowza"
                         :playStream="tile.streamData.playStream">
                     </jsmpeg>
+                    <div class="sidebar__voyeur-misc">
+                        <span class="sidebar__voyeur-misc-advert">1337</span>
+                        <span class="sidebar__voyeur-misc-favorite">
+                            <i class="fa fa-star"></i>
+                        </span>
+                    </div>
+                    <div class="sidebar__voyeur-hover">
+                        <a class="btn btn-black btn-small btn-icon" href="#"><i class="online"></i>{{ $t('voyeur.now1on1') }}</a>
+                        <!-- <a class="btn btn-black btn-small btn-icon" href="#"><i class="reserve"></i>{{ $t('voyeur.reserve') }}</a -->
+                    </div>
                 </li>
+
+                <!-- No performers -->
                 <li class="sidebar__performer" v-if="performers.length === 0 && category !== 'voyeur'">
                     <h3 class="text-center" v-t="$t('sidebar.noperformers')"></h3>
                 </li>
