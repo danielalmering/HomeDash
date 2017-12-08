@@ -36,10 +36,6 @@ export default class Profile extends Vue {
     displayPic: number = 0;
     displayFullDescription: boolean = false;
 
-    get displaySidebar(){
-        return this.$store.state.displaySidebar;
-    }
-
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
     }

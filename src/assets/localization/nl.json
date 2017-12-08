@@ -179,6 +179,8 @@
     },
     "voyeur": {
         "reserve": "Reserveren",
+        "reserving": "Reserveringen",
+        "favorites": "Favorieten",
         "now1on1": "Nu 1op1",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"

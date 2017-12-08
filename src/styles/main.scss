@@ -14,6 +14,8 @@
 
 // Main
 
+$sidebar-width: 250px;
+
 html { height: 100%; }
 
 body {
@@ -32,7 +34,20 @@ body {
 }
 
 main {
-    &.profileview { display:flex; }
+    &.profileview { 
+        display:flex; 
+
+        &.collapse {
+            .sidebar {
+                transition: all 0.5s ease-in-out;
+                margin-left: 0px;
+            }
+            .profile, .voyeur, .videochat {
+                transition: all 0.5s ease-in-out;
+                margin-left: -$sidebar-width;
+            }
+        }
+    }
     &.index, &.account, &.promos, &.payment { display: block; }
     min-height: 100vh;
 }
