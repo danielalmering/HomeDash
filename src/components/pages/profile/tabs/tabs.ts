@@ -19,7 +19,8 @@ import { Performer, PerformerStatus } from '../../../../models/Performer';
         videocall: { template: require('./videocall.tpl.html') },
         phone: { template: require('./phone.tpl.html') },
         email: { template: require('./email.tpl.html') },
-        sms: { template: require('./sms.tpl.html') }
+        sms: { template: require('./sms.tpl.html') },
+        voyeur: { template: require('./voyeur.tpl.html') }
     }
 })
 export default class Tabs extends Vue {
@@ -112,6 +113,10 @@ export default class Tabs extends Vue {
 
     startSession(ivrCode: string, displayName: string, service: string){
         this.$emit('startSession', { ivrCode, displayName, service });
+    }
+
+    startVoyeur(){
+        this.$emit('startVoyeur');
     }
 
     async sendMail(){

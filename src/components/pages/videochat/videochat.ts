@@ -8,7 +8,9 @@ import { SessionData } from '../../../store/Session';
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
 import Broadcast, { Caster } from './broadcast/broadcast';
-import View from './view/view';
+import Jsmpeg from './streams/jsmpeg';
+import Rtmp from './streams/rtmp';
+// import WebRTC from './jsmpeg/webrtc';
 import config from '../../../config';
 
 import './videochat.scss';
@@ -24,7 +26,9 @@ interface BroadcastConfiguration {
     components: {
         chat: Chat,
         broadcast: Broadcast,
-        viewer: View
+        jsmpeg: Jsmpeg,
+        rtmp: Rtmp,
+        // webrtc: WebRTC
     }
 })
 export default class VideoChat extends Vue {
@@ -85,6 +89,10 @@ export default class VideoChat extends Vue {
 
     get displayName(){
         return this.$store.state.session.activeDisplayName;
+    }
+
+    get type(){
+        return 'jsmpeg';
     }
 
     mounted(){

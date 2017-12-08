@@ -6,11 +6,15 @@ import { Performer } from '../../../../models/Performer';
 import config from '../../../../config';
 
 import './sidebar.scss';
+import JSMpeg from '../../videochat/streams/jsmpeg';
 
-type SidebarCategory = 'recommended' | 'peek' | 'favourites';
+type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 
 @Component({
     template: require('./sidebar.tpl.html'),
+    components: {
+        jsmpeg: JSMpeg
+    }
 })
 export default class Sidebar extends Vue {
 
@@ -45,6 +49,20 @@ export default class Sidebar extends Vue {
 
     get user(){
         return this.$store.state.authentication.user;
+    }
+
+    get voyeurTiles(){
+        return this.$store.state.voyeur.activeTiles;
+    }
+
+    get isVoyeurActive(){
+        return this.$store.state.voyeur.isActive;
+    }
+
+    @Watch('isVoyeurActive')
+    onVoyeurStateChange(newValue: boolean){
+        //When voyeur gets activated switch the voyeur tab, when the session ends, switch back
+        this.setCategory(newValue ? 'voyeur' : 'recommended');
     }
 
     mounted(){
@@ -118,6 +136,12 @@ export default class Sidebar extends Vue {
         this.loadPerformers();
     }
 
+    swap(performerId: number){
+        this.$store.dispatch('voyeur/swap', {
+            performerId: performerId
+        });
+    }
+    
     beforeDestroy(){
         if(this.displaySidebar){
             this.$store.commit('toggleSidebar');
@@ -125,6 +149,10 @@ export default class Sidebar extends Vue {
     }
 
     async loadPerformers(loadMore: boolean = false){
+        if(this.category === 'voyeur'){
+            return;
+        }
+
         const data = await this.categoryLoads[this.category]();
 
         if(loadMore){

@@ -63,6 +63,25 @@ export default class Profile extends Vue {
         this.displayPic = id;
     }
 
+    async startVoyeur({}){
+        if(!this.performer){
+            return;
+        }
+
+        try {
+            await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.performer.id });
+
+            this.$router.push({
+                name: 'Voyeur',
+                params: {
+                    id: this.performer.advert_numbers[0].advertNumber.toString()
+                }
+            })
+        } catch(ex){
+            console.log(ex);
+        }
+    }
+
     async startSession({}){
         if(!this.performer){
             return;
