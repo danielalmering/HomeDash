@@ -10,10 +10,10 @@
                 </select>
             </div>
             <div class="col-xs-12 col-sm-4">
-                <input type="date" :placeholder="$t('account.historystartdate')">
+                <input type="date" :placeholder="$t('account.historystartdate')" v-model="query.startDate">
             </div>
             <div class="col-xs-12 col-sm-4">
-                <input type="date" :placeholder="$t('account.historyenddate')">
+                <input type="date" :placeholder="$t('account.historyenddate')" v-model="query.endDate">
             </div>
         </div>
         <table class="account__view-table">
@@ -34,7 +34,7 @@
                 </td>
             </tr>
         </table>
-        
+
         <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" :pageCount="false" v-on:pageChange="pageChanged"></pagination>
     </div>
 </div>

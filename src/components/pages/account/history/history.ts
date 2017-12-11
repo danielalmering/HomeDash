@@ -38,7 +38,9 @@ export default class History extends Vue {
     query = {
         limit: 20,
         offset: 0,
-        filter: ''
+        filter: '',
+        startDate: '',
+        endDate: ''
     };
 
     mounted(){
@@ -48,19 +50,25 @@ export default class History extends Vue {
         for(const item in Service){
             this.services.push(Service[item]);
         }
+        this.services.push('VOYEURCLIENT'); //Gotta add voyeur manually
     }
 
     pageChanged(){
         this.loadHistory();
     }
 
-    @Watch('query.filter')
+    @Watch('query', { deep: true })
     onFilterChange(){
         this.loadHistory();
     }
 
     async loadHistory(){
-        const historyResult = await fetch(`${config.BaseUrl}/client/client_accounts/5789/history?limit=${this.query.limit}&offset=${this.query.offset}&filter=${this.query.filter}`, {
+        const userId = this.$store.state.authentication.user.id;
+
+        const startDate = this.query.startDate !== '' ? new Date(this.query.startDate + 'T00:00:00.000Z').getTime() / 1000 : '';
+        const endDate = this.query.endDate !== '' ? new Date(this.query.endDate + 'T00:00:00.000Z').getTime() / 1000 : '';
+
+        const historyResult = await fetch(`${config.BaseUrl}/client/client_accounts/${userId}/history?limit=${this.query.limit}&offset=${this.query.offset}&filter=${this.query.filter}&startDate=${startDate}&endDate=${endDate}`, {
             credentials: 'include'
         });
 
