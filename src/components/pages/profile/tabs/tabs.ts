@@ -20,7 +20,8 @@ import { Performer, PerformerStatus } from '../../../../models/Performer';
         phone: { template: require('./phone.tpl.html') },
         email: { template: require('./email.tpl.html') },
         sms: { template: require('./sms.tpl.html') },
-        voyeur: { template: require('./voyeur.tpl.html') }
+        voyeur: { template: require('./voyeur.tpl.html') },
+        none: { template: require('./none.tpl.html') }
     }
 })
 export default class Tabs extends Vue {
@@ -31,6 +32,10 @@ export default class Tabs extends Vue {
     ivrCode: string = '';
 
     @Prop() performer: Performer;
+
+    mounted(){
+        this.selectedTab = this.firstAvailable;
+    }
 
     enabled(service: string): boolean{
         if (!this.performer){
@@ -58,6 +63,22 @@ export default class Tabs extends Vue {
         }
 
         return false;
+    }
+
+    get firstAvailable(){
+        if(!this.performer){
+            return 'none';
+        }
+
+        const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
+
+        for (const service in this.performer.performer_services){
+            if(this.performer.performer_services[service] && ignoredServices.indexOf(service) === -1){
+                return service;
+            }
+        }
+
+        return 'none';
     }
 
     get camLabel(): string {
@@ -98,6 +119,14 @@ export default class Tabs extends Vue {
 
     get displayName(): string {
         return 'Karel';
+    }
+
+    @Watch('performer', { deep: true })
+    onPerformerUpdate(newPerformer: Performer){
+
+        if(!newPerformer.performer_services[this.selectedTab]){
+            this.selectedTab = this.firstAvailable;
+        }
     }
 
     selectTab(newTab: string){
