@@ -80,6 +80,10 @@ export default class Profile extends Vue {
         this.displayPic = id;
     }
 
+    hasService(service: string){
+        return !this.performer ? false : this.performer.performer_services[service];
+    }
+
     async startVoyeur({}){
         if(!this.performer){
             return;
@@ -135,6 +139,27 @@ export default class Profile extends Vue {
         });
     }
 
+    async startCall(){
+        if(!this.performer){
+            return;
+        }
+
+        const reservationResult = await fetch(`${config.BaseUrl}/session/make_reservation/${this.performer.advert_numbers[0].advertNumber}/PHONE?_format=json`, {
+            credentials: 'include'
+        });
+
+        if(!reservationResult.ok){
+            this.$store.dispatch('errorMessage', 'profile.errorReservationFailed');
+            return;
+        }
+
+        const data = await reservationResult.json();
+
+        if(data.DNIS){
+            window.open(`tel:${data.DNIS}`, '_self');
+        }
+    }
+
     async loadPerformer(id: number){
         const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/performer_number/${id}?limit=10`, {
             credentials: 'include'
@@ -148,5 +173,9 @@ export default class Profile extends Vue {
         if(this.$store.state.safeMode){
             this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
         }
+    }
+
+    login(){
+        this.$store.dispatch('displayModal', 'login');
     }
 }
