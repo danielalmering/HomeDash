@@ -2,6 +2,7 @@
 export interface ProjectConfig {
     BaseUrl: string;
     SocketUrl: string;
+    ImageUrl: string;
     JsmpegUrl: string;
     StorageKey: string;
 }

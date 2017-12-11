@@ -3,6 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer } from '../../../../models/Performer';
+import { getAvatarImage, getPerformerStatus } from '../../../../util';
 import config from '../../../../config';
 
 import './sidebar.scss';
@@ -20,7 +21,10 @@ export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
-    services: string[] = ["cam", "phone", "sms", "email", "videocall"];    
+    services: string[] = ["cam", "phone", "sms", "email", "videocall"];  
+
+    getAvatarImage = getAvatarImage;
+    getPerformerStatus = getPerformerStatus;
 
     query: any = {
         limit: 20,

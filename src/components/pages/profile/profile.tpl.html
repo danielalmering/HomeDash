@@ -3,7 +3,7 @@
     <div class="profile__info" v-if="performer">
 
         <div class="profile__info-image col-sm-12 col-md-3">
-            <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer)}')` }"></div>
+            <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }"></div>
         </div>
 
 
