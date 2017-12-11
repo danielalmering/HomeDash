@@ -2,7 +2,7 @@
     <div class="container-fluid">
 
         <div class="payment__title">
-            <i class="fa fa-check active"></i> 
+            <i class="fa fa-check active"></i>
             <span v-t="'payment.pickpackage'"></span>
         </div>
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="payment__title">
-            <i class="fa fa-shopping-cart"></i> 
+            <i class="fa fa-shopping-cart"></i>
             <span v-t="'payment.shoppingcart'"></span>
         </div>
 
@@ -47,7 +47,7 @@
                 <p v-t="'payment.bonusdiscountdesc'"></p>
                 <br />
 
-                <div class="payment__cart-form form" v-if="">
+                <div class="payment__cart-form form" v-if="promoData && promoData.active">
                     <input type="text" :placeholder="$t('payment.discountcode')" v-model="promoCode">
                     <i class="fa fa-share"></i>
                 </div>
@@ -83,7 +83,7 @@
         </div>
 
         <div class="payment__title">
-            <i class="fa fa-money"></i> 
+            <i class="fa fa-money"></i>
             <span v-t="'payment.methods'"></span>
         </div>
 

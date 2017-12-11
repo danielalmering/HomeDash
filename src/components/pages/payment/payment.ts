@@ -41,17 +41,19 @@ export default class Payment extends Vue {
     paymentMethods: PaymentMethod[] = [];
     selectedPayment: string = '';
 
+    promoData?: PromoData = undefined;
     promoCode: string = '';
+    promoCredits: number = 0;
 
     minimumBonusFee: number = 0;
     bonusPercentage: number = 0;
-    
+
     mounted(){
         this.getInfo();
     }
 
     async getInfo(){
-        
+
         const infoResults = await fetch(`${config.BaseUrl}/client/client_accounts/updatebalanceinfo`, {
             credentials: 'include'
         });
@@ -69,7 +71,8 @@ export default class Payment extends Vue {
         }, {});
 
         this.minimumBonusFee = data.fees[0].amount;
-        this.bonusPercentage = data.fees[0].percentage; 
+        this.bonusPercentage = data.fees[0].percentage;
+        this.promoData = data.promo;
     }
 
     get package(){
@@ -89,7 +92,7 @@ export default class Payment extends Vue {
 
     get bonusAmount(){
         return (credits: number) => {
-            return Math.floor(credits / this.minimumBonusFee) * (this.minimumBonusFee * (this.bonusPercentage / 100));
+            return Math.floor(credits / this.minimumBonusFee) * (this.minimumBonusFee * (this.bonusPercentage / 100)) + this.promoCredits;
         };
     }
 
@@ -110,22 +113,33 @@ export default class Payment extends Vue {
         this.selectedPayment = paymentType;
     }
 
-    async submitPurchase(){
-        if(this.selectedPayment === ''){
-            this.$store.dispatch('openMessage', {
-                content: 'payment.alerts.errorNoPayment',
-                class: 'error'
-            });
-
+    verifyPromo(){
+        if(!this.promoData){
             return;
         }
 
-        if(this.credits === 0){
-            this.$store.dispatch('openMessage', {
-                content: 'payment.alerts.errorNoPackage',
-                class: 'error'
-            });
+        if(this.promoCode !== this.promoData.code){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorIncorrectPromo');
+            return;
+        }
 
+        if(this.promoData.used){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorUsedPromo');
+            return;
+        }
+
+        this.promoCredits = this.promoData.credits;
+        this.$store.dispatch('successMessage', 'payment.alerts.successCorrectPromo');
+    }
+
+    async submitPurchase(){
+        if(this.credits === 0){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorNoPackage');
+            return;
+        }
+
+        if(this.selectedPayment === ''){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorNoPayment');
             return;
         }
 
@@ -134,13 +148,13 @@ export default class Payment extends Vue {
         });
 
         const data = await paymentResult.json();
-        
+
         if(data.free !== undefined){
             this.$store.dispatch('openMessage', {
                 content: data.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
                 class: data.free ? 'success' : 'error'
             });
-            
+
             return;
         }
 

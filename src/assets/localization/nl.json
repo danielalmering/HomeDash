@@ -168,6 +168,7 @@
             "errorInboxLoad": "Er is een fout opgetreden bij het laden van de inbox!",
             "errorInboxMessageLoad": "Er is een fout opgetreden bij het laden van het bericht!",
             "errorInboxMessagePay": "er is iets fout gegaan bij het betalen van het bericht!",
+            "errorInboxNoSelected": "Uw heeft geen berichten geselecteerd!",
             "succesInboxMessagePay": "Het bericht is succesvol betaalt!",
             "successInboxRemove": "De geselecteerde berichten zijn succesvol verwijderd",
             "errorInboxRemove": "De geselecteerde berichten zijn niet verwijderd!",
