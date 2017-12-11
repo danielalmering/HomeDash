@@ -1,8 +1,8 @@
 <template>
     <div class="slider__large" :class="{ 'visible': visible }" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
         <ul class="slider__large-list">
-            <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }">
-                <img :src="`//img.thuis.nl/files/pimg/${performer}/${photo.name}`">
+            <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }" v-if="getSliderImage(performer, photo.name, '')">
+                <img :src="getSliderImage(performer, photo.name, '')" />
             </li>
         </ul>
         <div class="slider__large-left" v-if="!isFirst" v-on:click="previous">
@@ -20,6 +20,8 @@
 
 <script lang="ts">
 import Vue, { ComponentOptions } from 'vue';
+
+import { getSliderImage }  from '../../../util';
 
 interface PhotoSliderFullscreen extends Vue {
     currentSelected: number;
@@ -60,6 +62,7 @@ export default {
 
     },
     methods: {
+        getSliderImage: getSliderImage,
         close(){
             this.$emit('update:visible', false);
         },

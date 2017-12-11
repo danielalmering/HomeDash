@@ -5,7 +5,7 @@ import Vue from 'vue';
 import Pagination from '../../layout/Pagination.vue';
 import notificationSocket from '../../../socket';
 import { Performer, PerformerStatus } from '../../../models/Performer';
-import { getAvatarImage } from '../../../util';
+import { getAvatarImage, getPerformerStatus } from '../../../util';
 import config from '../../../config';
 
 import './performers.scss';
@@ -25,6 +25,7 @@ export default class Performers extends Vue {
     services: string[] = ["cam", "phone", "sms", "email", "videocall"];
 
     getAvatarImage = getAvatarImage;
+    getPerformerStatus = getPerformerStatus;
 
     addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
@@ -43,19 +44,6 @@ export default class Performers extends Vue {
         const performer = this.performers.find(p => p.id === performerId);
 
         return !performer ? false : performer.performer_services[service];
-    }
-
-    performerStatus(performer: Performer){
-        if(performer.performerStatus === PerformerStatus.Available){
-            return 'available';
-        }
-
-        if(performer.performerStatus === PerformerStatus.OnCall ||
-            performer.performerStatus === PerformerStatus.Busy){
-            return performer.performer_services['peek'] ? 'peek' : 'busy';
-        }
-
-        return 'offline';
     }
 
     @Watch('$route')
