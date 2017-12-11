@@ -13,7 +13,7 @@
     <div class="voyeur__block">
         <div class="voyeur__block-title"><i class="fa fa-star"></i> {{ $t("voyeur.favorites") }}<span></span></div>
         <ul class="voyeur__block-list">
-            <li v-for="favorite in favoritePerformers">
+            <li v-for="favorite in favoritePerformers" v-on:click="swap(favorite.id)">
                 {{ favorite.nickname }} <i>({{ favorite.advert_numbers[0].advertNumber }})</i>
             </li>
         </ul>
@@ -22,7 +22,7 @@
     <div class="voyeur__block">
         <div class="voyeur__block-title"><i class="fa fa-clock-o"></i> {{ $t("voyeur.reserving") }}<span></span></div>
         <ul class="voyeur__block-list">
-            <li v-for="reservation in reservations">
+            <li v-for="reservation in reservations" v-on:click="swap(reservation.id)">
                 {{ reservation.nickname }} <i>({{ reservation.advert_numbers[0].advertNumber }})</i>
             </li>
         </ul>
