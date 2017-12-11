@@ -58,14 +58,18 @@
                         :playStream="tile.streamData.playStream">
                     </jsmpeg>
                     <div class="sidebar__voyeur-misc">
-                        <span class="sidebar__voyeur-misc-advert">1337</span>
+                        <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advert_numbers[0].advertNumber }}</span>
                         <span class="sidebar__voyeur-misc-favorite">
-                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star" :class="{ 'is-favourite': performer(tile.performer).isFavourite }"></i>
                         </span>
                     </div>
                     <div class="sidebar__voyeur-hover">
-                        <a class="btn btn-black btn-small btn-icon" href="#"><i class="online"></i>{{ $t('voyeur.now1on1') }}</a>
-                        <!-- <a class="btn btn-black btn-small btn-icon" href="#"><i class="reserve"></i>{{ $t('voyeur.reserve') }}</a -->
+                        <a class="btn btn-black btn-small btn-icon" v-if="performer(tile.performer).performerStatus === 'AVAILABLE' && performer(tile.performer).performer_services.cam" v-on:click="">
+                            <i class="online"></i>{{ $t('voyeur.now1on1') }}
+                        </a>
+                        <a class="btn btn-black btn-small btn-icon" v-if="performer(tile.performer).performerStatus !== 'AVAILABLE' && performer(tile.performer).performer_services.cam"  v-on:click="reserve(tile.performer)">
+                            <i class="reserve"></i>{{ isReserved(tile.performer) ? $t('voyeur.cancelReservation') : $t('voyeur.reserve') }}
+                        </a>
                     </div>
                 </li>
 
