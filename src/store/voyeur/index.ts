@@ -17,7 +17,14 @@ interface SocketVoyeurEventArgs {
 }
 
 interface SocketStatusEventArgs {
+    performerId: number;
+    status: string;
+}
 
+interface SocketServiceEventArgs {
+    performerId: number;
+    serviceName: string;
+    serviceStatus: boolean;
 }
 
 type VoyeurContext = ActionContext<VoyeurState, RootState>;
@@ -58,7 +65,21 @@ setTimeout(() => {
     notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
         if(!data) return;
 
+        rootState.commit('voyeur/setPerformerStatus', {
+            performerId: data.performerId,
+            status: data.status
+        });
+    });
 
+    //%7B%22performerId%22%3A13135%2C%22serviceName%22%3A%22videocall%22%2C%22serviceStatus%22%3Atrue%7D
+    notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
+        if(!data) return;
+
+        rootState.commit('voyeur/setPerformerService', {
+            performerId: data.performerId,
+            serviceName: data.serviceName,
+            status: data.serviceStatus
+        });
     });
 });
 
@@ -98,15 +119,26 @@ const mutations = {
         }
     },
     setPerformerStatus(state: VoyeurState, payload: { performerId: number, status: string }){
-        state.performers = state.performers.map(p => {
-            if(p.id !== payload.performerId){
-                return p;
+        state.performers = state.performers.map(performer => {
+            if(performer.id !== payload.performerId){
+                return performer;
             }
 
-            p.performerStatus = payload.status as PerformerStatus;
+            performer.performerStatus = payload.status as PerformerStatus;
 
-            return p;
+            return performer;
         });
+    },
+    setPerformerService(state: VoyeurState, payload: { performerId: number, serviceName: string, status: boolean }){
+        state.performers = state.performers.map(performer => {
+            if(performer.id !== payload.performerId){
+                return performer;
+            }
+
+            performer.performer_services[payload.serviceName] = payload.status;
+
+            return performer;
+        })
     },
     addReservation(state: VoyeurState, performerId: number){
         state.reservations.push(performerId);
