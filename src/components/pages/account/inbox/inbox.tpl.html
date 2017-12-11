@@ -18,9 +18,9 @@
                     <i class="fa" :class="{ 'fa-square-o': !notification.checked, 'fa-check-square-o': notification.checked }"></i>
                 </td>
                 <td width="50%">
-                    <router-link :to="{ name: 'Readmessage', params: { messageid: notification.id, performerid: notification.performer_id }}">
+                    <router-link :to="{ name: 'Readmessage', params: { messageid: notification.id, performerid: notification.performer_id, status:  notification.status, type:  notification.type }}">
                         <span>{{ notification.type }}</span>
-                        <p>{{ notification.subject }}</p>
+                        <p :class="{ 'active': notification.status === 'NEW' }">{{ notification.subject }}</p>
                     </router-link>
                 </td>
                 <td width="45%">

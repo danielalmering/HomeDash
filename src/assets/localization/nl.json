@@ -157,6 +157,8 @@
         "to": "Versturen naar",
         "subject": "Onderwerp",
         "message": "Bericht",
+        "paymessage": "De kosten voor het bekijken van het bericht bedragen",
+        "viewmessage": "Bericht bekijken!",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
@@ -164,6 +166,8 @@
             "errorVoucher": "Deze code was onjuist of is al gebruikt, probeer het opnieuw",
             "errorInboxLoad": "Er is een fout opgetreden bij het laden van de inbox!",
             "errorInboxMessageLoad": "Er is een fout opgetreden bij het laden van het bericht!",
+            "errorInboxMessagePay": "er is iets fout gegaan bij het betalen van het bericht!",
+            "succesInboxMessagePay": "Het bericht is succesvol betaalt!",
             "successInboxRemove": "De geselecteerde berichten zijn succesvol verwijderd",
             "errorInboxRemove": "De geselecteerde berichten zijn niet verwijderd!",
             "errorReplyMessage": "Er is een fout opgetreden bij het reageren!",

@@ -93,6 +93,13 @@
         p {
             display: inline-block;
             color: $pallete-7; 
+            &.highlight {
+                color: $pallete-2;
+                display: block;
+                @include rem(padding, 12px 15px);
+                background: $pallete-1;
+                @include border-radius(3px);
+            }
         }
 
         i { 
@@ -129,6 +136,12 @@
                 vertical-align: middle;
                 @include rem(padding, 10px);
 
+                a {
+                    display: table;
+                    height: 100%;
+                    width: 100%;
+                }
+
                 i { 
                     @include rem(font-size, 18px);
                     color: $pallete-3; 
@@ -144,6 +157,10 @@
 
                 p {
                     margin: 0;
+                    &.active {
+                        font-weight: 600;
+                        color: $pallete-3; 
+                    } 
                 }
 
                 &:last-child {
