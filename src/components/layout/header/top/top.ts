@@ -1,6 +1,8 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
+import config from '../../../../config';
+
 import './top.scss';
 
 interface Campaign {
@@ -14,6 +16,7 @@ interface Campaign {
 export default class Top extends Vue {
 
     campaign: Campaign = {number: 0, cpm: 0};
+    fees: any[] = [];
 
     get logo(){
         return this.$store.getters.getLogoLight;
@@ -29,6 +32,27 @@ export default class Top extends Vue {
 
     get branding(){
         return this.$store.getters.getBranding;
+    }
+
+    mounted(){
+        if(!this.$store.state.info){
+            return;
+        }
+
+        this.getFees();
+    }
+
+    routeGo(routename: string){
+        this.$router.push({ name: routename });
+    }
+
+    async getFees(){
+        const infoResults = await fetch(`${config.BaseUrl}/client/client_accounts/updatebalanceinfo`, {
+            credentials: 'include'
+        });
+
+        const data = await infoResults.json();
+        this.fees = data.fees.slice().reverse();
     }
 
 }

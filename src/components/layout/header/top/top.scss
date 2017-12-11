@@ -15,6 +15,7 @@
 
     &__logo {
         @include rem(padding, 22px 0px);
+        cursor: pointer;
 
         img {
             display: table;
@@ -62,10 +63,12 @@
     }
 
     &__banner {
+        
         @include rem(margin, 15px 0px);
 
         &-credits {
             float: right;
+            cursor: pointer;
             .discount {
                 float: left;
                 width: 100px;
@@ -121,6 +124,7 @@
         &-happyhour {
             float: right;
             width: 235px;
+            cursor: pointer;
             .col-1 {
                 float: left;
                 width: 65%;
