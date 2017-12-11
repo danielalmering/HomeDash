@@ -9,6 +9,7 @@ import { getAvatarImage } from '../../../util';
 import config from '../../../config';
 
 import './performers.scss';
+import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
 
 @Component({
     template: require('./performers.tpl.html'),
@@ -76,7 +77,7 @@ export default class Performers extends Vue {
 
         this.loadPerformers();
 
-        this.serviceEventId = notificationSocket.subscribe('service', (data) => {
+        this.serviceEventId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
             const performer = this.performers.find(p => p.id === data.performerId);
 
             if(!performer){
@@ -86,14 +87,14 @@ export default class Performers extends Vue {
             performer.performer_services[data.serviceName] = data.serviceStatus;
         });
 
-        this.statusEventId = notificationSocket.subscribe('status', (data) => {
+        this.statusEventId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
             const performer = this.performers.find(p => p.id === data.performerId);
 
             if(!performer){
                 return;
             }
 
-            performer.performerStatus = data.status;
+            performer.performerStatus = data.status as PerformerStatus;
         });
     }
 

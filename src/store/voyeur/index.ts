@@ -1,20 +1,14 @@
 import Vue from 'vue';
 import Vuex, { Module, ActionContext, Payload } from 'vuex';
-import { Performer } from '../../models/Performer';
+import { Performer, PerformerStatus } from '../../models/Performer';
 import { RootState } from '../index';
+import { SocketVoyeurEventArgs, SocketServiceEventArgs, SocketStatusEventArgs } from '../../models/Socket';
 
 import config from '../../config';
 import Voyeur from '../../components/pages/voyeur/voyeur';
 import { setInterval } from 'timers';
 import notificationSocket from '../../socket';
 import rootState from '../index';
-
-interface SocketVoyeurEventArgs {
-    performerId: number;
-    type: string;
-    value: boolean;
-    message?: string;
-}
 
 type VoyeurContext = ActionContext<VoyeurState, RootState>;
 
@@ -39,7 +33,7 @@ setTimeout(() => {
         if(data.message && (data.message === 'BROKE' || data.message === 'HANGUP')){
             //Show broke/hangup alert
             //Route to performer page
-            
+
             return;
         }
 
@@ -49,6 +43,26 @@ setTimeout(() => {
             rootState.dispatch('voyeur/updatePerformers', { performerId: data.performerId, value: data.value });
             return;
         }
+    });
+
+    notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
+        if(!data) return;
+
+        rootState.commit('voyeur/setPerformerStatus', {
+            performerId: data.performerId,
+            status: data.status
+        });
+    });
+
+    //%7B%22performerId%22%3A13135%2C%22serviceName%22%3A%22videocall%22%2C%22serviceStatus%22%3Atrue%7D
+    notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
+        if(!data) return;
+
+        rootState.commit('voyeur/setPerformerService', {
+            performerId: data.performerId,
+            serviceName: data.serviceName,
+            status: data.serviceStatus
+        });
     });
 });
 
@@ -87,6 +101,28 @@ const mutations = {
             state.mainTile = undefined;
         }
     },
+    setPerformerStatus(state: VoyeurState, payload: { performerId: number, status: string }){
+        state.performers = state.performers.map(performer => {
+            if(performer.id !== payload.performerId){
+                return performer;
+            }
+
+            performer.performerStatus = payload.status as PerformerStatus;
+
+            return performer;
+        });
+    },
+    setPerformerService(state: VoyeurState, payload: { performerId: number, serviceName: string, status: boolean }){
+        state.performers = state.performers.map(performer => {
+            if(performer.id !== payload.performerId){
+                return performer;
+            }
+
+            performer.performer_services[payload.serviceName] = payload.status;
+
+            return performer;
+        })
+    },
     addReservation(state: VoyeurState, performerId: number){
         state.reservations.push(performerId);
     },
@@ -98,9 +134,14 @@ const mutations = {
             state.queue.push(state.activeTiles[payload.position].performer);
         }
 
+        //Filter out performer from the queue if it hasn't been done yet, remove this from other parts of the code
+        state.queue = state.queue.filter(performerId => performerId !== payload.tile.performer);
+
         Vue.set(state.activeTiles, payload.position, payload.tile);
     },
     setMainTile(state: VoyeurState, tile: PerformerTile){
+        state.queue = state.queue.filter(performerId => performerId !== tile.performer);
+
         state.mainTile = tile;
         state.isActive = true;
     },
@@ -112,7 +153,7 @@ const mutations = {
         }
 
         const currentTileClone = Object.assign({}, currentTile);
-        
+
         if(state.mainTile){
             Vue.set(state.activeTiles, state.activeTiles.indexOf(currentTile), state.mainTile);
         } else {
@@ -168,34 +209,35 @@ const actions = {
         }
 
         await dispatch('loadMainTile', {
-            performerId: state.queue.splice(state.queue.indexOf(payload.performerId), 1)[0]
+            performerId: payload.performerId
         });
 
         for(let i = 0; i < maxTilesAllowed; i++){
-            const performerId = state.queue.shift();
 
-            if(!performerId){
+            if(state.queue.length === 0){
                 break;
             }
+
+            const performerId = state.queue[0];
 
             await dispatch('loadTile', { performerId: performerId, position: i });
         }
 
         switcherooCb = setInterval(() => {
             commit('increaseAlive');
-            
+
             if(state.queue.length === 0){
                 return;
             }
 
             const tileToReplace = getters.replacementTargetIndex;
 
-            dispatch('loadTile', { performerId: state.queue.shift(), position: tileToReplace });
+            dispatch('loadTile', { performerId: state.queue[0], position: tileToReplace });
         }, tileSwitchDelay);
     },
     async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
         const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
-        
+
         const performerResult = await fetch(`${config.BaseUrl}/session/performer_account/performer_number/${advertId}/initiate_videochat`, {
             credentials: 'include',
             method: 'POST',
@@ -275,7 +317,22 @@ const actions = {
 
         commit('setMainTile', tile);
     },
-    async swap({ commit }: VoyeurContext, payload: { performerId: number }){
+    async swap({ commit, dispatch, state, getters }: VoyeurContext, payload: { performerId: number }){
+        //If the performer is already in the main screen, we can jsut ignore this
+        if(state.mainTile && state.mainTile.performer === payload.performerId){
+            return;
+        }
+
+        const tile = state.activeTiles.filter(p => p.performer === payload.performerId);
+
+        //If there is no loaded tile for this performer, switch another tile out for her first
+        if(!tile){
+            await dispatch('loadTile', {
+                performerId: payload.performerId,
+                position: getters.replacementTargetIndex
+            });
+        }
+
         const result = await fetch(`/session/performer_account/${payload.performerId}/voyeur`);
 
         if(result.ok){
@@ -365,7 +422,7 @@ const getters = {
         }, state.activeTiles[0]);
     }
 };
-  
+
 /**
  *  Open voyeur page
  *

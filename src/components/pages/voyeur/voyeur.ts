@@ -15,7 +15,7 @@ import './voyeur.scss';
 export default class Voyeur extends Vue {
 
     intervalTimer: number;
-    
+
     get mainTile(){
         return this.$store.state.voyeur.mainTile;
     }
@@ -61,6 +61,12 @@ export default class Voyeur extends Vue {
 
         //Kill session
         this.$store.dispatch('voyeur/end');
+    }
+
+    swap(performerId: number){
+        this.$store.dispatch('voyeur/swap', {
+            performerId
+        })
     }
 
     viewerStateChange(state: string){

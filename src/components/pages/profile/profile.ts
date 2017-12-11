@@ -12,6 +12,9 @@ import FullSlider from './photo-slider-fullscreen.vue';
 import Tabs from './tabs/tabs';
 import config from '../../../config';
 
+import notificationSocket from '../../../socket';
+import { SocketServiceEventArgs } from '../../../models/Socket';
+
 import './profile.scss';
 import './photo-slider.scss';
 
@@ -36,6 +39,8 @@ export default class Profile extends Vue {
     displayPic: number = 0;
     displayFullDescription: boolean = false;
 
+    private serviceSocketId: number;
+
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
     }
@@ -47,6 +52,22 @@ export default class Profile extends Vue {
 
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
+
+        this.serviceSocketId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
+            if(!this.performer){
+                return;
+            }
+
+            if(data.serviceName === 'voyeur'){
+                this.performer.isVoyeur = data.serviceStatus;
+            } else {
+                this.performer.performer_services[data.serviceName] = data.serviceStatus;
+            }
+        });
+    }
+
+    beforeDestroy(){
+        notificationSocket.unsubscribe(this.serviceSocketId);
     }
 
     @Watch('$route')
