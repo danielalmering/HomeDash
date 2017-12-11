@@ -10,13 +10,13 @@
             <div class="clearfix"></div>
         </div>
     </h1>
-    <div class="account__view">
+    <div class="account__view" v-if="payed">
         <h3>{{ message.subject }}</h3>
 
         <div class="colum"> 
             <div class="col-xs-3 col-sm-1">
                 <div class="row">
-                    <img class="resize" :src="'//img.thuis.nl/files/pimg/152/medium/' + message.performer_account.avatar.name">
+                    <img class="resize" :src="getAvatarImage(message.performer_account)">
                 </div>
             </div>
             <div class="col-xs-9 col-sm-11">
@@ -43,6 +43,11 @@
             </form>
         </div>
 
+    </div>
+
+    <div class="account__view" v-if="!payed">
+        <p class="highlight">{{ $t('account.paymessage') }} {{ credits }} {{ $t('payment.credits') }}</p>
+        <a v-on:click="payMessage" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
     </div>
 </div>
 
