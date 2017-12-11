@@ -2,30 +2,13 @@ import Vue from 'vue';
 import Vuex, { Module, ActionContext, Payload } from 'vuex';
 import { Performer, PerformerStatus } from '../../models/Performer';
 import { RootState } from '../index';
+import { SocketVoyeurEventArgs, SocketServiceEventArgs, SocketStatusEventArgs } from '../../models/Socket';
 
 import config from '../../config';
 import Voyeur from '../../components/pages/voyeur/voyeur';
 import { setInterval } from 'timers';
 import notificationSocket from '../../socket';
 import rootState from '../index';
-
-interface SocketVoyeurEventArgs {
-    performerId: number;
-    type: string;
-    value: boolean;
-    message?: string;
-}
-
-interface SocketStatusEventArgs {
-    performerId: number;
-    status: string;
-}
-
-interface SocketServiceEventArgs {
-    performerId: number;
-    serviceName: string;
-    serviceStatus: boolean;
-}
 
 type VoyeurContext = ActionContext<VoyeurState, RootState>;
 
