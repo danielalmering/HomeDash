@@ -74,7 +74,7 @@
                 </li>
 
                 <!-- No performers -->
-                <li class="sidebar__performer" v-if="performers.length === 0 && category !== 'voyeur'">
+                <li class="sidebar__performer" :class="{ 'active': displaySidebar() }" v-if="performers.length === 0 && category !== 'voyeur'">
                     <h3 class="text-center" v-t="$t('sidebar.noperformers')"></h3>
                 </li>
             </ul>
@@ -83,7 +83,7 @@
 
     </div>
     
-    <div class="sidebar__toggle hidden-md hidden-lg" v-on:click="toggleSidebar">
+    <div class="sidebar__toggle hidden-md hidden-lg" :class="{ 'collapse': displaySidebar }" v-on:click="toggleSidebar">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
     </div>
 </div>
