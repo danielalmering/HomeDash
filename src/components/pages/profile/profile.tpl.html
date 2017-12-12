@@ -44,9 +44,16 @@
             </div>
         </div>
 
-        <div class="profile__tabs">
+        <div class="profile__tabs hidden-xs">
             <tabs :performer="performer" v-on:startSession="startSession" v-on:startVoyeur="startVoyeur"></tabs>
         </div>
 
+        <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer">
+            <button class="btn btn-full btn-large btn-green" v-if="hasService('cam')" v-on:click="authenticated ? startSession() : login()">{{ $t('tabs.webcambtn') }}</button>
+            <button class="btn btn-full btn-large btn-green" v-if="hasService('phone')" v-on:click="authenticated ? startCall() : login()">{{ $t('tabs.callbtn') }}</button>
+            <router-link  v-if="hasService('email')" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
+                <button class="btn btn-full btn-large btn-green">{{ $t('tabs.mailbtn') }}</button>
+            </router-link>
+        </div>
     </div>
 </div>

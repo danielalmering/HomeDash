@@ -65,7 +65,7 @@ const router = new Router({
                                     component: Readmessage
                                 },
                                 {
-                                    path: 'new-message',
+                                    path: 'new-message/:advertId?',
                                     name: 'Newmessage',
                                     component: Newmessage
                                 },

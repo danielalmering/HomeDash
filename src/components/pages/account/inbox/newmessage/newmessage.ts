@@ -9,6 +9,11 @@ interface MessageForm {
     content: string;
 }
 
+interface BarePerformer {
+    id: number;
+    username: string;
+}
+
 @Component({
     template: require('./newmessage.tpl.html')
 })
@@ -16,23 +21,39 @@ export default class Newmessage extends Vue {
 
     message: MessageForm = { subject: '', content: '' };
 
-    performers: any[] = [];
-    selectedperf: any[] = [];
-    selectedusername: string = '';
-    selectedid: number;
+    performers: BarePerformer[] = []; //This call returns performer id's, not adverts... include adverts lol
+    performerSearchQuery: string = '';
+    selectedPerformer: number = 0;
 
-    mounted(){
-        this.loadPerformers();
+    async mounted(){
+        await this.loadPerformers();
+
+        if(this.$route.params.advertId){
+            this.selectedPerformer = parseInt(this.$route.params.advertId);
+            this.performerSearchQuery = this.selectedPerformerUsername;
+        }
     }
 
-    selectPerformer(id: number, username: string){
-        this.selectedid = id;
-        this.selectedusername = username;
-        this.selectedperf = [];
+    selectPerformer(performerId: number){
+        this.selectedPerformer = performerId;
+        this.performerSearchQuery = this.selectedPerformerUsername;
     }
 
-    filterPerformers(){
-        this.selectedperf = this.performers.filter((perf: any) => this.selectedusername.substr(0, 4) === perf.username.substr(0, 4));
+    get selectedPerformerUsername(){
+        const performer = this.performers.find(p => p.id === this.selectedPerformer);
+
+        return performer ? performer.username : '';
+    }
+
+    get performersFilter(){
+        if(this.performerSearchQuery === ''){
+            return [];
+        }
+
+        return this.performers.filter((perf: BarePerformer) => {
+            return perf.username.toLocaleLowerCase().indexOf(this.performerSearchQuery.toLowerCase()) > -1 ||
+                    perf.id === parseInt(this.performerSearchQuery);
+        });
     }
 
     async loadPerformers() {
@@ -46,36 +67,28 @@ export default class Newmessage extends Vue {
     async sendMessage(){
         const user: User = this.$store.state.authentication.user;
 
-        if(!this.message.content || !this.selectedid || !this.message.subject){
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.errorNewMessage',
-                class: 'error'
-            });
-
+        if(!this.message.content || this.selectedPerformer === 0 || !this.message.subject){
+            this.$store.dispatch('errorMessage', 'account.alerts.errorNewMessage');
             return;
         }
 
         const message = {
             clientid: { id: user.id },
             content: this.message.content,
-            performer_account: { id: this.selectedid },
+            performer_account: { id: this.selectedPerformer },
             sent_by: 'CLIENT',
             status: 'INBOX',
             subject: this.message.subject
         };
 
-        const newmessageResult = await fetch(`${config.BaseUrl}/performer/performer_account/${this.selectedid}/email`, {
+        const newmessageResult = await fetch(`${config.BaseUrl}/performer/performer_account/${this.selectedPerformer}/email`, {
             method: 'POST',
             body: JSON.stringify(message),
             credentials: 'include'
         });
 
         if(newmessageResult.ok){
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.successNewMessage',
-                class: 'success'
-            });
-
+            this.$store.dispatch('successMessage', 'account.alerts.successNewMessage');
             this.message = { subject: '', content: '' };
         }
     }
