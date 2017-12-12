@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, Avatar } from '../../../models/Performer';
-import { getAvatarImage } from '../../../util';
+import { getAvatarImage, getPerformerLabel  } from '../../../util';
 import { RequestPayload } from '../../../store/session';
 import { SessionType, State } from '../../../models/Sessions';
 
@@ -46,6 +46,7 @@ export default class Profile extends Vue {
     }
 
     getAvatarImage = getAvatarImage;
+    getPerformerLabel = getPerformerLabel;
 
     addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);

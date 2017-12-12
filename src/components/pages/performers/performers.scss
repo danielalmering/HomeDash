@@ -39,22 +39,6 @@
         }
     }
 
-    &__label {
-        position: absolute;
-        top: 65px;
-        left: -3px;
-        z-index: 999;
-        color: $pallete-2; 
-        font-weight: 600;
-        @include rem(font-size, 12px);   
-        text-shadow: 0px 1px 0px rgba(0,0,0,0.05);  
-        @include rem(padding, 5px 10px);
-        @include border-radius(1px);
-        &.busy-label { background: $pallete-15; }
-        &.peek-label { background: $pallete-19; }
-        &.voyeur-label { background: $pallete-22; }
-    }
-
     &__info {
         position: absolute;
         top: 0;

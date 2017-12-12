@@ -10,7 +10,7 @@
         <div class="profile__info-content col-sm-12 col-md-9">
 
             <div class="profile__content col-sm-12 col-md-8">
-                <h2 class="profile__content-nick">{{ performer.nickname }}</h2>
+                <h2 class="profile__content-nick"><span>{{ performer.nickname }}</span><div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div></h2>
                 <a class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</a>
                 <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                     <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
@@ -49,10 +49,10 @@
         </div>
 
         <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer">
-            <button class="btn btn-full btn-large btn-green" v-if="hasService('cam')" v-on:click="authenticated ? startSession() : login()">{{ $t('tabs.webcambtn') }}</button>
-            <button class="btn btn-full btn-large btn-green" v-if="hasService('phone')" v-on:click="authenticated ? startCall() : login()">{{ $t('tabs.callbtn') }}</button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="hasService('cam')" v-on:click="authenticated ? startSession() : login()"><span>{{ $t('tabs.webcambtn') }}</span></button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="hasService('phone')" v-on:click="authenticated ? startCall() : login()"><span>{{ $t('tabs.callbtn') }}</span></button>
             <router-link  v-if="hasService('email')" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
-                <button class="btn btn-full btn-large btn-green">{{ $t('tabs.mailbtn') }}</button>
+                <button class="btn btn-full btn-xxl btn-green btn-fa fa-envelope"><span>{{ $t('tabs.mailbtn') }}</span></button>
             </router-link>
         </div>
     </div>
