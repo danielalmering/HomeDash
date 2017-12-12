@@ -37,6 +37,12 @@
         }
     },
     "performers": {
+        "labels": {
+            "peek-label": "Meekijken",
+            "busy-label": "Bezet",
+            "voyeur-label": "Voyeur",
+            "none": ""
+        }
     },
     "auth": {
         "accountlogin": "Gebruiker login",
