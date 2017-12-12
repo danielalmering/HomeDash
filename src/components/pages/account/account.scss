@@ -56,10 +56,15 @@
             li {
                 list-style: none;
                 border-bottom: 1px solid $pallete-13;
-                @include rem(padding, 10px);
                 a {
+                    display: table;
+                    @include rem(padding, 10px);
+                    width: 100%;
                     @include rem(font-size, 13px);
                     color: $pallete-2;
+                    &:hover {
+                        color: $pallete-3;
+                    }
 
                     i {
                         @include rem(padding, 0px 10px 0px 0px);

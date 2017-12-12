@@ -43,3 +43,17 @@ export function getPerformerStatus(performer: Performer){
 
     return 'offline';
 }
+
+export function getPerformerLabel(performer: Performer){
+    
+    if(performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === true){
+        return 'peek-label'
+    }
+
+    if(performer.performerStatus === PerformerStatus.OnCall 
+        || (performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === false)){
+        return 'busy-label'
+    }
+
+    return 'none';
+}
