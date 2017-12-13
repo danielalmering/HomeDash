@@ -5,14 +5,14 @@
             <h2>{{ $t('confirmations.connect') }}</h2>
             <img class="spinner" src="../../assets/images/spinner.gif" >
             <p>{{ $t('confirmations.connectdesc') }}</p>
-            <a class="btn btn-large btn-full">{{ $t('confirmations.cancel') }}</a>
+            <a class="btn btn-large btn-full" v-on:click="cancel">{{ $t('confirmations.cancel') }}</a>
         </div>
         
         <div class="confirmations__content" v-if="type === 'disconnect'">
             <h2>{{ $t('confirmations.disconnect') }}</h2>
             <p>{{ $t('confirmations.disconnectdesc') }}</p>
-            <a class="btn btn-large btn-orange btn-full">{{ $t('confirmations.accept') }}</a>
-            <a class="btn btn-large btn-full">{{ $t('confirmations.cancel') }}</a>
+            <a class="btn btn-large btn-orange btn-full" v-on:click="accept">{{ $t('confirmations.accept') }}</a>
+            <a class="btn btn-large btn-full" v-on:click="cancel">{{ $t('confirmations.cancel') }}</a>
         </div>
 
     </div>
@@ -31,11 +31,16 @@ export default {
         },
     },
     data () {
-
         return {
         };
     },
     methods: {
+        cancel: function(){
+            this.$emit('cancel');
+        },
+        accept: function(){
+            this.$emit('accept');
+        }
     }
 };
 </script>
