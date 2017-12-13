@@ -21,7 +21,8 @@ import Policy from '../components/pages/textpages/policy';
 import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
+import rootStore from '../store';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor } from './interceptors';
 
 Vue.use(Router);
 
@@ -75,6 +76,18 @@ const router = new Router({
                                     component: Giftvoucher
                                 }
                             ]
+                        },
+                        {
+                            path: 'login',
+                            beforeEnter: modalInterceptor('login')
+                        },
+                        {
+                            path: 'register',
+                            beforeEnter: modalInterceptor('register')
+                        },
+                        {
+                            path: 'register',
+                            
                         },
                         {
                             path: 'promos',
