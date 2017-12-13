@@ -113,6 +113,10 @@ export default class Payment extends Vue {
         this.selectedPayment = paymentType;
     }
 
+    clearSelection(id: number){
+        this.selectedPackages[id] = 0;
+    }
+
     verifyPromo(){
         if(!this.promoData){
             return;
