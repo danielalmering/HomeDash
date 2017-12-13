@@ -53,13 +53,15 @@ export default class Tabs extends Vue {
             throw new Error(`${service} ain't no service I ever heard of!`);
         }
 
-        if (this.performer.performer_services[service]){
-            return true;
+        const allowedInSession = ['email', 'sms'];
+
+        //If the performer is in a session you may only use certain services
+        if(this.performer.performerStatus === PerformerStatus.Busy){
+            return service === 'cam' && this.performer.performer_services['peek'] ? true : allowedInSession.indexOf(service) !== -1;
         }
 
-        if (service === 'cam'){
-            return this.performer.performerStatus === PerformerStatus.Busy &&
-            this.performer.performer_services['peek'];
+        if (this.performer.performer_services[service]){
+            return true;
         }
 
         return false;
@@ -73,7 +75,7 @@ export default class Tabs extends Vue {
         const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
 
         for (const service in this.performer.performer_services){
-            if(this.performer.performer_services[service] && ignoredServices.indexOf(service) === -1){
+            if(this.enabled(service) && ignoredServices.indexOf(service) === -1){
                 return service;
             }
         }
@@ -86,15 +88,11 @@ export default class Tabs extends Vue {
             return 'tabs.service-webcam';
         }
 
-        if (this.performer.performer_services['cam']){
-            return 'tabs.service-webcam';
-        }
-
-        if (this.performer.performer_services['peek']){
+        if (this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
             return 'tabs.service-peek';
         }
 
-        return 'tabs.service-peek';
+        return 'tabs.service-webcam';
     }
 
     get authenticated(){
@@ -122,7 +120,13 @@ export default class Tabs extends Vue {
     }
 
     @Watch('performer', { deep: true })
-    onPerformerUpdate(newPerformer: Performer){
+    onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
+        // const statusChanged = newPerformer.performerStatus !== oldPerformer.performerStatus;
+        // const peekChanged = newPerformer.performer_services['peek'] !== oldPerformer.performer_services['peek'];
+
+        // if((statusChanged || peekChanged) && this.selectedTab === 'cam'){
+        //     this.selectedTab = this.firstAvailable;
+        // }
 
         if(!newPerformer.performer_services[this.selectedTab]){
             this.selectedTab = this.firstAvailable;

@@ -3,7 +3,7 @@
         <div class="performers">
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
                 <div class="performers__block">
-                    <div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
+                    <div class="label" v-if="performer" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
                     <div class="performers__info" v-if="performer">
                         <div class="performers__info-personal">
                             {{ performer.nickname }}

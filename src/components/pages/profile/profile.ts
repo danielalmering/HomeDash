@@ -2,7 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer, Avatar } from '../../../models/Performer';
+import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
 import { getAvatarImage, getPerformerLabel  } from '../../../util';
 import { RequestPayload } from '../../../store/session';
 import { SessionType, State } from '../../../models/Sessions';
@@ -13,7 +13,8 @@ import Tabs from './tabs/tabs';
 import config from '../../../config';
 
 import notificationSocket from '../../../socket';
-import { SocketServiceEventArgs } from '../../../models/Socket';
+import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
+import Confirmation from '../../layout/Confirmations.vue';
 
 import './profile.scss';
 import './photo-slider.scss';
@@ -23,7 +24,8 @@ import './photo-slider.scss';
     components: {
         photoSlider: PhotoSlider,
         photoSliderFull: FullSlider,
-        tabs: Tabs
+        tabs: Tabs,
+        confirmation: Confirmation
     },
     filters: {
         truncate: function(text: string, displayFull: boolean){
@@ -40,9 +42,14 @@ export default class Profile extends Vue {
     displayFullDescription: boolean = false;
 
     private serviceSocketId: number;
+    private statusSocketId: number;
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
+    }
+
+    get activeState(): string {
+        return this.$store.state.session.activeState;
     }
 
     getAvatarImage = getAvatarImage;
@@ -55,7 +62,7 @@ export default class Profile extends Vue {
         this.loadPerformer(parseInt(this.$route.params.id));
 
         this.serviceSocketId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
-            if(!this.performer){
+            if(!this.performer || data.performerId !== this.performer.id){
                 return;
             }
 
@@ -64,6 +71,14 @@ export default class Profile extends Vue {
             } else {
                 this.performer.performer_services[data.serviceName] = data.serviceStatus;
             }
+        });
+
+        this.statusSocketId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
+            if(!this.performer || data.performerId !== this.performer.id){
+                return;
+            }
+
+            this.performer.performerStatus = data.status as PerformerStatus;
         });
     }
 
@@ -138,6 +153,11 @@ export default class Profile extends Vue {
                 });
             }
         });
+    }
+
+    cancel(){
+        console.log('cancel');
+        this.$store.dispatch('cancel');
     }
 
     async startCall(){
