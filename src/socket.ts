@@ -208,7 +208,7 @@ export class NotificationSocket {
             this.socket.emit('user', {
                 id: user.id,
                 token: user.socketToken,
-                type: loggedIn ? user.roles[0] : 'ROLE_ANNON'
+                type: loggedIn ? user.roles[0] : 'ROLE_CLIENT'
             }, this.processQueue.bind(this));
 
             console.info('[NotificationSocket] Connected with user: ', user);
