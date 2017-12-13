@@ -17,9 +17,9 @@ export default class WebRTC extends Stream {
         const video = <HTMLVideoElement>document.querySelector('.webrtc');
         video.autoplay = true;
         
-        const wowzaParts = typeRTC.parseUrl(this.wowza);
-        typeRTC.validate(wowzaParts);
-        
+        const wowzaParts = typeRTC.WRTCUtils.parseUrl(this.wowza);
+        typeRTC.WRTCUtils.validate(wowzaParts);
+
         const options = {
             wowza: wowzaParts.host + "/webrtc-session.json",
             applicationName: wowzaParts.application,
@@ -30,7 +30,7 @@ export default class WebRTC extends Stream {
             debug: true,
             muted: false
         };
-        
+
         this.player = new typeRTC.Player(options);
         this.player.onStateChange = this.onStateChange;
         this.player.onError = this.onError;
