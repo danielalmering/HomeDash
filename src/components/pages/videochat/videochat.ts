@@ -10,7 +10,7 @@ import Chat from './chat/chat';
 import Broadcast, { Caster } from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
 import Rtmp from './streams/rtmp';
-// import WebRTC from './jsmpeg/webrtc';
+import WebRTC from './streams/webrtc';
 import config from '../../../config';
 
 import './videochat.scss';
@@ -28,7 +28,7 @@ interface BroadcastConfiguration {
         broadcast: Broadcast,
         jsmpeg: Jsmpeg,
         rtmp: Rtmp,
-        // webrtc: WebRTC
+        webrtc: WebRTC
     }
 })
 export default class VideoChat extends Vue {

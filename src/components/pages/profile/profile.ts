@@ -99,18 +99,22 @@ export default class Profile extends Vue {
         }
     }
 
-    async startSession({}){
+    async startSession(payload={}){
         if(!this.performer){
             return;
         }
 
         const self = this;
 
-        await this.$store.dispatch<RequestPayload>({
+        let defaults:RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
-            sessionType: SessionType.Video,
-        });
+            sessionType: SessionType.Video
+        };
+
+        const toSend = {...defaults,...payload};
+
+        await this.$store.dispatch<RequestPayload>( toSend ); 
 
         this.$store.watch((state) => state.session.activeState, async (newValue: State) => {
             if(newValue === State.Canceling || newValue === State.Ending){

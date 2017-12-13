@@ -29,7 +29,7 @@ export interface SessionState {
     activePerformer: Performer | null;
     activeSessionData: SessionData | null;
     activeDisplayName: string;
-    activeIvrCode: string;
+    activeIvrCode: string | undefined;
 }
 
 export interface VideoEventSocketMessage {
@@ -57,7 +57,7 @@ const sessionStore: Module<SessionState, RootState> = {
         activePerformer: null,
         activeSessionData: null,
         activeDisplayName: '',
-        activeIvrCode: ''
+        activeIvrCode: undefined
     },
     getters: {
     },
@@ -84,7 +84,7 @@ const sessionStore: Module<SessionState, RootState> = {
                     type: payload.sessionType,
                     name: displayName,
                     ivrCode: payload.ivrCode || undefined,
-                    payment: 'CREDITS'
+                    payment: payload.ivrCode ? 'IVR' : 'CREDITS'
                 })
             });
 
@@ -94,8 +94,20 @@ const sessionStore: Module<SessionState, RootState> = {
                 store.state.activePerformer = payload.performer;
                 store.state.activeDisplayName = displayName;
                 store.state.activeSessionType = payload.sessionType;
+                store.state.activeIvrCode = payload.ivrCode;
 
                 store.commit('setState', State.Pending);
+            }
+
+            if (requestResult.ok && requestData.error){
+                store.state.activePerformer = store.state.activeSessionType = null;
+                store.state.activeIvrCode = undefined;
+                store.commit('setState', State.Idle);
+
+                store.dispatch('openMessage', {
+                    content: requestData.error,
+                    class: 'error'
+                });
             }
 
             // socketService.subscribe('')
@@ -156,16 +168,20 @@ const sessionStore: Module<SessionState, RootState> = {
                 `/performer_account/performer_number/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videochat` :
                 `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;
 
+            let body:string;
+            if( store.state.activeIvrCode ){
+                body = JSON.stringify({ chatroomName: store.state.activeDisplayName, ivrCode:store.state.activeIvrCode });
+            } else {
+                body = JSON.stringify({ clientId: store.rootState.authentication.user.id, chatroomName: store.state.activeDisplayName });
+            }
+
             const initiateResult = await fetch(`${config.BaseUrl}/session${url}`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify({
-                    clientId: store.rootState.authentication.user.id,
-                    chatroomName: store.state.activeDisplayName
-                })
+                body
             });
 
             if(!initiateResult.ok){
@@ -222,6 +238,10 @@ const sessionStore: Module<SessionState, RootState> = {
                         store.dispatch('end', 'CLIENT_BROKE');
                     }
 
+                    if(content.message === 'HANGUP'){
+                        store.dispatch('end', 'PHONE_DISCONNECT');
+                    }
+
                     return;
                 }
 
@@ -243,6 +263,10 @@ const sessionStore: Module<SessionState, RootState> = {
                         // KPI.send('client_saw_disconnect');
                     }
 
+                    else if(content.value === 'HANGUP'){
+                        store.dispatch('cancel', 'PHONE_DISCONNECT');
+                    }
+
                     return;
                 }
 
@@ -251,17 +275,6 @@ const sessionStore: Module<SessionState, RootState> = {
                     content.value === false){
                     store.dispatch('cancel', 'PERFORMER_END');
                 }
-            }
-
-            //The client has ended the phone payment stream
-            else if(content.type === 'HANGUP') {
-                if(store.state.activeState === State.Active){
-                    store.dispatch('end', 'PHONE_DISCONNECT');
-                } else {
-                    store.dispatch('cancel', 'PHONE_DISCONNECT');
-                }
-
-                // KPI.send('phone_aborted');
             }
         }
     }

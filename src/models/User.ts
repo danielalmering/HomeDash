@@ -1,5 +1,6 @@
 
 export interface AnonymousUser {
+    displayName:string;
     id: number;
     socketToken: string;
 

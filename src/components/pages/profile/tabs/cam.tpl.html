@@ -5,7 +5,7 @@
         <div class="numbers" v-if="$parent.info"><i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }} <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span></div>
         <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
 
-        <form class="form" v-on:submit="$parent.startSession(ivrCode, displayName, 'VIDEO')">
+        <form class="form" v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:'VIDEO'})">
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">

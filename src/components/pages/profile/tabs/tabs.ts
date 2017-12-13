@@ -118,7 +118,22 @@ export default class Tabs extends Vue {
     }
 
     get displayName(): string {
-        return 'Karel';
+        if(!this.user){
+            return "";
+        }
+
+        if (this.authenticated){
+            return this.user.displayName || this.user.username;
+        } else {
+            return this.user.displayName || '';
+        }
+    }
+
+    set displayName(value:string){
+        if (!this.user){
+            return;
+        }
+        this.user.displayName = value;
     }
 
     @Watch('performer', { deep: true })
@@ -140,8 +155,8 @@ export default class Tabs extends Vue {
         this.$store.dispatch('displayModal', 'login');
     }
 
-    startSession(ivrCode: string, displayName: string, service: string){
-        this.$emit('startSession', { ivrCode, displayName, service });
+    startSession(description:{ivrCode?:string, displayName?:string, sessionType:string}){
+        this.$emit('startSession', description);
     }
 
     startVoyeur(){
