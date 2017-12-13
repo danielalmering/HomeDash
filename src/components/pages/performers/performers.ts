@@ -5,7 +5,7 @@ import Vue from 'vue';
 import Pagination from '../../layout/Pagination.vue';
 import notificationSocket from '../../../socket';
 import { Performer, PerformerStatus } from '../../../models/Performer';
-import { getAvatarImage, getPerformerStatus } from '../../../util';
+import { getAvatarImage, getPerformerStatus, getPerformerLabel } from '../../../util';
 import config from '../../../config';
 
 import './performers.scss';
@@ -27,6 +27,7 @@ export default class Performers extends Vue {
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
+    getPerformerLabel = getPerformerLabel;
 
     addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);

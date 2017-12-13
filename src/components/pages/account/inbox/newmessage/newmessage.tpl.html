@@ -16,9 +16,9 @@
                 <div class="col-xs-12">
                     <div class="form__group">
                         <label v-t="'account.to'"></label>
-                        <input v-model="selectedusername" type="text" v-on:keyup="filterPerformers()" class="col-xs-12">
-                        <ul class="account__view-list" v-if="selectedperf.length !== 0">
-                            <li v-for="performer in selectedperf" v-on:click="selectPerformer(performer.id, performer.username)">{{ performer.username }}  <i>({{ performer.id }}</i></li>
+                        <input v-model="performerSearchQuery" type="text" class="col-xs-12">
+                        <ul class="account__view-list" v-if="performersFilter.length !== 0">
+                            <li v-for="performer in performersFilter" v-on:click="selectPerformer(performer.id)">{{ performer.username }}  <i>({{ performer.id }})</i></li>
                         </ul>
                     </div>
                     <div class="form__group">

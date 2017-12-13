@@ -2,8 +2,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer, Avatar } from '../../../models/Performer';
-import { getAvatarImage } from '../../../util';
+import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
+import { getAvatarImage, getPerformerLabel  } from '../../../util';
 import { RequestPayload } from '../../../store/session';
 import { SessionType, State } from '../../../models/Sessions';
 
@@ -13,7 +13,8 @@ import Tabs from './tabs/tabs';
 import config from '../../../config';
 
 import notificationSocket from '../../../socket';
-import { SocketServiceEventArgs } from '../../../models/Socket';
+import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
+import Confirmation from '../../layout/Confirmations.vue';
 
 import './profile.scss';
 import './photo-slider.scss';
@@ -23,7 +24,8 @@ import './photo-slider.scss';
     components: {
         photoSlider: PhotoSlider,
         photoSliderFull: FullSlider,
-        tabs: Tabs
+        tabs: Tabs,
+        confirmation: Confirmation
     },
     filters: {
         truncate: function(text: string, displayFull: boolean){
@@ -40,12 +42,18 @@ export default class Profile extends Vue {
     displayFullDescription: boolean = false;
 
     private serviceSocketId: number;
+    private statusSocketId: number;
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
     }
 
+    get activeState(): string {
+        return this.$store.state.session.activeState;
+    }
+
     getAvatarImage = getAvatarImage;
+    getPerformerLabel = getPerformerLabel;
 
     addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
@@ -54,7 +62,7 @@ export default class Profile extends Vue {
         this.loadPerformer(parseInt(this.$route.params.id));
 
         this.serviceSocketId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
-            if(!this.performer){
+            if(!this.performer || data.performerId !== this.performer.id){
                 return;
             }
 
@@ -63,6 +71,14 @@ export default class Profile extends Vue {
             } else {
                 this.performer.performer_services[data.serviceName] = data.serviceStatus;
             }
+        });
+
+        this.statusSocketId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
+            if(!this.performer || data.performerId !== this.performer.id){
+                return;
+            }
+
+            this.performer.performerStatus = data.status as PerformerStatus;
         });
     }
 
@@ -78,6 +94,10 @@ export default class Profile extends Vue {
     openFullSlider(id: number){
         this.fullSliderVisible = true;
         this.displayPic = id;
+    }
+
+    hasService(service: string){
+        return !this.performer ? false : this.performer.performer_services[service];
     }
 
     async startVoyeur({}){
@@ -139,6 +159,32 @@ export default class Profile extends Vue {
         });
     }
 
+    cancel(){
+        console.log('cancel');
+        this.$store.dispatch('cancel');
+    }
+
+    async startCall(){
+        if(!this.performer){
+            return;
+        }
+
+        const reservationResult = await fetch(`${config.BaseUrl}/session/make_reservation/${this.performer.advert_numbers[0].advertNumber}/PHONE?_format=json`, {
+            credentials: 'include'
+        });
+
+        if(!reservationResult.ok){
+            this.$store.dispatch('errorMessage', 'profile.errorReservationFailed');
+            return;
+        }
+
+        const data = await reservationResult.json();
+
+        if(data.DNIS){
+            window.open(`tel:${data.DNIS}`, '_self');
+        }
+    }
+
     async loadPerformer(id: number){
         const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/performer_number/${id}?limit=10`, {
             credentials: 'include'
@@ -152,5 +198,9 @@ export default class Profile extends Vue {
         if(this.$store.state.safeMode){
             this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
         }
+    }
+
+    login(){
+        this.$store.dispatch('displayModal', 'login');
     }
 }

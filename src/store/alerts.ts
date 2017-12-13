@@ -24,6 +24,8 @@ export interface Message {
 
 const defaultMessageTime: number = 2500;
 
+type AlertsContext = ActionContext<AlertsState, RootState>;
+
 const alertsState: Module<AlertsState, RootState> = {
     state: {
         messages: []
@@ -39,7 +41,7 @@ const alertsState: Module<AlertsState, RootState> = {
         }
     },
     actions: {
-        openMessage(store: ActionContext<AlertsState, RootState>, payload: MessagePayload){
+        openMessage(store: AlertsContext, payload: MessagePayload){
 
             const needsTranslation = payload.translate === undefined || payload.translate === true;
             const content = needsTranslation ? i18n.t(payload.content, payload.translateParams) : payload.content;
@@ -58,6 +60,18 @@ const alertsState: Module<AlertsState, RootState> = {
             setTimeout(() => {
                 store.commit('removeMessage', message);
             }, message.displayTime);
+        },
+        successMessage({ dispatch }: AlertsContext, message: string){
+            dispatch('openMessage', {
+                content: message,
+                class: 'success'
+            });
+        },
+        errorMessage({ dispatch }: AlertsContext, message: string){
+            dispatch('openMessage', {
+                content: message,
+                class: 'error'
+            });
         }
     }
 };

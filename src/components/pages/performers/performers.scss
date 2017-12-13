@@ -29,7 +29,7 @@
         position: relative;
         display: block;
         @include border-radius(1px);
-        overflow: hidden;
+        //overflow: hidden;
 
         animation: fadein 1.5s;
 

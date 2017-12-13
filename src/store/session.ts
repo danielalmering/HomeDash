@@ -129,7 +129,14 @@ const sessionStore: Module<SessionState, RootState> = {
             } else {
                 result = await fetch(`${config.BaseUrl}/session/cancel`, {
                     method: 'POST',
-                    credentials: 'include'
+                    credentials: 'include',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify({
+                        clientId: store.rootState.authentication.user.id,
+                        performerId: store.state.activePerformer ? store.state.activePerformer.id : 0
+                    })
                 });
             }
 

@@ -30,7 +30,7 @@
                     <p>{{ $t(`services.${historyItem.service}`) }}</p>
                 </td>
                 <td>
-                    <p>{{ historyItem.amount }}</p>
+                    <p>{{ historyItem.amount | euro }}</p>
                 </td>
             </tr>
         </table>

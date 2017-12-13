@@ -42,6 +42,14 @@ export default class Inbox extends Vue {
     async removeMessages(){
         const deletedMessages = this.notifications.filter(n => n.checked);
 
+        if(deletedMessages.length === 0){
+            this.$store.dispatch('openMessage', {
+                content: 'account.alerts.errorInboxNoSelected',
+                class: 'error'
+            });
+            return;
+        }
+
         const deleteResult = await fetch(`${config.BaseUrl}/client/client_accounts/notifications/group`, {
             method: 'DELETE',
             body: JSON.stringify({ notifications : deletedMessages }),

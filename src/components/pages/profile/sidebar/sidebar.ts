@@ -21,7 +21,7 @@ export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
-    services: string[] = ["cam", "phone", "sms", "email", "videocall"];  
+    services: string[] = ["cam", "phone", "sms", "email", "videocall"];
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
@@ -163,7 +163,7 @@ export default class Sidebar extends Vue {
             performerId: performerId
         });
     }
-    
+
     beforeDestroy(){
         if(this.displaySidebar){
             this.$store.commit('toggleSidebar');
@@ -185,7 +185,7 @@ export default class Sidebar extends Vue {
     }
 
     async loadRecommended() {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}${this.query.search !== '' ? '&search=' : '' }${this.query.search}`, {
             credentials: 'include'
         });
 

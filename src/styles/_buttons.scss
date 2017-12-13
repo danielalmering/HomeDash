@@ -7,9 +7,9 @@
     display: inline-block;
     color: $pallete-2;
     @include rem(font-size, 13px);
-    background: $pallete-14;
-    font-weight: 400;
-    @include border-radius(3px)
+    background: $pallete-16;
+    font-weight: 600;
+    @include border-radius(3px);
     @include rem(padding, 12px 25px);
     @include rem(margin, 5px 0px);
     border: none;
