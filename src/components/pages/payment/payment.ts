@@ -48,8 +48,14 @@ export default class Payment extends Vue {
     minimumBonusFee: number = 0;
     bonusPercentage: number = 0;
 
-    mounted(){
-        this.getInfo();
+    async mounted(){
+        await this.getInfo();
+
+        this.loadCache();
+    }
+
+    beforeDestroy(){
+        this.storeCache();
     }
 
     async getInfo(){
@@ -73,6 +79,29 @@ export default class Payment extends Vue {
         this.minimumBonusFee = data.fees[0].amount;
         this.bonusPercentage = data.fees[0].percentage;
         this.promoData = data.promo;
+    }
+
+    private loadCache(){
+        const paymentCacheString = window.localStorage.getItem(`${config.StorageKey}.payment-cache`);
+        
+        if(!paymentCacheString){
+            return;
+        }
+
+        const paymentCache = JSON.parse(paymentCacheString);
+        this.selectedPackages = paymentCache.packages;
+        this.promoCode = paymentCache.promoCode;
+
+        if(this.promoCode !== ''){
+            this.verifyPromo();
+        }
+    }
+
+    private storeCache(){
+        window.localStorage.setItem(`${config.StorageKey}.payment-cache`, JSON.stringify({
+            packages: this.selectedPackages,
+            promoCode: this.promoCode
+        }));
     }
 
     get package(){
@@ -107,6 +136,8 @@ export default class Payment extends Vue {
 
     addPackage(pack: Package){
         this.selectedPackages[pack.id] += 1;
+
+        this.storeCache();
     }
 
     selectPayment(paymentType: string){
@@ -115,6 +146,8 @@ export default class Payment extends Vue {
 
     clearSelection(id: number){
         this.selectedPackages[id] = 0;
+
+        this.storeCache();
     }
 
     verifyPromo(){
@@ -132,6 +165,7 @@ export default class Payment extends Vue {
             return;
         }
 
+        this.storeCache();
         this.promoCredits = this.promoData.credits;
         this.$store.dispatch('successMessage', 'payment.alerts.successCorrectPromo');
     }
