@@ -97,7 +97,7 @@
     position: absolute;
     top: 65px;
     left: -3px;
-    z-index: 1;
+    z-index: 0;
     color: $pallete-2; 
     font-weight: 600;
     @include rem(font-size, 12px);   

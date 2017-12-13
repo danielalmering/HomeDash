@@ -228,7 +228,14 @@
         "buy": "Koop",
         "extra": "extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
-        "discountcode": "Kortingscode?"
+        "discountcode": "Kortingscode?",
+        "alerts": {
+            "errorIncorrectPromo": "Incorrecte promocode!",
+            "errorUsedPromo": "Promocode reeds gebruikt!",
+            "successCorrectPromo": "Promocode toegepast!",
+            "errorNoPackage": "Geen pakket geselecteerd!",
+            "errorNoPayment": "Geen betaalmethode geselecteerd!"
+        }
     },
     "contact": {
         "title": "Contact",
