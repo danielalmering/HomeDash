@@ -84,6 +84,7 @@ export default class Profile extends Vue {
         });
 
         this.minHeight();
+
     }
 
     beforeDestroy(){
