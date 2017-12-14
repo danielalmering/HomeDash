@@ -18,7 +18,7 @@
         display: table;
         width: 100%;
         position: relative;
-        @include rem(padding, 70px 0px 20px 0px);
+        @include rem(padding, 70px 0px 70px 0px);
 
         &-image {
             .image {
@@ -33,13 +33,15 @@
     }
 
     &__content {
-        &-nick {
+        h1 {
             display: table;
             width: 100%;
             @include rem(font-size, 26px);
+            font-weight: 700;
             color: $pallete-3;
             text-transform: uppercase;
             @include rem(margin, 10px 0px);
+            @include rem(padding, 0px);
             span, .label {
                 position: relative;
                 float: left;
@@ -65,6 +67,12 @@
         &-description {
             color: $pallete-7;
             line-height: 190%;
+        }
+
+        a {
+            &:hover {
+                color: $pallete-18;
+            }
         }
     }
 
@@ -96,10 +104,13 @@
 
     &__sticky {
         position: relative;
-        @include breakpoint(lg) {
-            position: absolute;
-            bottom: 0;
-        }    
+
+        // @media screen and (min-height: 400px) {
+        //     @include breakpoint(lg) {
+        //         position: absolute;
+        //         bottom: 0;
+        //     }    
+        // }
         width: 100%;
     }
 

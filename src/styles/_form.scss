@@ -18,9 +18,10 @@
     
 
     input[type=text], input[type=password], input[type=email], input[type=name], input[type=date] {
-        color: $pallete-2;
+        color: $pallete-1;
+        font-weight: 600;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        background: $pallete-11;
+        background: $pallete-7;
         @include rem(font-size, 14px);
         @include rem(padding,12px 13px);
         @include border-radius(3px);
@@ -34,9 +35,10 @@
     
 
     select {
-        color: $pallete-2;
+        color: $pallete-1;
+        font-weight: 600;
         border: 2px solid rgba(125, 106, 109, 0.12);
-        background: $pallete-11;
+        background: $pallete-7;
         @include rem(font-size, 14px);
         @include rem(padding,12px 13px);
         @include border-radius(3px);
@@ -49,9 +51,10 @@
     }
 
     textarea {
-        color: $pallete-2;
+        color: $pallete-1;
+        font-weight: 600;
         border: 2px solid rgba(125, 106, 109, 0.12);
-        background: $pallete-11;
+        background: $pallete-7;
         @include rem(font-size, 14px);
         @include rem(padding,12px 13px);
         @include border-radius(3px);

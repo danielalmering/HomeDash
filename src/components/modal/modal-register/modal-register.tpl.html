@@ -3,6 +3,13 @@
     <div class="modal__close" v-on:click="close"><i class="fa fa-times"></i></div>
     <div class="modal__content register form">
         <div class="form__group">
+            <ul class="usp usp-large">
+                <li v-t="'sidebar.register.usp-1'"></li>
+                <li v-t="'sidebar.register.usp-2'"></li>
+                <li v-t="'sidebar.register.usp-3'"></li>
+            </ul>
+        </div>
+        <div class="form__group">
             <label v-t="'modals.register.username'"></label>
             <input type="text" v-model="userForm.username" />
         </div>

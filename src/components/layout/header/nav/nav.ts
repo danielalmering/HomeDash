@@ -68,5 +68,6 @@ export default class Nav extends Vue {
 
     logout(){
         this.$store.dispatch('logout');
+        this.$router.push({ name: 'Performers' });
     }
 }

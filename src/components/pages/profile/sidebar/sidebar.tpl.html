@@ -8,10 +8,17 @@
                 <router-link :to="{ path: '/'}"><img :src="logo" alt=""></router-link>
             </div>
 
-            <div class="sidebar__content-user" v-on:click="authenticated ? account() : login()">
-                <span class="name">{{ authenticated ? user.username : 'Anoniem' }}</span>
-                <span>{{ $t('sidebar.currentcredits') }}</span>
-                <span class="credits">{{ authenticated ? user.credits : '0' }}</span>
+            <div class="sidebar__content-user">
+                <span v-on:click="account()" class="name" v-t="authenticated ? user.username : 'sidebar.youraccount'"></span>
+                <p v-if="authenticated">{{ $t('sidebar.currentcredits') }}</p>
+                <span v-if="authenticated" class="credits">{{ user.credits }}</span>
+                <router-link v-if="authenticated" class="btn btn-fa fa-money btn-small" :to="{ name: 'Payment' }"></router-link>
+                <ul class="usp" v-if="!authenticated">
+                    <li v-t="'sidebar.register.usp-1'"></li>
+                    <li v-t="'sidebar.register.usp-2'"></li>
+                    <li v-t="'sidebar.register.usp-3'"></li>
+                </ul>
+                <a v-if="!authenticated" v-on:click="register()" class="btn btn-green btn-small">{{ $t('modals.login.register') }}</a>
             </div>
 
             <div class="sidebar__content-search form">

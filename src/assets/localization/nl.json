@@ -66,7 +66,13 @@
         "favorite": "Favoriet",
         "voyeur": "Voyeur",
         "noperformers": "Geen performers",
-        "currentcredits": "Huidig saldo"
+        "currentcredits": "Huidig saldo",
+        "youraccount": "Jouw account?",
+        "register": {
+            "usp-1": "Volledig anoniem",
+            "usp-2": "Profiteer van speciale acties",
+            "usp-3": "Veilig online betalen"
+        }
     },
     "profile": {
         "favorite-add": "Maak favoriet",
@@ -233,6 +239,7 @@
         "extra": "extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
         "discountcode": "Kortingscode?",
+        "mostlybought": "Meest verkocht!",
         "alerts": {
             "errorIncorrectPromo": "Incorrecte promocode!",
             "errorUsedPromo": "Promocode reeds gebruikt!",
@@ -277,8 +284,7 @@
         "webcam": "Webcammodel worden?",
         "webcamurl": "http://www.club-sense.nl",
         "copyright": "Copyright 2017",
-        "cookies": "De website werkt het beste met cookies. Zo kunnen we de website verbeteren en je instellingen onthouden.",
-        "cookiesAccept": "Oké, ik snap het"
+        "cookies": "De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord"
     },
     "confirm": {
         "errorAlreadyActivated": "Dit account is al geactiveerd",

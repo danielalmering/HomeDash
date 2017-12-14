@@ -8,13 +8,15 @@
 
         <div class="payment__package">
             <ul>
-                <li class="col-xs-12 col-sm-4" v-for="package in packages" v-on:click="addPackage(package)">
+                <li class="col-xs-12 col-sm-4" v-for="(package, key) in packages" v-on:click="addPackage(package)">
                     <div class="payment__package-item" :class="package.title">
+                        <span v-if="key == '1'" class="mostlybought">{{ $t('payment.mostlybought') }}</span>
                         <h2>{{package.title}}</h2>
                         <span class="time" v-html="package.subtitle"></span>
                         <span class="credits">{{ package.quantity }}</span>
                         <span v-t="'payment.credits'"></span>
                         <span class="price">{{ package.price | euro }}</span>
+                        <span class="plus"></span>
                     </div>
                 </li>
             </ul>
@@ -72,7 +74,7 @@
                         <div class="col-xs-12">
                             <div class="payment__cart-bonus">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
-                                <span>{{ $t('payment.buy') }} 2000 {{ $t('payment.creditsandget') }} 20% {{ $t('payment.extra') }}</span>
+                                {{ $t('payment.buy') }} 2000 {{ $t('payment.creditsandget') }} 20% {{ $t('payment.extra') }}
                             </div>
                         </div>
                     </div>
