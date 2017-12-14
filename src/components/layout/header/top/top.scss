@@ -30,7 +30,12 @@
 
     &__numbers {
         @include rem(margin, 14px 0px 8px 0px);
-        @include rem(padding, 0px 0px 0px 10px);
+        padding: 0px 0px !important;
+        .row {
+            display: table;
+            @include rem(margin, 0 auto);
+        }
+
         &-number {
             color: $pallete-3;
             padding: 0;

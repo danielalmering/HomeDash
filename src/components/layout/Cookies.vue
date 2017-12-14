@@ -3,9 +3,7 @@
         <div class="container-fluid">
             <div class="cookies__text">
                 <p v-t="'footer.cookies'"></p>
-            </div>
-            <div class="cookies__btn">
-                <a v-on:click="acceptCookie" class="btn btn-green btn-full">{{ $t('footer.cookiesAccept') }}</a>
+                <a v-on:click="acceptCookie" class="cookies__text-btn"></a>
             </div>
         </div>
     </div>
@@ -39,44 +37,34 @@ export default {
 @import "../../styles/_settings.scss";
 
 .cookies {
-    position: fixed;
     display: table;
     bottom: 0;
     left: 0;
     width: 100%;
     @include rem(padding, 0px 10px);
-
-    background-color: $pallete-11;
+    border-bottom: 3px solid $pallete-3;
+    background-color: $pallete-9;
 
     &__text {
-        display: table-cell;
-        width: 70%;
+        position: relative;
+        display: table;
+        width: 100%;
+        min-height: 50px;
+        line-height: 150%;
         color: $pallete-2;
-        @include rem(padding, 5px 10px);
+        text-align: left;
+        @include rem(padding, 5px 30px 2px 0px);
+        @include rem(font-size, 11px);
 
-        @include breakpoint(xs) {
-            display: table;
-            width: 100%;
-            @include rem(padding, 5px 10px 0px 10px);
-        }
-    }
-
-    &__btn {
-        display: table-cell;
-        width: 30%;
-        vertical-align: middle;
-        @include rem(padding, 5px 10px);
-
-        @include breakpoint(xs) {
-            display: table;
-            width: 100%;
-            @include rem(padding, 0px 10px 5px 10px);
-        }
-
-        .btn {
-            display: table;
-            @include rem(margin, 0 auto);
-            max-width: 250px;
+        &-btn {
+            position: absolute;
+            right: 0px;
+            top: 8px;
+            color: $pallete-3;
+            &:before{
+                content: "\f00d";
+                font: normal normal normal 33px/1 FontAwesome;
+            }
         }
     }
 }
