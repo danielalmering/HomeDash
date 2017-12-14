@@ -85,7 +85,8 @@
         "cupsize": "Cup maat",
         "eyecolor": "Kleur ogen",
         "expand": "Meer",
-        "hide": "Minder"
+        "hide": "Minder",
+        "collapsephotos": "Fotos bekijken"
     },
     "tabs": {
         "service-webcam": "Webcammen",
