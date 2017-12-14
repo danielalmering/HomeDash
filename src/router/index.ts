@@ -96,7 +96,7 @@ const router = new Router({
                             component: Promos
                         },
                         {
-                            path: 'payment-success',
+                            path: 'payment-success/',
                             name: 'Thankyou',
                             beforeEnter: authenticatedInterceptor,
                             component: Thankyou
