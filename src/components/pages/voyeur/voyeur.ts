@@ -1,15 +1,20 @@
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import config from '../../../config';
 import JSMpeg from '../videochat/streams/jsmpeg';
+import Confirmation from '../../layout/Confirmations.vue';
 
 import './voyeur.scss';
+import { SessionType, State } from '../../../models/Sessions';
+import { RequestPayload } from '../../../store/session';
+import { Performer } from '../../../models/Performer';
 
 @Component({
     template: require('./voyeur.tpl.html'),
     components: {
-        jsmpeg: JSMpeg
+        jsmpeg: JSMpeg,
+        confirmation: Confirmation
     }
 })
 export default class Voyeur extends Vue {
@@ -28,6 +33,10 @@ export default class Voyeur extends Vue {
         return this.$store.getters['voyeur/reservations'];
     }
 
+    get availableReservation(): Performer {
+        return this.$store.getters['voyeur/availableReservations'][0];
+    }
+
     get performer(){
         return (id: number) => {
             console.log(this.$store.getters['voyeur/performer']);
@@ -37,10 +46,14 @@ export default class Voyeur extends Vue {
         }
     }
 
+    get activeState(){
+        return this.$store.state.session.activeState;
+    }
+
     mounted(){
         this.intervalTimer = setInterval(async () => {
             await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
-        }, 1000);
+        }, 5000);
 
         if(!this.$store.state.voyeur.isActive){
             this.$router.push({
@@ -69,11 +82,49 @@ export default class Voyeur extends Vue {
         })
     }
 
+    async acceptReservation(){
+        await this.$store.dispatch<RequestPayload>({
+            type: 'startRequest',
+            performer: this.availableReservation,
+            sessionType: SessionType.Video,
+        });
+    }
+
+    cancelRequest(){
+        this.$store.dispatch('cancel');
+    }
+
+    async cancelReservation(){
+        this.$store.commit('voyeur/removeReservation', this.availableReservation.id);
+    }
+
     viewerStateChange(state: string){
         console.log(`yoyo dit is de state: ${state}`);
     }
 
     viewerError(message: string){
         console.log(message);
+    }
+
+    @Watch('activeState')
+    async stateChange(newState: State){
+        const activePerformer = this.$store.state.session.activePerformer as Performer;
+
+        if(this.availableReservation && activePerformer.id === this.availableReservation.id){
+            this.cancelReservation();
+        }
+
+        if(newState !== State.Accepted){
+            return;
+        }
+
+        await this.$store.dispatch('initiate');
+
+        this.$router.push({
+            name: 'Videochat',
+            params: {
+                id: activePerformer.advert_numbers[0].advertNumber.toString()
+            }
+        });
     }
 }

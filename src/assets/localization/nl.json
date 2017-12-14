@@ -207,6 +207,8 @@
         "reserving": "Reserveringen",
         "favorites": "Favorieten",
         "now1on1": "Nu 1op1",
+        "dialog1on1Title": "Verbind met {name}",
+        "dialog1on1Subtitle": "Wil je een privé sessie beginnen met {name}?",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"
         }

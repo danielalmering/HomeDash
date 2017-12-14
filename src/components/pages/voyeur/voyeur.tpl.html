@@ -27,4 +27,7 @@
             </li>
         </ul>
     </div>
+    
+    <confirmation v-if="availableReservation" :type="'dialog'" :title="$t('voyeur.dialog1on1Title', { name: availableReservation.nickname })" :subtitle="$t('voyeur.dialog1on1Subtitle', { name: availableReservation.nickname })" v-on:accept="acceptReservation" v-on:cancel="cancelReservation"></confirmation>
+    <confirmation v-if="activeState === 'pending'" :type="'loader'" v-on:cancel="cancelRequest"></confirmation>
 </div>
