@@ -59,10 +59,10 @@ export default class Performers extends Vue {
     }
 
     mounted(){
-        console.log(this.performers);
-
         this.query.category = this.$route.params.category ? this.$route.params.category : '';
         this.query.search = this.$route.query.search ? this.$route.query.search : '';
+
+        this.query.offset = this.$route.query.page ? (parseInt(this.$route.query.page) - 1) * this.query.limit : 0;
 
         this.loadPerformers();
 
@@ -97,7 +97,11 @@ export default class Performers extends Vue {
     }
 
     pageChanged(){
-        this.$router.push({ name: this.$route.name, query: { page: ((this.query.offset / this.query.limit) + 1).toString() } });
+        this.$router.push({
+            name: this.$route.name,
+            query: { page: ((this.query.offset / this.query.limit) + 1).toString() },
+            params: { category: this.query.category || '' }
+        });
     }
 
     isSafeMode(){

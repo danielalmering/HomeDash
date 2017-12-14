@@ -100,13 +100,3 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
         name: 'Performers'
     });
 }
-
-export function trailingSlashInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
-    if(!to.path.endsWith('/')){
-        next({
-            path: `${to.path}/`
-        })
-    } else {
-        next();
-    }
-}
