@@ -33,7 +33,8 @@
             "login": "Login",
             "history": "Account historie",
             "giftvoucher": "Cadeaubon",
-            "welcome": "Welkom"
+            "welcome": "Welkom",
+            "thankyou": "Bedankt voor u aankoop!"
         }
     },
     "performers": {
@@ -214,6 +215,10 @@
         "alerts": {
             "errorLoad": "Er is een fout opgetreden bij inladen van de promos!"
         }
+    },
+    "thankyou": {
+        "intro": "Hartelijk bedankt voor uw aankoop!!, hieronder kunt u een van uw favorieten bekijken",
+        "favo": "Favorieten"
     },
     "payment": {
         "pickpackage": "Kies een pakket",
