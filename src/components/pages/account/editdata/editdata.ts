@@ -40,4 +40,8 @@ export default class Editdata extends Vue {
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
     }
+
+    subscribePushMessages(){
+        window._pcq.push(['triggerOptIn',{subscriberSegment: 'homepage', modal: {text: 'HYEEEEEEEEEEEEEY', blackenBackground: true}}]);
+    }
 }
