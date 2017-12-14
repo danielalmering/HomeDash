@@ -180,6 +180,7 @@
         "message": "Bericht",
         "paymessage": "De kosten voor het bekijken van het bericht bedragen",
         "viewmessage": "Bericht bekijken!",
+        "pushmessages": "Push berichten ontvangen",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
