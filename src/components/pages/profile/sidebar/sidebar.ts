@@ -103,8 +103,8 @@ export default class Sidebar extends Vue {
         return !performer ? false : performer.performer_services[service];
     }
 
-    login(){
-        this.$store.dispatch('displayModal', 'login');
+    register(){
+        this.$store.dispatch('displayModal', 'register');
     }
 
     account(){
