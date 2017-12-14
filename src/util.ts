@@ -21,7 +21,7 @@ export function getSliderImage(performer: Performer, photoname: string, size: st
 
     if(!store.state.safeMode){
         return `${config.ImageUrl}${performer}/${size}/${photoname}`;
-    } 
+    }
 
     if(store.state.safeMode){
         return;
@@ -31,7 +31,7 @@ export function getSliderImage(performer: Performer, photoname: string, size: st
 }
 
 export function getPerformerStatus(performer: Performer){
-    
+
     if(performer.performerStatus === PerformerStatus.Available){
         return 'available';
     }
@@ -45,14 +45,14 @@ export function getPerformerStatus(performer: Performer){
 }
 
 export function getPerformerLabel(performer: Performer){
-    
+
     if(performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === true){
-        return 'peek-label'
+        return 'peek-label';
     }
 
-    if(performer.performerStatus === PerformerStatus.OnCall 
+    if(performer.performerStatus === PerformerStatus.OnCall
         || (performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === false)){
-        return 'busy-label'
+        return 'busy-label';
     }
 
     return 'none';

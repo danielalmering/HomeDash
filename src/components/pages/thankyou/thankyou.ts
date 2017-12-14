@@ -30,7 +30,7 @@ export default class Thankyou extends Vue {
         });
 
         const data = await performerResults.json();
-        
+
         this.favorites = data.performerAccounts.filter((performer: Performer) => performer.performerStatus === PerformerStatus.Available);
     }
 }

@@ -6,7 +6,7 @@ import { UserForm } from '../../../models/User';
     template: require('./modal-register.tpl.html')
 })
 export default class ModalRegister extends Vue {
-    
+
     userForm: UserForm = {
         username: '',
         email: '',
@@ -14,7 +14,7 @@ export default class ModalRegister extends Vue {
         country: '',
         password: '',
         passwordconfirm: ''
-    }
+    };
 
     get languages(){
         return this.$store.state.info.languages;
@@ -27,7 +27,7 @@ export default class ModalRegister extends Vue {
     async register(){
         try {
             await this.$store.dispatch('register', this.userForm);
-            
+
             this.$store.dispatch('successMessage', 'modals.register.alerts.successMessage');
             this.close();
         } catch {

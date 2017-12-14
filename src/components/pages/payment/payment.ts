@@ -83,7 +83,7 @@ export default class Payment extends Vue {
 
     private loadCache(){
         const paymentCacheString = window.localStorage.getItem(`${config.StorageKey}.payment-cache`);
-        
+
         if(!paymentCacheString){
             return;
         }
@@ -105,7 +105,7 @@ export default class Payment extends Vue {
     }
 
     get package(){
-        return (id: string) =>{
+        return (id: string) => {
             return this.packages.find(p => p.id === parseInt(id));
         };
     }
@@ -197,7 +197,7 @@ export default class Payment extends Vue {
         }
 
         if(data.form){
-            var redirForm = document.createElement('form');
+            const redirForm = document.createElement('form');
             redirForm.setAttribute('method', 'post');
             redirForm.setAttribute('name', 'redirform');
             redirForm.setAttribute('action', data.redirectURL);

@@ -20,10 +20,9 @@ import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/S
 export default class Performers extends Vue {
 
     performers: Performer[] = new Array(40).fill(undefined, 0, 40);
-    // performers: Performer[] = [];
 
     total: number = 0;
-    services: string[] = ["cam", "phone", "sms", "email", "videocall"];
+    services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
