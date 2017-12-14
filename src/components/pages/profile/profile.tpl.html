@@ -56,4 +56,6 @@
             </router-link>
         </div>
     </div>
+
+    <confirmation v-if="activeState === 'pending'" v-on:cancel="cancel" :type="'connect'"></tconfirmation>
 </div>
