@@ -34,10 +34,10 @@ export default {
 
         this.$store.dispatch('loadInfo');
 
-        this.$store.dispatch('openMessage', {
-            content: 'Welkom op het nieuwe thuis',
-            translate: false
-        });
+        // this.$store.dispatch('openMessage', {
+        //     content: 'Welkom op het nieuwe thuis',
+        //     translate: false
+        // });
 
         const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
 

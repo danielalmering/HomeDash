@@ -145,7 +145,11 @@
             "country": "Land",
             "password": "Wachtwoord",
             "passwordconfirm": "Bevestig wachtwoord",
-            "register": "Registreer"
+            "register": "Registreer",
+            "alerts": {
+                "successMessage": "Je hebt een bevestigingsmail ontvangen",
+                "errorMessage": "Er is iets mis gegaan tijdens de registratie"
+            }
         }
     },
     "account": {
@@ -176,6 +180,7 @@
         "message": "Bericht",
         "paymessage": "De kosten voor het bekijken van het bericht bedragen",
         "viewmessage": "Bericht bekijken!",
+        "pushmessages": "Push berichten ontvangen",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
@@ -288,6 +293,11 @@
         "copyright": "Copyright 2017",
         "cookies": "De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord"
     },
+    "confirm": {
+        "errorAlreadyActivated": "Dit account is al geactiveerd",
+        "errorDefault": "Er is iets mis gegaan tijdens de activatie",
+        "successMessage": "Je account is succesvol geactiveerd"
+    },
     "services": {
         "VOYEURCLIENT": "Voyeur",
         "PEEK": "Meekijken",
@@ -299,5 +309,13 @@
         "VOICEMAIL": "Voicemail",
         "IVR": "Bellen",
         "CREDIT_PURCHASE": "Credit Aankoop"
+    },
+    "languages": {
+        "nl": "Nederlands",
+        "en": "Engels",
+        "de": "Duits"
+    },
+    "countries": {
+        "nl": "Nederland"
     }
 }

@@ -27,6 +27,11 @@
                     <label v-t="'account.mobilenumber'"></label>
                     <input type="text" v-model="user.mobile_number" class="col-xs-12">
                 </div>
+                <div class="form__group">
+                    <label v-t="'account.pushmessages'"></label>
+                    <input id="checkbox1" type="checkbox" v-on:click="subscribePushMessages">
+                    <label for="checkbox1"></label>
+                </div>
             </div>
             <div class="col-xs-12">
                 <div class="form__group">
