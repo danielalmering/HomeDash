@@ -14,6 +14,7 @@ import Readmessage from '../components/pages/account/inbox/readmessage/readmessa
 import Newmessage from '../components/pages/account/inbox/newmessage/newmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Promos from '../components/pages/promos/promos';
+import Thankyou from '../components/pages/thankyou/thankyou';
 import Payment from '../components/pages/payment/payment';
 import Contact from '../components/pages/contact/contact';
 import Terms from '../components/pages/textpages/terms';
@@ -93,6 +94,12 @@ const router = new Router({
                             path: 'promos/',
                             name: 'Promos',
                             component: Promos
+                        },
+                        {
+                            path: 'payment-success',
+                            name: 'Thankyou',
+                            beforeEnter: authenticatedInterceptor,
+                            component: Thankyou
                         },
                         {
                             path: 'payment/',

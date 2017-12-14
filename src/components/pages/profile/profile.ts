@@ -40,6 +40,8 @@ export default class Profile extends Vue {
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
     displayFullDescription: boolean = false;
+    displaySlider: boolean = false;
+    displayHeight: boolean = false;
 
     private serviceSocketId: number;
     private statusSocketId: number;
@@ -80,6 +82,9 @@ export default class Profile extends Vue {
 
             this.performer.performerStatus = data.status as PerformerStatus;
         });
+
+        this.minHeight();
+
     }
 
     beforeDestroy(){
@@ -98,6 +103,20 @@ export default class Profile extends Vue {
 
     hasService(service: string){
         return !this.performer ? false : this.performer.performer_services[service];
+    }
+
+    minHeight(){
+        if(window.outerHeight > 1100){
+            this.displayHeight = true;
+            this.displaySlider = false;
+        } else {
+            this.displayHeight = false;
+            this.displaySlider = true;
+        }
+    }
+
+    toggleSlider(){
+        this.displaySlider = !this.displaySlider;
     }
 
     async startVoyeur({}){

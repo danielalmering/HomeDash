@@ -100,17 +100,40 @@
         display: block;
         float: left;
         width: 100%;
+
+        &-toggle {
+            position: absolute;
+            top: -43px;
+            left: 45%;
+            @include rem(padding, 12px 15px);
+            font-weight: 600;
+            color: $pallete-2;
+            background: $pallete-3;
+            @include rem(margin, 0px auto);
+            @include border-top-radius(3px);
+            cursor: pointer;
+            &:before {
+                content: "\f03e";
+                @include rem(margin-right, 10px);
+                font: normal normal normal 14px/1 FontAwesome;
+            }
+        }
+
+        &.collapse {
+            .slider {
+                display: none;
+            }
+        }
     }
 
     &__sticky {
         position: relative;
+        bottom: 0;
 
-        // @media screen and (min-height: 400px) {
-        //     @include breakpoint(lg) {
-        //         position: absolute;
-        //         bottom: 0;
-        //     }    
-        // }
+        @include breakpoint(lg) {
+            position: absolute;
+            bottom: 0;
+        }  
         width: 100%;
     }
 
