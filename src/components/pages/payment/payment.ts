@@ -60,7 +60,7 @@ export default class Payment extends Vue {
 
         const data = await infoResults.json();
 
-        this.packages = data.packages;
+        this.packages = data.packages.slice().reverse();
         this.paymentMethods = data.payment_methods;
 
         //Initialize initial state of the selectedpackages like this because adding properties to an object

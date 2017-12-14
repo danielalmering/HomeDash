@@ -3,6 +3,7 @@
 // --------------------------------------------------
 
 // Pagination
+
 .pager {
     display: table;
     width: 100%;
@@ -109,7 +110,36 @@
     &.voyeur-label { background: $pallete-22; }
 }
 
+// USP's
+
+.usp {
+    position: relative;
+    z-index: 0;
+    @include rem(margin, 2px 0px);
+    @include rem(padding, 0px);
+    list-style: none;
+    li {
+        @include rem(font-size, 12px);
+        &:before {
+            color: $pallete-21;
+            content: "\f05d";
+            font: normal normal normal 14px/1 FontAwesome;
+            @include rem(margin-right, 8px);
+        }
+    }
+
+    &-large {
+        li {
+            @include rem(font-size, 15px);
+            &:before {
+                @include rem(font-size, 18px);
+            }
+        }
+    }
+}
+
 // 5 Col grid
+
 .col-xs-15,
 .col-sm-15,
 .col-md-15,

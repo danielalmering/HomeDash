@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <modal-wrapper></modal-wrapper>
+        <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
         <router-view/>
         <alerts></alerts>
-        <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
     </div>
 </template>
 
