@@ -71,8 +71,9 @@ const sessionStore: Module<SessionState, RootState> = {
             store.commit('setState', State.InRequest);
 
             const displayName = payload.displayName || store.rootState.authentication.user.username;
+            const action = payload.sessionType == SessionType.Peek ? 'peek' : 'chat';
 
-            const requestResult = await fetch(`${config.BaseUrl}/session/request/chat`, {
+            const requestResult = await fetch(`${config.BaseUrl}/session/request/${action}`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: new Headers({
@@ -96,7 +97,11 @@ const sessionStore: Module<SessionState, RootState> = {
                 store.state.activeSessionType = payload.sessionType;
                 store.state.activeIvrCode = payload.ivrCode;
 
-                store.commit('setState', State.Pending);
+                if(payload.sessionType == SessionType.Peek){
+                    store.commit('setState', State.Accepted);
+                } else {
+                    store.commit('setState', State.Pending);
+                }
             }
 
             if (requestResult.ok && requestData.error){
@@ -234,6 +239,17 @@ const sessionStore: Module<SessionState, RootState> = {
 
             //Find a good way to do this shit, need it for testing now
             if(content.type === 'RESPONSE'){
+                
+                if(content.message === 'HANGUP'){
+                    store.dispatch('end', 'PHONE_DISCONNECT');
+                    return;
+                }
+
+                if(content.message === 'MAIN_ENDED'){
+                    store.dispatch('end', 'MAIN_ENDED');
+                    return;
+                }
+
                 if(store.state.activeState === State.Active){
                     //Performer disconnect or manual close
                     if(!content.value && (content.message === 'CLICK' || content.message === 'DISCONNECT')){
@@ -243,10 +259,6 @@ const sessionStore: Module<SessionState, RootState> = {
                     //Client ran out of credits
                     if(content.message === 'BROKE'){
                         store.dispatch('end', 'CLIENT_BROKE');
-                    }
-
-                    if(content.message === 'HANGUP'){
-                        store.dispatch('end', 'PHONE_DISCONNECT');
                     }
 
                     return;
@@ -268,10 +280,6 @@ const sessionStore: Module<SessionState, RootState> = {
                     else if(content.value === 'DISCONNECT'){
                         store.dispatch('cancel', 'PERFORMER_REJECT');
                         // KPI.send('client_saw_disconnect');
-                    }
-
-                    else if(content.value === 'HANGUP'){
-                        store.dispatch('cancel', 'PHONE_DISCONNECT');
                     }
 
                     return;

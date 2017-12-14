@@ -52,5 +52,5 @@
 
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
 
-    <chat :performer-name="performer.nickname" :user-name="displayName"></chat>
+    <chat v-if="sessionType != 'PEEK'" :performer-name="performer.nickname" :user-name="displayName"></chat>
 </div>

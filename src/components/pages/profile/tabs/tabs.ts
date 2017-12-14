@@ -95,6 +95,14 @@ export default class Tabs extends Vue {
         return 'tabs.service-webcam';
     }
 
+    get canPeek():boolean{
+        if (!this.performer){
+            return false;
+        }
+
+        return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
+    }
+
     get authenticated(){
         return this.$store.getters.isLoggedIn;
     }

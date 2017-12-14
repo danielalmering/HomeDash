@@ -14,7 +14,7 @@ export default class WebRTC extends Stream {
     private player: Player;
 
     mounted(){
-        const video = <HTMLVideoElement>document.querySelector('.webrtc');
+        const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
         video.autoplay = true;
         
         const wowzaParts = utils.parseUrl(this.wowza);
