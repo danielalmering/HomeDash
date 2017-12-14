@@ -4,31 +4,31 @@
     <div class="modal__content register form">
         <div class="form__group">
             <label v-t="'modals.register.username'"></label>
-            <input type="text" v-model="username" />
+            <input type="text" v-model="userForm.username" />
         </div>
         <div class="form__group">
             <label v-t="'modals.register.email'"></label>
-            <input type="text" v-model="email" />
+            <input type="text" v-model="userForm.email" />
         </div>
         <div class="form__group">
             <label v-t="'modals.register.language'"></label>
-            <select v-model="language">
-                <option>A</option>
+            <select v-model="userForm.language">
+                    <option v-for="lang in languages" :value="lang">{{ $t('languages.' + lang) }}</option>
             </select>
         </div>
         <div class="form__group"> 
             <label v-t="'modals.register.country'"></label>
-            <select v-model="country">
-                <option>A</option>
+            <select v-model="userForm.country">
+                <option v-for="country in countries" :value="country">{{ $t('countries.' + country) }}</option>
             </select>
         </div>
         <div class="form__group">
             <label v-t="'modals.register.password'"></label>
-            <input type="password" v-model="password" />
+            <input type="password" v-model="userForm.password" />
         </div>
         <div class="form__group">
             <label v-t="'modals.register.passwordconfirm'"></label>
-            <input type="password" v-model="passwordconfirm" />
+            <input type="password" v-model="userForm.passwordconfirm" />
             <button class="btn btn-large btn-orange btn-full" v-on:click="register" v-t="'modals.register.register'"></button>
         </div>
     </div>

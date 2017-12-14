@@ -137,7 +137,11 @@
             "country": "Land",
             "password": "Wachtwoord",
             "passwordconfirm": "Bevestig wachtwoord",
-            "register": "Registreer"
+            "register": "Registreer",
+            "alerts": {
+                "successMessage": "Je hebt een bevestigingsmail ontvangen",
+                "errorMessage": "Er is iets mis gegaan tijdens de registratie"
+            }
         }
     },
     "account": {
@@ -276,6 +280,11 @@
         "cookies": "De website werkt het beste met cookies. Zo kunnen we de website verbeteren en je instellingen onthouden.",
         "cookiesAccept": "Oké, ik snap het"
     },
+    "confirm": {
+        "errorAlreadyActivated": "Dit account is al geactiveerd",
+        "errorDefault": "Er is iets mis gegaan tijdens de activatie",
+        "successMessage": "Je account is succesvol geactiveerd"
+    },
     "services": {
         "VOYEURCLIENT": "Voyeur",
         "PEEK": "Meekijken",
@@ -287,5 +296,13 @@
         "VOICEMAIL": "Voicemail",
         "IVR": "Bellen",
         "CREDIT_PURCHASE": "Credit Aankoop"
+    },
+    "languages": {
+        "nl": "Nederlands",
+        "en": "Engels",
+        "de": "Duits"
+    },
+    "countries": {
+        "nl": "Nederland"
     }
 }

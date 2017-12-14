@@ -79,3 +79,34 @@ export function modalInterceptor(modalName: string) {
         }
     }
 }
+
+export async function confirmInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
+    try {
+        await store.dispatch('confirmAccount', {
+            userId: to.params.userId,
+            token: to.params.token
+        });
+
+        store.dispatch('successMessage', 'confirm.successMessage');
+    } catch(ex) {
+        const errors: { [key: string]: string } = {
+            'Account is already validated.': 'confirm.errorAlreadyActivated'
+        };
+
+        store.dispatch('errorMessage', errors[ex.message] || 'confirm.errorMessage');
+    }
+
+    next({
+        name: 'Performers'
+    });
+}
+
+export function trailingSlashInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
+    if(!to.path.endsWith('/')){
+        next({
+            path: `${to.path}/`
+        })
+    } else {
+        next();
+    }
+}
