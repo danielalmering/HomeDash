@@ -2,7 +2,7 @@ import Vuex from 'vuex';
 import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
-import { User, AnonymousUser } from '../models/User';
+import { User, AnonymousUser, UserForm } from '../models/User';
 import config from '../config';
 
 export interface AuthState {
@@ -39,9 +39,9 @@ const authenticationStore: Module<AuthState, RootState> = {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(payload),
-                headers: {
+                headers: new Headers({
                     role: 'ROLE_CLIENT'
-                }
+                })
             });
 
             const loginData: User = await loginResult.json();
@@ -72,8 +72,29 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             store.commit('setUser', undefined);
         },
-        async register(store: AuthContext){
-            //Empty
+        async register(store: AuthContext, payload: UserForm){
+            const registerResult = await fetch(`${config.BaseUrl}/client/client_accounts`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify(payload)
+            });
+
+            if(!registerResult.ok){
+                throw new Error('Registration failed');
+            }
+        },
+        async confirmAccount(store: AuthContext, payload: { userId: number, token: string }){
+            const confirmResult = await fetch(`${config.BaseUrl}/client/client_accounts/${payload.userId}/confirm/${payload.token}`, {
+                credentials: 'include'
+            });
+
+            if(!confirmResult.ok){
+                const data = await confirmResult.json();
+                throw new Error(data.error);
+            }
         },
         async getSession(store: AuthContext){
             const checkSessionResult = await fetch(`${config.BaseUrl}/check_session`, {

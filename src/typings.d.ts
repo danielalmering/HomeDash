@@ -14,4 +14,5 @@ declare module "*.vue" {
 
 interface Window {
     flashCallbacks: any;
+    _pcq: any[];
 }

@@ -166,6 +166,7 @@ const mutations = {
         state.activeTiles = [];
         state.queue = [];
         state.performers = [];
+        state.reservations = [];
         state.mainTile = undefined;
         state.isActive = false;
     },
@@ -395,6 +396,11 @@ const getters = {
     },
     reservations(state: VoyeurState){
         return state.performers.filter(p => state.reservations.indexOf(p.id) > -1);
+    },
+    availableReservations(state: VoyeurState){
+        return state.performers
+            .filter(p => state.reservations.indexOf(p.id) > -1)
+            .filter(p => p.performerStatus === PerformerStatus.Available);
     },
     performer(state: VoyeurState){
         return (id: number) => {

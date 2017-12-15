@@ -1,0 +1,21 @@
+<main class="thankyou">
+    <div class="container-fluid">
+        <div class="col-xs-12">
+            <h1 v-t="'nav.info.thankyou'"></h1>
+            <p v-t="'thankyou.intro'"></p>
+
+            <img class="resize" src="../../../assets/images/thankyou.png" />
+
+            <h3 v-t="'thankyou.favo'"></h3>
+
+            <div class="thankyou__favo">
+                <div class="col-xs-12 col-sm-3 thankyou__favo-performer" v-for="performer in favos">
+                    <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advert_numbers[0].advertNumber }}">
+                        <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }"></div>
+                        <div class="name">{{ performer.nickname }}</div>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

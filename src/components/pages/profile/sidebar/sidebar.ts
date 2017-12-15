@@ -8,6 +8,7 @@ import config from '../../../../config';
 
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
+import { RequestPayload } from '../../../../store/session';
 import { SessionType } from '../../../../models/Sessions';
 
 type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
@@ -114,8 +115,16 @@ export default class Sidebar extends Vue {
 
     reserve(performerId: number){
         this.isReserved(performerId) ?
-            this.$store.commit('removeReservation', performerId) :
-            this.$store.commit('addReservation', performerId);
+            this.$store.commit('voyeur/removeReservation', performerId) :
+            this.$store.commit('voyeur/addReservation', performerId);
+    }
+
+    async startVideoChat(performerId: number){
+        await this.$store.dispatch<RequestPayload>({
+            type: 'startRequest',
+            performer: this.performer(performerId),
+            sessionType: SessionType.Video,
+        });
     }
 
     goToPerformer(id: number){

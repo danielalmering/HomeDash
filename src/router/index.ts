@@ -15,6 +15,7 @@ import Readmessage from '../components/pages/account/inbox/readmessage/readmessa
 import Newmessage from '../components/pages/account/inbox/newmessage/newmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Promos from '../components/pages/promos/promos';
+import Thankyou from '../components/pages/thankyou/thankyou';
 import Payment from '../components/pages/payment/payment';
 import Contact from '../components/pages/contact/contact';
 import Terms from '../components/pages/textpages/terms';
@@ -22,7 +23,8 @@ import Policy from '../components/pages/textpages/policy';
 import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor } from './interceptors';
+import rootStore from '../store';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, trailingSlashInterceptor, confirmInterceptor } from './interceptors';
 
 Vue.use(Router);
 
@@ -46,69 +48,87 @@ const router = new Router({
                             beforeEnter: authenticatedInterceptor,
                             children: [
                                 {
-                                    path: 'edit-data',
+                                    path: 'edit-data/',
                                     name: 'Editdata',
                                     component: Editdata
                                 },
                                 {
-                                    path: 'account-history',
+                                    path: 'account-history/',
                                     name: 'History',
                                     component: History
                                 },
                                 {
-                                    path: 'notifications',
+                                    path: 'notifications/',
                                     name: 'Inbox',
                                     component: Inbox
                                 },
                                 {
-                                    path: 'notifications/:performerid/:messageid',
+                                    path: 'notifications/:performerid/:messageid/',
                                     name: 'Readmessage',
                                     component: Readmessage
                                 },
                                 {
-                                    path: 'new-message/:advertId?',
+                                    path: 'new-message/:advertId?/',
                                     name: 'Newmessage',
                                     component: Newmessage
                                 },
                                 {
-                                    path: 'gift-voucher',
+                                    path: 'gift-voucher/',
                                     name: 'Giftvoucher',
                                     component: Giftvoucher
                                 }
                             ]
                         },
                         {
-                            path: 'promos',
+                            path: 'login/',
+                            beforeEnter: modalInterceptor('login')
+                        },
+                        {
+                            path: 'register/',
+                            beforeEnter: modalInterceptor('register')
+                        },
+                        {
+                            path: 'confirm/:userId/:token',
+                            beforeEnter: confirmInterceptor
+                        },
+                        {
+                            path: 'promos/',
                             name: 'Promos',
                             component: Promos
                         },
                         {
-                            path: 'payment',
+                            path: 'payment-success/',
+                            name: 'Thankyou',
+                            beforeEnter: authenticatedInterceptor,
+                            component: Thankyou
+                        },
+                        {
+                            path: 'payment/',
                             name: 'Payment',
                             component: Payment
                         },
                         {
-                            path: 'contact',
+                            path: 'contact/',
                             name: 'Contact',
                             component: Contact
                         },
                         {
-                            path: 'privacy-policy',
+                            path: 'privacy-policy/',
                             name: 'Policy',
                             component: Policy
                         },
                         {
-                            path: 'terms',
+                            path: 'terms/',
                             name: 'Terms',
                             component: Terms
                         },
                         {
-                            path: 'favourites',
+                            path: 'favourites/',
                             name: 'Favourites',
                             component: Favourites
                         },
                         {
-                            path: ':category?',
+                            path: ':category?/',
                             name: 'Performers',
                             component: Performers
                         }
@@ -120,17 +140,17 @@ const router = new Router({
                     component: Performer,
                     children: [
                         {
-                            path: 'profile',
+                            path: 'profile/',
                             name: 'Profile',
                             component: Profile
                         },
                         {
-                            path: 'chat',
+                            path: 'chat/',
                             name: 'Videochat',
                             component: VideoChat
                         },
                         {
-                            path: 'voyeur',
+                            path: 'voyeur/',
                             name: 'Voyeur',
                             component: Voyeur
                         }
@@ -142,5 +162,6 @@ const router = new Router({
 });
 
 router.beforeEach(safeInterceptor);
+// router.beforeEach(trailingSlashInterceptor);
 
 export default router;

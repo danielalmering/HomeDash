@@ -26,3 +26,12 @@ export enum UserRole {
     Client      = 'ROLE_CLIENT',
     Admin       = 'ROLE_ADMIN'
 }
+
+export interface UserForm {
+    username: string;
+    email: string;
+    language: string;
+    country: string;
+    password: string;
+    passwordconfirm: string;
+}
