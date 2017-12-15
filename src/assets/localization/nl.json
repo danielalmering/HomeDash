@@ -135,7 +135,8 @@
             "email": "E-mail",
             "password": "Wachtwoord",
             "login": "Login",
-            "register": "Registreer"
+            "register": "Registreer",
+            "forgotPassword": "Wachtwoord vergeten?"
         },
         "register":{
             "title": "Registreer account",
@@ -149,6 +150,26 @@
             "alerts": {
                 "successMessage": "Je hebt een bevestigingsmail ontvangen",
                 "errorMessage": "Er is iets mis gegaan tijdens de registratie"
+            }
+        },
+        "recover": {
+            "title": "Wachtwoord vergeten",
+            "email": "E-mail",
+            "recover": "Wijzig wachtwoord",
+            "alerts": {
+                "successMessage": "Als dit e-mailadres bekend is ontvangt u binnen een paar minuten een e-mail van ons"
+            }
+        },
+        "reset": {
+            "title": "Reset wachtwoord",
+            "password": "Wachtwoord",
+            "passwordconfirm": "Bevestig wachtwoord",
+            "reset": "Wijzig wachtwoord",
+            "alerts": {
+                "successMessage": "Je wachtwoord is succesvol veranderd",
+                "errorMessage": "Je wachtwoord reset token is verlopen, vraag een nieuwe aan",
+                "errorPasswordMismatch": "De ingevulde wachtwoorden komen niet overeen",
+                "errorEmptyFields": "Niet alle velden zijn ingevuld"
             }
         }
     },
