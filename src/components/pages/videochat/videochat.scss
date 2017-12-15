@@ -160,6 +160,15 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         cursor: pointer;
     }
 
+    &__videocall {
+        position: absolute;
+        z-index: 2;
+        top: 10px;
+        right: 70px;
+        background-color: greenyellow;
+        padding: 10px;
+    }
+
     &__chat {
         position: absolute;
         z-index: 2;

@@ -63,6 +63,10 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionType;
     }
 
+    get paymentMethod(): string{
+        return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
+    }
+
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
@@ -137,6 +141,14 @@ export default class VideoChat extends Vue {
 
     close(){
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
+    }
+
+    startCalling(){
+        this.$store.dispatch('startCalling');
+    }
+
+    stopCalling(){
+        this.$store.dispatch('stopCalling');
     }
 
     startCam(){
@@ -227,7 +239,7 @@ export default class VideoChat extends Vue {
 
         this.navigation = {to, from, next};
         this.leave = this.leaveToPeek;
-        this.askToLeave = true;        
+        this.askToLeave = true; 
     }
 
     public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean)=>void){
@@ -246,7 +258,7 @@ export default class VideoChat extends Vue {
     navigation: {
         to:Route, from:Route, next:(yes?:boolean)=>void
     }
-    
+
     leave(){}
 
     async leaveToPeek(){

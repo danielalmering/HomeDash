@@ -203,13 +203,13 @@ const sessionStore: Module<SessionState, RootState> = {
             const data = await initiateResult.json();
 
             store.state.activeSessionData = data;
-
-            console.log('VideoChat data loaded');
         },
         setActive(store: ActionContext<SessionState, RootState>){
             store.commit('setState', State.Active);
 
-            if(!store.state.activePerformer) return;
+            if(!store.state.activePerformer){
+                return;
+            }
 
             notificationSocket.sendEvent({
                 receiverType: UserRole.Performer,
@@ -225,6 +225,63 @@ const sessionStore: Module<SessionState, RootState> = {
 
             //"{"event": "videoChat","receiverId":"152","receiverType":"ROLE_PERFORMER","content":"%7B%22type%22%3A%22START_TIMER_DEVICE%22%2C%22clientId%22%3A5789%2C%22performerId%22%3A152%2C%22value%22%3Anull%7D"}"
         },
+        async startCalling(store: ActionContext<SessionState, RootState>){
+            if (!store.state.activePerformer){
+                return;
+            }
+
+            const result = await fetch(`${config.BaseUrl}/session/start_audio/${store.state.activePerformer.id}`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({ivrCode:store.state.activeIvrCode})
+            });
+
+            if (result.status == 200){
+                store.state.activeSessionType = SessionType.VideoCall;
+            }
+        },
+        async stopCalling(store: ActionContext<SessionState, RootState>){
+            if (!store.state.activePerformer){
+                return;
+            }
+
+            const result = await fetch(`${config.BaseUrl}/session/stop_audio`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({ivrCode:store.state.activeIvrCode})
+            });
+
+            if (result.status == 200){
+                store.state.activeSessionType = SessionType.Video;
+            }
+        },
+        callEnded(store: ActionContext<SessionState, RootState>){
+            store.state.activeSessionType = SessionType.Video;
+            store.dispatch('openMessage', {
+                content: 'videocall.callEnded',
+                class: 'error'
+            });
+        },
+        callFailed(store: ActionContext<SessionState, RootState>){
+            store.state.activeSessionType = SessionType.Video;
+            store.dispatch('openMessage', {
+                content: 'videocall.callFailed',
+                class: 'error'
+            });
+        },
+        callAccepted(store: ActionContext<SessionState, RootState>){
+            store.dispatch('openMessage', {
+                content: 'videocall.callAccepted',
+                class: 'success'
+            })
+        },
+
         handleVideoEventSocket(store: ActionContext<SessionState, RootState>, content: VideoEventSocketMessage){
             if(store.state.activeState === State.Idle || !store.state.activePerformer){
                 throw new Error('Client shouldn\'t receive this message in an idle state');
@@ -235,6 +292,24 @@ const sessionStore: Module<SessionState, RootState> = {
             if(content.clientId !== client.id ||
                 content.performerId !== store.state.activePerformer.id) {
                 throw new Error(`Client shouldn\'t receive messages from client: ${content.clientId} and performer: ${content.performerId}`);
+            }
+
+            //{type: "VIDEOCALL_ANSWER", value: "false"}
+            //{type: "VIDEOCALL_FAILED", value: "false"}
+            //{type: "VIDEOCALL_DISCONNECT", value: "false"}
+            if (content.type === 'VIDEOCALL_ANSWER'){
+                //only now the videocall conversation is really a videocall conversation
+                store.dispatch('callAccepted');
+                return;
+            }
+
+            if (content.type === 'VIDEOCALL_FAILED'){
+                store.dispatch('callFailed');
+                return;
+            }
+
+            if (content.type === 'VIDEOCALL_DISCONNECT'){
+                store.dispatch('callEnded');
             }
 
             //Find a good way to do this shit, need it for testing now
