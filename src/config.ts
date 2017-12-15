@@ -5,6 +5,7 @@ export interface ProjectConfig {
     ImageUrl: string;
     JsmpegUrl: string;
     StorageKey: string;
+    NoAgeCheckCountries: string[];
 }
 
 export default require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
