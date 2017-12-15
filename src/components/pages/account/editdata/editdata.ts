@@ -42,6 +42,11 @@ export default class Editdata extends Vue {
     }
 
     subscribePushMessages(){
-        window._pcq.push(['triggerOptIn',{subscriberSegment: 'homepage', modal: {text: 'HYEEEEEEEEEEEEEY', blackenBackground: true}}]);
+        window._pcq.push(['triggerOptIn', {
+            subscriberSegment: 'homepage',
+            modal: {
+                text: 'HYEEEEEEEEEEEEEY', blackenBackground: true
+            }
+        }]);
     }
 }

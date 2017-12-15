@@ -69,15 +69,15 @@ export function safeInterceptor(to: Route, from: Route, next: (to?: string | Loc
 export function modalInterceptor(modalName: string) {
     return (to: Route, previous: Route, next: any) => {
         store.dispatch('displayModal', modalName);
-        
+
         if(!previous.name){
             next({
                 name: 'Performers'
-            })
+            });
         } else {
             next();
         }
-    }
+    };
 }
 
 export async function confirmInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
@@ -99,14 +99,4 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
     next({
         name: 'Performers'
     });
-}
-
-export function trailingSlashInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
-    if(!to.path.endsWith('/')){
-        next({
-            path: `${to.path}/`
-        })
-    } else {
-        next();
-    }
 }
