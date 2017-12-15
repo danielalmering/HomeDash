@@ -132,7 +132,7 @@ export default class Profile extends Vue {
                 params: {
                     id: this.performer.advert_numbers[0].advertNumber.toString()
                 }
-            })
+            });
         } catch(ex){
             console.log(ex);
         }

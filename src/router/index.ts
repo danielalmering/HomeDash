@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import Router, { RouteConfig } from 'vue-router';
 import { Route } from 'vue-router';
 import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
@@ -23,144 +23,158 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, trailingSlashInterceptor, confirmInterceptor } from './interceptors';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor } from './interceptors';
 
 Vue.use(Router);
+
+const routes = [{
+    path: '/:country?',
+    component: { template: '<router-view></router-view>' },
+    beforeEnter: countryInterceptor,
+    children: [
+        {
+            path: '',
+            component: Page,
+            children: [
+                {
+                    path: 'my-account',
+                    name: 'Account',
+                    component: Account,
+                    beforeEnter: authenticatedInterceptor,
+                    children: [
+                        {
+                            path: 'edit-data/',
+                            name: 'Editdata',
+                            component: Editdata
+                        },
+                        {
+                            path: 'account-history/',
+                            name: 'History',
+                            component: History
+                        },
+                        {
+                            path: 'notifications/',
+                            name: 'Inbox',
+                            component: Inbox
+                        },
+                        {
+                            path: 'notifications/:performerid/:messageid/',
+                            name: 'Readmessage',
+                            component: Readmessage
+                        },
+                        {
+                            path: 'new-message/:advertId?/',
+                            name: 'Newmessage',
+                            component: Newmessage
+                        },
+                        {
+                            path: 'gift-voucher/',
+                            name: 'Giftvoucher',
+                            component: Giftvoucher
+                        }
+                    ]
+                },
+                {
+                    path: 'login/',
+                    beforeEnter: modalInterceptor('login')
+                },
+                {
+                    path: 'register/',
+                    beforeEnter: modalInterceptor('register')
+                },
+                {
+                    path: 'confirm/:userId/:token',
+                    beforeEnter: confirmInterceptor
+                },
+                {
+                    path: 'promos/',
+                    name: 'Promos',
+                    component: Promos
+                },
+                {
+                    path: 'payment-success/',
+                    name: 'Thankyou',
+                    beforeEnter: authenticatedInterceptor,
+                    component: Thankyou
+                },
+                {
+                    path: 'payment/',
+                    name: 'Payment',
+                    component: Payment
+                },
+                {
+                    path: 'contact/',
+                    name: 'Contact',
+                    component: Contact
+                },
+                {
+                    path: 'privacy-policy/',
+                    name: 'Policy',
+                    component: Policy
+                },
+                {
+                    path: 'terms/',
+                    name: 'Terms',
+                    component: Terms
+                },
+                {
+                    path: 'favourites/',
+                    name: 'Favourites',
+                    component: Favourites
+                },
+                {
+                    path: ':category?/',
+                    name: 'Performers',
+                    component: Performers
+                }
+            ]
+        },
+        {
+            path: 'performer/:id',
+            name: 'Performer',
+            component: Performer,
+            children: [
+                {
+                    path: 'profile/',
+                    name: 'Profile',
+                    component: Profile
+                },
+                {
+                    path: 'chat/',
+                    name: 'Videochat',
+                    component: VideoChat
+                },
+                {
+                    path: 'voyeur/',
+                    name: 'Voyeur',
+                    component: Voyeur
+                }
+            ]
+        },
+    ]
+}];
 
 const router = new Router({
     mode: 'history',
     base: '/',
-    routes: [
-        {
-            path: '/:country?',
-            component: { template: '<router-view></router-view>' },
-            beforeEnter: countryInterceptor,
-            children: [
-                {
-                    path: '',
-                    component: Page,
-                    children: [
-                        {
-                            path: 'my-account',
-                            name: 'Account',
-                            component: Account,
-                            beforeEnter: authenticatedInterceptor,
-                            children: [
-                                {
-                                    path: 'edit-data/',
-                                    name: 'Editdata',
-                                    component: Editdata
-                                },
-                                {
-                                    path: 'account-history/',
-                                    name: 'History',
-                                    component: History
-                                },
-                                {
-                                    path: 'notifications/',
-                                    name: 'Inbox',
-                                    component: Inbox
-                                },
-                                {
-                                    path: 'notifications/:performerid/:messageid/',
-                                    name: 'Readmessage',
-                                    component: Readmessage
-                                },
-                                {
-                                    path: 'new-message/:advertId?/',
-                                    name: 'Newmessage',
-                                    component: Newmessage
-                                },
-                                {
-                                    path: 'gift-voucher/',
-                                    name: 'Giftvoucher',
-                                    component: Giftvoucher
-                                }
-                            ]
-                        },
-                        {
-                            path: 'login/',
-                            beforeEnter: modalInterceptor('login')
-                        },
-                        {
-                            path: 'register/',
-                            beforeEnter: modalInterceptor('register')
-                        },
-                        {
-                            path: 'confirm/:userId/:token',
-                            beforeEnter: confirmInterceptor
-                        },
-                        {
-                            path: 'promos/',
-                            name: 'Promos',
-                            component: Promos
-                        },
-                        {
-                            path: 'payment-success/',
-                            name: 'Thankyou',
-                            beforeEnter: authenticatedInterceptor,
-                            component: Thankyou
-                        },
-                        {
-                            path: 'payment/',
-                            name: 'Payment',
-                            component: Payment
-                        },
-                        {
-                            path: 'contact/',
-                            name: 'Contact',
-                            component: Contact
-                        },
-                        {
-                            path: 'privacy-policy/',
-                            name: 'Policy',
-                            component: Policy
-                        },
-                        {
-                            path: 'terms/',
-                            name: 'Terms',
-                            component: Terms
-                        },
-                        {
-                            path: 'favourites/',
-                            name: 'Favourites',
-                            component: Favourites
-                        },
-                        {
-                            path: ':category?/',
-                            name: 'Performers',
-                            component: Performers
-                        }
-                    ]
-                },
-                {
-                    path: 'performer/:id',
-                    name: 'Performer',
-                    component: Performer,
-                    children: [
-                        {
-                            path: 'profile/',
-                            name: 'Profile',
-                            component: Profile
-                        },
-                        {
-                            path: 'chat/',
-                            name: 'Videochat',
-                            component: VideoChat
-                        },
-                        {
-                            path: 'voyeur/',
-                            name: 'Voyeur',
-                            component: Voyeur
-                        }
-                    ]
-                },
-            ]
-        }
-    ]
+    routes: makeRoutesStrict(routes)
 });
 
 router.beforeEach(safeInterceptor);
-// router.beforeEach(trailingSlashInterceptor);
+
+function makeRoutesStrict(routes: RouteConfig[]){
+    
+    return routes.map(route => {
+        route.pathToRegexpOptions = {
+            strict: true
+        };
+
+        if(route.children){
+            route.children = makeRoutesStrict(route.children);
+        }
+
+        return route;
+    });
+}
 
 export default router;
