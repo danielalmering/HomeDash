@@ -15,6 +15,7 @@ import config from '../../../config';
 import notificationSocket from '../../../socket';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
 import Confirmation from '../../layout/Confirmations.vue';
+import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
 import './profile.scss';
 import './photo-slider.scss';
@@ -207,12 +208,21 @@ export default class Profile extends Vue {
 
         const data = await performerResults.json();
 
-        this.performer = data.performerAccount;
+        this.performer = data.performerAccount as Performer;
         this.perfphotos = data.photos.approved.photos;
 
         if(this.$store.state.safeMode){
             this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
         }
+
+        setTitle(this.$t('profile.metaTitle', { nickname: this.performer.nickname }).toString());
+        setDescription(this.$t('profile.metaDescription', { nickname: this.performer.nickname }).toString());
+        setKeywords(`${this.performer.nickname}, ${this.performer.eyeColor}, ${this.performer.cupSize}`);
+
+        setGraphData('og:type', 'profile');
+        setGraphData('og:image', getAvatarImage(this.performer, 'medium'));
+        setGraphData('profile:username', this.performer.nickname);
+        setGraphData('profile:gender', 'female');
     }
 
     login(){

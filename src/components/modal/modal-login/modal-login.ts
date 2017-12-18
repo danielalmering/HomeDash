@@ -24,6 +24,10 @@ export default class ModalLogin extends Vue {
         this.$store.dispatch('displayModal', 'register');
     }
 
+    forgotPassword(){
+        this.$store.dispatch('displayModal', 'recover');
+    }
+
     close(){
         this.$store.dispatch('closeModal');
     }

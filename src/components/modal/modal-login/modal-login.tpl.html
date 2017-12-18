@@ -12,6 +12,8 @@
                 <input type="password" v-model="password" />
                 <button class="btn btn-large btn-orange btn-full" v-t="'modals.login.login'"></button>
                 <a class="btn btn-large btn-full" v-on:click="register" v-t="'modals.login.register'"></a>
+
+                <a v-on:click="forgotPassword">{{ $t('modals.login.forgotPassword') }}</a>
             </div>
         </form>
     </div>
