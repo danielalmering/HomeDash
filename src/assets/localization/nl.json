@@ -2,7 +2,7 @@
     "top": {
         "numbers": {
             "callnow": "BEL NU",
-            "cpm": "CT",
+            "cpm": "CPM",
             "pm": "pm"
         },
         "banner": {
@@ -11,7 +11,7 @@
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
-            "purchase": "bij aankoop v.a €120"
+            "purchase": "vanaf"
         }
     },
     "nav": {

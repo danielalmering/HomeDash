@@ -35,10 +35,6 @@ export default class Top extends Vue {
     }
 
     mounted(){
-        if(!this.$store.state.info){
-            return;
-        }
-
         this.getFees();
     }
 

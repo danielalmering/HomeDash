@@ -65,8 +65,10 @@
             i { color: $pallete-19; @include rem(margin, 0px 8px); }
         }
         &-description {
+            display: block;
             color: $pallete-7;
-            line-height: 190%;
+            line-height: 170%;
+            max-height:150px;
         }
 
         a {
