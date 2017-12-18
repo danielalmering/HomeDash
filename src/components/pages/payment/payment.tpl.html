@@ -62,19 +62,19 @@
                         <div class="col-xs-6">
                             <span v-t="'payment.subtotal'"></span>
                             <span v-t="'payment.bonuscredits'"></span>
-                            <span v-t="'payment.subtotalcredits'"></span>
+                            <span v-t="'payment.totalcredits'"></span>
                             <span v-t="'payment.total'"></span>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <span>€100,-</span>
+                            <span>{{ credits }}</span>
                             <span>{{ bonusAmount(credits) }}</span>
                             <span>{{ credits + bonusAmount(credits) }}</span>
                             <p>{{ totalAmount | euro }}</p>
                         </div>
-                        <div class="col-xs-12">
+                        <div class="col-xs-12" v-if="nextBonus">
                             <div class="payment__cart-bonus">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
-                                {{ $t('payment.buy') }} 2000 {{ $t('payment.creditsandget') }} 20% {{ $t('payment.extra') }}
+                                {{ $t('payment.bonusbanner', { credits: nextBonus.amount - credits, percentage: nextBonus.percentage }) }}
                             </div>
                         </div>
                     </div>

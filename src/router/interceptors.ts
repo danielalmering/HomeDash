@@ -66,17 +66,11 @@ export function safeInterceptor(to: Route, from: Route, next: (to?: string | Loc
     next();
 }
 
-export function modalInterceptor(modalName: string) {
-    return (to: Route, previous: Route, next: any) => {
-        store.dispatch('displayModal', modalName);
+export function modalInterceptor(modalName: string, delayed: boolean = false) {
+    return async (to: Route, previous: Route, next: any) => {
+        await store.dispatch('displayModal', modalName);
 
-        if(!previous.name){
-            next({
-                name: 'Performers'
-            });
-        } else {
-            next();
-        }
+        next();
     };
 }
 

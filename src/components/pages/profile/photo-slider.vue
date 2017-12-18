@@ -58,6 +58,12 @@ export default {
                         return;
                     }
 
+                    const list = <HTMLElement>self.$el.children[0].lastChild;
+
+                    if(self.photos.length === 0 || (self.$data.position - self.$el.offsetWidth < -(list.offsetLeft + list.offsetWidth) && speed < 0)){
+                        return;
+                    }
+
                     self.$data.position += speed;
                 }, 10);
             } else {

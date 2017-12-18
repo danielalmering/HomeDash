@@ -83,6 +83,11 @@ const routes = [{
                     beforeEnter: modalInterceptor('register')
                 },
                 {
+                    path: 'reset-password/:userId/:token',
+                    beforeEnter: modalInterceptor('reset'),
+                    component: Performers
+                },
+                {
                     path: 'confirm/:userId/:token',
                     beforeEnter: confirmInterceptor
                 },
@@ -163,7 +168,7 @@ const router = new Router({
 router.beforeEach(safeInterceptor);
 
 function makeRoutesStrict(routes: RouteConfig[]){
-    
+
     return routes.map(route => {
         route.pathToRegexpOptions = {
             strict: true
