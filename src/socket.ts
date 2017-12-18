@@ -53,7 +53,7 @@ export class NotificationSocket {
     private lastPongTime: number;
     private lastReconnectTime: number;
 
-    private intervalHandle: number;
+    private intervalHandle?: number;
 
     constructor(){
 
@@ -114,6 +114,8 @@ export class NotificationSocket {
 
         if(this.intervalHandle){
             clearInterval(this.intervalHandle);
+
+            delete this.intervalHandle;
         }
     }
 

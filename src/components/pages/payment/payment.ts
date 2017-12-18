@@ -30,6 +30,11 @@ interface PromoData {
     used: boolean;
 }
 
+interface Fee {
+    amount: number,
+    percentage: number
+}
+
 @Component({
     template: require('./payment.tpl.html')
 })
@@ -47,6 +52,8 @@ export default class Payment extends Vue {
 
     minimumBonusFee: number = 0;
     bonusPercentage: number = 0;
+
+    fees: Fee[] = [];
 
     async mounted(){
         await this.getInfo();
@@ -76,14 +83,20 @@ export default class Payment extends Vue {
             return initialState;
         }, {});
 
-        this.minimumBonusFee = data.fees[0].amount;
-        this.bonusPercentage = data.fees[0].percentage;
+        // this.minimumBonusFee = data.fees[0].amount;
+        // this.bonusPercentage = data.fees[0].percentage;
+        this.fees = data.fees.map((f: any) => {
+            return {
+                amount: f.amount,
+                percentage: parseInt(f.percentage)
+            };
+        });
         this.promoData = data.promo;
     }
 
     private loadCache(){
         const paymentCacheString = window.localStorage.getItem(`${config.StorageKey}.payment-cache`);
-        
+
         if(!paymentCacheString){
             return;
         }
@@ -105,7 +118,7 @@ export default class Payment extends Vue {
     }
 
     get package(){
-        return (id: string) =>{
+        return (id: string) => {
             return this.packages.find(p => p.id === parseInt(id));
         };
     }
@@ -121,8 +134,28 @@ export default class Payment extends Vue {
 
     get bonusAmount(){
         return (credits: number) => {
-            return Math.floor(credits / this.minimumBonusFee) * (this.minimumBonusFee * (this.bonusPercentage / 100)) + this.promoCredits;
+            const applicableBonus =  this.fees.reduce((result, fee) => {
+                if(credits >= fee.amount && fee.amount > result) {
+                    result = fee.percentage;
+                }
+
+                return result;
+            }, 0);
+
+            return Math.floor(credits * (applicableBonus / 100)) + this.promoCredits;
         };
+    }
+
+    get nextBonus(){
+        const nextBonus =  this.fees.reduce<undefined | Fee>((result, fee) => {
+            if(this.credits < fee.amount && (!result || fee.amount < result.amount)) {
+                result = fee;
+            }
+
+            return result;
+        }, undefined);
+
+        return nextBonus;
     }
 
     get credits(){
@@ -197,7 +230,7 @@ export default class Payment extends Vue {
         }
 
         if(data.form){
-            var redirForm = document.createElement('form');
+            const redirForm = document.createElement('form');
             redirForm.setAttribute('method', 'post');
             redirForm.setAttribute('name', 'redirform');
             redirForm.setAttribute('action', data.redirectURL);

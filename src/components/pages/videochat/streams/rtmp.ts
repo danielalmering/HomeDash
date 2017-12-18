@@ -32,7 +32,7 @@ export default class Rtmp extends Stream {
         const attrs = {
             name: 'swf'
         };
-        
+
         const params = {
             wmode: 'transparent',
             allowFullScreen: true

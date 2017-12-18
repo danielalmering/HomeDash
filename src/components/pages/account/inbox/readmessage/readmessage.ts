@@ -32,15 +32,19 @@ export default class Readmessage extends Vue {
 
     async payMessage(){
         const user: User = this.$store.state.authentication.user;
-        const payload = {"serviceType":this.$route.params.type.toUpperCase(),"emailId":this.$route.params.messageid};
+
+        const payload = {
+            serviceType: this.$route.params.type.toUpperCase(),
+            emailId: this.$route.params.messageid
+        };
 
         const paymessageResult = await fetch(`${config.BaseUrl}/client/client_accounts/${user.id}/tax/performer_accounts/${this.$route.params.performerid}`, {
             method: 'POST',
             body: JSON.stringify(payload),
             credentials: 'include',
-            headers: {
+            headers: new Headers({
                 'Content-Type': 'application/json'
-            }
+            })
         });
 
         if(!paymessageResult.ok){
@@ -105,12 +109,12 @@ export default class Readmessage extends Vue {
 
             return;
         }
-        
+
         this.$store.dispatch('openMessage', {
             content: 'account.alerts.successReplyMessage',
             class: 'success'
         });
-        
+
         this.reply = '';
     }
 }

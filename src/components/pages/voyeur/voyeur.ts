@@ -39,11 +39,8 @@ export default class Voyeur extends Vue {
 
     get performer(){
         return (id: number) => {
-            console.log(this.$store.getters['voyeur/performer']);
-            console.log(id);
-            console.log(this.$store.getters['voyeur/performer'](id));
             return this.$store.getters['voyeur/performer'](id);
-        }
+        };
     }
 
     get activeState(){
@@ -61,7 +58,7 @@ export default class Voyeur extends Vue {
                 params: {
                     id: this.$route.params.id
                 }
-            })
+            });
         }
     }
 
@@ -79,7 +76,7 @@ export default class Voyeur extends Vue {
     swap(performerId: number){
         this.$store.dispatch('voyeur/swap', {
             performerId
-        })
+        });
     }
 
     async acceptReservation(){

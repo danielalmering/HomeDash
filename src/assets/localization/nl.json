@@ -86,7 +86,9 @@
         "eyecolor": "Kleur ogen",
         "expand": "Meer",
         "hide": "Minder",
-        "collapsephotos": "Fotos bekijken"
+        "collapsephotos": "Fotos bekijken",
+        "metaTitle": "Live webcammen, chatten en beeldbellen met {nickname} , echte Hollandse vrouwen - thuis.nl",
+        "metaDescription": "Nu live webcammen, bellen en chatten met {nickname} , echte Hollandse vrouwen vind je hier."
     },
     "tabs": {
         "service-webcam": "Webcammen",
@@ -136,7 +138,8 @@
             "email": "E-mail",
             "password": "Wachtwoord",
             "login": "Login",
-            "register": "Registreer"
+            "register": "Registreer",
+            "forgotPassword": "Wachtwoord vergeten?"
         },
         "register":{
             "title": "Registreer account",
@@ -150,6 +153,26 @@
             "alerts": {
                 "successMessage": "Je hebt een bevestigingsmail ontvangen",
                 "errorMessage": "Er is iets mis gegaan tijdens de registratie"
+            }
+        },
+        "recover": {
+            "title": "Wachtwoord vergeten",
+            "email": "E-mail",
+            "recover": "Wijzig wachtwoord",
+            "alerts": {
+                "successMessage": "Als dit e-mailadres bekend is ontvangt u binnen een paar minuten een e-mail van ons"
+            }
+        },
+        "reset": {
+            "title": "Reset wachtwoord",
+            "password": "Wachtwoord",
+            "passwordconfirm": "Bevestig wachtwoord",
+            "reset": "Wijzig wachtwoord",
+            "alerts": {
+                "successMessage": "Je wachtwoord is succesvol veranderd",
+                "errorMessage": "Je wachtwoord reset token is verlopen, vraag een nieuwe aan",
+                "errorPasswordMismatch": "De ingevulde wachtwoorden komen niet overeen",
+                "errorEmptyFields": "Niet alle velden zijn ingevuld"
             }
         }
     },
@@ -242,11 +265,9 @@
         "paywith": "Betaal met {title}",
         "subtotal": "Subtotaal",
         "bonuscredits": "Bonus credits",
-        "subtotalcredits": "Sub credits",
+        "totalcredits": "Totaal credits",
         "total": "Totaal",
-        "creditsandget": "credits en krijg",
-        "buy": "Koop",
-        "extra": "extra",
+        "bonusbanner": "Koop {credits} credits en krijg {percentage}% extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
         "discountcode": "Kortingscode?",
         "mostlybought": "Meest verkocht!",
@@ -292,9 +313,15 @@
         "information": "Informatie",
         "promos": "Acties",
         "webcam": "Webcammodel worden?",
+        "sexstories": "Sexverhalen",
+        "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",
         "webcamurl": "http://www.club-sense.nl",
         "copyright": "Copyright 2017",
-        "cookies": "De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord"
+        "cookies": "De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord",
+        "agecheck": "Deze website bevat expliciet materiaal. Door gebruik te maken van deze website ga je hiermee akkoord",
+        "olderthen": "Ouder dan 18jaar",
+        "leavewebsite": "Verlaat de website",
+        "or": "of"
     },
     "confirm": {
         "errorAlreadyActivated": "Dit account is al geactiveerd",
