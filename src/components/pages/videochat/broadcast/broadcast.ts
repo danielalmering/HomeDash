@@ -3,6 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 //import 'swfobject';
 const swfobject = require('swfobject');
+import WithRender from './broadcast.tpl.html';
 
 enum Quality{ LOW, MEDIUM, HIGH }
 
@@ -16,9 +17,8 @@ export interface Caster{
     setQuality( value: Quality ): void;
 }
 
-@Component({
-    template: require('./broadcast.tpl.html')
-})
+@WithRender
+@Component
 export default class Broadcast extends Vue{
 
     constructor(){

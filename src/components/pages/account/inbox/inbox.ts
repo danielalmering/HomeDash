@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Pagination from '../../../layout/Pagination.vue';
 import { User } from '../../../../models/User';
 import config from '../../../../config';
+import WithRender from './inbox.tpl.html';
 
 interface Notification {
     id: number;
@@ -15,8 +16,8 @@ interface Notification {
     checked: boolean;
 }
 
+@WithRender
 @Component({
-    template: require('./inbox.tpl.html'),
     components: {
         pagination: Pagination
     }

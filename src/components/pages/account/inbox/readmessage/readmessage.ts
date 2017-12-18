@@ -5,10 +5,10 @@ import { Route } from 'vue-router';
 import { User } from '../../../../../models/User';
 
 import config from '../../../../../config';
+import WithRender from './readmessage.tpl.html';
 
-@Component({
-    template: require('./readmessage.tpl.html')
-})
+@WithRender
+@Component
 export default class Readmessage extends Vue {
 
     payed: boolean = false;

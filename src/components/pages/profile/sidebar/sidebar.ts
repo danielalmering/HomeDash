@@ -10,11 +10,12 @@ import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
 import { RequestPayload } from '../../../../store/session';
 import { SessionType } from '../../../../models/Sessions';
+import WithRender from './sidebar.tpl.html';
 
 type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 
+@WithRender
 @Component({
-    template: require('./sidebar.tpl.html'),
     components: {
         jsmpeg: JSMpeg
     }

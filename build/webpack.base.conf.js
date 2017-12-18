@@ -56,6 +56,7 @@ module.exports = {
       {
         test: /\.ts$/,
         loader: 'ts-loader',
+        // esModule: true,
         // include: [resolve('src')],
         options: {
           // transpileOnly: true,
@@ -66,14 +67,16 @@ module.exports = {
         }
       },
       {
-        test: /\.html$/,
-        loader: 'html-loader'
+        test: /\.tpl\.html$/,
+        loader: 'vue-template-loader',
+        options: {
+          transformToRequire: {
+            // The key should be element name,
+            // the value should be attribute name or its array
+            img: 'src'
+          }
+        },
       },
-      // {
-      //   test: /\.js$/,
-      //   loader: 'babel-loader',
-      //   include: [resolve('src'), resolve('test')]
-      // },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',

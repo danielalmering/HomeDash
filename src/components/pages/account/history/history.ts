@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Pagination from '../../../layout/Pagination.vue';
 
 import config from '../../../../config';
+import WithRender from './history.tpl.html';
 
 interface HistoryItem {
     date: number;
@@ -23,8 +24,8 @@ enum Service {
     Call        = 'IVR'
 }
 
+@WithRender
 @Component({
-    template: require('./history.tpl.html'),
     components: {
         pagination: Pagination
     }

@@ -5,9 +5,10 @@ import Vue from 'vue';
 import Seo from './seo/seo';
 
 import './footer.scss';
+import WithRender from './footer.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./footer.tpl.html'),
     components: {
         seo: Seo
     }
@@ -29,5 +30,5 @@ export default class Footer extends Vue {
         this.seo = to.name === 'Performers';
     }
 
-   
+
 }

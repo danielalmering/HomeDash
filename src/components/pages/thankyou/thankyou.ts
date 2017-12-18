@@ -6,10 +6,10 @@ import config from '../../../config';
 
 import './thankyou.scss';
 import { Performer, PerformerStatus } from '../../../models/Performer';
+import WithRender from './thankyou.tpl.html';
 
-@Component({
-    template: require('./thankyou.tpl.html')
-})
+@WithRender
+@Component
 export default class Thankyou extends Vue {
 
     getAvatarImage = getAvatarImage;
