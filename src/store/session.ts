@@ -4,7 +4,7 @@ import { Module, ActionContext } from 'vuex';
 import rootState, { RootState } from './index';
 import { Performer } from '../models/Performer';
 import { UserRole } from '../models/User';
-import { SessionType, State } from '../models/Sessions';
+import { SessionType, State, PaymentType } from '../models/Sessions';
 import config from '../config';
 
 import notificationSocket from '../socket';
@@ -21,6 +21,7 @@ export interface RequestPayload extends Payload {
     sessionType: SessionType;
     ivrCode?: string;
     displayName?: string;
+    payment?:PaymentType;
 }
 
 export interface SessionState {
@@ -85,7 +86,7 @@ const sessionStore: Module<SessionState, RootState> = {
                     type: payload.sessionType,
                     name: displayName,
                     ivrCode: payload.ivrCode || undefined,
-                    payment: payload.ivrCode ? 'IVR' : 'CREDITS'
+                    payment: payload.payment
                 })
             });
 

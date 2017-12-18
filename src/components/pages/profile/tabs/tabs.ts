@@ -167,7 +167,7 @@ export default class Tabs extends Vue {
         this.$store.dispatch('displayModal', 'login');
     }
 
-    startSession(description:{ivrCode?:string, displayName?:string, sessionType:string}){
+    startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){
         this.$emit('startSession', description);
     }
 

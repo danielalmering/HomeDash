@@ -5,7 +5,7 @@ import Vue from 'vue';
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
 import { getAvatarImage, getPerformerLabel  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session';
-import { SessionType, State } from '../../../models/Sessions';
+import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
 import PhotoSlider from './photo-slider.vue';
 import FullSlider from './photo-slider-fullscreen.vue';
@@ -165,7 +165,8 @@ export default class Profile extends Vue {
         let defaults:RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
-            sessionType: SessionType.Video
+            sessionType: SessionType.Video,
+            payment: PaymentType.Ivr
         };
 
         const toSend = {...defaults,...payload};
