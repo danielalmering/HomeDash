@@ -72,7 +72,7 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        return this.$store.state.session.activeSessionData.streamTransportType;
+        return 'jsmpeg';//this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
     }
 
     get wowza(): string | undefined{
@@ -102,10 +102,6 @@ export default class VideoChat extends Vue {
 
     get displayName(){
         return this.$store.state.session.activeDisplayName;
-    }
-
-    get type(){
-        return 'jsmpeg';
     }
 
     mounted(){

@@ -34,7 +34,7 @@ export default class JSMpeg extends Stream {
         this.player = new jsmpeg.Player(videoUrl, {
             canvas: video,
             protocols: 'videoJSMPEG',
-            audio: true,
+            audio: !this.muted,
             streaming: true,
             pauseWhenHidden: false,
             disableGl: false,
