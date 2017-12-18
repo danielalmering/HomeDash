@@ -1,6 +1,7 @@
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
+import { setTitle, setDescription, setKeywords } from '../../../../seo';
 
 import config from '../../../../config';
 
@@ -33,8 +34,12 @@ export default class Seo extends Vue {
     seoTabs : SeoText[] = [];
     selectedTab: number = 0;
 
+    seoData?: SeoData = undefined;
+
     mounted(){
-        this.loadSeo('home');
+        const category = this.$route.params.category && this.$route.params.category !== '' ? this.$route.params.category : 'home';
+
+        this.loadSeo(category);
     }
 
     tabSelect(tab: number){
@@ -43,7 +48,13 @@ export default class Seo extends Vue {
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
-        this.loadSeo(to.params.category);
+        const category = to.params.category && to.params.category !== '' ? to.params.category : 'home';
+
+        if(this.seoData && category === this.seoData.slug){
+            return;
+        }
+
+        this.loadSeo(category);
     }
 
     async loadSeo(category: string){
@@ -53,5 +64,11 @@ export default class Seo extends Vue {
         this.seoMain = data.texts[0];
         this.seoTabs = data.texts.slice(1);
         this.selectedTab = this.seoTabs[0].id;
+
+        this.seoData = data;
+
+        setTitle(data.meta_title);
+        setDescription(data.meta_description);
+        setKeywords(data.meta_keywords);
     }
 }

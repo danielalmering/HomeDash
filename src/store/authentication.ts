@@ -4,6 +4,7 @@ import { Module, ActionContext } from 'vuex';
 import { RootState } from './index';
 import { User, AnonymousUser, UserForm } from '../models/User';
 import config from '../config';
+import notificationSocket from '../socket';
 
 export interface AuthState {
     user: User | undefined;
@@ -64,13 +65,19 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
 
             store.commit('setUser', loginData);
+
+            notificationSocket.disconnect();
+            notificationSocket.connect();
         },
         async logout(store: AuthContext){
             const logoutResult = await fetch(`${config.BaseUrl}/auth/logout`, {
                 credentials: 'include'
             });
 
-            store.commit('setUser', undefined);
+            await store.dispatch('getSession');
+
+            notificationSocket.disconnect();
+            notificationSocket.connect();
         },
         async register(store: AuthContext, payload: UserForm){
             const registerResult = await fetch(`${config.BaseUrl}/client/client_accounts`, {

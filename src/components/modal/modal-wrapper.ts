@@ -3,6 +3,8 @@ import Vue from 'vue';
 
 import modalLogin from './modal-login/modal-login';
 import modalRegister from './modal-register/modal-register';
+import modalRecover from './modal-recover/modal-recover';
+import modalReset from './modal-reset/modal-reset';
 
 import './modal-wrapper.scss';
 
@@ -10,7 +12,9 @@ import './modal-wrapper.scss';
     template: require('./modal-wrapper.tpl.html'),
     components: {
         login: modalLogin,
-        register: modalRegister
+        register: modalRegister,
+        recover: modalRecover,
+        reset: modalReset
     }
 })
 export default class ModalWrapper extends Vue {
