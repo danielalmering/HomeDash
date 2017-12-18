@@ -16,6 +16,10 @@ export default class Footer extends Vue {
 
     seo: boolean = false;
 
+    get branding(){
+        return this.$store.getters.getBranding;
+    }
+
     mounted(){
         this.seo = this.$route.name === 'Performers';
     }
@@ -24,4 +28,6 @@ export default class Footer extends Vue {
     onRouteChange(to: Route, from: Route){
         this.seo = to.name === 'Performers';
     }
+
+   
 }

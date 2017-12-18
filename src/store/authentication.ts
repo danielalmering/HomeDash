@@ -115,7 +115,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
 
             store.commit('setUser', sessionData);
-            store.dispatch('setCountry', sessionData.country);
+            await store.dispatch('setCountry', sessionData.country);
         }
     }
 };
