@@ -121,12 +121,16 @@ export default class Tabs extends Vue {
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        // const statusChanged = newPerformer.performerStatus !== oldPerformer.performerStatus;
-        // const peekChanged = newPerformer.performer_services['peek'] !== oldPerformer.performer_services['peek'];
+        if(!oldPerformer){
+            return;
+        }
 
-        // if((statusChanged || peekChanged) && this.selectedTab === 'cam'){
-        //     this.selectedTab = this.firstAvailable;
-        // }
+        const statusChanged = newPerformer.performerStatus !== PerformerStatus.Available && oldPerformer.performerStatus === PerformerStatus.Available;
+        const peekChanged = !newPerformer.performer_services['peek'] && oldPerformer.performer_services['peek'];
+
+        if((statusChanged || peekChanged) && this.selectedTab === 'cam'){
+            this.selectedTab = this.firstAvailable;
+        }
 
         if(!newPerformer.performer_services[this.selectedTab]){
             this.selectedTab = this.firstAvailable;
