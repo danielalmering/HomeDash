@@ -376,6 +376,11 @@
         @include rem(margin-top, 35px);
         border-top: 2px solid $pallete-13;
         @include rem(padding, 35px 0px);
+
+        img {
+            display: table;
+            @include rem(margin, 15px auto);
+        }
     }
 
 }
