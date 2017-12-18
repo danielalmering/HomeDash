@@ -1,15 +1,16 @@
 <div class="videochat">
     <div class="videochat__screen">
         <div class="videochat__screen-object">
-            <component :is="type"
+            <component :is="streamTransportType"
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
                 :wowza="wowza"
-                :playStream="playStream">
+                :playStream="playStream"
+                :muted="sessionType == 'PEEK'">
             </component>
         </div>
     </div>
-    <div class="videochat__broadcast" v-if="sessionType != 'PEEK'">
+    <div class="videochat__broadcast" v-if="sessionType != 'PEEK' && streamTransportType != 'rtmp' ">
         <div class="videochat__broadcast-object">
             <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
             <broadcast v-if="broadcasting.cam"

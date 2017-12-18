@@ -44,6 +44,8 @@ export default class Rtmp extends Stream {
             listener: 'flashCallbacks'
         };
 
+        const file = this.muted ? 'Peek' : 'Chat';
+
         swfobject.embedSWF('/static/View.swf', 'viewSWF', '100%', '100%', '10.2.0', true, flashvars, params, attrs);
     }
 
