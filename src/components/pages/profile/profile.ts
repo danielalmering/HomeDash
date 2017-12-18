@@ -215,6 +215,14 @@ export default class Profile extends Vue {
             this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
         }
 
+        this.setSeoParameters();
+    }
+
+    setSeoParameters(){
+        if(!this.performer){
+            return;
+        }
+
         setTitle(this.$t('profile.metaTitle', { nickname: this.performer.nickname }).toString());
         setDescription(this.$t('profile.metaDescription', { nickname: this.performer.nickname }).toString());
         setKeywords(`${this.performer.nickname}, ${this.performer.eyeColor}, ${this.performer.cupSize}`);
