@@ -95,6 +95,14 @@ export default class Tabs extends Vue {
         return 'tabs.service-webcam';
     }
 
+    get canPeek():boolean{
+        if (!this.performer){
+            return false;
+        }
+
+        return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
+    }
+
     get authenticated(){
         return this.$store.getters.isLoggedIn;
     }
@@ -116,7 +124,22 @@ export default class Tabs extends Vue {
     }
 
     get displayName(): string {
-        return 'Karel';
+        if(!this.user){
+            return "";
+        }
+
+        if (this.authenticated){
+            return this.user.displayName || this.user.username;
+        } else {
+            return this.user.displayName || '';
+        }
+    }
+
+    set displayName(value:string){
+        if (!this.user){
+            return;
+        }
+        this.user.displayName = value;
     }
 
     @Watch('performer', { deep: true })
@@ -148,8 +171,8 @@ export default class Tabs extends Vue {
         this.$store.dispatch('displayModal', 'login');
     }
 
-    startSession(ivrCode: string, displayName: string, service: string){
-        this.$emit('startSession', { ivrCode, displayName, service });
+    startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){
+        this.$emit('startSession', description);
     }
 
     startVoyeur(){

@@ -4,8 +4,8 @@ import Vue from 'vue';
 
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
 import { getAvatarImage, getPerformerLabel  } from '../../../util';
-import { RequestPayload } from '../../../store/session';
-import { SessionType, State } from '../../../models/Sessions';
+import { RequestPayload, SessionState } from '../../../store/session';
+import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
 import PhotoSlider from './photo-slider.vue';
 import FullSlider from './photo-slider-fullscreen.vue';
@@ -97,6 +97,22 @@ export default class Profile extends Vue {
         this.loadPerformer(parseInt(to.params.id));
     }
 
+    @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
+        if (value == State.Accepted){
+            await this.$store.dispatch('initiate');
+            if (!this.performer){
+                return;
+            }
+
+            this.$router.push({
+                name: 'Videochat',
+                params: {
+                    id: this.performer.advert_numbers[0].advertNumber.toString()
+                }
+            });
+        }
+    }
+
     openFullSlider(id: number){
         this.fullSliderVisible = true;
         this.displayPic = id;
@@ -139,40 +155,23 @@ export default class Profile extends Vue {
         }
     }
 
-    async startSession({}){
+    async startSession(payload={}){
         if(!this.performer){
             return;
         }
 
         const self = this;
 
-        await this.$store.dispatch<RequestPayload>({
+        let defaults:RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
             sessionType: SessionType.Video,
-        });
+            payment: PaymentType.Ivr
+        };
 
-        this.$store.watch((state) => state.session.activeState, async (newValue: State) => {
-            if(newValue === State.Canceling || newValue === State.Ending){
-                //Kill session loader
-            }
+        const toSend = {...defaults,...payload};
 
-            if(newValue === State.Accepted){
-                await this.$store.dispatch('initiate');
-
-                //Remove this when I find a way to not have double types
-                if(!self.performer){
-                    return;
-                }
-
-                this.$router.push({
-                    name: 'Videochat',
-                    params: {
-                        id: self.performer.advert_numbers[0].advertNumber.toString()
-                    }
-                });
-            }
-        });
+        await this.$store.dispatch<RequestPayload>( toSend ); 
     }
 
     cancel(){

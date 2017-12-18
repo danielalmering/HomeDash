@@ -13,10 +13,20 @@ const swfobject = require('swfobject');
 })
 export default class Rtmp extends Stream {
 
+    state:string = '';
+
+    public onStateChange(value:string){
+        if (this.state == value)
+            return;
+
+        this.state = value;
+        this.$emit('stateChange', value); 
+    }
+
     mounted(){
         window.flashCallbacks = {
-            onStateChange: this.onStateChange,
-            onError: this.onError
+            onStateChange: this.onStateChange.bind(this),
+            onError: this.onError.bind(this)
         };
 
         const attrs = {

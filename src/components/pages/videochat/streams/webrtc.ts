@@ -4,22 +4,22 @@ import { Component } from 'vue-property-decorator';
 import config from '../../../../config';
 import Stream from './stream';
 
-import * as typeRTC from 'typertc';
+import {Player, WRTCUtils as utils } from 'typertc';
 
 @Component({
     template: '<div><video class="webrtc"></video></div>',
 })
 export default class WebRTC extends Stream {
 
-    private player: typeRTC.Player;
+    private player: Player;
 
     mounted(){
-        const video = <HTMLVideoElement>document.querySelector('.webrtc');
+        const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
         video.autoplay = true;
         
-        const wowzaParts = typeRTC.WRTCUtils.parseUrl(this.wowza);
-        typeRTC.WRTCUtils.validate(wowzaParts);
-
+        const wowzaParts = utils.parseUrl(this.wowza);
+        utils.validate(wowzaParts);
+        
         const options = {
             wowza: wowzaParts.host + "/webrtc-session.json",
             applicationName: wowzaParts.application,
@@ -30,10 +30,10 @@ export default class WebRTC extends Stream {
             debug: true,
             muted: false
         };
-
-        this.player = new typeRTC.Player(options);
-        this.player.onStateChange = this.onStateChange;
-        this.player.onError = this.onError;
+        
+        this.player = new Player(options);
+        this.player.onStateChange = this.onStateChange.bind(this);
+        this.player.onError = this.onError.bind(this);
     }
 
     beforeDestroy(){

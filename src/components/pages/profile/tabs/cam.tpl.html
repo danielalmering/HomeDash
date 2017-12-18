@@ -5,7 +5,7 @@
         <div class="numbers" v-if="$parent.info"><i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }} <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span></div>
         <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
 
-        <form class="form" v-on:submit="$parent.startSession(ivrCode, displayName, 'VIDEO')">
+        <form class="form" v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO'})">
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
@@ -17,14 +17,15 @@
                     <input type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')">
                 </div>
             </div>
-            <button class="btn btn-full btn-large btn-green" v-t="'tabs.webcambtn'"></button>
+            <button class="btn btn-full btn-large btn-green" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></button>
         </form>
     </div>
 
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
         <p><span v-t="$parent.authenticated ? 'tabs.webcamwithcreditsdesc' : 'tabs.registeraccount'"></span> <span v-if="$parent.authenticated">({{ $parent.info.credits_per_minute | euro }} {{ $t('top.numbers.pm') }})</span></p>
-        <a class="btn btn-full btn-large" :class="$parent.authenticated ? 'btn-green' : 'btn-orange'" v-t="$parent.authenticated ? 'tabs.webcambtn' : 'modals.login.login'" v-on:click="$parent.authenticated ? $parent.startSession() : $parent.login()"></a>
+        <a v-if="$parent.authenticated" class="btn btn-full btn-large btn-green" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'" v-on:click="$parent.startSession({sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'})"></a>
+        <a v-if="!$parent.authenticated" class="btn btn-full btn-large btn-orange" v-t="'modals.login.login'" v-on:click="$parent.login()"></a>
     </div>
 
 </div>
