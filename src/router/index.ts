@@ -24,7 +24,7 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor } from './interceptors';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor } from './interceptors';
 
 Vue.use(Router);
 
@@ -170,6 +170,7 @@ const router = new Router({
 });
 
 router.beforeEach(safeInterceptor);
+router.afterEach(seoInterceptor);
 
 function makeRoutesStrict(routes: RouteConfig[]){
 

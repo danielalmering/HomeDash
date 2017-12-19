@@ -1,5 +1,6 @@
 import Router, { Route, Location } from 'vue-router';
 import store from '../store';
+import { setCanonical } from '../seo';
 
 export function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     const acceptedCountries = ['uk', 'nl', 'de'];
@@ -93,4 +94,8 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
     next({
         name: 'Performers'
     });
+}
+
+export function seoInterceptor(to: Route, previous: Route){
+    setCanonical(to.fullPath);
 }

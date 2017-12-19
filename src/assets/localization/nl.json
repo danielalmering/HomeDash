@@ -69,6 +69,9 @@
         "noperformers": "Geen performers",
         "currentcredits": "Huidig saldo",
         "youraccount": "Jouw account?",
+        "alerts": {
+            "errorSwitchFailed": "Het is niet gelukt om van performer te wisselen"
+        },
         "register": {
             "usp-1": "Volledig anoniem",
             "usp-2": "Profiteer van speciale acties",
