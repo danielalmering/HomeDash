@@ -36,6 +36,7 @@ body {
 main {
     &.profileview { 
         display:table; 
+        width: 100%;
 
         &.collapse {
             .sidebar {

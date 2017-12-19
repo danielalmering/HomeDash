@@ -224,6 +224,7 @@
         }
     },
     "videochat": {
+        "leaving": "Huidige sessie verlaten",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"
         }
