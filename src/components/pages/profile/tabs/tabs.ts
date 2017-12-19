@@ -195,12 +195,12 @@ export default class Tabs extends Vue {
 
         if(!mailResult.ok){
             this.$store.dispatch('openMessage', {
-                content: 'contact.errorSend',
+                content: 'contact.alerts.errorSend',
                 class: 'error'
             });
         } else {
             this.$store.dispatch('openMessage', {
-                content: 'contact.successSend',
+                content: 'contact.alerts.successSend',
                 class: 'success'
             });
 

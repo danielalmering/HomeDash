@@ -163,7 +163,10 @@ const routes = [{
 const router = new Router({
     mode: 'history',
     base: '/',
-    routes: makeRoutesStrict(routes)
+    routes: makeRoutesStrict(routes),
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });
 
 router.beforeEach(safeInterceptor);

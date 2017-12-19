@@ -12,7 +12,7 @@
                 <span v-on:click="account()" class="name" v-t="authenticated ? user.username : 'sidebar.youraccount'"></span>
                 <p v-if="authenticated">{{ $t('sidebar.currentcredits') }}</p>
                 <span v-if="authenticated" class="credits">{{ user.credits }}</span>
-                <router-link v-if="authenticated" class="btn btn-fa fa-money btn-small" :to="{ name: 'Payment' }"></router-link>
+                <router-link v-if="authenticated" class="btn btn-fa fa-money btn-small btn-black" :to="{ name: 'Payment' }"></router-link>
                 <ul class="usp" v-if="!authenticated">
                     <li v-t="'sidebar.register.usp-1'"></li>
                     <li v-t="'sidebar.register.usp-2'"></li>
@@ -92,7 +92,12 @@
 
     </div>
     
-    <div class="sidebar__toggle hidden-md hidden-lg" :class="{ 'collapse': displaySidebar }" v-on:click="toggleSidebar">
-        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+    <div class="sidebar__toggle hidden-md hidden-lg" :class="{ 'collapse': displaySidebar }">
+        <div class="sidebar__toggle-icon" v-on:click="toggleSidebar">
+            <i class="fa" :class="{ 'fa-angle-double-left': displaySidebar, 'fa-angle-double-right': !displaySidebar }" aria-hidden="true"></i>
+        </div>
+        <div class="sidebar__toggle-icon black" v-if="!displaySidebar">
+            <router-link :to="{ path: '/'}"><i class="fa fa-home" aria-hidden="true"></i></router-link>
+        </div>
     </div>
 </div>
