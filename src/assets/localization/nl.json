@@ -224,6 +224,7 @@
         }
     },
     "videochat": {
+        "leaving": "Huidige sessie verlaten",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"
         }
@@ -267,7 +268,7 @@
         "bonuscredits": "Bonus credits",
         "totalcredits": "Totaal credits",
         "total": "Totaal",
-        "bonusbanner": "Koop {credits} credits en krijg {percentage}% extra",
+        "bonusbanner": "Koop nog {credits} credits en krijg {percentage}% extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
         "discountcode": "Kortingscode?",
         "mostlybought": "Meest verkocht!",

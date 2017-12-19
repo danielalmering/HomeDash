@@ -56,5 +56,5 @@
 
     <chat v-if="sessionType != 'PEEK'" :performer-name="performer.nickname" :user-name="displayName"></chat>
 
-    <confirmation v-if="askToLeave" :type="'disconnect'" v-on:accept="leave" v-on:cancel="stay"></confirmation>
+    <confirmation v-if="askToLeave" :type="'dialog'" :title="'videochat.leaving'" v-on:accept="leave" v-on:cancel="stay"></confirmation>
 </div>
