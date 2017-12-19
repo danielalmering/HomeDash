@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
 import { Route } from 'vue-router';
+import Component from 'vue-class-component';
 import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
 import Profile from '../components/pages/profile/profile';

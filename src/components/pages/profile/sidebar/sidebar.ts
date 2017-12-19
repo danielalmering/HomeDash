@@ -128,6 +128,18 @@ export default class Sidebar extends Vue {
     }
 
     goToPerformer(id: number){
+        const session = this.$store.state.session;
+        //peek with another lady if you're currently peeking and the lady is peekable
+        if (this.category == 'peek' && session.activeSessionType == SessionType.Peek){
+            this.$router.push({
+                name: 'Videochat',
+                params: {
+                    id: id.toString()
+                }
+            });
+            return;
+        }
+
         this.$router.push({
             name: 'Profile',
             params: {
