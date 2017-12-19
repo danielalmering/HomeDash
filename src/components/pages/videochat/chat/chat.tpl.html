@@ -5,7 +5,7 @@
     <ul class="videochat__chat-list" :class="{ 'vhidden': !chatOpened }">
         <li v-for="message in chatMessages">
             <h3>{{ message.senderType === 'ROLE_PERFORMER' ? performerName : userName }}</h3>
-            <p>{{ message.message }}</p>
+            <p v-html="message.message"></p>
         </li>
     </ul>
     <div class="videochat__chat-input" :class="{ 'vhidden': !chatOpened }">
@@ -18,6 +18,6 @@
         </form>
     </div>
     <div class="videochat__chat-smilies" v-if="smiliesOpened">
-        <emoticons></emoticons>
+        <emoticons v-on:emojiSelected="emojiSelected"></emoticons>
     </div>
 </div>

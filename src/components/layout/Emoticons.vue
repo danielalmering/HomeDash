@@ -2,17 +2,13 @@
     <div class="emoticons">
         <div class="container-fluid">
             <ul class="emoticons__cat">
-                <li><a><i class="icon-people" v-on:click="toggleIcons(1)"></i></a></li>
-                <li><a><i class="icon-nature" v-on:click="toggleIcons(2)"></i></a></li>
-                <li><a><i class="icon-food" v-on:click="toggleIcons(3)"></i></a></li>
-                <li><a><i class="icon-activity" v-on:click="toggleIcons(4)"></i></a></li>
-                <li><a><i class="icon-travel" v-on:click="toggleIcons(5)"></i></a></li>
-                <li><a><i class="icon-objects" v-on:click="toggleIcons(6)"></i></a></li>
-                <li><a><i class="icon-symbols" v-on:click="toggleIcons(7)"></i></a></li>
-                <li><a><i class="icon-flags" v-on:click="toggleIcons(8)"></i></a></li>
+                <li v-for="cat in emoticonCategories" :key="cat">
+                    <a><i :class="`icon-${cat}`" v-on:click="toggleIcons(cat)"></i></a>
+                </li>
             </ul>
             <div class="emoticons__list">
-                <i v-for="index in emoticons['cat-' + number]" :key='index' class="e1a-med" :class="'e1a-'+ index">
+                <i v-for="index in emoticons[selectedCategory]" :key='index' class="e1a-med" :class="'e1a-'+ index" v-on:click="selectEmoji(index)">
+                    {{index}}
                 </i>
             </div>
         </div>
@@ -23,19 +19,28 @@
 import Vue from 'vue';
 import config from '../../config';
 
-import emoticonData from './Emoticons.data.json'
+import emoticonData from './Emoticons.data.json';
 
 export default {
     name: 'emoticons',
     data () {
         return {
             emoticons: emoticonData,
-            number: 1
+            emoticonCategories: [],
+            selectedCategory: 'people'
         };
     },
+    mounted() {
+        for(var category in this.emoticons){
+            this.emoticonCategories.push(category);
+        }
+    },
     methods: {
-        toggleIcons: function(number){
-            this.number = number;
+        toggleIcons: function(selectedCategory){
+            this.selectedCategory = selectedCategory;
+        },
+        selectEmoji: function(name){
+            this.$emit('emojiSelected', name);
         }
     }
 };
