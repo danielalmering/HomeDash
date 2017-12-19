@@ -21,7 +21,7 @@ export interface RequestPayload extends Payload {
     sessionType: SessionType;
     ivrCode?: string;
     displayName?: string;
-    payment?:PaymentType;
+    payment?: PaymentType;
 }
 
 export interface SessionState {
@@ -31,15 +31,20 @@ export interface SessionState {
     activeSessionData: SessionData | null;
     activeDisplayName: string;
     activeIvrCode: string | undefined;
+    activePaymentType: PaymentType | undefined;
+    isSwitching: boolean;
 }
 
-export interface VideoEventSocketMessage {
-    clientId: number;
-    performerId: number;
+interface VideoEventSocketMessageContent {
     type: string;
     value?: string | boolean;
     message?: string;
     _stateChange?: string;
+}
+
+export interface VideoEventSocketMessage extends VideoEventSocketMessageContent {
+    clientId: number;
+    performerId: number;
 }
 
 // TODO: Figure out how to remove this timeout
@@ -51,6 +56,25 @@ setTimeout(() => {
     });
 }, 100);
 
+const transitions: { [key: string]: State[] } = {
+    [State.Idle]:           [State.InRequest],
+    [State.InRequest]:      [State.Pending, State.Accepted, State.Canceling, State.Idle],
+    [State.Pending]:        [State.Accepted, State.Canceling],
+    [State.Accepted]:       [State.Initializing, State.Canceling],
+    [State.Initializing]:   [State.Active, State.Canceling],
+    [State.Active]:         [State.Ending],
+    [State.Canceling]:      [State.Idle],
+    [State.Ending]:         [State.Idle]
+};
+
+function isStateChangeAllowed(fromState: State, toState: State) {
+    if(!transitions.hasOwnProperty(fromState)){
+        throw new Error(`State does not exist: ${fromState}`);
+    }
+
+    return transitions[fromState].indexOf(toState) > -1;
+}
+
 const sessionStore: Module<SessionState, RootState> = {
     state: {
         activeState: State.Idle,
@@ -58,13 +82,19 @@ const sessionStore: Module<SessionState, RootState> = {
         activePerformer: null,
         activeSessionData: null,
         activeDisplayName: '',
-        activeIvrCode: undefined
+        activeIvrCode: undefined,
+        activePaymentType: undefined,
+        isSwitching: false
     },
     getters: {
     },
     mutations: {
-        setState(state: SessionState, newState: State){
-            state.activeState = newState;
+        setState(state: SessionState, toState: State){
+            if(!isStateChangeAllowed(state.activeState, toState)){
+                throw new Error(`Illegal state change from ${state.activeState} to ${toState}`);
+            }
+
+            state.activeState = toState;
         }
     },
     actions: {
@@ -97,6 +127,7 @@ const sessionStore: Module<SessionState, RootState> = {
                 store.state.activeDisplayName = displayName;
                 store.state.activeSessionType = payload.sessionType;
                 store.state.activeIvrCode = payload.ivrCode;
+                store.state.activePaymentType = payload.payment;
 
                 if(payload.sessionType == SessionType.Peek){
                     store.commit('setState', State.Accepted);
@@ -115,10 +146,6 @@ const sessionStore: Module<SessionState, RootState> = {
                     class: 'error'
                 });
             }
-
-            // socketService.subscribe('')
-
-            //"event":"videoChat","receiverId":"5789","receiverType":"ROLE_CLIENT","content":"%7B%22_stateChange%22%3A%22REJPERF%22%2C%22performerId%22%3A158%2C%22clientId%22%3A5789%2C%22type%22%3A%22RESPONSE%22%2C%22value%22%3Afalse%7D","senderType":"ROLE_PERFORMER","senderId":158}"
         },
         async cancel(store: ActionContext<SessionState, RootState>, reason: string){
             store.commit('setState', State.Canceling);
@@ -168,8 +195,40 @@ const sessionStore: Module<SessionState, RootState> = {
                 throw new Error('Oh noooooo, ending failed');
             }
         },
+        async switchPeek(store: ActionContext<SessionState, RootState>, performer: Performer){
+            if(store.state.activeState !== State.Active){
+                throw new Error(`No peek switch allowed from state ${store.state.activeState}. Try it again when you reach the ${State.Active} state.`);
+            }
+
+            if(store.state.activeSessionType !== SessionType.Peek){
+                throw new Error(`You can only do a switch while in a ${SessionType.Peek} session type. Current: ${store.state.activeSessionType}`);
+            }
+
+            if(store.state.activePerformer && store.state.activePerformer.id === performer.id){
+                throw new Error(`You are already peeking ${performer.id}. Pick another one dawg`)
+            }
+
+            try {
+                store.state.isSwitching = true;
+
+                await store.dispatch('end', 'PEEK_SWITCH');
+
+                await store.dispatch('startRequest', <RequestPayload>{
+                    performer: performer,
+                    sessionType: store.state.activeSessionType,
+                    ivrCode: store.state.activeIvrCode,
+                    displayName: store.state.activeDisplayName,
+                    payment: store.state.activePaymentType
+                });
+
+                store.state.isSwitching = false;
+            } catch(ex){
+                store.state.isSwitching = false;
+                throw ex;
+            }
+        },
         async initiate(store: ActionContext<SessionState, RootState>){
-            store.state.activeState = State.Initializing;
+            store.commit('setState', State.Initializing);
 
             if(!store.state.activePerformer){
                 return; //Do something else
@@ -181,11 +240,17 @@ const sessionStore: Module<SessionState, RootState> = {
                 `/performer_account/performer_number/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videochat` :
                 `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;
 
-            let body:string;
-            if( store.state.activeIvrCode ){
-                body = JSON.stringify({ chatroomName: store.state.activeDisplayName, ivrCode:store.state.activeIvrCode });
+            let body: string;
+            if(store.state.activeIvrCode){
+                body = JSON.stringify({
+                    chatroomName: store.state.activeDisplayName,
+                    ivrCode: store.state.activeIvrCode
+                });
             } else {
-                body = JSON.stringify({ clientId: store.rootState.authentication.user.id, chatroomName: store.state.activeDisplayName });
+                body = JSON.stringify({
+                    clientId: store.rootState.authentication.user.id,
+                    chatroomName: store.state.activeDisplayName
+                });
             }
 
             const initiateResult = await fetch(`${config.BaseUrl}/session${url}`, {
@@ -223,8 +288,6 @@ const sessionStore: Module<SessionState, RootState> = {
                     value: null
                 }
             });
-
-            //"{"event": "videoChat","receiverId":"152","receiverType":"ROLE_PERFORMER","content":"%7B%22type%22%3A%22START_TIMER_DEVICE%22%2C%22clientId%22%3A5789%2C%22performerId%22%3A152%2C%22value%22%3Anull%7D"}"
         },
         async startCalling(store: ActionContext<SessionState, RootState>){
             if (!store.state.activePerformer){
@@ -237,7 +300,7 @@ const sessionStore: Module<SessionState, RootState> = {
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify({ivrCode:store.state.activeIvrCode})
+                body: JSON.stringify({ ivrCode: store.state.activeIvrCode })
             });
 
             if (result.status == 200){
@@ -255,7 +318,7 @@ const sessionStore: Module<SessionState, RootState> = {
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify({ivrCode:store.state.activeIvrCode})
+                body: JSON.stringify({ivrCode: store.state.activeIvrCode})
             });
 
             if (result.status == 200){
@@ -271,16 +334,10 @@ const sessionStore: Module<SessionState, RootState> = {
         },
         callFailed(store: ActionContext<SessionState, RootState>){
             store.state.activeSessionType = SessionType.Video;
-            store.dispatch('openMessage', {
-                content: 'videocall.callFailed',
-                class: 'error'
-            });
+            store.dispatch('errorMessage', 'videocall.callFailed');
         },
         callAccepted(store: ActionContext<SessionState, RootState>){
-            store.dispatch('openMessage', {
-                content: 'videocall.callAccepted',
-                class: 'success'
-            })
+            store.dispatch('successMessage', 'videocall.callAccepted');
         },
 
         handleVideoEventSocket(store: ActionContext<SessionState, RootState>, content: VideoEventSocketMessage){
@@ -315,7 +372,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             //Find a good way to do this shit, need it for testing now
             if(content.type === 'RESPONSE'){
-                
+
                 if(content.message === 'HANGUP'){
                     store.dispatch('end', 'PHONE_DISCONNECT');
                     return;

@@ -73,7 +73,8 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        return 'jsmpeg';//this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
+        // return this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
+        return 'jsmpeg';
     }
 
     get wowza(): string | undefined{
@@ -105,6 +106,10 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeDisplayName;
     }
 
+    get isSwitching(){
+        return this.$store.state.session.isSwitching;
+    }
+
     mounted(){
         const self = this;
 
@@ -122,18 +127,15 @@ export default class VideoChat extends Vue {
 
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
             if(newValue === State.Ending && !this.isEnding){
-                this.$store.dispatch('openMessage', {
-                    content: 'video.alerts.successChatEnded',
-                    class: 'success'
-                });
+                this.$store.dispatch('successMessage', 'videochat.alerts.successChatEnded');
 
                 this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
             }
         });
 
-        this.intervalTimer = setInterval(async () => {
+        this.intervalTimer = window.setInterval(async () => {
             await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
-        }, 1000);
+        }, 5000);
     }
 
     close(){
@@ -228,25 +230,14 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeState;
     }
 
-    public beforeRouteUpdate(to:Route, from:Route, next:(yes?:boolean)=>void){
-        const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
-        if (autoLeaves.indexOf(this.activeState) > -1){
-            return next();
-        }
-
-        this.navigation = {to, from, next};
-        this.leave = this.leaveToPeek;
-        this.askToLeave = true;
-    }
-
     public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean)=>void){
         const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
-        if (autoLeaves.indexOf(this.activeState) > -1){
+
+        if (autoLeaves.indexOf(this.activeState) > -1 || this.isSwitching){
             return next();
         }
 
         this.navigation = {to, from, next};
-        this.leave = this.leaveToProfile;
         this.askToLeave = true;
     }
 
@@ -256,40 +247,14 @@ export default class VideoChat extends Vue {
         to:Route, from:Route, next:(yes?:boolean)=>void
     }
 
-    leave(){}
-
-    async leaveToPeek(){
-        this.isEnding = true;
-        await this.$store.dispatch('end', 'PLAYER_END');
-        const id = parseInt(this.navigation.to.params.id);
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/performer_number/${id}?limit=10`, {
-            credentials: 'include'
-        });
-
-        const data = await performerResults.json();
-
-        this.askToLeave = false;
-        //dispatching the request for the next peek action
-        //yields the next page change
-
-        const toSend:RequestPayload = {
-            type:'startRequest',
-            performer: this.performer,
-            sessionType: SessionType.Peek,
-            ivrCode: this.$store.state.session.activeIvrCode,
-            displayName: this.$store.state.session.activeDisplayName
-        }
-        this.$store.dispatch<RequestPayload>( toSend );
-    }
-
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
-        if (value == State.Accepted){
+        if (value === State.Accepted){
             await this.$store.dispatch('initiate');
             this.navigation.next(true);
         }
     }
 
-    leaveToProfile(){
+    leave(){
         this.askToLeave = false;
         this.navigation.next(true);
     }
