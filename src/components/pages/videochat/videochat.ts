@@ -1,19 +1,23 @@
 import Vue from 'vue';
 import jsmpeg from 'jsmpeg';
 
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import { State, SessionType } from '../../../models/Sessions';
-import { SessionData } from '../../../store/Session';
+import { SessionData, RequestPayload } from '../../../store/Session';
 
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
 import Broadcast, { Caster } from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
 import Rtmp from './streams/rtmp';
-// import WebRTC from './jsmpeg/webrtc';
+import WebRTC from './streams/webrtc';
 import config from '../../../config';
+import Confirmations from '../../layout/Confirmations.vue';
 
 import './videochat.scss';
+import Performer from '../performer';
+import WithRender from './videochat.tpl.html';
 
 interface BroadcastConfiguration {
     cam: boolean | string;
@@ -21,14 +25,21 @@ interface BroadcastConfiguration {
     settings: boolean;
 }
 
+Component.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'beforeRouteUpdate'
+]);
+
+@WithRender
 @Component({
-    template: require('./videochat.tpl.html'),
     components: {
         chat: Chat,
         broadcast: Broadcast,
         jsmpeg: Jsmpeg,
         rtmp: Rtmp,
-        // webrtc: WebRTC
+        webrtc: WebRTC,
+        confirmation: Confirmations
     }
 })
 export default class VideoChat extends Vue {
@@ -36,7 +47,6 @@ export default class VideoChat extends Vue {
     //Data
     isEnding: boolean = false;
 
-    player: jsmpeg.Player;
     intervalTimer: number;
 
     broadcasting: BroadcastConfiguration = {
@@ -54,12 +64,16 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionType;
     }
 
+    get paymentMethod(): string{
+        return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
+    }
+
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
 
-        return this.$store.state.session.activeSessionData.streamTransportType;
+        return 'jsmpeg';//this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
     }
 
     get wowza(): string | undefined{
@@ -89,10 +103,6 @@ export default class VideoChat extends Vue {
 
     get displayName(){
         return this.$store.state.session.activeDisplayName;
-    }
-
-    get type(){
-        return 'jsmpeg';
     }
 
     mounted(){
@@ -128,6 +138,14 @@ export default class VideoChat extends Vue {
 
     close(){
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
+    }
+
+    startCalling(){
+        this.$store.dispatch('startCalling');
+    }
+
+    stopCalling(){
+        this.$store.dispatch('stopCalling');
     }
 
     startCam(){
@@ -204,6 +222,81 @@ export default class VideoChat extends Vue {
                 this.broadcasting.mic = selected.name;
             }
         }
+    }
+
+    get activeState(): State {
+        return this.$store.state.session.activeState;
+    }
+
+    public beforeRouteUpdate(to:Route, from:Route, next:(yes?:boolean)=>void){
+        const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
+        if (autoLeaves.indexOf(this.activeState) > -1){
+            return next();
+        }
+
+        this.navigation = {to, from, next};
+        this.leave = this.leaveToPeek;
+        this.askToLeave = true;
+    }
+
+    public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean)=>void){
+        const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
+        if (autoLeaves.indexOf(this.activeState) > -1){
+            return next();
+        }
+
+        this.navigation = {to, from, next};
+        this.leave = this.leaveToProfile;
+        this.askToLeave = true;
+    }
+
+    askToLeave:boolean = false;
+
+    navigation: {
+        to:Route, from:Route, next:(yes?:boolean)=>void
+    }
+
+    leave(){}
+
+    async leaveToPeek(){
+        this.isEnding = true;
+        await this.$store.dispatch('end', 'PLAYER_END');
+        const id = parseInt(this.navigation.to.params.id);
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/performer_number/${id}?limit=10`, {
+            credentials: 'include'
+        });
+
+        const data = await performerResults.json();
+
+        this.askToLeave = false;
+        //dispatching the request for the next peek action
+        //yields the next page change
+
+        const toSend:RequestPayload = {
+            type:'startRequest',
+            performer: this.performer,
+            sessionType: SessionType.Peek,
+            ivrCode: this.$store.state.session.activeIvrCode,
+            displayName: this.$store.state.session.activeDisplayName
+        }
+        this.$store.dispatch<RequestPayload>( toSend );
+    }
+
+    @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
+        if (value == State.Accepted){
+            await this.$store.dispatch('initiate');
+            this.navigation.next(true);
+        }
+    }
+
+    leaveToProfile(){
+        this.askToLeave = false;
+        this.navigation.next(true);
+    }
+
+    stay(){
+        this.askToLeave = false;
+        this.navigation.next(false);
     }
 
     beforeDestroy(){

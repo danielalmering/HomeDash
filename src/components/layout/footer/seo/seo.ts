@@ -4,6 +4,7 @@ import Vue from 'vue';
 import { setTitle, setDescription, setKeywords } from '../../../../seo';
 
 import config from '../../../../config';
+import WithRender from './seo.tpl.html';
 
 interface SeoText {
     id: number;
@@ -25,9 +26,8 @@ interface SeoData {
     texts: SeoText[];
 }
 
-@Component({
-    template: require('./seo.tpl.html')
-})
+@WithRender
+@Component
 export default class Seo extends Vue {
 
     seoMain: SeoText | boolean = false;

@@ -13,10 +13,20 @@ const swfobject = require('swfobject');
 })
 export default class Rtmp extends Stream {
 
+    state:string = '';
+
+    public onStateChange(value:string){
+        if (this.state == value)
+            return;
+
+        this.state = value;
+        this.$emit('stateChange', value); 
+    }
+
     mounted(){
         window.flashCallbacks = {
-            onStateChange: this.onStateChange,
-            onError: this.onError
+            onStateChange: this.onStateChange.bind(this),
+            onError: this.onError.bind(this)
         };
 
         const attrs = {
@@ -33,6 +43,8 @@ export default class Rtmp extends Stream {
             playStream: this.playStream,
             listener: 'flashCallbacks'
         };
+
+        const file = this.muted ? 'Peek' : 'Chat';
 
         swfobject.embedSWF('/static/View.swf', 'viewSWF', '100%', '100%', '10.2.0', true, flashvars, params, attrs);
     }

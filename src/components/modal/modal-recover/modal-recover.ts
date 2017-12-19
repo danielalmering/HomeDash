@@ -2,10 +2,10 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
 import config from '../../../config';
+import WithRender from './modal-recover.tpl.html';
 
-@Component({
-    template: require('./modal-recover.tpl.html')
-})
+@WithRender
+@Component
 export default class ModalRecover extends Vue {
 
     email: string = '';

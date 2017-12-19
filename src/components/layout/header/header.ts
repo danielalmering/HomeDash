@@ -5,9 +5,10 @@ import Top from './top/top';
 import Nav from './nav/nav';
 
 import './header.scss';
+import WithRender from './header.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./header.tpl.html'),
     components: {
         top: Top,
         tnav: Nav

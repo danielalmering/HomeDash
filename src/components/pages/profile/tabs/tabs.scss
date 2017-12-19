@@ -134,6 +134,7 @@
             .btn {
                 position: absolute;
                 bottom: 15px;
+                left: 15px;
                 width: calc(100% - 30px);
                 @include rem(margin-top, 3px);
             }

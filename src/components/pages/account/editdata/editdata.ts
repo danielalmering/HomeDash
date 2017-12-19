@@ -3,10 +3,10 @@ import Vue from 'vue';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
+import WithRender from './editdata.tpl.html';
 
-@Component({
-    template: require('./editdata.tpl.html')
-})
+@WithRender
+@Component
 export default class Editdata extends Vue {
 
     user: User;

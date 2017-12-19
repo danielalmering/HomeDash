@@ -2,7 +2,7 @@
     "top": {
         "numbers": {
             "callnow": "BEL NU",
-            "cpm": "CT",
+            "cpm": "CPM",
             "pm": "pm"
         },
         "banner": {
@@ -11,7 +11,7 @@
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
-            "purchase": "bij aankoop v.a €120"
+            "purchase": "vanaf"
         }
     },
     "nav": {
@@ -105,6 +105,7 @@
         "webcambtn": "Webcammen",
         "webcamwithphonedesc": "Toets # in het hoofdmenu voor de toegangscode",
         "webcamwithcreditsdesc": "Hieronder kunt u webcammen en deze sessie betalen met credits, de kosten zijn",
+        "peekbtn": "Meekijken",
         "voyeurbtn": "Voyeur",
         "videochatbtn": "Beeldbellen",
         "videochatwithcreditsdesc1": "Toets",

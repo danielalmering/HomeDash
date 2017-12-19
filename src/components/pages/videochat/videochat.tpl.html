@@ -1,15 +1,16 @@
 <div class="videochat">
     <div class="videochat__screen">
         <div class="videochat__screen-object">
-            <component :is="type"
+            <component :is="streamTransportType"
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
                 :wowza="wowza"
-                :playStream="playStream">
+                :playStream="playStream"
+                :muted="sessionType == 'PEEK'">
             </component>
         </div>
     </div>
-    <div class="videochat__broadcast" v-if="sessionType != 'PEEK'">
+    <div class="videochat__broadcast" v-if="sessionType != 'PEEK' && streamTransportType != 'rtmp' ">
         <div class="videochat__broadcast-object">
             <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
             <broadcast v-if="broadcasting.cam"
@@ -49,8 +50,11 @@
         </div>
     </div>
     
-
+    <div v-if="sessionType == 'VIDEOCALL'" class="videochat__videocall" v-on:click="stopCalling">{{ $t('stop videocall') }}</div>
+    <div v-if="sessionType != 'VIDEOCALL' && paymentMethod == 'IVR'" class="videochat__videocall" v-on:click="startCalling">{{ $t('start videocall') }}</div>
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
 
-    <chat :performer-name="performer.nickname" :user-name="displayName"></chat>
+    <chat v-if="sessionType != 'PEEK'" :performer-name="performer.nickname" :user-name="displayName"></chat>
+
+    <confirmation v-if="askToLeave" :type="'disconnect'" v-on:accept="leave" v-on:cancel="stay"></confirmation>
 </div>

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
 import { Route } from 'vue-router';
+import Component from 'vue-class-component';
 import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
 import Profile from '../components/pages/profile/profile';
@@ -162,7 +163,10 @@ const routes = [{
 const router = new Router({
     mode: 'history',
     base: '/',
-    routes: makeRoutesStrict(routes)
+    routes: makeRoutesStrict(routes),
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });
 
 router.beforeEach(safeInterceptor);

@@ -59,7 +59,7 @@ export default {
         &-btn {
             position: absolute;
             right: 0px;
-            top: 8px;
+            top: 5px;
             color: $pallete-3;
             &:before{
                 content: "\f00d";

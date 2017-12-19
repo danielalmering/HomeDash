@@ -10,9 +10,10 @@ import config from '../../../config';
 
 import './performers.scss';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
+import WithRender from './performers.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./performers.tpl.html'),
     components: {
         pagination: Pagination
     }

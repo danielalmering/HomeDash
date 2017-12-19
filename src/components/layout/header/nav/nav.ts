@@ -3,10 +3,10 @@ import Vue from 'vue';
 import { Route } from 'vue-router';
 
 import './nav.scss';
+import WithRender from './nav.tpl.html';
 
-@Component({
-    template: require('./nav.tpl.html')
-})
+@WithRender
+@Component
 export default class Nav extends Vue {
 
     // TODO: Populate this based on country

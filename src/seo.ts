@@ -36,16 +36,12 @@ export function createOGTag(property: string, content: string){
 
     if(existingTag !== null){
         existingTag.content = content;
-        console.log('hi');
         return;
     }
-
-    console.log('hey');
 
     const metaTag = document.createElement('meta') as HTMLMetaElement;
     metaTag.setAttribute('property', property);
     metaTag.content = content;
 
     document.head.appendChild(metaTag);
-    console.log(metaTag);
 }

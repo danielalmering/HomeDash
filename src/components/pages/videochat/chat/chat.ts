@@ -9,9 +9,10 @@ interface ChatMessage {
     senderType: string;
     message: string;
 }
+import WithRender from './chat.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./chat.tpl.html'),
     props: {
         performerName: {
             required: true,

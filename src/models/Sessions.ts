@@ -15,3 +15,9 @@ export enum SessionType {
     VideoCall   = 'VIDEOCALL',
     Peek        = 'PEEK'
 }
+
+export enum PaymentType {
+    Ivr         = 'IVR',
+    Credits     = 'CREDITS',
+    IvrCredits  = 'IVRCREDITS'
+}

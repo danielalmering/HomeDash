@@ -9,10 +9,10 @@ interface Campaign {
     number: number;
     cpm: number;
 }
+import WithRender from './top.tpl.html';
 
-@Component({
-    template: require('./top.tpl.html')
-})
+@WithRender
+@Component
 export default class Top extends Vue {
 
     campaign: Campaign = {number: 0, cpm: 0};
@@ -35,10 +35,6 @@ export default class Top extends Vue {
     }
 
     mounted(){
-        if(!this.$store.state.info){
-            return;
-        }
-
         this.getFees();
     }
 

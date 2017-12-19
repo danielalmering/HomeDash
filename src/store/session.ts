@@ -4,7 +4,7 @@ import { Module, ActionContext } from 'vuex';
 import rootState, { RootState } from './index';
 import { Performer } from '../models/Performer';
 import { UserRole } from '../models/User';
-import { SessionType, State } from '../models/Sessions';
+import { SessionType, State, PaymentType } from '../models/Sessions';
 import config from '../config';
 
 import notificationSocket from '../socket';
@@ -21,6 +21,7 @@ export interface RequestPayload extends Payload {
     sessionType: SessionType;
     ivrCode?: string;
     displayName?: string;
+    payment?:PaymentType;
 }
 
 export interface SessionState {
@@ -29,7 +30,7 @@ export interface SessionState {
     activePerformer: Performer | null;
     activeSessionData: SessionData | null;
     activeDisplayName: string;
-    activeIvrCode: string;
+    activeIvrCode: string | undefined;
 }
 
 export interface VideoEventSocketMessage {
@@ -57,7 +58,7 @@ const sessionStore: Module<SessionState, RootState> = {
         activePerformer: null,
         activeSessionData: null,
         activeDisplayName: '',
-        activeIvrCode: ''
+        activeIvrCode: undefined
     },
     getters: {
     },
@@ -71,8 +72,9 @@ const sessionStore: Module<SessionState, RootState> = {
             store.commit('setState', State.InRequest);
 
             const displayName = payload.displayName || store.rootState.authentication.user.username;
+            const action = payload.sessionType == SessionType.Peek ? 'peek' : 'chat';
 
-            const requestResult = await fetch(`${config.BaseUrl}/session/request/chat`, {
+            const requestResult = await fetch(`${config.BaseUrl}/session/request/${action}`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: new Headers({
@@ -84,7 +86,7 @@ const sessionStore: Module<SessionState, RootState> = {
                     type: payload.sessionType,
                     name: displayName,
                     ivrCode: payload.ivrCode || undefined,
-                    payment: 'CREDITS'
+                    payment: payload.payment
                 })
             });
 
@@ -94,8 +96,24 @@ const sessionStore: Module<SessionState, RootState> = {
                 store.state.activePerformer = payload.performer;
                 store.state.activeDisplayName = displayName;
                 store.state.activeSessionType = payload.sessionType;
+                store.state.activeIvrCode = payload.ivrCode;
 
-                store.commit('setState', State.Pending);
+                if(payload.sessionType == SessionType.Peek){
+                    store.commit('setState', State.Accepted);
+                } else {
+                    store.commit('setState', State.Pending);
+                }
+            }
+
+            if (requestResult.ok && requestData.error){
+                store.state.activePerformer = store.state.activeSessionType = null;
+                store.state.activeIvrCode = undefined;
+                store.commit('setState', State.Idle);
+
+                store.dispatch('openMessage', {
+                    content: requestData.error,
+                    class: 'error'
+                });
             }
 
             // socketService.subscribe('')
@@ -163,16 +181,20 @@ const sessionStore: Module<SessionState, RootState> = {
                 `/performer_account/performer_number/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videochat` :
                 `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;
 
+            let body:string;
+            if( store.state.activeIvrCode ){
+                body = JSON.stringify({ chatroomName: store.state.activeDisplayName, ivrCode:store.state.activeIvrCode });
+            } else {
+                body = JSON.stringify({ clientId: store.rootState.authentication.user.id, chatroomName: store.state.activeDisplayName });
+            }
+
             const initiateResult = await fetch(`${config.BaseUrl}/session${url}`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify({
-                    clientId: store.rootState.authentication.user.id,
-                    chatroomName: store.state.activeDisplayName
-                })
+                body
             });
 
             if(!initiateResult.ok){
@@ -182,13 +204,13 @@ const sessionStore: Module<SessionState, RootState> = {
             const data = await initiateResult.json();
 
             store.state.activeSessionData = data;
-
-            console.log('VideoChat data loaded');
         },
         setActive(store: ActionContext<SessionState, RootState>){
             store.commit('setState', State.Active);
 
-            if(!store.state.activePerformer) return;
+            if(!store.state.activePerformer){
+                return;
+            }
 
             notificationSocket.sendEvent({
                 receiverType: UserRole.Performer,
@@ -204,6 +226,63 @@ const sessionStore: Module<SessionState, RootState> = {
 
             //"{"event": "videoChat","receiverId":"152","receiverType":"ROLE_PERFORMER","content":"%7B%22type%22%3A%22START_TIMER_DEVICE%22%2C%22clientId%22%3A5789%2C%22performerId%22%3A152%2C%22value%22%3Anull%7D"}"
         },
+        async startCalling(store: ActionContext<SessionState, RootState>){
+            if (!store.state.activePerformer){
+                return;
+            }
+
+            const result = await fetch(`${config.BaseUrl}/session/start_audio/${store.state.activePerformer.id}`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({ivrCode:store.state.activeIvrCode})
+            });
+
+            if (result.status == 200){
+                store.state.activeSessionType = SessionType.VideoCall;
+            }
+        },
+        async stopCalling(store: ActionContext<SessionState, RootState>){
+            if (!store.state.activePerformer){
+                return;
+            }
+
+            const result = await fetch(`${config.BaseUrl}/session/stop_audio`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({ivrCode:store.state.activeIvrCode})
+            });
+
+            if (result.status == 200){
+                store.state.activeSessionType = SessionType.Video;
+            }
+        },
+        callEnded(store: ActionContext<SessionState, RootState>){
+            store.state.activeSessionType = SessionType.Video;
+            store.dispatch('openMessage', {
+                content: 'videocall.callEnded',
+                class: 'error'
+            });
+        },
+        callFailed(store: ActionContext<SessionState, RootState>){
+            store.state.activeSessionType = SessionType.Video;
+            store.dispatch('openMessage', {
+                content: 'videocall.callFailed',
+                class: 'error'
+            });
+        },
+        callAccepted(store: ActionContext<SessionState, RootState>){
+            store.dispatch('openMessage', {
+                content: 'videocall.callAccepted',
+                class: 'success'
+            })
+        },
+
         handleVideoEventSocket(store: ActionContext<SessionState, RootState>, content: VideoEventSocketMessage){
             if(store.state.activeState === State.Idle || !store.state.activePerformer){
                 throw new Error('Client shouldn\'t receive this message in an idle state');
@@ -216,8 +295,37 @@ const sessionStore: Module<SessionState, RootState> = {
                 throw new Error(`Client shouldn\'t receive messages from client: ${content.clientId} and performer: ${content.performerId}`);
             }
 
+            //{type: "VIDEOCALL_ANSWER", value: "false"}
+            //{type: "VIDEOCALL_FAILED", value: "false"}
+            //{type: "VIDEOCALL_DISCONNECT", value: "false"}
+            if (content.type === 'VIDEOCALL_ANSWER'){
+                //only now the videocall conversation is really a videocall conversation
+                store.dispatch('callAccepted');
+                return;
+            }
+
+            if (content.type === 'VIDEOCALL_FAILED'){
+                store.dispatch('callFailed');
+                return;
+            }
+
+            if (content.type === 'VIDEOCALL_DISCONNECT'){
+                store.dispatch('callEnded');
+            }
+
             //Find a good way to do this shit, need it for testing now
             if(content.type === 'RESPONSE'){
+                
+                if(content.message === 'HANGUP'){
+                    store.dispatch('end', 'PHONE_DISCONNECT');
+                    return;
+                }
+
+                if(content.message === 'MAIN_ENDED'){
+                    store.dispatch('end', 'MAIN_ENDED');
+                    return;
+                }
+
                 if(store.state.activeState === State.Active){
                     //Performer disconnect or manual close
                     if(!content.value && (content.message === 'CLICK' || content.message === 'DISCONNECT')){
@@ -258,17 +366,6 @@ const sessionStore: Module<SessionState, RootState> = {
                     content.value === false){
                     store.dispatch('cancel', 'PERFORMER_END');
                 }
-            }
-
-            //The client has ended the phone payment stream
-            else if(content.type === 'HANGUP') {
-                if(store.state.activeState === State.Active){
-                    store.dispatch('end', 'PHONE_DISCONNECT');
-                } else {
-                    store.dispatch('cancel', 'PHONE_DISCONNECT');
-                }
-
-                // KPI.send('phone_aborted');
             }
         }
     }

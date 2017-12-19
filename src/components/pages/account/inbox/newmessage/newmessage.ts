@@ -3,6 +3,7 @@ import Vue from 'vue';
 import { User } from '../../../../../models/User';
 
 import config from '../../../../../config';
+import WithRender from './newmessage.tpl.html';
 
 interface MessageForm {
     subject: string;
@@ -14,9 +15,8 @@ interface BarePerformer {
     username: string;
 }
 
-@Component({
-    template: require('./newmessage.tpl.html')
-})
+@WithRender
+@Component
 export default class Newmessage extends Vue {
 
     message: MessageForm = { subject: '', content: '' };

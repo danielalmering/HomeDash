@@ -8,6 +8,8 @@ import store from './store';
 import router from './router';
 import i18n from './localization';
 
+//requiring the shim adds it to the build
+require('webrtc-adapter');
 require('./filters/date');
 require('./filters/euro');
 
