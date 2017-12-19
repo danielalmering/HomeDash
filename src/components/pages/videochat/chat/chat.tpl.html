@@ -12,9 +12,12 @@
         <form v-on:submit.prevent="sendMessage">
             <input type="text" name="text" class="searching" autocomplete="off" v-model="chatMessage">
             <div class="btns">
-                <a class="smilie fa fa-smile-o"></a>
+                <a class="smilie fa fa-smile-o" v-on:click="smiliesOpened = !smiliesOpened"></a>
                 <a class="send fa fa-paper-plane-o" v-on:click="sendMessage"></a>
             </div>
         </form>
+    </div>
+    <div class="videochat__chat-smilies" v-if="smiliesOpened">
+        <emoticons></emoticons>
     </div>
 </div>

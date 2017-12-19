@@ -2,6 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import notificationSocket from '../../../../socket';
+import Emoticons from '../../../layout/Emoticons.vue';
 
 import './chat.scss';
 
@@ -13,6 +14,9 @@ import WithRender from './chat.tpl.html';
 
 @WithRender
 @Component({
+    components: {
+        emoticons: Emoticons
+    },
     props: {
         performerName: {
             required: true,
@@ -27,6 +31,7 @@ import WithRender from './chat.tpl.html';
 export default class Chat extends Vue {
 
     chatOpened: boolean = true;
+    smiliesOpened: boolean = false;
 
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
@@ -57,5 +62,9 @@ export default class Chat extends Vue {
         });
 
         this.chatMessage = '';
+    }
+
+    sendEmoticon(emoticon: string){
+        this.chatMessage = emoticon;
     }
 }
