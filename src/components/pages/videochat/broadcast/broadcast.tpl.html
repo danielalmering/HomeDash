@@ -1,4 +1,6 @@
 <div>
-    <div id="broadcastSWF">
+    <div id="broadcastSWF" v-if="streamType=='rtmp'">
     </div>
+    <video playsinline webkit-playsinline autoplay v-if="streamType!='rtmp'">
+    </video>
 </div>

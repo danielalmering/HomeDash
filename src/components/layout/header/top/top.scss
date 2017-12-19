@@ -73,48 +73,56 @@
 
         &-credits {
             float: right;
+            @include rem(padding, 5px 0px 0px 0px);
             cursor: pointer;
             .discount {
+                position: relative;
                 float: left;
-                width: 100px;
+                display: table;
+                width: 74px;
                 height: 47px;
                 margin-top: -5px;
                 line-height: 90%;
                 &__percent {
-                    display: inline-block;
-                    height: 33px;
+                    display: table-cell;
                     line-height: 33px;
-                    width: 47px;
                     color: $pallete-7;
-                    @include rem(font-size, 39px);
-                    letter-spacing: -5.5px;
+                    @include rem(font-size, 38px);
+                    letter-spacing: -6.5px;
                     font-style: italic;
+                    @include rem(padding, 0px 10px 0px 0px);
 
 
                     i {
-                        @include rem(font-size, 15px);
+                        @include rem(font-size, 10px);
                         @include rem(padding, 10px 0px 0px 5px);
                     }
                 }
                 &__text {
-                    display: inline-block;
-                    height: 23px;
-                    width: 43px;
+                    display: table-cell;
                     color: $pallete-7;
-                    @include rem(font-size, 14px);
+                    @include rem(font-size, 12px);
                     font-style: italic;
                     font-weight: 700;
                     text-transform: uppercase;
                     line-height: 100%;
+                    span {
+                        float: left;
+                        width: 100%;
+                    }
 
                     i {
+                        float: left;
+                        width: 100%;
                         color: $pallete-3;
-                        @include rem(font-size, 11px);
+                        @include rem(font-size, 9px);
                     }
                 }
                 &__buy {
-                    clear: both;
-                    line-height: 0%;
+                    position: absolute;
+                    left: 0;
+                    bottom: 8px;
+                    line-height: 5%;
                     @include rem(font-size, 10.5px);
                     color: $pallete-20;
                     text-transform: uppercase;
@@ -166,8 +174,8 @@
                 -webkit-transform: rotate(90.0deg);
                 transform: rotate(90.0deg);
                 @include rem(padding-left, 10px);
-                @include rem(font-size, 17px);
-                font-weight: 700;
+                @include rem(font-size, 14px);
+                font-weight: 600;
                 color: $pallete-7;
                 line-height: 122%;
                 width: 100%;

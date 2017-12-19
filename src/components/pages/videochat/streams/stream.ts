@@ -15,6 +15,12 @@ export default class Stream extends Vue {
     })
     wowza: string;
 
+    @Prop({
+        type:Boolean,
+        required: false
+    })
+    muted: boolean = false;
+
     public onStateChange(value: string){
         this.$emit('stateChange', value);
     }

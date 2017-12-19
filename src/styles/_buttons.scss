@@ -7,7 +7,7 @@
     display: inline-block;
     color: $pallete-2;
     @include rem(font-size, 13px);
-    background: $pallete-16;
+    background: $pallete-13;
     font-weight: 600;
     @include border-radius(3px);
     @include rem(padding, 12px 25px);
@@ -15,6 +15,7 @@
     border: none;
     text-align: center;
     cursor: pointer;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255,0.25);
 
     &-small     { @include rem(padding, 9px 20px); }
     &-large     { @include rem(padding, 11px 35px); }

@@ -4,7 +4,7 @@
             <img alt="logo" :src="logo" v-on:click="routeGo('Performers')">
         </div>
 
-        <div class="top__numbers col-xs-12 col-sm-6 col-md-7" v-if="info && info.phone_enabled === 1">
+        <div class="top__numbers col-xs-12 col-sm-5 col-md-6" v-if="info && info.phone_enabled === 1">
             <div class="row">
                 <div class="top__numbers-number" v-bind:class="{ 'large': !branding }" >
                     <span :class="'flag flag-' + info.country"></span>
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="top__banner hidden-xs col-xs-12 col-sm-3 nopad" v-if="info">
+        <div class="top__banner hidden-xs col-xs-12 col-sm-4 nopad" v-if="info">
             <div class="top__banner-happyhour" v-if="info.marketing.current" v-on:click="routeGo('Promos')">
                 <div class="col-1">
                     <span class="h1" v-t="$t('top.banner.happyhour')"></span>
@@ -29,11 +29,11 @@
                 </div>
             </div>
 
-            <div class="top__banner-credits"v-if="!info.marketing.current" v-on:click="routeGo('Payment')">
+            <div class="top__banner-credits" v-if="!info.marketing.current" v-on:click="routeGo('Payment')">
                 <div class="discount" v-for="fee in fees">
                     <span class="discount__percent">{{ fee.percentage.split('.')[0] }}<i>%</i></span>
                     <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="'top.banner.credits'"></i></span></span>
-                    <span class="discount__buy" v-t="'top.banner.purchase'"></span>
+                    <span class="discount__buy">{{ $t('top.banner.purchase') }} €{{ fee.amount/100 }} </span>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
+import { Publisher, WRTCUtils } from 'typertc';
 //import 'swfobject';
 const swfobject = require('swfobject');
 import WithRender from './broadcast.tpl.html';
@@ -27,7 +28,7 @@ export default class Broadcast extends Vue{
         this.onError = this.onError.bind(this);
     }
 
-    @Prop() streamType: string = 'RTMP';
+    @Prop() streamType: string;
 
     @Prop() wowza: string;
 
@@ -67,7 +68,19 @@ export default class Broadcast extends Vue{
         return this.$el.querySelector('#broadcastSWF') as any;
     }
 
+    wrtc:Publisher;
+
     mounted(){
+        switch(this.streamType){
+            case 'rtmp':
+                this.startFlash();
+                break;
+            default:
+                this.startWebRTC();
+        }
+    }
+
+    startFlash(){
         const attrs = {'name': 'swf', 'id': 'broadcastSWF'};
         const params = {
             wmode : 'transparent',
@@ -91,9 +104,34 @@ export default class Broadcast extends Vue{
         swfobject.embedSWF('/static/Publish.swf', 'broadcastSWF', '100%', '100%', '10.2.0', true, flashvars, params, attrs);
     }
 
+    startWebRTC(){
+        var wowzaParts = WRTCUtils.parseUrl(this.wowza);
+        WRTCUtils.validate(wowzaParts);
+
+        var options = {
+            wowza: wowzaParts.host + "/webrtc-session.json",
+            applicationName: wowzaParts.application,
+            token: wowzaParts.parameters.token,
+            streamName : this.publishStream,
+            element: this.$el.querySelector('video') || undefined,
+            useWebSockets: true,
+            debug: true
+        };
+
+        this.wrtc = new Publisher( options );
+        this.wrtc.onStateChange = this.onStateChange.bind(this);
+        this.wrtc.onError = this.onError.bind(this);
+    }
+
     destroyed(){
-        const bla: any = window;
-        delete bla[this.listener];
+        if (this.listener){
+            const bla: any = window;
+            delete bla[this.listener];
+        }
+
+        if (this.wrtc){
+            this.wrtc.stop();
+        }
     }
 
     private listener: string;
