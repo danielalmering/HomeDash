@@ -21,3 +21,35 @@
     &.fa-peek:before        { content: "\f06e"; }
 }
 
+// Emoticons Categories
+
+@font-face{
+    font-family:'emojione';
+    src:url("../assets/fonts/emojione.eot?ocdeuf");
+    src:url("../assets/fonts/emojione.eot?ocdeuf#iefix") format("embedded-opentype"),
+    url("../assets/fonts/emojione.woff2?ocdeuf") format("woff2"),
+    url("../assets/fonts/emojione.ttf?ocdeuf") format("truetype"),
+    url("../assets/fonts/emojione.woff?ocdeuf") format("woff"),
+    url("?ocdeuf#emojione") format("svg");
+}
+
+[class^=icon-], [class*=icon-] {
+    font-family: 'emojione';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+}
+
+.icon-people:before { content: "\e906"; }
+.icon-nature:before { content: "\e904"; }
+.icon-food:before { content: "\e900"; }
+.icon-activity:before { content: "\e901"; }
+.icon-travel:before { content: "\e903"; }
+.icon-objects:before { content: "\e902"; }
+.icon-symbols:before { content: "\e907"; }
+.icon-flags:before { content: "\e905"; }
+.icon-diversity:before { content: "\e31d"; }
+
