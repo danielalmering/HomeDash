@@ -17,6 +17,7 @@ import Confirmations from '../../layout/Confirmations.vue';
 
 import './videochat.scss';
 import Performer from '../performer';
+import WithRender from './videochat.tpl.html';
 
 interface BroadcastConfiguration {
     cam: boolean | string;
@@ -30,8 +31,8 @@ Component.registerHooks([
     'beforeRouteUpdate'
 ]);
 
+@WithRender
 @Component({
-    template: require('./videochat.tpl.html'),
     components: {
         chat: Chat,
         broadcast: Broadcast,
@@ -235,7 +236,7 @@ export default class VideoChat extends Vue {
 
         this.navigation = {to, from, next};
         this.leave = this.leaveToPeek;
-        this.askToLeave = true; 
+        this.askToLeave = true;
     }
 
     public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean)=>void){
@@ -278,7 +279,7 @@ export default class VideoChat extends Vue {
             ivrCode: this.$store.state.session.activeIvrCode,
             displayName: this.$store.state.session.activeDisplayName
         }
-        this.$store.dispatch<RequestPayload>( toSend ); 
+        this.$store.dispatch<RequestPayload>( toSend );
     }
 
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){

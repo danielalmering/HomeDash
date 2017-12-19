@@ -3,9 +3,10 @@ import Vue from 'vue';
 
 import Header from '../layout/header/header';
 import Footer from '../layout/footer/footer';
+import WithRender from './page.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./page.tpl.html'),
     components: {
         theader: Header,
         tfooter: Footer

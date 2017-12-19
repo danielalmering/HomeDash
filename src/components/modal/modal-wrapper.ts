@@ -7,9 +7,10 @@ import modalRecover from './modal-recover/modal-recover';
 import modalReset from './modal-reset/modal-reset';
 
 import './modal-wrapper.scss';
+import WithRender from './modal-wrapper.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./modal-wrapper.tpl.html'),
     components: {
         login: modalLogin,
         register: modalRegister,

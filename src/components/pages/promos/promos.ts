@@ -2,10 +2,10 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import config from '../../../config';
+import WithRender from './promos.tpl.html';
 
-@Component({
-    template: require('./promos.tpl.html')
-})
+@WithRender
+@Component
 export default class Promo extends Vue {
 
     promos: any[] = [];
