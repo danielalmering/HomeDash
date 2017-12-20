@@ -1,10 +1,10 @@
 import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import { UserForm } from '../../../models/User';
+import WithRender from './modal-register.tpl.html';
 
-@Component({
-    template: require('./modal-register.tpl.html')
-})
+@WithRender
+@Component
 export default class ModalRegister extends Vue {
 
     userForm: UserForm = {

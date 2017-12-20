@@ -2,7 +2,7 @@
     "top": {
         "numbers": {
             "callnow": "BEL NU",
-            "cpm": "CT",
+            "cpm": "CPM",
             "pm": "pm"
         },
         "banner": {
@@ -11,7 +11,7 @@
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
-            "purchase": "bij aankoop v.a €120"
+            "purchase": "vanaf"
         }
     },
     "nav": {
@@ -69,6 +69,9 @@
         "noperformers": "Geen performers",
         "currentcredits": "Huidig saldo",
         "youraccount": "Jouw account?",
+        "alerts": {
+            "errorSwitchFailed": "Het is niet gelukt om van performer te wisselen"
+        },
         "register": {
             "usp-1": "Volledig anoniem",
             "usp-2": "Profiteer van speciale acties",
@@ -224,6 +227,7 @@
         }
     },
     "videochat": {
+        "leaving": "Huidige sessie verlaten",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"
         }
@@ -267,7 +271,7 @@
         "bonuscredits": "Bonus credits",
         "totalcredits": "Totaal credits",
         "total": "Totaal",
-        "bonusbanner": "Koop {credits} credits en krijg {percentage}% extra",
+        "bonusbanner": "Koop nog {credits} credits en krijg {percentage}% extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
         "discountcode": "Kortingscode?",
         "mostlybought": "Meest verkocht!",

@@ -9,9 +9,10 @@ import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
 import { RequestPayload } from '../../../store/session';
 import { Performer } from '../../../models/Performer';
+import WithRender from './voyeur.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./voyeur.tpl.html'),
     components: {
         jsmpeg: JSMpeg,
         confirmation: Confirmation

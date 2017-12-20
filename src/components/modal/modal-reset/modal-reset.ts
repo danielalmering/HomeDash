@@ -2,10 +2,10 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
 import config from '../../../config';
+import WithRender from './modal-reset.tpl.html';
 
-@Component({
-    template: require('./modal-reset.tpl.html')
-})
+@WithRender
+@Component
 export default class ModalReset extends Vue {
 
     password: string = '';

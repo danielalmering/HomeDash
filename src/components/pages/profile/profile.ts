@@ -19,9 +19,10 @@ import { setTitle, setDescription, setKeywords, setGraphData } from '../../../se
 
 import './profile.scss';
 import './photo-slider.scss';
+import WithRender from './profile.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./profile.tpl.html'),
     components: {
         photoSlider: PhotoSlider,
         photoSliderFull: FullSlider,
@@ -171,7 +172,7 @@ export default class Profile extends Vue {
 
         const toSend = {...defaults,...payload};
 
-        await this.$store.dispatch<RequestPayload>( toSend ); 
+        await this.$store.dispatch<RequestPayload>( toSend );
     }
 
     cancel(){
@@ -212,6 +213,14 @@ export default class Profile extends Vue {
 
         if(this.$store.state.safeMode){
             this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
+        }
+
+        this.setSeoParameters();
+    }
+
+    setSeoParameters(){
+        if(!this.performer){
+            return;
         }
 
         setTitle(this.$t('profile.metaTitle', { nickname: this.performer.nickname }).toString());

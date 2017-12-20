@@ -13,32 +13,42 @@ $sidebar-width: 250px;
 $sidebar-top-height: 315px;
 
 .sidebar {
-    position: relative;
+    position: fixed;
+    top: 0;
     z-index: 999;
-    margin-left: -$sidebar-width;
+    left: -$sidebar-width;
+    height: 100%;
     width: $sidebar-width;
     background: $pallete-17;
     width: $sidebar-width;
     box-shadow: 0 10px 10px 5px rgba(0,0,0,0.2);
+    transition: all 0.5s ease-in-out;
 
     @include breakpoint(md) {
-        margin-left: 0px;
+        position: relative;
+        display: table-cell;
+        vertical-align: top;
+        left: 0;
     }
 
     &__content {
-        display: flex;
-        flex-direction: column;
+        display:table;
         height: 100%;
+        height: 100vh;
         width: $sidebar-width;
 
         // Alignmend
 
         &-top { 
+            display: table;
+            vertical-align: top;
             width: $sidebar-width;
             height: $sidebar-top-height;
         }
 
         &-bottom { 
+            display: table;
+            vertical-align: top;
             width: $sidebar-width;
             height: calc(100% - #{$sidebar-top-height});
         }
@@ -152,26 +162,36 @@ $sidebar-top-height: 315px;
     }
 
     &__toggle {
-        position: fixed;
-        top:10px;
-        left: 0px;
-        &.collapse {
-            left: 250px;
-            transition: all 0.5s ease-in-out;
+        position: absolute;
+        top: 10px;
+        left: 250px;
+
+        &-icon {
+            height: 50px;
+            width: 50px;
+            color: $pallete-2;
+            background: $pallete-3;
+            @include border-top-right-radius(5px);
+            @include border-bottom-right-radius(5px);
+            cursor: pointer;
+            @include rem(margin,0px 0px 10px 0px);
+            &.black { background: $pallete-1; }
+            a {
+                display: table;
+                height: 100%;
+                width: 100%;
+                color: $pallete-2;
+                &:hover { color: $pallete-2; }
+            }
         }
-        height: 50px;
-        width: 50px;
-        color: $pallete-2;
-        background: $pallete-3;
-        @include border-top-right-radius(5px);
-        @include border-bottom-right-radius(5px);
-        cursor: pointer;
 
         i {
-            @include rem(padding,5px 10px);
+            @include rem(padding,5px 12px);
             @include rem(font-size, 41px);
-            &.fa-angle-double-left { @include rem(padding,5px 10px); }
-            &.fa-angle-double-right { @include rem(padding,5px 14px); }
+            &.fa-home { 
+                @include rem(padding, 13px);
+                @include rem(font-size, 25px); 
+            }
         }
     }
 

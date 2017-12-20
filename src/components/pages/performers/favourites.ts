@@ -8,9 +8,10 @@ import { Performer } from '../../../models/Performer';
 import config from '../../../config';
 
 import './performers.scss';
+import WithRender from './performers.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./performers.tpl.html'),
     components: {
         pagination: Pagination
     }

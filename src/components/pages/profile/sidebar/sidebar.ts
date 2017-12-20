@@ -10,11 +10,12 @@ import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
 import { RequestPayload } from '../../../../store/session';
 import { SessionType } from '../../../../models/Sessions';
+import WithRender from './sidebar.tpl.html';
 
 type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 
+@WithRender
 @Component({
-    template: require('./sidebar.tpl.html'),
     components: {
         jsmpeg: JSMpeg
     }
@@ -127,23 +128,31 @@ export default class Sidebar extends Vue {
         });
     }
 
-    goToPerformer(id: number){
+    async goToPerformer(performer: Performer){
         const session = this.$store.state.session;
+
         //peek with another lady if you're currently peeking and the lady is peekable
-        if (this.category == 'peek' && session.activeSessionType == SessionType.Peek){
+        if (this.category === 'peek' && session.activeSessionType == SessionType.Peek){
+            try {
+                await this.$store.dispatch('switchPeek', performer);
+            } catch(e){
+                this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
+            }
+
             this.$router.push({
                 name: 'Videochat',
                 params: {
-                    id: id.toString()
+                    id: performer.advert_numbers[0].advertNumber.toString()
                 }
             });
+
             return;
         }
 
         this.$router.push({
             name: 'Profile',
             params: {
-                id: id.toString()
+                id: performer.advert_numbers[0].advertNumber.toString()
             }
         });
     }

@@ -12,16 +12,18 @@ interface EmailForm {
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
 
+import WithRender from './tabs.tpl.html';
+
+@WithRender
 @Component({
-    template: require('./tabs.tpl.html'),
     components: {
-        cam: { template: require('./cam.tpl.html') },
-        videocall: { template: require('./videocall.tpl.html') },
-        phone: { template: require('./phone.tpl.html') },
-        email: { template: require('./email.tpl.html') },
-        sms: { template: require('./sms.tpl.html') },
-        voyeur: { template: require('./voyeur.tpl.html') },
-        none: { template: require('./none.tpl.html') }
+        cam: { render: require('./cam.tpl.html')({}).render },
+        videocall: { render: require('./videocall.tpl.html')({}).render },
+        phone: { render: require('./phone.tpl.html')({}).render },
+        email: { render: require('./email.tpl.html')({}).render },
+        sms: { render: require('./sms.tpl.html')({}).render },
+        voyeur: { render: require('./voyeur.tpl.html')({}).render },
+        none: { render: require('./none.tpl.html')({}).render },
     }
 })
 export default class Tabs extends Vue {
@@ -144,14 +146,7 @@ export default class Tabs extends Vue {
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        // const statusChanged = newPerformer.performerStatus !== oldPerformer.performerStatus;
-        // const peekChanged = newPerformer.performer_services['peek'] !== oldPerformer.performer_services['peek'];
-
-        // if((statusChanged || peekChanged) && this.selectedTab === 'cam'){
-        //     this.selectedTab = this.firstAvailable;
-        // }
-
-        if(!newPerformer.performer_services[this.selectedTab]){
+        if(!newPerformer.performer_services[this.selectedTab] || !this.enabled(this.selectedTab)){
             this.selectedTab = this.firstAvailable;
         }
     }
@@ -195,12 +190,12 @@ export default class Tabs extends Vue {
 
         if(!mailResult.ok){
             this.$store.dispatch('openMessage', {
-                content: 'contact.errorSend',
+                content: 'contact.alerts.errorSend',
                 class: 'error'
             });
         } else {
             this.$store.dispatch('openMessage', {
-                content: 'contact.successSend',
+                content: 'contact.alerts.successSend',
                 class: 'success'
             });
 

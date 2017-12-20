@@ -4,9 +4,10 @@ import Vue from 'vue';
 import Sidebar from './profile/sidebar/sidebar';
 import Confirmations from '../layout/Confirmations.vue';
 import { Route } from 'vue-router/types/router';
+import WithRender from './performer.tpl.html';
 
+@WithRender
 @Component({
-    template: require('./performer.tpl.html'),
     components: {
         tsidebar: Sidebar,
         tconfirmations: Confirmations

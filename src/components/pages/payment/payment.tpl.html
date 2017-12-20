@@ -74,7 +74,7 @@
                         <div class="col-xs-12" v-if="nextBonus">
                             <div class="payment__cart-bonus">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
-                                {{ $t('payment.bonusbanner', { credits: nextBonus.amount - credits, percentage: nextBonus.percentage }) }}
+                                {{ $t('payment.bonusbanner', { credits: nextBonus.amount * 1000, percentage: nextBonus.percentage }) }}
                             </div>
                         </div>
                     </div>

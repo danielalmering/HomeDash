@@ -24,7 +24,7 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor } from './interceptors';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor } from './interceptors';
 
 Vue.use(Router);
 
@@ -163,10 +163,14 @@ const routes = [{
 const router = new Router({
     mode: 'history',
     base: '/',
-    routes: makeRoutesStrict(routes)
+    routes: makeRoutesStrict(routes),
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });
 
 router.beforeEach(safeInterceptor);
+router.afterEach(seoInterceptor);
 
 function makeRoutesStrict(routes: RouteConfig[]){
 

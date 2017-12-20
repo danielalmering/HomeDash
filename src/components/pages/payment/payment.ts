@@ -4,6 +4,7 @@ import Vue from 'vue';
 import config from '../../../config';
 
 import './payment.scss';
+import WithRender from './payment.tpl.html';
 
 interface Package {
     id: number;
@@ -35,9 +36,8 @@ interface Fee {
     percentage: number
 }
 
-@Component({
-    template: require('./payment.tpl.html')
-})
+@WithRender
+@Component
 export default class Payment extends Vue {
 
     packages: Package[] = [];

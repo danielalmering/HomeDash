@@ -4,18 +4,38 @@ export function setTitle(title: string){
 }
 
 export function setDescription(description: string){
-    createTag('description', description);
+    createMetaTag('description', description);
 }
 
 export function setKeywords(keywords: string){
-    createTag('keywords', keywords);
+    createMetaTag('keywords', keywords);
 }
 
 export function setGraphData(type: string, content: string){
     createOGTag(type, content);
 }
 
-function createTag(name: string, content: string){
+export function setCanonical(href: string){
+    createLinkTag('canonical', href);
+}
+
+function createLinkTag(rel: string, href: string){
+    const existingTag = document.querySelector(`link[rel='${rel}']`) as HTMLLinkElement;
+
+    if(existingTag !== null){
+        existingTag.href = href;
+        return;
+    }
+
+    const tag = document.createElement('link') as HTMLLinkElement;
+
+    tag.rel = rel;
+    tag.href = href;
+
+    document.head.appendChild(tag);
+}
+
+function createMetaTag(name: string, content: string){
     const existingTag = document.querySelector(`meta[name='${name}']`) as HTMLMetaElement;
 
     if(existingTag !== null){
@@ -36,16 +56,12 @@ export function createOGTag(property: string, content: string){
 
     if(existingTag !== null){
         existingTag.content = content;
-        console.log('hi');
         return;
     }
-
-    console.log('hey');
 
     const metaTag = document.createElement('meta') as HTMLMetaElement;
     metaTag.setAttribute('property', property);
     metaTag.content = content;
 
     document.head.appendChild(metaTag);
-    console.log(metaTag);
 }

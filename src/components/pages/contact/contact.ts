@@ -4,6 +4,7 @@ import Vue from 'vue';
 import './contact.scss';
 
 import config from '../../../config';
+import WithRender from './contact.tpl.html';
 
 interface Message {
     email: string;
@@ -12,9 +13,8 @@ interface Message {
     subject: string;
 }
 
-@Component({
-    template: require('./contact.tpl.html')
-})
+@WithRender
+@Component
 export default class Contact extends Vue {
 
     contact: Message = {
