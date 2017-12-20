@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
-import jsmpeg from 'jsmpeg';
 import config from '../../../../config';
 
 import Stream from './stream';
@@ -11,7 +10,7 @@ const swfobject = require('swfobject');
 @Component({
     template: '<div><div id="viewSWF"></div></div>',
 })
-export default class Rtmp extends Stream {
+export class Rtmp extends Stream {
 
     state:string = '';
 

@@ -10,14 +10,13 @@
             </component>
         </div>
     </div>
-    <div class="videochat__broadcast" v-if="sessionType != 'PEEK' && streamTransportType != 'rtmp' ">
+    <div class="videochat__broadcast" v-if="sessionType != 'PEEK'">
 
         <div class="videochat__broadcast-object" v-if="broadcasting.cam">
             <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
             <component v-if="broadcasting.cam" :is="broadcastType"
                 v-on:stateChange="broadcastStateChange"
                 v-on:error="broadcastError"
-                :streamType="streamTransportType"
                 :wowza="wowza" 
                 :publishStream="publishStream" 
                 :mic="broadcasting.mic" 

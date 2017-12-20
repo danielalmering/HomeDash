@@ -5,7 +5,7 @@ import { WRTCUtils, Publisher } from "typertc";
 @Component({
     template: '<div><video playsinline webkit-playsinline autoplay></video></div>'
 })
-export default class WebRTC extends Broadcast{
+export class WebRTC extends Broadcast{
 
     @Watch('mic') onMicChanged(value: boolean | string, oldValue: boolean | string) {
         if (typeof value === 'boolean'){
@@ -32,6 +32,7 @@ export default class WebRTC extends Broadcast{
     }
 
     mounted(){
+        console.log("modderdude, wrtc gemount!!");
         var wowzaParts = WRTCUtils.parseUrl(this.wowza);
         WRTCUtils.validate(wowzaParts);
 

@@ -15,9 +15,9 @@ export interface Flash{
 }
 
 @Component({
-    template: '<div><div id="broadcastSWF"></div></div>',
+    template: '<div><div id="broadcastSWF">Dit wordt vervangen</div></div>',
 })
-export default class Rtmp extends Broadcast{
+export class Rtmp extends Broadcast{
 
     get flash(): Flash{
         return this.$el.querySelector('#broadcastSWF') as any;
@@ -48,6 +48,7 @@ export default class Rtmp extends Broadcast{
     }
 
     mounted(){
+        console.log("modderdude, wrtc gemount!!");
         const attrs = {'name': 'swf', 'id': 'broadcastSWF'};
         const params = {
             wmode : 'transparent',
