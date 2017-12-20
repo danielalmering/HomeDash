@@ -5,7 +5,7 @@ export default class Stream extends Vue {
 
     @Prop({
         type: String,
-        required: true
+        required: false
     })
     playStream: string;
 

@@ -9,7 +9,7 @@ import {Player, WRTCUtils as utils } from 'typertc';
 @Component({
     template: '<div><video class="webrtc"></video></div>',
 })
-export default class WebRTC extends Stream {
+export class WebRTC extends Stream {
 
     private player: Player;
 

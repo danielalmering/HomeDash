@@ -8,11 +8,13 @@ import { SessionData, RequestPayload } from '../../../store/Session';
 
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
-import Broadcast, { Caster } from './broadcast/broadcast';
+import Broadcast from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
-import Rtmp from './streams/rtmp';
+import { Rtmp as RTMPPlay } from './streams/rtmp';
+import { Rtmp as RTMPBroadcast } from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
-import WebRTC from './streams/webrtc';
+import { WebRTC as WRTCPlay } from './streams/webrtc';
+import { WebRTC as WRTCBroadcast } from './broadcast/webrtc'
 import config from '../../../config';
 import Confirmations from '../../layout/Confirmations.vue';
 
@@ -36,12 +38,13 @@ Component.registerHooks([
 @Component({
     components: {
         chat: Chat,
-        broadcast: Broadcast,
         jsmpeg: Jsmpeg,
-        rtmp: Rtmp,
-        webrtc: WebRTC,
+        rtmp: RTMPPlay,
+        webrtc: WRTCPlay,
         nanocosmos: NanoCosmos,
-        confirmation: Confirmations
+        confirmation: Confirmations,
+        rtmpBroadcast: RTMPBroadcast,
+        webrtcBroadcast: WRTCBroadcast
     }
 })
 export default class VideoChat extends Vue {
@@ -76,7 +79,12 @@ export default class VideoChat extends Vue {
         }
 
         // return this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
-        return 'nanocosmos';
+        return 'jsmpeg';
+    }
+
+    get broadcastType():string{
+        
+        return "webrtcBroadcast";
     }
 
     get wowza(): string | undefined{
@@ -168,7 +176,7 @@ export default class VideoChat extends Vue {
         this.broadcasting.mic = !this.broadcasting.mic;
         //replace the boolean with the actual name if the selected mic is showing..
         if (this.broadcasting.settings && this.broadcasting.mic){
-            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
+            const flash: any = this.$el.querySelector('#broadcastSWF') as any;
             this.microphones = flash.getMicrophones();
             const selected = this.microphones.find(mic => mic.selected);
             if (selected){
@@ -212,7 +220,7 @@ export default class VideoChat extends Vue {
         this.broadcasting.settings = !this.broadcasting.settings;
         //go get the list of devices if the "settings" will toggle to visible
         if (this.broadcasting.settings){
-            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
+            const flash: any = this.$el.querySelector('#broadcastSWF') as any;
 
             this.cameras = flash.getCameras();
             let selected = this.cameras.find(cam => cam.selected);
