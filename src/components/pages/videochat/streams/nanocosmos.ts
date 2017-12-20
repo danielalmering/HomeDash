@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Component, Watch, Prop } from 'vue-property-decorator';
-
+import { State } from '../../../../models/Sessions';
 import config from '../../../../config';
 
 import Stream from './stream';
@@ -101,6 +101,7 @@ export default class NanoCosmos extends Stream {
     }
 
     beforeDestroy(){
+        console.log('Before destroy...');
         this.end();
     }
 
@@ -129,15 +130,15 @@ export default class NanoCosmos extends Stream {
                 }
             },
             'events': {
-                onReady: (s: any) => { this.log(s); },
+                onReady: (s: any) => { this.onReady(s); },
                 onPlay: (s: any) => { this.onPlay(s); },
                 onPause: (s: any) => { this.log(s); },
                 onLoading: (s: any) => { this.log(s); },
                 onStartBuffering: (s: any) => { this.log(s); },
-                onStopBuffering: (s: any) => { this.log(s); },
+                onStopBuffering: (s: any) => { this.onStopBuffering(s); },
                 onError: (s: any) => { this.onNanoCosmosError(s); },
                 //onStats: (s: any) => { this.log(s); },
-                onMetaData: (s: any) => { this.log(s); },
+                //onMetaData: (s: any) => { this.onMetaData(s); },
                 onMuted: (s: any) => { this.log(s); },
                 onUnmuted: (s: any) => { this.log(s); },
                 onVolumeChange: (s: any) => { this.log(s); },
@@ -168,8 +169,22 @@ export default class NanoCosmos extends Stream {
         });
     }
 
-    private onPlay(s: any){
-        this.onStateChange('active');
+    private onReady(s: any) {
+        //this.onStateChange('active');
+        if(this.$store.state.session.activeState !== State.Active){
+            this.onStateChange('active'); //not sure about this yet
+        }
+    }
+
+    private onPlay(s: any) {
+        console.log(s);
+    }
+
+    private onStopBuffering(s: any){
+        console.log("stop buffering test");
+        //not sure to reload here
+        this.end();
+        this.load();
     }
 
     private onNanoCosmosError(s: any){
@@ -179,7 +194,6 @@ export default class NanoCosmos extends Stream {
            console.log(s);
            this.onError(s);
         }
-
     }
 
     private log(val: any){
@@ -190,9 +204,9 @@ export default class NanoCosmos extends Stream {
         if(!this.player)
           return false;
 
-        this.player.pause();
+        //this.player.pause();
         this.player.destroy();
-        this.player = undefined;
+
         return true;
     }
 }
