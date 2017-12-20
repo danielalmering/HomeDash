@@ -101,7 +101,6 @@ export default class NanoCosmos extends Stream {
     }
 
     beforeDestroy(){
-        console.log('Before destroy...');
         this.end();
     }
 
@@ -170,19 +169,17 @@ export default class NanoCosmos extends Stream {
     }
 
     private onReady(s: any) {
-        //this.onStateChange('active');
-        if(this.$store.state.session.activeState !== State.Active){
-            this.onStateChange('active'); //not sure about this yet
-        }
+        console.log('ready', s)
     }
 
     private onPlay(s: any) {
         console.log(s);
+        if(this.$store.state.session.activeState !== State.Active){
+            this.onStateChange('active');
+        }
     }
 
     private onStopBuffering(s: any){
-        console.log("stop buffering test");
-        //not sure to reload here
         this.end();
         this.load();
     }

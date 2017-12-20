@@ -18,10 +18,10 @@
                 v-on:stateChange="broadcastStateChange"
                 v-on:error="broadcastError"
                 :streamType="streamTransportType"
-                :wowza="wowza" 
-                :publishStream="publishStream" 
-                :mic="broadcasting.mic" 
-                :cam="broadcasting.cam" 
+                :wowza="wowza"
+                :publishStream="publishStream"
+                :mic="broadcasting.mic"
+                :cam="broadcasting.cam"
                 :quality="1" >
             </broadcast>
         </div>
@@ -53,12 +53,12 @@
         </div>
 
     </div>
-    
+
     <div v-if="sessionType == 'VIDEOCALL'" class="videochat__videocall" v-on:click="stopCalling">{{ $t('stop videocall') }}</div>
     <div v-if="sessionType != 'VIDEOCALL' && paymentMethod == 'IVR'" class="videochat__videocall" v-on:click="startCalling">{{ $t('start videocall') }}</div>
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
 
-    <chat v-if="sessionType != 'PEEK'" :performer-name="performer.nickname" :user-name="displayName"></chat>
+    <chat v-if="sessionType != 'PEEK'" :performer-name="performer ? performer.nickname : ''" :user-name="displayName"></chat>
 
     <confirmation v-if="askToLeave" :type="'dialog'" :title="'videochat.leaving'" v-on:accept="leave" v-on:cancel="stay"></confirmation>
 </div>
