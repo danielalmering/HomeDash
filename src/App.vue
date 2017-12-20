@@ -37,11 +37,7 @@ export default {
 
         this.$store.dispatch('loadInfo');
 
-        // this.$store.dispatch('openMessage', {
-        //     content: 'Welkom op het nieuwe thuis',
-        //     translate: false
-        // });
-
+        setInterval(() => this.$store.dispatch('getSession'), 60 * 1000); //Update user data every minute
 
         // Cookies
         const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);

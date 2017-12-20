@@ -2,6 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import notificationSocket from '../../../../socket';
+import Emoticons from '../../../layout/Emoticons.vue';
 
 import './chat.scss';
 
@@ -13,6 +14,9 @@ import WithRender from './chat.tpl.html';
 
 @WithRender
 @Component({
+    components: {
+        emoticons: Emoticons
+    },
     props: {
         performerName: {
             required: true,
@@ -27,6 +31,7 @@ import WithRender from './chat.tpl.html';
 export default class Chat extends Vue {
 
     chatOpened: boolean = true;
+    smiliesOpened: boolean = false;
 
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
@@ -34,7 +39,11 @@ export default class Chat extends Vue {
     chatSocketRef: number;
 
     mounted(){
-        this.chatSocketRef = notificationSocket.subscribe('msg', (content) => {
+        this.chatSocketRef = notificationSocket.subscribe('msg', (content: ChatMessage) => {
+            content.message = content.message.replace(/:\w+:/g, (w) => {
+                return `<i class="e1a-med e1a-${w.substring(1, w.length - 1)}"></i>`;
+            });
+
             this.chatMessages.push(content);
 
             const chatContainer = this.$el.querySelector('.videochat__chat-list');
@@ -57,5 +66,12 @@ export default class Chat extends Vue {
         });
 
         this.chatMessage = '';
+    }
+
+    emojiSelected(name: string){
+        this.chatMessage += `:${name}:`;
+
+        const inputElement = this.$el.getElementsByClassName('searching')[0] as HTMLElement;
+        inputElement.focus();
     }
 }

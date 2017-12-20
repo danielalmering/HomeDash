@@ -56,8 +56,8 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
 
     &__broadcast{
         position: absolute;
-        top: 5px;
-        left: 5px;
+        top: 10px;
+        right: 0px;
         z-index: 1;
 
         &-object{
@@ -92,18 +92,22 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         &-buttons {
             float: left;
             display: table;
-            background: $semi-transparent-bg;
             @include border-radius(5px);
             @include rem(padding,0);
-            @include rem(margin, 0px 5px 5px 5px);
+            @include rem(margin, 58px 0px 0px 0px);
 
             li{
                 list-style: none;
-                margin: 10px;
                 text-align: center;
+                background: $semi-transparent-bg;
+                @include rem(padding, 12.5px);
+                width: 50px;
+                @include rem(margin, 0px 0px 10px 10px);
+                @include border-left-radius(5px);
+                cursor: pointer;
 
                 .fa{
-                    font-size: 20px;
+                    @include rem(font-size, 25px);
                     color: $pallete-2;
                     &.active {
                         color: $pallete-3;
@@ -115,14 +119,14 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
     }
 
     &__devices{
-        float: left;
+        float: right;
         clear: both;
         background: $semi-transparent-bg;
-        @include border-radius(5px);
+        @include border-left-radius(5px);
         @include rem(padding,10px 10px 0px 10px);
-        width: $streamback-width;
+        width: calc(#{$streamback-width} + 60px);
         @include breakpoint(xs) {
-            width: $streamback-width-small;
+            width: calc(#{$streamback-width-small} + 60px);
         }
 
         &-item {
@@ -155,13 +159,13 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
     &__close {
         position: absolute;
         z-index: 2;
-        right: 5px;
-        top: 5px;
+        right: 0px;
+        top: 10px;
         color: $pallete-2;
-        @include rem(font-size, 28px);
-        @include rem(padding,5px 15px);
-        background: $pallete-11;
-        @include border-radius(5px);
+        @include rem(font-size, 26px);
+        background: $semi-transparent-bg;
+        @include rem(padding, 6px 15px);
+        @include border-left-radius(5px);
         cursor: pointer;
     }
 
@@ -228,6 +232,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                     color: $pallete-2;
                     @include rem(font-size, 12px);
                     margin: 0;
+                    word-break: break-word;
                 }
             }
 

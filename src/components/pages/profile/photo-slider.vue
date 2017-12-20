@@ -1,5 +1,5 @@
 <template>
-    <div class="slider__small">
+    <div class="slider__small" v-on:touchmove="onTouchMove" v-on:touchend="onTouchEnd">
         <ul class="slider__small-list" :style="{ left: position + 'px' }">
             <li v-for="photo in photos" :key="photo.id" v-on:click="onClick(photo.id)" v-if="getSliderImage(performer, photo.name, 'medium')">
                 <img :src="getSliderImage(performer, photo.name, 'medium')" />
@@ -15,18 +15,12 @@
 </template>
 
 <script lang="ts">
-import store from 'store';
 import Vue from 'vue';
 
 import { getSliderImage }  from '../../../util';
 
-import FullSlider from './photo-slider-fullscreen';
-
 export default {
     name: 'photo-slider',
-    components: {
-        photoSliderFull: FullSlider
-    },
     props: {
         photos: {
             required: true,
@@ -41,7 +35,8 @@ export default {
     data () {
         return {
             position: 0,
-            moveInterval: undefined
+            moveInterval: undefined,
+            previousTouch: 0
         };
     },
     mounted: function(){
@@ -72,7 +67,28 @@ export default {
         },
         onClick: function(photo: number){
             this.$emit('photoSelected', photo);
-        }
+        },
+        onTouchMove(evt: TouchEvent){
+
+            if(this.previousTouch !== 0){
+                const touchDifference = this.previousTouch - evt.changedTouches[0].pageX;
+
+                const list = <HTMLElement>this.$el.children[0].lastChild;
+
+                if(this.position + touchDifference >= 0 ||
+                    this.photos.length === 0 ||
+                    (this.$data.position + touchDifference) - this.$el.offsetWidth < -(list.offsetLeft + list.offsetWidth)){
+                    return;
+                }
+
+                this.position += touchDifference;
+            }
+
+            this.previousTouch = evt.changedTouches[0].pageX;
+        },
+        onTouchEnd(evt: TouchEvent){
+            this.previousTouch = 0;
+        },
     },
     watch: {
 

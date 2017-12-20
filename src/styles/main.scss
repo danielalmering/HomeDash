@@ -11,6 +11,7 @@
 @import "_form.scss";
 @import "_modals.scss";
 @import "_components.scss";
+@import "_emoticons.scss";
 
 // Main
 
@@ -35,16 +36,12 @@ body {
 
 main {
     &.profileview { 
-        display:flex; 
+        display:table; 
+        width: 100%;
 
         &.collapse {
             .sidebar {
-                transition: all 0.5s ease-in-out;
-                margin-left: 0px;
-            }
-            .profile, .voyeur, .videochat {
-                transition: all 0.5s ease-in-out;
-                margin-left: -$sidebar-width;
+                left: 0px;
             }
         }
     }
