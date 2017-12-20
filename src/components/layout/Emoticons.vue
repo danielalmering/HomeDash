@@ -8,7 +8,6 @@
             </ul>
             <div class="emoticons__list">
                 <i v-for="index in emoticons[selectedCategory]" :key='index' class="e1a-med" :class="'e1a-'+ index" v-on:click="selectEmoji(index)">
-                    {{index}}
                 </i>
             </div>
         </div>
@@ -74,7 +73,7 @@ export default {
             float: left;
             @include rem(font-size, 22px);
             @include rem(padding, 0px 4.5px);
-            i { color: $pallete-2; }
+            i { color: $pallete-2; cursor: pointer; }
 
             &:hover, .active {
                 i { color: $pallete-3; }
@@ -86,6 +85,9 @@ export default {
         height: 200px;
         overflow: auto;
         @include rem(margin, 10px 0px);
+        i {
+            cursor: pointer; 
+        }
     }
 }
 
