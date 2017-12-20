@@ -8,7 +8,7 @@ import { SessionData, RequestPayload } from '../../../store/Session';
 
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
-import Broadcast, { Caster } from './broadcast/broadcast';
+import Broadcast from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
 import Rtmp from './streams/rtmp';
 import WebRTC from './streams/webrtc';
@@ -163,7 +163,7 @@ export default class VideoChat extends Vue {
         this.broadcasting.mic = !this.broadcasting.mic;
         //replace the boolean with the actual name if the selected mic is showing..
         if (this.broadcasting.settings && this.broadcasting.mic){
-            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
+            const flash: any = this.$el.querySelector('#broadcastSWF') as any;
             this.microphones = flash.getMicrophones();
             const selected = this.microphones.find(mic => mic.selected);
             if (selected){
@@ -207,7 +207,7 @@ export default class VideoChat extends Vue {
         this.broadcasting.settings = !this.broadcasting.settings;
         //go get the list of devices if the "settings" will toggle to visible
         if (this.broadcasting.settings){
-            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
+            const flash: any = this.$el.querySelector('#broadcastSWF') as any;
 
             this.cameras = flash.getCameras();
             let selected = this.cameras.find(cam => cam.selected);

@@ -13,7 +13,7 @@
     <div class="videochat__broadcast" v-if="sessionType != 'PEEK' && streamTransportType != 'rtmp' ">
         <div class="videochat__broadcast-object">
             <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
-            <broadcast v-if="broadcasting.cam"
+            <component v-if="broadcasting.cam" :is="broadcastType"
                 v-on:stateChange="broadcastStateChange"
                 v-on:error="broadcastError"
                 :streamType="streamTransportType"
