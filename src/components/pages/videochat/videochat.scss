@@ -74,6 +74,25 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
             text-align: center;
             overflow: hidden;
 
+            p {
+                display: table;
+                height: 100%;
+                width: 100%;
+                @include rem(padding,15px 10px);
+                font-weight: 600;
+                @include rem(margin,0px);
+                color: $pallete-1;
+                line-height: 100%; 
+                background: $pallete-3;
+                img {
+                    @include rem(margin-top, 10px);
+                }
+
+                @include breakpoint(xs) {
+                    @include rem(font-size, 12px);
+                }
+            }
+
             .btn{
                 margin-top: 30%;
             }
