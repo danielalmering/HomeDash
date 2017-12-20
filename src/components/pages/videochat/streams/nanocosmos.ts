@@ -101,6 +101,7 @@ export default class NanoCosmos extends Stream {
     }
 
     beforeDestroy(){
+        console.log('Before destroy...');
         this.end();
     }
 
@@ -129,7 +130,7 @@ export default class NanoCosmos extends Stream {
                 }
             },
             'events': {
-                onReady: (s: any) => { this.log(s); },
+                onReady: (s: any) => { this.onReady(s); },
                 onPlay: (s: any) => { this.onPlay(s); },
                 onPause: (s: any) => { this.log(s); },
                 onLoading: (s: any) => { this.log(s); },
@@ -203,7 +204,7 @@ export default class NanoCosmos extends Stream {
         if(!this.player)
           return false;
 
-        this.player.pause();
+        //this.player.pause();
         this.player.destroy();
 
         return true;
