@@ -69,7 +69,7 @@ export default class NanoCosmos extends Stream {
     @Prop({required: true, type: String})
     public token: string;*/
 
-    @Prop({default: true, type: Boolean})
+    @Prop({default: false, type: Boolean})
     public debug: Boolean;
 
     //TODO typescript declaration of NanoPlayer
@@ -101,7 +101,6 @@ export default class NanoCosmos extends Stream {
     }
 
     beforeDestroy(){
-        console.log('Before destroy...');
         this.end();
     }
 
@@ -130,7 +129,7 @@ export default class NanoCosmos extends Stream {
                 }
             },
             'events': {
-                onReady: (s: any) => { this.onReady(s); },
+                onReady: (s: any) => { this.log(s); },
                 onPlay: (s: any) => { this.onPlay(s); },
                 onPause: (s: any) => { this.log(s); },
                 onLoading: (s: any) => { this.log(s); },
@@ -160,51 +159,44 @@ export default class NanoCosmos extends Stream {
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {
-            if(this.debug){
-              console.log('setup success');
-              console.log(`config:  ${JSON.stringify(s, undefined, 4)}`);
-            }
+            this.log('setup success');
+            this.log(`config:  ${JSON.stringify(s, undefined, 4)}`);
         }, function (error: any) {
             console.log(error.message);
         });
     }
 
-    private onReady(s: any) {
-        //this.onStateChange('active');
+    private onPlay(s: any) {
+        this.log(s);
         if(this.$store.state.session.activeState !== State.Active){
-            this.onStateChange('active'); //not sure about this yet
+            this.onStateChange('active');
         }
     }
 
-    private onPlay(s: any) {
-        console.log(s);
-    }
-
     private onStopBuffering(s: any){
-        console.log("stop buffering test");
-        //not sure to reload here
         this.end();
         this.load();
     }
 
     private onNanoCosmosError(s: any){
         if(s.data && s.data.code === 2002){
-            this.onStateChange('disconnected');
+           this.onStateChange('disconnected');
         } else {
-           console.log(s);
+           this.log(s);
            this.onError(s);
         }
     }
 
     private log(val: any){
-        console.log(val);
+        if(this.debug){
+            console.log(val);
+        }
     }
 
     private end(){
         if(!this.player)
           return false;
 
-        //this.player.pause();
         this.player.destroy();
 
         return true;

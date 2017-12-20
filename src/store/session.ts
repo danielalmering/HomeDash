@@ -57,7 +57,7 @@ setTimeout(() => {
 }, 100);
 
 const transitions: { [key: string]: State[] } = {
-    [State.Idle]:           [State.InRequest],
+    [State.Idle]:           [State.InRequest, State.Ending], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
     [State.InRequest]:      [State.Pending, State.Accepted, State.Canceling, State.Idle],
     [State.Pending]:        [State.Accepted, State.Canceling],
     [State.Accepted]:       [State.Initializing, State.Canceling],
