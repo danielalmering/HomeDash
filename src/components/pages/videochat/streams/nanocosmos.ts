@@ -130,13 +130,13 @@ export default class NanoCosmos extends Stream {
             },
             'events': {
                 onReady: (s: any) => { this.log(s); },
-                onPlay: (s: any) => { this.log(s); },
+                onPlay: (s: any) => { this.onPlay(s); },
                 onPause: (s: any) => { this.log(s); },
                 onLoading: (s: any) => { this.log(s); },
                 onStartBuffering: (s: any) => { this.log(s); },
                 onStopBuffering: (s: any) => { this.log(s); },
-                onError: (s: any) => { this.log(s); },
-                onStats: (s: any) => { this.log(s); },
+                onError: (s: any) => { this.onNanoCosmosError(s); },
+                //onStats: (s: any) => { this.log(s); },
                 onMetaData: (s: any) => { this.log(s); },
                 onMuted: (s: any) => { this.log(s); },
                 onUnmuted: (s: any) => { this.log(s); },
@@ -166,6 +166,20 @@ export default class NanoCosmos extends Stream {
         }, function (error: any) {
             console.log(error.message);
         });
+    }
+
+    private onPlay(s: any){
+        this.onStateChange('active');
+    }
+
+    private onNanoCosmosError(s: any){
+        if(s.data && s.data.code === 2002){
+            this.onStateChange('disconnected');
+        } else {
+           console.log(s);
+           this.onError(s);
+        }
+
     }
 
     private log(val: any){
