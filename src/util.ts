@@ -3,7 +3,6 @@ import config from './config';
 
 import { Performer, PerformerStatus } from './models/Performer';
 
-
 export function getAvatarImage(performer: Performer, size: string){
 
     if(store.state.safeMode && performer.safe_avatar){
@@ -56,4 +55,12 @@ export function getPerformerLabel(performer: Performer){
     }
 
     return 'none';
+}
+
+export function scrollToTop(scrollDuration: number) {
+    const scrollStep = -window.scrollY / (scrollDuration / 15);
+
+    const scrollInterval = setInterval(() => {
+        window.scrollY !== 0 ? window.scrollBy(0, scrollStep) : clearInterval(scrollInterval)
+    }, 15);
 }

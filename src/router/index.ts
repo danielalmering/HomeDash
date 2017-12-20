@@ -25,6 +25,7 @@ import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor } from './interceptors';
+import { scrollToTop } from '../util';
 
 Vue.use(Router);
 
@@ -163,13 +164,11 @@ const routes = [{
 const router = new Router({
     mode: 'history',
     base: '/',
-    routes: makeRoutesStrict(routes),
-    scrollBehavior (to, from, savedPosition) {
-        return { x: 0, y: 0 }
-    }
+    routes: makeRoutesStrict(routes)
 });
 
 router.beforeEach(safeInterceptor);
+router.afterEach(() => scrollToTop(600)); //Scroll to top after page changes
 router.afterEach(seoInterceptor);
 
 function makeRoutesStrict(routes: RouteConfig[]){
