@@ -56,6 +56,14 @@ export default class Profile extends Vue {
         return this.$store.state.session.activeState;
     }
 
+    get canPeek():boolean{
+        if (!this.performer){
+            return false;
+        }
+
+        return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
+    }
+
     getAvatarImage = getAvatarImage;
     getPerformerLabel = getPerformerLabel;
 

@@ -107,9 +107,7 @@
         width: 100%;
 
         &-toggle {
-            position: absolute;
-            top: -43px;
-            left: 45%;
+            display: table;
             @include rem(padding, 12px 15px);
             font-weight: 600;
             color: $pallete-2;
