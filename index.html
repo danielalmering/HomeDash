@@ -26,7 +26,15 @@
         </script>
 
         <script type="text/javascript">
-            var scriptUrl = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Promise,Array.prototype.find,Array.prototype.fill';
+            var features = [
+                'fetch',
+                'Promise',
+                'Array.prototype.find',
+                'Array.prototype.fill',
+                'Object.assign'
+            ].join(',');
+
+            var scriptUrl = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=' + features;
 
             if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
                 document.write('<script src="' + scriptUrl + '"><\/script>');
