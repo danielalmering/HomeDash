@@ -11,7 +11,18 @@ export default class Editdata extends Vue {
 
     user: User;
 
+    confirmPassword: string = '';
+
+    created(){
+        this.user = Object.assign({}, this.$store.state.authentication.user);
+    }
+
     async updateUser(){
+        if(this.user.password && this.user.password !== this.confirmPassword){
+            this.$store.dispatch('errorMessage', 'modals.reset.alerts.errorPasswordMismatch');
+            return;
+        }
+
         const userResult = await fetch(`${config.BaseUrl}/client/client_accounts/${this.user.id}`, {
             method: 'PUT',
             body: JSON.stringify(this.user),
@@ -19,26 +30,15 @@ export default class Editdata extends Vue {
         });
 
         if(!userResult.ok){
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.errorEditData',
-                class: 'error'
-            });
-
+            this.$store.dispatch('errorMessage', 'account.alerts.errorEditData');
             return;
         }
 
-        this.$store.dispatch('openMessage', {
-            content: 'account.alerts.successEditData',
-            class: 'success'
-        });
+        this.$store.dispatch('successMessage', 'account.alerts.successEditData');
 
         const userData = await userResult.json();
 
         this.$store.commit('setUser', userData);
-    }
-
-    created(){
-        this.user = Object.assign({}, this.$store.state.authentication.user);
     }
 
     subscribePushMessages(){
