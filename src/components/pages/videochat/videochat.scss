@@ -279,14 +279,14 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 color: $pallete-2;
                 @include border-radius(3px);
                 &:focus { outline: none; }
-                width: 100%;
+                width: calc(100% - 95px);
             }
 
             .btns {
                 position: absolute;
                 top: 0;
                 right: 0;
-                width: auto;
+                width: 103px;
                 background: $pallete-9;
                 height: 45px;
                 @include rem(padding,8px 10px 8px 5px);
