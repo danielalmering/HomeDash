@@ -13,6 +13,11 @@ declare module '*.html' {
     export = withRender
 }
 
+declare module "*.json" {
+    const value: any;
+    export default value;
+}
+
 // declare module "vue/types/vue" {
 //     import { Store } from 'vuex';
 //     import { RootState } from './store';

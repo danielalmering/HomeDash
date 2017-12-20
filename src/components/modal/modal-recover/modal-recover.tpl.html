@@ -2,13 +2,15 @@
     <div class="modal__title"><i class="fa fa-user"></i><span v-t="'modals.recover.title'"></span></div>
     <div class="modal__close" v-on:click="close"><i class="fa fa-times"></i></div>
     <div class="modal__content register form">
-        <div class="form__group">
-            <label v-t="'modals.recover.email'"></label>
-            <input type="email" v-model="email" />
-        </div>
+        <form v-on:submit.prevent="register">
+            <div class="form__group">
+                <label v-t="'modals.recover.email'"></label>
+                <input type="email" required v-model="email" />
+            </div>
 
-        <div class="form__group">
-            <button class="btn btn-large btn-orange btn-full" v-on:click="recover" v-t="'modals.recover.recover'"></button>
-        </div>
+            <div class="form__group">
+                <button class="btn btn-large btn-orange btn-full" v-t="'modals.recover.recover'"></button>
+            </div>
+        </form>
     </div>
 </div>

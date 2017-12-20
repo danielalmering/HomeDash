@@ -25,6 +25,5 @@ export default class ModalWrapper extends Vue {
     }
 
     mounted(){
-        // this.$store.dispatch('displayModal', 'login');
     }
 }

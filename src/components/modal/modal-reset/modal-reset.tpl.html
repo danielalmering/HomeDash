@@ -2,15 +2,17 @@
     <div class="modal__title"><i class="fa fa-user"></i><span v-t="'modals.reset.title'"></span></div>
     <div class="modal__close" v-on:click="close"><i class="fa fa-times"></i></div>
     <div class="modal__content register form">
-        <div class="form__group">
-            <label v-t="'modals.reset.password'"></label>
-            <input type="password" v-model="password" />
-        </div>
+        <form v-on:submit.prevent="reset">
+            <div class="form__group">
+                <label v-t="'modals.reset.password'"></label>
+                <input type="password" required v-model="password" />
+            </div>
 
-        <div class="form__group">
-            <label v-t="'modals.reset.passwordconfirm'"></label>
-            <input type="password" v-model="passwordConfirm" />
-            <button class="btn btn-large btn-orange btn-full" v-on:click="reset" v-t="'modals.reset.reset'"></button>
-        </div>
+            <div class="form__group">
+                <label v-t="'modals.reset.passwordconfirm'"></label>
+                <input type="password" required v-model="passwordConfirm" />
+                <button class="btn btn-large btn-orange btn-full" v-t="'modals.reset.reset'"></button>
+            </div>
+        </form>
     </div>
 </div>

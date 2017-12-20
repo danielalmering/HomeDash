@@ -16,85 +16,77 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
+import { Avatar } from '../../../models/Performer';
 
 import { getSliderImage }  from '../../../util';
 
-export default {
-    name: 'photo-slider',
-    props: {
-        photos: {
-            required: true,
-            type: Array
-        },
-        performer: {
-            required: true,
-            type: Number
-        }
-    },
+@Component
+export default class PhotoSlider extends Vue {
 
-    data () {
-        return {
-            position: 0,
-            moveInterval: undefined,
-            previousTouch: 0
-        };
-    },
-    mounted: function(){
-        console.log(this.$props.photos);
-    },
-    methods: {
-        getSliderImage: getSliderImage,
-        move: function(toggle: boolean, speed?: number){
-            var self = this;
+    @Prop({
+        required: true,
+        type: Array
+    })
+    photos: Avatar[];
 
-            if(toggle && speed){
-                this.$data.moveInterval = setInterval(function(){
-                    if(self.$data.position >= 0 && speed > 0){
-                        return;
-                    }
+    @Prop({
+        required: true,
+        type: Number
+    })
+    performer: number;
 
-                    const list = <HTMLElement>self.$el.children[0].lastChild;
+    position: number = 0;
+    moveInterval: number = 0;
+    previousTouch: number = 0;
 
-                    if(self.photos.length === 0 || (self.$data.position - self.$el.offsetWidth < -(list.offsetLeft + list.offsetWidth) && speed < 0)){
-                        return;
-                    }
+    getSliderImage = getSliderImage;
 
-                    self.$data.position += speed;
-                }, 10);
-            } else {
-                clearInterval(this.$data.moveInterval);
-            }
-        },
-        onClick: function(photo: number){
-            this.$emit('photoSelected', photo);
-        },
-        onTouchMove(evt: TouchEvent){
-
-            if(this.previousTouch !== 0){
-                const touchDifference = this.previousTouch - evt.changedTouches[0].pageX;
-
-                const list = <HTMLElement>this.$el.children[0].lastChild;
-
-                if(this.position + touchDifference >= 0 ||
-                    this.photos.length === 0 ||
-                    (this.$data.position + touchDifference) - this.$el.offsetWidth < -(list.offsetLeft + list.offsetWidth)){
+    move(toggle: boolean, speed?: number){
+        if(toggle && speed){
+            this.moveInterval = window.setInterval(() => {
+                if(this.position >= 0 && speed > 0){
                     return;
                 }
 
-                this.position += touchDifference;
+                const list = <HTMLElement>this.$el.children[0].lastChild;
+
+                if(this.photos.length === 0 || (this.position - this.$el.offsetWidth < -(list.offsetLeft + list.offsetWidth) && speed < 0)){
+                    return;
+                }
+
+                this.position += speed;
+            }, 10);
+        } else {
+            clearInterval(this.moveInterval);
+        }
+    }
+
+    onClick(photoId: number){
+        this.$emit('photoSelected', photoId);
+    }
+
+    onTouchMove(evt: TouchEvent){
+
+        if(this.previousTouch !== 0){
+            const touchDifference = this.previousTouch - evt.changedTouches[0].pageX;
+
+            const list = <HTMLElement>this.$el.children[0].lastChild;
+
+            if(this.position + touchDifference >= 0 ||
+                this.photos.length === 0 ||
+                (this.position + touchDifference) - this.$el.offsetWidth < -(list.offsetLeft + list.offsetWidth)){
+                return;
             }
 
-            this.previousTouch = evt.changedTouches[0].pageX;
-        },
-        onTouchEnd(evt: TouchEvent){
-            this.previousTouch = 0;
-        },
-    },
-    watch: {
+            this.position += touchDifference;
+        }
 
-    },
-    computed: {
-
+        this.previousTouch = evt.changedTouches[0].pageX;
     }
-};
+
+    onTouchEnd(evt: TouchEvent){
+        this.previousTouch = 0;
+    }
+}
 </script>
