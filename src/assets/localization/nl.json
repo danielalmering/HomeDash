@@ -228,6 +228,7 @@
     },
     "videochat": {
         "leaving": "Huidige sessie verlaten",
+        "flashchecktext": "U heeft geen flash installatie, klik hieronder om deze te downloaden",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!"
         }

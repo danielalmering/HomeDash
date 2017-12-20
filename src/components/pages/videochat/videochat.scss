@@ -74,6 +74,25 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
             text-align: center;
             overflow: hidden;
 
+            p {
+                display: table;
+                height: 100%;
+                width: 100%;
+                @include rem(padding,15px 10px);
+                font-weight: 600;
+                @include rem(margin,0px);
+                color: $pallete-1;
+                line-height: 100%; 
+                background: $pallete-3;
+                img {
+                    @include rem(margin-top, 10px);
+                }
+
+                @include breakpoint(xs) {
+                    @include rem(font-size, 12px);
+                }
+            }
+
             .btn{
                 margin-top: 30%;
             }
@@ -260,14 +279,14 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 color: $pallete-2;
                 @include border-radius(3px);
                 &:focus { outline: none; }
-                width: 100%;
+                width: calc(100% - 95px);
             }
 
             .btns {
                 position: absolute;
                 top: 0;
                 right: 0;
-                width: auto;
+                width: 103px;
                 background: $pallete-9;
                 height: 45px;
                 @include rem(padding,8px 10px 8px 5px);
