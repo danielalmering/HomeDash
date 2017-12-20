@@ -11,6 +11,7 @@ import Chat from './chat/chat';
 import Broadcast, { Caster } from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
 import Rtmp from './streams/rtmp';
+import NanoCosmos from './streams/nanocosmos';
 import WebRTC from './streams/webrtc';
 import config from '../../../config';
 import Confirmations from '../../layout/Confirmations.vue';
@@ -39,6 +40,7 @@ Component.registerHooks([
         jsmpeg: Jsmpeg,
         rtmp: Rtmp,
         webrtc: WebRTC,
+        nanocosmos: NanoCosmos,
         confirmation: Confirmations
     }
 })
@@ -74,7 +76,7 @@ export default class VideoChat extends Vue {
         }
 
         // return this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
-        return 'jsmpeg';
+        return 'nanocosmos';
     }
 
     get wowza(): string | undefined{
