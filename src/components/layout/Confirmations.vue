@@ -7,10 +7,10 @@
             <p>{{ $t('confirmations.connectdesc') }}</p>
             <a class="btn btn-large btn-full btn-black" v-on:click="cancel">{{ $t('confirmations.cancel') }}</a>
         </div>
-        
+
         <div class="confirmations__content" v-if="type === 'dialog'">
             <h2>{{ $t(title) }}</h2>
-            <p>{{ $t(subtitle) }}</p>
+            <p>{{ $t(subTitle) }}</p>
             <a class="btn btn-large btn-orange btn-full" v-on:click="accept">{{ $t('confirmations.accept') }}</a>
             <a class="btn btn-large btn-full btn-black" v-on:click="cancel">{{ $t('confirmations.cancel') }}</a>
         </div>
@@ -18,39 +18,41 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import config from '../../config';
 
-export default {
-    name: 'confirmations',
-    props: {
-        type: {
-            required: true,
-            type: String
-        },
-        title: {
-            required: false,
-            type: String
-        },
-        subtitle: {
-            required: false,
-            type: String
-        }
-    },
-    data () {
-        return {
-        };
-    },
-    methods: {
-        cancel: function(){
-            this.$emit('cancel');
-        },
-        accept: function(){
-            this.$emit('accept');
-        }
+import { Component, Prop } from 'vue-property-decorator';
+
+@Component
+export default class Confirmations extends Vue {
+
+    @Prop({
+        required: true,
+        type: String
+    })
+    type: string;
+
+    @Prop({
+        required: false,
+        type: String
+    })
+    title: string;
+
+    @Prop({
+        required: false,
+        type: String
+    })
+    subTitle: string;
+
+    accept(){
+        this.$emit('accept');
     }
-};
+
+    cancel(){
+        this.$emit('cancel');
+    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -80,7 +82,7 @@ export default {
         background: $pallete-9;
         @include border-radius(5px);
 
-        h2 { 
+        h2 {
             @include rem(margin-top, 0);
             color: $pallete-3;
         }

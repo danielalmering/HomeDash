@@ -23,111 +23,123 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 
-export default {
-    name: 'pagination',
-    props: {
-        limit: {
-            required: true,
-            type: Number
-        },
-        offset: {
-            required: true,
-            type: Number
-        },
-        total: {
-            required: true,
-            type: Number
-        },
-        pageButtons: {
-            default: false,
-            type: Boolean
-        },
-        pageCount: {
-            default: false,
-            type: Boolean
-        },
-        buttonsAhead: {
-            default: 2,
-            type: Number
-        },
-        buttonsBack: {
-            default: 2,
-            type: Number
-        }
-    },
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
-    data () {
-        return {
-            updatedLimit: 40
-        };
-    },
-    methods: {
-        next: function(){
-            this.$emit('update:offset', this.offset + this.limit);
-            this.$emit('pageChange');
-        },
-        previous: function(){
-            this.$emit('update:offset', this.offset - this.limit);
-            this.$emit('pageChange');
-        },
-        setPage: function(page){
-            this.$emit('update:offset', (page - 1) * this.limit);
-            this.$emit('pageChange');
-        }
-    },
-    watch: {
-        updatedLimit: function(limit){
-            const currentPage = Math.floor((this.offset / limit));
+@Component
+export default class Pagination extends Vue {
 
-            console.log(currentPage);
+    @Prop({
+        required: true,
+        type: Number
+    })
+    limit: number;
 
-            this.$emit('update:limit', parseInt(limit));
-            this.$emit('update:offset', currentPage * limit);
-            this.$emit('pageChange');
-        }
-    },
-    computed: {
-        showPrevious: function(){
-            return this.offset > 0;
-        },
-        showNext: function(){
-            return this.total > (this.offset + this.limit);
-        },
-        currentPage: function(){
-            return (this.offset / this.limit) + 1;
-        },
-        totalPages: function(){
-            return Math.ceil(this.total / this.limit);
-        },
-        pages: function(){
-            const pages = [this.currentPage];
+    @Prop({
+        required: true,
+        type: Number
+    })
+    offset: number;
 
-            for(var i = 1; i <= this.buttonsBack; i++){
-                let page = this.currentPage - i;
+    @Prop({
+        required: true,
+        type: Number
+    })
+    total: number;
 
-                if(page < 1){
-                    break;
-                }
+    @Prop({
+        default: false,
+        type: Boolean
+    })
+    pageButtons: boolean;
 
-                pages.unshift(page);
-            }
+    @Prop({
+        default: false,
+        type: Boolean
+    })
+    pageCount: boolean;
 
-            for(var i = 1; i <= this.buttonsAhead; i++){
-                let page = this.currentPage + 1;
+    @Prop({
+        default: 2,
+        type: Number
+    })
+    buttonsAhead: number;
 
-                if(page > this.totalPages){
-                    break;
-                }
+    @Prop({
+        default: 2,
+        type: Number
+    })
+    buttonsBack: number;
 
-                pages.push(this.currentPage + i);
-            }
+    updatedLimit: number = 40;
 
-
-            return pages;
-        }
+    get showPrevious(){
+        return this.offset > 0;
     }
-};
+
+    get showNext(){
+        return this.total > (this.offset + this.limit);
+    }
+
+    get currentPage(){
+        return (this.offset / this.limit) + 1;
+    }
+
+    get totalPages(){
+        return Math.ceil(this.total / this.limit);
+    }
+
+    get pages(){
+        const pages = [this.currentPage];
+
+        for(var i = 1; i <= this.buttonsBack; i++){
+            let page = this.currentPage - i;
+
+            if(page < 1){
+                break;
+            }
+
+            pages.unshift(page);
+        }
+
+        for(var i = 1; i <= this.buttonsAhead; i++){
+            let page = this.currentPage + 1;
+
+            if(page > this.totalPages){
+                break;
+            }
+
+            pages.push(this.currentPage + i);
+        }
+
+
+        return pages;
+    }
+
+    next(){
+        this.$emit('update:offset', this.offset + this.limit);
+        this.$emit('pageChange');
+    }
+
+    previous(){
+        this.$emit('update:offset', this.offset - this.limit);
+        this.$emit('pageChange');
+    }
+
+    setPage(page: number){
+        this.$emit('update:offset', (page - 1) * this.limit);
+        this.$emit('pageChange');
+    }
+
+    @Watch('updatedLimit')
+    onUpdatedLimitChange(limit: any){
+        const currentPage = Math.floor((this.offset / limit));
+
+        this.$emit('update:limit', parseInt(limit));
+        this.$emit('update:offset', currentPage * limit);
+        this.$emit('pageChange');
+    }
+}
 </script>

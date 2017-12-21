@@ -5,26 +5,7 @@ import { setTitle, setDescription, setKeywords } from '../../../../seo';
 
 import config from '../../../../config';
 import WithRender from './seo.tpl.html';
-
-interface SeoText {
-    id: number;
-    description: string;
-    image_location: string;
-    image_position: string;
-    image_title: string;
-    order: number;
-    title: string;
-}
-
-interface SeoData {
-    id: number;
-    language: string;
-    slug: string;
-    meta_description: string;
-    meta_keywords: string;
-    meta_title: string;
-    texts: SeoText[];
-}
+import { SeoText, SeoData } from '../../../../models/Seo';
 
 @WithRender
 @Component

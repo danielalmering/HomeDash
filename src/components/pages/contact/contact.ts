@@ -34,15 +34,9 @@ export default class Contact extends Vue {
         const contactData = await contactResult.json();
 
         if(!contactResult.ok){
-            this.$store.dispatch('openMessage', {
-                content: 'contact.alerts.errorSend',
-                class: 'error'
-            });
+            this.$store.dispatch('errorMessage', 'contact.alerts.errorSend');
         } else {
-            this.$store.dispatch('openMessage', {
-                content: 'contact.alerts.successSend',
-                class: 'success'
-            });
+            this.$store.dispatch('successMessage', 'contact.alerts.successSend');
 
             this.contact = {
                 email: '',

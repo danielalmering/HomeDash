@@ -10,20 +10,19 @@
             </component>
         </div>
     </div>
-    <div class="videochat__broadcast" v-if="sessionType != 'PEEK' && streamTransportType != 'rtmp' ">
+    <div class="videochat__broadcast" v-if="broadcastType != 'none'">
 
         <div class="videochat__broadcast-object" v-if="broadcasting.cam">
             <a class="btn btn-large btn-orange" v-if="!broadcasting.cam" v-on:click="startCam">{{ $t("start cam") }}</a>
-            <broadcast
+            <component v-if="broadcasting.cam" :is="broadcastType"
                 v-on:stateChange="broadcastStateChange"
                 v-on:error="broadcastError"
-                :streamType="streamTransportType"
-                :wowza="wowza" 
-                :publishStream="publishStream" 
-                :mic="broadcasting.mic" 
-                :cam="broadcasting.cam" 
+                :wowza="wowza"
+                :publishStream="publishStream"
+                :mic="broadcasting.mic"
+                :cam="broadcasting.cam"
                 :quality="1" >
-            </broadcast>
+            </component>
         </div>
 
         <ul class="videochat__broadcast-buttons">
@@ -36,7 +35,7 @@
             <div class="videochat__devices-item">
                 <i class="fa fa-video-camera"></i>
                 <select v-model="broadcasting.cam" v-on:change="setCamera">
-                    <option v-for="camera in cameras">
+                    <option v-for="camera in cameras" :value="camera.id ? camera.id : camera.name">
                         {{ camera.name }}
                     </option>
                 </select>
@@ -44,7 +43,7 @@
             <div class="videochat__devices-item">
                 <i class="fa fa-microphone"></i>
                 <select v-model="broadcasting.mic" v-on:change="setMicrophone">
-                    <option v-for="mic in microphones">
+                    <option v-for="mic in microphones" :value="mic.id ? mic.id : mic.name">
                         {{ mic.name }}
                     </option>
                 </select>
@@ -53,12 +52,12 @@
         </div>
 
     </div>
-    
+
     <div v-if="sessionType == 'VIDEOCALL'" class="videochat__videocall" v-on:click="stopCalling">{{ $t('stop videocall') }}</div>
     <div v-if="sessionType != 'VIDEOCALL' && paymentMethod == 'IVR'" class="videochat__videocall" v-on:click="startCalling">{{ $t('start videocall') }}</div>
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
 
-    <chat v-if="sessionType != 'PEEK'" :performer-name="performer.nickname" :user-name="displayName"></chat>
+    <chat v-if="sessionType != 'PEEK'" :performer-name="performer ? performer.nickname : ''" :user-name="displayName"></chat>
 
     <confirmation v-if="askToLeave" :type="'dialog'" :title="'videochat.leaving'" v-on:accept="leave" v-on:cancel="stay"></confirmation>
 </div>

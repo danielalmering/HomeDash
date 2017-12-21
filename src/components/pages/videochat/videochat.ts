@@ -8,17 +8,22 @@ import { SessionData, RequestPayload } from '../../../store/Session';
 
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
-import Broadcast, { Caster } from './broadcast/broadcast';
+import Broadcast from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
-import Rtmp from './streams/rtmp';
+import { Rtmp as RTMPPlay } from './streams/rtmp';
+import { Rtmp as RTMPBroadcast } from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
-import WebRTC from './streams/webrtc';
+import { WebRTC as WRTCPlay } from './streams/webrtc';
+import { WebRTC as WRTCBroadcast } from './broadcast/webrtc'
 import config from '../../../config';
 import Confirmations from '../../layout/Confirmations.vue';
+import { Devices } from 'typertc';
 
 import './videochat.scss';
 import Performer from '../performer';
 import WithRender from './videochat.tpl.html';
+import Page from '../page';
+const Platform = require('platform');
 
 interface BroadcastConfiguration {
     cam: boolean | string;
@@ -36,12 +41,13 @@ Component.registerHooks([
 @Component({
     components: {
         chat: Chat,
-        broadcast: Broadcast,
         jsmpeg: Jsmpeg,
-        rtmp: Rtmp,
-        webrtc: WebRTC,
+        rtmp: RTMPPlay,
+        webrtc: WRTCPlay,
         nanocosmos: NanoCosmos,
-        confirmation: Confirmations
+        confirmation: Confirmations,
+        rtmpBroadcast: RTMPBroadcast,
+        webrtcBroadcast: WRTCBroadcast
     }
 })
 export default class VideoChat extends Vue {
@@ -59,8 +65,8 @@ export default class VideoChat extends Vue {
 
     stateMessages: string[] = [];
 
-    cameras: {name: string, selected: boolean}[];
-    microphones: {name: string, selected: boolean}[];
+    cameras: {id:string, name: string, selected: boolean}[];
+    microphones: {id:string, name: string, selected: boolean}[];
 
     get sessionType(): SessionType{
         return this.$store.state.session.activeSessionType;
@@ -77,6 +83,64 @@ export default class VideoChat extends Vue {
 
         // return this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
         return 'nanocosmos';
+    }
+
+    get broadcastType():string{
+        if (this.sessionType == SessionType.Peek){
+            return 'none';
+        }
+
+        var platform = Platform.parse(navigator.userAgent);
+        if (this.isIOS(platform)){
+            return 'none';
+        }
+        if (this.noWebRtc(platform)){
+            return 'flash';
+        }
+        return 'webrtcBroadcast';
+    }
+
+    isIOS(platform:Platform):boolean{
+        if (!platform){
+            return false;
+        }
+        if (!platform.os){
+            return false;
+        }
+
+        return platform.os.family == 'iOS';
+    }
+    
+    noWebRtc(platform:Platform):boolean{
+        if (!platform){
+            return false;
+        }
+        if (!platform.name){
+            return false;
+        }
+        const flashers = ["Microsoft Edge", "IE", "Firefox"];
+        if ( flashers.indexOf(platform.name) > -1 ){
+            return true;
+        }
+
+        if (platform.name == 'Safari' && this.major(platform.version) < 11){
+            return true;
+        }
+
+        return false;
+    }
+
+    major(version:string | undefined):number{
+        if (!version){
+            return 0;
+        }
+
+        const result:number = parseInt(version.split('.')[0]);
+        if (result){
+            return result;
+        }
+
+        return 0;
     }
 
     get wowza(): string | undefined{
@@ -168,25 +232,24 @@ export default class VideoChat extends Vue {
         this.broadcasting.mic = !this.broadcasting.mic;
         //replace the boolean with the actual name if the selected mic is showing..
         if (this.broadcasting.settings && this.broadcasting.mic){
-            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
-            this.microphones = flash.getMicrophones();
             const selected = this.microphones.find(mic => mic.selected);
             if (selected){
-                this.broadcasting.mic = selected.name;
+                console.log("nu is alles anders!");
+                this.broadcasting.mic = selected.id;
             }
         }
     }
 
     setCamera(event: Event){
-        const camName = (<HTMLSelectElement>event.srcElement).value;
-        this.cameras.forEach(cam => cam.selected = (cam.name === camName));
-        this.broadcasting.cam = camName;
+        const camId = (<HTMLSelectElement>event.srcElement).value;
+        this.cameras.forEach(cam => cam.selected = (cam.id === camId));
+        this.broadcasting.cam = camId;
     }
 
     setMicrophone(event: Event){
-        const micName = (<HTMLSelectElement>event.srcElement).value;
-        this.microphones.forEach(mic => mic.selected = (mic.name === micName));
-        this.broadcasting.mic = micName;
+        const micId = (<HTMLSelectElement>event.srcElement).value;
+        this.microphones.forEach(mic => mic.selected = (mic.id === micId));
+        this.broadcasting.mic = micId;
     }
 
     broadcastStateChange(state: string){
@@ -198,7 +261,6 @@ export default class VideoChat extends Vue {
     }
 
     viewerStateChange(state: string){
-        console.log(`yoyo dit is de state: ${state}`);
         if (state === 'active'){
             this.$store.dispatch('setActive');
         }
@@ -212,18 +274,43 @@ export default class VideoChat extends Vue {
         this.broadcasting.settings = !this.broadcasting.settings;
         //go get the list of devices if the "settings" will toggle to visible
         if (this.broadcasting.settings){
-            const flash: Caster = this.$el.querySelector('#broadcastSWF') as any;
+            const flash: any = this.$el.querySelector('#broadcastSWF') as any;
 
-            this.cameras = flash.getCameras();
-            let selected = this.cameras.find(cam => cam.selected);
-            if (selected && this.broadcasting.cam !== selected.name){
-                this.broadcasting.cam = selected.name;
-            }
+            if (flash){
+                this.cameras = flash.getCameras();
+                this.cameras.forEach(cam=>cam.id = cam.name);
 
-            this.microphones = flash.getMicrophones();
-            selected = this.microphones.find(mic => mic.selected);
-            if (selected && this.broadcasting.mic && this.broadcasting.mic !== selected.name){
-                this.broadcasting.mic = selected.name;
+                let selected = this.cameras.find(cam => cam.selected);
+                if (selected && this.broadcasting.cam !== selected.id){
+                    this.broadcasting.cam = selected.id;
+                }
+
+                this.microphones = flash.getMicrophones();
+                this.cameras.forEach(mic=>mic.id = mic.name);
+                selected = this.microphones.find(mic => mic.selected);
+                if (selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
+                    this.broadcasting.mic = selected.id;
+                }
+            } else {
+                var devices = new Devices();
+                devices.getCameras().then( cams=>{
+                    console.log("jawohl, cameras binnen");
+                    console.log(cams);
+                    this.cameras=cams;
+                    let selected = this.cameras.find(cam=>cam.selected);
+                    if (selected && this.broadcasting.cam !== selected.id){
+                        this.broadcasting.cam = selected.id;
+                    }
+                });
+                devices.getMicrophones().then( mics => {
+                    console.log("jawohl, microphoes binnen");
+                    console.log(mics);
+                    this.microphones=mics;
+                    let selected = this.microphones.find(mic=>mic.selected);
+                    if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
+                        this.broadcasting.mic = selected.id;
+                    }
+                });
             }
         }
     }
@@ -271,7 +358,6 @@ export default class VideoChat extends Vue {
 
         //Stop clientSeen event
         clearInterval(this.intervalTimer);
-        //end player if its there
         //Send end API call and update state to ending
         this.$store.dispatch('end', 'PLAYER_END');
     }

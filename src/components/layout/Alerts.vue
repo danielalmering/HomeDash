@@ -8,24 +8,19 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 
-export default {
-    name: 'alerts',
-    data () {
-        return {
-        };
-    },
-    methods: {
+import { Component } from 'vue-property-decorator';
 
-    },
-    computed: {
-        alerts: function(){
-            return this.$store.state.alerts.messages;
-        }
+@Component
+export default class Alerts extends Vue {
+
+    get alerts(){
+        return this.$store.state.alerts.messages;
     }
-};
+}
+
 </script>
 
 <style scoped lang="scss">

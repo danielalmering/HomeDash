@@ -11,6 +11,7 @@ export interface AnonymousUser {
 export interface User extends AnonymousUser {
     username: string;
     email: string;
+    password?: string;
 
     status: string; // Make Enum
     roles: string[]; //Transform to single

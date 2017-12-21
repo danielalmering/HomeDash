@@ -33,6 +33,15 @@ export default class Tabs extends Vue {
 
     ivrCode: string = '';
 
+    tabs = {
+        'cam': 'video-camera',
+        'videocall': 'video-camera',
+        'voyeur': 'eye',
+        'phone': 'phone',
+        'email': 'envelope',
+        'sms': 'mobile'
+    };
+
     @Prop() performer: Performer;
 
     mounted(){
@@ -86,15 +95,11 @@ export default class Tabs extends Vue {
     }
 
     get camLabel(): string {
-        if (!this.performer){
-            return 'tabs.service-webcam';
+        if (this.performer && this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
+            return 'peek';
         }
 
-        if (this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
-            return 'tabs.service-peek';
-        }
-
-        return 'tabs.service-webcam';
+        return 'cam';
     }
 
     get canPeek():boolean{
@@ -127,7 +132,7 @@ export default class Tabs extends Vue {
 
     get displayName(): string {
         if(!this.user){
-            return "";
+            return this._displayName;
         }
 
         if (this.authenticated){
@@ -138,11 +143,15 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
+        console.log(value);
         if (!this.user){
-            return;
+            this._displayName = value;
+        } else {
+            this.user.displayName = value;
         }
-        this.user.displayName = value;
     }
+
+    private _displayName:string = "";
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){

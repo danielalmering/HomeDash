@@ -44,7 +44,7 @@
 
                     <a class="nav__info-item nav__info-item--last" v-on:click="showLang = !showLang">
                         <span>
-                            <i :class="'flag flag-' + language"></i>
+                            <i :class="`flag flag-${language}`"></i>
                             <span class="visible-xs" v-t="'nav.info.lang'"></span>
                         </span>
                         <ul class="nav__info-subitems" v-if="showLang">

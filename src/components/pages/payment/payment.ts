@@ -50,9 +50,6 @@ export default class Payment extends Vue {
     promoCode: string = '';
     promoCredits: number = 0;
 
-    minimumBonusFee: number = 0;
-    bonusPercentage: number = 0;
-
     fees: Fee[] = [];
 
     async mounted(){
@@ -83,8 +80,6 @@ export default class Payment extends Vue {
             return initialState;
         }, {});
 
-        // this.minimumBonusFee = data.fees[0].amount;
-        // this.bonusPercentage = data.fees[0].percentage;
         this.fees = data.fees.map((f: any) => {
             return {
                 amount: f.amount,
