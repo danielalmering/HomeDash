@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Component, Watch, Prop } from 'vue-property-decorator';
-
+import { State } from '../../../../models/Sessions';
 import config from '../../../../config';
 
 import Stream from './stream';
@@ -97,6 +97,7 @@ export default class NanoCosmos extends Stream {
     }
 
     mounted(){
+       this.muted = true;
        this.load();
     }
 
@@ -105,11 +106,13 @@ export default class NanoCosmos extends Stream {
     }
 
     private getH5WebSocket(): string {
-        return `ws://${config.H5Server}:8181/h5live/stream`;
+        //`ws://${config.H5Server}:8181/h5live/stream`;
+        return `wss://${config.H5Server}:443/h5live/stream`;
     }
 
     private getH5hls(): string {
-        return `http://${config.H5Server}:8180/h5live/http/playlist.m3u8`;
+        //`http://${config.H5Server}:8180/h5live/http/playlist.m3u8`;
+        return `https://${config.H5Server}:443/h5live/http/playlist.m3u8`;
     }
 
     private load(){
@@ -134,10 +137,10 @@ export default class NanoCosmos extends Stream {
                 onPause: (s: any) => { this.log(s); },
                 onLoading: (s: any) => { this.log(s); },
                 onStartBuffering: (s: any) => { this.log(s); },
-                onStopBuffering: (s: any) => { this.log(s); },
+                onStopBuffering: (s: any) => { this.onStopBuffering(s); },
                 onError: (s: any) => { this.onNanoCosmosError(s); },
                 //onStats: (s: any) => { this.log(s); },
-                onMetaData: (s: any) => { this.log(s); },
+                //onMetaData: (s: any) => { this.onMetaData(s); },
                 onMuted: (s: any) => { this.log(s); },
                 onUnmuted: (s: any) => { this.log(s); },
                 onVolumeChange: (s: any) => { this.log(s); },
@@ -159,40 +162,47 @@ export default class NanoCosmos extends Stream {
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {
-            if(this.debug){
-              console.log('setup success');
-              console.log(`config:  ${JSON.stringify(s, undefined, 4)}`);
-            }
+            this.log('setup success');
+            this.log(`config:  ${JSON.stringify(s, undefined, 4)}`);
         }, function (error: any) {
             console.log(error.message);
         });
     }
 
-    private onPlay(s: any){
-        this.onStateChange('active');
+    private onPlay(s: any) {
+        this.log(s);
+        if(this.$store.state.session.activeState !== State.Active){
+            this.onStateChange('active');
+        }
+    }
+
+    private onStopBuffering(s: any){
+        /*this.end();
+        this.load();*/
+        this.log(s);
     }
 
     private onNanoCosmosError(s: any){
         if(s.data && s.data.code === 2002){
-            this.onStateChange('disconnected');
+           this.onStateChange('disconnected');
         } else {
-           console.log(s);
+           this.log(s);
            this.onError(s);
         }
-
     }
 
     private log(val: any){
-        console.log(val);
+        if(this.debug){
+            console.log(val);
+        }
     }
 
     private end(){
         if(!this.player)
           return false;
 
-        this.player.pause();
         this.player.destroy();
-        this.player = undefined;
+
         return true;
     }
 }

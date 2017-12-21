@@ -7,6 +7,12 @@
                 :wowza="mainTile.streamData.wowza"
                 :playStream="mainTile.streamData.playStream">
             </jsmpeg>
+            <!-- <nanocosmos
+                v-on:stateChange="viewerStateChange"
+                v-on:error="viewerError"
+                :wowza="mainTile.streamData.wowza"
+                :playStream="mainTile.streamData.playStream">
+            </nanocosmos> -->
         </div>
     </div>
 
@@ -27,7 +33,7 @@
             </li>
         </ul>
     </div>
-    
+
     <confirmation v-if="availableReservation" :type="'dialog'" :title="$t('voyeur.dialog1on1Title', { name: availableReservation.nickname })" :subtitle="$t('voyeur.dialog1on1Subtitle', { name: availableReservation.nickname })" v-on:accept="acceptReservation" v-on:cancel="cancelReservation"></confirmation>
     <confirmation v-if="activeState === 'pending'" :type="'loader'" v-on:cancel="cancelRequest"></confirmation>
 </div>

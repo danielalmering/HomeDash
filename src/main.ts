@@ -2,11 +2,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 
-import App from './App.vue';
-
 import store from './store';
 import router from './router';
 import i18n from './localization';
+
+import App from './App.vue';
 
 //requiring the shim adds it to the build
 require('webrtc-adapter');

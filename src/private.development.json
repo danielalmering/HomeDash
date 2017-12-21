@@ -5,6 +5,6 @@
     "JsmpegUrl": "wss://accept-push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
     "NoAgeCheckCountries": ["nl"],
-    "H5Server": "10.4.11.31",
+    "H5Server": "accept-stream01.thuis.nl",
     "H5FlashSwf": "//demo.nanocosmos.de/nanoplayer/nano.player.swf"
  }

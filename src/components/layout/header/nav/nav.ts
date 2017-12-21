@@ -9,9 +9,6 @@ import WithRender from './nav.tpl.html';
 @Component
 export default class Nav extends Vue {
 
-    // TODO: Populate this based on country
-    acceptedLanguages: string[] = ['nl', 'en'];
-
     searchQuery: string = '';
 
     showMenu: boolean = false;
@@ -38,6 +35,10 @@ export default class Nav extends Vue {
 
     get categories(){
         return this.$store.state.info ? this.$store.state.info.categories : [];
+    }
+
+    get acceptedLanguages(){
+        return this.$store.state.info.languages ? this.$store.state.info.languages : [];
     }
 
     get logo(){

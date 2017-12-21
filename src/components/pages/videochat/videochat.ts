@@ -358,7 +358,6 @@ export default class VideoChat extends Vue {
 
         //Stop clientSeen event
         clearInterval(this.intervalTimer);
-
         //Send end API call and update state to ending
         this.$store.dispatch('end', 'PLAYER_END');
     }
