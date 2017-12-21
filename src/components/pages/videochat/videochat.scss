@@ -30,13 +30,13 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
     &__screen{
         position: relative;
         z-index: 1;
-        display: block;
+        display: table;
         height: 100vh;
         width: 100%;
 
         &-object {
             position: relative;
-            display: table;
+            display: block;
             height: 100vh;
             width: calc(100% + 125px);
             canvas {
