@@ -69,7 +69,7 @@ export default class NanoCosmos extends Stream {
     @Prop({required: true, type: String})
     public token: string;*/
 
-    @Prop({default: false, type: Boolean})
+    @Prop({default: true, type: Boolean})
     public debug: Boolean;
 
     //TODO typescript declaration of NanoPlayer
