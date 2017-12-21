@@ -42,7 +42,7 @@ export default class NanoCosmos extends Stream {
     @Prop({ default: false, type: Boolean })
     public controls: Boolean;
 
-    @Prop({ default: false, type: Boolean })
+    @Prop({ default: true, type: Boolean })
     public interactive: Boolean;
 
     @Prop({ default: true, type: Boolean })
@@ -97,6 +97,7 @@ export default class NanoCosmos extends Stream {
     }
 
     mounted(){
+       this.muted = true;
        this.load();
     }
 
