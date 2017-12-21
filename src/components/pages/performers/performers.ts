@@ -109,6 +109,9 @@ export default class Performers extends Vue {
     }
 
     async loadPerformers(){
+        //Makes the tiles load when switching pages
+        this.performers = new Array(40).fill(undefined, 0, this.query.limit);
+
         const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}&search=${this.query.search}`, {
             credentials: 'include'
         });

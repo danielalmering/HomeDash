@@ -47,14 +47,11 @@ export interface VideoEventSocketMessage extends VideoEventSocketMessageContent 
     performerId: number;
 }
 
-// TODO: Figure out how to remove this timeout
-setTimeout(() => {
-    notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
-        console.log('VIDEO EVENT MOTHERFUCKER ', data);
+notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
+    console.log('VIDEO EVENT MOTHERFUCKER ', data);
 
-        rootState.dispatch('handleVideoEventSocket', data);
-    });
-}, 100);
+    rootState.dispatch('handleVideoEventSocket', data);
+});
 
 const transitions: { [key: string]: State[] } = {
     [State.Idle]:           [State.InRequest, State.Ending], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
@@ -87,6 +84,10 @@ const sessionStore: Module<SessionState, RootState> = {
         isSwitching: false
     },
     getters: {
+        canStartNewSession: state => {
+            return state.activeState === State.Idle &&
+                    !state.isSwitching;
+        }
     },
     mutations: {
         setState(state: SessionState, toState: State){

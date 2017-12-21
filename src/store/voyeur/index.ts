@@ -21,45 +21,41 @@ export const maxTilesAllowed = 1;
 //Time between the switching of tiles
 export const tileSwitchDelay = 5000;
 
-// TODO: Figure out how to remove this timeout
-setTimeout(() => {
-    notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
+notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
 
-        if(!data) return;
+    if(!data) return;
 
-        if(data.message && (data.message === 'BROKE' || data.message === 'HANGUP')){
-            //Show broke/hangup alert
-            //Route to performer page
+    if(data.message && (data.message === 'BROKE' || data.message === 'HANGUP')){
+        //Show broke/hangup alert
+        //Route to performer page
 
-            return;
-        }
+        return;
+    }
 
-        if(!data.performerId) return;
+    if(!data.performerId) return;
 
-        if(data.type === 'STREAMING'){
-            rootState.dispatch('voyeur/updatePerformers', { performerId: data.performerId, value: data.value });
-            return;
-        }
+    if(data.type === 'STREAMING'){
+        rootState.dispatch('voyeur/updatePerformers', { performerId: data.performerId, value: data.value });
+        return;
+    }
+});
+
+notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
+    if(!data) return;
+
+    rootState.commit('voyeur/setPerformerStatus', {
+        performerId: data.performerId,
+        status: data.status
     });
+});
 
-    notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
-        if(!data) return;
+notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
+    if(!data) return;
 
-        rootState.commit('voyeur/setPerformerStatus', {
-            performerId: data.performerId,
-            status: data.status
-        });
-    });
-
-    //%7B%22performerId%22%3A13135%2C%22serviceName%22%3A%22videocall%22%2C%22serviceStatus%22%3Atrue%7D
-    notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
-        if(!data) return;
-
-        rootState.commit('voyeur/setPerformerService', {
-            performerId: data.performerId,
-            serviceName: data.serviceName,
-            status: data.serviceStatus
-        });
+    rootState.commit('voyeur/setPerformerService', {
+        performerId: data.performerId,
+        serviceName: data.serviceName,
+        status: data.serviceStatus
     });
 });
 
