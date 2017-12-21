@@ -3,11 +3,12 @@ import { Watch, Component } from "vue-property-decorator";
 import { WRTCUtils, Publisher } from "typertc";
 
 @Component({
-    template: '<div><video playsinline webkit-playsinline autoplay></video></div>'
+    template: '<video playsinline webkit-playsinline autoplay :cam="true" :mic="false"></video>'
 })
 export class WebRTC extends Broadcast{
 
     @Watch('mic') onMicChanged(value: boolean | string, oldValue: boolean | string) {
+        console.log(`mic was ${oldValue} en is ${value}`)
         if (typeof value === 'boolean'){
             //a boolean turns the mic on or off..
             this.wrtc.toggleAudio(value);
@@ -21,6 +22,7 @@ export class WebRTC extends Broadcast{
     }
 
     @Watch('cam') onCamChanged(value: string, oldValue: string) {
+        console.log(`cam was ${oldValue} en is ${value}`)
         if (typeof value !== 'string'){
             return;
         }
@@ -41,9 +43,9 @@ export class WebRTC extends Broadcast{
             applicationName: wowzaParts.application,
             token: wowzaParts.parameters.token,
             streamName : this.publishStream,
-            element: this.$el.querySelector('video') || undefined,
+            element: (this.$el as HTMLVideoElement) || undefined,
             useWebSockets: true,
-            debug: true
+            debug: false
         };
 
         this.wrtc = new Publisher( options );

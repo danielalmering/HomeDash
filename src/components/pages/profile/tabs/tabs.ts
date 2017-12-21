@@ -132,7 +132,7 @@ export default class Tabs extends Vue {
 
     get displayName(): string {
         if(!this.user){
-            return "";
+            return this._displayName;
         }
 
         if (this.authenticated){
@@ -143,11 +143,15 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
+        console.log(value);
         if (!this.user){
-            return;
+            this._displayName = value;
+        } else {
+            this.user.displayName = value;
         }
-        this.user.displayName = value;
     }
+
+    private _displayName:string = "";
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
