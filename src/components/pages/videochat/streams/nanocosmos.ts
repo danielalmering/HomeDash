@@ -105,11 +105,13 @@ export default class NanoCosmos extends Stream {
     }
 
     private getH5WebSocket(): string {
-        return `ws://${config.H5Server}:8181/h5live/stream`;
+        //`ws://${config.H5Server}:8181/h5live/stream`;
+        return `wss://${config.H5Server}:443/h5live/stream`;
     }
 
     private getH5hls(): string {
-        return `http://${config.H5Server}:8180/h5live/http/playlist.m3u8`;
+        //`http://${config.H5Server}:8180/h5live/http/playlist.m3u8`;
+        return `https://${config.H5Server}:443/h5live/http/playlist.m3u8`;
     }
 
     private load(){
