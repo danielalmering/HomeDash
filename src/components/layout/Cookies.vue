@@ -3,30 +3,27 @@
         <div class="container-fluid">
             <div class="cookies__text">
                 <p v-t="'footer.cookies'"></p>
-                <a v-on:click="acceptCookie" class="cookies__text-btn"></a>
+                <a v-on:click="acceptCookies" class="cookies__text-btn"></a>
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import config from '../../config';
 
-export default {
-    name: 'alerts',
-    data () {
-        return {
-        };
-    },
-    methods: {
-        acceptCookie: function(){
-            localStorage.setItem(`${config.StorageKey}.cookiesAccepted`, 'true');
+import { Component } from 'vue-property-decorator';
 
-            this.$emit('close');
-        }
+@Component
+export default class Cookies extends Vue {
+
+    acceptCookies(){
+        localStorage.setItem(`${config.StorageKey}.cookiesAccepted`, 'true');
+
+        this.$emit('close');
     }
-};
+}
 </script>
 
 <style scoped lang="scss">

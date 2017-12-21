@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <ul class="emoticons__cat">
                 <li v-for="cat in emoticonCategories" :key="cat">
-                    <a><i :class="`icon-${cat}`" v-on:click="toggleIcons(cat)"></i></a>
+                    <a><i :class="`icon-${cat}`" v-on:click="selectCategory(cat)"></i></a>
                 </li>
             </ul>
             <div class="emoticons__list">
@@ -14,35 +14,33 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import config from '../../config';
-
 import emoticonData from './Emoticons.data.json';
 
-export default {
-    name: 'emoticons',
-    data () {
-        return {
-            emoticons: emoticonData,
-            emoticonCategories: [],
-            selectedCategory: 'people'
-        };
-    },
-    mounted() {
-        for(var category in this.emoticons){
-            this.emoticonCategories.push(category);
-        }
-    },
-    methods: {
-        toggleIcons: function(selectedCategory){
-            this.selectedCategory = selectedCategory;
-        },
-        selectEmoji: function(name){
-            this.$emit('emojiSelected', name);
-        }
+import { Component } from 'vue-property-decorator';
+
+@Component
+export default class Emoticons extends Vue {
+
+    emoticons: { [key: string]: string } = emoticonData;
+    emoticonCategories: string[] = [];
+
+    selectedCategory: string = 'people';
+
+    mounted(){
+        this.emoticonCategories = Object.keys(this.emoticons);
     }
-};
+
+    selectCategory(category: string){
+        this.selectedCategory = category;
+    }
+
+    selectEmoji(name: string){
+        this.$emit('emojiSelected', name);
+    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -86,7 +84,7 @@ export default {
         overflow: auto;
         @include rem(margin, 10px 0px);
         i {
-            cursor: pointer; 
+            cursor: pointer;
         }
     }
 }

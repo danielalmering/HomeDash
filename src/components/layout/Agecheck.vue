@@ -4,33 +4,31 @@
             <div class="agecheck__text">
                 <p v-t="'footer.agecheck'"></p>
                 <a v-on:click="acceptAge" class="btn btn-small btn-orange" v-t="'footer.olderthen'"></a>
-                <p> {{ $t('footer.or') }} <a v-on:click="deniedAge" v-t="'footer.leavewebsite'"></a></p>
+                <p> {{ $t('footer.or') }} <a v-on:click="declineAge" v-t="'footer.leavewebsite'"></a></p>
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import config from '../../config';
 
-export default {
-    name: 'alerts',
-    data () {
-        return {
-        };
-    },
-    methods: {
-        acceptAge: function(){
-            localStorage.setItem(`${config.StorageKey}.agecheck`, 'true');
+import { Component } from 'vue-property-decorator';
 
-            this.$emit('close');
-        },
-        deniedAge: function(){
-            location.href = 'http://www.google.com';
-        }
+@Component
+export default class Alerts extends Vue {
+
+    acceptAge(){
+        window.localStorage.setItem(`${config.StorageKey}.agecheck`, 'true');
+
+        this.$emit('close');
     }
-};
+
+    declineAge(){
+        location.href = 'http://www.google.com';
+    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -49,7 +47,7 @@ export default {
     @include rem(padding, 0px 10px);
     background-color: $pallete-9;
     @include border-radius(5px);
-    
+
     &:before {
         content: "";
         position: absolute;

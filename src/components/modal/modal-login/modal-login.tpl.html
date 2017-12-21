@@ -5,11 +5,11 @@
         <form v-on:submit.prevent="login">
             <div class="form__group">
                 <label v-t="'modals.login.email'"></label>
-                <input type="text" v-model="email" />
+                <input type="text" required v-model="email" />
             </div>
             <div class="form__group">
                 <label v-t="'modals.login.password'"></label>
-                <input type="password" v-model="password" />
+                <input type="password" required v-model="password" />
                 <button class="btn btn-large btn-orange btn-full" v-t="'modals.login.login'"></button>
                 <a class="btn btn-large btn-full" v-on:click="register" v-t="'modals.login.register'"></a>
 

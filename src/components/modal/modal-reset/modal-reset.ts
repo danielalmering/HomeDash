@@ -11,12 +11,6 @@ export default class ModalReset extends Vue {
     password: string = '';
     passwordConfirm: string = '';
 
-    private userId: string = '';
-    private token: string = '';
-
-    mounted(){
-    }
-
     async reset(){
         if(this.password === '' || this.passwordConfirm === ''){
             this.$store.dispatch('errorMessage', 'modals.reset.alerts.errorEmptyFields');
@@ -38,9 +32,9 @@ export default class ModalReset extends Vue {
                 'Content-Type': 'application/json'
             }),
             body: JSON.stringify({
-                id: this.userId,
+                id: userId,
                 password: this.password,
-                token: this.token
+                token: token
             })
         });
 

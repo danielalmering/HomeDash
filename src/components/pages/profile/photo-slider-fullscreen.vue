@@ -20,111 +20,111 @@
 
 <script lang="ts">
 import Vue, { ComponentOptions } from 'vue';
+import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Avatar } from '../../../models/Performer';
 
 import { getSliderImage }  from '../../../util';
 
-interface PhotoSliderFullscreen extends Vue {
-    currentSelected: number;
-    touchStart: number;
+@Component
+export default class PhotoSliderFullscreen extends Vue {
 
-    previous: () => void;
-    next: () => void;
-}
+    @Prop({
+        required: true,
+        type: Array
+    })
+    photos: Avatar[];
 
-export default {
-    name: 'photo-slider-fullscreen',
-    props: {
-        photos: {
-            required: true,
-            type: Array
-        },
-        performer: {
-            required: true,
-            type: Number
-        },
-        visible: {
-            default: false,
-            type: Boolean
-        },
-        displayPic: {
-            required: false,
-            type: Number
+    @Prop({
+        required: true,
+        type: Number
+    })
+    performer: number;
+
+    @Prop({
+        default: false,
+        type: Boolean
+    })
+    visible: boolean;
+
+    @Prop({
+        required: true,
+        type: Number
+    })
+    displayPic: number;
+
+    currentSelected: number = 1;
+    touchStart: number = 0;
+
+    getSliderImage = getSliderImage;
+
+    get isLast(){
+        return this.currentSelected === this.$props.photos.length - 1
+    }
+
+    get isFirst(){
+        return this.currentSelected === 0;
+    }
+
+    next(){
+        if(this.isLast){
+            return;
         }
-    },
 
-    data () {
-        return {
-            currentSelected: 1,
-            touchStart: 0
-        };
-    },
-    mounted: function(){
+        this.currentSelected += 1;
+    }
 
-    },
-    methods: {
-        getSliderImage: getSliderImage,
-        close(){
-            this.$emit('update:visible', false);
-        },
-        onTouchStart(evt: TouchEvent){
-            this.touchStart = evt.touches[0].pageX;
-        },
-        onTouchEnd(evt: TouchEvent){
-            // console.log(evt.offsetX + ' ' + evt.clientX + ' ' + evt.screenX + ' ' + evt.movementX);
-
-            const touchDifference = this.touchStart - evt.changedTouches[0].pageX;
-
-            console.log('end: ', touchDifference);
-
-            if(touchDifference > 75){
-                this.next();
-            } else if(touchDifference < -75){
-                this.previous();
-            }
-        },
-        next(){
-            if((<any>this).isLast){
-                return;
-            }
-
-            this.currentSelected += 1;
-        },
-        previous(){
-            if((<any>this).isFirst){
-                return;
-            }
-
-            this.currentSelected -= 1;
+    previous(){
+        if(this.isFirst){
+            return;
         }
-    },
-    watch: {
-        displayPic: function(newValue: number){
-            for(var i = 0; i < this.$props.photos.length; i++){
-                if(this.$props.photos[i].id === newValue){
-                    this.currentSelected = i;
-                }
-            }
-        },
-        visible: async function(newValue: boolean){
-            const self = this;
 
-            this.$nextTick().then(() => {
-                if(newValue){
-                    self.$el.focus();
-                } else {
-                    self.$el.blur();
-                }
-            });
+        this.currentSelected -= 1;
+    }
 
-        }
-    },
-    computed: {
-        isLast: function(){
-            return this.currentSelected === this.$props.photos.length - 1
-        },
-        isFirst: function(){
-            return this.currentSelected === 0;
+    close(){
+        this.$emit('update:visible', false);
+    }
+
+    onTouchStart(evt: TouchEvent){
+        this.touchStart = evt.touches[0].pageX;
+    }
+
+    onTouchEnd(evt: TouchEvent){
+        const touchDifference = this.touchStart - evt.changedTouches[0].pageX;
+
+        if(touchDifference > 75){
+            this.next();
+        } else if(touchDifference < -75){
+            this.previous();
         }
     }
-} as ComponentOptions<PhotoSliderFullscreen>
+
+    @Watch('displayPic')
+    onDisplayPicUpdate(newValue: number){
+        const photoIndex = this.photos.findIndex(p => p.id === newValue);
+
+        if(photoIndex > -1){
+            this.currentSelected = photoIndex;
+        }
+
+        for(var i = 0; i < this.$props.photos.length; i++){
+            if(this.$props.photos[i].id === newValue){
+                this.currentSelected = i;
+            }
+        }
+    }
+
+    @Watch('visible')
+    async onVisibleUpdate(newValue: boolean){
+        const self = this;
+
+        this.$nextTick().then(() => {
+            if(newValue){
+                self.$el.focus();
+            } else {
+                self.$el.blur();
+            }
+        });
+    }
+}
 </script>
