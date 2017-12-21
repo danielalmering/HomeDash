@@ -3,6 +3,7 @@ import Vue from 'vue';
 
 import config from '../../../config';
 import JSMpeg from '../videochat/streams/jsmpeg';
+import NanoCosmos from '../videochat/streams/nanocosmos';
 import Confirmation from '../../layout/Confirmations.vue';
 
 import './voyeur.scss';
@@ -15,6 +16,7 @@ import WithRender from './voyeur.tpl.html';
 @Component({
     components: {
         jsmpeg: JSMpeg,
+        nanocosmos: NanoCosmos,
         confirmation: Confirmation
     }
 })
