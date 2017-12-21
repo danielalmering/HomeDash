@@ -163,7 +163,7 @@ export default class Profile extends Vue {
 
         const self = this;
 
-        let defaults:RequestPayload = {
+        const defaults:RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
             sessionType: SessionType.Video,
