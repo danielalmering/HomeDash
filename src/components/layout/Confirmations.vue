@@ -63,15 +63,18 @@ export default class Confirmations extends Vue {
 @import "../../styles/_settings.scss";
 
 .confirmations {
-    position: fixed;
-    z-index: 2;
-    bottom: 0;
-    left: 0;
-    height: 100%;
+    position: absolute;
+    top: 0;
     width: 100%;
+    height: 100%;
     background-color: $pallete-11;
 
     &__content {
+        position: absolute;
+        z-index: 2;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;
         display: table;
         text-align: center;
         width: 300px;

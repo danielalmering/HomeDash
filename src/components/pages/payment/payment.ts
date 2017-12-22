@@ -112,6 +112,10 @@ export default class Payment extends Vue {
         }));
     }
 
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
     get package(){
         return (id: string) => {
             return this.packages.find(p => p.id === parseInt(id));

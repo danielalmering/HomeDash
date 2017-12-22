@@ -38,7 +38,8 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
             position: relative;
             display: block;
             height: 100vh;
-            width: calc(100% + 125px);
+            //width: calc(100% + 125px);
+            width: 100%;
             canvas {
                 display: table-cell;
                 vertical-align: middle;
@@ -198,7 +199,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
     }
 
     &__chat {
-        position: absolute;
+        position: fixed;
         z-index: 2;
         bottom: 0px;
         left: 0px;
@@ -316,7 +317,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         @include breakpoint(md) {
             width: 305px;
             bottom: 5px;
-            left: 5px;
+            left: 255px;
             @include border-radius(5px);
         }
     }

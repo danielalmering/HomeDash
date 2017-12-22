@@ -10,20 +10,20 @@
 // Styling
 
 .voyeur {
-    position: fixed;
+    position: relative;
     z-index: 2;
     right: 0px;
     width: 100%;
     background: $pallete-16;
 
-    @include breakpoint(xs) {
-        position: relative;
-        width: calc(100% - 250px);
-    }
+    // @include breakpoint(xs) {
+    //     position: relative;
+    //     width: calc(100% - 250px);
+    // }
 
-    @include breakpoint(md) {
-        width: calc(100% - 250px);
-    }
+    // @include breakpoint(md) {
+    //     width: calc(100% - 250px);
+    // }
 
     &__screen{
         position: relative;
@@ -36,14 +36,14 @@
             position: relative;
             display: table;
             height: 100vh;
-            width: calc(100% + 125px);
+            width: 100%;
             canvas {
                 display: table-cell;
                 vertical-align: middle;
                 object-fit: cover;
                 width: 100%;
                 height: 100%;
-                margin-left: -125px;
+                //margin-left: -125px;
             }
             div {
                 width: 100%;
@@ -69,13 +69,12 @@
 
         @include breakpoint(xs) {
             position: relative;
-            width: calc(100% + 250px);
+            width: 100%;
             left: 0;
             &:last-child{
                 left: 0;
             }
         }
-
 
         &-title {
             color: $pallete-2;
@@ -113,6 +112,7 @@
                 @include rem(font-size, 13px);
                 color: $pallete-2;
                 line-height: 150%;
+                cursor: pointer;
                 i {
                     @include rem(margin-left,10px);
                     @include rem(font-size, 11px);

@@ -38,6 +38,7 @@
         }
     },
     "performers": {
+        "noperformersfound": "Geen performers gevonden!",
         "labels": {
             "peek-label": "Meekijken",
             "busy-label": "Bezet",
@@ -208,6 +209,8 @@
         "paymessage": "De kosten voor het bekijken van het bericht bedragen",
         "viewmessage": "Bericht bekijken!",
         "pushmessages": "Push berichten ontvangen",
+        "datetill": "Datum tot",
+        "datefrom": "Datum van",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
@@ -271,6 +274,7 @@
         "subtotal": "Subtotaal",
         "bonuscredits": "Bonus credits",
         "totalcredits": "Totaal credits",
+        "newbalance": "Nieuw credits saldo", 
         "total": "Totaal",
         "bonusbanner": "Koop nog {credits} credits en krijg {percentage}% extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
