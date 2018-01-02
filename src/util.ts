@@ -64,3 +64,101 @@ export function scrollToTop(scrollDuration: number) {
         window.scrollY !== 0 ? window.scrollBy(0, scrollStep) : clearInterval(scrollInterval)
     }, 15);
 }
+
+export function webrtcPossible(platform:Platform):boolean{
+    var supported = [
+        {
+            name: 'Chrome'
+        },
+        {
+            name: 'Safari',
+            version: "11.0"
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function noFlash(platform:Platform):boolean{
+    var noFlashers = [
+        {
+            os:{
+                family:"iOS"
+            }
+        },
+        {
+            os:{
+                family:"Android"
+            }
+        }
+    ];
+
+    return noFlashers.find( pattern => match(platform, pattern) ) != null;
+}
+
+// checks if 'pattern' is a subset of 'message'
+// eg match( {id:3, text:"bla"}, {text:"bla"} ) => true
+function match(message:any, pattern:any):boolean{
+    for(var prop in pattern){
+        if (! (prop in message) ){
+            return false;
+        }
+
+        if ( (typeof pattern[prop] === "object") && (typeof message[prop] === "object")){
+            //recursive matching. No guards!
+            if (!match(message[prop], pattern[prop])){
+                return false;
+            } 
+
+        } else if (prop == "version"){
+            //the 'version' property in the message should be equal or bigger than the one in the pattern.
+            if (! ("version" in message) ){
+                return false;
+            }
+            if (smaller(message.version, pattern.version)){
+                return false;
+            }
+        } else if( pattern[prop] != message[prop] ){
+            return false;
+        }
+    }
+    return true;
+}
+
+//checks if version, formatted as <major>.<minor>.<evenmoreminor>... is smaller than 'than' formatted the same way.
+//eg smaller("47.0.2526.111", "47.0.2530.9") => true
+function smaller(version:string, than:string):boolean{
+    var versionList: number[] = toInts(version);
+    var thanList: number[] =  than.split(".").map(num=>parseInt(num));
+
+    if (! (versionList.length && thanList.length) ){
+        return false;
+    }
+
+    for(var k=0; k<thanList.length; k++){
+        //happens eg. with version("48", "47.1")
+        if (k >= versionList.length){
+            return false;
+        }
+        
+        if (versionList[k] > thanList[k] ){
+            return false;
+        }
+
+        if (versionList[k] < thanList[k] ){
+            return true;
+        }
+
+        //on equal: go to the next option.
+    }
+
+    return false;
+}
+
+function toInts(version:string):number[]{
+    var result = version.split(".").map(num=>parseInt(num));
+    for(var num of result){
+        if ( isNaN(num) ) return [];
+    }
+    return result;
+}

@@ -145,6 +145,17 @@ export default class Tabs extends Vue {
 //        this.user.displayName = value;
     }
 
+    get advertNumber():string{
+        if (!this.performer){
+            return "0000";
+        }
+        if (!this.performer.advert_numbers.length){
+            return "0000";
+        }
+        
+        return this.performer.advert_numbers[0].advertNumber.toString();
+    }    
+
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
         if(!newPerformer.performer_services[this.selectedTab] || !this.enabled(this.selectedTab)){
