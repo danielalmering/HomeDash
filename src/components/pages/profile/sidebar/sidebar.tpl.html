@@ -2,14 +2,15 @@
 
     <div class="sidebar__content">
 
-        <div class="sidebar__content-top">
+        <div class="sidebar__content-top" :class="{ 'collapse': !toggleUserinfo }">
 
             <div class="sidebar__content-logo">
                 <router-link :to="{ path: '/'}"><img :src="logo" alt=""></router-link>
             </div>
 
-            <div class="sidebar__content-user">
+            <div class="sidebar__content-user" :class="{ 'collapse': !toggleUserinfo }">
                 <span v-on:click="account()" class="name" v-t="authenticated ? user.username : 'sidebar.youraccount'"></span>
+                <span class="resize" :class="{ 'collapse': !toggleUserinfo }" v-on:click="toggleUserinfo = !toggleUserinfo"></span>
                 <p v-if="authenticated">{{ $t('sidebar.currentcredits') }}</p>
                 <span v-if="authenticated" class="credits">{{ user.credits }}</span>
                 <router-link v-if="authenticated" class="btn btn-fa fa-money btn-small btn-black" :to="{ name: 'Payment' }"></router-link>
@@ -37,9 +38,9 @@
 
         </div>
 
-        <div class="sidebar__content-bottom">
+        <div class="sidebar__content-bottom" :class="{ 'collapse': !toggleUserinfo }">
 
-            <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll">
+            <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll" :class="{ 'collapse': !toggleUserinfo }">
 
                 <!-- Performerlist -->
                 <li class="sidebar__performer" v-if="category !== 'voyeur'" v-for="performer in performers" v-on:click="goToPerformer(performer)">

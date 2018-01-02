@@ -25,6 +25,7 @@ export default class Sidebar extends Vue {
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
     services: string[] = ["cam", "phone", "sms", "email", "videocall"];
+    toggleUserinfo: boolean = true;
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
