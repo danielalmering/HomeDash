@@ -50,8 +50,8 @@
         </div>
 
         <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer">        
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="hasService('cam')" v-on:click="authenticated ? startSession({sessionType:canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : login()"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="hasService('phone')" v-on:click="authenticated ? startCall() : login()"><span >{{ $t('tabs.callbtn') }}</span></button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="hasService('cam')" v-on:click="authenticated ? startSession({sessionType:canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="hasService('phone')" v-on:click="authenticated ? startCall() : openModal('login')"><span >{{ $t('tabs.callbtn') }}</span></button>
             <router-link  v-if="hasService('email')" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
                 <button class="btn btn-full btn-xxl btn-green btn-fa fa-envelope"><span>{{ $t('tabs.mailbtn') }}</span></button>
             </router-link>

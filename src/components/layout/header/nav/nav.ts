@@ -2,6 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 import { Route } from 'vue-router';
 import { User } from '../../../../models/User';
+import { openRoute, openModal } from '../../../../util';
 import config from '../../../../config';
 
 import './nav.scss';
@@ -16,6 +17,10 @@ export default class Nav extends Vue {
     showMenu: boolean = false;
     showAccount: boolean = false;
     showLang: boolean = false;
+
+    openRoute = openRoute;
+    openModal = openModal;
+
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
@@ -49,6 +54,7 @@ export default class Nav extends Vue {
     closeAll(){
         this.showMenu = false;
         this.showAccount = false;
+        this.showLang = false;
     }
 
     changeLanguage(language: string){
@@ -61,7 +67,7 @@ export default class Nav extends Vue {
         if(this.searchQuery === ''){
             this.$router.push({ name: 'Performers' });
         } else {
-            this.$router.push({ name: 'Performers', query: { search: this.searchQuery } });
+            this.$router.push({ name: 'Performers', params: { category: this.$route.params.category }, query: { search: this.searchQuery } });
             this.searchQuery = '';
         }
     }
@@ -71,12 +77,12 @@ export default class Nav extends Vue {
     }
 
     login(){
-        this.$store.dispatch('displayModal', 'login');
+        this.openModal('login');
         this.closeAll();
     }
 
     logout(){
         this.$store.dispatch('logout');
-        this.$router.push({ name: 'Performers' });
+        this.openRoute('Performers');
     }
 }

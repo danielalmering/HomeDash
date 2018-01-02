@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
-import { getAvatarImage, getPerformerLabel  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -64,6 +64,7 @@ export default class Profile extends Vue {
         return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
     }
 
+    openModal = openModal;
     getAvatarImage = getAvatarImage;
     getPerformerLabel = getPerformerLabel;
 
@@ -184,7 +185,6 @@ export default class Profile extends Vue {
     }
 
     cancel(){
-        console.log('cancel');
         this.$store.dispatch('cancel');
     }
 
@@ -239,9 +239,5 @@ export default class Profile extends Vue {
         setGraphData('og:image', getAvatarImage(this.performer, 'medium'));
         setGraphData('profile:username', this.performer.nickname);
         setGraphData('profile:gender', 'female');
-    }
-
-    login(){
-        this.$store.dispatch('displayModal', 'login');
     }
 }
