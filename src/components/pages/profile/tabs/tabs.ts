@@ -1,5 +1,6 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import VeeValidate from 'vee-validate';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
@@ -13,6 +14,8 @@ import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
 
 import WithRender from './tabs.tpl.html';
+
+Vue.use(VeeValidate);
 
 @WithRender
 @Component({
@@ -131,10 +134,6 @@ export default class Tabs extends Vue {
     }
 
     get displayName(): string {
-        if(!this.user){
-            return this._displayName;
-        }
-
         if (this.authenticated){
             return this.user.displayName || this.user.username;
         } else {
@@ -143,15 +142,11 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
-        console.log(value);
-        if (!this.user){
-            this._displayName = value;
-        } else {
-            this.user.displayName = value;
-        }
+        var usr = {...this.user, displayName:value };
+        console.log(usr);
+        this.$store.commit("setUser", {...this.user, displayName:value });
+//        this.user.displayName = value;
     }
-
-    private _displayName:string = "";
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
@@ -161,7 +156,6 @@ export default class Tabs extends Vue {
     }
 
     selectTab(newTab: string){
-        console.log(`${newTab} enabled: ${this.enabled(newTab)}`);
         if (this.enabled(newTab)){
             this.selectedTab = newTab;
         }
@@ -171,7 +165,14 @@ export default class Tabs extends Vue {
         this.$store.dispatch('displayModal', 'login');
     }
 
+    validate():boolean{
+        this.$validator.validateAll();
+        console.log(this.$validator.errors);
+        return false;
+    }
+
     startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){
+        console.log(description);
         this.$emit('startSession', description);
     }
 

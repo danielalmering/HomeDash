@@ -182,6 +182,14 @@ const sessionStore: Module<SessionState, RootState> = {
 
             store.commit('setState', State.Idle);
         },
+        async disconnected(store:ActionContext<SessionState, RootState>){
+            if (store.state.activeState != State.Active){
+                return;
+            }
+            
+            store.commit('setState', State.Ending);
+            store.commit('setState', State.Idle);
+        },
         async end(store: ActionContext<SessionState, RootState>, reason: string){
             store.commit('setState', State.Ending);
 

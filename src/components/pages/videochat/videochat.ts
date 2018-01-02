@@ -264,6 +264,10 @@ export default class VideoChat extends Vue {
         if (state === 'active'){
             this.$store.dispatch('setActive');
         }
+
+        if (state === 'disconnected'){
+            this.$store.dispatch('disconnected');
+        }
     }
 
     viewerError(message: string){
@@ -294,8 +298,6 @@ export default class VideoChat extends Vue {
             } else {
                 var devices = new Devices();
                 devices.getCameras().then( cams=>{
-                    console.log("jawohl, cameras binnen");
-                    console.log(cams);
                     this.cameras=cams;
                     let selected = this.cameras.find(cam=>cam.selected);
                     if (selected && this.broadcasting.cam !== selected.id){
@@ -303,8 +305,6 @@ export default class VideoChat extends Vue {
                     }
                 });
                 devices.getMicrophones().then( mics => {
-                    console.log("jawohl, microphoes binnen");
-                    console.log(mics);
                     this.microphones=mics;
                     let selected = this.microphones.find(mic=>mic.selected);
                     if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){

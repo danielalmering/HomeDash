@@ -5,17 +5,16 @@
         <div class="numbers" v-if="$parent.info"><i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }} <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span></div>
         <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
 
-        <form class="form" v-on:submit.prevent="$parent.$validator.validateAll() && $parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO'})">
+        <form class="form" v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO'})">
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
-                    <input name="ivrCode" type="text" class="col-xs-7 col-sm-9" v-model="$parent.ivrCode" :placeholder="$t('tabs.accesscode')" 
-                    v-validate="'required'">
+                    <input name="cam_ivr" type="text" class="col-xs-7 col-sm-9" v-model="$parent.ivrCode" :placeholder="$t('tabs.accesscode')" required>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
-                    <input name="displayName" type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')" v-validate="'required'">
+                    <input name="cam_name" type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')" required>
                 </div>
             </div>
             <button class="btn btn-full btn-large btn-green" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></button>
