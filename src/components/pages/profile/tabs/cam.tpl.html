@@ -10,12 +10,12 @@
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
                     <input name="ivrCode" type="text" class="col-xs-7 col-sm-9" v-model="$parent.ivrCode" :placeholder="$t('tabs.accesscode')" 
-                    v-validate="$parent.ivrCode" data-vv-rules="required|digits|min:5|max:5">
+                    v-validate="'required'">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
-                    <input name="displayName" type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')" v-validate="$parent.displayName" data-vv-rules="required">
+                    <input name="displayName" type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')" v-validate="'required'">
                 </div>
             </div>
             <button class="btn btn-full btn-large btn-green" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></button>
