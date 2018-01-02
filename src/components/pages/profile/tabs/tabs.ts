@@ -1,6 +1,5 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
@@ -14,8 +13,6 @@ import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
 
 import WithRender from './tabs.tpl.html';
-
-Vue.use(VeeValidate);
 
 @WithRender
 @Component({
@@ -163,12 +160,6 @@ export default class Tabs extends Vue {
 
     login(){
         this.$store.dispatch('displayModal', 'login');
-    }
-
-    validate():boolean{
-        this.$validator.validateAll();
-        console.log(this.$validator.errors);
-        return false;
     }
 
     startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){
