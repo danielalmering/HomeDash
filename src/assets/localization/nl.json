@@ -241,7 +241,14 @@
         "leaving": "Huidige sessie verlaten",
         "flashchecktext": "U heeft geen flash installatie, klik hieronder om deze te downloaden",
         "alerts": {
-            "successChatEnded": "Sessie is afgelopen!"
+            "successChatEnded": "Sessie is afgelopen!",
+            "socketErrors": {
+                "PERFORMER_REJECT": "De performer heeft het verzoek afgewezen",
+                "PERFORMER_END": "De performer heeft de sessie beeindigd",
+                "CLIENT_BROKE": "U heeft geen credits meer",
+                "PHONE_DISCONNECT": "De telefoon is opgehangen",
+                "MAIN_ENDED": "De huidige sessie is beeindigd"
+            }
         }
     },
     "voyeur": {
