@@ -24,7 +24,7 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor } from './interceptors';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor } from './interceptors';
 import { scrollToTop } from '../util';
 
 Vue.use(Router);
@@ -127,7 +127,8 @@ const routes = [{
                 {
                     path: 'favourites/',
                     name: 'Favourites',
-                    component: Favourites
+                    component: Favourites,
+                    beforeEnter: preloadUserInterceptor
                 },
                 {
                     path: ':category?/',
