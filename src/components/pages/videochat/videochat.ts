@@ -164,7 +164,11 @@ export default class VideoChat extends Vue {
         });
 
         this.intervalTimer = window.setInterval(async () => {
-            await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
+            const result = await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
+
+            if(!result.ok){
+                this.close();
+            }
         }, 5000);
     }
 
