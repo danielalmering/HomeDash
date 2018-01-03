@@ -183,7 +183,6 @@ export default class NanoCosmos extends Stream {
     }
 
     private onNanoCosmosError(s: any){
-        console.log(s);
         if(s.data && s.data.code === 2002){
            this.onStateChange('disconnected');
         } else {

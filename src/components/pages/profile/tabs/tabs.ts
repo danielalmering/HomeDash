@@ -33,8 +33,6 @@ export default class Tabs extends Vue {
     selectedTab: string = 'cam';
     openModal = openModal;
 
-    ivrCode: string = '';
-
     tabs = {
         'cam': 'video-camera',
         'videocall': 'video-camera',
@@ -154,7 +152,15 @@ export default class Tabs extends Vue {
         }
         
         return this.performer.advert_numbers[0].advertNumber.toString();
-    }    
+    }
+
+    get ivrCode():string{
+        return this.$store.state.session.activeIvrCode;
+    }
+
+    set ivrCode(value:string){
+        this.$store.commit('setIvrCode', value);
+    }
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
@@ -170,7 +176,6 @@ export default class Tabs extends Vue {
     }
 
     startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){
-        console.log(description);
         this.$emit('startSession', description);
     }
 
