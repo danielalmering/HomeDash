@@ -9,11 +9,13 @@ Vue.directive('clickOutside', {
         anyEl.onOutsideClick = function(event: Event) {
             const target = event.target as HTMLElement;
 
-            const ignored = binding.value.ignoreClass as string[];
-            const hasIgnored = ignored.some(i => target.classList.contains(i));
+            if(binding.value.ignoreClass){
+                const ignored = binding.value.ignoreClass as string[];
+                const hasIgnored = ignored.some(i => target.classList.contains(i) || (target.parentElement !== null && target.parentElement.classList.contains(i)));
 
-            if(hasIgnored){
-                return;
+                if(hasIgnored){
+                    return;
+                }
             }
 
             callback();
