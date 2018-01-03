@@ -48,8 +48,6 @@ export interface VideoEventSocketMessage extends VideoEventSocketMessageContent 
     performerId: number;
 }
 
-
-
 notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
     console.log('VIDEO EVENT MOTHERFUCKER ', data);
 
@@ -76,78 +74,78 @@ function isStateChangeAllowed(fromState: State, toState: State) {
 }
 
 interface StateSocketMessage extends VideoEventSocketMessage{
-    inState:State;
+    inState: State;
 }
 
 //translates a socket message to an action to be dispatched when the rule matches.
 //Rules are checked from top to bottom
-export function translate(socketMessage:StateSocketMessage):{action:string, label?:string} | null{
-    var rules = [
+export function translate(socketMessage: StateSocketMessage): { action: string, label?: string } | undefined {
+    const rules = [
         {
-            when: { type:'VIDEOCALL_ANSWER' },
-            result: { action:'callAccepted' }
+            when: { type: 'VIDEOCALL_ANSWER' },
+            result: { action: 'callAccepted' }
         },
         {
-            when: { type:'VIDEOCALL_FAILED' },
+            when: { type: 'VIDEOCALL_FAILED' },
             result: { action: 'callFailed' }
         },
         {
-            when: { type:'VIDEOCALL_DISCONNECT' },
+            when: { type: 'VIDEOCALL_DISCONNECT' },
             result: { action: 'callEnded' }
         },
         {
             when: { type: 'RESPONSE', message: 'HANGUP' },
-            result: { action:'end', label: 'PHONE_DISCONNECT' }
+            result: { action: 'end', label: 'PHONE_DISCONNECT' }
         },
         {
             when: { type: 'RESPONSE', message: 'MAIN_ENDED' },
-            result: { action:'end', label: 'MAIN_ENDED' }
+            result: { action: 'end', label: 'MAIN_ENDED' }
         },
         {
-            when: { inState:State.Active, type: 'RESPONSE', message: 'CLICK', value:false },
-            result: { action:'end', label:'PERFORMER_END' }
+            when: { inState: State.Active, type: 'RESPONSE', message: 'CLICK', value: false },
+            result: { action: 'end', label: 'PERFORMER_END' }
         },
         {
-            when: { inState:State.Active, type: 'RESPONSE', message: 'DISCONNECT', value:false },
-            result: { action:'end', label:'PERFORMER_END' }
+            when: { inState: State.Active, type: 'RESPONSE', message: 'DISCONNECT', value: false },
+            result: { action: 'end', label: 'PERFORMER_END' }
         },
         {
-            when: { inState:State.Active, type: 'RESPONSE', message: 'BROKE' },
-            result: { action:'end', label:'CLIENT_BROKE' }
+            when: { inState: State.Active, type: 'RESPONSE', message: 'BROKE' },
+            result: { action: 'end', label: 'CLIENT_BROKE' }
         },
         {
-            when: { inState:State.Pending, value:true },
+            when: { inState: State.Pending, value: true },
             result: { action: 'accepted' }
         },
         {
-            when: { inState:State.Pending, _stateChange: 'REJPERF' },
+            when: { inState: State.Pending, _stateChange: 'REJPERF' },
             result: { action: 'cancel', label: 'PERFORMER_REJECT'}
         },
         {
-            when: { inState:State.Pending, value: 'DISCONNECT' },
+            when: { inState: State.Pending, value: 'DISCONNECT' },
             result: { action: 'cancel', label: 'PERFORMER_REJECT'}
         },
         //all other scenario's while pending should result in null
         {
-            when: { inState:State.Pending },
-            result: null
+            when: { inState: State.Pending },
+            result: undefined
         },
         {
-            when: { message:'CLICK', value: false },
-            result: { action:'cancel', label: 'PERFORMER_END' }
+            when: { message: 'CLICK', value: false },
+            result: { action: 'cancel', label: 'PERFORMER_END' }
         },
         {
-            when: { message:'DISCONNECT', value: false },
-            result: { action:'cancel', label: 'PERFORMER_END' }
+            when: { message: 'DISCONNECT', value: false },
+            result: { action: 'cancel', label: 'PERFORMER_END' }
         }
     ];
 
-    var rule = rules.find( rule=>match(socketMessage, rule) )
+    const rule = rules.find( check => match(socketMessage, check.when) );
     if (rule){
         return rule.result;
     }
 
-    return null;
+    return undefined;
 }
 
 const sessionStore: Module<SessionState, RootState> = {
@@ -263,7 +261,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             store.commit('setState', State.Idle);
         },
-        async disconnected(store:ActionContext<SessionState, RootState>){
+        async disconnected(store: ActionContext<SessionState, RootState>){
             if (store.state.activeState != State.Active){
                 return;
             }
@@ -295,7 +293,7 @@ const sessionStore: Module<SessionState, RootState> = {
             }
 
             if(store.state.activePerformer && store.state.activePerformer.id === performer.id){
-                throw new Error(`You are already peeking ${performer.id}. Pick another one dawg`)
+                throw new Error(`You are already peeking ${performer.id}. Peek another one dawg`);
             }
 
             try {
@@ -442,12 +440,9 @@ const sessionStore: Module<SessionState, RootState> = {
                 throw new Error(`Client shouldn\'t receive messages from client: ${content.clientId} and performer: ${content.performerId}`);
             }
 
-            var translation = translate({...content, inState:store.state.activeState});
+            const translation = translate( {...content, inState: store.state.activeState} );
             if (translation){
                 store.dispatch(translation.action, translation.label);
-            } else {
-                console.log(`Unhandled videochat message:`)
-                console.log(content);
             }
 
         }

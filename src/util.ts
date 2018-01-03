@@ -72,7 +72,7 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Safari',
-            version: "11.0"
+            version: '11.0'
         }
     ];
 
@@ -83,12 +83,12 @@ export function noFlash(platform:Platform):boolean{
     var noFlashers = [
         {
             os:{
-                family:"iOS"
+                family:'iOS'
             }
         },
         {
             os:{
-                family:"Android"
+                family:'Android'
             }
         }
     ];
@@ -104,7 +104,7 @@ export function match(message:any, pattern:any):boolean{
             return false;
         }
 
-        if ( (typeof pattern[prop] === "object") && (typeof message[prop] === "object")){
+        if ( (typeof pattern[prop] === 'object') && (typeof message[prop] === 'object')){
             //recursive matching. No guards!
             if (!match(message[prop], pattern[prop])){
                 return false;

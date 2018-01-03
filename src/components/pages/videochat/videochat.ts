@@ -83,7 +83,7 @@ export default class VideoChat extends Vue {
         }
 
         // return this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
-        return 'nanocosmos';
+        return 'jsmpeg';
     }
 
     get broadcastType():string{
