@@ -16,7 +16,7 @@ export type VoyeurContext = ActionContext<VoyeurState, RootState>;
 export const initializationDelay = 1000;
 
 //Maximum amount of tiles that are allowed to be displayed at the same time
-export const maxTilesAllowed = 1;
+export const maxTilesAllowed = 5;
 
 //Time between the switching of tiles
 export const tileSwitchDelay = 5000;

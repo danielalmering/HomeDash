@@ -171,8 +171,13 @@ export default class Tabs extends Vue {
         this.$emit('startSession', description);
     }
 
-    startVoyeur(){
-        this.$emit('startVoyeur');
+    startVoyeur(ivr: boolean = false){
+        if(ivr && this.ivrCode === ''){
+            this.$store.dispatch('errorMessage', 'tabs.errorNoIvrCode');
+            return;
+        }
+
+        this.$emit('startVoyeur', { ivrCode: ivr ? this.ivrCode : undefined });
     }
 
     async sendMail(){
