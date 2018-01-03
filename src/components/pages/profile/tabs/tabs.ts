@@ -141,9 +141,8 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
-        if (this.user){
-            this.user.displayName = value;
-        }
+        var usr = {...this.user, displayName:value };
+        this.$store.commit("setUser", {...this.user, displayName:value });
     }
 
     get advertNumber():string{
