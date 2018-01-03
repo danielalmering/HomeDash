@@ -38,7 +38,7 @@ const actions = {
                 translate: false
             });
 
-            return;
+            throw 'Server error';
         }
 
         const performersResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=80&offset=0&voyeur=2`, {
