@@ -181,6 +181,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             if(result.ok){
                 store.commit('setState', State.Idle);
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             } else {
                 throw new Error('Oh noooooo, ending failed');
             }
@@ -197,6 +198,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             if(endResult.ok){
                 store.commit('setState', State.Idle);
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             } else {
                 throw new Error('Oh noooooo, ending failed');
             }
