@@ -18,6 +18,7 @@ export interface User extends AnonymousUser {
     registerDate: number;
     credits: number;
     mobile_number: string;
+    totalNotifications: number;
 
     credits_ivr_code: number;
 }

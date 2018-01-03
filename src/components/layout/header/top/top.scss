@@ -10,8 +10,11 @@
 // Styling
 
 .top {
+    position: relative;
+    z-index: 1;
     display: table;
     width: 100%;
+    background: $pallete-1;
 
     &__logo {
         @include rem(padding, 22px 0px);
@@ -189,6 +192,30 @@
                 color: $pallete-7;
                 line-height: 122%;
                 width: 10%
+            }
+
+            // Mobile Happyhour 
+            @include breakpoint(xs) {
+                width: 100%;
+                text-align: center;
+                line-height: 20%;
+                @include rem(margin, -5px 0px);
+
+                .h1 { font-style: normal; @include rem(font-size, 29px); }
+                .h2, .h4 { display: none; }
+                .h3 { 
+                    position: relative; 
+                    top: 0; 
+                    left: 0; 
+                    transform: none; 
+                    width: auto; 
+                    font-style: normal; 
+                    @include rem(font-size, 29px); 
+                    line-height: 70%;
+                    letter-spacing: -1.5px;
+                    color: $pallete-3;
+                }
+                .col-1, .col-2 { float: none; display: inline-block; width: auto; }
             }
         }
     }

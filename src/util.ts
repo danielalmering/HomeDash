@@ -57,6 +57,14 @@ export function getPerformerLabel(performer: Performer){
     return 'none';
 }
 
+export function openModal(name: string){
+    this.$store.dispatch('displayModal', name);
+}
+
+export function openRoute(name: string){
+    this.$router.push({ name: name });
+}
+
 export function scrollToTop(scrollDuration: number) {
     const scrollStep = -window.scrollY / (scrollDuration / 15);
 

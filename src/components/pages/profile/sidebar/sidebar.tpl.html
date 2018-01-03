@@ -2,23 +2,24 @@
 
     <div class="sidebar__content">
 
-        <div class="sidebar__content-top">
+        <div class="sidebar__content-top" :class="{ 'collapse': !toggleUserinfo }">
 
             <div class="sidebar__content-logo">
                 <router-link :to="{ path: '/'}"><img :src="logo" alt=""></router-link>
             </div>
 
-            <div class="sidebar__content-user">
-                <span v-on:click="account()" class="name" v-t="authenticated ? user.username : 'sidebar.youraccount'"></span>
+            <div class="sidebar__content-user" :class="{ 'collapse': !toggleUserinfo }">
+                <span v-on:click="openRoute('Editdata')" class="name" v-t="authenticated ? user.username : 'sidebar.youraccount'"></span>
+                <span class="resize" v-if="authenticated" :class="{ 'collapse': !toggleUserinfo }" v-on:click="toggleUserinfo = !toggleUserinfo"></span>
                 <p v-if="authenticated">{{ $t('sidebar.currentcredits') }}</p>
                 <span v-if="authenticated" class="credits">{{ user.credits }}</span>
-                <router-link v-if="authenticated" class="btn btn-fa fa-money btn-small btn-black" :to="{ name: 'Payment' }"></router-link>
+                <router-link v-if="authenticated" class="btn btn-fa fa-credit-card btn-small btn-black" :to="{ name: 'Payment' }"></router-link>
                 <ul class="usp" v-if="!authenticated">
                     <li v-t="'sidebar.register.usp-1'"></li>
                     <li v-t="'sidebar.register.usp-2'"></li>
                     <li v-t="'sidebar.register.usp-3'"></li>
                 </ul>
-                <a v-if="!authenticated" v-on:click="register()" class="btn btn-green btn-small">{{ $t('modals.login.register') }}</a>
+                <a v-if="!authenticated" v-on:click="openModal('register')" class="btn btn-green btn-small">{{ $t('modals.login.register') }}</a>
             </div>
 
             <div class="sidebar__content-search form">
@@ -37,9 +38,9 @@
 
         </div>
 
-        <div class="sidebar__content-bottom">
+        <div class="sidebar__content-bottom" :class="{ 'collapse': !toggleUserinfo }">
 
-            <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll">
+            <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll" :class="{ 'collapse': !toggleUserinfo }">
 
                 <!-- Performerlist -->
                 <li class="sidebar__performer" v-if="category !== 'voyeur'" v-for="performer in performers" v-on:click="goToPerformer(performer)">
@@ -93,11 +94,11 @@
     </div>
 
     <div class="sidebar__toggle hidden-md hidden-lg">
+        <div class="sidebar__toggle-icon black">
+            <router-link :to="{ path: '/'}"><i class="fa fa-home" aria-hidden="true"></i></router-link>
+        </div>
         <div class="sidebar__toggle-icon" v-on:click="toggleSidebar">
             <i class="fa" :class="{ 'fa-angle-double-left': displaySidebar, 'fa-angle-double-right': !displaySidebar }" aria-hidden="true"></i>
-        </div>
-        <div class="sidebar__toggle-icon black" v-if="!displaySidebar">
-            <router-link :to="{ path: '/'}"><i class="fa fa-home" aria-hidden="true"></i></router-link>
         </div>
     </div>
 </div>

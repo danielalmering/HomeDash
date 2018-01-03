@@ -63,12 +63,14 @@
                             <span v-t="'payment.subtotal'"></span>
                             <span v-t="'payment.bonuscredits'"></span>
                             <span v-t="'payment.totalcredits'"></span>
+                            <span v-if="credits != 0" v-t="'payment.newbalance'"></span>
                             <span v-t="'payment.total'"></span>
                         </div>
                         <div class="col-xs-6 text-right">
                             <span>{{ credits }}</span>
                             <span>{{ bonusAmount(credits) }}</span>
                             <span>{{ credits + bonusAmount(credits) }}</span>
+                            <span v-if="credits != 0">{{ user.credits + credits + bonusAmount(credits) }}</span>
                             <p>{{ totalAmount | euro }}</p>
                         </div>
                         <div class="col-xs-12" v-if="nextBonus">
