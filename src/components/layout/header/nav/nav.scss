@@ -105,6 +105,21 @@
                 &.only {
                     @include rem(margin, 4px 0 0 0);
                 }
+
+                .notify {
+                    position: absolute;
+                    top: -12px;
+                    right: -10px;
+                    width: 18px;
+                    height: 18px;
+                    @include border-radius(18px);
+                    line-height: 190%;
+                    text-align: center;
+                    color: $pallete-2;
+                    font-weight: 700;
+                    @include rem(font-size, 11px);
+                    background: $pallete-11;
+                }
             }
 
             span i {

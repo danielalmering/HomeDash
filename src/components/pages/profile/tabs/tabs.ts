@@ -11,6 +11,7 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
+import { openModal } from '../../../../util';
 
 import WithRender from './tabs.tpl.html';
 
@@ -30,6 +31,7 @@ export default class Tabs extends Vue {
 
     emailForm: EmailForm = { subject: '', content: '' };
     selectedTab: string = 'cam';
+    openModal = openModal;
 
     ivrCode: string = '';
 
@@ -143,7 +145,6 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
-        console.log(value);
         if (!this.user){
             this._displayName = value;
         } else {
@@ -161,14 +162,9 @@ export default class Tabs extends Vue {
     }
 
     selectTab(newTab: string){
-        console.log(`${newTab} enabled: ${this.enabled(newTab)}`);
         if (this.enabled(newTab)){
             this.selectedTab = newTab;
         }
-    }
-
-    login(){
-        this.$store.dispatch('displayModal', 'login');
     }
 
     startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){

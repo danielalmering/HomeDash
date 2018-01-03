@@ -1,12 +1,14 @@
 import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import WithRender from './modal-login.tpl.html';
+import { openModal } from '../../../util';
 
 @WithRender
 @Component
 export default class ModalLogin extends Vue {
     email: string = '';
     password: string = '';
+    openModal = openModal;
 
     async login(){
 
@@ -18,14 +20,6 @@ export default class ModalLogin extends Vue {
         if(this.$store.getters.isLoggedIn){
             this.close();
         }
-    }
-
-    register(){
-        this.$store.dispatch('displayModal', 'register');
-    }
-
-    forgotPassword(){
-        this.$store.dispatch('displayModal', 'recover');
     }
 
     close(){

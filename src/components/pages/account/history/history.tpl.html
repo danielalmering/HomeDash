@@ -9,10 +9,16 @@
                     <option v-for="service in services" :value="service">{{ $t(`services.${service}`) }}</option>
                 </select>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-1">
+                <p style="margin: 5px 0;">{{ $t(`account.datefrom`) }}</p>
+            </div>
+            <div class="col-xs-12 col-sm-3">
                 <input type="date" :placeholder="$t('account.historystartdate')" v-model="query.startDate">
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-1">
+                <p style="margin: 5px 0;">{{ $t(`account.datetill`) }}</p>
+            </div>
+            <div class="col-xs-12 col-sm-3">
                 <input type="date" :placeholder="$t('account.historyenddate')" v-model="query.endDate">
             </div>
         </div>

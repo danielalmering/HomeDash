@@ -44,6 +44,8 @@ $sidebar-top-height: 315px;
             vertical-align: top;
             width: $sidebar-width;
             height: $sidebar-top-height;
+
+            &.collapse { height: calc(#{$sidebar-top-height} - 97px)}
         }
 
         &-bottom { 
@@ -51,6 +53,8 @@ $sidebar-top-height: 315px;
             vertical-align: top;
             width: $sidebar-width;
             height: calc(100% - #{$sidebar-top-height});
+
+            &.collapse { height: calc(100% - #{$sidebar-top-height} + 97px);}
         }
 
         // Components
@@ -75,6 +79,11 @@ $sidebar-top-height: 315px;
             @include rem(font-size, 13px);
             @include border-radius(5px);
             cursor: pointer;
+            overflow: hidden;
+
+            &.collapse {
+                height: 44px;
+            }
     
             &:before {
                 position: absolute;
@@ -96,6 +105,27 @@ $sidebar-top-height: 315px;
                 @include rem(margin, 0px 0px 5px 0px);
                 font-weight: 600;
                 color: #fff;
+            }
+
+            .resize{
+                position: absolute;
+                z-index: 2;
+                @include rem(padding, 8px 10px);
+                background: $pallete-11;
+                @include border-radius(5px);
+                right: 0px;
+                top: 0px;
+                color: $pallete-3;
+                font: normal normal normal 22px/1 FontAwesome;
+                &:before {
+                    content: "\f068";
+                }
+
+                &.collapse {
+                    &:before {
+                        content: "\f067";
+                    }
+                }
             }
     
             .credits {
@@ -122,6 +152,7 @@ $sidebar-top-height: 315px;
                 @include border-radius(5px);
                 @include rem(padding, 8px 10px);
                 background: $pallete-13 !important;
+                color: $pallete-2 !important;
             }
     
             button {
@@ -202,6 +233,8 @@ $sidebar-top-height: 315px;
         height: calc(100% - #{$sidebar-top-height});
         list-style: none;
         overflow: auto;
+
+        &.collapse { height: calc(100% - #{$sidebar-top-height} + 97px);}
     }
 
     &__performer {

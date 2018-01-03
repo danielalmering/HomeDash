@@ -22,7 +22,7 @@
 
 .performers {
     display: block;
-    @include rem(margin, 25px 0 0 0);
+    @include rem(margin, 15px 0 0 0);
     cursor: pointer;
 
     &__block {
@@ -113,5 +113,32 @@
                 color: #ffb400;
             }
         }
+    }
+}
+
+.performers-notfound {
+    @include rem(padding, 15px);
+    text-align: center;
+    background: $pallete-11;
+    border: 2px solid $pallete-11; 
+    @include rem(font-size, 15px);
+    @include border-radius(2px);
+    @include rem(margin, 15px 15px 35px 15px);
+    color: $pallete-7;
+    font-weight: 600;
+}
+
+.performers-category {
+    @include rem(margin, 30px 15px 10px 15px);
+    color: $pallete-2;
+    font-weight: 600;
+    @include rem(padding, 0px 5px 5px 5px);
+    @include rem(font-size, 16px);
+    text-transform: capitalize;
+    &:before {
+        color: $pallete-3; 
+        content: "\f105";
+        font: normal normal normal 20px/1 FontAwesome;
+        @include rem(margin-right, 10px);
     }
 }
