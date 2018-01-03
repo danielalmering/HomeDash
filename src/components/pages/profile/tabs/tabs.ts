@@ -133,10 +133,6 @@ export default class Tabs extends Vue {
     }
 
     get displayName(): string {
-        if(!this.user){
-            return this._displayName;
-        }
-
         if (this.authenticated){
             return this.user.displayName || this.user.username;
         } else {
@@ -145,14 +141,20 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
-        if (!this.user){
-            this._displayName = value;
-        } else {
-            this.user.displayName = value;
-        }
+        var usr = {...this.user, displayName:value };
+        this.$store.commit("setUser", {...this.user, displayName:value });
     }
 
-    private _displayName:string = "";
+    get advertNumber():string{
+        if (!this.performer){
+            return "0000";
+        }
+        if (!this.performer.advert_numbers.length){
+            return "0000";
+        }
+        
+        return this.performer.advert_numbers[0].advertNumber.toString();
+    }    
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
@@ -168,6 +170,7 @@ export default class Tabs extends Vue {
     }
 
     startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){
+        console.log(description);
         this.$emit('startSession', description);
     }
 

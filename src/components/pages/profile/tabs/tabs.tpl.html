@@ -5,6 +5,5 @@
             <span>{{ $t(`tabs.service-${service === 'cam' ? camLabel : service}`) }}</span>
         </li>
     </ul>
-
     <component v-bind:is="selectedTab"></component>
 </div>

@@ -16,12 +16,12 @@ export class WebRTC extends Stream {
     mounted(){
         const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
         video.autoplay = true;
-        
+
         const wowzaParts = utils.parseUrl(this.wowza);
         utils.validate(wowzaParts);
-        
+
         const options = {
-            wowza: wowzaParts.host + "/webrtc-session.json",
+            wowza: wowzaParts.host + '/webrtc-session.json',
             applicationName: wowzaParts.application,
             token: wowzaParts.parameters.token,
             streamName: this.playStream,
@@ -30,7 +30,7 @@ export class WebRTC extends Stream {
             debug: true,
             muted: false
         };
-        
+
         this.player = new Player(options);
         this.player.onStateChange = this.onStateChange.bind(this);
         this.player.onError = this.onError.bind(this);
