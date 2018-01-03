@@ -89,10 +89,10 @@ $sidebar-top-height: 315px;
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                color: $pallete-14;
+                color: $pallete-16;
                 font: normal normal normal 60px/1 FontAwesome;
                 content: "\f007";
-                z-index: -1px;
+                z-index: 0;
             }
     
             .name {
