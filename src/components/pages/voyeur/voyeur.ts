@@ -85,10 +85,13 @@ export default class Voyeur extends Vue {
     }
 
     async acceptReservation(){
+
         await this.$store.dispatch<RequestPayload>({
             type: 'startRequest',
             performer: this.availableReservation,
             sessionType: SessionType.Video,
+            fromVoyeur: true,
+            ivrCode: this.$store.state.voyeur.ivrCode
         });
     }
 

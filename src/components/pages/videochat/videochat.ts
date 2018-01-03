@@ -23,6 +23,7 @@ import './videochat.scss';
 import Performer from '../performer';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
+import { RawLocation } from 'vue-router/types/router';
 import { webrtcPossible, noFlash } from '../../../util';
 const Platform = require('platform');
 
@@ -68,6 +69,11 @@ export default class VideoChat extends Vue {
 
     cameras: {id:string, name: string, selected: boolean}[];
     microphones: {id:string, name: string, selected: boolean}[];
+
+    askToLeave:boolean = false;
+    navigation: {
+        to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void
+    }
 
     get sessionType(): SessionType{
         return this.$store.state.session.activeSessionType;
@@ -153,7 +159,7 @@ export default class VideoChat extends Vue {
             if(newValue === State.Ending && !this.isEnding){
                 this.$store.dispatch('successMessage', 'videochat.alerts.successChatEnded');
 
-                this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
+                close();
             }
         });
 
@@ -164,6 +170,24 @@ export default class VideoChat extends Vue {
 
     close(){
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
+    }
+
+    async gotoVoyeur(next:(yes?:boolean | RawLocation)=>void){
+
+        try {
+            await this.$store.dispatch('end', 'PLAYER_END');
+
+            await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.$store.state.session.activePerformer.id, ivrCode: this.$store.state.session.activeIvrCode });
+
+            next({
+                name: 'Voyeur',
+                params: {
+                    id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
+                }
+            });
+        } catch(ex){
+            next();
+        }
     }
 
     startCalling(){
@@ -277,21 +301,19 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeState;
     }
 
-    public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean)=>void){
+    public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void){
         const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
 
-        if (autoLeaves.indexOf(this.activeState) > -1 || this.isSwitching){
+        if (autoLeaves.indexOf(this.activeState) > -1 || this.isSwitching || to.name === 'Voyeur'){
+            if(this.$store.state.session.fromVoyeur && to.name !== 'Voyeur'){
+                return this.gotoVoyeur(next);
+            }
+
             return next();
         }
 
         this.navigation = {to, from, next};
         this.askToLeave = true;
-    }
-
-    askToLeave:boolean = false;
-
-    navigation: {
-        to:Route, from:Route, next:(yes?:boolean)=>void
     }
 
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
@@ -301,9 +323,14 @@ export default class VideoChat extends Vue {
         }
     }
 
-    leave(){
+    async leave(){
         this.askToLeave = false;
-        this.navigation.next(true);
+
+        if(this.$store.state.session.fromVoyeur){
+            return this.gotoVoyeur(this.navigation.next);
+        }
+
+        this.navigation.next();
     }
 
     stay(){
@@ -317,6 +344,8 @@ export default class VideoChat extends Vue {
         //Stop clientSeen event
         clearInterval(this.intervalTimer);
         //Send end API call and update state to ending
-        this.$store.dispatch('end', 'PLAYER_END');
+        if(this.$store.state.session.activeState !== State.Idle){
+            this.$store.dispatch('end', 'PLAYER_END');
+        }
     }
 }

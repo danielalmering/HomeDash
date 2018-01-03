@@ -1,5 +1,6 @@
 import { VoyeurContext, maxTilesAllowed, PerformerTile, tileSwitchDelay } from './index';
 
+import store from '../';
 import config from '../../config';
 
 
@@ -26,6 +27,22 @@ const actions = {
 
         if(!voyeurResult.ok){
             throw 'Voyeur declined';
+        }
+
+        const voyeurData = await voyeurResult.json();
+
+        if(voyeurData.error){
+            store.dispatch('openMessage', {
+                content: voyeurData.error,
+                class: 'error',
+                translate: false
+            });
+
+            throw 'Server error';
+        }
+
+        if(payload.ivrCode){
+            commit('storeIvrCode', payload.ivrCode);
         }
 
         const performersResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=80&offset=0&voyeur=2`, {

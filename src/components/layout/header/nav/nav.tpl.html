@@ -29,7 +29,7 @@
 
                     <a class="nav__info-item nav__info-item--last">
                         <span v-on:click="authenticated ? toggleAccountMenu() : login()">
-                            <i class="fa fa-user"><span v-if="authenticated && totalNotifications != 0" class="notify">{{ user.totalNotifications }}</span></i>
+                            <i class="fa fa-user"><span v-if="authenticated && user.totalNotifications && user.totalNotifications !== 0" class="notify">{{ user.totalNotifications }}</span></i>
                             <span v-t="authenticated ? 'nav.info.account' : 'nav.info.login'"></span>
                         </span>
                         <div class="nav__info-subitems" v-if="authenticated && showAccount">
