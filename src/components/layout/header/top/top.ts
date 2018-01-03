@@ -3,6 +3,8 @@ import Vue from 'vue';
 
 import config from '../../../../config';
 
+import { openRoute } from '../../../../util';
+
 import './top.scss';
 
 interface Campaign {
@@ -17,6 +19,8 @@ export default class Top extends Vue {
 
     campaign: Campaign = {number: 0, cpm: 0};
     fees: any[] = [];
+
+    openRoute = openRoute;
 
     get logo(){
         return this.$store.getters.getLogoLight;
@@ -36,10 +40,6 @@ export default class Top extends Vue {
 
     mounted(){
         this.getFees();
-    }
-
-    routeGo(routename: string){
-        this.$router.push({ name: routename });
     }
 
     async getFees(){
