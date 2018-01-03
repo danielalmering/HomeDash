@@ -8,32 +8,39 @@
     </div>
 </template>
 
-<script language="ts">
+<script lang="ts">
+import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
+
 import modalWrapper from './components/modal/modal-wrapper';
 import notificationSocket from './socket';
-import alerts from './components/layout/Alerts';
-import cookies from './components/layout/Cookies';
-import agecheck from './components/layout/Agecheck';
+import { SocketMessageEventArgs } from './models/Socket';
+
+import alerts from './components/layout/Alerts.vue';
+import cookies from './components/layout/Cookies.vue';
+import agecheck from './components/layout/Agecheck.vue';
 
 import config from './config';
 
-export default {
+@Component({
     components: {
         modalWrapper: modalWrapper,
         alerts: alerts,
         cookies: cookies,
         agecheck: agecheck
-    },
-    data: function(){
-        return {
-            displayCookies: false,
-            displayAgecheck: false
-        };
-    },
-    name: 'app',
-    created: async function(){
+    }
+})
+export default class Cookies extends Vue {
+    displayCookies: boolean = false;
+    displayAgecheck: boolean = false;
+
+    async created(){
         await this.$store.dispatch('getSession');
         notificationSocket.connect();
+        notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
+            console.log('New message');
+            this.$store.dispatch('successMessage', 'general.successNewMessage');
+        });
 
         this.$store.dispatch('loadInfo');
 
@@ -47,6 +54,6 @@ export default {
         const AgeCheckAccepted = localStorage.getItem(`${config.StorageKey}.agecheck`);
         this.displayAgecheck = config.NoAgeCheckCountries.indexOf(this.$store.state.localization.country) > -1 ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
     }
-};
+}
 </script>
 

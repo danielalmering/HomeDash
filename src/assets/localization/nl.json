@@ -1,4 +1,7 @@
 {
+    "general": {
+        "successNewMessage": "Je hebt een nieuw bericht!"
+    },
     "top": {
         "numbers": {
             "callnow": "BEL NU",
@@ -278,7 +281,7 @@
         "subtotal": "Subtotaal",
         "bonuscredits": "Bonus credits",
         "totalcredits": "Totaal credits",
-        "newbalance": "Nieuw credits saldo", 
+        "newbalance": "Nieuw credits saldo",
         "total": "Totaal",
         "bonusbanner": "Koop nog {credits} credits en krijg {percentage}% extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
