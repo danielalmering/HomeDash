@@ -23,6 +23,8 @@ import WithRender from './voyeur.tpl.html';
 export default class Voyeur extends Vue {
 
     intervalTimer: number;
+    showFavo: boolean = false;
+    showReserve: boolean = false;
 
     get mainTile(){
         return this.$store.state.voyeur.mainTile;

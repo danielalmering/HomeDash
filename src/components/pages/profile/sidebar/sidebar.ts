@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer } from '../../../../models/Performer';
-import { getAvatarImage, getPerformerStatus } from '../../../../util';
+import { openModal, openRoute, getAvatarImage, getPerformerStatus } from '../../../../util';
 import config from '../../../../config';
 
 import './sidebar.scss';
@@ -25,7 +25,10 @@ export default class Sidebar extends Vue {
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
     services: string[] = ["cam", "phone", "sms", "email", "videocall"];
+    toggleUserinfo: boolean = true;
 
+    openModal = openModal;
+    openRoute = openRoute;
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
 
@@ -104,14 +107,6 @@ export default class Sidebar extends Vue {
         const performer = this.performers.find(p => p.id === performerId);
 
         return !performer ? false : performer.performer_services[service];
-    }
-
-    register(){
-        this.$store.dispatch('displayModal', 'register');
-    }
-
-    account(){
-        this.$router.push({ name: 'Editdata' });
     }
 
     reserve(performerId: number){

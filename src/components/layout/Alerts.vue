@@ -44,7 +44,7 @@ export default class Alerts extends Vue {
         right: 0px;
         background-color: $pallete-1;
         color: $pallete-2;
-        animation: slideIn 0.8s ease-in;
+        animation: slideIn 0.4s ease-in;
         width: 220px;
         @include rem(margin-bottom, 10px);
         @include rem(padding, 10px);
@@ -57,7 +57,7 @@ export default class Alerts extends Vue {
 
         &.slide-fade-leave-active {
             right: -230px;
-            transition: all 0.8s ease-out;
+            transition: all 0.4s ease-out;
         }
 
         &-success {

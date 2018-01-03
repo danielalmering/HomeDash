@@ -24,6 +24,7 @@ export default class Performers extends Vue {
 
     total: number = 0;
     services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
+    noperformers: boolean = false;
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
@@ -52,6 +53,7 @@ export default class Performers extends Vue {
     onRouteChange(to: Route, from: Route){
         this.query.category = to.params.category ? to.params.category : '';
         this.query.search = to.query.search ? to.query.search : '';
+        this.noperformers = false;
 
         this.query.offset = to.query.page ? (parseInt(to.query.page) - 1) * this.query.limit : 0;
 
@@ -124,5 +126,6 @@ export default class Performers extends Vue {
 
         this.performers = data.performerAccounts;
         this.total = data.total;
+        this.noperformers = (data.total == 0) ? true : false;
     }
 }
