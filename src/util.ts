@@ -98,7 +98,7 @@ export function noFlash(platform:Platform):boolean{
 
 // checks if 'pattern' is a subset of 'message'
 // eg match( {id:3, text:"bla"}, {text:"bla"} ) => true
-function match(message:any, pattern:any):boolean{
+export function match(message:any, pattern:any):boolean{
     for(var prop in pattern){
         if (! (prop in message) ){
             return false;
@@ -162,3 +162,4 @@ function toInts(version:string):number[]{
     }
     return result;
 }
+
