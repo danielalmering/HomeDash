@@ -41,6 +41,10 @@ const actions = {
             throw 'Server error';
         }
 
+        if(payload.ivrCode){
+            commit('storeIvrCode', payload.ivrCode);
+        }
+
         const performersResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=80&offset=0&voyeur=2`, {
             credentials: 'include'
         });

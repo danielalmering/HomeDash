@@ -90,8 +90,8 @@ export default class Voyeur extends Vue {
             type: 'startRequest',
             performer: this.availableReservation,
             sessionType: SessionType.Video,
-            fromVoyeur: true
-            //Add ivr code
+            fromVoyeur: true,
+            ivrCode: this.$store.state.voyeur.ivrCode
         });
     }
 

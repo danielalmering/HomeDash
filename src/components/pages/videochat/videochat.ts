@@ -69,6 +69,11 @@ export default class VideoChat extends Vue {
     cameras: {id:string, name: string, selected: boolean}[];
     microphones: {id:string, name: string, selected: boolean}[];
 
+    askToLeave:boolean = false;
+    navigation: {
+        to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void
+    }
+
     get sessionType(): SessionType{
         return this.$store.state.session.activeSessionType;
     }
@@ -351,12 +356,6 @@ export default class VideoChat extends Vue {
 
         this.navigation = {to, from, next};
         this.askToLeave = true;
-    }
-
-    askToLeave:boolean = false;
-
-    navigation: {
-        to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void
     }
 
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){

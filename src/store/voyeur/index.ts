@@ -75,6 +75,7 @@ export interface VoyeurState {
     reservations: number[];
     queue: number[];                //Id's of performers that are in the queue
     isActive: boolean;
+    ivrCode?: string;
 }
 
 const voyeurState: Module<VoyeurState, RootState> = {
@@ -86,6 +87,7 @@ const voyeurState: Module<VoyeurState, RootState> = {
         reservations: [],
         mainTile: undefined,
         isActive: false,
+        ivrCode: undefined
     },
     mutations,
     actions,
