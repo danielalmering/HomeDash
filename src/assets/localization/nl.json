@@ -56,6 +56,7 @@
         "missingfields": "Niet alle velden ingevuld",
         "alerts": {
             "successlogin": "Welkom, {username}",
+            "successlogout": "U bent succesvol uitgelogd!",
             "errorlogin": "Foutieve logingegevens",
             "errorNotLoggedin": "Niet meer ingelogd!"
         }
@@ -90,7 +91,8 @@
         "eyecolor": "Kleur ogen",
         "expand": "Meer",
         "hide": "Minder",
-        "collapsephotos": "Fotos bekijken",
+        "collapsphotos": "Fotos bekijken",
+        "collapsedphotos": "Fotos verbergen",
         "metaTitle": "Live webcammen, chatten en beeldbellen met {nickname} , echte Hollandse vrouwen - thuis.nl",
         "metaDescription": "Nu live webcammen, bellen en chatten met {nickname} , echte Hollandse vrouwen vind je hier."
     },

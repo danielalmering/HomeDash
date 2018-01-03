@@ -38,7 +38,7 @@
     <div class="profile__sticky">
 
         <div class="profile__slider" :class="{ 'collapse': displaySlider }">
-            <div class="profile__slider-toggle" v-if="!displayHeight" v-on:click="toggleSlider">{{ $t('profile.collapsephotos') }}</div>
+            <div class="profile__slider-toggle" v-if="!displayHeight"><span v-on:click="toggleSlider" v-t="!displaySlider ? 'profile.collapsedphotos' : 'profile.collapsphotos'"></span></div>
             <div class="slider">
                 <photo-slider v-if="performer" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
                 <photo-slider-full v-if="performer" :visible.sync="fullSliderVisible" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
