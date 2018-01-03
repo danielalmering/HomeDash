@@ -69,7 +69,7 @@ export default class Performers extends Vue {
         this.loadPerformers();
 
         this.serviceEventId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
-            const performer = this.performers.find(p => p.id === data.performerId);
+            const performer = this.performers.find(p => p && p.id === data.performerId);
 
             if(!performer){
                 return;
@@ -79,7 +79,7 @@ export default class Performers extends Vue {
         });
 
         this.statusEventId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
-            const performer = this.performers.find(p => p.id === data.performerId);
+            const performer = this.performers.find(p => p && p.id === data.performerId);
 
             if(!performer){
                 return;
