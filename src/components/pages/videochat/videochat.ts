@@ -20,11 +20,11 @@ import Confirmations from '../../layout/Confirmations.vue';
 import { Devices } from 'typertc';
 
 import './videochat.scss';
-import Performer from '../performer';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
 import { webrtcPossible, noFlash } from '../../../util';
+import { Performer } from '../../../models/Performer';
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
@@ -128,7 +128,7 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionData.playStream;
     }
 
-    get performer(){
+    get performer(): Performer {
         return this.$store.state.session.activePerformer;
     }
 
@@ -174,6 +174,14 @@ export default class VideoChat extends Vue {
 
     close(){
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
+    }
+
+    toggleFavourite(){
+        this.performer.isFavourite ?
+            this.$store.dispatch('addFavourite', this.performer.id) :
+            this.$store.dispatch('removeFavourite', this.performer.id);
+
+        this.performer.isFavourite = !this.performer.isFavourite;
     }
 
     async gotoVoyeur(next:(yes?:boolean | RawLocation)=>void){
