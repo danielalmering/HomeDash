@@ -1,3 +1,4 @@
+
 export interface SocketVoyeurEventArgs {
     performerId: number;
     type: string;
@@ -14,4 +15,11 @@ export interface SocketServiceEventArgs {
     performerId: number;
     serviceName: string;
     serviceStatus: boolean;
+}
+
+export interface SocketMessageEventArgs {
+    clientId: number;
+    performerId: number;
+    sentBy: string;
+    type: string;
 }

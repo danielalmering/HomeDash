@@ -21,7 +21,6 @@ export default class Nav extends Vue {
     openRoute = openRoute;
     openModal = openModal;
 
-
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
         this.closeAll();

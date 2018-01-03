@@ -23,6 +23,7 @@ export interface RequestPayload extends Payload {
     ivrCode?: string;
     displayName?: string;
     payment?: PaymentType;
+    fromVoyeur?: boolean;
 }
 
 export interface SessionState {
@@ -34,6 +35,7 @@ export interface SessionState {
     activeIvrCode: string | undefined;
     activePaymentType: PaymentType | undefined;
     isSwitching: boolean;
+    fromVoyeur: boolean;
 }
 
 interface VideoEventSocketMessageContent {
@@ -53,8 +55,8 @@ notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
     rootState.dispatch('handleVideoEventSocket', data);
 });
 
-const transitions: { [key: string]: State[] } = {
-    [State.Idle]:           [State.InRequest, State.Ending], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
+const transitions: { [key: string]: State[] } = { //TODO: Added by Lorenzo: Ask Hotze what the edgecase is, removing state transition for now
+    [State.Idle]:           [State.InRequest], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
     [State.InRequest]:      [State.Pending, State.Accepted, State.Canceling, State.Idle],
     [State.Pending]:        [State.Accepted, State.Canceling],
     [State.Accepted]:       [State.Initializing, State.Canceling],
@@ -156,7 +158,8 @@ const sessionStore: Module<SessionState, RootState> = {
         activeDisplayName: '',
         activeIvrCode: undefined,
         activePaymentType: undefined,
-        isSwitching: false
+        isSwitching: false,
+        fromVoyeur: false
     },
     getters: {
         canStartNewSession: state => {
@@ -207,6 +210,7 @@ const sessionStore: Module<SessionState, RootState> = {
                 store.state.activeSessionType = payload.sessionType;
                 store.state.activeIvrCode = payload.ivrCode;
                 store.state.activePaymentType = payload.payment;
+                store.state.fromVoyeur = payload.fromVoyeur !== undefined ? payload.fromVoyeur : false;
 
                 if(payload.sessionType == SessionType.Peek){
                     store.commit('setState', State.Accepted);
@@ -218,6 +222,7 @@ const sessionStore: Module<SessionState, RootState> = {
             if (requestResult.ok && requestData.error){
                 store.state.activePerformer = store.state.activeSessionType = null;
                 store.state.activeIvrCode = undefined;
+                store.state.fromVoyeur = payload.fromVoyeur || false;
                 store.commit('setState', State.Idle);
 
                 store.dispatch('openMessage', {
@@ -257,6 +262,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             if(result.ok){
                 store.commit('setState', State.Idle);
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             } else {
                 throw new Error('Oh noooooo, ending failed');
             }
@@ -284,6 +290,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             if(endResult.ok){
                 store.commit('setState', State.Idle);
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             } else {
                 throw new Error('Oh noooooo, ending failed');
             }
