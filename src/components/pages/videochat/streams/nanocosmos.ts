@@ -36,7 +36,7 @@ export default class NanoCosmos extends Stream {
     @Prop({ default: '100%', type: String})
     public height: string;
 
-    @Prop({ default: '16/9', type: String})
+    @Prop({ default: '4/3', type: String})
     public aspectratio: string;
 
     @Prop({ default: false, type: Boolean })
@@ -183,6 +183,7 @@ export default class NanoCosmos extends Stream {
     }
 
     private onNanoCosmosError(s: any){
+        console.log(s);
         if(s.data && s.data.code === 2002){
            this.onStateChange('disconnected');
         } else {

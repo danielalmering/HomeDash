@@ -23,6 +23,7 @@ import './videochat.scss';
 import Performer from '../performer';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
+import { webrtcPossible, noFlash } from '../../../util';
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
@@ -82,7 +83,7 @@ export default class VideoChat extends Vue {
         }
 
         // return this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
-        return 'nanocosmos';
+        return 'jsmpeg';
     }
 
     get broadcastType():string{
@@ -91,56 +92,13 @@ export default class VideoChat extends Vue {
         }
 
         var platform = Platform.parse(navigator.userAgent);
-        if (this.isIOS(platform)){
+        if (webrtcPossible(platform)){
+            return 'webrtcBroadcast';
+        }
+        if (noFlash(platform)){
             return 'none';
         }
-        if (this.noWebRtc(platform)){
-            return 'flash';
-        }
-        return 'webrtcBroadcast';
-    }
-
-    isIOS(platform:Platform):boolean{
-        if (!platform){
-            return false;
-        }
-        if (!platform.os){
-            return false;
-        }
-
-        return platform.os.family == 'iOS';
-    }
-    
-    noWebRtc(platform:Platform):boolean{
-        if (!platform){
-            return false;
-        }
-        if (!platform.name){
-            return false;
-        }
-        const flashers = ["Microsoft Edge", "IE", "Firefox"];
-        if ( flashers.indexOf(platform.name) > -1 ){
-            return true;
-        }
-
-        if (platform.name == 'Safari' && this.major(platform.version) < 11){
-            return true;
-        }
-
-        return false;
-    }
-
-    major(version:string | undefined):number{
-        if (!version){
-            return 0;
-        }
-
-        const result:number = parseInt(version.split('.')[0]);
-        if (result){
-            return result;
-        }
-
-        return 0;
+        return 'flash';
     }
 
     get wowza(): string | undefined{
@@ -264,6 +222,10 @@ export default class VideoChat extends Vue {
         if (state === 'active'){
             this.$store.dispatch('setActive');
         }
+
+        if (state === 'disconnected'){
+            this.$store.dispatch('disconnected');
+        }
     }
 
     viewerError(message: string){
@@ -294,8 +256,6 @@ export default class VideoChat extends Vue {
             } else {
                 var devices = new Devices();
                 devices.getCameras().then( cams=>{
-                    console.log("jawohl, cameras binnen");
-                    console.log(cams);
                     this.cameras=cams;
                     let selected = this.cameras.find(cam=>cam.selected);
                     if (selected && this.broadcasting.cam !== selected.id){
@@ -303,8 +263,6 @@ export default class VideoChat extends Vue {
                     }
                 });
                 devices.getMicrophones().then( mics => {
-                    console.log("jawohl, microphoes binnen");
-                    console.log(mics);
                     this.microphones=mics;
                     let selected = this.microphones.find(mic=>mic.selected);
                     if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
