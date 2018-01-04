@@ -19,7 +19,15 @@
                         <input required v-model="performerSearchQuery" type="text" class="col-xs-12">
                         <ul class="account__view-list" v-if="performersFilter.length !== 0">
                             <li v-for="performer in performersFilter" v-on:click="selectPerformer(performer)">
-                                <img clas="small" :src="`${imageUrl}${performer.id}/small/${performer.avatar}`"/>{{ performer.username }}  <i>({{ performer.advertNumber }})</i>
+                                <div class="col-xs-3 col-sm-1">
+                                    <div class="row">
+                                        <img clas="small" v-if="performer" :src="`${imageUrl}${performer.id}/small/${performer.avatar}`"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9 col-sm-11 text-left">
+                                    {{ performer.username }} <br />
+                                    <i>({{ performer.advertNumber }})</i>
+                                </div>
                             </li>
                         </ul>
                     </div>
