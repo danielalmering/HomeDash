@@ -22,13 +22,12 @@
 
             <div class="nav__info col-xs-12 col-sm-7">
                 <div class="nav__info-container">
-                    <!-- <a class="nav__info-item visible-xs" href="#"><i class="fa fa-home only"></i><span v-t="'nav.info.home'"></span></a>   -->
                     <a class="nav__info-item visible-xs" v-on:click="toggleTagMenu"><i class="fa fa-bars"></i><span v-t="'nav.info.menu'"></span></a>
                     <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
 
-                    <a class="nav__info-item nav__info-item--last">
-                        <span v-on:click="authenticated ? toggleAccountMenu() : login()">
+                    <a class="nav__info-item nav__info-item--last" v-on:click="authenticated ? toggleAccountMenu() : login()">
+                        <span>
                             <i class="fa fa-user"><span v-if="authenticated && user.totalNotifications && user.totalNotifications !== 0" class="notify">{{ user.totalNotifications }}</span></i>
                             <span v-t="authenticated ? 'nav.info.account' : 'nav.info.login'"></span>
                         </span>

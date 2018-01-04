@@ -71,13 +71,14 @@
     }
 
     &__banner {
-        
-        @include rem(margin, 15px 0px);
+
 
         &-credits {
             float: right;
             @include rem(padding, 5px 0px 0px 0px);
             cursor: pointer;
+            @include rem(margin, 15px 0px);
+
             .discount {
                 position: relative;
                 float: left;
@@ -141,6 +142,8 @@
             float: right;
             width: 235px;
             cursor: pointer;
+            @include rem(margin, 15px 0px);
+            
             .col-1 {
                 float: left;
                 width: 65%;
