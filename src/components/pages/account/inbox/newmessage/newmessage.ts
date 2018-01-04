@@ -43,19 +43,15 @@ export default class Newmessage extends Vue {
 
         if(this.$route.params.advertId){
             this.selectedPerformer = parseInt(this.$route.params.advertId);
-            this.performerSearchQuery = this.selectedPerformerUsername;
+            let performer = this.performers.find( p => p.id == this.selectedPerformer );
+            if (!performer) return;
+            this.performerSearchQuery = `${performer.username} (${performer.advertNumber})`
         }
     }
 
     selectPerformer(performer:BarePerformer){
         this.selectedPerformer = performer.id;
         this.performerSearchQuery = `${performer.username} (${performer.advertNumber})`
-    }
-
-    get selectedPerformerUsername(){
-        const performer = this.performers.find(p => p.id === this.selectedPerformer);
-
-        return performer ? performer.username : '';
     }
 
     get performersFilter(){
@@ -118,6 +114,5 @@ export default class Newmessage extends Vue {
 
         this.performerSearchQuery = "";
     }
-
 
 }
