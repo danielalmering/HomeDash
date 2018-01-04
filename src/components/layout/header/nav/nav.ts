@@ -75,6 +75,22 @@ export default class Nav extends Vue {
         this.showAccount = !this.showAccount;
     }
 
+    closeAccountMenu(){
+        this.showAccount = false;
+    }
+
+    toggleTagMenu(){
+        this.showMenu = !this.showMenu;
+    }
+
+    closeTagMenu(){
+        this.showMenu = false;
+    }
+
+    closeLangMenu(){
+        this.showLang = false;
+    }
+
     login(){
         this.openModal('login');
         this.closeAll();

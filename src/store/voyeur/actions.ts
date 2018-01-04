@@ -189,6 +189,10 @@ const actions = {
         }
     },
     async end({ commit, rootState, state }: VoyeurContext){
+        if(!state.isActive){
+            throw 'Voyeur is not active';
+        }
+
         await fetch(`${config.BaseUrl}/session/end`, {
             credentials: 'include',
             method: 'POST',

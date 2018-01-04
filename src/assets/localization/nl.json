@@ -258,7 +258,8 @@
                 "PERFORMER_END": "De performer heeft de sessie beeindigd",
                 "CLIENT_BROKE": "U heeft geen credits meer",
                 "PHONE_DISCONNECT": "De telefoon is opgehangen",
-                "MAIN_ENDED": "De huidige sessie is beeindigd"
+                "MAIN_ENDED": "De huidige sessie is beeindigd",
+                "PLAYER_END": "U heeft de sessie beeindigd"
             }
         }
     },

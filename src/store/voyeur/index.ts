@@ -26,8 +26,7 @@ notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
     if(!data) return;
 
     if(data.message && (data.message === 'BROKE' || data.message === 'HANGUP')){
-        //Show broke/hangup alert
-        //Route to performer page
+        rootState.dispatch('voyeur/end');
 
         return;
     }
