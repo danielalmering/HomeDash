@@ -157,9 +157,7 @@ export default class VideoChat extends Vue {
 
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
             if(newValue === State.Ending && !this.isEnding){
-                this.$store.dispatch('successMessage', 'videochat.alerts.successChatEnded');
-
-                close();
+                this.close();
             }
         });
 

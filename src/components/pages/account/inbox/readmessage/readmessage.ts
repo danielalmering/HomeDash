@@ -1,6 +1,6 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
-import { getAvatarImage } from '../../../../../util';
+import { getAvatarImage, getPerformerStatus } from '../../../../../util';
 import { Route } from 'vue-router';
 import { User } from '../../../../../models/User';
 
@@ -16,6 +16,7 @@ export default class Readmessage extends Vue {
     reply: string = '';
 
     getAvatarImage = getAvatarImage;
+    getPerformerStatus = getPerformerStatus;
 
     get credits(){
         return this.$store.state.info['credits_per_' + (this.$route.params.type.toLowerCase())];

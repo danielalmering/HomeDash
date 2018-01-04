@@ -234,7 +234,7 @@ const sessionStore: Module<SessionState, RootState> = {
         async accepted(store: ActionContext<SessionState, RootState>){
             store.commit('setState', State.Accepted);
         },
-        async cancel(store: ActionContext<SessionState, RootState>, reason: string){
+        async cancel(store: ActionContext<SessionState, RootState>, reason: string = "CANCEL"){
             store.commit('setState', State.Canceling);
 
             let result;
