@@ -12,6 +12,7 @@ import App from './App.vue';
 require('webrtc-adapter');
 require('./filters/date');
 require('./filters/euro');
+require('./directives/clickOutside');
 
 import './styles/main.scss';
 

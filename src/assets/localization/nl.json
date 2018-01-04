@@ -186,6 +186,16 @@
                 "errorPasswordMismatch": "De ingevulde wachtwoorden komen niet overeen",
                 "errorEmptyFields": "Niet alle velden zijn ingevuld"
             }
+        },
+        "countryselect": {
+            "title": "Kies uw land van afkomst",
+            "desc": "selecteer het gewenste land",
+            "defaultcountry": "(overige landen)",
+            "country-nl": "Nederland",
+            "country-de": "Duitsland",
+            "country-gl": "Global",
+            "country-at": "Oosterijk",
+            "country-uk": "Verenigd Koninkrijk"
         }
     },
     "account": {
