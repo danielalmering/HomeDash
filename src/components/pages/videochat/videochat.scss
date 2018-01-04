@@ -54,6 +54,17 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         }
     }
 
+    &__start-stop {
+        font-weight: 600;
+        color: $pallete-2;
+        float: left;
+        background: $pallete-3;
+        @include rem(padding, 12.5px);
+        @include border-radius(5px);
+        cursor: pointer;
+        
+    }
+
     &__broadcast{
         position: absolute;
         top: 10px;
@@ -73,6 +84,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
             border-radius: 5px;
             text-align: center;
             overflow: hidden;
+            @include rem(margin-left, 10px);
 
             p {
                 display: table;
