@@ -36,7 +36,7 @@ import config from './config';
 export default class Cookies extends Vue {
     displayCookies: boolean = false;
     displayAgecheck: boolean = false;
-    displayCountryselection: boolean = true;
+    displayCountryselection: boolean = false;
 
     async created(){
         await this.$store.dispatch('getSession');
