@@ -279,7 +279,7 @@ export default class VideoChat extends Vue {
                 }
             } else {
                 var devices = new Devices();
-                devices.getCameras().then( cams=>{
+                devices.getCameras().then( cams => {
                     this.cameras=cams;
                     let selected = this.cameras.find(cam=>cam.selected);
                     if (selected && this.broadcasting.cam !== selected.id){

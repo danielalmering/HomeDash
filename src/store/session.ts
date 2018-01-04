@@ -126,7 +126,7 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
             when: { inState: State.Pending, value: 'DISCONNECT' },
             result: { action: 'cancel', label: 'PERFORMER_REJECT'}
         },
-        //all other scenario's while pending should result in null
+        //all other scenario's while pending should result in undefined
         {
             when: { inState: State.Pending },
             result: undefined
