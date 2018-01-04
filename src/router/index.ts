@@ -107,6 +107,7 @@ const routes = [{
                 {
                     path: 'payment/',
                     name: 'Payment',
+                    beforeEnter: authenticatedInterceptor,
                     component: Payment
                 },
                 {

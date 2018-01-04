@@ -24,6 +24,4 @@ export default class ModalWrapper extends Vue {
         return this.$store.state.modals.activeModal;
     }
 
-    mounted(){
-    }
 }

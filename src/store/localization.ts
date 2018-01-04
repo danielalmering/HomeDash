@@ -13,12 +13,14 @@ export interface LocalizationState {
 type LocalizationContext = ActionContext<LocalizationState, RootState>;
 
 const defaultLanguages: { [country: string]: string } = {
+    gl: 'en',
     uk: 'en',
     de: 'de',
     nl: 'nl'
 };
 
 const allowedLanguages: { [country: string]: string[] } = {
+    gl: ['de', 'en'],
     uk: ['en'],
     de: ['de', 'en'],
     nl: ['nl', 'en']
