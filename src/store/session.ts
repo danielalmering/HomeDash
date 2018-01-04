@@ -52,7 +52,6 @@ export interface VideoEventSocketMessage extends VideoEventSocketMessageContent 
 
 notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
     console.log('VIDEO EVENT MOTHERFUCKER ', data);
-
     rootState.dispatch('handleVideoEventSocket', data);
 });
 
@@ -127,7 +126,7 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
             when: { inState: State.Pending, value: 'DISCONNECT' },
             result: { action: 'cancel', label: 'PERFORMER_REJECT'}
         },
-        //all other scenario's while pending should result in null
+        //all other scenario's while pending should result in undefined
         {
             when: { inState: State.Pending },
             result: undefined
@@ -175,6 +174,9 @@ const sessionStore: Module<SessionState, RootState> = {
             }
 
             state.activeState = toState;
+        },
+        setIvrCode(state:SessionState, toCode:string){
+            state.activeIvrCode = toCode;
         }
     },
     actions: {
@@ -232,7 +234,7 @@ const sessionStore: Module<SessionState, RootState> = {
         async accepted(store: ActionContext<SessionState, RootState>){
             store.commit('setState', State.Accepted);
         },
-        async cancel(store: ActionContext<SessionState, RootState>, reason: string){
+        async cancel(store: ActionContext<SessionState, RootState>, reason: string = "CANCEL"){
             store.commit('setState', State.Canceling);
 
             let result;
@@ -277,6 +279,9 @@ const sessionStore: Module<SessionState, RootState> = {
         },
         async end(store: ActionContext<SessionState, RootState>, reason: string){
             store.commit('setState', State.Ending);
+            if (reason == 'PHONE_DISCONNECT'){
+                store.commit('setIvrCode', undefined);
+            }
 
             const endResult = await fetch(`${config.BaseUrl}/session/end`, {
                 method: 'POST',
@@ -450,6 +455,9 @@ const sessionStore: Module<SessionState, RootState> = {
             const translation = translate( {...content, inState: store.state.activeState} );
             if (translation){
                 store.dispatch(translation.action, translation.label);
+            } else {
+                console.log("UNHANDLED!!")
+                console.log(content)
             }
 
         }

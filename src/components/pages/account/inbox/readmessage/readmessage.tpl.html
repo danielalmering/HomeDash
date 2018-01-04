@@ -17,11 +17,16 @@
             <div class="col-xs-3 col-sm-1">
                 <div class="row">
                     <img class="resize" :src="getAvatarImage(message.performer_account, 'small')">
+                    <span class="status" :class="getPerformerStatus(message.performer_account)"></span>
                 </div>
             </div>
             <div class="col-xs-9 col-sm-11">
                 <div class="row">
-                    <span class="col-xs-12 col-sm-6 text-left">{{ $t('account.by') }}: <i>{{ message.performer_account.nickname }}</i></span>
+                    <span class="col-xs-12 col-sm-6 text-left">{{ $t('account.by') }}: 
+                        <router-link :to="{ name: 'Profile', params: { id: message.performer_account.advert_numbers[0].advertNumber }}">
+                        <i>{{ message.performer_account.nickname }}</i>
+                        </router-link>
+                    </span>
                     <span class="col-xs-12 col-sm-6 text-left">{{ message.date | date }}</span>
                     <p class="col-xs-12">{{ message.content }}</p>
                 </div>

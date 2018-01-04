@@ -7,7 +7,7 @@ import config from '../../../../config';
 import Stream from './stream';
 
 @Component({
-    template: '<div><canvas class="jsmpeg"></canvas></div>',
+    template: '<div><canvas width="640" height="480" class="jsmpeg"></canvas></div>',
 })
 export default class JSMpeg extends Stream {
 

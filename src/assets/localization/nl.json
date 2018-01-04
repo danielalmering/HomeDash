@@ -259,7 +259,9 @@
                 "CLIENT_BROKE": "U heeft geen credits meer",
                 "PHONE_DISCONNECT": "De telefoon is opgehangen",
                 "MAIN_ENDED": "De huidige sessie is beeindigd",
-                "PLAYER_END": "U heeft de sessie beeindigd"
+                "INITIATE_FAILED": "Er is iets fout gegaan. Probeer het nog eens.",
+                "CANCEL": "Geannuleerd",
+                "PLAYER_END": "U heeft de sessie geëindigd"
             }
         }
     },
