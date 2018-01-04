@@ -13,6 +13,16 @@ interface MessageForm {
 interface BarePerformer {
     id: number;
     username: string;
+    advertNumber:string;
+    avatar:string;
+}
+
+function randAdv():string{
+    let result = "0000".split(""); 
+    for(let k=0; k<result.length; k++){
+        result[k] = Math.floor( Math.random() * 10).toString();
+    }
+    return result.join("");
 }
 
 @WithRender
@@ -25,24 +35,23 @@ export default class Newmessage extends Vue {
     performerSearchQuery: string = '';
     selectedPerformer: number = 0;
 
+    //accept-img.thuis.nl/files/pimg/
+    imageUrl = config.ImageUrl;
+
     async mounted(){
         await this.loadPerformers();
 
         if(this.$route.params.advertId){
             this.selectedPerformer = parseInt(this.$route.params.advertId);
-            this.performerSearchQuery = this.selectedPerformerUsername;
+            let performer = this.performers.find( p => p.id == this.selectedPerformer );
+            if (!performer) return;
+            this.performerSearchQuery = `${performer.username} (${performer.advertNumber})`
         }
     }
 
-    selectPerformer(performerId: number){
-        this.selectedPerformer = performerId;
-        this.performerSearchQuery = this.selectedPerformerUsername;
-    }
-
-    get selectedPerformerUsername(){
-        const performer = this.performers.find(p => p.id === this.selectedPerformer);
-
-        return performer ? performer.username : '';
+    selectPerformer(performer:BarePerformer){
+        this.selectedPerformer = performer.id;
+        this.performerSearchQuery = `${performer.username} (${performer.advertNumber})`
     }
 
     get performersFilter(){
@@ -50,10 +59,16 @@ export default class Newmessage extends Vue {
             return [];
         }
 
-        return this.performers.filter((perf: BarePerformer) => {
-            return perf.username.toLocaleLowerCase().indexOf(this.performerSearchQuery.toLowerCase()) > -1 ||
-                    perf.id === parseInt(this.performerSearchQuery);
-        });
+        var terms = this.performerSearchQuery.toLowerCase().trim().split(" ");
+        return this.performers.filter( performer=>{
+            const search = `${performer.username.toLowerCase()} (${performer.advertNumber})`;
+            for(var term of terms){
+                if (search.indexOf(term)==-1){
+                    return false;
+                }
+            }
+            return true;
+        }).slice(0, 10);
     }
 
     async loadPerformers() {
@@ -62,6 +77,11 @@ export default class Newmessage extends Vue {
         });
 
         this.performers =  await performersResults.json();
+        //stop doing this when Ljuba fixes the api call
+        this.performers.forEach( value => {
+            value.advertNumber = randAdv();
+            value.avatar = "1.jpg";
+        });
     }
 
     async sendMessage(){
@@ -91,7 +111,8 @@ export default class Newmessage extends Vue {
             this.$store.dispatch('successMessage', 'account.alerts.successNewMessage');
             this.message = { subject: '', content: '' };
         }
-    }
 
+        this.performerSearchQuery = "";
+    }
 
 }
