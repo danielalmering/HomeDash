@@ -21,10 +21,16 @@ export class H5Style {
 }
 
 @Component({
-    template: '<div id="playerDiv"></div>',
+    template: '<div :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 
+    constructor(){
+        super();
+        this.id = Math.round( Math.random() * Date.now() ).toString(16);
+    }
+
+    private id:string;
 
     @Prop({ default: true, type: Boolean})
     public autoplay: Boolean;
@@ -48,7 +54,7 @@ export default class NanoCosmos extends Stream {
     @Prop({ default: true, type: Boolean })
     public view: Boolean;
 
-    @Prop({ default: 'fill', type: String})
+    @Prop({ default: 'crop', type: String})
     public scaling: String;
 
     @Prop({ default: true, type: Boolean})
@@ -116,7 +122,7 @@ export default class NanoCosmos extends Stream {
     }
 
     private load(){
-        this.player = new NanoPlayer('playerDiv');
+        this.player = new NanoPlayer(this.id);
 
         const configH5LIVE = {
             'source': {
