@@ -202,7 +202,7 @@
                 width: 100%;
                 text-align: center;
                 line-height: 20%;
-                @include rem(margin, -5px 0px);
+                @include rem(margin, 10px 0px);
 
                 .h1 { font-style: normal; @include rem(font-size, 29px); }
                 .h2, .h4 { display: none; }

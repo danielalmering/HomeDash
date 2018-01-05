@@ -69,7 +69,7 @@
                     </div>
                     <div class="sidebar__voyeur-misc">
                         <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advert_numbers[0].advertNumber }}</span>
-                        <span class="sidebar__voyeur-misc-favorite">
+                        <span class="sidebar__voyeur-misc-favorite" v-on:click="addFavorite(tile.performer)">
                             <i class="fa fa-star" :class="{ 'is-favourite': performer(tile.performer).isFavourite }"></i>
                         </span>
                     </div>
