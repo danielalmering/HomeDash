@@ -13,7 +13,7 @@
                 <span class="resize" v-if="authenticated" :class="{ 'collapse': !toggleUserinfo }" v-on:click="toggleUserinfo = !toggleUserinfo"></span>
                 <p v-if="authenticated">{{ $t('sidebar.currentcredits') }}</p>
                 <span v-if="authenticated" class="credits">{{ user.credits }}</span>
-                <router-link v-if="authenticated" class="btn btn-fa fa-money btn-small btn-black" :to="{ name: 'Payment' }"></router-link>
+                <router-link v-if="authenticated" class="btn btn-fa fa-credit-card btn-small btn-black" :to="{ name: 'Payment' }"></router-link>
                 <ul class="usp" v-if="!authenticated">
                     <li v-t="'sidebar.register.usp-1'"></li>
                     <li v-t="'sidebar.register.usp-2'"></li>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="sidebar__voyeur-misc">
                         <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advert_numbers[0].advertNumber }}</span>
-                        <span class="sidebar__voyeur-misc-favorite">
+                        <span class="sidebar__voyeur-misc-favorite" v-on:click="addFavorite(tile.performer)">
                             <i class="fa fa-star" :class="{ 'is-favourite': performer(tile.performer).isFavourite }"></i>
                         </span>
                     </div>

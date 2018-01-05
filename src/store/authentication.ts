@@ -121,6 +121,11 @@ const authenticationStore: Module<AuthState, RootState> = {
                 sessionData = await checkSessionResult.json() as AnonymousUser;
             }
 
+            //since the displayname is set locally, transfer it when setting a new remote user
+            if (sessionData  && store.state.user){
+                sessionData.displayName = store.state.user.displayName;
+            }
+
             store.commit('setUser', sessionData);
             await store.dispatch('setCountry', sessionData.country);
         }

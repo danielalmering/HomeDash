@@ -146,13 +146,13 @@ export default class Profile extends Vue {
         this.displaySlider = !this.displaySlider;
     }
 
-    async startVoyeur({}){
+    async startVoyeur(payload: { ivrCode?: string }){
         if(!this.performer){
             return;
         }
 
         try {
-            await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.performer.id });
+            await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.performer.id, ivrCode: payload.ivrCode });
 
             this.$router.push({
                 name: 'Voyeur',
@@ -172,7 +172,7 @@ export default class Profile extends Vue {
 
         const self = this;
 
-        let defaults:RequestPayload = {
+        const defaults:RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
             sessionType: SessionType.Video,

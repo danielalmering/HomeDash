@@ -33,8 +33,6 @@ export default class Tabs extends Vue {
     selectedTab: string = 'cam';
     openModal = openModal;
 
-    ivrCode: string = '';
-
     tabs = {
         'cam': 'video-camera',
         'videocall': 'video-camera',
@@ -133,10 +131,6 @@ export default class Tabs extends Vue {
     }
 
     get displayName(): string {
-        if(!this.user){
-            return this._displayName;
-        }
-
         if (this.authenticated){
             return this.user.displayName || this.user.username;
         } else {
@@ -145,14 +139,28 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
-        if (!this.user){
-            this._displayName = value;
-        } else {
-            this.user.displayName = value;
-        }
+        var usr = {...this.user, displayName:value };
+        this.$store.commit("setUser", {...this.user, displayName:value });
     }
 
-    private _displayName:string = "";
+    get advertNumber():string{
+        if (!this.performer){
+            return "0000";
+        }
+        if (!this.performer.advert_numbers.length){
+            return "0000";
+        }
+        
+        return this.performer.advert_numbers[0].advertNumber.toString();
+    }
+
+    get ivrCode():string{
+        return this.$store.state.session.activeIvrCode;
+    }
+
+    set ivrCode(value:string){
+        this.$store.commit('setIvrCode', value);
+    }
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
@@ -171,8 +179,13 @@ export default class Tabs extends Vue {
         this.$emit('startSession', description);
     }
 
-    startVoyeur(){
-        this.$emit('startVoyeur');
+    startVoyeur(ivr: boolean = false){
+        if(ivr && this.ivrCode === ''){
+            this.$store.dispatch('errorMessage', 'tabs.errorNoIvrCode');
+            return;
+        }
+
+        this.$emit('startVoyeur', { ivrCode: ivr ? this.ivrCode : undefined });
     }
 
     async sendMail(){

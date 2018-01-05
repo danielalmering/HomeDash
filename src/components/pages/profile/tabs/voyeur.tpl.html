@@ -5,16 +5,16 @@
         <div class="numbers" v-if="$parent.info"><i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }} <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span></div>
         <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
 
-        <form class="form">
+        <form class="form" v-on:submit.prevent="$parent.startVoyeur(true)">
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
-                    <input type="text" class="col-xs-7 col-sm-9" v-model="$parent.ivrCode" :placeholder="$t('tabs.accesscode')">
+                    <input required type="text" class="col-xs-7 col-sm-9" v-model="$parent.ivrCode" :placeholder="$t('tabs.accesscode')">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
-                    <input type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')">
+                    <input required type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')">
                 </div>
             </div>
             <button class="btn btn-full btn-large btn-green" v-t="'tabs.voyeurbtn'"></button>

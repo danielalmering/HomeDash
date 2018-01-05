@@ -48,16 +48,24 @@ export default class Voyeur extends Vue {
         };
     }
 
+    get isActive(){
+        return this.$store.state.voyeur.isActive;
+    }
+
     get activeState(){
         return this.$store.state.session.activeState;
     }
 
     mounted(){
-        this.intervalTimer = setInterval(async () => {
-            await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
+        this.intervalTimer = window.setInterval(async () => {
+            const result = await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
+
+            if(!result.ok){
+                close();
+            }
         }, 5000);
 
-        if(!this.$store.state.voyeur.isActive){
+        if(!this.isActive){
             this.$router.push({
                 name: 'Profile',
                 params: {
@@ -67,10 +75,20 @@ export default class Voyeur extends Vue {
         }
     }
 
+    async close(){
+        if(this.isActive){
+            await this.$store.dispatch('voyeur/end');
+        }
+
+        this.$store.dispatch('errorMessage', 'voyeur.successChatEnded');
+
+        this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
+    }
+
     beforeDestroy(){
         clearInterval(this.intervalTimer);
 
-        if(!this.$store.state.voyeur.isActive){
+        if(!this.isActive){
             return;
         }
 
@@ -85,10 +103,13 @@ export default class Voyeur extends Vue {
     }
 
     async acceptReservation(){
+
         await this.$store.dispatch<RequestPayload>({
             type: 'startRequest',
             performer: this.availableReservation,
             sessionType: SessionType.Video,
+            fromVoyeur: true,
+            ivrCode: this.$store.state.voyeur.ivrCode
         });
     }
 
@@ -106,6 +127,13 @@ export default class Voyeur extends Vue {
 
     viewerError(message: string){
         console.log(message);
+    }
+
+    @Watch('isActive')
+    activeChange(newState: boolean){
+        if(!newState){
+            this.close();
+        }
     }
 
     @Watch('activeState')

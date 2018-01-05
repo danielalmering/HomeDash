@@ -8,6 +8,7 @@ import { SessionType, State, PaymentType } from '../models/Sessions';
 import config from '../config';
 
 import notificationSocket from '../socket';
+import { match } from '../util';
 
 export interface SessionData {
     playStream: string;
@@ -22,6 +23,7 @@ export interface RequestPayload extends Payload {
     ivrCode?: string;
     displayName?: string;
     payment?: PaymentType;
+    fromVoyeur?: boolean;
 }
 
 export interface SessionState {
@@ -33,6 +35,7 @@ export interface SessionState {
     activeIvrCode: string | undefined;
     activePaymentType: PaymentType | undefined;
     isSwitching: boolean;
+    fromVoyeur: boolean;
 }
 
 interface VideoEventSocketMessageContent {
@@ -49,12 +52,11 @@ export interface VideoEventSocketMessage extends VideoEventSocketMessageContent 
 
 notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
     console.log('VIDEO EVENT MOTHERFUCKER ', data);
-
     rootState.dispatch('handleVideoEventSocket', data);
 });
 
-const transitions: { [key: string]: State[] } = {
-    [State.Idle]:           [State.InRequest, State.Ending], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
+const transitions: { [key: string]: State[] } = { //TODO: Added by Lorenzo: Ask Hotze what the edgecase is, removing state transition for now
+    [State.Idle]:           [State.InRequest], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
     [State.InRequest]:      [State.Pending, State.Accepted, State.Canceling, State.Idle],
     [State.Pending]:        [State.Accepted, State.Canceling],
     [State.Accepted]:       [State.Initializing, State.Canceling],
@@ -72,6 +74,81 @@ function isStateChangeAllowed(fromState: State, toState: State) {
     return transitions[fromState].indexOf(toState) > -1;
 }
 
+interface StateSocketMessage extends VideoEventSocketMessage{
+    inState: State;
+}
+
+//translates a socket message to an action to be dispatched when the rule matches.
+//Rules are checked from top to bottom
+export function translate(socketMessage: StateSocketMessage): { action: string, label?: string } | undefined {
+    const rules = [
+        {
+            when: { type: 'VIDEOCALL_ANSWER' },
+            result: { action: 'callAccepted' }
+        },
+        {
+            when: { type: 'VIDEOCALL_FAILED' },
+            result: { action: 'callFailed' }
+        },
+        {
+            when: { type: 'VIDEOCALL_DISCONNECT' },
+            result: { action: 'callEnded' }
+        },
+        {
+            when: { type: 'RESPONSE', message: 'HANGUP' },
+            result: { action: 'end', label: 'PHONE_DISCONNECT' }
+        },
+        {
+            when: { type: 'RESPONSE', message: 'MAIN_ENDED' },
+            result: { action: 'end', label: 'MAIN_ENDED' }
+        },
+        {
+            when: { inState: State.Active, type: 'RESPONSE', message: 'CLICK', value: false },
+            result: { action: 'end', label: 'PERFORMER_END' }
+        },
+        {
+            when: { inState: State.Active, type: 'RESPONSE', message: 'DISCONNECT', value: false },
+            result: { action: 'end', label: 'PERFORMER_END' }
+        },
+        {
+            when: { inState: State.Active, type: 'RESPONSE', message: 'BROKE' },
+            result: { action: 'end', label: 'CLIENT_BROKE' }
+        },
+        {
+            when: { inState: State.Pending, value: true },
+            result: { action: 'accepted' }
+        },
+        {
+            when: { inState: State.Pending, _stateChange: 'REJPERF' },
+            result: { action: 'cancel', label: 'PERFORMER_REJECT'}
+        },
+        {
+            when: { inState: State.Pending, value: 'DISCONNECT' },
+            result: { action: 'cancel', label: 'PERFORMER_REJECT'}
+        },
+        //all other scenario's while pending should result in undefined
+        {
+            when: { inState: State.Pending },
+            result: undefined
+        },
+        {
+            when: { message: 'CLICK', value: false },
+            result: { action: 'cancel', label: 'PERFORMER_END' }
+        },
+        {
+            when: { message: 'DISCONNECT', value: false },
+            result: { action: 'cancel', label: 'PERFORMER_END' }
+        }
+    ];
+
+    const rule = rules.find( check => match(socketMessage, check.when) );
+    if (rule){
+        return rule.result;
+    }
+
+    return undefined;
+}
+
 const sessionStore: Module<SessionState, RootState> = {
     state: {
         activeState: State.Idle,
@@ -81,7 +158,8 @@ const sessionStore: Module<SessionState, RootState> = {
         activeDisplayName: '',
         activeIvrCode: undefined,
         activePaymentType: undefined,
-        isSwitching: false
+        isSwitching: false,
+        fromVoyeur: false
     },
     getters: {
         canStartNewSession: state => {
@@ -96,6 +174,9 @@ const sessionStore: Module<SessionState, RootState> = {
             }
 
             state.activeState = toState;
+        },
+        setIvrCode(state:SessionState, toCode:string){
+            state.activeIvrCode = toCode;
         }
     },
     actions: {
@@ -129,6 +210,7 @@ const sessionStore: Module<SessionState, RootState> = {
                 store.state.activeSessionType = payload.sessionType;
                 store.state.activeIvrCode = payload.ivrCode;
                 store.state.activePaymentType = payload.payment;
+                store.state.fromVoyeur = payload.fromVoyeur !== undefined ? payload.fromVoyeur : false;
 
                 if(payload.sessionType == SessionType.Peek){
                     store.commit('setState', State.Accepted);
@@ -140,6 +222,7 @@ const sessionStore: Module<SessionState, RootState> = {
             if (requestResult.ok && requestData.error){
                 store.state.activePerformer = store.state.activeSessionType = null;
                 store.state.activeIvrCode = undefined;
+                store.state.fromVoyeur = payload.fromVoyeur || false;
                 store.commit('setState', State.Idle);
 
                 store.dispatch('openMessage', {
@@ -148,7 +231,10 @@ const sessionStore: Module<SessionState, RootState> = {
                 });
             }
         },
-        async cancel(store: ActionContext<SessionState, RootState>, reason: string){
+        async accepted(store: ActionContext<SessionState, RootState>){
+            store.commit('setState', State.Accepted);
+        },
+        async cancel(store: ActionContext<SessionState, RootState>, reason: string = "CANCEL"){
             store.commit('setState', State.Canceling);
 
             let result;
@@ -176,14 +262,26 @@ const sessionStore: Module<SessionState, RootState> = {
 
             if(result.ok){
                 store.commit('setState', State.Idle);
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             } else {
                 throw new Error('Oh noooooo, ending failed');
             }
 
             store.commit('setState', State.Idle);
         },
+        async disconnected(store: ActionContext<SessionState, RootState>){
+            if (store.state.activeState != State.Active){
+                return;
+            }
+
+            store.commit('setState', State.Ending);
+            store.commit('setState', State.Idle);
+        },
         async end(store: ActionContext<SessionState, RootState>, reason: string){
             store.commit('setState', State.Ending);
+            if (reason == 'PHONE_DISCONNECT'){
+                store.commit('setIvrCode', undefined);
+            }
 
             const endResult = await fetch(`${config.BaseUrl}/session/end`, {
                 method: 'POST',
@@ -192,6 +290,7 @@ const sessionStore: Module<SessionState, RootState> = {
 
             if(endResult.ok){
                 store.commit('setState', State.Idle);
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             } else {
                 throw new Error('Oh noooooo, ending failed');
             }
@@ -206,7 +305,7 @@ const sessionStore: Module<SessionState, RootState> = {
             }
 
             if(store.state.activePerformer && store.state.activePerformer.id === performer.id){
-                throw new Error(`You are already peeking ${performer.id}. Pick another one dawg`)
+                throw new Error(`You are already peeking ${performer.id}. Peek another one dawg`);
             }
 
             try {
@@ -353,78 +452,14 @@ const sessionStore: Module<SessionState, RootState> = {
                 throw new Error(`Client shouldn\'t receive messages from client: ${content.clientId} and performer: ${content.performerId}`);
             }
 
-            //{type: "VIDEOCALL_ANSWER", value: "false"}
-            //{type: "VIDEOCALL_FAILED", value: "false"}
-            //{type: "VIDEOCALL_DISCONNECT", value: "false"}
-            if (content.type === 'VIDEOCALL_ANSWER'){
-                //only now the videocall conversation is really a videocall conversation
-                store.dispatch('callAccepted');
-                return;
+            const translation = translate( {...content, inState: store.state.activeState} );
+            if (translation){
+                store.dispatch(translation.action, translation.label);
+            } else {
+                console.log("UNHANDLED!!")
+                console.log(content)
             }
 
-            if (content.type === 'VIDEOCALL_FAILED'){
-                store.dispatch('callFailed');
-                return;
-            }
-
-            if (content.type === 'VIDEOCALL_DISCONNECT'){
-                store.dispatch('callEnded');
-            }
-
-            //Find a good way to do this shit, need it for testing now
-            if(content.type === 'RESPONSE'){
-
-                if(content.message === 'HANGUP'){
-                    store.dispatch('end', 'PHONE_DISCONNECT');
-                    return;
-                }
-
-                if(content.message === 'MAIN_ENDED'){
-                    store.dispatch('end', 'MAIN_ENDED');
-                    return;
-                }
-
-                if(store.state.activeState === State.Active){
-                    //Performer disconnect or manual close
-                    if(!content.value && (content.message === 'CLICK' || content.message === 'DISCONNECT')){
-                        store.dispatch('end', 'PERFORMER_END');
-                    }
-
-                    //Client ran out of credits
-                    if(content.message === 'BROKE'){
-                        store.dispatch('end', 'CLIENT_BROKE');
-                    }
-
-                    return;
-                }
-
-                if(store.state.activeState === State.Pending){
-                    //The performer has accepted the request
-                    if(content.value === true){
-                        store.commit('setState', State.Accepted);
-                    }
-
-                    //The performer has rejected the request
-                    else if(content._stateChange && content._stateChange === 'REJPERF'){
-                        store.dispatch('cancel', 'PERFORMER_REJECT');
-                        // KPI.send('client_saw_reject');
-                    }
-
-                    //The performer has disconnect during the request
-                    else if(content.value === 'DISCONNECT'){
-                        store.dispatch('cancel', 'PERFORMER_REJECT');
-                        // KPI.send('client_saw_disconnect');
-                    }
-
-                    return;
-                }
-
-                //During any other state the performer has closed the session or disconnected
-                if((content.message === 'CLICK' || content.message === 'DISCONNECT') &&
-                    content.value === false){
-                    store.dispatch('cancel', 'PERFORMER_END');
-                }
-            }
         }
     }
 };

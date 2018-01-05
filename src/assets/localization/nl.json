@@ -1,4 +1,7 @@
 {
+    "general": {
+        "successNewMessage": "Je hebt een nieuw bericht!"
+    },
     "top": {
         "numbers": {
             "callnow": "BEL NU",
@@ -56,6 +59,7 @@
         "missingfields": "Niet alle velden ingevuld",
         "alerts": {
             "successlogin": "Welkom, {username}",
+            "successlogout": "U bent succesvol uitgelogd!",
             "errorlogin": "Foutieve logingegevens",
             "errorNotLoggedin": "Niet meer ingelogd!"
         }
@@ -90,7 +94,8 @@
         "eyecolor": "Kleur ogen",
         "expand": "Meer",
         "hide": "Minder",
-        "collapsephotos": "Fotos bekijken",
+        "collapsphotos": "Fotos bekijken",
+        "collapsedphotos": "Fotos verbergen",
         "metaTitle": "Live webcammen, chatten en beeldbellen met {nickname} , echte Hollandse vrouwen - thuis.nl",
         "metaDescription": "Nu live webcammen, bellen en chatten met {nickname} , echte Hollandse vrouwen vind je hier."
     },
@@ -130,8 +135,10 @@
         "smsdesc": "Verstuur privénummer",
         "smsdesc1": "gevolgd door een spatie<br />en dan jouw bericht naar",
         "smsterms": "Deze dienst is toegankelijk voor alle toestellen met SMS. Geen abonnementsdienst. 1:1 Chatdienst, 1 bericht sturen, is max. 1 bericht ontvangen (€ 1,50/bericht). Minimale gebruikersleeftijd is 18 jaar. Met deelname aan deze dienst aanvaardt gebruiker automatisch de Algemene voorwaarden: Bekijk de Algemene voorwaarden. Geen herroepingsrecht of inzichttermijn. Gegevens van gebruiker worden niet met derden gedeeld. De Reclamecode SMS-dienstverlening en Gedragscode SMS-dienstverlening worden nageleefd. Deze dienst wordt u aangeboden door Sensemakers BV, Monitorweg 17, 1322 BJ Almere, KvK: 33128110, BTW: NL803697041.B.01. Helpdesk: info@sensemakers.nl en 036 - 8222222",
+        "smscost": "per ontvangen bericht*",
         "registeraccount": "Registreer een account, en profiteer van doorlopende acties!",
-        "noServices": "Geen dienst(en) beschikbaar!"
+        "noServices": "Geen dienst(en) beschikbaar!",
+        "errorNoIvrCode": "Vul je toegangscode in"
     },
     "pagination": {
         "pageOf": "Pagina {page} van {total}",
@@ -179,6 +186,16 @@
                 "errorPasswordMismatch": "De ingevulde wachtwoorden komen niet overeen",
                 "errorEmptyFields": "Niet alle velden zijn ingevuld"
             }
+        },
+        "countryselect": {
+            "title": "Kies uw land van afkomst",
+            "desc": "selecteer het gewenste land",
+            "defaultcountry": "(overige landen)",
+            "country-nl": "Nederland",
+            "country-de": "Duitsland",
+            "country-gl": "Global",
+            "country-at": "Oosterijk",
+            "country-uk": "Verenigd Koninkrijk"
         }
     },
     "account": {
@@ -235,7 +252,17 @@
         "leaving": "Huidige sessie verlaten",
         "flashchecktext": "U heeft geen flash installatie, klik hieronder om deze te downloaden",
         "alerts": {
-            "successChatEnded": "Sessie is afgelopen!"
+            "successChatEnded": "Sessie is afgelopen!",
+            "socketErrors": {
+                "PERFORMER_REJECT": "De performer heeft het verzoek afgewezen",
+                "PERFORMER_END": "De performer heeft de sessie beeindigd",
+                "CLIENT_BROKE": "U heeft geen credits meer",
+                "PHONE_DISCONNECT": "De telefoon is opgehangen",
+                "MAIN_ENDED": "De huidige sessie is beeindigd",
+                "INITIATE_FAILED": "Er is iets fout gegaan. Probeer het nog eens.",
+                "CANCEL": "Geannuleerd",
+                "PLAYER_END": "U heeft de sessie geëindigd"
+            }
         }
     },
     "voyeur": {
@@ -276,7 +303,7 @@
         "subtotal": "Subtotaal",
         "bonuscredits": "Bonus credits",
         "totalcredits": "Totaal credits",
-        "newbalance": "Nieuw credits saldo", 
+        "newbalance": "Nieuw credits saldo",
         "total": "Totaal",
         "bonusbanner": "Koop nog {credits} credits en krijg {percentage}% extra",
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",

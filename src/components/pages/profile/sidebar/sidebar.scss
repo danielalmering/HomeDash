@@ -89,10 +89,10 @@ $sidebar-top-height: 315px;
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                color: $pallete-14;
+                color: $pallete-16;
                 font: normal normal normal 60px/1 FontAwesome;
                 content: "\f007";
-                z-index: -1px;
+                z-index: 0;
             }
     
             .name {
@@ -314,15 +314,12 @@ $sidebar-top-height: 315px;
         }
 
         &-misc {
-            position: absolute;
-            z-index: 2;
-            display: block;
-            bottom:3px;
-            width: 100%;
 
             &-advert {
-                display: inline-block;
-                float: left;
+                position: absolute;
+                z-index: 2;
+                left: 3px;
+                bottom: 3px;
                 background: $pallete-9;
                 color: $pallete-3;
                 font-weight: 700;
@@ -333,8 +330,10 @@ $sidebar-top-height: 315px;
             }
 
             &-favorite {
-                display: inline-block;
-                float: right;
+                position: absolute;
+                z-index: 2;
+                right: 3px;
+                bottom: 3px;
                 background: $pallete-9;
                 @include rem(padding, 4px 6px);
                 @include rem(margin, 4px);
@@ -352,9 +351,9 @@ $sidebar-top-height: 315px;
 
         &-hover {
             position: absolute;
-            z-index: 5;
-            bottom:0px;
-            display: block;
+            z-index: 1;
+            bottom:4px;
+            display: none;
             height: 50px;
             width: 100%;
             background: rgba(0,0,0, 0.4);
@@ -385,7 +384,6 @@ $sidebar-top-height: 315px;
         }
 
         &:hover {
-            //.sidebar__voyeur-misc { display: none; }
             .sidebar__voyeur-hover { display: block; }
         }
     }

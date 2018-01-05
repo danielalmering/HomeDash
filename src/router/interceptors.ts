@@ -25,8 +25,7 @@ export function countryInterceptor(to: Route, from: Route, next: (to?: string | 
     }
 }
 
-export function authenticatedInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-
+export function waitAuthenticated(authenticatedRequired: boolean, next: (to?: string | Location) => void){
     let routed = false;
 
     if(store.state.authentication.user === undefined){
@@ -45,7 +44,7 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
     }
 
     function continueRouting (){
-        if(!store.getters.isLoggedIn){
+        if(!store.getters.isLoggedIn && authenticatedRequired){
 
             store.dispatch('openMessage', {
                 class: 'error',
@@ -57,6 +56,14 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
             next();
         }
     }
+}
+
+export function authenticatedInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
+    return waitAuthenticated(true, next);
+}
+
+export function preloadUserInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
+    return waitAuthenticated(false, next);
 }
 
 export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){

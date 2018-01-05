@@ -42,6 +42,9 @@ const mutations = {
             return performer;
         });
     },
+    storeIvrCode(state: VoyeurState, ivrCode: string){
+        state.ivrCode = ivrCode;
+    },
     addReservation(state: VoyeurState, performerId: number){
         state.reservations.push(performerId);
     },
@@ -88,6 +91,7 @@ const mutations = {
         state.reservations = [];
         state.mainTile = undefined;
         state.isActive = false;
+        state.ivrCode = undefined;
     },
     increaseAlive(state: VoyeurState){
         state.activeTiles.forEach(t => t.iterationsAlive++);

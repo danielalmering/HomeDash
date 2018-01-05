@@ -2,7 +2,7 @@
     <div class="tabs__servicescontent-method full">
         <h2>{{ $t('tabs.calltitle') }} <span>{{ $parent.performer.nickname }}</span></h2>
         <div class="col-xs-12 col-sm-6">
-            <p><span v-html="$t('tabs.smsdesc')"></span> <i>4348</i> <span v-html="$t('tabs.smsdesc1')"></span> <i>4500</i> (€ 1,50 per ontvangen bericht*)</p>
+            <p><span v-html="$t('tabs.smsdesc')"></span> <i>{{ $parent.advertNumber }}</i> <span v-html="$t('tabs.smsdesc1')"></span> <i>{{ $parent.info.sms_number }}</i> ({{ $parent.info.credits_per_sms | euro }} {{ $t('tabs.smscost') }})</p>
             <h3>{{ $t('tabs.callbyebye') }} <span>{{ $parent.performer.nickname }}</span></h3>
         </div>
         <div class="col-xs-12 col-sm-6">

@@ -2,7 +2,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer } from '../../../../models/Performer';
+import { Performer, PerformerStatus } from '../../../../models/Performer';
 import { openModal, openRoute, getAvatarImage, getPerformerStatus } from '../../../../util';
 import config from '../../../../config';
 
@@ -10,7 +10,9 @@ import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
 import { RequestPayload } from '../../../../store/session';
 import { SessionType } from '../../../../models/Sessions';
+import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
+import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
 
 type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 
@@ -38,6 +40,9 @@ export default class Sidebar extends Vue {
         performer: 0,
         search: ''
     };
+
+    serviceEventId: number;
+    statusEventId: number;
 
     categoryLoads = {
         'recommended': this.loadRecommended,
@@ -90,6 +95,26 @@ export default class Sidebar extends Vue {
     mounted(){
         this.query.performer = this.$route.params.id;
         this.loadPerformers();
+
+        this.serviceEventId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
+            const performer = this.performers.find(p => p.id === data.performerId);
+
+            if(!performer || this.category === 'voyeur'){
+                return;
+            }
+
+            performer.performer_services[data.serviceName] = data.serviceStatus;
+        });
+
+        this.statusEventId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
+            const performer = this.performers.find(p => p.id === data.performerId);
+
+            if(!performer || this.category === 'voyeur'){
+                return;
+            }
+
+            performer.performerStatus = data.status as PerformerStatus;
+        });
     }
 
     @Watch('$route')
@@ -109,6 +134,10 @@ export default class Sidebar extends Vue {
         return !performer ? false : performer.performer_services[service];
     }
 
+    addFavorite(performerId: number){
+        console.log('Lo maak hier ff een functie aub');
+    }
+
     reserve(performerId: number){
         this.isReserved(performerId) ?
             this.$store.commit('voyeur/removeReservation', performerId) :
@@ -120,6 +149,8 @@ export default class Sidebar extends Vue {
             type: 'startRequest',
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
+            fromVoyeur: true,
+            ivrCode: this.$store.state.voyeur.ivrCode
         });
     }
 
@@ -194,6 +225,9 @@ export default class Sidebar extends Vue {
         if(this.displaySidebar){
             this.$store.commit('toggleSidebar');
         }
+
+        notificationSocket.unsubscribe(this.serviceEventId);
+        notificationSocket.unsubscribe(this.statusEventId);
     }
 
     async loadPerformers(loadMore: boolean = false){

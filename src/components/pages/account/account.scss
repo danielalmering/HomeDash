@@ -112,6 +112,10 @@
             color: $pallete-3; 
         }
 
+        .small{
+            height: 51px;
+        }
+
         .colum {
             display: table;
             width: 100%;
@@ -183,7 +187,12 @@
             background: $pallete-11;
             border: 1px solid rgba(255, 255, 255, 0.1);
             li {
+                display: table;
+                height: 50px;
+                overflow: hidden;
+                width: 100%;
                 color: $pallete-18; 
+                line-height: 180%;
                 @include rem(padding, 10px 10px 10px 10px);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 &:last-child { border-bottom: none; }
@@ -191,6 +200,8 @@
                 &:hover {
                     color: $pallete-3; 
                 }
+
+                img { display: table; height: 50px; width: auto; margin: 0 auto; }
             }
         }
 

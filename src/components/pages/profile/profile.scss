@@ -19,7 +19,7 @@
         display: table;
         width: 100%;
         position: relative;
-        @include rem(padding, 70px 0px 70px 0px);
+        @include rem(padding, 60px 0px 60px 0px);
 
         &-image {
             .image {
@@ -102,12 +102,17 @@
     }
 
     &__slider, &__tabs {
+        position: relative;
         display: block;
         float: left;
         width: 100%;
 
         &-toggle {
-            display: table;
+            position: absolute;
+            z-index: 2;
+            left: 50%;
+            bottom: 0;
+            transform: translate(-50%, 0);
             @include rem(padding, 12px 15px);
             font-weight: 600;
             color: $pallete-2;
