@@ -1,10 +1,23 @@
 import Router, { Route, Location } from 'vue-router';
 import store from '../store';
 import { setCanonical } from '../seo';
+import config from '../config';
 
-export function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    const acceptedCountries = ['uk', 'nl', 'de'];
-    const currentCountry = to.params.country;
+export async function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
+    const acceptedCountries = ['uk', 'nl', 'de', 'gl'];
+    let currentCountry;
+
+    if(config.AutomaticCountryRedirect){
+        let country = store.state.localization.country;
+
+        console.log('<Country> store: ', country);
+
+        if(!country){
+            country = to.params.country ? to.params.country : from.params.country;
+        }
+
+        currentCountry = country;
+    }
 
     if(currentCountry && acceptedCountries.indexOf(currentCountry) === -1){
         const newParams = to.params;
@@ -15,13 +28,20 @@ export function countryInterceptor(to: Route, from: Route, next: (to?: string | 
 
         delete newParams.country;
 
-        next({ name: to.name, params: newParams });
+        next({ name: to.name, params: newParams, query: to.query });
     } else {
         if(currentCountry) {
-            store.dispatch('setCountry', currentCountry);
+            await store.dispatch('setCountry', currentCountry);
         }
 
-        next();
+        if(config.AutomaticCountryRedirect && to.params.country !== currentCountry && currentCountry !== 'gl'){
+            const newParams = to.params;
+            newParams.country = currentCountry;
+
+            next({ name: to.name, params: newParams, query: to.query });
+        } else {
+            next();
+        }
     }
 }
 
@@ -62,7 +82,11 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
     return waitAuthenticated(true, next);
 }
 
-export function preloadUserInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
+export async function preloadUserInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
+    if(to.params.country && !store.state.localization.country){
+        await store.dispatch('setCountry', to.params.country);
+    }
+
     return waitAuthenticated(false, next);
 }
 

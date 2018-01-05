@@ -32,7 +32,6 @@ Vue.use(Router);
 const routes = [{
     path: '/:country?',
     component: { template: '<router-view></router-view>' },
-    beforeEnter: countryInterceptor,
     children: [
         {
             path: '',
@@ -128,8 +127,7 @@ const routes = [{
                 {
                     path: 'favourites/',
                     name: 'Favourites',
-                    component: Favourites,
-                    beforeEnter: preloadUserInterceptor
+                    component: Favourites
                 },
                 {
                     path: ':category?/',
@@ -169,6 +167,8 @@ const router = new Router({
     routes: makeRoutesStrict(routes)
 });
 
+router.beforeEach(preloadUserInterceptor);
+router.beforeEach(countryInterceptor);
 router.beforeEach(safeInterceptor);
 router.afterEach(() => scrollToTop(600)); //Scroll to top after page changes
 router.afterEach(seoInterceptor);
