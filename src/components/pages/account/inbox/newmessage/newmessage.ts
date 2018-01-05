@@ -13,8 +13,8 @@ interface MessageForm {
 interface BarePerformer {
     id: number;
     username: string;
-    advertNumber:string;
-    avatar:string;
+    adv:string;
+    img:string;
 }
 
 function randAdv():string{
@@ -45,13 +45,13 @@ export default class Newmessage extends Vue {
             this.selectedPerformer = parseInt(this.$route.params.advertId);
             let performer = this.performers.find( p => p.id == this.selectedPerformer );
             if (!performer) return;
-            this.performerSearchQuery = `${performer.username} (${performer.advertNumber})`
+            this.performerSearchQuery = `${performer.username} (${performer.adv})`
         }
     }
 
     selectPerformer(performer:BarePerformer){
         this.selectedPerformer = performer.id;
-        this.performerSearchQuery = `${performer.username} (${performer.advertNumber})`
+        this.performerSearchQuery = `${performer.username} (${performer.adv})`
     }
 
     get performersFilter(){
@@ -61,7 +61,7 @@ export default class Newmessage extends Vue {
 
         var terms = this.performerSearchQuery.toLowerCase().trim().split(" ");
         return this.performers.filter( performer=>{
-            const search = `${performer.username.toLowerCase()} (${performer.advertNumber})`;
+            const search = `${performer.username.toLowerCase()} (${performer.adv})`;
             for(var term of terms){
                 if (search.indexOf(term)==-1){
                     return false;
@@ -72,16 +72,11 @@ export default class Newmessage extends Vue {
     }
 
     async loadPerformers() {
-        const performersResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/usernames`, {
+        const performersResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/usernames?extra=1`, {
             credentials: 'include'
         });
 
         this.performers =  await performersResults.json();
-        //stop doing this when Ljuba fixes the api call
-        this.performers.forEach( value => {
-            value.advertNumber = randAdv();
-            value.avatar = "1.jpg";
-        });
     }
 
     async sendMessage(){
