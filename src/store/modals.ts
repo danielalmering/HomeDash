@@ -19,6 +19,7 @@ const localizationStore: Module<ModalsState, RootState> = {
     actions: {
         async displayModal(store: ActionContext<ModalsState, any>, name: string){
             store.commit('setActiveModal', name);
+            window.scrollTo(0, 0);
         },
         async closeModal(store: ActionContext<ModalsState, any>){
             store.commit('setActiveModal', '');
