@@ -17,12 +17,12 @@ interface BarePerformer {
     img:string;
 }
 
-function randAdv():string{
-    let result = "0000".split(""); 
+function randAdv(): string{
+    const result = '0000'.split('');
     for(let k=0; k<result.length; k++){
         result[k] = Math.floor( Math.random() * 10).toString();
     }
-    return result.join("");
+    return result.join('');
 }
 
 @WithRender
