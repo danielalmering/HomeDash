@@ -21,12 +21,12 @@
                             <li v-for="performer in performersFilter" v-on:click="selectPerformer(performer)">
                                 <div class="col-xs-3 col-sm-1">
                                     <div class="row">
-                                        <img clas="small" v-if="performer" :src="`${imageUrl}${performer.id}/small/${performer.avatar}`"/>
+                                        <img clas="small" v-if="performer" :src="`${imageUrl}${performer.id}/small/${performer.img}`"/>
                                     </div>
                                 </div>
                                 <div class="col-xs-9 col-sm-11 text-left">
                                     {{ performer.username }} <br />
-                                    <i>({{ performer.advertNumber }})</i>
+                                    <i>({{ performer.adv }})</i>
                                 </div>
                             </li>
                         </ul>
