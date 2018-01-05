@@ -11,6 +11,11 @@ const localizationStore: Module<ModalsState, RootState> = {
     state: {
         activeModal: ''
     },
+    getters: {
+        getModal: state => {
+            return state.activeModal ? true : false;
+        }
+    },
     mutations: {
         setActiveModal(state: ModalsState, name: string){
             state.activeModal = name;
