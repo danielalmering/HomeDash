@@ -134,6 +134,10 @@ export default class Sidebar extends Vue {
         return !performer ? false : performer.performer_services[service];
     }
 
+    addFavorite(performerId: number){
+        console.log('Lo maak hier ff een functie aub');
+    }
+
     reserve(performerId: number){
         this.isReserved(performerId) ?
             this.$store.commit('voyeur/removeReservation', performerId) :
