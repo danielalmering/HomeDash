@@ -2,6 +2,7 @@ import Router, { Route, Location } from 'vue-router';
 import store from '../store';
 import { setCanonical } from '../seo';
 import config from '../config';
+import Page from '../components/pages/page';
 
 export async function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     const acceptedCountries = ['uk', 'nl', 'de', 'gl'];
@@ -129,4 +130,12 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
 
 export function seoInterceptor(to: Route, previous: Route){
     setCanonical(to.fullPath);
+}
+
+export function hotjarInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
+    if(window.hj){
+        window.hj('stateChange', to.fullPath);
+    }
+
+    next();
 }

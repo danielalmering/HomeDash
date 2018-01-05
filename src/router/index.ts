@@ -24,7 +24,7 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor } from './interceptors';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor, hotjarInterceptor } from './interceptors';
 import { scrollToTop } from '../util';
 
 Vue.use(Router);
@@ -170,6 +170,7 @@ const router = new Router({
 router.beforeEach(preloadUserInterceptor);
 router.beforeEach(countryInterceptor);
 router.beforeEach(safeInterceptor);
+router.beforeEach(hotjarInterceptor);
 router.afterEach(() => scrollToTop(600)); //Scroll to top after page changes
 router.afterEach(seoInterceptor);
 
