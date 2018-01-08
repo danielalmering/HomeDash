@@ -30,4 +30,5 @@ declare module "*.json" {
 interface Window {
     flashCallbacks: any;
     _pcq: any[];
+    hj: (action: string, path: string) => void;
 }

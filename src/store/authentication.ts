@@ -112,7 +112,7 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             if(checkSessionResult.status === 403){
 
-                const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect`, {
+                const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}`, {
                     credentials: 'include'
                 });
 

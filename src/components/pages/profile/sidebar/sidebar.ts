@@ -50,6 +50,9 @@ export default class Sidebar extends Vue {
         'peek': this.loadPeek
     };
 
+    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+
     get displaySidebar(){
         return this.$store.state.displaySidebar;
     }
@@ -75,7 +78,7 @@ export default class Sidebar extends Vue {
     }
 
     get performer(){
-        return (id: number) => {
+        return (id: number): Performer  => {
             return this.$store.getters['voyeur/performer'](id);
         }
     }
@@ -134,8 +137,10 @@ export default class Sidebar extends Vue {
         return !performer ? false : performer.performer_services[service];
     }
 
-    addFavorite(performerId: number){
-        console.log('Lo maak hier ff een functie aub');
+    toggleFavourite(performerId: number){
+        const performer = this.performer(performerId);
+
+        performer.isFavourite ? this.removeFavourite(performer) : this.addFavourite(performer)
     }
 
     reserve(performerId: number){
