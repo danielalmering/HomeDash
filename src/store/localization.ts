@@ -8,7 +8,7 @@ import i18n from '../localization';
 
 export interface LocalizationState {
     country?: string;
-    language: string;
+    language?: string;
 }
 
 type LocalizationContext = ActionContext<LocalizationState, RootState>;
@@ -30,7 +30,7 @@ const allowedLanguages: { [country: string]: string[] } = {
 const localizationStore: Module<LocalizationState, RootState> = {
     state: {
         country: undefined,
-        language: 'en'
+        language: undefined
     },
     mutations: {
         setCountry(state: LocalizationState, country: string){
@@ -44,13 +44,19 @@ const localizationStore: Module<LocalizationState, RootState> = {
         async setCountry(store: LocalizationContext, country: string){
             store.commit('setCountry', country);
 
-            store.dispatch('setLanguage', defaultLanguages[country]);
+            // const languageChange = !store.state.language || allowedLanguages[country].indexOf(store.state.language) === -1;
+
+            // if(languageChange){
+            //     // store.dispatch('setLanguage', defaultLanguages[country]);
+            // }
         },
         async setLanguage(store: LocalizationContext, language: string){
-            if(language !== store.state.language && config.AutomaticCountryRedirect){
+            if(language !== store.state.language){
                 await fetch(`${config.BaseUrl}/localize?language=${language}`, {
                     credentials: 'include'
                 });
+
+                store.dispatch('loadInfo');
             }
 
             i18n.locale = language;
