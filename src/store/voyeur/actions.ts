@@ -110,6 +110,7 @@ const actions = {
             iterationsAlive: 0,
             performer: payload.performerId,
             streamData: {
+                id: data.id,
                 wowza: data.wowza,
                 playStream: data.playStream
             }
@@ -159,6 +160,7 @@ const actions = {
             iterationsAlive: 0,
             performer: payload.performerId,
             streamData: {
+                id: data.id,
                 wowza: data.wowza,
                 playStream: data.playStream
             }
@@ -196,22 +198,24 @@ const actions = {
             commit('swap', payload.performerId);
         }
     },
-    async end({ commit, rootState, state }: VoyeurContext){
+    async end({ commit, rootState, state }: VoyeurContext, silent: boolean = false){
         if(!state.isActive){
             throw 'Voyeur is not active';
         }
 
-        await fetch(`${config.BaseUrl}/session/end`, {
-            credentials: 'include',
-            method: 'POST',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                clientId: rootState.authentication.user.id,
-                type: 'VOYEURCLIENT'
-            })
-        });
+        if(!silent){
+            await fetch(`${config.BaseUrl}/session/end`, {
+                credentials: 'include',
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({
+                    clientId: rootState.authentication.user.id,
+                    type: 'VOYEURCLIENT'
+                })
+            });
+        }
 
         if(switcherooCb){
             clearInterval(switcherooCb);
