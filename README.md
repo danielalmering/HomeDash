@@ -4,6 +4,8 @@
 
 ## Configuration
 
+Create a `private.development.json` for development usage, or a `private.production.json` for production usage.
+
 ``` json
 {
     "BaseUrl": "/api",                                              //Url the front-end uses to prefix in front of API requets
