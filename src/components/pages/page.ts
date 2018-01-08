@@ -13,4 +13,9 @@ import WithRender from './page.tpl.html';
     }
 })
 export default class Page extends Vue {
+
+    get modal(){
+        return this.$store.getters.getModal;
+    }
+
 }
