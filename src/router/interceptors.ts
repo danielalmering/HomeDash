@@ -86,6 +86,11 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
 export async function preloadUserInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     if(to.params.country && !store.state.localization.country){
         await store.dispatch('setCountry', to.params.country);
+    } else if(!store.state.localization.country) {
+        const locationResult = await fetch(`${config.BaseUrl}/client/geo/location`);
+        const locationData = await locationResult.json();
+
+        await store.dispatch('setCountry', locationData.country);
     }
 
     return waitAuthenticated(false, next);
