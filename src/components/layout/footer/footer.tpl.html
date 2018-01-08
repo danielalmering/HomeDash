@@ -6,12 +6,12 @@
         <div class="footer__copyright">
             <div class="container-fluid">
                 <ul>
-                    <li><router-link :to="{ name: 'Contact'}" v-t="'contact.title'"></router-link></li>
-                    <li><router-link :to="{ name: 'Policy'}" v-t="'footer.privacypolicy'"></router-link></li>
-                    <li><router-link :to="{ name: 'Terms'}" v-t="'footer.terms'"></router-link></li>
-                    <li><router-link :to="{ name: 'Promos'}" v-t="'footer.promos'"></router-link></li>
-                    <li><a v-if="branding" :href="$t('footer.sexstoriesurl')" v-t="'footer.sexstories'"></a></li>
-                    <li><a :href="$t('footer.webcamurl')" v-t="'footer.webcam'"></a></li>
+                    <li><router-link :to="{ name: 'Contact'}" v-t="'contact.title'" rel="nofollow"></router-link></li>
+                    <li><router-link :to="{ name: 'Policy'}" v-t="'footer.privacypolicy'" rel="nofollow"></router-link></li>
+                    <li><router-link :to="{ name: 'Terms'}" v-t="'footer.terms'" rel="nofollow"></router-link></li>
+                    <li><router-link :to="{ name: 'Promos'}" v-t="'footer.promos'" rel="nofollow"></router-link></li>
+                    <li><a v-if="branding" :href="$t('footer.sexstoriesurl')" v-t="'footer.sexstories'" rel="nofollow"></a></li>
+                    <li><a :href="$t('footer.webcamurl')" v-t="'footer.webcam'" rel="nofollow"></a></li>
                 </ul>
 
                 <span v-t="'footer.copyright'"></span>

@@ -16,7 +16,7 @@
 
     .modal {
         position: relative;
-        margin: 20% 0;
+        margin: 150px 0;
         // position: absolute;
         // top: 50%;
         // left: 50%;
@@ -30,7 +30,7 @@
         border: 10px solid rgba(0, 0, 0, 0.8);
         box-shadow: 0px 0px 150px $pallete-1;
         color: $pallete-2;
-        z-index: 4999;
+        z-index: 3;
         background: $pallete-1;
         outline: 9999px solid rgba(0,0,0,0.5);
         @include breakpoint(xs) {

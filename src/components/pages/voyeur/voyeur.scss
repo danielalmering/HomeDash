@@ -55,15 +55,17 @@
     &__block {
         position: absolute;
         z-index: 1;
-        left: 100px;
         bottom: 0;
         background: $pallete-11;
         min-width: 250px;
         @include border-top-radius(5px);
         border: 1px solid rgba(255, 255, 255, 0.1);
 
-        &:last-child {
-            left: auto;
+        &.left {
+            left: 100px;
+        }
+
+        &.right {
             right: 100px;
         }
 

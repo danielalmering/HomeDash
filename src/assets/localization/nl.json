@@ -96,7 +96,14 @@
         "collapsphotos": "Fotos bekijken",
         "collapsedphotos": "Fotos verbergen",
         "metaTitle": "Live webcammen, chatten en beeldbellen met {nickname} , echte Hollandse vrouwen - thuis.nl",
-        "metaDescription": "Nu live webcammen, bellen en chatten met {nickname} , echte Hollandse vrouwen vind je hier."
+        "metaDescription": "Nu live webcammen, bellen en chatten met {nickname} , echte Hollandse vrouwen vind je hier.",
+        "breastsizes": {
+            "xsmall": "Extra klein",
+            "small": "Klein",
+            "medium": "Normaal",
+            "large": "Groot",
+            "xlarge": "Extra groot"
+        }
     },
     "tabs": {
         "service-cam": "Webcammen",
@@ -212,7 +219,7 @@
         "date": "Datum",
         "paymentmethod": "Betaalmethode",
         "amount": "Bedrag",
-        "historymethod": "Betaalmethode",
+        "historymethod": "Dienst",
         "historystartdate": "Startdatum",
         "historyenddate": "Einddatum",
         "giftvoucherdesc": "Heb je een cadeaucode gekregen? Leuk! Voer hier de code van de cadeaubon in en klik op ‘activeren’. De credits worden meteen bijgeschreven op je account. Elke code is éénmalig te gebruiken. <br /><br />Heb je geen cadeaucode? Niet getreurd. Houd ons in de gaten op Twitter via @ThuisNL, soms geven we iets weg.",
@@ -273,7 +280,8 @@
         "dialog1on1Title": "Verbind met {name}",
         "dialog1on1Subtitle": "Wil je een privé sessie beginnen met {name}?",
         "alerts": {
-            "successChatEnded": "Sessie is afgelopen!"
+            "successChatEnded": "Sessie is afgelopen!",
+            "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd" 
         }
     },
     "promos": {
