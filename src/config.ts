@@ -6,6 +6,7 @@ export interface ProjectConfig {
     JsmpegUrl: string;
     StorageKey: string;
     NoAgeCheckCountries: string[];
+    AutomaticCountryRedirect: boolean;
     H5Server: string;
     H5FlashSwf: string;
 }

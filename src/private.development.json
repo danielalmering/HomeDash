@@ -6,6 +6,7 @@
     "JsmpegUrl": "wss://accept-push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
     "NoAgeCheckCountries": ["nl"],
+    "AutomaticCountryRedirect": false,
     "H5Server": "accept-stream01.thuis.nl",
     "H5FlashSwf": "//demo.nanocosmos.de/nanoplayer/nano.player.swf"
- }
+}

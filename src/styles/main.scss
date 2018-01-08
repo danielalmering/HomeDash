@@ -34,6 +34,13 @@ body {
     @include rem(padding-right, 5px);
 }
 
+.page, .profileview {
+    &.fixed {
+        position: fixed;
+        width: 100%;
+    }
+}
+
 main {
     &.profileview { 
         display:table; 
