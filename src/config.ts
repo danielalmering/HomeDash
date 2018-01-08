@@ -1,6 +1,7 @@
 
 export interface ProjectConfig {
     BaseUrl: string;
+    FullApiUrl: string;
     SocketUrl: string;
     ImageUrl: string;
     JsmpegUrl: string;
