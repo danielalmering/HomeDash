@@ -12,8 +12,8 @@
     </div>
     <div class="videochat__broadcast" v-if="broadcastType != 'none'">
 
-        <div class="videochat__start-stop" v-if="sessionType == 'VIDEOCALL'" v-on:click="startCalling">{{ $t('tabs.service-videocall') }}</div>
-        <div class="videochat__start-stop" v-if="sessionType != 'VIDEOCALL' && paymentMethod == 'IVR'" v-on:click="stopCalling">{{ $t('tabs.service-cam') }}</div>
+        <div class="videochat__start-stop" v-if="canSwitchToVideoCall" v-on:click="startCalling">{{ $t('tabs.service-videocall') }}</div>
+        <div class="videochat__start-stop" v-if="sessionType === 'VIDEOCALL' && paymentMethod == 'IVR'" v-on:click="stopCalling">{{ $t('tabs.service-cam') }}</div>
 
         <div class="videochat__broadcast-object" v-if="broadcasting.cam">
             <component v-if="broadcasting.cam" :is="broadcastType"
