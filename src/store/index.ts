@@ -96,7 +96,9 @@ const rootStore = new Vuex.Store<RootState>({
     },
     actions: {
         loadInfo: async function(store: RootContext){
-            const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`);
+            const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`, {
+                credentials: 'include'
+            });
             const infoData: Info = await infoResult.json();
 
             store.commit('setInfo', infoData);

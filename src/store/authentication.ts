@@ -128,6 +128,7 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             store.commit('setUser', sessionData);
             await store.dispatch('setCountry', sessionData.country);
+            await store.dispatch('setLanguage', sessionData.language);
         }
     }
 };
