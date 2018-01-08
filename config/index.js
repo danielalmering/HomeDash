@@ -5,7 +5,6 @@
 
 const path = require('path');
 const settings = require('../src/private.development.json');
-console.log(settings);
 
 module.exports = {
   build: {
