@@ -16,7 +16,9 @@
         </div>
     </div>
 
-    <div class="voyeur__block">
+    <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
+
+    <div class="voyeur__block left">
         <div class="voyeur__block-title" v-on:click="showFavo = !showFavo"><i class="fa fa-star"></i> {{ $t("voyeur.favorites") }}<span :class="{ active:!showFavo }"></span></div>
         <ul class="voyeur__block-list" v-if="showFavo">
             <li v-for="favorite in favoritePerformers" v-on:click="swap(favorite.id)">
@@ -25,7 +27,7 @@
         </ul>
     </div>
 
-    <div class="voyeur__block">
+    <div class="voyeur__block right">
         <div class="voyeur__block-title" v-on:click="showReserve = !showReserve"><i class="fa fa-clock-o"></i> {{ $t("voyeur.reserving") }}<span :class="{ active:!showReserve }"></span></div>
         <ul class="voyeur__block-list" v-if="showReserve">
             <li v-for="reservation in reservations" v-on:click="swap(reservation.id)">

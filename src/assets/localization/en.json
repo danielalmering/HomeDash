@@ -96,7 +96,14 @@
         "collapsphotos": "View pictures",
         "collapsedphotos": "Hide pictures",
         "metaTitle": "Live webcamming, chatting and videocalling with {nickname} , real woman - gigacams.com",
-        "metaDescription": "Live webcamming, calling and chatting with {nickname} , here you will find real woman."
+        "metaDescription": "Live webcamming, calling and chatting with {nickname} , here you will find real woman.",
+        "breastsizes": {
+            "xsmall": "Extra small",
+            "small": "Small",
+            "medium": "Medium",
+            "large": "Large",
+            "xlarge": "Extra large"
+        }
     },
     "tabs": {
         "service-cam": "Chat and cam",
@@ -212,7 +219,7 @@
         "date": "Date",
         "paymentmethod": "Payment method",
         "amount": "Amount",
-        "historymethod": "Payment method",
+        "historymethod": "Service",
         "historystartdate": "Startdate",
         "historyenddate": "Enddate",
         "giftvoucherdesc": "Did you receive a gift code? Fun! Enter the code of the gift voucher here and click on 'activate'. The credits are immediately credited to your account. Each code can be used once.",
@@ -270,7 +277,8 @@
         "dialog1on1Title": "Connect with {name}",
         "dialog1on1Subtitle": "Do you want to start a private session with {name}?",
         "alerts": {
-            "successChatEnded": "Session ended!"
+            "successChatEnded": "Session ended!",
+            "succesAddedreserve": "Successfully reserved the selected performer" 
         }
     },
     "promos": {
