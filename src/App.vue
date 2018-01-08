@@ -45,8 +45,6 @@ export default class Cookies extends Vue {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
         });
 
-        this.$store.dispatch('loadInfo');
-
         setInterval(() => this.$store.dispatch('getSession'), 60 * 1000); //Update user data every minute
 
         // Cookies

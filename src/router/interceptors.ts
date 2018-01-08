@@ -11,8 +11,6 @@ export async function countryInterceptor(to: Route, from: Route, next: (to?: str
     if(config.AutomaticCountryRedirect){
         let country = store.state.localization.country;
 
-        console.log('<Country> store: ', country);
-
         if(!country){
             country = to.params.country ? to.params.country : from.params.country;
         }
@@ -20,7 +18,7 @@ export async function countryInterceptor(to: Route, from: Route, next: (to?: str
         currentCountry = country;
     }
 
-    if(currentCountry && acceptedCountries.indexOf(currentCountry) === -1){
+    if(to.params.country && acceptedCountries.indexOf(to.params.country) === -1){
         const newParams = to.params;
 
         if(to.name === 'Performers'){
@@ -84,8 +82,13 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
 }
 
 export async function preloadUserInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    if(to.params.country && !store.state.localization.country){
+    if(to.params.country && !store.state.localization.country && config.AutomaticCountryRedirect){
         await store.dispatch('setCountry', to.params.country);
+    } else if(!store.state.localization.country && config.AutomaticCountryRedirect) {
+        const locationResult = await fetch(`${config.BaseUrl}/client/geo/location`);
+        const locationData = await locationResult.json();
+
+        await store.dispatch('setCountry', locationData.country);
     }
 
     return waitAuthenticated(false, next);

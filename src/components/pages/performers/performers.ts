@@ -61,6 +61,7 @@ export default class Performers extends Vue {
     }
 
     mounted(){
+        console.log('cat', this.$route.params);
         this.query.category = this.$route.params.category ? this.$route.params.category : '';
         this.query.search = this.$route.query.search ? this.$route.query.search : '';
 
@@ -104,6 +105,8 @@ export default class Performers extends Vue {
             query: { page: ((this.query.offset / this.query.limit) + 1).toString() },
             params: { category: this.query.category || '' }
         });
+
+        console.log(this.query.category);
     }
 
     isSafeMode(){
