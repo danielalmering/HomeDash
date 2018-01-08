@@ -3,6 +3,7 @@ import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
 
+import config from '../config';
 import i18n from '../localization';
 
 export interface LocalizationState {
@@ -46,6 +47,12 @@ const localizationStore: Module<LocalizationState, RootState> = {
             store.dispatch('setLanguage', defaultLanguages[country]);
         },
         async setLanguage(store: LocalizationContext, language: string){
+            if(language !== store.state.language && config.AutomaticCountryRedirect){
+                await fetch(`${config.BaseUrl}/localize?language=${language}`, {
+                    credentials: 'include'
+                });
+            }
+
             i18n.locale = language;
 
             store.commit('setLanguage', language);
