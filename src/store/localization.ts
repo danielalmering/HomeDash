@@ -6,7 +6,7 @@ import { RootState } from './index';
 import i18n from '../localization';
 
 export interface LocalizationState {
-    country: string;
+    country?: string;
     language: string;
 }
 
@@ -28,7 +28,7 @@ const allowedLanguages: { [country: string]: string[] } = {
 
 const localizationStore: Module<LocalizationState, RootState> = {
     state: {
-        country: 'uk',
+        country: undefined,
         language: 'en'
     },
     mutations: {

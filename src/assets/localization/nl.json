@@ -10,7 +10,6 @@
         },
         "banner": {
             "happyhour": "HappyHour",
-            "happyhournr": "0906-0225",
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
@@ -238,7 +237,7 @@
             "errorInboxMessageLoad": "Er is een fout opgetreden bij het laden van het bericht!",
             "errorInboxMessagePay": "er is iets fout gegaan bij het betalen van het bericht!",
             "errorInboxNoSelected": "Uw heeft geen berichten geselecteerd!",
-            "succesInboxMessagePay": "Het bericht is succesvol betaalt!",
+            "succesInboxMessagePay": "Het bericht is succesvol betaald",
             "successInboxRemove": "De geselecteerde berichten zijn succesvol verwijderd",
             "errorInboxRemove": "De geselecteerde berichten zijn niet verwijderd!",
             "errorReplyMessage": "Er is een fout opgetreden bij het reageren!",

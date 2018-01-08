@@ -56,7 +56,7 @@
     </div>
 
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
-    <div class="videochat__favourite" v-on:click="toggleFavourite"><i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i></div>
+    <!--<div class="videochat__favourite" v-on:click="toggleFavourite"><i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i></div>-->
 
     <chat v-if="sessionType != 'PEEK'" :performer-name="performer ? performer.nickname : ''" :user-name="displayName"></chat>
 
