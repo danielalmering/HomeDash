@@ -18,6 +18,13 @@ declare module "*.json" {
     export default value;
 }
 
+declare module "raven-js/plugins/vue" {
+    import { RavenPlugin } from 'raven-js';
+
+    const plugin: RavenPlugin;
+    export default plugin;
+}
+
 // declare module "vue/types/vue" {
 //     import { Store } from 'vuex';
 //     import { RootState } from './store';
