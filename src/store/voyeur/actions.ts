@@ -182,7 +182,15 @@ const actions = {
             });
         }
 
-        const result = await fetch(`/session/performer_account/${payload.performerId}/voyeur`);
+        const result = await fetch(`${config.BaseUrl}/session/performer_account/${payload.performerId}/voyeur`,
+            {
+                credentials: 'include',
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            }
+        );
 
         if(result.ok){
             commit('swap', payload.performerId);
