@@ -71,6 +71,7 @@ export default class VideoChat extends Vue {
     microphones: {id:string, name: string, selected: boolean}[];
 
     askToLeave:boolean = false;
+
     navigation: {
         to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void
     }
@@ -104,7 +105,7 @@ export default class VideoChat extends Vue {
         if (noFlash(platform)){
             return 'none';
         }
-        return 'flash';
+        return 'rtmpBroadcast';
     }
 
     get wowza(): string | undefined{
@@ -142,7 +143,7 @@ export default class VideoChat extends Vue {
 
     get canSwitchToVideoCall():boolean{
         console.log(this.sessionType, this.paymentMethod, this.performer.performer_services.videocall);
-        
+
         return (this.sessionType == SessionType.Video)
              && 
                 (this.paymentMethod == PaymentType.Ivr)

@@ -16,7 +16,7 @@
         <div class="videochat__start-stop" v-if="sessionType === 'VIDEOCALL' && paymentMethod == 'IVR'" v-on:click="stopCalling">{{ $t('tabs.service-cam') }}</div>
 
         <div class="videochat__broadcast-object" v-if="broadcasting.cam">
-            <component v-if="broadcasting.cam" :is="broadcastType"
+            <component :is="broadcastType"
                 v-on:stateChange="broadcastStateChange"
                 v-on:error="broadcastError"
                 :wowza="wowza"
@@ -30,7 +30,7 @@
         <ul class="videochat__broadcast-buttons">
             <li><a v-on:click="toggleCam" class="fa fa-video-camera" :class="{ active:broadcasting.cam }" ></a></li>
             <li v-if="broadcasting.cam"><a v-on:click="toggleMic" class="fa fa-microphone" :class="{ active:broadcasting.mic }"></a></li>
-            <li v-if="broadcasting.cam"><a v-on:click="toggleSettings" class="fa fa-cogs" :class="{ active:broadcasting.settings }"></a></li>
+            <li :class="{hidden: !broadcasting.cam }"><a v-on:click="toggleSettings" class="fa fa-cogs" :class="{ active:false }"></a></li>
         </ul>
 
         <div class="videochat__devices" v-if="broadcasting.settings">
