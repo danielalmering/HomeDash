@@ -33,7 +33,7 @@
                         </span>
                         <div class="nav__info-subitems" v-if="authenticated && showAccount" v-click-outside="{ cb: closeAccountMenu }">
                             <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>
-                            <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'"></router-link>
+                            <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'" :class="{ 'active': authenticated && user.totalNotifications && user.totalNotifications !== 0 }"></router-link>
                             <router-link class="subitem" :to="{ name: 'History'}" v-t="'nav.info.history'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Giftvoucher'}" v-t="'nav.info.giftvoucher'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Payment'}" v-t="'nav.info.upgradebalance'"></router-link>
