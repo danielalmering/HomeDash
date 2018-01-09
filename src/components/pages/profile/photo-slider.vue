@@ -69,7 +69,7 @@ export default class PhotoSlider extends Vue {
     onTouchMove(evt: TouchEvent){
 
         if(this.previousTouch !== 0){
-            const touchDifference = this.previousTouch - evt.changedTouches[0].pageX;
+            const touchDifference = evt.changedTouches[0].pageX - this.previousTouch;
 
             const list = <HTMLElement>this.$el.children[0].lastChild;
 
@@ -79,6 +79,8 @@ export default class PhotoSlider extends Vue {
                 return;
             }
 
+            //stop moving when starts doing stuff
+            this.move(false);
             this.position += touchDifference;
         }
 

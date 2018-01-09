@@ -15,6 +15,10 @@ import WithRender from './performer.tpl.html';
 })
 export default class Performer extends Vue {
 
+    get modal(){
+        return this.$store.getters.getModal;
+    }
+
     get displaySidebar(){
         return this.$store.state.displaySidebar;
     }

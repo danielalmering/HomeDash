@@ -80,7 +80,7 @@ export default class Voyeur extends Vue {
             await this.$store.dispatch('voyeur/end');
         }
 
-        this.$store.dispatch('errorMessage', 'voyeur.successChatEnded');
+        this.$store.dispatch('errorMessage', 'voyeur.alerts.successChatEnded');
 
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
     }
@@ -111,6 +111,8 @@ export default class Voyeur extends Vue {
             fromVoyeur: true,
             ivrCode: this.$store.state.voyeur.ivrCode
         });
+
+        this.$store.dispatch('succesMessage', 'voyeur.alerts.succesAddedreserve');
     }
 
     cancelRequest(){

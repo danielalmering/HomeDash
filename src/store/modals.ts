@@ -11,6 +11,11 @@ const localizationStore: Module<ModalsState, RootState> = {
     state: {
         activeModal: ''
     },
+    getters: {
+        getModal: state => {
+            return state.activeModal ? true : false;
+        }
+    },
     mutations: {
         setActiveModal(state: ModalsState, name: string){
             state.activeModal = name;
@@ -19,6 +24,7 @@ const localizationStore: Module<ModalsState, RootState> = {
     actions: {
         async displayModal(store: ActionContext<ModalsState, any>, name: string){
             store.commit('setActiveModal', name);
+            window.scrollTo(0, 0);
         },
         async closeModal(store: ActionContext<ModalsState, any>){
             store.commit('setActiveModal', '');
