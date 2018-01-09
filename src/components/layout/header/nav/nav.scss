@@ -237,9 +237,11 @@
             @include rem(font-size, 13px);
             cursor: pointer;
 
-            &:hover, &:focus {
+            &:hover, &:focus, &.router-link-active {
                 background: $pallete-10;
                 color: $pallete-2;
+                font-weight: 700;
+                letter-spacing: -0.4px;
             }
 
             &.active {

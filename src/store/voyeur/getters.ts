@@ -31,6 +31,11 @@ const getters = {
         return state.activeTiles.reduce((selected: PerformerTile, current: PerformerTile) => {
             return current.iterationsAlive > selected.iterationsAlive ? current : selected;
         }, state.activeTiles[0]);
+    },
+    idExists(state: VoyeurState){
+        return (id: string) => {
+            return state.activeTiles.find(t => t.streamData.id === id) !== undefined;
+        }
     }
 };
 

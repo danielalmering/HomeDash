@@ -1,5 +1,6 @@
 
 export interface SocketVoyeurEventArgs {
+    id: string;
     performerId: number;
     type: string;
     value: boolean;

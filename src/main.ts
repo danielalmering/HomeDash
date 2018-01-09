@@ -8,6 +8,9 @@ import i18n from './localization';
 
 import App from './App.vue';
 
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
+
 //requiring the shim adds it to the build
 require('webrtc-adapter');
 require('./filters/date');
@@ -27,3 +30,8 @@ const app = new Vue({
     template: '<App/>',
     components: { App }
 });
+
+Raven
+    .config('https://41ba31c21ec141c0b5bbcb50e6083f00@sentry.io/268247')
+    .addPlugin(RavenVue, Vue)
+    .install();
