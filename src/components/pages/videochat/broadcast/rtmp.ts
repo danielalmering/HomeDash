@@ -48,7 +48,6 @@ export class Rtmp extends Broadcast{
     }
 
     mounted(){
-        console.log("modderdude, wrtc gemount!!");
         const attrs = {'name': 'swf', 'id': 'broadcastSWF'};
         const params = {
             wmode : 'transparent',

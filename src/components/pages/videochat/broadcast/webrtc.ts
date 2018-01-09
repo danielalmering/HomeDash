@@ -34,7 +34,6 @@ export class WebRTC extends Broadcast{
     }
 
     mounted(){
-        console.log("modderdude, wrtc gemount!!");
         var wowzaParts = WRTCUtils.parseUrl(this.wowza);
         WRTCUtils.validate(wowzaParts);
 
