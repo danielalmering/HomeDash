@@ -10,7 +10,7 @@
             <div class="clearfix"></div>
         </div>
     </h1>
-    <div class="account__view" v-if="payed">
+    <div class="account__view" v-if="!payed">
         <h3>{{ message.subject }}</h3>
 
         <div class="colum"> 
@@ -50,7 +50,7 @@
 
     </div>
 
-    <div class="account__view" v-if="!payed">
+    <div class="account__view" v-if="payed">
         <p class="highlight">{{ $t('account.paymessage') }} {{ credits }} {{ $t('payment.credits') }}</p>
         <a v-on:click="payMessage" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
     </div>

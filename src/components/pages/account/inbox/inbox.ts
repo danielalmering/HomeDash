@@ -32,8 +32,9 @@ export default class Inbox extends Vue {
         offset: 0
     };
 
-    mounted(){
-        this.loadInbox();
+    async mounted(){
+        await this.loadInbox();
+        await this.$store.dispatch('getSession');
     }
 
     pageChanged(){

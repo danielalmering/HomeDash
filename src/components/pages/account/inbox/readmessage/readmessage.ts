@@ -24,9 +24,9 @@ export default class Readmessage extends Vue {
 
     mounted(){
         if(this.$route.params.status === 'NEW'){
-            this.payed = false;
-        } else {
             this.payed = true;
+        } else {
+            this.payed = false;
             this.loadMessage();
         }
     }
@@ -62,7 +62,7 @@ export default class Readmessage extends Vue {
             class: 'success'
         });
 
-        this.payed = true;
+        this.payed = false;
         this.loadMessage();
     }
 

@@ -216,6 +216,12 @@
                     color: $pallete-1;
                 }
 
+                &.active {
+                    color: $pallete-2;
+                    font-weight: 700;
+                    background: $pallete-11;
+                }
+
                 .flag {
                     float: left;
                     @include rem(margin, -5px 8px 0px 0px);
