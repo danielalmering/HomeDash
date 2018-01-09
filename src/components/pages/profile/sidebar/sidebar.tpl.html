@@ -43,22 +43,20 @@
             <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll" :class="{ 'collapse': !toggleUserinfo }">
 
                 <!-- Performerlist -->
-                <router-link v-if="category !== 'voyeur'" v-for="performer in performers" :to="$localize({ name: 'Profile', params: { id: performer.advert_numbers[0].advertNumber }})">
-                    <li class="sidebar__performer">
-                        <div class="sidebar__performer-image col-xs-5 nopad">
-                            <img :src="getAvatarImage(performer, 'small')" />
-                            <span class="status" :class="getPerformerStatus(performer)"></span>
-                            <div class="sidebar__performer-services">
-                                <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
-                            </div>
+                <li class="sidebar__performer" v-if="category !== 'voyeur'" v-for="performer in performers" v-on:click="goToPerformer(performer)">
+                    <div class="sidebar__performer-image col-xs-5 nopad">
+                        <img :src="getAvatarImage(performer, 'small')" />
+                        <span class="status" :class="getPerformerStatus(performer)"></span>
+                        <div class="sidebar__performer-services">
+                            <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
-                        <div class="sidebar__performer-info col-xs-7">
-                            <h3>{{ performer.nickname }}</h3>
-                            <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
-                            <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
-                        </div>
-                    </li>
-                </router-link>
+                    </div>
+                    <div class="sidebar__performer-info col-xs-7">
+                        <h3>{{ performer.nickname }}</h3>
+                        <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
+                        <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
+                    </div>
+                </li>
 
                 <!-- Voyeurlist -->
                 <li class="sidebar__voyeur" v-if="category === 'voyeur'" v-for="tile in voyeurTiles">
