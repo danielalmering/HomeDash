@@ -6,10 +6,10 @@
         <div class="footer__copyright">
             <div class="container-fluid">
                 <ul>
-                    <li><router-link :to="{ name: 'Contact'}" v-t="'contact.title'"></router-link></li>
-                    <li><router-link :to="{ name: 'Policy'}" v-t="'footer.privacypolicy'"></router-link></li>
-                    <li><router-link :to="{ name: 'Terms'}" v-t="'footer.terms'"></router-link></li>
-                    <li><router-link :to="{ name: 'Promos'}" v-t="'footer.promos'"></router-link></li>
+                    <li><router-link :to="$localize({ name: 'Contact'})" v-t="'contact.title'"></router-link></li>
+                    <li><router-link :to="$localize({ name: 'Policy'})" v-t="'footer.privacypolicy'"></router-link></li>
+                    <li><router-link :to="$localize({ name: 'Terms'})" v-t="'footer.terms'"></router-link></li>
+                    <li><router-link :to="$localize({ name: 'Promos'})" v-t="'footer.promos'"></router-link></li>
                     <li><a v-if="branding" :href="$t('footer.sexstoriesurl')" v-t="'footer.sexstories'"></a></li>
                     <li><a :href="$t('footer.webcamurl')" v-t="'footer.webcam'"></a></li>
                 </ul>

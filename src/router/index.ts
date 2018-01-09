@@ -30,7 +30,7 @@ import { scrollToTop } from '../util';
 Vue.use(Router);
 
 const routes = [{
-    path: '/:country?',
+    path: '/:country?/',
     component: { template: '<router-view></router-view>' },
     children: [
         {
@@ -159,7 +159,7 @@ const routes = [{
             ]
         },
     ]
-}];
+}] as RouteConfig[];
 
 const router = new Router({
     mode: 'history',
