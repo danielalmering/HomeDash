@@ -9,6 +9,7 @@ import config from '../config';
 
 import notificationSocket from '../socket';
 import { match } from '../util';
+import { SocketServiceEventArgs } from '../models/Socket';
 
 export interface SessionData {
     playStream: string;
@@ -54,6 +55,10 @@ notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
     console.log('VIDEO EVENT MOTHERFUCKER ', data);
     rootState.dispatch('handleVideoEventSocket', data);
 });
+
+notificationSocket.subscribe('service', (data: SocketServiceEventArgs)=>{
+    rootState.dispatch('handleServiceEventSocket', data);
+})
 
 const transitions: { [key: string]: State[] } = { //TODO: Added by Lorenzo: Ask Hotze what the edgecase is, removing state transition for now
     [State.Idle]:           [State.InRequest], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
@@ -177,6 +182,12 @@ const sessionStore: Module<SessionState, RootState> = {
         },
         setIvrCode(state:SessionState, toCode:string){
             state.activeIvrCode = toCode;
+        },
+        updateService(state:SessionState, payload:{service:string, enabled:boolean}){
+            if (!state.activePerformer){
+                return;
+            }
+            state.activePerformer.performer_services[payload.service] = payload.enabled;
         }
     },
     actions: {
@@ -460,6 +471,14 @@ const sessionStore: Module<SessionState, RootState> = {
                 console.log(content)
             }
 
+        },
+
+        handleServiceEventSocket(store:ActionContext<SessionState, RootState>, content: SocketServiceEventArgs){
+            if (! (store.state.activePerformer && store.state.activePerformer.id == content.performerId) ){
+                return;
+            }
+
+            store.commit('updateService', {service:content.serviceName,enabled:content.serviceStatus});
         }
     }
 };

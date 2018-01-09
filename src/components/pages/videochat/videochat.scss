@@ -145,6 +145,9 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                     }
                 }
             }
+            .hidden{
+                visibility: hidden;
+            }
 
         }
     }
