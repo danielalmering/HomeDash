@@ -11,4 +11,12 @@ export interface ProjectConfig {
     H5FlashSwf: string;
 }
 
-export default require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
+const config = require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
+
+const countryRedirectDomains = ['gigacams.com'];
+
+if(countryRedirectDomains.indexOf(window.location.hostname) > -1){
+    config.AutomaticCountryRedirect = true;
+}
+
+export default config;
