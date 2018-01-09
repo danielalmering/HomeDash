@@ -256,7 +256,7 @@
     },
     "videochat": {
         "leaving": "Leave current session",
-        "flashchecktext": "You do not have a flash installation, click below to download it",
+        "flashchecktext": "To be able to cam back, you need to have Flash enabled. Please click below for instructions.",
         "alerts": {
             "successChatEnded": "Session ended!",
             "socketErrors": {
@@ -264,7 +264,10 @@
                 "PERFORMER_END": "The performer has finished the session",
                 "CLIENT_BROKE": "You no longer have credits",
                 "PHONE_DISCONNECT": "The phone is hung up",
-                "MAIN_ENDED": "The current session has ended"
+                "MAIN_ENDED": "The current session has ended",
+                "INITIATE_FAILED": "Something went wrong. Please try again.",
+                "CANCEL": "Cancelled",
+                "PLAYER_END": "You ended the session"
             }
         }
     },

@@ -312,6 +312,11 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 @include border-radius(3px);
                 &:focus { outline: none; }
                 width: calc(100% - 95px);
+
+                @include breakpoint(xs) {
+                    @include rem(font-size, 16px);
+                }
+                
             }
 
             .btns {

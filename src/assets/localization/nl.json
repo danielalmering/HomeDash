@@ -256,7 +256,7 @@
     },
     "videochat": {
         "leaving": "Huidige sessie verlaten",
-        "flashchecktext": "U heeft geen flash installatie, klik hieronder om deze te downloaden",
+        "flashchecktext": "Om terug te kunnen cammen moet Flash het doen. Klik hieronder voor instructies.",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
             "socketErrors": {
