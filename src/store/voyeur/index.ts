@@ -40,12 +40,6 @@ notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
         rootState.dispatch('voyeur/updatePerformers', { performerId: data.performerId, value: data.value });
         return;
     }
-
-    if(data.type === 'RESPONSE' && data.message === 'MAIN_ENDED'){
-
-    }
-    //"{"event":"voyeur","receiverId":"5789","receiverType":"ROLE_CLIENT","content":"%7B%22performerId%22%3A150%2C%22clientId%22%3A5789%2C%22type%22%3A%22RESPONSE%22%2C%22value%22%3Afalse%2C%22id%22%3A%222a617e638f1a1cea0f248a40662ad928%22%2C%22message%22%3A%22MAIN_ENDED%22%7D"}"
-
 });
 
 notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
