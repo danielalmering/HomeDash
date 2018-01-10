@@ -2,13 +2,13 @@
     <div class="nav__wrap">
         <div class="container-fluid">
             <div class="nav__info hidden-xs col-sm-1">
-                <router-link class="nav__info-item hidden-xs" :to="{ path: '/' }">
+                <router-link class="nav__info-item hidden-xs" :to="$localize({ path: '/' })">
                     <i class="fa fa-home only"></i>
                 </router-link>
             </div>
 
             <div class="nav__logo visible-xs col-xs-4">
-                <router-link :to="{ path: '/' }">
+                <router-link :to="$localize({ path: '/' })">
                     <img alt="logo" :src="logo">
                 </router-link>
             </div>
@@ -23,8 +23,8 @@
             <div class="nav__info col-xs-12 col-sm-7">
                 <div class="nav__info-container">
                     <a class="nav__info-item visible-xs" v-on:click="toggleTagMenu"><i class="fa fa-bars"></i><span v-t="'nav.info.menu'"></span></a>
-                    <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
-                    <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
+                    <router-link class="nav__info-item" :to="$localize({ name: 'Favourites' })"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
+                    <router-link class="nav__info-item" :to="$localize({ name: 'Promos' })"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
 
                     <a class="nav__info-item nav__info-item--last" v-on:click="authenticated ? toggleAccountMenu() : login()">
                         <span>
@@ -33,7 +33,7 @@
                         </span>
                         <div class="nav__info-subitems" v-if="authenticated && showAccount" v-click-outside="{ cb: closeAccountMenu }">
                             <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>
-                            <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'"></router-link>
+                            <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'" :class="{ 'active': authenticated && user.totalNotifications && user.totalNotifications !== 0 }"></router-link>
                             <router-link class="subitem" :to="{ name: 'History'}" v-t="'nav.info.history'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Giftvoucher'}" v-t="'nav.info.giftvoucher'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Payment'}" v-t="'nav.info.upgradebalance'"></router-link>
@@ -59,7 +59,7 @@
 
     <div class="nav__filters" :class="{ 'visible': showMenu }" v-click-outside="{ cb: closeTagMenu, ignoreClass: ['nav__info-item'] }">
         <div class="container-fluid">
-            <router-link v-for="category in categories" :key="category.slug" :to="{ name: 'Performers', params: { category: category.slug } }">{{ category.title }}</router-link>
+            <router-link v-for="category in categories" :key="category.slug" :to="$localize({ name: 'Performers', params: { category: category.slug } })">{{ category.title }}</router-link>
         </div>
     </div>
 </div>

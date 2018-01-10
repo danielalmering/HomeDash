@@ -116,7 +116,7 @@ export function match(message:any, pattern:any):boolean{
             //recursive matching. No guards!
             if (!match(message[prop], pattern[prop])){
                 return false;
-            } 
+            }
 
         } else if (prop == "version"){
             //the 'version' property in the message should be equal or bigger than the one in the pattern.
@@ -148,7 +148,7 @@ function smaller(version:string, than:string):boolean{
         if (k >= versionList.length){
             return false;
         }
-        
+
         if (versionList[k] > thanList[k] ){
             return false;
         }
@@ -169,4 +169,12 @@ function toInts(version:string):number[]{
         if ( isNaN(num) ) return [];
     }
     return result;
+}
+
+export function isInSession(status: PerformerStatus){
+    return status === PerformerStatus.Busy || status === PerformerStatus.Offline;
+}
+
+export function isOutOfSession(status: PerformerStatus){
+    return status === PerformerStatus.Offline || status === PerformerStatus.Available;
 }
