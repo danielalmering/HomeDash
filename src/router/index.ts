@@ -95,7 +95,10 @@ const routes = [{
                 {
                     path: 'promos/',
                     name: 'Promos',
-                    component: Promos
+                    component: Promos,
+                    meta: {
+                        title: 'footer.metaTitlePromos'
+                    }
                 },
                 {
                     path: 'payment-success/',
@@ -112,17 +115,26 @@ const routes = [{
                 {
                     path: 'contact/',
                     name: 'Contact',
-                    component: Contact
+                    component: Contact,
+                    meta: {
+                        title: 'footer.metaTitleContact'
+                    }
                 },
                 {
                     path: 'privacy-policy/',
                     name: 'Policy',
-                    component: Policy
+                    component: Policy,
+                    meta: {
+                        title: 'footer.metaTitlePrivacy'
+                    }
                 },
                 {
                     path: 'terms/',
                     name: 'Terms',
-                    component: Terms
+                    component: Terms,
+                    meta: {
+                        title: 'footer.metaTitleTerms'
+                    }
                 },
                 {
                     path: 'favourites/',
