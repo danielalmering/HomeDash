@@ -54,7 +54,7 @@
                     <div class="sidebar__performer-info col-xs-7">
                         <h3>{{ performer.nickname }}</h3>
                         <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
-                        <p class="view"> {{ $t('sidebar.view') }} <i class="fa fa-chevron-right"></i></p>
+                        <p class="view"><span v-t="category !== 'peek' ? 'sidebar.view' : 'sidebar.peek'"></span> <i class="fa fa-chevron-right"></i></p>
                     </div>
                 </li>
 
