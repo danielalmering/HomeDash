@@ -383,7 +383,8 @@
         "EMAIL": "E-mail",
         "VOICEMAIL": "Voicemail",
         "IVR": "Bellen",
-        "CREDIT_PURCHASE": "Credit Aankoop"
+        "CREDIT_PURCHASE": "Credit Aankoop",
+        "PROMO_CAMPAIGN_1": "Promotion Aankoop"
     },
     "languages": {
         "nl": "Nederlands",

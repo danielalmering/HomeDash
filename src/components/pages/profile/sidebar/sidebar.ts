@@ -205,6 +205,13 @@ export default class Sidebar extends Vue {
     }
 
     search(){
+        const element = document.querySelector('.sidebar__performers');
+
+        if(!element){
+            return;
+        }
+
+        element.scrollTop = 0;
         this.query.offset = 0;
         this.loadPerformers();
     }
