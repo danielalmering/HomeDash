@@ -47,7 +47,7 @@
                     <div class="sidebar__performer-image col-xs-5 nopad">
                         <img :src="getAvatarImage(performer, 'small')" />
                         <span class="status" :class="getPerformerStatus(performer)"></span>
-                        <div class="sidebar__performer-services">
+                        <div class="sidebar__performer-services" v-if="category !== 'peek'">
                             <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
                     </div>
