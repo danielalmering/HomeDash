@@ -380,7 +380,8 @@
         "EMAIL": "E-mail",
         "VOICEMAIL": "Voicemail",
         "IVR": "Phone",
-        "CREDIT_PURCHASE": "Credit purchase"
+        "CREDIT_PURCHASE": "Credit purchase",
+        "PROMO_CAMPAIGN_1": "Promotion purchase"
     },
     "languages": {
         "nl": "Dutch",
