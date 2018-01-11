@@ -25,6 +25,7 @@ export interface RootState {
     authentication?: any;
     localization?: any;
     modals?: any;
+    voyeur?: any;
 }
 
 type RootContext = ActionContext<RootState, RootState>;
