@@ -12,9 +12,9 @@ export default class Broadcast extends Stream{
 
     @Prop() publishStream: string;
 
-    @Prop() cam: boolean | string = true;
+    @Prop({default:true}) cam: boolean | string;
 
-    @Prop() mic: boolean | string = false;
+    @Prop({default:false}) mic: boolean | string;
 
     @Prop() quality: Quality = Quality.MEDIUM;
 

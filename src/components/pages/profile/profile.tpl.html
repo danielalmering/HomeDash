@@ -27,7 +27,7 @@
                 <li><span v-t="'profile.age'"></span>{{ performer.age }}</li>
                 <li><span v-t="'profile.height'"></span>{{ performer.height }}</li>
                 <li><span v-t="'profile.weight'"></span>{{ performer.weight }}</li>
-                <li><span v-t="'profile.cupsize'"></span>{{ $t('profile.breastsizes.' + performer.cupSize) }}</li>
+                <li><span v-t="'profile.cupsize'"></span>{{ breastSize(performer.cupSize) }}</li>
                 <li><span v-t="'profile.eyecolor'"></span>{{ performer.eyeColor }}</li>
             </ul>
 
@@ -51,7 +51,7 @@
 
         <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer">
             <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="hasService('cam')" v-on:click="authenticated ? startSession({sessionType:canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="hasService('phone')" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="canCall" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
             <button class="btn btn-full btn-xxl btn-green btn-fa fa-eye" v-if="performer.isVoyeur" v-on:click="startVoyeur(true)"><span >{{ $t('tabs.voyeurbtn') }}</span></button>
             <router-link  v-if="hasService('email')" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
                 <button class="btn btn-full btn-xxl btn-green btn-fa fa-envelope"><span>{{ $t('tabs.mailbtn') }}</span></button>

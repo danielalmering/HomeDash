@@ -64,6 +64,18 @@ export default class Profile extends Vue {
         return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
     }
 
+    get canCall(): boolean{
+        if (!this.performer){
+            return false;
+        }
+
+        if ([PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus) > -1){
+            return false;
+        }
+
+        return this.performer.performer_services['phone'] 
+    }
+
     openModal = openModal;
     getAvatarImage = getAvatarImage;
     getPerformerLabel = getPerformerLabel;
@@ -225,6 +237,17 @@ export default class Profile extends Vue {
 
         this.setSeoParameters();
     }
+
+    breastSize(cupSize:string):string{
+        const knownSizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
+        if (knownSizes.indexOf(cupSize) == -1){
+            return cupSize;
+            
+        } 
+        
+        return this.$t(`profile.breastsizes.${cupSize}`).toString();
+    }
+    
 
     setSeoParameters(){
         if(!this.performer){

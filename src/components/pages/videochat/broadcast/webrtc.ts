@@ -1,6 +1,6 @@
-import Broadcast, {Quality} from "./broadcast";
-import { Watch, Component } from "vue-property-decorator";
-import { WRTCUtils, Publisher } from "typertc";
+import Broadcast, {Quality} from './broadcast';
+import { Watch, Component } from 'vue-property-decorator';
+import { WRTCUtils, Publisher } from 'typertc';
 
 @Component({
     template: '<video playsinline webkit-playsinline autoplay :cam="true" :mic="false"></video>'
