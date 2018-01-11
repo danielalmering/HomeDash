@@ -30,7 +30,7 @@ export default class NanoCosmos extends Stream {
         this.id = Math.round( Math.random() * Date.now() ).toString(16);
     }
 
-    private id:string;
+    private id: string;
 
     @Prop({ default: true, type: Boolean})
     public autoplay: Boolean;

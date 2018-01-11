@@ -4,7 +4,7 @@ import Vue from 'vue';
 
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
 import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
-import { RequestPayload, SessionState } from '../../../store/session';
+import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
 import PhotoSlider from './photo-slider.vue';
@@ -56,7 +56,7 @@ export default class Profile extends Vue {
         return this.$store.state.session.activeState;
     }
 
-    get canPeek():boolean{
+    get canPeek(): boolean{
         if (!this.performer){
             return false;
         }
@@ -107,7 +107,7 @@ export default class Profile extends Vue {
         this.loadPerformer(parseInt(to.params.id));
     }
 
-    @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
+    @Watch('activeState') async onSessionStateChange(value: State, oldValue: State){
         if (value == State.Accepted){
             await this.$store.dispatch('initiate');
             if (!this.performer){
@@ -165,21 +165,21 @@ export default class Profile extends Vue {
         }
     }
 
-    async startSession(payload={}){
+    async startSession(payload = {}){
         if(!this.performer){
             return;
         }
 
         const self = this;
 
-        const defaults:RequestPayload = {
+        const defaults: RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
             sessionType: SessionType.Video,
             payment: PaymentType.Ivr
         };
 
-        const toSend = {...defaults,...payload};
+        const toSend = {...defaults, ...payload};
 
         await this.$store.dispatch<RequestPayload>( toSend );
     }

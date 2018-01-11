@@ -32,8 +32,8 @@ interface PromoData {
 }
 
 interface Fee {
-    amount: number,
-    percentage: number
+    amount: number;
+    percentage: number;
 }
 
 @WithRender

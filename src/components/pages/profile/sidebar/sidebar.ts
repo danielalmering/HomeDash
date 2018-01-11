@@ -8,7 +8,7 @@ import config from '../../../../config';
 
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
-import { RequestPayload } from '../../../../store/session';
+import { RequestPayload } from '../../../../store/session/';
 import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
@@ -26,7 +26,7 @@ export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
     category: SidebarCategory = 'recommended';
-    services: string[] = ["cam", "phone", "sms", "email", "videocall"];
+    services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
     toggleUserinfo: boolean = true;
 
     openModal = openModal;
@@ -81,13 +81,13 @@ export default class Sidebar extends Vue {
     get performer(){
         return (id: number): Performer  => {
             return this.$store.getters['voyeur/performer'](id);
-        }
+        };
     }
 
     get isReserved(){
         return (id: number) => {
-            this.$store.getters['voyeur/reservations'].indexOf(id) > -1;
-        }
+            return this.$store.getters['voyeur/reservations'].indexOf(id) > -1;
+        };
     }
 
     @Watch('isVoyeurActive')
@@ -196,7 +196,7 @@ export default class Sidebar extends Vue {
     toggleFavourite(performerId: number){
         const performer = this.performer(performerId);
 
-        performer.isFavourite ? this.removeFavourite(performer) : this.addFavourite(performer)
+        performer.isFavourite ? this.removeFavourite(performer) : this.addFavourite(performer);
     }
 
     reserve(performerId: number){
@@ -305,11 +305,7 @@ export default class Sidebar extends Vue {
 
         const data = await this.categoryLoads[this.category]();
 
-        if(loadMore){
-            this.performers = this.performers.concat(data.performerAccounts);
-        } else {
-            this.performers = data.performerAccounts;
-        }
+        this.performers = loadMore ? this.performers.concat(data.performerAccounts) : data.performerAccounts;
     }
 
     async loadPerformer(id: number): Promise<Performer> {
