@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import { Location } from 'vue-router';
 import router from './router';
+import config from './config';
 
 Vue.use(VueI18n);
 
@@ -12,7 +13,7 @@ const messages = {
 };
 
 const i18n = new VueI18n({
-    locale: 'en',
+    locale: config.AutomaticCountryRedirect ? 'en' : 'nl',
     messages,
 });
 

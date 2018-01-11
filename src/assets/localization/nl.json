@@ -281,7 +281,7 @@
         "dialog1on1Subtitle": "Wil je een privé sessie beginnen met {name}?",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
-            "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd" 
+            "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd"
         }
     },
     "promos": {
@@ -353,10 +353,13 @@
     },
     "footer": {
         "contact": "Contact",
+        "metaTitleContact": "Contact - thuis.nl",
         "privacypolicy": "Privacybeleid",
+        "metaTitlePrivacy": "Privacybeleid - thuis.nl",
         "terms": "Algemene voorwaarden",
-        "information": "Informatie",
+        "metaTitleTerms": "Algemene voorwaarden - thuis.nl",
         "promos": "Acties",
+        "metaTitlePromos": "Acties - thuis.nl",
         "webcam": "Webcammodel worden?",
         "sexstories": "Sexverhalen",
         "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",
