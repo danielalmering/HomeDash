@@ -33,6 +33,7 @@ export default class Sidebar extends Vue {
     openRoute = openRoute;
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
+    isOutOfSession = isOutOfSession;
 
     query: any = {
         limit: 20,
