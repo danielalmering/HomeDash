@@ -21,6 +21,8 @@ export const maxTilesAllowed = 4;
 //Time between the switching of tiles
 export const tileSwitchDelay = 5000;
 
+export let canMainEnd = true;
+
 notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
 
     if(!data) return;
@@ -29,6 +31,13 @@ notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
     const endMessages = ['BROKE', 'HANGUP', 'MAIN_ENDED'];
 
     if(data.message && endMessages.indexOf(data.message) > -1){
+        if(data.message === 'MAIN_ENDED' && (!canMainEnd || rootState.getters['voyeur/isMainTile'](data.performerId))){
+            canMainEnd = false;
+            setTimeout(() => canMainEnd = true, 1000);
+
+            return;
+        }
+
         rootState.dispatch('voyeur/end', isVoyeurEnd);
 
         return;
