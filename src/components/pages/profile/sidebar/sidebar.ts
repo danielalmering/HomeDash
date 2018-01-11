@@ -9,7 +9,7 @@ import config from '../../../../config';
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
 import { RequestPayload } from '../../../../store/session';
-import { SessionType } from '../../../../models/Sessions';
+import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
@@ -219,7 +219,7 @@ export default class Sidebar extends Vue {
         const session = this.$store.state.session;
 
         //peek with another lady if you're currently peeking and the lady is peekable
-        if (this.category === 'peek' && session.activeSessionType == SessionType.Peek){
+        if (this.category === 'peek' && session.activeState === State.Active && session.activeSessionType == SessionType.Peek){
             try {
                 await this.$store.dispatch('switchPeek', performer);
             } catch(e){
