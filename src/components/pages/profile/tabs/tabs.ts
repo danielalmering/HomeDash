@@ -67,7 +67,7 @@ export default class Tabs extends Vue {
         const allowedInSession = ['email', 'sms'];
 
         //If the performer is in a session you may only use certain services
-        if(this.performer.performerStatus === PerformerStatus.Busy){
+        if(this.performer.performerStatus === PerformerStatus.Busy || this.performer.performerStatus === PerformerStatus.OnCall){
             return service === 'cam' && this.performer.performer_services['peek'] ? true : allowedInSession.indexOf(service) !== -1;
         }
 

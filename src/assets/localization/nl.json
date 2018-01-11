@@ -281,7 +281,7 @@
         "dialog1on1Subtitle": "Wil je een privé sessie beginnen met {name}?",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
-            "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd" 
+            "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd"
         }
     },
     "promos": {
@@ -353,15 +353,18 @@
     },
     "footer": {
         "contact": "Contact",
+        "metaTitleContact": "Contact - thuis.nl",
         "privacypolicy": "Privacybeleid",
+        "metaTitlePrivacy": "Privacybeleid - thuis.nl",
         "terms": "Algemene voorwaarden",
-        "information": "Informatie",
+        "metaTitleTerms": "Algemene voorwaarden - thuis.nl",
         "promos": "Acties",
+        "metaTitlePromos": "Acties - thuis.nl",
         "webcam": "Webcammodel worden?",
         "sexstories": "Sexverhalen",
         "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",
         "webcamurl": "http://www.club-sense.nl",
-        "copyright": "Copyright 2017",
+        "copyright": "Copyright 2018",
         "cookies": "De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord",
         "agecheck": "Deze website bevat expliciet materiaal. Door gebruik te maken van deze website ga je hiermee akkoord",
         "olderthen": "Ouder dan 18jaar",
@@ -383,7 +386,8 @@
         "EMAIL": "E-mail",
         "VOICEMAIL": "Voicemail",
         "IVR": "Bellen",
-        "CREDIT_PURCHASE": "Credit Aankoop"
+        "CREDIT_PURCHASE": "Credit Aankoop",
+        "PROMO_CAMPAIGN_1": "Promotion Aankoop"
     },
     "languages": {
         "nl": "Nederlands",
