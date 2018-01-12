@@ -1,5 +1,5 @@
-import Broadcast, {Quality} from "./broadcast";
-import { Watch, Component } from "vue-property-decorator";
+import Broadcast, {Quality} from './broadcast';
+import { Watch, Component } from 'vue-property-decorator';
 
 //import 'swfobject';
 const swfobject = require('swfobject');

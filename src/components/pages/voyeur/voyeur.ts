@@ -8,7 +8,7 @@ import Confirmation from '../../layout/Confirmations.vue';
 
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
-import { RequestPayload } from '../../../store/session';
+import { RequestPayload } from '../../../store/session/';
 import { Performer } from '../../../models/Performer';
 import WithRender from './voyeur.tpl.html';
 
