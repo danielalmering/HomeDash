@@ -5,7 +5,7 @@
         <form v-on:submit.prevent="login">
             <div class="form__group">
                 <label v-t="'modals.login.email'"></label>
-                <input type="text" required v-model="email" />
+                <input type="text" required v-model="email" autocorrect="off" autocapitalize="none" />
             </div>
             <div class="form__group">
                 <label v-t="'modals.login.password'"></label>

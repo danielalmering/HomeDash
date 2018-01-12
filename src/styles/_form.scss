@@ -31,6 +31,10 @@
         &:focus {
             outline: none;
         }
+
+        @include breakpoint(xs) {
+            @include rem(font-size, 16px);
+        }
     }
 
     input[type=checkbox] { 
@@ -62,6 +66,10 @@
         &:focus {
             outline: none;
         }
+
+        @include breakpoint(xs) {
+            @include rem(font-size, 16px);
+        }
     }
 
     textarea {
@@ -78,6 +86,10 @@
         resize: none;
         &:focus {
             outline: none;
+        }
+
+        @include breakpoint(xs) {
+            @include rem(font-size, 16px);
         }
     }
 

@@ -15,7 +15,7 @@
                                 <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
                             </span>
                         </div>
-                        <div class="performers__info-services">
+                        <div class="performers__info-services" v-if="performer && getPerformerLabel(performer) === 'none'">
                             <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
                     </div>

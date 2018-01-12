@@ -198,7 +198,7 @@ export default class Tabs extends Vue {
             subject: this.emailForm.subject
         };
 
-        const mailResult = await fetch(`${config.BaseUrl}/performer/performer_account/158/email`, {
+        const mailResult = await fetch(`${config.BaseUrl}/performer/performer_account/${this.performer.id}/email`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(message)

@@ -74,7 +74,7 @@ export function scrollToTop(scrollDuration: number) {
 }
 
 export function webrtcPossible(platform:Platform):boolean{
-    var supported = [
+    const supported = [
         {
             name: 'Chrome'
         },
@@ -88,7 +88,7 @@ export function webrtcPossible(platform:Platform):boolean{
 }
 
 export function noFlash(platform:Platform):boolean{
-    var noFlashers = [
+    const noFlashers = [
         {
             os:{
                 family:'iOS'
@@ -120,9 +120,6 @@ export function match(message:any, pattern:any):boolean{
 
         } else if (prop == "version"){
             //the 'version' property in the message should be equal or bigger than the one in the pattern.
-            if (! ("version" in message) ){
-                return false;
-            }
             if (smaller(message.version, pattern.version)){
                 return false;
             }

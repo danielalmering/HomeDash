@@ -7,7 +7,7 @@ import localization, { LocalizationState } from './localization';
 import modals, { ModalsState } from './modals';
 import authentication, { AuthState } from './authentication';
 import performers, { PerformersState } from './performers';
-import session, { SessionState } from './session';
+import session, { SessionState } from './session/';
 import alerts, { AlertsState } from './alerts';
 import voyeur, { VoyeurState } from './voyeur';
 
