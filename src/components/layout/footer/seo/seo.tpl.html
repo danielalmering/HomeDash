@@ -1,7 +1,6 @@
 <div>
     <div class="footer__primary" v-if="seoMain" v-html="seoMain.description"></div>
-
-    <div class="footer__tabs">
+    <div class="footer__tabs" v-if="hasTabs"></div>
         <ul class="footer__tabs-items col-xs-12 col-sm-2">
             <li v-for="seoTab in seoTabs" v-on:click="tabSelect(seoTab.id)" v-bind:class="{ 'active': selectedTab == seoTab.id }">{{ seoTab.title }}</li>
         </ul>
