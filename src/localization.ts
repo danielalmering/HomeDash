@@ -36,7 +36,7 @@ Object.defineProperty(Vue.prototype, '$localize', {
             }
 
             return newLocation;
-        }
+        };
     }
 });
 

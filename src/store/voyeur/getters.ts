@@ -35,7 +35,12 @@ const getters = {
     idExists(state: VoyeurState){
         return (id: string) => {
             return state.activeTiles.find(t => t.streamData.id === id) !== undefined;
-        }
+        };
+    },
+    isMainTile(state: VoyeurState){
+        return (id: number) => {
+            return state.mainTile && state.mainTile.performer === id;
+        };
     }
 };
 

@@ -1,5 +1,5 @@
-import Broadcast, {Quality} from "./broadcast";
-import { Watch, Component } from "vue-property-decorator";
+import Broadcast, {Quality} from './broadcast';
+import { Watch, Component } from 'vue-property-decorator';
 
 //import 'swfobject';
 const swfobject = require('swfobject');
@@ -15,7 +15,7 @@ export interface Flash{
 }
 
 @Component({
-    template: '<div><div id="broadcastSWF"><p>{{ $t("videochat.flashchecktext") }}<br /><a href="http://www.adobe.com/go/getflashplayer" target="_blank"><img alt="Get Adobe Flash player" src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" /></a></p></div></div>',
+    template: '<div><div id="broadcastSWF"><p>{{ $t("videochat.flashchecktext") }}<br /><a href="//www.adobe.com/go/getflashplayer" target="_blank"><img alt="Get Adobe Flash player" src="//www.adobe.com/images/shared/download_buttons/get_flash_player.gif" /></a></p></div></div>',
 })
 export class Rtmp extends Broadcast{
 

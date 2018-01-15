@@ -4,7 +4,7 @@ import jsmpeg from 'jsmpeg';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { State, SessionType, PaymentType } from '../../../models/Sessions';
-import { SessionData, RequestPayload } from '../../../store/Session';
+import { SessionData, RequestPayload } from '../../../store/Session/';
 
 import notificationSocket from '../../../socket';
 import Chat from './chat/chat';
@@ -145,7 +145,7 @@ export default class VideoChat extends Vue {
         console.log(this.sessionType, this.paymentMethod, this.performer.performer_services.videocall);
 
         return (this.sessionType == SessionType.Video)
-             && 
+             &&
                 (this.paymentMethod == PaymentType.Ivr)
             &&
                 (this.performer.performer_services.videocall);

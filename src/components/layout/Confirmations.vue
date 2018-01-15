@@ -68,10 +68,11 @@ export default class Confirmations extends Vue {
     width: 100%;
     height: 100%;
     background-color: $pallete-11;
+    z-index: 2;
 
     &__content {
         position: absolute;
-        z-index: 2;
+        z-index: 3;
         top: 25%;
         left: 50%;
         transform: translate(-50%, -50%) !important;

@@ -69,7 +69,7 @@ export default class Chat extends Vue {
 
             this.typingTimer = setTimeout(() => {
                 this.showTyping = false;
-            }, 5*1000);
+            }, 5*3000);
         });
     }
 
@@ -79,8 +79,10 @@ export default class Chat extends Vue {
     }
 
     sendMessage(){
+        const santizedChatMessage = this.encodeHTML(this.chatMessage);
+
         notificationSocket.sendCustomEvent('msg', {
-            message: this.chatMessage,
+            message: santizedChatMessage,
             receiverId: this.$store.state.session.activePerformer.id,
             recceiverType: 'ROLE_PERFORMER'
         });
@@ -93,5 +95,9 @@ export default class Chat extends Vue {
 
         const inputElement = this.$el.getElementsByClassName('searching')[0] as HTMLElement;
         inputElement.focus();
+    }
+
+    encodeHTML(s: string) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     }
 }
