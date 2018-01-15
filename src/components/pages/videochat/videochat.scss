@@ -254,6 +254,16 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
             background: $pallete-11;
             border-bottom: 1px solid rgba(255,255,255,0.09);
 
+            .notifier {
+                float: left;
+                @include rem(font-size, 24px);
+                color: $pallete-2;
+                background: $pallete-3;
+                @include rem(padding,0px 10px);
+                @include border-radius(5px);
+                cursor: pointer;
+            }
+
             .close {
                 float: right;
                 @include rem(font-size, 24px);
@@ -261,7 +271,9 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 background: $pallete-9;
                 @include rem(padding,0px 10px);
                 @include border-radius(5px);
+                cursor: pointer;
             }
+            
         }
 
         &-list {
