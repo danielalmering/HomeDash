@@ -2,6 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 import { User } from '../../../../../models/User';
 
+import store from '../../../../../store';
 import config from '../../../../../config';
 import WithRender from './newmessage.tpl.html';
 
@@ -27,9 +28,6 @@ export default class Newmessage extends Vue {
     performerSearchQuery: string = '';
     selectedPerformer: number = 0;
 
-    //accept-img.thuis.nl/files/pimg/
-    imageUrl = config.ImageUrl;
-
     async mounted(){
         await this.loadPerformers();
 
@@ -46,6 +44,18 @@ export default class Newmessage extends Vue {
     selectPerformer(performer:BarePerformer){
         this.selectedPerformer = performer.id;
         this.performerSearchQuery = `${performer.username} (${performer.adv})`;
+    }
+
+    getImage(performer: BarePerformer){
+        if(!store.state.safeMode && performer.img){
+            return `${config.ImageUrl}${performer.id}/small/${performer.img}`;
+        }
+    
+        if(store.state.safeMode && performer.img){
+            return;
+        }
+    
+        return require('../../../../../assets/images/placeholder.png');
     }
 
     get performersFilter(){
