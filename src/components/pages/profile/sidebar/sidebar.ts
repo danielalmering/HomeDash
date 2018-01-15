@@ -200,6 +200,10 @@ export default class Sidebar extends Vue {
     }
 
     reserve(performerId: number){
+        if(this.$store.state.session.activeState === 'pending'){
+            return;
+        }
+
         this.isReserved(performerId) ?
             this.$store.commit('voyeur/removeReservation', performerId) :
             this.$store.commit('voyeur/addReservation', performerId);
