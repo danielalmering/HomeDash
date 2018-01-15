@@ -10,6 +10,10 @@ interface ChatMessage {
     senderType: string;
     message: string;
 }
+interface TypingReceivedMessage {
+    recentTyping: boolean;
+    inBuffer: boolean;
+}
 import WithRender from './chat.tpl.html';
 
 @WithRender
@@ -33,10 +37,14 @@ export default class Chat extends Vue {
     chatOpened: boolean = true;
     smiliesOpened: boolean = false;
 
+    typingTimer: number = 0;
+    showTyping: boolean = false;
+
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
 
     chatSocketRef: number;
+    typingSocketRef: number;
 
     mounted(){
         this.chatSocketRef = notificationSocket.subscribe('msg', (content: ChatMessage) => {
@@ -52,9 +60,21 @@ export default class Chat extends Vue {
 
             this.$nextTick(() => chatContainer.scrollTo(0, chatContainer.scrollHeight));
         });
+        this.typingSocketRef = notificationSocket.subscribe('typing_received', (content: TypingReceivedMessage) => {
+            this.showTyping = content.recentTyping || content.inBuffer;
+
+            if (this.typingTimer) {
+                clearTimeout(this.typingTimer);
+            }
+
+            this.typingTimer = setTimeout(() => {
+                this.showTyping = false;
+            }, 5*1000);
+        });
     }
 
     beforeDestroy(){
+        notificationSocket.unsubscribe(this.typingSocketRef);
         notificationSocket.unsubscribe(this.chatSocketRef);
     }
 

@@ -1,5 +1,6 @@
 <div class="videochat__chat">
     <div class="videochat__chat-top">
+        <span class="typing" v-if="showTyping">&hellip;</span>
         <a class="close" v-on:click="chatOpened = !chatOpened"><i class="fa" :class="chatOpened ? 'fa-caret-down' : 'fa-caret-up'"></i></a>
     </div>
     <ul class="videochat__chat-list" :class="{ 'vhidden': !chatOpened }">
