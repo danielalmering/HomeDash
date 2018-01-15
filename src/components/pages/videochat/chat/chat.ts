@@ -35,6 +35,7 @@ export default class Chat extends Vue {
 
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
+    newMessage: boolean = false;
 
     chatSocketRef: number;
 
@@ -51,7 +52,18 @@ export default class Chat extends Vue {
             if(!chatContainer) return;
 
             this.$nextTick(() => chatContainer.scrollTo(0, chatContainer.scrollHeight));
+
+            this.setNotifier(content.senderType);
         });
+
+    }
+
+    setNotifier(sender: string){
+        this.newMessage = (sender === 'ROLE_CLIENT') ? false : true;
+
+        setTimeout(() => {
+            this.newMessage = false;
+        }, 2000);
     }
 
     beforeDestroy(){
@@ -75,6 +87,8 @@ export default class Chat extends Vue {
 
         const inputElement = this.$el.getElementsByClassName('searching')[0] as HTMLElement;
         inputElement.focus();
+
+        this.smiliesOpened = false;
     }
 
     encodeHTML(s: string) {
