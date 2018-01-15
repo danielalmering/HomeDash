@@ -28,7 +28,7 @@
                 <th><h3 v-t="'account.paymentmethod'"></h3></th>
                 <th><h3 v-t="'account.amount'"></h3></th>
             </tr>
-            <tr v-for="(historyItem, index) in history" :key="historyItem.date" :class="{ 'even': index % 2 === 0 }">
+            <tr v-for="(historyItem, index) in history" :class="{ 'even': index % 2 === 0 }">
                 <td>
                     <p>{{ historyItem.date | date }}</p>
                 </td>

@@ -44,6 +44,10 @@ export default class History extends Vue {
         endDate: ''
     };
 
+    get combinedQuery(){
+        return this.query.filter + this.query.startDate + this.query.endDate;
+    }
+
     mounted(){
         this.loadHistory();
 
@@ -58,8 +62,9 @@ export default class History extends Vue {
         this.loadHistory();
     }
 
-    @Watch('query', { deep: true })
+    @Watch('combinedQuery', { deep: true })
     onFilterChange(){
+        this.query.offset = 0;
         this.loadHistory();
     }
 

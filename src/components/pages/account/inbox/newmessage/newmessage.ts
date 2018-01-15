@@ -2,6 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 import { User } from '../../../../../models/User';
 
+import store from '../../../../../store';
 import config from '../../../../../config';
 import WithRender from './newmessage.tpl.html';
 
@@ -17,14 +18,6 @@ interface BarePerformer {
     img:string;
 }
 
-function randAdv(): string{
-    const result = '0000'.split('');
-    for(let k=0; k<result.length; k++){
-        result[k] = Math.floor( Math.random() * 10).toString();
-    }
-    return result.join('');
-}
-
 @WithRender
 @Component
 export default class Newmessage extends Vue {
@@ -35,23 +28,34 @@ export default class Newmessage extends Vue {
     performerSearchQuery: string = '';
     selectedPerformer: number = 0;
 
-    //accept-img.thuis.nl/files/pimg/
-    imageUrl = config.ImageUrl;
-
     async mounted(){
         await this.loadPerformers();
 
         if(this.$route.params.advertId){
             this.selectedPerformer = parseInt(this.$route.params.advertId);
-            let performer = this.performers.find( p => p.id == this.selectedPerformer );
+            const performer = this.performers.find( p => p.id == this.selectedPerformer );
+
             if (!performer) return;
-            this.performerSearchQuery = `${performer.username} (${performer.adv})`
+
+            this.performerSearchQuery = `${performer.username} (${performer.adv})`;
         }
     }
 
     selectPerformer(performer:BarePerformer){
         this.selectedPerformer = performer.id;
-        this.performerSearchQuery = `${performer.username} (${performer.adv})`
+        this.performerSearchQuery = `${performer.username} (${performer.adv})`;
+    }
+
+    getImage(performer: BarePerformer){
+        if(!store.state.safeMode && performer.img){
+            return `${config.ImageUrl}${performer.id}/small/${performer.img}`;
+        }
+    
+        if(store.state.safeMode && performer.img){
+            return;
+        }
+    
+        return require('../../../../../assets/images/placeholder.png');
     }
 
     get performersFilter(){
@@ -59,14 +63,17 @@ export default class Newmessage extends Vue {
             return [];
         }
 
-        var terms = this.performerSearchQuery.toLowerCase().trim().split(" ");
-        return this.performers.filter( performer=>{
+        const terms = this.performerSearchQuery.toLowerCase().trim().split(' ');
+
+        return this.performers.filter(performer => {
             const search = `${performer.username.toLowerCase()} (${performer.adv})`;
-            for(var term of terms){
-                if (search.indexOf(term)==-1){
+
+            for(const term of terms){
+                if (search.indexOf(term) === -1){
                     return false;
                 }
             }
+
             return true;
         }).slice(0, 10);
     }
@@ -107,7 +114,7 @@ export default class Newmessage extends Vue {
             this.message = { subject: '', content: '' };
         }
 
-        this.performerSearchQuery = "";
+        this.performerSearchQuery = '';
     }
 
 }
