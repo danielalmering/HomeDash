@@ -31,5 +31,7 @@ interface Window {
     _pcq: any[]; //Pushcrew actions
     pushcrew: any;
 
+    loadTagManager: any;
+
     hj: (action: string, path: string) => void;
 }

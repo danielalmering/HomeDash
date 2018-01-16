@@ -240,7 +240,7 @@
         "to": "Versturen naar",
         "subject": "Onderwerp",
         "message": "Bericht",
-        "paymessage": "De kosten voor het bekijken van het bericht bedragen",
+        "paymessage": "De kosten voor het bekijken van het bericht bedragen {credits} credits",
         "viewmessage": "Bericht bekijken!",
         "pushmessages": "Push berichten ontvangen",
         "datetill": "Datum tot",
@@ -278,7 +278,8 @@
                 "INITIATE_FAILED": "Er is iets fout gegaan. Probeer het nog eens.",
                 "CANCEL": "Geannuleerd",
                 "PLAYER_END": "U heeft de sessie geëindigd.",
-                "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd."
+                "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd.",
+                "PEEK_SWITCH": "Gewisseld"
             }
         }
     },
