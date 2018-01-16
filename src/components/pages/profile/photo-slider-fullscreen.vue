@@ -28,6 +28,10 @@ import { getSliderImage }  from '../../../util';
 @Component
 export default class PhotoSliderFullscreen extends Vue {
 
+    mounted(){
+        this.currentSelected = this.photos.findIndex(p => p.id === this.displayPic);
+    }
+    
     @Prop({
         required: true,
         type: Array
@@ -52,10 +56,11 @@ export default class PhotoSliderFullscreen extends Vue {
     })
     displayPic: number;
 
-    //currentSelected: number = 1;
     touchStart: number = 0;
 
     getSliderImage = getSliderImage;
+
+    currentSelected:number = 1;
 
     get isLast(){
         return this.currentSelected === this.$props.photos.length - 1
@@ -70,14 +75,15 @@ export default class PhotoSliderFullscreen extends Vue {
             return;
         }
 
-        this.displayPic = this.photos[this.currentSelected+1].id;
+        this.currentSelected += 1;
     }
 
     previous(){
         if(this.isFirst){
             return;
         }
-        this.displayPic = this.photos[this.currentSelected-1].id;
+
+        this.currentSelected -= 1;
     }
 
     close(){
@@ -96,10 +102,6 @@ export default class PhotoSliderFullscreen extends Vue {
         } else if(touchDifference < -75){
             this.previous();
         }
-    }
-
-    get currentSelected():number{
-        return this.photos.findIndex(p => p.id === this.displayPic);
     }
 
     @Watch('visible')
