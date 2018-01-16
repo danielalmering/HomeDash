@@ -26,9 +26,9 @@
                 <li><h2 v-t="'profile.property'"></h2></li>
                 <li><span v-t="'profile.age'"></span>{{ performer.age }}</li>
                 <li><span v-t="'profile.height'"></span>{{ performer.height }}</li>
-                <li><span v-t="'profile.weight'"></span>{{ performer.weight }}</li>
+                <li v-if="performer.weight>0"><span v-t="'profile.weight'"></span>{{ performer.weight }}</li>
                 <li><span v-t="'profile.cupsize'"></span>{{ breastSize(performer.cupSize) }}</li>
-                <li><span v-t="'profile.eyecolor'"></span>{{ performer.eyeColor }}</li>
+                <li><span v-t="'profile.eyecolor'"></span>{{ eyeColor(performer.eyeColor) }}</li>
             </ul>
 
         </div>
