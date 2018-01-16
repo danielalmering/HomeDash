@@ -27,7 +27,7 @@
             <div class="form__group">
                 <label v-t="'modals.register.country'"></label>
                 <select required v-model="userForm.country">
-                    <option v-for="country in countries" :value="country">{{ $t('countries.' + country) }}</option>
+                    <option v-for="country in countries" :value="country">{{ $t('modals.countryselect.country-' + country) }}</option>
                 </select>
             </div>
             <div class="form__group">
