@@ -127,9 +127,9 @@ const actions = {
         store.commit('setState', State.Ending);
         store.commit('setState', State.Idle);
     },
-    async end(store: ActionContext<SessionState, RootState>, reason: string){
+    async end(store: ActionContext<SessionState, RootState>, reason?: string){
         store.commit('setState', State.Ending);
-        if (reason == 'PHONE_DISCONNECT'){
+        if (reason === 'PHONE_DISCONNECT'){
             store.commit('setIvrCode', undefined);
         }
 
@@ -140,7 +140,10 @@ const actions = {
 
         if(endResult.ok){
             store.commit('setState', State.Idle);
-            store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
+
+            if(reason){
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
+            }
         } else {
             throw new Error('Oh noooooo, ending failed');
         }
@@ -161,7 +164,7 @@ const actions = {
         try {
             store.state.isSwitching = true;
 
-            await store.dispatch('end', 'PEEK_SWITCH');
+            await store.dispatch('end');
 
             await store.dispatch('startRequest', <RequestPayload>{
                 performer: performer,

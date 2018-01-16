@@ -25,12 +25,26 @@ interface Notification {
 export default class Inbox extends Vue {
 
     notifications: Notification[] = [];
+    paymentDialogs: number[] = [];
     total: number = 0;
 
     query = {
         limit: 20,
         offset: 0
     };
+
+    get hasPaymentDialog(){
+        return (id: number) => {
+            return this.paymentDialogs.indexOf(id) > -1;
+        };
+    }
+
+    get creditsPerType(){
+        return (type: string) => {
+            console.log(type);
+            return this.$store.state.info[`credits_per_${type.toLocaleLowerCase()}`];
+        }
+    }
 
     async mounted(){
         await this.loadInbox();
@@ -95,5 +109,59 @@ export default class Inbox extends Vue {
 
         this.notifications = data.notifications;
         this.total = data.total;
+    }
+
+    openMessage(notification: Notification, force = false){
+
+        if(notification.status !== 'NEW' || force){
+
+            this.$router.push({
+                name: 'Readmessage',
+                params: {
+                    messageid: notification.id.toString(),
+                    performerid: notification.performer_id.toString()
+                }
+            });
+
+            return;
+        }
+
+        this.paymentDialogs.push(notification.id);
+    }
+
+    async payMessage(notification: Notification){
+        const user: User = this.$store.state.authentication.user;
+
+        const payload = {
+            serviceType: notification.type.toUpperCase(),
+            emailId: notification.id
+        };
+
+        const paymessageResult = await fetch(`${config.BaseUrl}/client/client_accounts/${user.id}/tax/performer_accounts/${notification.performer_id}`, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            credentials: 'include',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+
+        if(!paymessageResult.ok){
+            this.$store.dispatch('openMessage', {
+                content: 'account.alerts.errorInboxMessagePay',
+                class: 'error'
+            });
+
+            return;
+        }
+
+        this.$store.dispatch('getSession');
+
+        this.$store.dispatch('openMessage', {
+            content: 'account.alerts.succesInboxMessagePay',
+            class: 'success'
+        });
+
+        this.openMessage(notification, true);
     }
 }

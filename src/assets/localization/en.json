@@ -240,7 +240,7 @@
         "to": "Send to",
         "subject": "Subject",
         "message": "Message",
-        "paymessage": "The costs for viewing the message amount to",
+        "paymessage": "The costs for viewing the message amount to {credits} credits",
         "viewmessage": "View message!",
         "pushmessages": "Receive push messages",
         "datetill": "Date till",
@@ -292,7 +292,7 @@
         "dialog1on1Subtitle": "Do you want to start a private session with {name}?",
         "alerts": {
             "successChatEnded": "Session ended!",
-            "succesAddedreserve": "Successfully reserved the selected performer" 
+            "succesAddedreserve": "Successfully reserved the selected performer"
         }
     },
     "promos": {
