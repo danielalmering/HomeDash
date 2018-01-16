@@ -1,12 +1,12 @@
 <div>
     <div class="footer__primary" v-if="seoMain" v-html="seoMain.description"></div>
     <div class="footer__tabs" v-if="hasTabs"></div>
-        <ul class="footer__tabs-items col-xs-12 col-sm-2">
+        <ul class="footer__tabs-items col-xs-12 col-sm-2" v-if="seoTabs">
             <li v-for="seoTab in seoTabs" v-on:click="tabSelect(seoTab.id)" v-bind:class="{ 'active': selectedTab == seoTab.id }">{{ seoTab.title }}</li>
         </ul>
         <div v-for="seoTab in seoTabs" class="footer__tabs-desc col-xs-12 col-sm-10" v-show="selectedTab == seoTab.id">
-            <span class="col-xs-12 col-sm-9" v-html="seoTab.description"></span>
-            <span class="col-xs-12 col-sm-3"><img :src="`//img.thuis.nl/files/categories/${seoTab.image_location}`"></span>
+            <span class="col-xs-12 col-sm-9" v-if="seoTab.description" v-html="seoTab.description"></span>
+            <span class="col-xs-12 col-sm-3"><img v-if="seoTab.image_location" :src="setImages(seoTab.image_location)"></span>
         </div>
     </div>
 </div>

@@ -27,6 +27,10 @@ export default class Seo extends Vue {
         this.selectedTab = tab;
     }
 
+    setImages(location: string){
+        return `${config.ImageUrl}categories/${location}`;
+    }
+
     get hasTabs():boolean{
         if (!this.seoTabs){
             return false;
