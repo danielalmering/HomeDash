@@ -34,7 +34,7 @@ export default class Performers extends Vue {
     addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
 
-    query: { limit: number, offset: number, category?: string, search?: string } = {
+    query: { limit: number, offset: number, category?: string, search: string } = {
         limit: 40,
         offset: 0,
         category: '',
@@ -111,6 +111,10 @@ export default class Performers extends Vue {
         //Add this to trigger a route change when the user changes the performer limit but the current page doesnt change
         if(this.query.limit !== this.performers.length && route.query){
             route.query.resultsPerPage = this.query.limit.toString();
+        }
+
+        if(route.query && this.query.search !== ''){
+            route.query.search = this.query.search;
         }
 
         this.$router.push(route);
