@@ -6,7 +6,7 @@ import Page from '../components/pages/page';
 import i18n from '../localization';
 
 export async function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    const acceptedCountries = ['uk', 'nl', 'de', 'gl'];
+    const acceptedCountries = ['uk', 'nl', 'de', 'gl', 'at'];
     let currentCountry;
 
     if(config.AutomaticCountryRedirect){
