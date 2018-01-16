@@ -8,6 +8,9 @@ const mutations = {
         }
 
         state.activeState = toState;
+        if (toState != State.Pending){
+            state.performerTimeout && clearTimeout(state.performerTimeout);
+        }
     },
     setIvrCode(state:SessionState, toCode:string){
         state.activeIvrCode = toCode;

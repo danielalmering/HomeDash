@@ -103,6 +103,16 @@
             "medium": "Medium",
             "large": "Large",
             "xlarge": "Extra large"
+        },
+        "eyecolors":{
+            "brown": "Brown",
+            "hazel": "Hazel",
+            "blue": "Blue",
+            "green": "Green",
+            "silver": "Silver",
+            "amber": "Amber",
+            "grey": "Grey",
+            "red&violet": "Red & violet"
         }
     },
     "tabs": {
@@ -268,7 +278,7 @@
                 "INITIATE_FAILED": "Something went wrong. Please try again.",
                 "CANCEL": "Cancelled",
                 "PLAYER_END": "You ended the session",
-                "PEEK_SWITCH": "You switched performers"
+                "PERFORMER_TIMEOUT": "The performer did not respond."
             }
         }
     },
@@ -354,10 +364,13 @@
     },
     "footer": {
         "contact": "Contact",
+        "metaTitleContact": "Contact - Gigacams.com",
         "privacypolicy": "Privacy policy",
+        "metaTitlePrivacy": "Privacy policy - Gigacams.com",
         "terms": "Terms and Conditions",
-        "information": "Information",
+        "metaTitleTerms": "Terms and Conditions - Gigacams.com",
         "promos": "Promos",
+        "metaTitlePromos": "Promos - Gigacams.com",
         "webcam": "Become a webcam model?",
         "sexstories": "Sex stories",
         "sexstoriesurl": "#",

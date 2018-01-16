@@ -8,6 +8,7 @@ import { UserRole } from '../../models/User';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
 
+
 const actions = {
     async startRequest(store: ActionContext<SessionState, RootState>, payload: RequestPayload){
         store.commit('setState', State.InRequest);
@@ -45,6 +46,7 @@ const actions = {
                 store.commit('setState', State.Accepted);
             } else {
                 store.commit('setState', State.Pending);
+                store.state.performerTimeout = setTimeout( ()=>store.dispatch('performerTimeout'), 60 * 1000 );
             }
         }
 
@@ -60,6 +62,25 @@ const actions = {
             });
         }
     },
+
+    //performer did not respond in time
+    async performerTimeout(store: ActionContext<SessionState, RootState>){
+        store.commit('setState', State.Canceling);
+        await fetch(`${config.BaseUrl}/session/timeout/performer`,{
+            method: 'POST',
+            credentials: 'include',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                performerId: store.state.activePerformer ? store.state.activePerformer.id : undefined,
+                clientId: store.rootState.authentication.user.id
+            })
+        });
+        store.commit('setState', State.Idle);
+        store.dispatch('errorMessage', `videochat.alerts.socketErrors.PERFORMER_TIMEOUT`);
+    },
+
     async accepted(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Accepted);
     },

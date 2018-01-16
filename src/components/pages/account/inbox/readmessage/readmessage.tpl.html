@@ -16,8 +16,10 @@
         <div class="colum"> 
             <div class="col-xs-3 col-sm-1">
                 <div class="row">
-                    <img class="resize" :src="getAvatarImage(message.performer_account, 'small')">
-                    <span class="status" :class="getPerformerStatus(message.performer_account)"></span>
+                    <router-link :to="{ name: 'Profile', params: { id: message.performer_account.advert_numbers[0].advertNumber }}">
+                        <img class="resize" :src="getAvatarImage(message.performer_account, 'small')">
+                        <span class="status" :class="getPerformerStatus(message.performer_account)"></span>
+                    </router-link>
                 </div>
             </div>
             <div class="col-xs-9 col-sm-11">
