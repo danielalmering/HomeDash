@@ -1,5 +1,5 @@
 <template>
-    <div class="slider__large" :class="{ 'visible': visible }" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
+    <div class="slider__large" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
         <ul class="slider__large-list">
             <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }" v-if="getSliderImage(performer, photo.name, '')">
                 <img :src="getSliderImage(performer, photo.name, '')" />
@@ -52,7 +52,7 @@ export default class PhotoSliderFullscreen extends Vue {
     })
     displayPic: number;
 
-    currentSelected: number = 1;
+    //currentSelected: number = 1;
     touchStart: number = 0;
 
     getSliderImage = getSliderImage;
@@ -70,19 +70,18 @@ export default class PhotoSliderFullscreen extends Vue {
             return;
         }
 
-        this.currentSelected += 1;
+        this.displayPic = this.photos[this.currentSelected+1].id;
     }
 
     previous(){
         if(this.isFirst){
             return;
         }
-
-        this.currentSelected -= 1;
+        this.displayPic = this.photos[this.currentSelected-1].id;
     }
 
     close(){
-        this.$emit('update:visible', false);
+        this.$emit('close');
     }
 
     onTouchStart(evt: TouchEvent){
@@ -99,19 +98,8 @@ export default class PhotoSliderFullscreen extends Vue {
         }
     }
 
-    @Watch('displayPic')
-    onDisplayPicUpdate(newValue: number){
-        const photoIndex = this.photos.findIndex(p => p.id === newValue);
-
-        if(photoIndex > -1){
-            this.currentSelected = photoIndex;
-        }
-
-        for(var i = 0; i < this.$props.photos.length; i++){
-            if(this.$props.photos[i].id === newValue){
-                this.currentSelected = i;
-            }
-        }
+    get currentSelected():number{
+        return this.photos.findIndex(p => p.id === this.displayPic);
     }
 
     @Watch('visible')
