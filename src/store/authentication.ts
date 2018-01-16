@@ -61,8 +61,6 @@ const authenticationStore: Module<AuthState, RootState> = {
                     class: 'error'
                 });
 
-                console.log('test', loginResult.ok);
-
                 return;
             }
 
