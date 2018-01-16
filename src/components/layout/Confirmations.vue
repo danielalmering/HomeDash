@@ -45,6 +45,17 @@ export default class Confirmations extends Vue {
     })
     subTitle: string;
 
+    get displaySidebar(){
+        return this.$store.state.displaySidebar;
+    }
+
+    mounted(){
+        window.scrollTo(0, 0);
+        if(this.displaySidebar){
+            this.$store.commit('toggleSidebar');
+        }
+    }
+
     accept(){
         this.$emit('accept');
     }

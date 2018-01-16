@@ -27,6 +27,22 @@ export default class Seo extends Vue {
         this.selectedTab = tab;
     }
 
+    setImages(location: string){
+        return `${config.ImageUrl}categories/${location}`;
+    }
+
+    get hasTabs():boolean{
+        if (!this.seoTabs){
+            return false;
+        }
+
+        if (this.seoTabs.length <= 1){
+            return false;
+        }
+
+        return this.seoTabs[1].description != "" && this.seoTabs[1].title != "";
+    }
+
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
         const category = to.params.category && to.params.category !== '' ? to.params.category : 'home';

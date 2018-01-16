@@ -247,6 +247,15 @@ export default class Profile extends Vue {
         
         return this.$t(`profile.breastsizes.${cupSize}`).toString();
     }
+
+    eyeColor(color:string):string{
+        const knownColors = ['brown','hazel','blue','green','silver','amber','grey','red&violet'];
+        if (knownColors.indexOf(color) == -1){
+            return color;
+        }
+
+        return this.$t(`profile.eyecolors.${color}`).toString();
+    }
     
 
     setSeoParameters(){

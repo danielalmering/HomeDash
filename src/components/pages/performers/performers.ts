@@ -11,6 +11,7 @@ import config from '../../../config';
 import './performers.scss';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
 import WithRender from './performers.tpl.html';
+import { RawLocation } from 'vue-router/types/router';
 
 @WithRender
 @Component({
@@ -33,7 +34,7 @@ export default class Performers extends Vue {
     addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
 
-    query: { limit: number, offset: number, category?: string, search?: string } = {
+    query: { limit: number, offset: number, category?: string, search: string } = {
         limit: 40,
         offset: 0,
         category: '',
@@ -51,6 +52,7 @@ export default class Performers extends Vue {
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
+        console.log('route change');
         this.query.category = to.params.category ? to.params.category : '';
         this.query.search = to.query.search ? to.query.search : '';
         this.noperformers = false;
@@ -100,13 +102,22 @@ export default class Performers extends Vue {
     }
 
     pageChanged(){
-        this.$router.push({
+        const route: RawLocation = {
             name: this.$route.name,
             query: { page: ((this.query.offset / this.query.limit) + 1).toString() },
             params: { category: this.query.category || '' }
-        });
+        };
 
-        console.log(this.query.category);
+        //Add this to trigger a route change when the user changes the performer limit but the current page doesnt change
+        if(this.query.limit !== this.performers.length && route.query){
+            route.query.resultsPerPage = this.query.limit.toString();
+        }
+
+        if(route.query && this.query.search !== ''){
+            route.query.search = this.query.search;
+        }
+
+        this.$router.push(route);
     }
 
     isSafeMode(){

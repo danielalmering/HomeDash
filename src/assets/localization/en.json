@@ -71,7 +71,7 @@
         "favorite": "Favorite",
         "voyeur": "Voyeur",
         "noperformers": "No performers",
-        "currentcredits": "Current galance",
+        "currentcredits": "Current balance",
         "youraccount": "Your account?",
         "alerts": {
             "errorSwitchFailed": "It has not been possible to change the performer"
@@ -103,6 +103,16 @@
             "medium": "Medium",
             "large": "Large",
             "xlarge": "Extra large"
+        },
+        "eyecolors":{
+            "brown": "Brown",
+            "hazel": "Hazel",
+            "blue": "Blue",
+            "green": "Green",
+            "silver": "Silver",
+            "amber": "Amber",
+            "grey": "Grey",
+            "red&violet": "Red & violet"
         }
     },
     "tabs": {
@@ -267,7 +277,8 @@
                 "MAIN_ENDED": "The current session has ended",
                 "INITIATE_FAILED": "Something went wrong. Please try again.",
                 "CANCEL": "Cancelled",
-                "PLAYER_END": "You ended the session"
+                "PLAYER_END": "You ended the session",
+                "PERFORMER_TIMEOUT": "The performer did not respond."
             }
         }
     },
@@ -281,7 +292,7 @@
         "dialog1on1Subtitle": "Do you want to start a private session with {name}?",
         "alerts": {
             "successChatEnded": "Session ended!",
-            "succesAddedreserve": "Successfully reserved the selected performer" 
+            "succesAddedreserve": "Successfully reserved the selected performer"
         }
     },
     "promos": {
@@ -353,10 +364,13 @@
     },
     "footer": {
         "contact": "Contact",
+        "metaTitleContact": "Contact - Gigacams.com",
         "privacypolicy": "Privacy policy",
+        "metaTitlePrivacy": "Privacy policy - Gigacams.com",
         "terms": "Terms and Conditions",
-        "information": "Information",
+        "metaTitleTerms": "Terms and Conditions - Gigacams.com",
         "promos": "Promos",
+        "metaTitlePromos": "Promos - Gigacams.com",
         "webcam": "Become a webcam model?",
         "sexstories": "Sex stories",
         "sexstoriesurl": "#",

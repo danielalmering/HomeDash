@@ -200,6 +200,10 @@ export default class Sidebar extends Vue {
     }
 
     reserve(performerId: number){
+        if(this.$store.state.session.activeState === 'pending'){
+            return;
+        }
+
         this.isReserved(performerId) ?
             this.$store.commit('voyeur/removeReservation', performerId) :
             this.$store.commit('voyeur/addReservation', performerId);
@@ -220,6 +224,10 @@ export default class Sidebar extends Vue {
 
         //peek with another lady if you're currently peeking and the lady is peekable
         if (this.category === 'peek' && session.activeState === State.Active && session.activeSessionType == SessionType.Peek){
+            if(performer.id === session.activePerformer.id){
+                return;
+            }
+
             try {
                 await this.$store.dispatch('switchPeek', performer);
             } catch(e){
