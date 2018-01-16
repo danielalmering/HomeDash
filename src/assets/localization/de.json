@@ -130,7 +130,7 @@
         "webcambtn": "Webcam Chat",
         "webcamwithphonedesc": "Wähle # im Hauptmenü für deinen Zugangscode",
         "webcamwithcreditsdesc": "Jetzt in den Webcam Chat und mit Credits bezahlen, die Kosten betragen",
-        "peekbtn": "Voyeur Cam", 
+        "peekbtn": "Voyeur Cam",
         "voyeurbtn": "Voyeur Cam",
         "videochatbtn": "Videocall",
         "videochatwithcreditsdesc1": "Wähle",
@@ -240,7 +240,7 @@
         "to": "Senden an",
         "subject": "Betreff",
         "message": "Nachricht",
-        "paymessage": "Das Lesen der Nachricht kostet",
+        "paymessage": "Das Lesen der Nachricht kostet {credits} credits",
         "viewmessage": "Nachricht lesen!",
         "pushmessages": "Push Nachrichten erhalten",
         "datetill": "Datum bis",
@@ -292,7 +292,7 @@
         "dialog1on1Subtitle": "Möchtest du eine Privat Session mit {name}?",
         "alerts": {
             "successChatEnded": "Session beendet!",
-            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert" 
+            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert"
         }
     },
     "promos": {

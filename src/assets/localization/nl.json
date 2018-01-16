@@ -240,7 +240,7 @@
         "to": "Versturen naar",
         "subject": "Onderwerp",
         "message": "Bericht",
-        "paymessage": "De kosten voor het bekijken van het bericht bedragen",
+        "paymessage": "De kosten voor het bekijken van het bericht bedragen {credits} credits",
         "viewmessage": "Bericht bekijken!",
         "pushmessages": "Push berichten ontvangen",
         "datetill": "Datum tot",
