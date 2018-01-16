@@ -19,7 +19,7 @@ export default class Stream extends Vue {
         type:Boolean,
         required: false
     })
-    muted: boolean = false;
+    muted: boolean;
 
     public onStateChange(value: string){
         this.$emit('stateChange', value);

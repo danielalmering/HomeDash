@@ -42,7 +42,7 @@
     "performers": {
         "noperformersfound": "No performers found!",
         "labels": {
-            "peek-label": "Peeking",
+            "peek-label": "Peek",
             "busy-label": "Busy",
             "voyeur-label": "Voyeur",
             "none": ""
@@ -67,7 +67,7 @@
         "age": "year",
         "view": "View",
         "recommended": "Recommended",
-        "peek": "Peeking",
+        "peek": "Peek",
         "favorite": "Favorite",
         "voyeur": "Voyeur",
         "noperformers": "No performers",
@@ -117,7 +117,7 @@
     },
     "tabs": {
         "service-cam": "Chat and cam",
-        "service-peek": "Peeking",
+        "service-peek": "Peek",
         "service-videocall": "Video call",
         "service-voyeur": "Voyeur",
         "service-phone": "Phone",
@@ -130,7 +130,7 @@
         "webcambtn": "Chat and cam",
         "webcamwithphonedesc": "Press # in the main menu for the access code page",
         "webcamwithcreditsdesc": "Below you can chat and cam and pay this session with credits, the costs are",
-        "peekbtn": "Peeking",
+        "peekbtn": "Peek",
         "voyeurbtn": "Voyeur",
         "videochatbtn": "Video call",
         "videochatwithcreditsdesc1": "Press",
@@ -273,12 +273,13 @@
                 "PERFORMER_REJECT": "The performer has rejected the request",
                 "PERFORMER_END": "The performer has finished the session",
                 "CLIENT_BROKE": "You no longer have credits",
-                "PHONE_DISCONNECT": "The phone is hung up",
+                "PHONE_DISCONNECT": "You hung up the phone",
                 "MAIN_ENDED": "The current session has ended",
                 "INITIATE_FAILED": "Something went wrong. Please try again.",
                 "CANCEL": "Cancelled",
                 "PLAYER_END": "You ended the session",
-                "PERFORMER_TIMEOUT": "The performer did not respond."
+                "PERFORMER_TIMEOUT": "The performer did not respond.",
+                "PEEK_SWITCH": "Switched"
             }
         }
     },
@@ -389,7 +390,7 @@
     },
     "services": {
         "VOYEURCLIENT": "Voyeur",
-        "PEEK": "Peeking",
+        "PEEK": "Peek",
         "MANUAL": "Manual payment",
         "VIDEO": "Video",
         "VIDEOCALL": "Video call",

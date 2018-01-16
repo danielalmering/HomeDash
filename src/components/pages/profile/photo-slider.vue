@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Avatar } from '../../../models/Performer';
 
 import { getSliderImage }  from '../../../util';
@@ -35,6 +35,11 @@ export default class PhotoSlider extends Vue {
         type: Number
     })
     performer: number;
+
+    @Watch('performer')
+    onPerformerChange(id:number){
+        this.position = 0;
+    }
 
     position: number = 0;
     moveInterval: number = 0;

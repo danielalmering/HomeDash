@@ -6,11 +6,11 @@ import { Performer, PerformerStatus } from './models/Performer';
 export function getAvatarImage(performer: Performer, size: string){
 
     if(store.state.safeMode && performer.safe_avatar){
-        return `${config.ImageUrl}${performer.id}/${size}/${performer.safe_avatar.name}`;
+        return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.safe_avatar.name}`;
     }
 
     if(!store.state.safeMode && performer.avatar){
-        return `${config.ImageUrl}${performer.id}/${size}/${performer.avatar.name}`;
+        return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.avatar.name}`;
     }
 
     return require('./assets/images/placeholder.png');
@@ -19,7 +19,7 @@ export function getAvatarImage(performer: Performer, size: string){
 export function getSliderImage(performer: Performer, photoname: string, size: string){
 
     if(!store.state.safeMode){
-        return `${config.ImageUrl}${performer}/${size}/${photoname}`;
+        return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
     }
 
     if(store.state.safeMode){
