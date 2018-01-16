@@ -71,7 +71,7 @@
         "favorite": "Favorite",
         "voyeur": "Voyeur",
         "noperformers": "No performers",
-        "currentcredits": "Current galance",
+        "currentcredits": "Current balance",
         "youraccount": "Your account?",
         "alerts": {
             "errorSwitchFailed": "It has not been possible to change the performer"
@@ -267,7 +267,8 @@
                 "MAIN_ENDED": "The current session has ended",
                 "INITIATE_FAILED": "Something went wrong. Please try again.",
                 "CANCEL": "Cancelled",
-                "PLAYER_END": "You ended the session"
+                "PLAYER_END": "You ended the session",
+                "PEEK_SWITCH": "You switched performers"
             }
         }
     },
@@ -281,7 +282,7 @@
         "dialog1on1Subtitle": "Do you want to start a private session with {name}?",
         "alerts": {
             "successChatEnded": "Session ended!",
-            "succesAddedreserve": "Successfully reserved the selected performer" 
+            "succesAddedreserve": "Successfully reserved the selected performer"
         }
     },
     "promos": {

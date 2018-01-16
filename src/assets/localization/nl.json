@@ -267,7 +267,8 @@
                 "MAIN_ENDED": "De huidige sessie is beeindigd",
                 "INITIATE_FAILED": "Er is iets fout gegaan. Probeer het nog eens.",
                 "CANCEL": "Geannuleerd",
-                "PLAYER_END": "U heeft de sessie geëindigd"
+                "PLAYER_END": "U heeft de sessie geëindigd",
+                "PEEK_SWITCH": "U heeft van performer gewisseld"
             }
         }
     },
