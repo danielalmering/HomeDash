@@ -353,10 +353,9 @@ $sidebar-top-height: 315px;
             position: absolute;
             z-index: 1;
             bottom:4px;
-            display: none;
+            display: block;
             height: 50px;
             width: 100%;
-            background: rgba(0,0,0, 0.4);
 
             .btn {
                 &.btn-icon {
@@ -381,10 +380,6 @@ $sidebar-top-height: 315px;
                     }
                 }
             }
-        }
-
-        &:hover {
-            .sidebar__voyeur-hover { display: block; }
         }
     }
 }

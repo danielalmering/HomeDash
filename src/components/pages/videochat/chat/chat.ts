@@ -43,6 +43,7 @@ export default class Chat extends Vue {
 
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
+    newMessage: boolean = false;
 
     chatSocketRef: number;
     typingSocketRef: number;
@@ -60,6 +61,8 @@ export default class Chat extends Vue {
             if(!chatContainer) return;
 
             this.$nextTick(() => chatContainer.scrollTo(0, chatContainer.scrollHeight));
+
+            this.setNotifier(content.senderType);
         });
         this.typingSocketRef = notificationSocket.subscribe('typing_received', (content: TypingReceivedMessage) => {
             this.showTyping = content.recentTyping || content.inBuffer;
@@ -72,6 +75,14 @@ export default class Chat extends Vue {
                 this.showTyping = false;
             }, 3*1000);
         });
+    }
+
+    setNotifier(sender: string){
+        this.newMessage = (sender === 'ROLE_CLIENT') ? false : true;
+
+        setTimeout(() => {
+            this.newMessage = false;
+        }, 2000);
     }
 
     beforeDestroy(){
@@ -117,6 +128,8 @@ export default class Chat extends Vue {
 
         const inputElement = this.$el.getElementsByClassName('searching')[0] as HTMLElement;
         inputElement.focus();
+
+        this.smiliesOpened = false;
     }
 
     encodeHTML(s: string) {

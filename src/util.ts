@@ -31,7 +31,8 @@ export function getSliderImage(performer: Performer, photoname: string, size: st
 
 export function getPerformerStatus(performer: Performer){
 
-    if(performer.performerStatus === PerformerStatus.Available){
+    if(performer.performerStatus === PerformerStatus.Available
+        && performer.performer_services['cam'] || performer.performer_services['call']){
         return 'available';
     }
 
