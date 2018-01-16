@@ -38,6 +38,7 @@ export default class Chat extends Vue {
     smiliesOpened: boolean = false;
 
     typingTimer: number = 0;
+    lastTypingMessage: number = 0;
     showTyping: boolean = false;
 
     chatMessage: string = '';
@@ -69,7 +70,7 @@ export default class Chat extends Vue {
 
             this.typingTimer = setTimeout(() => {
                 this.showTyping = false;
-            }, 5*3000);
+            }, 3*1000);
         });
     }
 
@@ -84,10 +85,31 @@ export default class Chat extends Vue {
         notificationSocket.sendCustomEvent('msg', {
             message: santizedChatMessage,
             receiverId: this.$store.state.session.activePerformer.id,
-            recceiverType: 'ROLE_PERFORMER'
+            receiverType: 'ROLE_PERFORMER'
         });
 
         this.chatMessage = '';
+    }
+
+    sendTypingMessage(inBuffer: boolean){
+        notificationSocket.sendCustomEvent('event', {
+            event: 'typing_received',
+            receiverId: this.$store.state.session.activePerformer.id,
+            receiverType: 'ROLE_PERFORMER',
+            content: encodeURIComponent('{"recentTyping":true,"inBuffer":'+(inBuffer?'true':'false')+'}')
+        });
+    }
+
+    setTyping(){
+        var currentTime = (new Date()).getTime() / 1000;
+
+        // protect against sending to many 'is typing' updates
+        // @note the inBuffer boolean is not considered, so possibly the inBuffer status on
+        //       the client side is incorrect
+        if (currentTime - this.lastTypingMessage >= 3) {
+            this.sendTypingMessage(this.chatMessage !== '');
+            this.lastTypingMessage = currentTime;
+        }
     }
 
     emojiSelected(name: string){
