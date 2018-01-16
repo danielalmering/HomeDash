@@ -13,9 +13,16 @@ export interface ProjectConfig {
 }
 
 const config = require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
+const isGigacams = window.location.hostname.indexOf('gigacams.com') > -1;
 
-if(window.location.hostname.indexOf('gigacams.com') > -1){
+if(isGigacams){
     config.AutomaticCountryRedirect = true;
+}
+
+const tagManagerKey = isGigacams ? 'GTM-MPS978H' : 'GTM-WQN9TVH';
+
+if(window.loadTagManager){
+    window.loadTagManager(window,document,'script','dataLayer',tagManagerKey);
 }
 
 export default config;
