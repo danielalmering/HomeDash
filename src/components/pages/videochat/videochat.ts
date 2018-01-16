@@ -99,12 +99,15 @@ export default class VideoChat extends Vue {
         }
 
         var platform = Platform.parse(navigator.userAgent);
-        if (webrtcPossible(platform)){
-            return 'webrtcBroadcast';
-        }
+        //disabled camback on mobile for now
         if (noFlash(platform)){
             return 'none';
         }
+
+        if (webrtcPossible(platform)){
+            return 'webrtcBroadcast';
+        }
+
         return 'rtmpBroadcast';
     }
 

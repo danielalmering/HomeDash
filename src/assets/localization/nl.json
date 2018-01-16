@@ -278,7 +278,8 @@
                 "INITIATE_FAILED": "Er is iets fout gegaan. Probeer het nog eens.",
                 "CANCEL": "Geannuleerd",
                 "PLAYER_END": "U heeft de sessie geëindigd.",
-                "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd."
+                "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd.",
+                "PEEK_SWITCH": "Gewisseld"
             }
         }
     },

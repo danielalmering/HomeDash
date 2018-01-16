@@ -278,7 +278,8 @@
                 "INITIATE_FAILED": "Something went wrong. Please try again.",
                 "CANCEL": "Cancelled",
                 "PLAYER_END": "You ended the session",
-                "PERFORMER_TIMEOUT": "The performer did not respond."
+                "PERFORMER_TIMEOUT": "The performer did not respond.",
+                "PEEK_SWITCH": "Switched"
             }
         }
     },
