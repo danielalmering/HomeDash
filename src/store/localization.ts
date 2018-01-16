@@ -17,6 +17,7 @@ const defaultLanguages: { [country: string]: string } = {
     gl: 'en',
     uk: 'en',
     de: 'de',
+    at: 'de',
     nl: 'nl'
 };
 
@@ -24,6 +25,7 @@ const allowedLanguages: { [country: string]: string[] } = {
     gl: ['de', 'en'],
     uk: ['en'],
     de: ['de', 'en'],
+    at: ['de', 'en'],
     nl: ['nl', 'en']
 };
 
