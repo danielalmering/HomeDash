@@ -1,6 +1,6 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
-import { User } from '../../../../models/User';
+import { UserRole, User } from '../../../../models/User';
 
 import config from '../../../../config';
 
@@ -12,6 +12,7 @@ interface EmailForm {
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
 import { openModal } from '../../../../util';
+import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';
 
@@ -212,6 +213,18 @@ export default class Tabs extends Vue {
                 class: 'error'
             });
         } else {
+            notificationSocket.sendEvent({
+                event: 'message',
+                receiverType: UserRole.Performer,
+                receiverId: this.performer.id,
+                content: {
+                    clientId : this.user.id,
+                    performerId : this.performer.id,
+                    sentBy : 'CLIENT',
+                    type : 'EMAIL'	
+                }
+            });
+
             this.$store.dispatch('openMessage', {
                 content: 'contact.alerts.successSend',
                 class: 'success'
