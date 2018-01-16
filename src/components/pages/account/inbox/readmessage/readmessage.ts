@@ -57,6 +57,8 @@ export default class Readmessage extends Vue {
             return;
         }
 
+        this.$store.dispatch('getSession');
+
         this.$store.dispatch('openMessage', {
             content: 'account.alerts.succesInboxMessagePay',
             class: 'success'

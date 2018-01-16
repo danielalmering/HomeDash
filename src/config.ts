@@ -14,9 +14,7 @@ export interface ProjectConfig {
 
 const config = require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
 
-const countryRedirectDomains = ['gigacams.com'];
-
-if(countryRedirectDomains.indexOf(window.location.hostname) > -1){
+if(window.location.hostname.indexOf('gigacams.com') > -1){
     config.AutomaticCountryRedirect = true;
 }
 

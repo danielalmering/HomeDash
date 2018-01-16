@@ -29,7 +29,7 @@
                 </div>
                 <div class="form__group">
                     <label v-t="'account.pushmessages'"></label>
-                    <input id="checkbox1" type="checkbox" v-on:click="subscribePushMessages">
+                    <input id="checkbox1" type="checkbox" :checked="pushcrewSubscribed" v-on:click.prevent="subscribePushMessages">
                     <label for="checkbox1"></label>
                 </div>
             </div>

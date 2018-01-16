@@ -292,7 +292,7 @@
         "dialog1on1Subtitle": "Do you want to start a private session with {name}?",
         "alerts": {
             "successChatEnded": "Session ended!",
-            "succesAddedreserve": "Successfully reserved the selected performer" 
+            "succesAddedreserve": "Successfully reserved the selected performer"
         }
     },
     "promos": {
