@@ -181,6 +181,13 @@ export default class Sidebar extends Vue {
         if(this.displaySidebar){
             this.$store.commit('toggleSidebar');
         }
+
+        //Switch to the peek tab when starting a peek session
+        if(this.$store.state.session.activeSessionType === SessionType.Peek &&
+            to.name === 'Videochat' && this.category !== 'peek'){
+
+            this.setCategory('peek');
+        }
     }
 
     toggleSidebar(check: boolean){
