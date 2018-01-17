@@ -80,7 +80,7 @@ export default class Newmessage extends Vue {
     }
 
     async loadPerformers() {
-        const performersResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/usernames?extra=1`, {
+        const performersResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/usernames?extra=1&service=email`, {
             credentials: 'include'
         });
 

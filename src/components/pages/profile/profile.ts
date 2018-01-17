@@ -73,7 +73,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        return this.performer.performer_services['phone'] 
+        return this.performer.performer_services['phone']
     }
 
     openModal = openModal;
@@ -127,7 +127,7 @@ export default class Profile extends Vue {
             }
 
             this.$router.push({
-                name: 'Videochat',
+                name: this.$store.state.session.activeSessionType === SessionType.Peek ? 'Peek' : 'Videochat',
                 params: {
                     id: this.performer.advert_numbers[0].advertNumber.toString()
                 }
@@ -242,21 +242,22 @@ export default class Profile extends Vue {
         const knownSizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
         if (knownSizes.indexOf(cupSize) == -1){
             return cupSize;
-            
-        } 
-        
+
+        }
+
         return this.$t(`profile.breastsizes.${cupSize}`).toString();
     }
 
     eyeColor(color:string):string{
-        const knownColors = ['brown','hazel','blue','green','silver','amber','grey','red&violet'];
+        if(color === 'red&violet'){ color = 'redviolet' }
+        const knownColors = ['brown','hazel','blue','green','silver','amber','grey','redviolet'];
         if (knownColors.indexOf(color) == -1){
             return color;
         }
 
         return this.$t(`profile.eyecolors.${color}`).toString();
     }
-    
+
 
     setSeoParameters(){
         if(!this.performer){

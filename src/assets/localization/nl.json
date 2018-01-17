@@ -112,7 +112,7 @@
             "silver": "Zilver",
             "amber": "Amber",
             "grey": "Grijs",
-            "red&violet": "Rood & violet"
+            "redviolet": "Rood & violet"
         }
     },
     "tabs": {
@@ -411,5 +411,8 @@
     },
     "countries": {
         "nl": "Nederland"
+    },
+    "videocall": {
+        "callEnded": "Gesprek beeindigd!"
     }
 }

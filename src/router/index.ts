@@ -164,6 +164,11 @@ const routes = [{
                     component: VideoChat
                 },
                 {
+                    path: 'peek/',
+                    name: 'Peek',
+                    component: VideoChat
+                },
+                {
                     path: 'voyeur/',
                     name: 'Voyeur',
                     component: Voyeur
