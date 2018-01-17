@@ -399,7 +399,8 @@
         "VOICEMAIL": "Voicemail",
         "IVR": "Bellen",
         "CREDIT_PURCHASE": "Credit Aankoop",
-        "PROMO_CAMPAIGN_1": "Promotion Aankoop"
+        "PROMO_CAMPAIGN_1": "Promotion Aankoop",
+        "IDEAL": "ideal"
     },
     "languages": {
         "nl": "Nederlands",
