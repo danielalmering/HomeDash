@@ -129,6 +129,14 @@
                     color: $pallete-2;
                     @include rem(font-size,12px);
                 }
+
+                strong {
+                    text-transform: capitalize;
+                    font-weight: 700;
+                    color: $pallete-3;
+                    @include rem(font-size,12px);
+                    font-style: italic;
+                }
             }
 
             .btn {

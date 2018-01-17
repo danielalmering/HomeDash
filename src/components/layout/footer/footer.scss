@@ -29,7 +29,6 @@
         display: table;
         width: 100%;
         border-top: 1px solid $pallete-20;
-        @include rem(margin-bottom, 35px);
 
         &-items {
             padding: 0px !important;

@@ -31,14 +31,25 @@ export function getSliderImage(performer: Performer, photoname: string, size: st
 
 export function getPerformerStatus(performer: Performer){
 
-    if(performer.performerStatus === PerformerStatus.Available
-        && performer.performer_services['cam'] || performer.performer_services['call']){
+    if(performer.performerStatus === PerformerStatus.OnCall){
+        return 'busy';
+    }
+
+    if(performer.performerStatus === PerformerStatus.Busy){
+        return performer.performer_services['peek'] ? 'peek' : 'busy';
+    }
+
+    if(performer.performerStatus === PerformerStatus.Available &&
+        performer.performer_services['cam'] || 
+        performer.performer_services['call'] || 
+        performer.performer_services['videocall']){
+
         return 'available';
     }
 
-    if(performer.performerStatus === PerformerStatus.OnCall ||
-        performer.performerStatus === PerformerStatus.Busy){
-        return performer.performer_services['peek'] ? 'peek' : 'busy';
+    // Performer status Offline
+    if(performer.performer_services['call']){
+        return 'available';
     }
 
     return 'offline';
