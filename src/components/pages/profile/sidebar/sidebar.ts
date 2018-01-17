@@ -183,8 +183,7 @@ export default class Sidebar extends Vue {
         }
 
         //Switch to the peek tab when starting a peek session
-        if(this.$store.state.session.activeSessionType === SessionType.Peek &&
-            to.name === 'Videochat' && this.category !== 'peek'){
+        if(to.name === 'Peek' && this.category !== 'peek'){
 
             this.setCategory('peek');
         }
@@ -230,7 +229,7 @@ export default class Sidebar extends Vue {
         const session = this.$store.state.session;
 
         //peek with another lady if you're currently peeking and the lady is peekable
-        if (this.category === 'peek' && session.activeState === State.Active && session.activeSessionType == SessionType.Peek){
+        if (this.category === 'peek' && session.activeState === State.Active && session.activeSessionType === SessionType.Peek){
             if(performer.id === session.activePerformer.id){
                 return;
             }
@@ -242,9 +241,9 @@ export default class Sidebar extends Vue {
             }
 
             this.$router.push({
-                name: 'Videochat',
+                name: 'Peek',
                 params: {
-                    id: performer.advert_numbers[0].advertNumber.toString()
+                    id: session.activePerformer.advert_numbers[0].advertNumber.toString()
                 }
             });
 
