@@ -29,6 +29,7 @@ export default class Inbox extends Vue {
     notifications: Notification[] = [];
     paymentDialogs: number[] = [];
     total: number = 0;
+    messageSocket: number;
 
     query = {
         limit: 20,
@@ -52,13 +53,17 @@ export default class Inbox extends Vue {
         await this.loadInbox();
         await this.$store.dispatch('getSession');
 
-        notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
+        this.messageSocket = notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
             this.loadInbox();
         });
     }
 
     pageChanged(){
         this.loadInbox();
+    }
+
+    beforeDestroy(){
+        notificationSocket.unsubscribe(this.messageSocket);
     }
 
     async removeMessages(){
