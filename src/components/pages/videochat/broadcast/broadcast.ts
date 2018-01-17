@@ -12,6 +12,8 @@ export default class Broadcast extends Stream{
 
     @Prop() publishStream: string;
 
+    @Prop() publishToken: string;
+
     @Prop({default:true}) cam: boolean | string;
 
     @Prop({default:false}) mic: boolean | string;

@@ -125,6 +125,13 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionData.publishStream;
     }
 
+    get publishToken(): string | undefined{
+        if (!this.$store.state.session.activeSessionData){
+            return undefined;
+        }
+        return this.$store.state.session.activeSessionData.publishToken;
+    }
+
     get playStream(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
@@ -348,7 +355,7 @@ export default class VideoChat extends Vue {
         if (value === State.Accepted){
             await this.$store.dispatch('initiate');
 
-            if(this.navigation.next){
+            if(this.navigation && this.navigation.next){
                 this.navigation.next(true);
             }
         }
