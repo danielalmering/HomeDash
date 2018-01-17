@@ -162,6 +162,8 @@ const actions = {
         }
 
         try {
+            const previousPerformer = { ...store.state.activePerformer };
+
             store.state.isSwitching = true;
 
             await store.dispatch('end');
@@ -173,6 +175,8 @@ const actions = {
                 displayName: store.state.activeDisplayName,
                 payment: store.state.activePaymentType
             });
+
+
 
             store.state.isSwitching = false;
         } catch(ex){

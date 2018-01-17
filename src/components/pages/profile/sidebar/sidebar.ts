@@ -276,13 +276,8 @@ export default class Sidebar extends Vue {
     }
 
     search(){
-        const element = document.querySelector('.sidebar__performers');
+        this.scrollToTop();
 
-        if(!element){
-            return;
-        }
-
-        element.scrollTop = 0;
         this.query.offset = 0;
         this.loadPerformers();
     }
@@ -294,6 +289,8 @@ export default class Sidebar extends Vue {
 
         this.category = category;
 
+        this.scrollToTop();
+
         this.query.offset = 0;
         this.loadPerformers();
     }
@@ -302,6 +299,16 @@ export default class Sidebar extends Vue {
         this.$store.dispatch('voyeur/swap', {
             performerId: performerId
         });
+    }
+
+    scrollToTop(){
+        const element = document.querySelector('.sidebar__performers');
+
+        if(!element){
+            return;
+        }
+
+        element.scrollTop = 0;
     }
 
     beforeDestroy(){
