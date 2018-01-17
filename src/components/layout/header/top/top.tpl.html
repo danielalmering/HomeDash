@@ -20,12 +20,12 @@
         <div class="top__banner col-xs-12 col-sm-4 nopad" v-if="info">
             <div class="top__banner-happyhour" v-if="info.marketing.current" v-on:click="openRoute('Promos')">
                 <div class="col-1">
-                    <span class="h1" v-t="$t('top.banner.happyhour')"></span>
+                    <span class="h1" v-t="'top.banner.happyhour'"></span>
                     <span class="h2">{{ activeCampaign.number }}</span>
                 </div>
                 <div class="col-2">
                     <span class="h3">{{ activeCampaign.cpm }} {{ $t('top.numbers.cpm') }}</span>
-                    <span class="h4" v-t="$t('top.banner.seeactionpage')"></span>
+                    <span class="h4" v-t="'top.banner.seeactionpage'"></span>
                 </div>
             </div>
 
