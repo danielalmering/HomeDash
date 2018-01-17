@@ -1,5 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import notificationSocket from '../../../../socket';
+import { SocketMessageEventArgs } from '../../../../models/Socket';
 
 import Pagination from '../../../layout/Pagination.vue';
 import { User } from '../../../../models/User';
@@ -27,6 +29,7 @@ export default class Inbox extends Vue {
     notifications: Notification[] = [];
     paymentDialogs: number[] = [];
     total: number = 0;
+    messageSocket: number;
 
     query = {
         limit: 20,
@@ -49,10 +52,18 @@ export default class Inbox extends Vue {
     async mounted(){
         await this.loadInbox();
         await this.$store.dispatch('getSession');
+
+        this.messageSocket = notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
+            this.loadInbox();
+        });
     }
 
     pageChanged(){
         this.loadInbox();
+    }
+
+    beforeDestroy(){
+        notificationSocket.unsubscribe(this.messageSocket);
     }
 
     async removeMessages(){
