@@ -249,7 +249,8 @@ export default class Profile extends Vue {
     }
 
     eyeColor(color:string):string{
-        const knownColors = ['brown','hazel','blue','green','silver','amber','grey','red&violet'];
+        if(color === 'red&violet'){ color = 'redviolet' }
+        const knownColors = ['brown','hazel','blue','green','silver','amber','grey','redviolet'];
         if (knownColors.indexOf(color) == -1){
             return color;
         }

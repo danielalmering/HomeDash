@@ -1,5 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import notificationSocket from '../../../../socket';
+import { SocketMessageEventArgs } from '../../../../models/Socket';
 
 import Pagination from '../../../layout/Pagination.vue';
 import { User } from '../../../../models/User';
@@ -49,6 +51,10 @@ export default class Inbox extends Vue {
     async mounted(){
         await this.loadInbox();
         await this.$store.dispatch('getSession');
+
+        notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
+            this.loadInbox();
+        });
     }
 
     pageChanged(){
