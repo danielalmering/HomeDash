@@ -181,6 +181,13 @@ export default class Sidebar extends Vue {
         if(this.displaySidebar){
             this.$store.commit('toggleSidebar');
         }
+
+        //Switch to the peek tab when starting a peek session
+        if(this.$store.state.session.activeSessionType === SessionType.Peek &&
+            to.name === 'Videochat' && this.category !== 'peek'){
+
+            this.setCategory('peek');
+        }
     }
 
     toggleSidebar(check: boolean){
@@ -200,6 +207,10 @@ export default class Sidebar extends Vue {
     }
 
     reserve(performerId: number){
+        if(this.$store.state.session.activeState === 'pending'){
+            return;
+        }
+
         this.isReserved(performerId) ?
             this.$store.commit('voyeur/removeReservation', performerId) :
             this.$store.commit('voyeur/addReservation', performerId);
@@ -220,6 +231,10 @@ export default class Sidebar extends Vue {
 
         //peek with another lady if you're currently peeking and the lady is peekable
         if (this.category === 'peek' && session.activeState === State.Active && session.activeSessionType == SessionType.Peek){
+            if(performer.id === session.activePerformer.id){
+                return;
+            }
+
             try {
                 await this.$store.dispatch('switchPeek', performer);
             } catch(e){

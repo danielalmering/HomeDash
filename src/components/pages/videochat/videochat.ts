@@ -328,7 +328,11 @@ export default class VideoChat extends Vue {
     public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void){
         const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
 
-        if (autoLeaves.indexOf(this.activeState) > -1 || this.isSwitching || to.name === 'Voyeur'){
+        if(this.isSwitching){
+            return;
+        }
+
+        if (autoLeaves.indexOf(this.activeState) > -1 || to.name === 'Voyeur' || to.name === 'Videochat'){
             if(this.$store.state.session.fromVoyeur && to.name !== 'Voyeur'){
                 return this.gotoVoyeur(next);
             }
@@ -343,7 +347,10 @@ export default class VideoChat extends Vue {
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
         if (value === State.Accepted){
             await this.$store.dispatch('initiate');
-            this.navigation.next(true);
+
+            if(this.navigation.next){
+                this.navigation.next(true);
+            }
         }
     }
 

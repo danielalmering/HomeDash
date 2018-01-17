@@ -10,19 +10,21 @@
             <div class="clearfix"></div>
         </div>
     </h1>
-    <div class="account__view" v-if="!payed">
+    <div class="account__view">
         <h3>{{ message.subject }}</h3>
 
-        <div class="colum"> 
+        <div class="colum">
             <div class="col-xs-3 col-sm-1">
                 <div class="row">
-                    <img class="resize" :src="getAvatarImage(message.performer_account, 'small')">
-                    <span class="status" :class="getPerformerStatus(message.performer_account)"></span>
+                    <router-link :to="{ name: 'Profile', params: { id: message.performer_account.advert_numbers[0].advertNumber }}">
+                        <img class="resize" :src="getAvatarImage(message.performer_account, 'small')">
+                        <span class="status" :class="getPerformerStatus(message.performer_account)"></span>
+                    </router-link>
                 </div>
             </div>
             <div class="col-xs-9 col-sm-11">
                 <div class="row">
-                    <span class="col-xs-12 col-sm-6 text-left">{{ $t('account.by') }}: 
+                    <span class="col-xs-12 col-sm-6 text-left">{{ $t('account.by') }}:
                         <router-link :to="{ name: 'Profile', params: { id: message.performer_account.advert_numbers[0].advertNumber }}">
                         <i>{{ message.performer_account.nickname }}</i>
                         </router-link>
@@ -48,11 +50,6 @@
             </form>
         </div>
 
-    </div>
-
-    <div class="account__view" v-if="payed">
-        <p class="highlight">{{ $t('account.paymessage') }} {{ credits }} {{ $t('payment.credits') }}</p>
-        <a v-on:click="payMessage" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
     </div>
 </div>
 

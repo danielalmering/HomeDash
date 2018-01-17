@@ -12,9 +12,22 @@ export default class Editdata extends Vue {
     user: User;
 
     confirmPassword: string = '';
+    pushcrewSubscribed: boolean = false;
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
+
+        window._pcq.push(['APIReady', () => {
+            this.pushcrewSubscribed = window.pushcrew.subscriberId !== false && window.pushcrew.subscriberId !== null;
+        }]);
+
+        window._pcq.push(['subscriptionSuccessCallback', () => {
+            this.pushcrewSubscribed = true;
+        }]);
+
+        window._pcq.push(['subscriptionFailureCallback', () => {
+            this.pushcrewSubscribed = false;
+        }]);
     }
 
     async updateUser(){
@@ -45,7 +58,7 @@ export default class Editdata extends Vue {
         window._pcq.push(['triggerOptIn', {
             subscriberSegment: 'homepage',
             modal: {
-                text: 'HYEEEEEEEEEEEEEY', blackenBackground: true
+                text: '', blackenBackground: true
             }
         }]);
     }

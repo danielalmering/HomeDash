@@ -18,17 +18,21 @@
                     <i class="fa" :class="{ 'fa-square-o': !notification.checked, 'fa-check-square-o': notification.checked }"></i>
                 </td>
                 <td width="50%">
-                    <router-link :to="{ name: 'Readmessage', params: { messageid: notification.id, performerid: notification.performer_id, status:  notification.status, type:  notification.type }}">
+                    <a v-on:click.prevent="openMessage(notification)" v-if="!hasPaymentDialog(notification.id)">
                         <span>{{ notification.type }}</span>
                         <p :class="{ 'active': notification.status === 'NEW' }">{{ notification.subject }}</p>
-                    </router-link>
+                    </a>
+                    <div class="popout" v-if="hasPaymentDialog(notification.id)">
+                        <p class="highlight">{{ $t('account.paymessage', { credits: creditsPerType(notification.type) }) }}</p>
+                        <a v-on:click="payMessage(notification)" class="btn btn-orange btn-right">{{ $t('account.viewmessage') }}</a>
+                    </div>
                 </td>
                 <td width="45%">
                     <p class="text-right">{{ notification.date | date }}</p>
                 </td>
             </tr>
         </table>
-        
+
         <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" :pageCount="false" v-on:pageChange="pageChanged"></pagination>
     </div>
 </div>

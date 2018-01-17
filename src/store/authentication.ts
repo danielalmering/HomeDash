@@ -45,7 +45,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 })
             });
 
-            const loginData: User = await loginResult.json();
+            const loginData: any = await loginResult.json();
 
             if(loginResult.ok){
                 store.dispatch('openMessage', {
@@ -60,6 +60,10 @@ const authenticationStore: Module<AuthState, RootState> = {
                     content: 'auth.alerts.errorlogin',
                     class: 'error'
                 });
+
+                if(loginData.url){
+                    setTimeout(() => window.location.replace(loginData.url), 1000);
+                }
 
                 return;
             }

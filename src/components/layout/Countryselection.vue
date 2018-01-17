@@ -53,6 +53,12 @@ export default class Countryselection extends Vue {
         localStorage.setItem(`${config.StorageKey}.defaultCountry`, country);
 
         this.$emit('close');
+
+        if(country === 'gl'){
+            location.reload();
+        } else {
+            location.replace(window.location.href + country);
+        }
     }
 
     close(){
