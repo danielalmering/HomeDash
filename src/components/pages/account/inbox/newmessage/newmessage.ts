@@ -1,10 +1,11 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
-import { User } from '../../../../../models/User';
+import { UserRole, User } from '../../../../../models/User';
 
 import store from '../../../../../store';
 import config from '../../../../../config';
 import WithRender from './newmessage.tpl.html';
+import notificationSocket from '../../../../../socket';
 
 interface MessageForm {
     subject: string;
@@ -48,7 +49,7 @@ export default class Newmessage extends Vue {
 
     getImage(performer: BarePerformer){
         if(!store.state.safeMode && performer.img){
-            return `${config.ImageUrl}${performer.id}/small/${performer.img}`;
+            return `${config.ImageUrl}pimg/${performer.id}/small/${performer.img}`;
         }
     
         if(store.state.safeMode && performer.img){
@@ -79,7 +80,7 @@ export default class Newmessage extends Vue {
     }
 
     async loadPerformers() {
-        const performersResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/usernames?extra=1`, {
+        const performersResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/usernames?extra=1&service=email`, {
             credentials: 'include'
         });
 
@@ -110,6 +111,18 @@ export default class Newmessage extends Vue {
         });
 
         if(newmessageResult.ok){
+            notificationSocket.sendEvent({
+                event: 'message',
+                receiverType: UserRole.Performer,
+                receiverId: this.selectedPerformer,
+                content: {
+                    clientId : user.id,
+                    performerId : this.selectedPerformer,
+                    sentBy : 'CLIENT',
+                    type : 'EMAIL'	
+                }
+            });
+
             this.$store.dispatch('successMessage', 'account.alerts.successNewMessage');
             this.message = { subject: '', content: '' };
         }
