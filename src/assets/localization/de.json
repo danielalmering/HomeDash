@@ -404,5 +404,8 @@
     },
     "countries": {
         "nl": "The Netherlands"
+    },
+    "videocall": {
+        "callEnded": "Anruf beendet!"
     }
 }
