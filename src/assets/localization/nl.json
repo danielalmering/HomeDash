@@ -398,7 +398,11 @@
         "IVR": "Bellen",
         "CREDIT_PURCHASE": "Credit Aankoop",
         "PROMO_CAMPAIGN_1": "Promotion Aankoop",
-        "IDEAL": "ideal"
+        "IDEAL": "ideal",
+        "BCMC": "bcmc",
+        "CLICK_BUY": "Click and Buy",
+        "VXSBILL": "Credit Card",
+        "SOFORT": "Sofort Banking"
     },
     "languages": {
         "nl": "Nederlands",

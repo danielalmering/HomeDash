@@ -28,7 +28,7 @@ export default class JSMpeg extends Stream {
     }
 
     private load(){
-        const videoUrl = `${config.JsmpegUrl}?stream=${this.playStream}&token=${this.wowza.split('?token=')[1]}&hash=5B9F45B17A77831EA6C5346464BD2`;
+        const videoUrl = `${config.JsmpegUrl}?stream=${this.playStream}&token=${this.playToken}&hash=5B9F45B17A77831EA6C5346464BD2`;
         const video = <HTMLCanvasElement>this.$el.querySelector('.jsmpeg');
 
         this.player = new jsmpeg.Player(videoUrl, {
