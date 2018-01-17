@@ -52,7 +52,6 @@ const actions = {
 
         if (requestResult.ok && requestData.error){
             store.state.activePerformer = store.state.activeSessionType = null;
-            store.state.activeIvrCode = undefined;
             store.state.fromVoyeur = payload.fromVoyeur || false;
             store.commit('setState', State.Idle);
 
@@ -176,7 +175,21 @@ const actions = {
                 payment: store.state.activePaymentType
             });
 
+            /* Switching failed man, the new performer is not available, lets go back to the previous
+             * If the previous is gone, well fuck me, session is just gonna have to stop..
+             * Why am I casting a State to State? Well this ain't this a state... this is State.Active specifically right now
+             * That's because I did a check to see if it was at the top of this function and it couldnt have possibly changed meanwhile, right.. ?
+             */
 
+            if((store.state.activeState as State) === State.Idle){
+                await store.dispatch('startRequest', <RequestPayload>{
+                    performer: previousPerformer,
+                    sessionType: SessionType.Peek,
+                    ivrCode: store.state.activeIvrCode,
+                    displayName: store.state.activeDisplayName,
+                    payment: store.state.activePaymentType
+                });
+            }
 
             store.state.isSwitching = false;
         } catch(ex){
