@@ -17,16 +17,7 @@ export function getAvatarImage(performer: Performer, size: string){
 }
 
 export function getSliderImage(performer: Performer, photoname: string, size: string){
-
-    if(!store.state.safeMode){
-        return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
-    }
-
-    if(store.state.safeMode){
-        return;
-    }
-
-    return require('./assets/images/placeholder.png');
+    return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
 }
 
 export function getPerformerStatus(performer: Performer){
@@ -40,8 +31,8 @@ export function getPerformerStatus(performer: Performer){
     }
 
     if(performer.performerStatus === PerformerStatus.Available &&
-        performer.performer_services['cam'] || 
-        performer.performer_services['call'] || 
+        performer.performer_services['cam'] ||
+        performer.performer_services['call'] ||
         performer.performer_services['videocall']){
 
         return 'available';
