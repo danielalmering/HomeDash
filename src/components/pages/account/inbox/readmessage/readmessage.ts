@@ -17,8 +17,9 @@ export default class Readmessage extends Vue {
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
 
-    mounted(){
-        this.loadMessage();
+    async mounted(){
+        await this.loadMessage();
+        await this.$store.dispatch('getSession');
     }
 
     async loadMessage(){
