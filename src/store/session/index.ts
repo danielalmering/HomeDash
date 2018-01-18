@@ -16,7 +16,9 @@ import actions from './actions';
 
 export interface SessionData {
     playStream: string;
-    publishStream: string;
+    playToken: string;
+    publishStream?: string;
+    publishToken?: string;
     streamTransportType: string;
     wowza: string;
 }
