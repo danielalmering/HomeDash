@@ -395,7 +395,13 @@
         "EMAIL": "E-mail",
         "VOICEMAIL": "Voicemail",
         "IVR": "Telefon",
-        "CREDIT_PURCHASE": "Credits Kauf"
+        "CREDIT_PURCHASE": "Credits Kauf",
+        "PROMO_CAMPAIGN_1": "Promotion Kauf",
+        "IDEAL": "ideal",
+        "BCMC": "bcmc",
+        "CLICK_BUY": "Click and Buy",
+        "VXSBILL": "Credit Card",
+        "SOFORT": "Sofort Banking"
     },
     "languages": {
         "nl": "Niederländisch",
