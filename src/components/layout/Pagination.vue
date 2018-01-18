@@ -105,7 +105,7 @@ export default class Pagination extends Vue {
         }
 
         for(var i = 1; i <= this.buttonsAhead; i++){
-            let page = this.currentPage + 1;
+            let page = this.currentPage + i;
 
             if(page > this.totalPages){
                 break;

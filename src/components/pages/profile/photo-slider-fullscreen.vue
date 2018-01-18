@@ -1,5 +1,5 @@
 <template>
-    <div class="slider__large" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
+    <div class="slider__large" v-on:keyup.esc="close" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
         <ul class="slider__large-list">
             <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }" v-if="getSliderImage(performer, photo.name, '')">
                 <img :src="getSliderImage(performer, photo.name, '')" />
@@ -30,8 +30,10 @@ export default class PhotoSliderFullscreen extends Vue {
 
     mounted(){
         this.currentSelected = this.photos.findIndex(p => p.id === this.displayPic);
+        //without the timeout, photos will flash through the screen
+        setTimeout( ()=>this.$el.focus(), 1 );
     }
-    
+
     @Prop({
         required: true,
         type: Array
@@ -104,17 +106,5 @@ export default class PhotoSliderFullscreen extends Vue {
         }
     }
 
-    @Watch('visible')
-    async onVisibleUpdate(newValue: boolean){
-        const self = this;
-
-        this.$nextTick().then(() => {
-            if(newValue){
-                self.$el.focus();
-            } else {
-                self.$el.blur();
-            }
-        });
-    }
 }
 </script>
