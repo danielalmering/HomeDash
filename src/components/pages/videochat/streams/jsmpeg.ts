@@ -19,6 +19,12 @@ export default class JSMpeg extends Stream {
         this.load();
     }
 
+    @Watch('wowza')
+    onWowzaSwitch(){
+        this.end();
+        this.load();
+    }
+
     mounted(){
         this.load();
     }

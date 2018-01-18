@@ -145,7 +145,10 @@ export default class VideoChat extends Vue {
     }
 
     get canSwitchToVideoCall():boolean{
-        console.log(this.sessionType, this.paymentMethod, this.performer.performer_services.videocall);
+        //TODO: Look into this
+        //There is an off chance in between changing peekers that there is no performer but this property gets triggered from a rerender or something
+        //Only happens in peek so it shouldn't error here if we comment out this console.log
+        //console.log(this.sessionType, this.paymentMethod, this.performer.performer_services.videocall);
 
         return (this.sessionType == SessionType.Video)
              &&
@@ -332,7 +335,7 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        if (autoLeaves.indexOf(this.activeState) > -1 || to.name === 'Voyeur' || to.name === 'Videochat'){
+        if (autoLeaves.indexOf(this.activeState) > -1 || to.name === 'Voyeur' || to.name === 'Videochat' || to.name === 'Peek'){
             if(this.$store.state.session.fromVoyeur && to.name !== 'Voyeur'){
                 return this.gotoVoyeur(next);
             }

@@ -9,7 +9,7 @@
             </div>
 
             <div class="sidebar__content-user" :class="{ 'collapse': !toggleUserinfo }">
-                <span v-on:click="openRoute('Editdata')" class="name" v-t="authenticated ? user.username : 'sidebar.youraccount'"></span>
+                <span v-on:click="openRoute('Editdata')" class="name">{{ authenticated ? user.username : $t('sidebar.youraccount') }}</span>
                 <span class="resize" v-if="authenticated" :class="{ 'collapse': !toggleUserinfo }" v-on:click="toggleUserinfo = !toggleUserinfo"></span>
                 <p v-if="authenticated">{{ $t('sidebar.currentcredits') }}</p>
                 <span v-if="authenticated" class="credits">{{ user.credits }}</span>
@@ -84,7 +84,7 @@
 
                 <!-- No performers -->
                 <li class="sidebar__performer" :class="{ 'active': displaySidebar }" v-if="performers.length === 0 && category !== 'voyeur'">
-                    <h3 class="text-center" v-t="$t('sidebar.noperformers')"></h3>
+                    <h3 class="text-center" v-t="'sidebar.noperformers'"></h3>
                 </li>
             </ul>
 
