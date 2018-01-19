@@ -21,7 +21,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
     right: 0px;
     width: 100%;
     height: 100vh;
-    background: $pallete-16;
+    background: $pallete-13;
 
     @include breakpoint(md) {
         width: calc(100% - 250px);
