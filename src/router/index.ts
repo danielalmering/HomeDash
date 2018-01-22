@@ -142,6 +142,11 @@ const routes = [{
                     component: Favourites
                 },
                 {
+                    path: 'main1/',
+                    name: 'Safe Performers',
+                    component: Performers
+                },
+                {
                     path: ':category?/',
                     name: 'Performers',
                     component: Performers
