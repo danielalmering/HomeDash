@@ -75,7 +75,7 @@ export default class JSMpeg extends Stream {
         const canvas = <HTMLCanvasElement>this.$el.querySelector("canvas");
         const container = this.$el;
 
-        const canvasRatio = 640 / 480;
+        const canvasRatio = canvas.width / canvas.height;
         const containerRatio = container.clientWidth / container.clientHeight;
 
         //if the canvas is wider than the container, the canvas should fill out the width
