@@ -413,6 +413,7 @@
         "nl": "Nederland"
     },
     "videocall": {
-        "callEnded": "Gesprek beeindigd!"
+        "callEnded": "Gesprek beeindigd!",
+        "callFailed": "Gesprek is gefaald!"
     }
 }
