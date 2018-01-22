@@ -28,7 +28,14 @@
                 height: 188px;
                 width: 188px;
                 border: 1px solid $pallete-9;
+                cursor: pointer;
                 @include border-radius(188px);
+                .labelwrapper {
+                    position: absolute; 
+                    bottom: 0;
+                    width: 100%;
+                    .label { display: table; position: relative; top: 0; left: auto; @include rem(margin, 0px auto); }
+                }
             }
         }
     }
