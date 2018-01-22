@@ -96,7 +96,7 @@ export async function preloadUserInterceptor(to: Route, from: Route, next: (to?:
 }
 
 export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    if(to.query.safe !== undefined || to.name === 'Safe Performers'){
+    if(to.query.safe !== undefined){
         store.commit('activateSafeMode');
     } else {
         store.commit('deactivateSafeMode');

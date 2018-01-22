@@ -143,8 +143,13 @@ const routes = [{
                 },
                 {
                     path: 'main1/',
-                    name: 'Safe Performers',
-                    component: Performers
+                    name: 'Adwords',
+                    beforeEnter: (to, from, next) => {
+                        next({
+                            name: 'Performers',
+                            query: { ...to.query, safe: 'true' }
+                        });
+                    }
                 },
                 {
                     path: ':category?/',
