@@ -95,8 +95,11 @@ const rootStore = new Vuex.Store<RootState>({
         },
         activateSafeMode: function(state: RootState){
             state.safeMode = true;
+        },
+        deactivateSafeMode: function(state: RootState){
+            state.safeMode = false;
         }
-    },
+    }, 
     actions: {
         loadInfo: async function(store: RootContext){
             const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`, {

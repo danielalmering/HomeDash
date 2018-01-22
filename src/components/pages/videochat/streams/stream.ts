@@ -11,6 +11,12 @@ export default class Stream extends Vue {
 
     @Prop({
         type: String,
+        required: false
+    })
+    playToken: string;    
+
+    @Prop({
+        type: String,
         required: true
     })
     wowza: string;

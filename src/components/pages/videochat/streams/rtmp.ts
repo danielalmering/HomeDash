@@ -37,8 +37,13 @@ export class Rtmp extends Stream {
             allowFullScreen: true
         };
 
+        let wowza = this.wowza;
+        if (this.playToken){
+            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`)
+        }
+
         const flashvars = {
-            wowza: this.wowza,
+            wowza: wowza,
             playStream: this.playStream,
             listener: 'flashCallbacks'
         };
