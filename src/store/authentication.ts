@@ -5,6 +5,7 @@ import { RootState } from './index';
 import { User, AnonymousUser, UserForm } from '../models/User';
 import config from '../config';
 import notificationSocket from '../socket';
+import Raven from 'raven-js';
 
 export interface AuthState {
     user: User | undefined;
@@ -32,6 +33,12 @@ const authenticationStore: Module<AuthState, RootState> = {
     mutations: {
         async setUser(state: AuthState, user: User | undefined){
             state.user = user;
+
+            if(state.user !== undefined && Raven.isSetup()){
+                Raven.setUserContext({
+                    id: state.user.id.toString()
+                });
+            }
         }
     },
     actions: {

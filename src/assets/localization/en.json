@@ -413,6 +413,7 @@
         "nl": "The Netherlands"
     },
     "videocall": {
-        "callEnded": "Call ended!"
+        "callEnded": "Call ended!",
+        "callFailed": "Call failed!"
     }
 }
