@@ -1,5 +1,5 @@
 <template>
-    <div class="slider__large" :class="{ 'visible': visible }" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
+    <div class="slider__large" v-on:keyup.esc="close" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
         <ul class="slider__large-list">
             <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }" v-if="getSliderImage(performer, photo.name, '')">
                 <img :src="getSliderImage(performer, photo.name, '')" />
@@ -28,6 +28,12 @@ import { getSliderImage }  from '../../../util';
 @Component
 export default class PhotoSliderFullscreen extends Vue {
 
+    mounted(){
+        this.currentSelected = this.photos.findIndex(p => p.id === this.displayPic);
+        //without the timeout, photos will flash through the screen
+        setTimeout( ()=>this.$el.focus(), 1 );
+    }
+
     @Prop({
         required: true,
         type: Array
@@ -52,10 +58,11 @@ export default class PhotoSliderFullscreen extends Vue {
     })
     displayPic: number;
 
-    currentSelected: number = 1;
     touchStart: number = 0;
 
     getSliderImage = getSliderImage;
+
+    currentSelected:number = 1;
 
     get isLast(){
         return this.currentSelected === this.$props.photos.length - 1
@@ -82,7 +89,7 @@ export default class PhotoSliderFullscreen extends Vue {
     }
 
     close(){
-        this.$emit('update:visible', false);
+        this.$emit('close');
     }
 
     onTouchStart(evt: TouchEvent){
@@ -99,32 +106,5 @@ export default class PhotoSliderFullscreen extends Vue {
         }
     }
 
-    @Watch('displayPic')
-    onDisplayPicUpdate(newValue: number){
-        const photoIndex = this.photos.findIndex(p => p.id === newValue);
-
-        if(photoIndex > -1){
-            this.currentSelected = photoIndex;
-        }
-
-        for(var i = 0; i < this.$props.photos.length; i++){
-            if(this.$props.photos[i].id === newValue){
-                this.currentSelected = i;
-            }
-        }
-    }
-
-    @Watch('visible')
-    async onVisibleUpdate(newValue: boolean){
-        const self = this;
-
-        this.$nextTick().then(() => {
-            if(newValue){
-                self.$el.focus();
-            } else {
-                self.$el.blur();
-            }
-        });
-    }
 }
 </script>

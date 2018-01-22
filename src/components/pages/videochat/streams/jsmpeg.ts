@@ -11,6 +11,11 @@ import Stream from './stream';
 })
 export default class JSMpeg extends Stream {
 
+    constructor(){
+        super();
+        this.onResize = this.onResize.bind(this);
+    }
+
     player: jsmpeg.Player;
 
     @Watch('playStream')
@@ -19,8 +24,20 @@ export default class JSMpeg extends Stream {
         this.load();
     }
 
-    mounted(){
+    @Watch('wowza')
+    onWowzaSwitch(){
+        this.end();
         this.load();
+    }
+
+    mounted(){
+        this.load();        
+        this.onResize();
+        window.addEventListener("resize", this.onResize);
+    }
+
+    destroyed(){
+        window.removeEventListener("resize", this.onResize);
     }
 
     beforeDestroy(){
@@ -28,7 +45,9 @@ export default class JSMpeg extends Stream {
     }
 
     private load(){
-        const videoUrl = `${config.JsmpegUrl}?stream=${this.playStream}&token=${this.wowza.split('?token=')[1]}&hash=5B9F45B17A77831EA6C5346464BD2`;
+        const token = this.playToken ? this.playToken : this.wowza.split('?token=')[1];
+
+        const videoUrl = `${config.JsmpegUrl}?stream=${this.playStream}&token=${token}&hash=5B9F45B17A77831EA6C5346464BD2`;
         const video = <HTMLCanvasElement>this.$el.querySelector('.jsmpeg');
 
         this.player = new jsmpeg.Player(videoUrl, {
@@ -49,6 +68,23 @@ export default class JSMpeg extends Stream {
             }
 
             this.player.stop();
+        }
+    }
+
+    private onResize(){
+        const canvas = <HTMLCanvasElement>this.$el.querySelector("canvas");
+        const container = this.$el;
+
+        const canvasRatio = 640 / 480;
+        const containerRatio = container.clientWidth / container.clientHeight;
+
+        //if the canvas is wider than the container, the canvas should fill out the width
+        if (canvasRatio > containerRatio){
+            canvas.style.width = '100%';
+            canvas.style.height = `${(containerRatio / canvasRatio)*100}%`;
+        } else {
+            canvas.style.height = "100%";
+            canvas.style.width = `${(canvasRatio / containerRatio)*100}%`;
         }
     }
 }

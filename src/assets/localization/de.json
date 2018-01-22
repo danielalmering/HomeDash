@@ -1,3 +1,417 @@
 {
-    "test": "Hallo DE"
+    "general": {
+        "successNewMessage": "Du hast eine neue Nachricht!"
+    },
+    "top": {
+        "numbers": {
+            "callnow": "Wähle jetzt",
+            "cpm": "PM.",
+            "pm": "pro Min."
+        },
+        "banner": {
+            "happyhour": "HappyHour",
+            "seeactionpage": "Unsere Aktions-Seite",
+            "extra": "Extra",
+            "credits": "Credits",
+            "purchase": "beim Kauf von"
+        }
+    },
+    "nav": {
+        "search": {
+            "input": "Suche..."
+        },
+        "info": {
+            "home": "Home",
+            "menu": "Menü",
+            "lang": "Sprache",
+            "account": "Account",
+            "voyeur": "Voyeur",
+            "actions": "Angebote",
+            "editdata": "Account bearbeiten",
+            "favourites": "Favoriten",
+            "inbox": "Posteingang",
+            "upgradebalance": "Guthaben aufladen",
+            "logout": "Logout",
+            "login": "Login",
+            "history": "Account Verlauf",
+            "giftvoucher": "Geschenkgutschein",
+            "welcome": "Willkommen",
+            "thankyou": "Danke für deinen Einkauf!"
+        }
+    },
+    "performers": {
+        "noperformersfound": "Keine Darsteller gefunden!",
+        "labels": {
+            "peek-label": "Voyeur",
+            "busy-label": "Besetzt",
+            "voyeur-label": "Voyeur",
+            "none": ""
+        }
+    },
+    "auth": {
+        "accountlogin": "Benutzer Login",
+        "registeraccount": "Account registrieren",
+        "login": "Login",
+        "register": "Registrieren",
+        "email": "E-mail",
+        "lostpassword": "Passwort vergessen?",
+        "missingfields": "Bitte alle Felder ausfüllen",
+        "alerts": {
+            "successlogin": "Willkommen, {username}",
+            "successlogout": "Erfolgreich abgemeldet!",
+            "errorlogin": "Falsche Login Daten",
+            "errorNotLoggedin": "Nicht mehr angemeldet!"
+        }
+    },
+    "sidebar": {
+        "age": "Alter",
+        "view": "Ansehen",
+        "recommended": "Empfohlen",
+        "peek": "Voyeur",
+        "favorite": "Favorit",
+        "voyeur": "Voyeur",
+        "noperformers": "Keine Darsteller",
+        "currentcredits": "Aktuelles Guthaben",
+        "youraccount": "Dein Account?",
+        "alerts": {
+            "errorSwitchFailed": "Darsteller Wechsel nicht möglich"
+        },
+        "register": {
+            "usp-1": "100% anonym",
+            "usp-2": "Mehr Angebote & Rabatte",
+            "usp-3": "Sichere Online Zahlung"
+        }
+    },
+    "profile": {
+        "favorite-add": "Favorit hinzufügen",
+        "favorite-remove": "Favorit entfernen",
+        "property": "Eigenschaften",
+        "age": "Alter",
+        "height": "Größe",
+        "weight": "Gewicht",
+        "cupsize": "Brustgröße",
+        "eyecolor": "Augenfarbe",
+        "expand": "Mehr",
+        "hide": "Weniger",
+        "collapsphotos": "Fotos ansehen",
+        "collapsedphotos": "Fotos verbergen",
+        "metaTitle": "Live Webcam, chatten und Videochat mit {nickname} , Echte Frauen - gigacams.com",
+        "metaDescription": "Live Webcam, telefonieren und chatten mit {nickname} , hier findest du echte Frauen.",
+        "breastsizes": {
+            "xsmall": "Extra klein",
+            "small": "Klein",
+            "medium": "Mittel",
+            "large": "Groß",
+            "xlarge": "Extra groß"
+        },
+        "eyecolors":{
+            "brown": "Brown",
+            "hazel": "Hazel",
+            "blue": "Blue",
+            "green": "Green",
+            "silver": "Silver",
+            "amber": "Amber",
+            "grey": "Grey",
+            "redviolet": "Red & violet"
+        }
+    },
+    "tabs": {
+        "service-cam": "Webcam Chat",
+        "service-peek": "Voyeur Cam",
+        "service-videocall": "Videocall",
+        "service-voyeur": "Voyeur Cam",
+        "service-phone": "Telefon",
+        "service-email": "E-mail",
+        "service-sms": "SMS",
+        "paymentwithtelephone": "Zahlung per <span>phone</span>",
+        "paymentwithcredits": "Zahlung mit <span>credits</span>",
+        "accesscode": "Zugangscode",
+        "username": "Benutzername",
+        "webcambtn": "Webcam Chat",
+        "webcamwithphonedesc": "Wähle # im Hauptmenü für deinen Zugangscode",
+        "webcamwithcreditsdesc": "Jetzt in den Webcam Chat und mit Credits bezahlen, die Kosten betragen",
+        "peekbtn": "Voyeur Cam",
+        "voyeurbtn": "Voyeur Cam",
+        "videochatbtn": "Videocall",
+        "videochatwithcreditsdesc1": "Wähle",
+        "videochatwithcreditsdesc2": "danach drück die # und wähle dann im Menü die Option Videocall (#)",
+        "callbtn": "Telefonieren",
+        "calltitle": "Hallo, Ich bin",
+        "calldesc": "Willst du mich Live am Telefon?",
+        "callmenu1": "Wähle die <i>1</i> im Hauptmenü, dann nochmal die <i>1</i><br>Gib meine Privat Nummer ein",
+        "callmenu2": "und beende mit #",
+        "callbyebye": "Bis gleich, ",
+        "mailbtn": "Nachricht senden",
+        "mailtitle": "Möchtest du mir eine nette e-mail senden?",
+        "mailsubject": "Betreff",
+        "mailmessage": "Nachricht",
+        "mailsend": "Senden",
+        "mailinfo": "Das Versenden von E-mails ist kostenlos, du bezahlst nur für das Lesen von empfangenen E-mails.",
+        "mailloggedin": "Um E-mails zu senden, benötigst du einen Account. Du hast noch keinen Account?",
+        "smsdesc": "Sende Privatnummer",
+        "smsdesc1": "gefolgt von Leerschritt<br />und dann deine Nachricht an",
+        "smsterms": "Dieser Dienst ist für alle SMS fähigen Geräte zugänglich. Es wird KEIN Abo abgeschlossen. 1:1 Chatdienst, auf eine gesendete SMS folgt maximal 1 empfangene SMS (1,50€/sms). Mindestalter für die Nutzung ist 18 Jahre. Mit der Teilnahme an diesem Service akzeptierst du automatisch die daran gebundenen Allgemeinen Geschäftsbedingungen: AGB’s ansehen. Kein Widerruf oder Rücktrittsrecht. Nutzerdaten werden nicht mit Dritten geteilt. Der SMS Service unterliegt den Richtlinien und dem  Verhaltenskodex  für SMS Dienste. Dieser Service wird von Sensemakers BV, Postbus 89, 1300 AB Almere, The Netherlands angeboten. KvK Nummer: 33128110 , VAT ID NL803697041.B.01. Support: info@gigicams.com , Tel: +31(0)36 - 5458595",
+        "smscost": "pro empfangene Nachricht*",
+        "registeraccount": "Registriere kostenlos ein Account und profitiere von zahlreichen Angeboten!",
+        "noServices": "Kein(e) Service(s) verfügbar!",
+        "errorNoIvrCode": "Gib deinen Zugangscode ein"
+    },
+    "pagination": {
+        "pageOf": "Seite {page} bis {total}",
+        "amountPerPage": "Anzahl pro Seite"
+    },
+    "modals": {
+        "login":{
+            "title": "Account Login",
+            "email": "E-mail",
+            "password": "Passwort",
+            "login": "Login",
+            "register": "Registrieren",
+            "forgotPassword": "Passwort vergessen?"
+        },
+        "register":{
+            "title": "Account registrieren",
+            "email": "E-mail",
+            "username": "Benutzername",
+            "language": "Sprache",
+            "country": "Land",
+            "password": "Passwort",
+            "passwordconfirm": "Passwort bestätigen",
+            "register": "Registrieren",
+            "alerts": {
+                "successMessage": "Du hast eine Bestätigungsemail erhalten",
+                "errorMessage": "Etwas ist bei der Registrierung schief gelaufen."
+            }
+        },
+        "recover": {
+            "title": "Passwort vergessen",
+            "email": "E-mail",
+            "recover": "Passwort ändern",
+            "alerts": {
+                "successMessage": "Wenn diese E-mail Adresse zu deinem Account gehört, erhältst du innerhalb der nächsten Minuten eine E-mail"
+            }
+        },
+        "reset": {
+            "title": "Passwort zurücksetzen",
+            "password": "Passwort",
+            "passwordconfirm": "Passwort bestätigen",
+            "reset": "Passwort ändern",
+            "alerts": {
+                "successMessage": "Dein Passwort wurde erfolgreich geändert",
+                "errorMessage": "Der Link zum Zurücksetzen deines Passworts ist abgelaufen, bitte beantrage ein neues Passwort",
+                "errorPasswordMismatch": "Die eingegebenen Passwörter stimmen nicht überein",
+                "errorEmptyFields": "Es sind nicht alle Felder vollständig ausgefüllt"
+            }
+        },
+        "countryselect": {
+            "title": "Wähle dein Land",
+            "desc": "Bitte wähle dein Land",
+            "defaultcountry": "(andere Länder)",
+            "country-nl": "Netherlands",
+            "country-de": "Deutschland",
+            "country-gl": "Global",
+            "country-at": "Österreich",
+            "country-uk": "United Kingdom"
+        }
+    },
+    "account": {
+        "currentcredits": "Aktuelles Guthaben",
+        "username": "Benutzername:",
+        "password": "Passwort:",
+        "email": "E-mail",
+        "mobilenumber": "Mobilnumber",
+        "confirmpassword": "Passwort bestätigen:",
+        "editdatabtn": "Änderungen speichern",
+        "newmessage": "Neue Nachricht",
+        "removemessage": "Nachricht löschen",
+        "sendmessage": "Nachricht senden",
+        "historydesc": "Hier findest du eine Übersicht deiner Aktivitäten auf der Webseite",
+        "date": "Datum",
+        "paymentmethod": "Zahlungsweise",
+        "amount": "Betrag",
+        "historymethod": "Zahlungsweise",
+        "historystartdate": "Startdatum",
+        "historyenddate": "Enddatum",
+        "giftvoucherdesc": "Hast du einen Geschenkgutschein erhalten? Super! Gib hier den Code deines Geschenkgutscheins ein und klick auf 'Aktivieren'. Die Guthaben Credits werden deinem Account sofort gutgeschrieben. Jeder Code kann nur einmalig eingesetzt werden.",
+        "savegiftvoucher": "Gutschein aktivieren",
+        "giftvouchercode": "Code",
+        "backinbox": "Zurück zum Posteingang",
+        "by": "Von",
+        "to": "Senden an",
+        "subject": "Betreff",
+        "message": "Nachricht",
+        "paymessage": "Das Lesen der Nachricht kostet {credits} credits",
+        "viewmessage": "Nachricht lesen!",
+        "pushmessages": "Push Nachrichten erhalten",
+        "datetill": "Datum bis",
+        "datefrom": "Datum vom",
+        "alerts": {
+            "successEditData": "Dein Account wurde erfolgreich bearbeitet!",
+            "errorEditData": "Dein Account wurde nicht erfolgreich bearbeitet!",
+            "successVoucher": "Dein Code wurde aktiviert und die Credits wurden deinem Account gutgeschrieben",
+            "errorVoucher": "Dieser Code ist ungültig oder wurde bereits benutzt, bitte versuche es nochmal",
+            "errorInboxLoad": "Ein Fehler ist aufgetreten beim Laden deines Posteingangs!",
+            "errorInboxMessageLoad": "Ein Fehler ist aufgetreten beim Laden der Nachricht!",
+            "errorInboxMessagePay": "Beim Bezahlungsvorgang der Nachricht ist ein Fehler aufgetreten!",
+            "errorInboxNoSelected": "Du hast keine Nachricht ausgewählt!",
+            "succesInboxMessagePay": "Die Nachricht wurde erfolgreich bezahlt",
+            "successInboxRemove": "Die ausgewählten Nachrichten wurden erfolgreich gelöscht",
+            "errorInboxRemove": "Die ausgewählten Nachrichten wurden nicht gelöscht!",
+            "errorReplyMessage": "Ein Fehler ist beim Antworten aufgetreten!",
+            "successReplyMessage": "Deine Antwort wurde erfolgreich versendet!",
+            "successNewMessage": "Die Nachricht wurde erfolgreich versendet!",
+            "errorNewMessage": "Die Nachricht ist nicht erfolgreich versendet worden!",
+            "successGotMessage": "Du hast neue Nachrichten!"
+        }
+    },
+    "videochat": {
+        "leaving": "Aktuelle Session verlassen",
+        "flashchecktext": "Du hast kein Flash installiert, klick hier unten um es zu downloaden.",
+        "alerts": {
+            "successChatEnded": "Session beendet!",
+            "socketErrors": {
+                "PERFORMER_REJECT": "Darsteller hat Anfrage abgelehnt",
+                "PERFORMER_END": "Darsteller hat Session beendet",
+                "CLIENT_BROKE": "Du hast keine Credits mehr",
+                "PHONE_DISCONNECT": "Das Telefon wurde aufgelegt",
+                "MAIN_ENDED": "Die aktuelle Session wurde beendet",
+                "INITIATE_FAILED": "Etwas ist schief gelaufen. Bitte versuche es erneut.",
+                "CANCEL": "Abgebrochen",
+                "PLAYER_END": "Sie haben die Sitzung beendet",
+                "PERFORMER_TIMEOUT": "Der Darsteller antwortete nicht."
+            }
+        }
+    },
+    "voyeur": {
+        "reserve": "Reservieren",
+        "cancelReservation": "Reservierung löschen",
+        "reserving": "Reservierungen",
+        "favorites": "Favoriten",
+        "now1on1": "Jetzt 1zu1",
+        "dialog1on1Title": "Verbinden mit {name}",
+        "dialog1on1Subtitle": "Möchtest du eine Privat Session mit {name}?",
+        "alerts": {
+            "successChatEnded": "Session beendet!",
+            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert"
+        }
+    },
+    "promos": {
+        "intro": "Willkommen auf der Aktions-Seite! Auf dieser Seite informieren wir dich über laufende oder kommende Spezial Aktionen, sowie tolle Angebote, Rabatte und Schnäppchen.",
+        "currentactions": "Laufende Aktionen",
+        "data": "Details",
+        "alerts": {
+            "errorLoad": "Ein Fehler ist beim Laden der Aktionen aufgetreten!"
+        }
+    },
+    "thankyou": {
+        "intro": "Vielen Dank für deinen Einkauf !! Hier unten siehst du einen deiner Favoriten",
+        "favo": "Favoriten"
+    },
+    "payment": {
+        "pickpackage": "Wähle ein Paket",
+        "shoppingcart": "Warenkorb",
+        "methods": "Zahlungsweise",
+        "credits": "Credits",
+        "product": "Produkt",
+        "quanity": "Anzahl",
+        "creditscap": "Credits",
+        "price": "Preis",
+        "paying": "Kaufen",
+        "paywith": "Zahlung mit {title}",
+        "subtotal": "Zwischensumme",
+        "bonuscredits": "Bonus Credits",
+        "totalcredits": "Total Credits",
+        "newbalance": "Neues Credits Guthaben",
+        "total": "Total",
+        "bonusbanner": "Kaufe {credits} Credits und bekomme zusätzlich {percentage}% Gratis dazu",
+        "bonusdiscountdesc": "Das obige Angebot ist nur gültig beim Kauf mit iDeal & Mister Cash und nicht gültig beim Kauf mit Kreditkarte und Visa per Click and Buy. * ",
+        "discountcode": "Rabattcode?",
+        "mostlybought": "Meistgekauft!",
+        "alerts": {
+            "errorIncorrectPromo": "Ungültiger Promocode!",
+            "errorUsedPromo": "Promocode bereits benutzt!",
+            "successCorrectPromo": "Promocode eingelöst!",
+            "errorNoPackage": "Kein Paket ausgewählt!",
+            "errorNoPayment": "Keine Zahlungsweise ausgewählt!"
+        }
+    },
+    "contact": {
+        "title": "Kontakt",
+        "desc": "Wenn du Fragen oder Kommentare zu unserer Plattform hast, kannst du uns gerne hier unten über das Kontaktformular schreiben. Wenn erforderlich, werden wir dich so bald wie möglich kontaktieren. Wir freuen uns auch über deine Vorschläge und Verbesserungsmöglichkeiten für unsere Services. <br><br> Versuche bitte dein Anliegen so genau wie möglich zu beschreiben: was genau ist passiert? Bitte gib auch das Datum und die genaue Uhrzeit dazu an. Wenn möglich mache bitte auch Angaben zum Performer mit dem du zum Zeitpunkt in Kontakt warst (Name und Privatnummer). Bitte gib auch mit an, welchen Internetprovider du hast (DTAG, 1und1, UnityMedia etc..), Browser und Versionsnummer (z.B. Internet Explorer 8, Chrome 23 etc.), Betriebssystem und Version (z.B. Windows 7, OS X, etc.) und welchen Flash Player du nutzt (z.B. Player Version 11.3.376.12 mit IE 8, Chrome 11.5.31.2, etc.). <br> Danke für dein Feedback!",
+        "send": "Senden",
+        "subject": "Betreff:*",
+        "email": "E-mail:*",
+        "name": "Name:*",
+        "message": "Nachricht:*",
+        "alerts": {
+            "errorSend": "Ein Fehler ist während des Versands aufgetreten",
+            "successSend": "Nachricht wurde erfolgreich gesendet"
+        }
+    },
+    "textpages": {
+        "termstitle": "Allgemeine Geschäftsbedingungen",
+        "policytitle": "Datenschutzbestimmungen"
+    },
+    "confirmations": {
+        "accept": "Akzeptieren",
+        "cancel": "Abbrechen",
+        "disconnect": "Abbrechen",
+        "disconnectdesc": "Die aktuelle Verbindung abbrechen",
+        "connect": "Verbinden",
+        "connectdesc": "Wenn der Darsteller nicht rechtzeitig annimmt, wähle einfach jemand anderes, ok? Viel Spaß!"
+    },
+    "footer": {
+        "contact": "Kontakt",
+        "metaTitleContact": "Kontakt - Gigacams.com",
+        "privacypolicy": "Datenschutzbestimmungen",
+        "metaTitlePrivacy": "atenschutzbestimmungen - Gigacams.com",
+        "terms": "Allgemeine Geschäftsbedingungen",
+        "metaTitleTerms": "Allgemeine Geschäftsbedingungen - Gigacams.com",
+        "promos": "Aktionen",
+        "metaTitlePromos": "Aktionen - Gigacams.com",
+        "webcam": "Geld als Camgirl verdienen?",
+        "sexstories": "Sex Stories",
+        "sexstoriesurl": "#",
+        "webcamurl": "http://www.club-sense.com",
+        "copyright": "Copyright 2018",
+        "cookies": "Durch die Verwendung von Cookies können wir die Webseite nutzerfreundlich gestalten und deine Einstellungen speichern. \nMit der Nutzung dieser Webseite erklärst du dich damit einverstanden, dass wir Cookies verwenden",
+        "agecheck": "Diese Webseite enthält explizite Inhalte. Mit der Nutzung der Webseite, akzeptiere ich die Geschäftsbedingungen.",
+        "olderthen": "Ja, ich bin mindestens 18 Jahre alt",
+        "leavewebsite": "Nein, Webseite verlassen",
+        "or": "oder"
+    },
+    "confirm": {
+        "errorAlreadyActivated": "Dieser Account wurde bereits aktiviert",
+        "errorDefault": "Es ist ein Fehler bei der Aktivierung aufgetreten",
+        "successMessage": "Dein Account wurde erfolgreich aktiviert"
+    },
+    "services": {
+        "VOYEURCLIENT": "Voyeur Cam",
+        "PEEK": "Voyeur Cam",
+        "MANUAL": "Manuelle Zahlung",
+        "VIDEO": "Video",
+        "VIDEOCALL": "Videocall",
+        "SMS": "SMS",
+        "EMAIL": "E-mail",
+        "VOICEMAIL": "Voicemail",
+        "IVR": "Telefon",
+        "CREDIT_PURCHASE": "Credits Kauf",
+        "PROMO_CAMPAIGN_1": "Promotion Kauf",
+        "IDEAL": "ideal",
+        "BCMC": "bcmc",
+        "CLICK_BUY": "Click and Buy",
+        "VXSBILL": "Credit Card",
+        "SOFORT": "Sofort Banking"
+    },
+    "languages": {
+        "nl": "Niederländisch",
+        "en": "Englisch",
+        "de": "Deutsch"
+    },
+    "countries": {
+        "nl": "The Netherlands"
+    },
+    "videocall": {
+        "callEnded": "Anruf beendet!"
+    }
 }

@@ -21,12 +21,16 @@ export default class Footer extends Vue {
         return this.$store.getters.getBranding;
     }
 
+    get isSafeMode(){
+        return this.$store.state.safeMode;
+    }
+
     mounted(){
-        this.displaySeo = this.$route.name === 'Performers';
+        this.displaySeo = this.$route.name === 'Performers' && !this.isSafeMode;
     }
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
-        this.displaySeo = to.name === 'Performers';
+        this.displaySeo = to.name === 'Performers' && !this.isSafeMode;
     }
 }

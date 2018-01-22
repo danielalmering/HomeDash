@@ -23,7 +23,7 @@ export class WebRTC extends Stream {
         const options = {
             wowza: wowzaParts.host + '/webrtc-session.json',
             applicationName: wowzaParts.application,
-            token: wowzaParts.parameters.token,
+            token: this.playToken ? this.playToken : wowzaParts.parameters.token,
             streamName: this.playStream,
             element: video,
             useWebSockets: true,

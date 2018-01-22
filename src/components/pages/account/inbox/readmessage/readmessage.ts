@@ -11,59 +11,15 @@ import WithRender from './readmessage.tpl.html';
 @Component
 export default class Readmessage extends Vue {
 
-    payed: boolean = false;
     message: any = { client: { id: 0 }, performer_account: { id: 0 }, subject: ''};
     reply: string = '';
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
 
-    get credits(){
-        return this.$store.state.info['credits_per_' + (this.$route.params.type.toLowerCase())];
-    }
-
-    mounted(){
-        if(this.$route.params.status === 'NEW'){
-            this.payed = true;
-        } else {
-            this.payed = false;
-            this.loadMessage();
-        }
-    }
-
-    async payMessage(){
-        const user: User = this.$store.state.authentication.user;
-
-        const payload = {
-            serviceType: this.$route.params.type.toUpperCase(),
-            emailId: this.$route.params.messageid
-        };
-
-        const paymessageResult = await fetch(`${config.BaseUrl}/client/client_accounts/${user.id}/tax/performer_accounts/${this.$route.params.performerid}`, {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-
-        if(!paymessageResult.ok){
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.errorInboxMessagePay',
-                class: 'error'
-            });
-
-            return;
-        }
-
-        this.$store.dispatch('openMessage', {
-            content: 'account.alerts.succesInboxMessagePay',
-            class: 'success'
-        });
-
-        this.payed = false;
-        this.loadMessage();
+    async mounted(){
+        await this.loadMessage();
+        await this.$store.dispatch('getSession');
     }
 
     async loadMessage(){

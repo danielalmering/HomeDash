@@ -8,6 +8,7 @@ import { UserRole } from '../../models/User';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
 
+
 const actions = {
     async startRequest(store: ActionContext<SessionState, RootState>, payload: RequestPayload){
         store.commit('setState', State.InRequest);
@@ -45,12 +46,12 @@ const actions = {
                 store.commit('setState', State.Accepted);
             } else {
                 store.commit('setState', State.Pending);
+                store.state.performerTimeout = setTimeout( ()=>store.dispatch('performerTimeout'), 60 * 1000 );
             }
         }
 
         if (requestResult.ok && requestData.error){
             store.state.activePerformer = store.state.activeSessionType = null;
-            store.state.activeIvrCode = undefined;
             store.state.fromVoyeur = payload.fromVoyeur || false;
             store.commit('setState', State.Idle);
 
@@ -60,6 +61,25 @@ const actions = {
             });
         }
     },
+
+    //performer did not respond in time
+    async performerTimeout(store: ActionContext<SessionState, RootState>){
+        store.commit('setState', State.Canceling);
+        await fetch(`${config.BaseUrl}/session/timeout/performer`,{
+            method: 'POST',
+            credentials: 'include',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                performerId: store.state.activePerformer ? store.state.activePerformer.id : undefined,
+                clientId: store.rootState.authentication.user.id
+            })
+        });
+        store.commit('setState', State.Idle);
+        store.dispatch('errorMessage', `videochat.alerts.socketErrors.PERFORMER_TIMEOUT`);
+    },
+
     async accepted(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Accepted);
     },
@@ -106,9 +126,9 @@ const actions = {
         store.commit('setState', State.Ending);
         store.commit('setState', State.Idle);
     },
-    async end(store: ActionContext<SessionState, RootState>, reason: string){
+    async end(store: ActionContext<SessionState, RootState>, reason?: string){
         store.commit('setState', State.Ending);
-        if (reason == 'PHONE_DISCONNECT'){
+        if (reason === 'PHONE_DISCONNECT'){
             store.commit('setIvrCode', undefined);
         }
 
@@ -119,7 +139,10 @@ const actions = {
 
         if(endResult.ok){
             store.commit('setState', State.Idle);
-            store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
+
+            if(reason){
+                store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
+            }
         } else {
             throw new Error('Oh noooooo, ending failed');
         }
@@ -138,9 +161,11 @@ const actions = {
         }
 
         try {
+            const previousPerformer = { ...store.state.activePerformer };
+
             store.state.isSwitching = true;
 
-            await store.dispatch('end', 'PEEK_SWITCH');
+            await store.dispatch('end');
 
             await store.dispatch('startRequest', <RequestPayload>{
                 performer: performer,
@@ -149,6 +174,22 @@ const actions = {
                 displayName: store.state.activeDisplayName,
                 payment: store.state.activePaymentType
             });
+
+            /* Switching failed man, the new performer is not available, lets go back to the previous
+             * If the previous is gone, well fuck me, session is just gonna have to stop..
+             * Why am I casting a State to State? Well this ain't this a state... this is State.Active specifically right now
+             * That's because I did a check to see if it was at the top of this function and it couldnt have possibly changed meanwhile, right.. ?
+             */
+
+            if((store.state.activeState as State) === State.Idle){
+                await store.dispatch('startRequest', <RequestPayload>{
+                    performer: previousPerformer,
+                    sessionType: SessionType.Peek,
+                    ivrCode: store.state.activeIvrCode,
+                    displayName: store.state.activeDisplayName,
+                    payment: store.state.activePaymentType
+                });
+            }
 
             store.state.isSwitching = false;
         } catch(ex){

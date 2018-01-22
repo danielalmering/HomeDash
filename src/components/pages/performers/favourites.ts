@@ -28,5 +28,6 @@ export default class Favourites extends Performers {
 
         this.performers = data.performerAccounts;
         this.total = data.total;
+        this.noperformers = (data.total == 0) ? true : false;
     }
 }

@@ -60,7 +60,7 @@ export default class Chat extends Vue {
 
             if(!chatContainer) return;
 
-            this.$nextTick(() => chatContainer.scrollTo(0, chatContainer.scrollHeight));
+            this.$nextTick(() => chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight);
 
             this.setNotifier(content.senderType);
         });

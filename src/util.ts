@@ -6,39 +6,41 @@ import { Performer, PerformerStatus } from './models/Performer';
 export function getAvatarImage(performer: Performer, size: string){
 
     if(store.state.safeMode && performer.safe_avatar){
-        return `${config.ImageUrl}${performer.id}/${size}/${performer.safe_avatar.name}`;
+        return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.safe_avatar.name}`;
     }
 
     if(!store.state.safeMode && performer.avatar){
-        return `${config.ImageUrl}${performer.id}/${size}/${performer.avatar.name}`;
+        return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.avatar.name}`;
     }
 
     return require('./assets/images/placeholder.png');
 }
 
 export function getSliderImage(performer: Performer, photoname: string, size: string){
-
-    if(!store.state.safeMode){
-        return `${config.ImageUrl}${performer}/${size}/${photoname}`;
-    }
-
-    if(store.state.safeMode){
-        return;
-    }
-
-    return require('./assets/images/placeholder.png');
+    return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
 }
 
 export function getPerformerStatus(performer: Performer){
 
-    if(performer.performerStatus === PerformerStatus.Available
-        && performer.performer_services['cam'] || performer.performer_services['call']){
+    if(performer.performerStatus === PerformerStatus.OnCall){
+        return 'busy';
+    }
+
+    if(performer.performerStatus === PerformerStatus.Busy){
+        return performer.performer_services['peek'] ? 'peek' : 'busy';
+    }
+
+    if(performer.performerStatus === PerformerStatus.Available &&
+        performer.performer_services['cam'] || 
+        performer.performer_services['phone'] || 
+        performer.performer_services['videocall']){
+
         return 'available';
     }
 
-    if(performer.performerStatus === PerformerStatus.OnCall ||
-        performer.performerStatus === PerformerStatus.Busy){
-        return performer.performer_services['peek'] ? 'peek' : 'busy';
+    // Performer status Offline
+    if(performer.performer_services['phone']){
+        return 'available';
     }
 
     return 'offline';

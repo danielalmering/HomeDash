@@ -99,12 +99,15 @@ export default class VideoChat extends Vue {
         }
 
         var platform = Platform.parse(navigator.userAgent);
-        if (webrtcPossible(platform)){
-            return 'webrtcBroadcast';
-        }
+        //disabled camback on mobile for now
         if (noFlash(platform)){
             return 'none';
         }
+
+        if (webrtcPossible(platform)){
+            return 'webrtcBroadcast';
+        }
+
         return 'rtmpBroadcast';
     }
 
@@ -120,6 +123,13 @@ export default class VideoChat extends Vue {
             return undefined;
         }
         return this.$store.state.session.activeSessionData.publishStream;
+    }
+
+    get publishToken(): string | undefined{
+        if (!this.$store.state.session.activeSessionData){
+            return undefined;
+        }
+        return this.$store.state.session.activeSessionData.publishToken;
     }
 
     get playStream(): string | undefined{
@@ -142,7 +152,10 @@ export default class VideoChat extends Vue {
     }
 
     get canSwitchToVideoCall():boolean{
-        console.log(this.sessionType, this.paymentMethod, this.performer.performer_services.videocall);
+        //TODO: Look into this
+        //There is an off chance in between changing peekers that there is no performer but this property gets triggered from a rerender or something
+        //Only happens in peek so it shouldn't error here if we comment out this console.log
+        //console.log(this.sessionType, this.paymentMethod, this.performer.performer_services.videocall);
 
         return (this.sessionType == SessionType.Video)
              &&
@@ -325,7 +338,11 @@ export default class VideoChat extends Vue {
     public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void){
         const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
 
-        if (autoLeaves.indexOf(this.activeState) > -1 || this.isSwitching || to.name === 'Voyeur'){
+        if(this.isSwitching){
+            return;
+        }
+
+        if (autoLeaves.indexOf(this.activeState) > -1 || to.name === 'Voyeur' || to.name === 'Videochat' || to.name === 'Peek'){
             if(this.$store.state.session.fromVoyeur && to.name !== 'Voyeur'){
                 return this.gotoVoyeur(next);
             }
@@ -340,7 +357,10 @@ export default class VideoChat extends Vue {
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
         if (value === State.Accepted){
             await this.$store.dispatch('initiate');
-            this.navigation.next(true);
+
+            if(this.navigation && this.navigation.next){
+                this.navigation.next(true);
+            }
         }
     }
 

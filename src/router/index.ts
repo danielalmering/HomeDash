@@ -84,12 +84,12 @@ const routes = [{
                     beforeEnter: modalInterceptor('register')
                 },
                 {
-                    path: 'reset-password/:userId/:token',
+                    path: 'reset-password/:userId/:token/',
                     beforeEnter: modalInterceptor('reset'),
                     component: Performers
                 },
                 {
-                    path: 'confirm/:userId/:token',
+                    path: 'confirm/:userId/:token/',
                     beforeEnter: confirmInterceptor
                 },
                 {
@@ -161,6 +161,11 @@ const routes = [{
                 {
                     path: 'chat/',
                     name: 'Videochat',
+                    component: VideoChat
+                },
+                {
+                    path: 'peek/',
+                    name: 'Peek',
                     component: VideoChat
                 },
                 {

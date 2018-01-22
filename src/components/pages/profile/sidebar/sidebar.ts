@@ -181,6 +181,12 @@ export default class Sidebar extends Vue {
         if(this.displaySidebar){
             this.$store.commit('toggleSidebar');
         }
+
+        //Switch to the peek tab when starting a peek session
+        if(to.name === 'Peek' && this.category !== 'peek'){
+
+            this.setCategory('peek');
+        }
     }
 
     toggleSidebar(check: boolean){
@@ -223,7 +229,11 @@ export default class Sidebar extends Vue {
         const session = this.$store.state.session;
 
         //peek with another lady if you're currently peeking and the lady is peekable
-        if (this.category === 'peek' && session.activeState === State.Active && session.activeSessionType == SessionType.Peek){
+        if (this.category === 'peek' && session.activeState === State.Active && session.activeSessionType === SessionType.Peek){
+            if(performer.id === session.activePerformer.id){
+                return;
+            }
+
             try {
                 await this.$store.dispatch('switchPeek', performer);
             } catch(e){
@@ -231,9 +241,9 @@ export default class Sidebar extends Vue {
             }
 
             this.$router.push({
-                name: 'Videochat',
+                name: 'Peek',
                 params: {
-                    id: performer.advert_numbers[0].advertNumber.toString()
+                    id: session.activePerformer.advert_numbers[0].advertNumber.toString()
                 }
             });
 
@@ -265,13 +275,8 @@ export default class Sidebar extends Vue {
     }
 
     search(){
-        const element = document.querySelector('.sidebar__performers');
+        this.scrollToTop();
 
-        if(!element){
-            return;
-        }
-
-        element.scrollTop = 0;
         this.query.offset = 0;
         this.loadPerformers();
     }
@@ -283,6 +288,8 @@ export default class Sidebar extends Vue {
 
         this.category = category;
 
+        this.scrollToTop();
+
         this.query.offset = 0;
         this.loadPerformers();
     }
@@ -291,6 +298,16 @@ export default class Sidebar extends Vue {
         this.$store.dispatch('voyeur/swap', {
             performerId: performerId
         });
+    }
+
+    scrollToTop(){
+        const element = document.querySelector('.sidebar__performers');
+
+        if(!element){
+            return;
+        }
+
+        element.scrollTop = 0;
     }
 
     beforeDestroy(){

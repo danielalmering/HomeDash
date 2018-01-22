@@ -40,7 +40,7 @@ export class WebRTC extends Broadcast{
         var options = {
             wowza: wowzaParts.host + "/webrtc-session.json",
             applicationName: wowzaParts.application,
-            token: wowzaParts.parameters.token,
+            token: this.publishToken ? this.publishToken : wowzaParts.parameters.token,
             streamName : this.publishStream,
             element: (this.$el as HTMLVideoElement) || undefined,
             useWebSockets: true,

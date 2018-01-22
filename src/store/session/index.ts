@@ -16,7 +16,9 @@ import actions from './actions';
 
 export interface SessionData {
     playStream: string;
-    publishStream: string;
+    playToken: string;
+    publishStream?: string;
+    publishToken?: string;
     streamTransportType: string;
     wowza: string;
 }
@@ -40,7 +42,12 @@ export interface SessionState {
     activePaymentType: PaymentType | undefined;
     isSwitching: boolean;
     fromVoyeur: boolean;
+    //ID of the timeout for the request
+    performerTimeout:any;
 }
+//don't work??
+// 'Cannot assign to 'performerTimeout' because it is not a variable.''
+//export var performerTimeout:number;
 
 interface VideoEventSocketMessageContent {
     type: string;
@@ -167,7 +174,8 @@ const sessionStore: Module<SessionState, RootState> = {
         activeIvrCode: undefined,
         activePaymentType: undefined,
         isSwitching: false,
-        fromVoyeur: false
+        fromVoyeur: false,
+        performerTimeout: Number.NaN
     },
     getters: getters,
     mutations: mutations,
