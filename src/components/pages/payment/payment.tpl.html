@@ -95,7 +95,7 @@
             <div class="payment__method">
                 <ul>
                     <li class="col-xs-12 col-sm-4" v-for="paymentMethod in paymentMethods">
-                        <a href="#" v-on:click="selectPayment(paymentMethod.abbr)">
+                        <a v-on:click="selectPayment(paymentMethod.abbr)">
                             <div class="payment__method-item" :class="{ 'special': paymentMethod.abbr === selectedPayment }" :id="paymentMethod.abbr">
                                 <i></i>
                                 <span></span>
