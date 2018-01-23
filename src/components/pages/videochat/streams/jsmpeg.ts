@@ -49,7 +49,7 @@ export default class JSMpeg extends Stream {
 
         const videoUrl = `${config.JsmpegUrl}?stream=${this.playStream}&token=${token}&hash=5B9F45B17A77831EA6C5346464BD2`;
         const video = <HTMLCanvasElement>this.$el.querySelector('.jsmpeg');
-        const poster = require('../../../../assets/images/loader.gif');
+        const poster = require('../../../../assets/images/videoloader.gif');
 
         this.player = new jsmpeg.Player(videoUrl, {
             canvas: video,
