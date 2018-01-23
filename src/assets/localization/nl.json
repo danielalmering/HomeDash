@@ -414,6 +414,7 @@
     },
     "videocall": {
         "callEnded": "Gesprek beeindigd!",
-        "callFailed": "Gesprek is gefaald!"
+        "callFailed": "Gesprek is gefaald!",
+        "callAccepted": "Het gesprek is succesvol begonnen!"
     }
 }

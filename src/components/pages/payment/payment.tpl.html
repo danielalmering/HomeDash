@@ -75,7 +75,7 @@
                                 <span v-if="credits != 0">{{ user.credits + credits + bonusAmount(credits) }}</span>
                                 <p>{{ totalAmount | euro }}</p>
                             </div>
-                            <div class="col-xs-12" v-if="nextBonus && !info.marketing.current">
+                            <div class="col-xs-12" v-if="nextBonus && info && !info.marketing.current">
                                 <div class="payment__cart-bonus">
                                     {{ $t('payment.bonusbanner', { credits: nextBonus.amount, percentage: nextBonus.percentage }) }}
                                 </div>

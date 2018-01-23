@@ -31,7 +31,7 @@ const authenticationStore: Module<AuthState, RootState> = {
         }
     },
     mutations: {
-        async setUser(state: AuthState, user: User | undefined){
+        setUser(state: AuthState, user: User | undefined){
             state.user = user;
 
             if(state.user !== undefined && Raven.isSetup()){
