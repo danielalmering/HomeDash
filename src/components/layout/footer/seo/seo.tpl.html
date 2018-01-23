@@ -1,4 +1,4 @@
-<div>
+<div v-if="isVisible">
     <div class="footer__primary" v-if="seoMain" v-html="seoMain.description"></div>
     <div class="footer__tabs" v-if="hasTabs"></div>
         <ul class="footer__tabs-items col-xs-12 col-sm-2" v-if="seoTabs">
