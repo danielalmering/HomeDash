@@ -414,6 +414,7 @@
     },
     "videocall": {
         "callEnded": "Call ended!",
-        "callFailed": "Call failed!"
+        "callFailed": "Call failed!",
+        "callAccepted": "The call successfully started!"
     }
 }
