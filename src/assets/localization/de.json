@@ -413,6 +413,7 @@
     },
     "videocall": {
         "callEnded": "Anruf beendet!",
-        "callFailed": "Anruf fehlgeschlagen!"
+        "callFailed": "Anruf fehlgeschlagen!",
+        "callAccepted": "Anruf gestartet!"
     }
 }
