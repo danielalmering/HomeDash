@@ -23,7 +23,7 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { webrtcPossible, noFlash } from '../../../util';
+import { webrtcPossible, noFlash, tagHotjar } from '../../../util';
 import { Performer } from '../../../models/Performer';
 const Platform = require('platform');
 
@@ -242,6 +242,8 @@ export default class VideoChat extends Vue {
         if (!this.broadcasting.cam){
             this.broadcasting.settings = false;
         }
+
+        tagHotjar(`TOGGLE_CAM`);
     }
 
     toggleMic(){
@@ -254,6 +256,8 @@ export default class VideoChat extends Vue {
                 this.broadcasting.mic = selected.id;
             }
         }
+
+        tagHotjar(`TOGGLE_MIC`);
     }
 
     setCamera(event: Event){

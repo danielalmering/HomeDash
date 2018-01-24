@@ -2,6 +2,7 @@ import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import { UserForm } from '../../../models/User';
 import WithRender from './modal-register.tpl.html';
+import { tagHotjar } from '../../../util';
 
 @WithRender
 @Component
@@ -30,8 +31,12 @@ export default class ModalRegister extends Vue {
 
             this.$store.dispatch('successMessage', 'modals.register.alerts.successMessage');
             this.close();
+
+            tagHotjar('REGISTER_SUCCESS');
         } catch {
             this.$store.dispatch('errorMessage', 'modals.register.alerts.errorMessage');
+
+            tagHotjar('REGISTER_FAIL');
         }
     }
 

@@ -7,6 +7,7 @@ import { Performer } from '../../models/Performer';
 import { UserRole } from '../../models/User';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
+import { tagHotjar } from '../../util';
 
 
 const actions = {
@@ -48,6 +49,8 @@ const actions = {
                 store.commit('setState', State.Pending);
                 store.state.performerTimeout = setTimeout( ()=>store.dispatch('performerTimeout'), 60 * 1000 );
             }
+
+            tagHotjar(`SESSION_${payload.sessionType.toUpperCase()}_${payload.payment ? payload.payment : 'NONE'}`);
         }
 
         if (requestResult.ok && requestData.error){
@@ -59,6 +62,8 @@ const actions = {
                 content: requestData.error,
                 class: 'error'
             });
+
+            tagHotjar(`ERROR_${payload.sessionType.toUpperCase()}REQUEST`);
         }
     },
 
@@ -78,6 +83,8 @@ const actions = {
         });
         store.commit('setState', State.Idle);
         store.dispatch('errorMessage', `videochat.alerts.socketErrors.PERFORMER_TIMEOUT`);
+
+        tagHotjar(`ERROR_PERFORMERTIMEOUT`);
     },
 
     async accepted(store: ActionContext<SessionState, RootState>){
@@ -112,6 +119,8 @@ const actions = {
         if(result.ok){
             store.commit('setState', State.Idle);
             store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
+
+            tagHotjar(`CANCEL_${reason}`);
         } else {
             throw new Error('Oh noooooo, ending failed');
         }
@@ -141,6 +150,8 @@ const actions = {
             store.commit('setState', State.Idle);
 
             if(reason){
+                tagHotjar(`END_${reason}`);
+
                 store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             }
         } else {
@@ -189,6 +200,10 @@ const actions = {
                     displayName: store.state.activeDisplayName,
                     payment: store.state.activePaymentType
                 });
+
+                tagHotjar(`PEEKSWITCH_FAIL`);
+            } else {
+                tagHotjar(`PEEKSWITCH_SUCCESS`);
             }
 
             store.state.isSwitching = false;
@@ -234,6 +249,8 @@ const actions = {
 
         if(!initiateResult.ok){
             store.dispatch('cancel', 'INITIATE_FAILED');
+
+            tagHotjar(`ERROR_INITIATE`);
         }
 
         const data = await initiateResult.json();
