@@ -11,7 +11,7 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal } from '../../../../util';
+import { openModal, tagHotjar } from '../../../../util';
 import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';
@@ -151,7 +151,7 @@ export default class Tabs extends Vue {
         if (!this.performer.advert_numbers.length){
             return "0000";
         }
-        
+
         return this.performer.advert_numbers[0].advertNumber.toString();
     }
 
@@ -221,7 +221,7 @@ export default class Tabs extends Vue {
                     clientId : this.user.id,
                     performerId : this.performer.id,
                     sentBy : 'CLIENT',
-                    type : 'EMAIL'	
+                    type : 'EMAIL'
                 }
             });
 
@@ -229,6 +229,8 @@ export default class Tabs extends Vue {
                 content: 'contact.alerts.successSend',
                 class: 'success'
             });
+
+            tagHotjar('MESSAGE_SEND_PROFILE');
 
             this.emailForm = {content: '', subject: ''};
         }
