@@ -15,22 +15,10 @@ import WithRender from './footer.tpl.html';
 })
 export default class Footer extends Vue {
 
-    displaySeo: boolean = false;
-
     get branding(){
         return this.$store.getters.getBranding;
     }
 
-    get isSafeMode(){
-        return this.$store.state.safeMode;
-    }
-
     mounted(){
-        this.displaySeo = this.$route.name === 'Performers' && !this.isSafeMode;
-    }
-
-    @Watch('$route')
-    onRouteChange(to: Route, from: Route){
-        this.displaySeo = to.name === 'Performers' && !this.isSafeMode;
     }
 }

@@ -75,7 +75,7 @@ const transitions: { [key: string]: State[] } = { //TODO: Added by Lorenzo: Ask 
     [State.InRequest]:      [State.Pending, State.Accepted, State.Canceling, State.Idle],
     [State.Pending]:        [State.Accepted, State.Canceling],
     [State.Accepted]:       [State.Initializing, State.Canceling],
-    [State.Initializing]:   [State.Active, State.Canceling],
+    [State.Initializing]:   [State.Active, State.Canceling, State.Ending],
     [State.Active]:         [State.Ending],
     [State.Canceling]:      [State.Idle],
     [State.Ending]:         [State.Idle]

@@ -31,8 +31,8 @@ export function getPerformerStatus(performer: Performer){
     }
 
     if(performer.performerStatus === PerformerStatus.Available &&
-        performer.performer_services['cam'] || 
-        performer.performer_services['phone'] || 
+        performer.performer_services['cam'] ||
+        performer.performer_services['phone'] ||
         performer.performer_services['videocall']){
 
         return 'available';
@@ -199,4 +199,10 @@ export function isInSession(status: PerformerStatus){
 
 export function isOutOfSession(status: PerformerStatus){
     return status === PerformerStatus.Offline || status === PerformerStatus.Available;
+}
+
+export function tagHotjar(tag: string){
+    if(window.hj){
+        window.hj('tagRecording', [tag]);
+    }
 }

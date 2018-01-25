@@ -109,7 +109,8 @@ export default class Voyeur extends Vue {
             performer: this.availableReservation,
             sessionType: SessionType.Video,
             fromVoyeur: true,
-            ivrCode: this.$store.state.voyeur.ivrCode
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
         });
 
         this.$store.dispatch('succesMessage', 'voyeur.alerts.succesAddedreserve');
@@ -149,6 +150,10 @@ export default class Voyeur extends Vue {
         if(newState !== State.Accepted){
             return;
         }
+
+        // Close voyeur session first, this changes the isActive state to false and should trigger the close() function
+        // This doesn't happen tho because before it gets a chance we go to another component and this one gets broken down
+        await this.$store.dispatch('voyeur/end');
 
         await this.$store.dispatch('initiate');
 

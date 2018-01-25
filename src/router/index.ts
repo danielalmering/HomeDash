@@ -142,6 +142,17 @@ const routes = [{
                     component: Favourites
                 },
                 {
+                    path: 'main1/:category?/',
+                    name: 'Adwords',
+                    beforeEnter: (to, from, next) => {
+                        next({
+                            name: 'Performers',
+                            query: { ...to.query, safe: 'true' },
+                            params: { category: to.params.category }
+                        });
+                    }
+                },
+                {
                     path: ':category?/',
                     name: 'Performers',
                     component: Performers

@@ -6,6 +6,7 @@ import store from '../../../../../store';
 import config from '../../../../../config';
 import WithRender from './newmessage.tpl.html';
 import notificationSocket from '../../../../../socket';
+import { tagHotjar } from '../../../../../util';
 
 interface MessageForm {
     subject: string;
@@ -51,11 +52,11 @@ export default class Newmessage extends Vue {
         if(!store.state.safeMode && performer.img){
             return `${config.ImageUrl}pimg/${performer.id}/small/${performer.img}`;
         }
-    
+
         if(store.state.safeMode && performer.img){
             return;
         }
-    
+
         return require('../../../../../assets/images/placeholder.png');
     }
 
@@ -111,6 +112,8 @@ export default class Newmessage extends Vue {
         });
 
         if(newmessageResult.ok){
+            tagHotjar('MESSAGE_SEND');
+
             notificationSocket.sendEvent({
                 event: 'message',
                 receiverType: UserRole.Performer,
@@ -119,7 +122,7 @@ export default class Newmessage extends Vue {
                     clientId : user.id,
                     performerId : this.selectedPerformer,
                     sentBy : 'CLIENT',
-                    type : 'EMAIL'	
+                    type : 'EMAIL'
                 }
             });
 

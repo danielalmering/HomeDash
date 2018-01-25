@@ -417,6 +417,8 @@
         "nl": "The Netherlands"
     },
     "videocall": {
-        "callEnded": "Anruf beendet!"
+        "callEnded": "Anruf beendet!",
+        "callFailed": "Anruf fehlgeschlagen!",
+        "callAccepted": "Anruf gestartet!"
     }
 }
