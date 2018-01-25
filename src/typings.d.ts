@@ -27,6 +27,7 @@ declare module "raven-js/plugins/vue" {
 
 interface Window {
     flashCallbacks: any;
+    flashCheckCallback():void;
 
     _pcq: any[]; //Pushcrew actions
     pushcrew: any;

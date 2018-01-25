@@ -113,6 +113,11 @@
             "amber": "Amber",
             "grey": "Grijs",
             "redviolet": "Rood & violet"
+        },
+        "flash": {
+            "no": "Flash is uitgeschakeld.",
+            "checktext": "U moet Flash inschakelen om te kunnen cammen. Klik hieronder voor de instructies voor het inschakelen van Flash",
+            "enable": "Inschakelen"
         }
     },
     "tabs": {
