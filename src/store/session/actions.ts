@@ -8,13 +8,19 @@ import { UserRole } from '../../models/User';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
 import { tagHotjar } from '../../util';
-
+import i18n from '../../localization';
 
 const actions = {
     async startRequest(store: ActionContext<SessionState, RootState>, payload: RequestPayload){
         store.commit('setState', State.InRequest);
 
-        const displayName = payload.displayName || store.rootState.authentication.user.username;
+        let displayName: string = payload.displayName || store.rootState.authentication.user.username;
+
+        //annon_blablablabla is a lame name, let's replace it
+        if(displayName && displayName.indexOf('annon_') > -1){
+            displayName = i18n.t('videochat.anonymous').toString();
+        }
+
         const action = payload.sessionType == SessionType.Peek ? 'peek' : 'chat';
 
         const requestResult = await fetch(`${config.BaseUrl}/session/request/${action}`, {

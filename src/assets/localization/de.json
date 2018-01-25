@@ -267,6 +267,7 @@
     "videochat": {
         "leaving": "Aktuelle Session verlassen",
         "flashchecktext": "Du hast kein Flash installiert, klick hier unten um es zu downloaden.",
+        "anonymous": "Anonym",
         "alerts": {
             "successChatEnded": "Session beendet!",
             "socketErrors": {
