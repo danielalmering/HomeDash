@@ -211,7 +211,11 @@ export default class VideoChat extends Vue {
         try {
             await this.$store.dispatch('end', 'PLAYER_END');
 
-            await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.$store.state.session.activePerformer.id, ivrCode: this.$store.state.session.activeIvrCode });
+            await this.$store.dispatch('voyeur/startVoyeur', {
+                performerId: this.$store.state.session.activePerformer.id,
+                ivrCode: this.$store.state.session.activeIvrCode,
+                displayName: this.$store.state.session.displayName
+            });
 
             next({
                 name: 'Voyeur',

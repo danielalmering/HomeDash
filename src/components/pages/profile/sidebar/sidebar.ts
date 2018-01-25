@@ -221,7 +221,8 @@ export default class Sidebar extends Vue {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
             fromVoyeur: true,
-            ivrCode: this.$store.state.voyeur.ivrCode
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
         });
     }
 

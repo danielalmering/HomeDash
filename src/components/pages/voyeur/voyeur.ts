@@ -109,7 +109,8 @@ export default class Voyeur extends Vue {
             performer: this.availableReservation,
             sessionType: SessionType.Video,
             fromVoyeur: true,
-            ivrCode: this.$store.state.voyeur.ivrCode
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
         });
 
         this.$store.dispatch('succesMessage', 'voyeur.alerts.succesAddedreserve');
