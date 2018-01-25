@@ -45,6 +45,9 @@ const mutations = {
     storeIvrCode(state: VoyeurState, ivrCode: string){
         state.ivrCode = ivrCode;
     },
+    storeDisplayName(state: VoyeurState, displayName: string){
+        state.displayName = displayName;
+    },
     addReservation(state: VoyeurState, performerId: number){
         state.reservations.push(performerId);
     },
@@ -92,6 +95,7 @@ const mutations = {
         state.mainTile = undefined;
         state.isActive = false;
         state.ivrCode = undefined;
+        state.displayName = undefined;
     },
     increaseAlive(state: VoyeurState){
         state.activeTiles.forEach(t => t.iterationsAlive++);

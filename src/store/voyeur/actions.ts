@@ -9,7 +9,7 @@ let switcherooCb: number | undefined = undefined;
 
 const actions = {
 
-    async startVoyeur({ state, rootState, commit, dispatch, getters }: VoyeurContext, payload: { ivrCode?: string, performerId: number }){
+    async startVoyeur({ state, rootState, commit, dispatch, getters }: VoyeurContext, payload: { ivrCode?: string, displayName?: string, performerId: number }){
         const userId = rootState.authentication.user.id;
 
         const voyeurResult = await fetch(`${config.BaseUrl}/session/initiate_voyeurclient`, {
@@ -44,6 +44,8 @@ const actions = {
         if(payload.ivrCode){
             commit('storeIvrCode', payload.ivrCode);
         }
+
+        commit('storeDisplayName', payload.displayName);
 
         const performersResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=80&offset=0&voyeur=2`, {
             credentials: 'include'
