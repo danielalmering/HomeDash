@@ -330,7 +330,7 @@ export default class Sidebar extends Vue {
     }
 
     async loadPerformer(id: number): Promise<Performer> {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/${id}?limit=0`, {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/${id}?data=1`, {
             credentials: 'include'
         });
 
