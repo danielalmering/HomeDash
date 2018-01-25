@@ -150,6 +150,10 @@ export default class Voyeur extends Vue {
             return;
         }
 
+        // Close voyeur session first, this changes the isActive state to false and should trigger the close() function
+        // This doesn't happen tho because before it gets a chance we go to another component and this one gets broken down
+        await this.$store.dispatch('voyeur/end');
+
         await this.$store.dispatch('initiate');
 
         this.$router.push({
