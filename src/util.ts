@@ -181,6 +181,7 @@ export function isOutOfSession(status: PerformerStatus){
 
 export function tagHotjar(tag: string){
     if(window.hj){
+        console.log(tag);
         window.hj('tagRecording', [tag]);
     }
 }

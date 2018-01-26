@@ -2,6 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import config from '../../../config';
+import { getPaymentInfo } from 'SenseCore-FrontNew/consumer/payment';
 
 import './payment.scss';
 import WithRender from './payment.tpl.html';
@@ -63,12 +64,13 @@ export default class Payment extends Vue {
     }
 
     async getInfo(){
+        const { result, error } = await getPaymentInfo();
 
-        const infoResults = await fetch(`${config.BaseUrl}/client/client_accounts/updatebalanceinfo`, {
-            credentials: 'include'
-        });
+        if(error){
+            return;
+        }
 
-        const data = await infoResults.json();
+        const data = result;
 
         this.packages = data.packages.slice().reverse();
         this.paymentMethods = data.payment_methods;
@@ -222,6 +224,8 @@ export default class Payment extends Vue {
         });
 
         const data = await paymentResult.json();
+
+        console.log(data);
 
         if(data.free !== undefined){
             this.$store.dispatch('openMessage', {

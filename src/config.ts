@@ -1,3 +1,4 @@
+import { setConfig } from "SenseCore-FrontNew/core/config";
 
 export interface ProjectConfig {
     BaseUrl: string;
@@ -14,6 +15,10 @@ export interface ProjectConfig {
 
 const config = require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
 const isGigacams = window.location.hostname.indexOf('gigacams.com') > -1;
+
+setConfig({
+    ApiUrl: config.BaseUrl
+});
 
 if(isGigacams){
     config.AutomaticCountryRedirect = true;

@@ -45,7 +45,7 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-        test: /\.ts$/,
+        test: /\.(ts|service\.ts)$/,
         loader: 'ts-loader',
         // esModule: true,
         // include: [resolve('src')],

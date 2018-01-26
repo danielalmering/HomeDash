@@ -17,6 +17,8 @@ import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/S
 import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
+import { getByAdvert } from 'SenseCore-FrontNew/performer/performer';
+
 import './profile.scss';
 import './photo-slider.scss';
 import WithRender from './profile.tpl.html';
@@ -222,6 +224,9 @@ export default class Profile extends Vue {
     }
 
     async loadPerformer(id: number){
+        const result = await getByAdvert(id);
+        console.log(result);
+
         const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/performer_number/${id}?limit=10`, {
             credentials: 'include'
         });

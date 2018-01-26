@@ -5,17 +5,16 @@ import { setTitle, setDescription, setKeywords } from '../../../../seo';
 
 import config from '../../../../config';
 import WithRender from './seo.tpl.html';
-import { SeoText, SeoData } from '../../../../models/Seo';
+import { SeoText, CategoryData } from 'SenseCore-FrontNew/core/models/Category';
+import { getCategory } from 'SenseCore-FrontNew/consumer/Category';
 
 @WithRender
 @Component
 export default class Seo extends Vue {
 
-    seoMain: SeoText | boolean = false;
-    seoTabs : SeoText[] = [];
     selectedTab: number = 0;
 
-    seoData?: SeoData = undefined;
+    seoData?: CategoryData = undefined;
 
     mounted(){
         const category = this.$route.params.category && this.$route.params.category !== '' ? this.$route.params.category : 'home';
@@ -32,15 +31,15 @@ export default class Seo extends Vue {
     }
 
     get hasTabs():boolean{
-        if (!this.seoTabs){
+        if (!this.seoData || !this.seoData.texts){
             return false;
         }
 
-        if (this.seoTabs.length <= 1){
+        if (this.seoData.texts.length <= 1){
             return false;
         }
 
-        return this.seoTabs[1].description != "" && this.seoTabs[1].title != "";
+        return this.seoData.texts[1].description != "" && this.seoData.texts[1].title != "";
     }
 
     get isVisible(){
@@ -63,17 +62,17 @@ export default class Seo extends Vue {
     }
 
     async loadSeo(category: string){
-        const seoResults = await fetch(`${config.BaseUrl}/category/${category}`);
-        const data: SeoData = await seoResults.json();
+        const { result, error } = await getCategory(category);
 
-        this.seoMain = data.texts[0];
-        this.seoTabs = data.texts.slice(1);
-        this.selectedTab = this.seoTabs[0].id;
+        if(error){
+            return;
+        }
 
-        this.seoData = data;
+        this.seoData = result;
+        this.selectedTab = result.texts[0].id;
 
-        setTitle(data.meta_title);
-        setDescription(data.meta_description);
-        setKeywords(data.meta_keywords);
+        setTitle(result.meta_title);
+        setDescription(result.meta_description);
+        setKeywords(result.meta_keywords);
     }
 }

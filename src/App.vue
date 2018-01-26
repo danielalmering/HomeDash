@@ -3,7 +3,7 @@
         <modal-wrapper></modal-wrapper>
         <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
         <countryselection v-if="displayCountryselection" v-on:close="displayCountryselection = false"></countryselection>
-        <router-view/>
+        <router-view />
         <agecheck v-if="displayAgecheck" v-on:close="displayAgecheck = false"></agecheck>
         <alerts></alerts>
     </div>
@@ -38,9 +38,11 @@ export default class Cookies extends Vue {
     displayCookies: boolean = false;
     displayAgecheck: boolean = false;
     displayCountryselection: boolean = false;
+    sessionLoaded: boolean = false;
 
     async created(){
         await this.$store.dispatch('getSession');
+
         notificationSocket.connect();
         notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
@@ -69,14 +71,14 @@ export default class Cookies extends Vue {
             const hj = window.hj as any;
             registrationAttempts += 1;
 
-            if(Raven.isSetup() && hj && hj.pageVisit && hj.pageVisit.property){
-                const hotjarUserId = hj.pageVisit.property.get('userId');
+            if(Raven.isSetup() && hj && hj.pageVisit && hj.pageVisit.property && hj.pageVisit.property.key){
+                const hotjarUserId = hj.pageVisit.property.key;
 
                 Raven.captureBreadcrumb({
                     message: `Sentry session started with hotjar user ${hotjarUserId}`,
                     category: 'data'
                 });
-            } else if(registrationAttempts < 5) {
+            } else if(registrationAttempts <= 5) {
                 setTimeout(registerHotjarToSentry, 2000);
             } else {
                 Raven.captureBreadcrumb({
