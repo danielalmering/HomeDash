@@ -2,7 +2,6 @@ import { Component, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer, PerformerStatus } from '../../../../models/Performer';
 import { openModal, openRoute, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
 import config from '../../../../config';
 
@@ -13,6 +12,9 @@ import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
+import { listRecommended, listBusy } from 'SenseJS/performer/performer';
+import { listFavourites } from 'SenseJS/performer/favourite';
+import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
 
 type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 
@@ -223,8 +225,7 @@ export default class Sidebar extends Vue {
     }
 
     async startVideoChat(performerId: number){
-        await this.$store.dispatch<RequestPayload>({
-            type: 'startRequest',
+        await this.$store.dispatch('startRequest', {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
             fromVoyeur: true,
@@ -261,7 +262,7 @@ export default class Sidebar extends Vue {
         this.$router.push(this.$localize({
             name: 'Profile',
             params: {
-                id: performer.advert_numbers[0].advertNumber.toString()
+                id: performer.advertId.toString()
             }
         }));
     }
@@ -348,28 +349,24 @@ export default class Sidebar extends Vue {
     }
 
     async loadRecommended() {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}${this.query.search !== '' ? '&search=' : '' }${this.query.search}`, {
-            credentials: 'include'
+        const { result } = await listRecommended({
+            ...this.query,
+            search: this.query.search === '' ? undefined : this.query.search
         });
 
-        return performerResults.json();
+        return result;
     }
 
     async loadFavorites(){
         const userId = this.$store.state.authentication.user.id;
+        const { result } = await listFavourites(userId, this.query);
 
-        const performerResults = await fetch(`${config.BaseUrl}/client/client_accounts/${userId}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
-            credentials: 'include'
-        });
-
-        return performerResults.json();
+        return result;
     }
 
     async loadPeek(){
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
-            credentials: 'include'
-        });
+        const { result } = await listBusy(this.query);
 
-        return performerResults.json();
+        return result;
     }
 }

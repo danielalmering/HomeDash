@@ -8,16 +8,8 @@ import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './inbox.tpl.html';
 import { tagHotjar } from '../../../../util';
-
-interface Notification {
-    id: number;
-    date: number;
-    performer_id: number;
-    status: string;
-    subject: string;
-    type: string;
-    checked: boolean;
-}
+import { Notification } from 'SenseJS/core/models/notification';
+import { getNotifications, removeNotifications, payNotification } from 'SenseJS/consumer/notification';
 
 @WithRender
 @Component({
@@ -78,25 +70,23 @@ export default class Inbox extends Vue {
             return;
         }
 
-        const deleteResult = await fetch(`${config.BaseUrl}/client/client_accounts/notifications/group`, {
-            method: 'DELETE',
-            body: JSON.stringify({ notifications : deletedMessages }),
-            credentials: 'include'
-        });
+        const { result, error } = await removeNotifications(deletedMessages);
 
-        if(!deleteResult.ok){
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'account.alerts.errorInboxRemove',
                 class: 'error'
             });
-        } else {
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.successInboxRemove',
-                class: 'success'
-            });
 
-            this.pageChanged();
+            return;
         }
+
+        this.$store.dispatch('openMessage', {
+            content: 'account.alerts.successInboxRemove',
+            class: 'success'
+        });
+
+        this.pageChanged();
     }
 
     async loadInbox(){
@@ -106,7 +96,9 @@ export default class Inbox extends Vue {
             credentials: 'include'
         });
 
-        if(!inboxResults.ok){
+        const { result, error } = await getNotifications(user.id, this.query);
+
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'account.alerts.errorInboxLoad',
                 class: 'error'
@@ -115,12 +107,10 @@ export default class Inbox extends Vue {
             return;
         }
 
-        const data = await inboxResults.json();
+        result.notifications.forEach((notification: Notification) => notification.checked = false);
 
-        data.notifications.forEach((notification: Notification) => notification.checked = false);
-
-        this.notifications = data.notifications;
-        this.total = data.total;
+        this.notifications = result.notifications;
+        this.total = result.total;
     }
 
     openMessage(notification: Notification, force = false){
@@ -149,16 +139,9 @@ export default class Inbox extends Vue {
             emailId: notification.id
         };
 
-        const paymessageResult = await fetch(`${config.BaseUrl}/client/client_accounts/${user.id}/tax/performer_accounts/${notification.performer_id}`, {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
+        const { result, error } = await payNotification(user.id, notification.performer_id, payload);
 
-        if(!paymessageResult.ok){
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'account.alerts.errorInboxMessagePay',
                 class: 'error'

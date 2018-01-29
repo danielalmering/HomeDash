@@ -1,7 +1,6 @@
 import store from './store';
 import config from './config';
-
-import { Performer, PerformerStatus } from './models/Performer';
+import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
 
 export function getAvatarImage(performer: Performer, size: string){
 

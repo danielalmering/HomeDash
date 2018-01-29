@@ -5,6 +5,7 @@ import './contact.scss';
 
 import config from '../../../config';
 import WithRender from './contact.tpl.html';
+import { PostContactPayload, postContactMessage } from 'SenseJS/admin';
 
 interface Message {
     email: string;
@@ -17,7 +18,7 @@ interface Message {
 @Component
 export default class Contact extends Vue {
 
-    contact: Message = {
+    contact: PostContactPayload = {
         email: '',
         message: '',
         name: '',
@@ -25,15 +26,9 @@ export default class Contact extends Vue {
     };
 
     async send(){
-        const contactResult = await fetch(`${config.BaseUrl}/admin/contact_message`, {
-            method: 'POST',
-            credentials: 'include',
-            body: JSON.stringify(this.contact)
-        });
+        const { error } = await postContactMessage(this.contact);
 
-        const contactData = await contactResult.json();
-
-        if(!contactResult.ok){
+        if(error){
             this.$store.dispatch('errorMessage', 'contact.alerts.errorSend');
         } else {
             this.$store.dispatch('successMessage', 'contact.alerts.successSend');

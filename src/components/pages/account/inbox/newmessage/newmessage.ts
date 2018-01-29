@@ -7,17 +7,12 @@ import config from '../../../../../config';
 import WithRender from './newmessage.tpl.html';
 import notificationSocket from '../../../../../socket';
 import { tagHotjar } from '../../../../../util';
+import { listUsernames, SimplePerformer } from 'SenseJS/performer/performer';
+import { postNotification, PostNotificationParams } from 'SenseJS/consumer/notification';
 
 interface MessageForm {
     subject: string;
     content: string;
-}
-
-interface BarePerformer {
-    id: number;
-    username: string;
-    adv:string;
-    img:string;
 }
 
 @WithRender
@@ -26,7 +21,7 @@ export default class Newmessage extends Vue {
 
     message: MessageForm = { subject: '', content: '' };
 
-    performers: BarePerformer[] = []; //This call returns performer id's, not adverts... include adverts lol
+    performers: SimplePerformer[] = []; //This call returns performer id's, not adverts... include adverts lol
     performerSearchQuery: string = '';
     selectedPerformer: number = 0;
 
@@ -43,12 +38,12 @@ export default class Newmessage extends Vue {
         }
     }
 
-    selectPerformer(performer:BarePerformer){
+    selectPerformer(performer: SimplePerformer){
         this.selectedPerformer = performer.id;
         this.performerSearchQuery = `${performer.username} (${performer.adv})`;
     }
 
-    getImage(performer: BarePerformer){
+    getImage(performer: SimplePerformer){
         if(!store.state.safeMode && performer.img){
             return `${config.ImageUrl}pimg/${performer.id}/small/${performer.img}`;
         }
@@ -81,11 +76,9 @@ export default class Newmessage extends Vue {
     }
 
     async loadPerformers() {
-        const performersResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/usernames?extra=1&service=email`, {
-            credentials: 'include'
-        });
+        const { result, error } =  await listUsernames();
 
-        this.performers =  await performersResults.json();
+        this.performers = result;
     }
 
     async sendMessage(){
@@ -96,7 +89,7 @@ export default class Newmessage extends Vue {
             return;
         }
 
-        const message = {
+        const message: PostNotificationParams = {
             clientid: { id: user.id },
             content: this.message.content,
             performer_account: { id: this.selectedPerformer },
@@ -105,13 +98,9 @@ export default class Newmessage extends Vue {
             subject: this.message.subject
         };
 
-        const newmessageResult = await fetch(`${config.BaseUrl}/performer/performer_account/${this.selectedPerformer}/email`, {
-            method: 'POST',
-            body: JSON.stringify(message),
-            credentials: 'include'
-        });
+        const { result, error } = await postNotification(message);
 
-        if(newmessageResult.ok){
+        if(!error){
             tagHotjar('MESSAGE_SEND');
 
             notificationSocket.sendEvent({

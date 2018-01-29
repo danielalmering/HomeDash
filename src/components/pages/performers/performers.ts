@@ -4,7 +4,6 @@ import Vue from 'vue';
 
 import Pagination from '../../layout/Pagination.vue';
 import notificationSocket from '../../../socket';
-import { Performer, PerformerStatus } from '../../../models/Performer';
 import { getAvatarImage, getPerformerStatus, getPerformerLabel } from '../../../util';
 import config from '../../../config';
 
@@ -12,6 +11,8 @@ import './performers.scss';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
 import WithRender from './performers.tpl.html';
 import { RawLocation } from 'vue-router/types/router';
+import { listPerformers } from 'SenseJS/performer/performer';
+import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
 
 @WithRender
 @Component({
@@ -25,7 +26,6 @@ export default class Performers extends Vue {
 
     total: number = 0;
     services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
-    noperformers: boolean = false;
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
@@ -44,6 +44,10 @@ export default class Performers extends Vue {
     serviceEventId: number;
     statusEventId: number;
 
+    get noPerformers(){
+        return this.performers.length === 0;
+    }
+
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 
@@ -54,7 +58,6 @@ export default class Performers extends Vue {
     onRouteChange(to: Route, from: Route){
         this.query.category = to.params.category ? to.params.category : '';
         this.query.search = to.query.search ? to.query.search : '';
-        this.noperformers = false;
 
         this.query.offset = to.query.page ? (parseInt(to.query.page) - 1) * this.query.limit : 0;
 
@@ -126,18 +129,13 @@ export default class Performers extends Vue {
         //Makes the tiles load when switching pages
         this.performers = new Array(this.query.limit).fill(undefined, 0, this.query.limit);
 
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}&search=${this.query.search}`, {
-            credentials: 'include'
-        });
+        const { result, error } = await listPerformers(this.query);
 
-        if(performerResults.status !== 200){
+        if(error){
             this.$router.push({ name: 'Performers' });
         }
 
-        const data = await performerResults.json();
-
-        this.performers = data.performerAccounts;
-        this.total = data.total;
-        this.noperformers = (data.total == 0) ? true : false;
+        this.performers = result.performerAccounts;
+        this.total = result.total;
     }
 }

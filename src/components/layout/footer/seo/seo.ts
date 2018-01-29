@@ -5,8 +5,8 @@ import { setTitle, setDescription, setKeywords } from '../../../../seo';
 
 import config from '../../../../config';
 import WithRender from './seo.tpl.html';
-import { SeoText, CategoryData } from 'SenseCore-FrontNew/core/models/Category';
-import { getCategory } from 'SenseCore-FrontNew/consumer/Category';
+import { SeoText, CategoryData } from 'SenseJS/core/models/Category';
+import { getCategory } from 'SenseJS/consumer/Category';
 
 @WithRender
 @Component

@@ -1,4 +1,4 @@
-import { setConfig } from "SenseCore-FrontNew/core/config";
+import { setConfig } from "SenseJS/core/config";
 
 export interface ProjectConfig {
     BaseUrl: string;
