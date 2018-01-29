@@ -25,6 +25,8 @@ import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
 import { webrtcPossible, noFlash, tagHotjar } from '../../../util';
 import { Performer } from '../../../models/Performer';
+import { addFavourite, removeFavourite } from '../../../../../SenseCore-FrontNew/performer/favourite';
+import { clientSeen } from 'SenseJS/session/index';
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
@@ -186,9 +188,9 @@ export default class VideoChat extends Vue {
         });
 
         this.intervalTimer = window.setInterval(async () => {
-            const result = await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
+            const { error } = await clientSeen();
 
-            if(!result.ok && !this.isSwitching){
+            if(error && !this.isSwitching){
                 this.close();
             }
         }, 5000);
@@ -200,8 +202,8 @@ export default class VideoChat extends Vue {
 
     toggleFavourite(){
         this.performer.isFavourite ?
-            this.$store.dispatch('addFavourite', this.performer.id) :
-            this.$store.dispatch('removeFavourite', this.performer.id);
+            addFavourite(this.$store.state.authentication.user.id, this.performer.id) :
+            removeFavourite(this.$store.state.authentication.user.id, this.performer.id);
 
         this.performer.isFavourite = !this.performer.isFavourite;
     }

@@ -6,7 +6,6 @@ import { ActionContext } from 'vuex';
 import localization, { LocalizationState } from './localization';
 import modals, { ModalsState } from './modals';
 import authentication, { AuthState } from './authentication';
-import performers, { PerformersState } from './performers';
 import session, { SessionState } from './session/';
 import alerts, { AlertsState } from './alerts';
 import voyeur, { VoyeurState } from './voyeur';
@@ -99,7 +98,7 @@ const rootStore = new Vuex.Store<RootState>({
         deactivateSafeMode: function(state: RootState){
             state.safeMode = false;
         }
-    }, 
+    },
     actions: {
         loadInfo: async function(store: RootContext){
             const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`, {
@@ -114,7 +113,6 @@ const rootStore = new Vuex.Store<RootState>({
         localization: localization,
         modals: modals,
         authentication: authentication,
-        performers: performers,
         session: session,
         alerts: alerts,
         voyeur: voyeur

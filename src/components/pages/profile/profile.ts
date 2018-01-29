@@ -23,6 +23,7 @@ import './photo-slider.scss';
 import WithRender from './profile.tpl.html';
 import { Performer, PerformerStatus, PerformerAvatar } from 'SenseJS/performer/performer.model';
 import { createReservation } from 'SenseJS/session';
+import { removeFavourite, addFavourite } from 'SenseJS/performer/favourite';
 
 @WithRender
 @Component({
@@ -93,8 +94,8 @@ export default class Profile extends Vue {
     getAvatarImage = getAvatarImage;
     getPerformerLabel = getPerformerLabel;
 
-    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
-    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+    addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));

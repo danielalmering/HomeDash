@@ -13,6 +13,7 @@ import WithRender from './performers.tpl.html';
 import { RawLocation } from 'vue-router/types/router';
 import { listPerformers } from 'SenseJS/performer/performer';
 import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
+import { addFavourite, removeFavourite } from 'SenseJS/performer/favourite';
 
 @WithRender
 @Component({
@@ -31,8 +32,8 @@ export default class Performers extends Vue {
     getPerformerStatus = getPerformerStatus;
     getPerformerLabel = getPerformerLabel;
 
-    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
-    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+    addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     query: { limit: number, offset: number, category?: string, search: string } = {
         limit: 40,

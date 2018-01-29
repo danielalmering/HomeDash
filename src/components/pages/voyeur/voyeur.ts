@@ -11,6 +11,7 @@ import { SessionType, State } from '../../../models/Sessions';
 import { RequestPayload } from '../../../store/session/';
 import { Performer } from '../../../models/Performer';
 import WithRender from './voyeur.tpl.html';
+import { clientSeen } from '../../../../../SenseCore-FrontNew/session/index';
 
 @WithRender
 @Component({
@@ -58,9 +59,11 @@ export default class Voyeur extends Vue {
 
     mounted(){
         this.intervalTimer = window.setInterval(async () => {
-            const result = await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
+            const { error } = await clientSeen({
+                app: 'VOYEUR'
+            });
 
-            if(!result.ok){
+            if(error){
                 close();
             }
         }, 5000);
