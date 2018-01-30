@@ -9,6 +9,7 @@ import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
 import { tagHotjar } from '../../util';
 import i18n from '../../localization';
+import { startRequest, deleteVideorequest, cancel, end, performerTimeout, startCall, endCall } from 'SenseJS/session/index';
 
 const actions = {
     async startRequest(store: ActionContext<SessionState, RootState>, payload: RequestPayload){
@@ -21,27 +22,16 @@ const actions = {
             displayName = i18n.t('videochat.anonymous').toString();
         }
 
-        const action = payload.sessionType == SessionType.Peek ? 'peek' : 'chat';
-
-        const requestResult = await fetch(`${config.BaseUrl}/session/request/${action}`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                performerId: payload.performer.id,
-                clientId: store.rootState.authentication.user.id,
-                type: payload.sessionType,
-                name: displayName,
-                ivrCode: payload.ivrCode || undefined,
-                payment: payload.payment
-            })
+        const { error, result } = await startRequest({
+            performerId: payload.performer.id,
+            clientId: store.rootState.authentication.user.id,
+            type: payload.sessionType,
+            name: displayName,
+            ivrCode: payload.ivrCode || undefined,
+            payment: payload.payment
         });
 
-        const requestData = await requestResult.json();
-
-        if(requestResult.ok && requestData.ok){
+        if(!error){
             store.state.activePerformer = payload.performer;
             store.state.activeDisplayName = displayName;
             store.state.activeSessionType = payload.sessionType;
@@ -59,13 +49,13 @@ const actions = {
             tagHotjar(`SESSION_${payload.sessionType.toUpperCase()}_${payload.payment ? payload.payment : 'NONE'}`);
         }
 
-        if (requestResult.ok && requestData.error){
+        if (error){
             store.state.activePerformer = store.state.activeSessionType = null;
             store.state.fromVoyeur = payload.fromVoyeur || false;
             store.commit('setState', State.Idle);
 
             store.dispatch('openMessage', {
-                content: requestData.error,
+                content: error.message,
                 class: 'error'
             });
 
@@ -76,17 +66,12 @@ const actions = {
     //performer did not respond in time
     async performerTimeout(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Canceling);
-        await fetch(`${config.BaseUrl}/session/timeout/performer`,{
-            method: 'POST',
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                performerId: store.state.activePerformer ? store.state.activePerformer.id : undefined,
-                clientId: store.rootState.authentication.user.id
-            })
+
+        await performerTimeout({
+            performerId: store.state.activePerformer ? store.state.activePerformer.id : 0,
+            clientId: store.rootState.authentication.user.id
         });
+
         store.commit('setState', State.Idle);
         store.dispatch('errorMessage', `videochat.alerts.socketErrors.PERFORMER_TIMEOUT`);
 
@@ -99,30 +84,21 @@ const actions = {
     async cancel(store: ActionContext<SessionState, RootState>, reason: string = 'CANCEL'){
         store.commit('setState', State.Canceling);
 
-        let result;
+        const performerId = store.state.activePerformer ? store.state.activePerformer.id : 0;
+        let hasError;
 
         if(reason === 'PERFORMER_REJECT'){
-            const performerId = store.state.activePerformer ? store.state.activePerformer.id : 0;
-
-            result = await fetch(`${config.BaseUrl}/session/videochat_request/${performerId}`, {
-                method: 'DELETE',
-                credentials: 'include'
-            });
+            const { error } = await deleteVideorequest(performerId);
+            hasError = error !== undefined;
         } else {
-            result = await fetch(`${config.BaseUrl}/session/cancel`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify({
-                    clientId: store.rootState.authentication.user.id,
-                    performerId: store.state.activePerformer ? store.state.activePerformer.id : 0
-                })
+            const { error } = await cancel({
+                clientId: store.rootState.authentication.user.id,
+                performerId: performerId
             });
+            hasError = error !== undefined;
         }
 
-        if(result.ok){
+        if(!hasError){
             store.commit('setState', State.Idle);
             store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
 
@@ -147,12 +123,9 @@ const actions = {
             store.commit('setIvrCode', undefined);
         }
 
-        const endResult = await fetch(`${config.BaseUrl}/session/end`, {
-            method: 'POST',
-            credentials: 'include'
-        });
+        const { error } = await end();
 
-        if(endResult.ok){
+        if(!error){
             store.commit('setState', State.Idle);
 
             if(reason){
@@ -287,16 +260,11 @@ const actions = {
             return;
         }
 
-        const result = await fetch(`${config.BaseUrl}/session/start_audio/${store.state.activePerformer.id}`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({ ivrCode: store.state.activeIvrCode })
+        const { error } = await startCall(store.state.activePerformer.id, {
+            ivrCode: store.state.activeIvrCode || ''
         });
 
-        if (result.status == 200){
+        if (!error){
             store.state.activeSessionType = SessionType.VideoCall;
         }
     },
@@ -305,16 +273,11 @@ const actions = {
             return;
         }
 
-        const result = await fetch(`${config.BaseUrl}/session/stop_audio`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({ivrCode: store.state.activeIvrCode})
+        const { error } = await endCall({
+            ivrCode: store.state.activeIvrCode || ''
         });
 
-        if (result.status == 200){
+        if (!error){
             store.state.activeSessionType = SessionType.Video;
         }
     },
