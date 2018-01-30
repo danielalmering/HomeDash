@@ -125,7 +125,10 @@ export default class Sidebar extends Vue {
                     return;
                 }
 
-                this.performers.push(newPerformer);
+                //Extra check because this can be triggered twice if the performer quickly goes online and offline
+                if(!this.performers.find(p => p.id === data.performerId)){
+                    this.performers.push(newPerformer);
+                }
 
                 return;
             }
@@ -164,7 +167,11 @@ export default class Sidebar extends Vue {
                     return;
                 }
 
-                this.performers.push(newPerformer);
+                //Extra check because this can be triggered twice if the performer quickly goes online and offline
+                if(!this.performers.find(p => p.id === data.performerId)){
+                    this.performers.push(newPerformer);
+                }
+
                 return;
             }
 
@@ -221,7 +228,8 @@ export default class Sidebar extends Vue {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
             fromVoyeur: true,
-            ivrCode: this.$store.state.voyeur.ivrCode
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
         });
     }
 
@@ -330,7 +338,7 @@ export default class Sidebar extends Vue {
     }
 
     async loadPerformer(id: number): Promise<Performer> {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/${id}?limit=0`, {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/${id}?data=1`, {
             credentials: 'include'
         });
 

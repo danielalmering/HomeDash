@@ -6,6 +6,7 @@ import { User, AnonymousUser, UserForm } from '../models/User';
 import config from '../config';
 import notificationSocket from '../socket';
 import Raven from 'raven-js';
+import { tagHotjar } from '../util';
 
 export interface AuthState {
     user: User | undefined;
@@ -39,6 +40,8 @@ const authenticationStore: Module<AuthState, RootState> = {
                     id: state.user.id.toString()
                 });
             }
+
+            tagHotjar(`USER_${user ? user.id : 'NONE'}`);
         }
     },
     actions: {

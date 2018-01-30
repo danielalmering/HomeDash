@@ -33,5 +33,5 @@ interface Window {
 
     loadTagManager: any;
 
-    hj: (action: string, path: string) => void;
+    hj: (action: string, path: string | string[]) => void;
 }

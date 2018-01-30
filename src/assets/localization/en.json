@@ -267,6 +267,7 @@
     "videochat": {
         "leaving": "Leave current session",
         "flashchecktext": "To be able to cam back, you need to have Flash enabled. Please click below for instructions.",
+        "anonymous": "Anonymous",
         "alerts": {
             "successChatEnded": "Session ended!",
             "socketErrors": {
