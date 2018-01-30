@@ -27,18 +27,18 @@ notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
 
     if(!data) return;
 
-    const isVoyeurEnd = data.type === 'RESPONSE' && data.message === 'MAIN_ENDED' && rootState.getters['voyeur/idExists'](data.id);
-    const endMessages = ['BROKE', 'HANGUP', 'MAIN_ENDED'];
+    // const isVoyeurEnd = data.type === 'RESPONSE' && data.message === 'MAIN_ENDED' && rootState.getters['voyeur/idExists'](data.id);
+    const endMessages = ['BROKE', 'HANGUP'];
 
     if(data.message && endMessages.indexOf(data.message) > -1){
-        if(data.message === 'MAIN_ENDED' && (!canMainEnd || rootState.getters['voyeur/isMainTile'](data.performerId))){
-            canMainEnd = false;
-            setTimeout(() => canMainEnd = true, 1000);
+        // if(data.message === 'MAIN_ENDED' && (!canMainEnd || rootState.getters['voyeur/isMainTile'](data.performerId))){
+        //     canMainEnd = false;
+        //     setTimeout(() => canMainEnd = true, 1000);
 
-            return;
-        }
+        //     return;
+        // }
 
-        rootState.dispatch('voyeur/end', isVoyeurEnd);
+        rootState.dispatch('voyeur/end', false);
 
         return;
     }
