@@ -97,6 +97,10 @@ export function webrtcPossible(platform:Platform):boolean{
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+export function hasWebAudio():boolean{
+    return ("AudioContext" in window) || ("webkitAudioContext" in window);
+}
+
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
         {
@@ -112,6 +116,24 @@ export function noFlash(platform:Platform):boolean{
     ];
 
     return noFlashers.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isApple(platform:Platform):boolean{
+    console.log(platform);
+    const apples = [
+        {
+            os:{
+                famlily: 'iOS'
+            }
+        },
+        {
+            os:{
+                family: 'OS X'
+            }
+        }
+    ];
+
+    return apples.find( pattern => match(platform, pattern) ) != null;
 }
 
 // checks if 'pattern' is a subset of 'message'

@@ -26,6 +26,8 @@ export default class Voyeur extends Vue {
     showFavo: boolean = false;
     showReserve: boolean = false;
 
+    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+
     get mainTile(){
         return this.$store.state.voyeur.mainTile;
     }
@@ -42,6 +44,11 @@ export default class Voyeur extends Vue {
         return this.$store.getters['voyeur/availableReservations'][0];
     }
 
+    get performerData(){
+        const performerId = this.$store.state.voyeur.mainTile.performer;
+        return this.$store.getters['voyeur/performer'](performerId);
+    }
+
     get performer(){
         return (id: number) => {
             return this.$store.getters['voyeur/performer'](id);
@@ -54,6 +61,12 @@ export default class Voyeur extends Vue {
 
     get activeState(){
         return this.$store.state.session.activeState;
+    }
+
+    get isReserved(){
+        return (id: number) => {
+            return this.$store.getters['voyeur/reservations'].indexOf(id) > -1;
+        };
     }
 
     mounted(){
@@ -73,6 +86,7 @@ export default class Voyeur extends Vue {
                 }
             });
         }
+        
     }
 
     async close(){
@@ -102,6 +116,34 @@ export default class Voyeur extends Vue {
         });
     }
 
+    removeFavorite(performer: any){
+        if(!performer){
+            return;
+        }
+
+        this.removeFavourite(performer);
+    }
+
+    reserve(performerId: number){
+        if(this.$store.state.session.activeState === 'pending'){
+            return;
+        }
+
+        this.isReserved(performerId) ?
+            this.$store.commit('voyeur/removeReservation', performerId) :
+            this.$store.commit('voyeur/addReservation', performerId);
+
+        this.showReserve = true;
+    }
+
+    async removeReservation(performerId: number){
+        if(!performerId){
+            return;
+        }
+
+        this.$store.commit('voyeur/removeReservation', performerId);
+    }
+
     async acceptReservation(){
 
         await this.$store.dispatch<RequestPayload>({
@@ -122,6 +164,17 @@ export default class Voyeur extends Vue {
 
     async cancelReservation(){
         this.$store.commit('voyeur/removeReservation', this.availableReservation.id);
+    }
+
+    async startVideoChat(performerId: number){
+        await this.$store.dispatch<RequestPayload>({
+            type: 'startRequest',
+            performer: this.performer(performerId),
+            sessionType: SessionType.Video,
+            fromVoyeur: true,
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
+        });
     }
 
     viewerStateChange(state: string){

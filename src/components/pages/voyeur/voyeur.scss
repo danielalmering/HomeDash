@@ -14,37 +14,50 @@
     z-index: 2;
     right: 0px;
     width: 100%;
-    background: $pallete-16;
+    @include breakpoint(xs) { height: 100vh; }
+    background: $pallete-13;
 
     &__screen{
         position: relative;
         z-index: 1;
         display: table;
         height: 100vh;
+        @include breakpoint(xs) { height: auto; }
         width: 100%;
 
         &-object {
-            position: relative;
-            display: table;
-            height: 100vh;
+            position: absolute;
+            display: block;
             width: 100%;
+            height: auto;
+
+            @include breakpoint(xs) { position: relative; }
+            @include breakpoint(md) { height: 100%; }
+            @include breakpoint(lg) { height: 100%; }
+            
             canvas {
                 display: table-cell;
                 vertical-align: middle;
-                object-fit: cover;
                 width: 100%;
                 height: 100%;
-            }
-            div {
-                width: 100%;
-                height: 100%;
-            }
-        }
 
-        @include breakpoint(xs) {
-            height: auto;
-            &-object {
-                height: auto;
+                @include breakpoint(md) {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%); 
+                }
+
+                @include breakpoint(lg) {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%); 
+                }
+            }
+            div, video {
+                width: 100%;
+                height: 100%;
             }
         }
     }
@@ -53,23 +66,62 @@
         position: fixed;
         z-index: 1;
         bottom: 0;
-        background: $pallete-11;
+        background: $pallete-0;
         min-width: 250px;
         @include border-top-radius(5px);
         border: 1px solid rgba(255, 255, 255, 0.1);
 
         &.left {
-            left: 100px;
+            left: 25px;
             @include breakpoint(xs) {
                 left: 0;
             }
             @include breakpoint(md) {
-                left: 350px;
+                left: 275px;
+            }
+        }
+
+        &.center {
+            bottom: 1px;
+            width: 100%;
+            @include breakpoint(xs) {
+                position: relative;
+                bottom: 51px;
+            }
+            @include breakpoint(md) {
+                width: calc(100% - 250px);
+            }
+            border: none;
+            background: none;
+            .btn {
+                display: table;
+                @include rem(margin,10px auto);
+                &.btn-icon {
+                    position: relative;
+                    display: table;
+                    @include rem(padding, 9px 10px 9px 35px);
+                    @include rem(margin, 5px auto);
+
+                    i {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 25px;
+                        height: 36px;
+                        @include rem(padding, 13px 4px);
+                        background: black;
+                        font: normal normal normal 12px/1 FontAwesome; 
+                        @include border-left-radius(3px);
+
+                        &.reserve { background: $pallete-19; &:before { content: "\f017"; } }
+                        &.online { background: $pallete-12; &:before { content: "\f03d"; } }
+                    }
+                }
             }
         }
 
         &.right {
-            right: 100px;
+            right: 25px;
         }
 
         @include breakpoint(xs) {
@@ -120,7 +172,7 @@
                 cursor: pointer;
                 i {
                     @include rem(margin-left,10px);
-                    @include rem(font-size, 11px);
+                    @include rem(font-size, 15px);
                     font-style: normal;
                     color: $pallete-3; 
                 }

@@ -54,7 +54,10 @@ const mutations = {
         state.reservations.push(performerId);
     },
     removeReservation(state: VoyeurState, performerId: number){
-        state.reservations = state.reservations.filter(r => r !== performerId);
+        const ix = state.reservations.indexOf(performerId);
+        if(ix > -1){ 
+            state.reservations.splice(ix, 1);
+        }
     },
     setTile(state: VoyeurState, payload: { tile: PerformerTile, position: number }){
         if(state.activeTiles[payload.position]){
