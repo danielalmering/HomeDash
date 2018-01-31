@@ -25,7 +25,7 @@
             "menu": "Menu",
             "lang": "Taal",
             "account": "Account",
-            "voyeur": "Voyeur",
+            "voyeur": "Teaser",
             "actions": "Acties",
             "editdata": "Bewerk account",
             "favourites": "Favo",
@@ -44,7 +44,7 @@
         "labels": {
             "peek-label": "Meekijken",
             "busy-label": "Bezet",
-            "voyeur-label": "Voyeur",
+            "teaser-label": "Teaser",
             "none": ""
         }
     },
@@ -69,7 +69,7 @@
         "recommended": "Aanbevolen",
         "peek": "Meekijken",
         "favorite": "Favoriet",
-        "voyeur": "Voyeur",
+        "voyeur": "Teaser",
         "noperformers": "Geen performers",
         "currentcredits": "Huidig saldo",
         "youraccount": "Jouw account?",
@@ -124,7 +124,7 @@
         "service-cam": "Webcammen",
         "service-peek": "Meekijken",
         "service-videocall": "Beeldbellen",
-        "service-voyeur": "Voyeur",
+        "service-voyeur": "Teaser",
         "service-phone": "Bellen",
         "service-email": "E-mail",
         "service-sms": "SMS",
@@ -136,7 +136,7 @@
         "webcamwithphonedesc": "Toets # in het hoofdmenu voor de toegangscode",
         "webcamwithcreditsdesc": "Hieronder kunt u webcammen en deze sessie betalen met credits, de kosten zijn",
         "peekbtn": "Meekijken",
-        "voyeurbtn": "Voyeur",
+        "voyeurbtn": "Teaser",
         "videochatbtn": "Beeldbellen",
         "videochatwithcreditsdesc1": "Toets",
         "videochatwithcreditsdesc2": "en sluit af met een # en kies vervolgens de optie beeldbellen in het menu (#)",
@@ -272,6 +272,7 @@
     "videochat": {
         "leaving": "Huidige sessie verlaten",
         "flashchecktext": "Om terug te kunnen cammen moet Flash het doen. Klik hieronder voor instructies.",
+        "anonymous": "Anoniem",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
             "socketErrors": {
@@ -392,7 +393,7 @@
         "successMessage": "Je account is succesvol geactiveerd"
     },
     "services": {
-        "VOYEURCLIENT": "Voyeur",
+        "VOYEURCLIENT": "Teaser",
         "PEEK": "Meekijken",
         "MANUAL": "Handmatig",
         "VIDEO": "Video",

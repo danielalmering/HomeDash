@@ -125,7 +125,10 @@ export default class Sidebar extends Vue {
                     return;
                 }
 
-                this.performers.push(newPerformer);
+                //Extra check because this can be triggered twice if the performer quickly goes online and offline
+                if(!this.performers.find(p => p.id === data.performerId)){
+                    this.performers.push(newPerformer);
+                }
 
                 return;
             }
@@ -164,7 +167,11 @@ export default class Sidebar extends Vue {
                     return;
                 }
 
-                this.performers.push(newPerformer);
+                //Extra check because this can be triggered twice if the performer quickly goes online and offline
+                if(!this.performers.find(p => p.id === data.performerId)){
+                    this.performers.push(newPerformer);
+                }
+
                 return;
             }
 
