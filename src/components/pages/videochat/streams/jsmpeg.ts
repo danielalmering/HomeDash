@@ -6,6 +6,8 @@ import config from '../../../../config';
 
 import Stream from './stream';
 
+const Platform = require('platform');
+
 @Component({
     template: '<div><canvas width="640" height="480" class="jsmpeg"></canvas></div>',
 })
@@ -50,6 +52,7 @@ export default class JSMpeg extends Stream {
         const videoUrl = `${config.JsmpegUrl}?stream=${this.playStream}&token=${token}&hash=5B9F45B17A77831EA6C5346464BD2`;
         const video = <HTMLCanvasElement>this.$el.querySelector('.jsmpeg');
         const poster = require('../../../../assets/images/videoloader.gif');
+        const platform = Platform.parse(navigator.userAgent);
 
         this.player = new jsmpeg.Player(videoUrl, {
             canvas: video,
@@ -58,7 +61,7 @@ export default class JSMpeg extends Stream {
             streaming: true,
             poster: poster,
             pauseWhenHidden: false,
-            disableGl: false,
+            disableGl: platform.name === 'Chrome',
             playingStateChange: (playing: boolean) => playing ? this.onStateChange('active') : this.onStateChange('disconnected')
         });
     }
