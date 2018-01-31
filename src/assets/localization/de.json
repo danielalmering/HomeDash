@@ -113,6 +113,11 @@
             "amber": "Amber",
             "grey": "Grey",
             "redviolet": "Red & violet"
+        },
+        "flash": {
+            "no": "Flash ist deaktiviert.",
+            "checktext": "Zum Cammen muss Flash aktiviert sein. Klicken Sie unten für die Instruktionen zum Aktivieren",
+            "enable": "Aktivieren"
         }
     },
     "tabs": {

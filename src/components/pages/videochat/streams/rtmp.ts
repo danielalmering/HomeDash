@@ -43,7 +43,7 @@ export class Rtmp extends Stream {
         }
 
         const flashvars = {
-            wowza: wowza,
+            wowza,
             playStream: this.playStream,
             listener: 'flashCallbacks'
         };
