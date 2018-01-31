@@ -44,7 +44,7 @@
         "labels": {
             "peek-label": "Meekijken",
             "busy-label": "Bezet",
-            "voyeur-label": "Teaser",
+            "teaser-label": "Teaser",
             "none": ""
         }
     },

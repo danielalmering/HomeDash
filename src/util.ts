@@ -47,6 +47,9 @@ export function getPerformerStatus(performer: Performer){
 }
 
 export function getPerformerLabel(performer: Performer){
+    if(performer.isVoyeur){
+        return 'teaser-label';
+    }
 
     if(performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === true){
         return 'peek-label';
