@@ -47,7 +47,7 @@ export function getPerformerStatus(performer: Performer){
 }
 
 export function getPerformerLabel(performer: Performer){
-    if(performer.isVoyeur){
+    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
         return 'teaser-label';
     }
 
