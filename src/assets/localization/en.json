@@ -113,6 +113,11 @@
             "amber": "Amber",
             "grey": "Grey",
             "redviolet": "Red & violet"
+        },
+        "flash": {
+            "no": "Flash is disabled.",
+            "checktext": "To be able to cam, you need to enable Flash. Click below for the instructions for enabling Flash",
+            "enable": "Enable"
         }
     },
     "tabs": {

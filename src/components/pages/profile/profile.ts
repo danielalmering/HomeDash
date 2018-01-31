@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
-import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -20,6 +20,8 @@ import { setTitle, setDescription, setKeywords, setGraphData } from '../../../se
 import './profile.scss';
 import './photo-slider.scss';
 import WithRender from './profile.tpl.html';
+
+const swfobject = require('swfobject');
 
 @WithRender
 @Component({
@@ -177,10 +179,19 @@ export default class Profile extends Vue {
         }
     }
 
-    async startSession(payload = {}){
+    async startSession(payload:any = {}){
         if(!this.performer){
             return;
         }
+
+        //Uncomment if you need to offer the user the possibility to use flash 
+        //if you need the user to hear the performer
+        // if (payload.sessionType != 'PEEK' && !hasWebAudio()){
+        //     this.enableFlash = ! (await this.checkFlash());
+        //     if (this.enableFlash){
+        //         return;
+        //     }
+        // }
 
         const self = this;
 
@@ -194,6 +205,34 @@ export default class Profile extends Vue {
         const toSend = {...defaults, ...payload};
 
         await this.$store.dispatch<RequestPayload>( toSend );
+    }
+
+
+    enableFlash:boolean = false;
+
+    unNagFlash(){
+        this.enableFlash = false;
+    }
+
+    async checkFlash():Promise<boolean>{
+        return new Promise<boolean>( (resolve, reject)=>{
+            let timeout = window.setTimeout( ()=>{
+                timeout = Number.NaN;
+                resolve(false);
+            }, 1000);
+
+            window.flashCheckCallback = ()=>{
+                if (isNaN(timeout)){
+                    return;
+                }
+                window.clearTimeout(timeout);
+                resolve(true);
+            };
+
+            swfobject.embedSWF(
+                '/static/checkflash.swf', 'profile__flash-check', '100%', '100%', '10.2.0', true, {}, {wmode:'transparent'}
+            );
+        })
     }
 
     cancel(){
@@ -257,7 +296,6 @@ export default class Profile extends Vue {
 
         return this.$t(`profile.eyecolors.${color}`).toString();
     }
-
 
     setSeoParameters(){
         if(!this.performer){
