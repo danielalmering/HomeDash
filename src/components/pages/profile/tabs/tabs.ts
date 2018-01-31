@@ -86,6 +86,10 @@ export default class Tabs extends Vue {
 
         const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
 
+        if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 ) && this.performer.isVoyeur){
+            return 'voyeur';
+        }
+
         for (const service in this.performer.performer_services){
             if(this.enabled(service) && ignoredServices.indexOf(service) === -1){
                 return service;

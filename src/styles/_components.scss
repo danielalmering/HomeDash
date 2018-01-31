@@ -87,6 +87,10 @@
         border-color: transparent $pallete-19 transparent transparent;
     }
 
+    &.teaser {
+        border-color: transparent $pallete-22 transparent transparent;
+    }
+
     &.offline {
         display: none;
     }
