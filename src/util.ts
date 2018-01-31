@@ -22,6 +22,10 @@ export function getSliderImage(performer: Performer, photoname: string, size: st
 
 export function getPerformerStatus(performer: Performer){
 
+    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
+        return 'teaser';
+    }
+
     if(performer.performerStatus === PerformerStatus.OnCall){
         return 'busy';
     }
@@ -31,8 +35,8 @@ export function getPerformerStatus(performer: Performer){
     }
 
     if(performer.performerStatus === PerformerStatus.Available &&
-        performer.performer_services['cam'] || 
-        performer.performer_services['phone'] || 
+        performer.performer_services['cam'] ||
+        performer.performer_services['phone'] ||
         performer.performer_services['videocall']){
 
         return 'available';
@@ -47,6 +51,9 @@ export function getPerformerStatus(performer: Performer){
 }
 
 export function getPerformerLabel(performer: Performer){
+    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
+        return 'teaser-label';
+    }
 
     if(performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === true){
         return 'peek-label';
@@ -177,4 +184,10 @@ export function isInSession(status: PerformerStatus){
 
 export function isOutOfSession(status: PerformerStatus){
     return status === PerformerStatus.Offline || status === PerformerStatus.Available;
+}
+
+export function tagHotjar(tag: string){
+    if(window.hj){
+        window.hj('tagRecording', [tag]);
+    }
 }

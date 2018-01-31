@@ -7,6 +7,7 @@ import Pagination from '../../../layout/Pagination.vue';
 import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './inbox.tpl.html';
+import { tagHotjar } from '../../../../util';
 
 interface Notification {
     id: number;
@@ -165,6 +166,8 @@ export default class Inbox extends Vue {
 
             return;
         }
+
+        tagHotjar('MESSAGE_PAID');
 
         this.$store.dispatch('getSession');
 

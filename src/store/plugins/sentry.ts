@@ -10,10 +10,18 @@ const sentryPlugin = (store: Store<RootState>) => {
             return;
         }
 
+        let data = mutation.payload;
+
+        if(typeof mutation.payload === 'number' || typeof mutation.payload === 'string'){
+            data = {
+                data: mutation.payload
+            };
+        }
+
         Raven.captureBreadcrumb({
             message: `Mutation of type ${mutation.type}`,
             category: 'mutation',
-            data: mutation.payload
+            data: data
         });
     });
 }

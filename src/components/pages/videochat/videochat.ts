@@ -23,7 +23,7 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { webrtcPossible, noFlash } from '../../../util';
+import { webrtcPossible, noFlash, tagHotjar } from '../../../util';
 import { Performer } from '../../../models/Performer';
 const Platform = require('platform');
 
@@ -188,7 +188,7 @@ export default class VideoChat extends Vue {
         this.intervalTimer = window.setInterval(async () => {
             const result = await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
 
-            if(!result.ok){
+            if(!result.ok && !this.isSwitching){
                 this.close();
             }
         }, 5000);
@@ -211,7 +211,11 @@ export default class VideoChat extends Vue {
         try {
             await this.$store.dispatch('end', 'PLAYER_END');
 
-            await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.$store.state.session.activePerformer.id, ivrCode: this.$store.state.session.activeIvrCode });
+            await this.$store.dispatch('voyeur/startVoyeur', {
+                performerId: this.$store.state.session.activePerformer.id,
+                ivrCode: this.$store.state.session.activeIvrCode,
+                displayName: this.$store.state.session.displayName
+            });
 
             next({
                 name: 'Voyeur',
@@ -242,6 +246,8 @@ export default class VideoChat extends Vue {
         if (!this.broadcasting.cam){
             this.broadcasting.settings = false;
         }
+
+        tagHotjar(`TOGGLE_CAM`);
     }
 
     toggleMic(){
@@ -254,6 +260,8 @@ export default class VideoChat extends Vue {
                 this.broadcasting.mic = selected.id;
             }
         }
+
+        tagHotjar(`TOGGLE_MIC`);
     }
 
     setCamera(event: Event){

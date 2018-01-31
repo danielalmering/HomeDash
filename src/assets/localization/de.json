@@ -25,7 +25,7 @@
             "menu": "Menü",
             "lang": "Sprache",
             "account": "Account",
-            "voyeur": "Voyeur",
+            "voyeur": "Teaser",
             "actions": "Angebote",
             "editdata": "Account bearbeiten",
             "favourites": "Favoriten",
@@ -44,7 +44,7 @@
         "labels": {
             "peek-label": "Voyeur",
             "busy-label": "Besetzt",
-            "voyeur-label": "Voyeur",
+            "teaser-label": "Teaser",
             "none": ""
         }
     },
@@ -69,7 +69,7 @@
         "recommended": "Empfohlen",
         "peek": "Voyeur",
         "favorite": "Favorit",
-        "voyeur": "Voyeur",
+        "voyeur": "Teaser",
         "noperformers": "Keine Darsteller",
         "currentcredits": "Aktuelles Guthaben",
         "youraccount": "Dein Account?",
@@ -119,7 +119,7 @@
         "service-cam": "Webcam Chat",
         "service-peek": "Voyeur Cam",
         "service-videocall": "Videocall",
-        "service-voyeur": "Voyeur Cam",
+        "service-voyeur": "Teaser",
         "service-phone": "Telefon",
         "service-email": "E-mail",
         "service-sms": "SMS",
@@ -131,7 +131,7 @@
         "webcamwithphonedesc": "Wähle # im Hauptmenü für deinen Zugangscode",
         "webcamwithcreditsdesc": "Jetzt in den Webcam Chat und mit Credits bezahlen, die Kosten betragen",
         "peekbtn": "Voyeur Cam",
-        "voyeurbtn": "Voyeur Cam",
+        "voyeurbtn": "Teaser",
         "videochatbtn": "Videocall",
         "videochatwithcreditsdesc1": "Wähle",
         "videochatwithcreditsdesc2": "danach drück die # und wähle dann im Menü die Option Videocall (#)",
@@ -267,6 +267,7 @@
     "videochat": {
         "leaving": "Aktuelle Session verlassen",
         "flashchecktext": "Du hast kein Flash installiert, klick hier unten um es zu downloaden.",
+        "anonymous": "Anonym",
         "alerts": {
             "successChatEnded": "Session beendet!",
             "socketErrors": {
@@ -386,7 +387,7 @@
         "successMessage": "Dein Account wurde erfolgreich aktiviert"
     },
     "services": {
-        "VOYEURCLIENT": "Voyeur Cam",
+        "VOYEURCLIENT": "Teaser",
         "PEEK": "Voyeur Cam",
         "MANUAL": "Manuelle Zahlung",
         "VIDEO": "Video",
@@ -413,6 +414,7 @@
     },
     "videocall": {
         "callEnded": "Anruf beendet!",
-        "callFailed": "Anruf fehlgeschlagen!"
+        "callFailed": "Anruf fehlgeschlagen!",
+        "callAccepted": "Anruf gestartet!"
     }
 }
