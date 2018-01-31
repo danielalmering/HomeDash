@@ -19,7 +19,7 @@ export const initializationDelay = 1000;
 export const maxTilesAllowed = 4;
 
 //Time between the switching of tiles
-export const tileSwitchDelay = 1000;
+export const tileSwitchDelay = 5000;
 
 export let canMainEnd = true;
 
