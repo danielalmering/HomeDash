@@ -14,37 +14,50 @@
     z-index: 2;
     right: 0px;
     width: 100%;
-    background: $pallete-16;
+    @include breakpoint(xs) { height: 100vh; }
+    background: $pallete-13;
 
     &__screen{
         position: relative;
         z-index: 1;
         display: table;
         height: 100vh;
+        @include breakpoint(xs) { height: auto; }
         width: 100%;
 
         &-object {
-            position: relative;
-            display: table;
-            height: 100vh;
+            position: absolute;
+            display: block;
             width: 100%;
+            height: auto;
+
+            @include breakpoint(xs) { position: relative; }
+            @include breakpoint(md) { height: 100%; }
+            @include breakpoint(lg) { height: 100%; }
+            
             canvas {
                 display: table-cell;
                 vertical-align: middle;
-                object-fit: cover;
                 width: 100%;
                 height: 100%;
-            }
-            div {
-                width: 100%;
-                height: 100%;
-            }
-        }
 
-        @include breakpoint(xs) {
-            height: auto;
-            &-object {
-                height: auto;
+                @include breakpoint(md) {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%); 
+                }
+
+                @include breakpoint(lg) {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%); 
+                }
+            }
+            div, video {
+                width: 100%;
+                height: 100%;
             }
         }
     }
@@ -53,7 +66,7 @@
         position: fixed;
         z-index: 1;
         bottom: 0;
-        background: $pallete-11;
+        background: $pallete-0;
         min-width: 250px;
         @include border-top-radius(5px);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -73,6 +86,7 @@
             width: 100%;
             @include breakpoint(xs) {
                 position: relative;
+                bottom: 51px;
             }
             @include breakpoint(md) {
                 width: calc(100% - 250px);
