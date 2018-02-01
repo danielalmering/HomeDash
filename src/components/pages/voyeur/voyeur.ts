@@ -65,7 +65,7 @@ export default class Voyeur extends Vue {
 
     get isReserved(){
         return (id: number) => {
-            return this.$store.getters['voyeur/reservations'].indexOf(id) > -1;
+            return this.$store.getters['voyeur/isReservation'](id);
         };
     }
 
@@ -74,7 +74,7 @@ export default class Voyeur extends Vue {
             const result = await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
 
             if(!result.ok){
-                close();
+                this.close();
             }
         }, 5000);
 

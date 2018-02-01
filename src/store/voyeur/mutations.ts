@@ -10,7 +10,12 @@ const mutations = {
     },
     addPerformer(state: VoyeurState, performer: Performer){
         state.performers.push(performer);
-        state.queue.unshift(performer.id);
+
+        if(state.queue.length >= 3){
+            state.queue.splice(3, 0, performer.id);
+        } else {
+            state.queue.push(performer.id);
+        }
     },
     removePerformer(state: VoyeurState, performerId: number){
         state.performers = state.performers.filter(p => p.id !== performerId);
@@ -55,7 +60,7 @@ const mutations = {
     },
     removeReservation(state: VoyeurState, performerId: number){
         const ix = state.reservations.indexOf(performerId);
-        if(ix > -1){ 
+        if(ix > -1){
             state.reservations.splice(ix, 1);
         }
     },
