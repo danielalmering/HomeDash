@@ -176,7 +176,9 @@ const actions = {
             return;
         }
 
-        const tile = state.activeTiles.filter(p => p.performer === payload.performerId);
+        const tile = state.activeTiles.find(p => p.performer === payload.performerId);
+
+        console.log(tile);
 
         //If there is no loaded tile for this performer, switch another tile out for her first
         if(!tile){
