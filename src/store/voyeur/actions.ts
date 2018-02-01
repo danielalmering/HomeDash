@@ -178,8 +178,6 @@ const actions = {
 
         const tile = state.activeTiles.find(p => p.performer === payload.performerId);
 
-        console.log(tile);
-
         //If there is no loaded tile for this performer, switch another tile out for her first
         if(!tile){
             await dispatch('loadTile', {
