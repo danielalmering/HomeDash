@@ -86,7 +86,7 @@ export default class Sidebar extends Vue {
 
     get isReserved(){
         return (id: number) => {
-            return this.$store.getters['voyeur/reservations'].indexOf(id) > -1;
+            return this.$store.getters['voyeur/isReservation'](id);
         };
     }
 

@@ -13,6 +13,12 @@ const getters = {
             .filter(p => state.reservations.indexOf(p.id) > -1)
             .filter(p => p.performerStatus === PerformerStatus.Available);
     },
+    isReservation(state: VoyeurState){
+        return (id: number) => {
+            const reservations = state.performers.filter(p => state.reservations.indexOf(p.id) > -1);
+            return reservations.find(p => p.id === id) != null;
+        };
+    },
     performer(state: VoyeurState){
         return (id: number) => {
             return state.performers.find(p =>  p.id === id );
