@@ -21,7 +21,7 @@ export class H5Style {
 }
 
 @Component({
-    template: '<div :id="id"></div>',
+    template: '<div class="nanocosmos" :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 
