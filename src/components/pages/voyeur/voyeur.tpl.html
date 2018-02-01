@@ -23,7 +23,7 @@
             <i class="online"></i>{{ $t('voyeur.now1on1') }}
         </a>
         <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus !== 'AVAILABLE' && performerData.performer_services.cam" v-on:click="reserve(performerData.id)">
-            <i class="reserve"></i>{{ $t('voyeur.reserve') }}
+            <i class="reserve"></i>{{ isReserved(performerData.id) ? $t('voyeur.cancelReservation') : $t('voyeur.reserve') }}
         </a>
     </div>
 
