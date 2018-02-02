@@ -3,6 +3,8 @@ import { Component, Watch, Prop } from 'vue-property-decorator';
 import { State } from '../../../../models/Sessions';
 import config from '../../../../config';
 
+require('../../../../../static/nanoplayer.3.min.js');
+
 import Stream from './stream';
 
 declare const NanoPlayer: any;
@@ -21,7 +23,7 @@ export class H5Style {
 }
 
 @Component({
-    template: '<div :id="id"></div>',
+    template: '<div class="nanocosmos" :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 

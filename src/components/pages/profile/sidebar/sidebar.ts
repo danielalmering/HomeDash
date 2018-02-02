@@ -8,6 +8,7 @@ import config from '../../../../config';
 
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
+import NanoCosmos from '../../videochat/streams/nanocosmos';
 import { RequestPayload } from '../../../../store/session/';
 import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
@@ -19,7 +20,8 @@ type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 @WithRender
 @Component({
     components: {
-        jsmpeg: JSMpeg
+        jsmpeg: JSMpeg,
+        nanocosmos: NanoCosmos
     }
 })
 export default class Sidebar extends Vue {
