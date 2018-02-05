@@ -79,13 +79,14 @@ const actions = {
         switcherooCb = window.setInterval(async () => {
             commit('increaseAlive');
 
-            if(state.queue.length === 0){
-                return;
-            }
-
-            const tileToReplace = getters.replacementTargetIndex;
 
             do {
+                if(state.queue.length === 0){
+                    return;
+                }
+
+                const tileToReplace = getters.replacementTargetIndex;
+
                 try {
                     await dispatch('loadTile', { performerId: state.queue[0], position: tileToReplace });
                     break;
