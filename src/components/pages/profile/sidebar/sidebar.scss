@@ -309,7 +309,7 @@ $sidebar-top-height: 315px;
         @include rem(margin, 10px);
         cursor: pointer;
 
-        canvas {
+        .jsmpeg {
             width: 230px;
         }
 

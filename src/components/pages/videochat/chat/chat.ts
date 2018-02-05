@@ -55,7 +55,6 @@ export default class Chat extends Vue {
 
             this.setNotifier(content.senderType);
         });
-
     }
 
     setNotifier(sender: string){
