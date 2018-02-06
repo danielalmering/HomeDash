@@ -49,9 +49,6 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 vertical-align: middle;
                 width: 100%;
                 height: 100%;
-                top: 50%;
-                left: 0%;
-                transform: translate(-0%, 50%); 
 
                 @include breakpoint(md) {
                     position: absolute;
@@ -294,9 +291,12 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
             list-style: none;
             height: 211px;
             background: $pallete-11;
-            @include breakpoint(xs) {
-                height: 155px;
+            &.small {
+                height: 105px;
             }
+            // @include breakpoint(xs) {
+            //     height: 105px;
+            // }
 
             overflow: auto;
 
