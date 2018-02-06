@@ -71,7 +71,7 @@ export default class Chat extends Vue {
     }
 
     setFocus(selected: boolean){
-        if(window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth > 480){
+        if((window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) > 480){
             return;
         }
 
