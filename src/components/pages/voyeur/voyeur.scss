@@ -59,10 +59,11 @@
             .nanocosmos {
                 div { width: 80px !important; height: 80px !important; }
                 video {
-                    @include breakpoint(xs) { 
+                    @media screen and (max-width: 992px) {
                         transform: none !important;
                         position: relative !important;
                         left: 0px !important;
+                        top: 0px !important;
                     }
                 }
             }
@@ -78,33 +79,72 @@
         position: fixed;
         z-index: 1;
         bottom: 0;
-        background: $pallete-0;
-        min-width: 250px;
-        @include border-top-radius(5px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: calc(100% - 250px);
+        height: 0;
 
-        &.left {
-            left: 25px;
-            @include breakpoint(xs) {
-                left: 0;
+        .col-xs-4 { position: relative; }
+
+        .blocks {
+            position: absolute;
+            left: 20px;
+            bottom: 0;
+            @include border-top-radius(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: $pallete-11;
+            width: calc(100% - 40px);
+
+            &__title {
+                color: $pallete-2;
+                font-weight: 600;
+                @include rem(font-size, 15px);
+                @include rem(padding,10px 15px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+                text-transform: capitalize;
+    
+                i {
+                    @include rem(margin-right, 5px);
+                    color: $pallete-3;
+                }
+    
+                span{
+                    float: right;
+                    &:before {
+                        font: normal normal normal 20px/1 FontAwesome;
+                        content: "\f068";
+                    }
+    
+                    &.active {
+                        &:before {
+                            content: "\f067";
+                        }
+                    }
+                }
             }
-            @include breakpoint(md) {
-                left: 275px;
+
+            &__list {
+                @include rem(padding,10px 15px);
+                margin: 0;
+                list-style: none;
+                li {
+                    @include rem(font-size, 13px);
+                    color: $pallete-2;
+                    line-height: 150%;
+                    cursor: pointer;
+                    i {
+                        @include rem(margin-left,10px);
+                        @include rem(font-size, 15px);
+                        font-style: normal;
+                        color: $pallete-3; 
+                    }
+                }
             }
         }
 
-        &.center {
-            bottom: 1px;
+        .buttons {
+            position: absolute;
+            bottom: 50px;
             width: 100%;
-            @include breakpoint(xs) {
-                position: relative;
-                bottom: 51px;
-            }
-            @include breakpoint(md) {
-                width: calc(100% - 250px);
-            }
-            border: none;
-            background: none;
             .btn {
                 display: table;
                 @include rem(margin,10px auto);
@@ -130,10 +170,6 @@
                     }
                 }
             }
-        }
-
-        &.right {
-            right: 25px;
         }
 
         @include breakpoint(xs) {
@@ -169,24 +205,6 @@
                     &:before {
                         content: "\f067";
                     }
-                }
-            }
-        }
-
-        &-list {
-            @include rem(padding,10px 15px);
-            margin: 0;
-            list-style: none;
-            li {
-                @include rem(font-size, 13px);
-                color: $pallete-2;
-                line-height: 150%;
-                cursor: pointer;
-                i {
-                    @include rem(margin-left,10px);
-                    @include rem(font-size, 15px);
-                    font-style: normal;
-                    color: $pallete-3; 
                 }
             }
         }
