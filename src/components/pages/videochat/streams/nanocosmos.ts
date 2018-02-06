@@ -54,7 +54,7 @@ export default class NanoCosmos extends Stream {
     @Prop({ default: true, type: Boolean })
     public view: Boolean;
 
-    @Prop({ default: 'crop', type: String})
+    @Prop({ default: 'letterbox', type: String})
     public scaling: String;
 
     @Prop({ default: true, type: Boolean})
@@ -75,7 +75,7 @@ export default class NanoCosmos extends Stream {
     @Prop({required: true, type: String})
     public token: string;*/
 
-    @Prop({default: true, type: Boolean})
+    @Prop({default: false, type: Boolean})
     public debug: Boolean;
 
     //TODO typescript declaration of NanoPlayer
