@@ -24,6 +24,7 @@ export const tileSwitchDelay = 5000;
 export let canMainEnd = true;
 
 notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
+    if (!rootState.state.voyeur.isActive) return;
 
     if(!data) return;
 

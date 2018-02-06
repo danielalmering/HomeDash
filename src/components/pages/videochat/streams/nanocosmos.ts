@@ -105,7 +105,6 @@ export default class NanoCosmos extends Stream {
     }
 
     mounted(){
-       this.muted = true;
        this.load();
     }
 
@@ -175,8 +174,7 @@ export default class NanoCosmos extends Stream {
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {
-            this.log('setup success');
-            this.log(`config:  ${JSON.stringify(s, undefined, 4)}`);
+            //na da?
         }, function (error: any) {
             console.log(error.message);
         });
