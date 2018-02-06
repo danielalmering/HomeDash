@@ -58,6 +58,13 @@
             
             .nanocosmos {
                 div { width: 80px !important; height: 80px !important; }
+                video {
+                    @include breakpoint(xs) { 
+                        transform: none !important;
+                        position: relative !important;
+                        left: 0px !important;
+                    }
+                }
             }
 
             div, video {
