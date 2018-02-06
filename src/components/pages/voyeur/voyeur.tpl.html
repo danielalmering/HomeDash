@@ -1,50 +1,67 @@
 <div class="voyeur">
     <div class="voyeur__screen" v-if="mainTile">
         <div class="voyeur__screen-object">
-            <jsmpeg
+            <!-- <jsmpeg
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
                 :wowza="mainTile.streamData.wowza"
                 :playStream="mainTile.streamData.playStream"
                 :muted="true">
-            </jsmpeg>
-            <!-- <nanocosmos
+            </jsmpeg> -->
+            <nanocosmos
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
                 :wowza="mainTile.streamData.wowza"
-                :playStream="mainTile.streamData.playStream">
-            </nanocosmos> -->
+                :playStream="mainTile.streamData.playStream"
+                :muted="true">
+            </nanocosmos>
         </div>
     </div>
 
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
-    <div class="voyeur__block center">
-        <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus === 'AVAILABLE' && performerData.performer_services.cam" v-on:click="startVideoChat(performerData.id)">
-            <i class="online"></i>{{ $t('voyeur.now1on1') }}
-        </a>
-        <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus !== 'AVAILABLE' && performerData.performer_services.cam" v-on:click="reserve(performerData.id)">
-            <i class="reserve"></i>{{ isReserved(performerData.id) ? $t('voyeur.cancelReservation') : $t('voyeur.reserve') }}
-        </a>
-    </div>
+    <div class="videochat__favourite" v-on:click="toggleFavourite(performerData.id)"><i class="fa fa-star" :class="{ 'is-favourite': performerData.isFavourite }"></i></div>
 
-    <div class="voyeur__block left">
-        <div class="voyeur__block-title" v-on:click="showFavo = !showFavo"><i class="fa fa-star"></i> {{ $t("voyeur.favorites") }}<span :class="{ active:!showFavo }"></span></div>
-        <ul class="voyeur__block-list" v-if="showFavo">
-            <li v-for="favorite in favoritePerformers">
-                <span  v-on:click="swap(favorite.id)">{{ favorite.nickname }} <i v-if="favorite.advert_numbers">({{ favorite.advert_numbers[0].advertNumber }})</i></span>
-                <i class="fa fa-times" aria-hidden="true" v-on:click="removeFavorite(favorite)"></i>
-            </li>
-        </ul>
-    </div>
+    <div class="voyeur__block">
 
-    <div class="voyeur__block right">
-        <div class="voyeur__block-title" v-on:click="showReserve = !showReserve"><i class="fa fa-clock-o"></i> {{ $t("voyeur.reserving") }}<span :class="{ active:!showReserve }"></span></div>
-        <ul class="voyeur__block-list" v-if="showReserve">
-            <li v-for="reservation in reservations">
-                <span  v-on:click="swap(reservation.id)">{{ reservation.nickname }} <i v-if="reservation.advert_numbers">({{ reservation.advert_numbers[0].advertNumber }})</i></span>
-                <i class="fa fa-times" aria-hidden="true" v-on:click="removeReservation(reservation.id)"></i>
-            </li>
-        </ul>
+        <div class="col-xs-12 col-sm-4">
+            <div class="blocks">
+                <div class="blocks__title" v-on:click="showFavo = !showFavo"><i class="fa fa-star"></i> {{ $t("voyeur.favorites") }}<span :class="{ active:!showFavo }"></span></div>
+                <ul class="blocks__list" v-if="showFavo">
+                    <li v-for="favorite in favoritePerformers">
+                        <span  v-on:click="swap(favorite.id)">{{ favorite.nickname }} <i v-if="favorite.advert_numbers">({{ favorite.advert_numbers[0].advertNumber }})</i></span>
+                        <i class="fa fa-times" aria-hidden="true" v-on:click="removeFavorite(favorite)"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="blocks center">
+                <div class="blocks__title">{{ performerData.nickname }} <i>( {{performerData.advert_numbers[0].advertNumber}} )</i></div>
+            </div>
+
+            <div class="buttons">
+                <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus === 'AVAILABLE' && performerData.performer_services.cam" v-on:click="startVideoChat(performerData.id)">
+                    <i class="online"></i>{{ $t('voyeur.now1on1') }}
+                </a>
+                <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus !== 'AVAILABLE' && performerData.performer_services.cam" v-on:click="reserve(performerData.id)">
+                    <i class="reserve"></i>{{ isReserved(performerData.id) ? $t('voyeur.cancelReservation') : $t('voyeur.reserve') }}
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="blocks">
+                <div class="blocks__title" v-on:click="showReserve = !showReserve"><i class="fa fa-clock-o"></i> {{ $t("voyeur.reserving") }}<span :class="{ active:!showReserve }"></span></div>
+                <ul class="blocks__list" v-if="showReserve">
+                    <li v-for="reservation in reservations">
+                        <span  v-on:click="swap(reservation.id)">{{ reservation.nickname }} <i v-if="reservation.advert_numbers">({{ reservation.advert_numbers[0].advertNumber }})</i></span>
+                        <i class="fa fa-times" aria-hidden="true" v-on:click="removeReservation(reservation.id)"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
     </div>
 
     <confirmation v-if="availableReservation" :type="'dialog'" :title="$t('voyeur.dialog1on1Title', { name: availableReservation.nickname })" :subtitle="$t('voyeur.dialog1on1Subtitle', { name: availableReservation.nickname })" v-on:accept="acceptReservation" v-on:cancel="cancelReservation"></confirmation>

@@ -61,11 +61,17 @@
                 <!-- Voyeurlist -->
                 <li class="sidebar__voyeur" v-if="category === 'voyeur'" v-for="tile in voyeurTiles">
                     <div v-on:click="swap(tile.performer)">
-                        <jsmpeg
+                        <!-- <jsmpeg
                             :wowza="tile.streamData.wowza"
                             :playStream="tile.streamData.playStream"
                             :muted="true">
-                        </jsmpeg>
+                        </jsmpeg> -->
+                        <nanocosmos
+                        :wowza="tile.streamData.wowza"
+                        :interactive="false"
+                        :playStream="tile.streamData.playStream"
+                        :muted="true">
+                        </nanocosmos>
                     </div>
                     <div class="sidebar__voyeur-misc">
                         <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advert_numbers[0].advertNumber }}</span>

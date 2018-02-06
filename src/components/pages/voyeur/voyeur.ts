@@ -6,6 +6,8 @@ import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
 import Confirmation from '../../layout/Confirmations.vue';
 
+require('../../../../static/nanoplayer.3.min.js');
+
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
 import { RequestPayload } from '../../../store/session/';
@@ -26,6 +28,7 @@ export default class Voyeur extends Vue {
     showFavo: boolean = false;
     showReserve: boolean = false;
 
+    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);    
     removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
 
     get mainTile(){
@@ -132,8 +135,14 @@ export default class Voyeur extends Vue {
         this.isReserved(performerId) ?
             this.$store.commit('voyeur/removeReservation', performerId) :
             this.$store.commit('voyeur/addReservation', performerId);
-
         this.showReserve = true;
+    }
+
+    toggleFavourite(performerId: number){
+        const performer = this.performer(performerId);
+
+        performer.isFavourite ? this.removeFavourite(performer) : this.addFavourite(performer);
+        this.showFavo = true;
     }
 
     async removeReservation(performerId: number){
