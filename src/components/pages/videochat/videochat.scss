@@ -237,7 +237,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         color: $pallete-2;
         @include rem(font-size, 26px);
         background: $semi-transparent-bg;
-        @include rem(padding, 6px 15px);
+        @include rem(padding, 6px 13px);
         @include border-left-radius(5px);
         cursor: pointer;
 
