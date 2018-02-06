@@ -54,7 +54,7 @@ export default class NanoCosmos extends Stream {
     @Prop({ default: true, type: Boolean })
     public view: Boolean;
 
-    @Prop({ default: 'crop', type: String})
+    @Prop({ default: 'letterbox', type: String})
     public scaling: String;
 
     @Prop({ default: true, type: Boolean})
@@ -75,7 +75,7 @@ export default class NanoCosmos extends Stream {
     @Prop({required: true, type: String})
     public token: string;*/
 
-    @Prop({default: true, type: Boolean})
+    @Prop({default: false, type: Boolean})
     public debug: Boolean;
 
     //TODO typescript declaration of NanoPlayer
@@ -103,7 +103,6 @@ export default class NanoCosmos extends Stream {
     }
 
     mounted(){
-       this.muted = true;
        this.load();
     }
 
@@ -173,8 +172,7 @@ export default class NanoCosmos extends Stream {
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {
-            this.log('setup success');
-            this.log(`config:  ${JSON.stringify(s, undefined, 4)}`);
+            //na da?
         }, function (error: any) {
             console.log(error.message);
         });
