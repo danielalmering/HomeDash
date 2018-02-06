@@ -82,10 +82,30 @@
         width: calc(100% - 250px);
         height: 0;
 
-        .col-xs-4 { position: relative; }
+        @include breakpoint(xs) {
+            position: relative;
+        }
+
+        .col-sm-4 { 
+            @include breakpoint(xs) {
+                position: static;
+            } 
+        }
 
         .blocks {
             position: absolute;
+            @include breakpoint(xs) {
+                position: relative;
+                display: table;
+                width: 100%;
+                left: 0;
+                &.center {
+                    position: absolute;
+                    bottom: 0px;
+                    left: 15px;
+                    width: calc(100% - 30px);
+                }
+            }
             left: 20px;
             bottom: 0;
             @include border-top-radius(5px);
@@ -145,6 +165,7 @@
             position: absolute;
             bottom: 50px;
             width: 100%;
+
             .btn {
                 display: table;
                 @include rem(margin,10px auto);

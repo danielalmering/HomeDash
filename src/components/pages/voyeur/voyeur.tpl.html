@@ -23,7 +23,7 @@
 
     <div class="voyeur__block">
 
-        <div class="col-xs-4">
+        <div class="col-xs-12 col-sm-4">
             <div class="blocks">
                 <div class="blocks__title" v-on:click="showFavo = !showFavo"><i class="fa fa-star"></i> {{ $t("voyeur.favorites") }}<span :class="{ active:!showFavo }"></span></div>
                 <ul class="blocks__list" v-if="showFavo">
@@ -35,8 +35,8 @@
             </div>
         </div>
 
-        <div class="col-xs-4">
-            <div class="blocks">
+        <div class="col-xs-12 col-sm-4">
+            <div class="blocks center">
                 <div class="blocks__title">{{ performerData.nickname }} <i>( {{performerData.advert_numbers[0].advertNumber}} )</i></div>
             </div>
 
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="col-xs-4">
+        <div class="col-xs-12 col-sm-4">
             <div class="blocks">
                 <div class="blocks__title" v-on:click="showReserve = !showReserve"><i class="fa fa-clock-o"></i> {{ $t("voyeur.reserving") }}<span :class="{ active:!showReserve }"></span></div>
                 <ul class="blocks__list" v-if="showReserve">
@@ -61,17 +61,7 @@
                 </ul>
             </div>
         </div>
-
-
-        <!--
-        <div class="voyeur__block-btn">
-            <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus === 'AVAILABLE' && performerData.performer_services.cam" v-on:click="startVideoChat(performerData.id)">
-                <i class="online"></i>{{ $t('voyeur.now1on1') }}
-            </a>
-            <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus !== 'AVAILABLE' && performerData.performer_services.cam" v-on:click="reserve(performerData.id)">
-                <i class="reserve"></i>{{ isReserved(performerData.id) ? $t('voyeur.cancelReservation') : $t('voyeur.reserve') }}
-            </a>
-        </div> -->
+        
     </div>
 
     <confirmation v-if="availableReservation" :type="'dialog'" :title="$t('voyeur.dialog1on1Title', { name: availableReservation.nickname })" :subtitle="$t('voyeur.dialog1on1Subtitle', { name: availableReservation.nickname })" v-on:accept="acceptReservation" v-on:cancel="cancelReservation"></confirmation>
