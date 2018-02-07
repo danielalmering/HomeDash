@@ -71,19 +71,27 @@ const actions = {
 
             const performerId = state.queue[0];
 
-            await dispatch('loadTile', { performerId: performerId, position: i });
+            try {
+                await dispatch('loadTile', { performerId: performerId, position: i });
+            } catch { continue; }
         }
 
-        switcherooCb = window.setInterval(() => {
+        switcherooCb = window.setInterval(async () => {
             commit('increaseAlive');
 
-            if(state.queue.length === 0){
-                return;
-            }
 
-            const tileToReplace = getters.replacementTargetIndex;
+            do {
+                if(state.queue.length === 0){
+                    return;
+                }
 
-            dispatch('loadTile', { performerId: state.queue[0], position: tileToReplace });
+                const tileToReplace = getters.replacementTargetIndex;
+
+                try {
+                    await dispatch('loadTile', { performerId: state.queue[0], position: tileToReplace });
+                    break;
+                } catch{};
+            } while(true);
         }, tileSwitchDelay);
     },
     async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
@@ -103,6 +111,7 @@ const actions = {
         });
 
         if(!performerResult.ok){
+            commit('removePerformer', payload.performerId);
             throw 'Performer declined';
         }
 
@@ -180,10 +189,14 @@ const actions = {
 
         //If there is no loaded tile for this performer, switch another tile out for her first
         if(!tile){
-            await dispatch('loadTile', {
-                performerId: payload.performerId,
-                position: getters.replacementTargetIndex
-            });
+            try {
+                await dispatch('loadTile', {
+                    performerId: payload.performerId,
+                    position: getters.replacementTargetIndex
+                });
+            } catch {
+                return;
+            }
         }
 
         const result = await fetch(`${config.BaseUrl}/session/performer_account/${payload.performerId}/voyeur`,
