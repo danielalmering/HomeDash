@@ -15,7 +15,7 @@ import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
 
-type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
+type SidebarCategory = 'teasers' | 'peek' | 'favourites' | 'voyeur';
 
 @WithRender
 @Component({
@@ -27,7 +27,7 @@ type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
-    category: SidebarCategory = 'recommended';
+    category: SidebarCategory = 'teasers';
     services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
     toggleUserinfo: boolean = true;
 
@@ -48,7 +48,7 @@ export default class Sidebar extends Vue {
     statusEventId: number;
 
     categoryLoads = {
-        'recommended': this.loadRecommended,
+        'teasers': this.loadTeasers,
         'favourites': this.loadFavorites,
         'peek': this.loadPeek
     };
@@ -95,7 +95,7 @@ export default class Sidebar extends Vue {
     @Watch('isVoyeurActive')
     onVoyeurStateChange(newValue: boolean){
         //When voyeur gets activated switch the voyeur tab, when the session ends, switch back
-        this.setCategory(newValue ? 'voyeur' : 'recommended');
+        this.setCategory(newValue ? 'voyeur' : 'teasers');
     }
 
     mounted(){
@@ -349,8 +349,8 @@ export default class Sidebar extends Vue {
         return data.performerAccount as Performer;
     }
 
-    async loadRecommended() {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}${this.query.search !== '' ? '&search=' : '' }${this.query.search}`, {
+    async loadTeasers() {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}&voyeur=2`, {
             credentials: 'include'
         });
 
