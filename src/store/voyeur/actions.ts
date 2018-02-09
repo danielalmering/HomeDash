@@ -1,7 +1,12 @@
 import { VoyeurContext, maxTilesAllowed, PerformerTile, tileSwitchDelay } from './index';
+import { initiateVoyeur, switchVoyeur } from 'sensejs/session/voyeur';
 
 import store from '../';
 import config from '../../config';
+import { listBusy } from '../../../../SenseCore-FrontNew/performer/performer';
+import { initiate, end } from 'SenseJS/session';
+import { SessionType } from '../../models/Sessions';
+import { get } from 'SenseJS/performer/performer';
 
 
 //Switcheroo interval callback
@@ -12,33 +17,14 @@ const actions = {
     async startVoyeur({ state, rootState, commit, dispatch, getters }: VoyeurContext, payload: { ivrCode?: string, displayName?: string, performerId: number }){
         const userId = rootState.authentication.user.id;
 
-        const voyeurResult = await fetch(`${config.BaseUrl}/session/initiate_voyeurclient`, {
-            credentials: 'include',
-            method: 'POST',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                clientId: payload.ivrCode ? undefined : userId,
-                ivrCode: payload.ivrCode,
-                payment: payload.ivrCode ? 'IVR' : undefined
-            })
+        const { error } = await initiateVoyeur({
+            clientId: payload.ivrCode ? undefined : userId,
+            ivrCode: payload.ivrCode,
+            payment: payload.ivrCode ? 'IVR' : undefined
         });
 
-        if(!voyeurResult.ok){
+        if(error){
             throw 'Voyeur declined';
-        }
-
-        const voyeurData = await voyeurResult.json();
-
-        if(voyeurData.error){
-            store.dispatch('openMessage', {
-                content: voyeurData.error,
-                class: 'error',
-                translate: false
-            });
-
-            throw 'Server error';
         }
 
         if(payload.ivrCode){
@@ -47,17 +33,17 @@ const actions = {
 
         commit('storeDisplayName', payload.displayName);
 
-        const performersResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=80&offset=0&voyeur=2`, {
-            credentials: 'include'
+        const { result, error: performerError } = await listBusy({
+            limit: 80,
+            offset: 0,
+            voyeur: 2
         });
 
-        const performers = await performersResult.json();
-
-        commit('addPerformers', performers.performerAccounts);
-
-        if(state.performers.length === 0){
-            throw 'No Performers';
+        if(performerError || result.total === 0 || result.performerAccounts.length === 0){
+            throw 'No performers';
         }
+
+        commit('addPerformers', result.performerAccounts);
 
         await dispatch('loadMainTile', {
             performerId: payload.performerId
@@ -89,48 +75,31 @@ const actions = {
     async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
         const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
 
-        const performerResult = await fetch(`${config.BaseUrl}/session/performer_account/performer_number/${advertId}/initiate_videochat`, {
-            credentials: 'include',
-            method: 'POST',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                clientId: rootState.authentication.user.id,
-                performerId: payload.performerId,
-                type: 'VOYEURPEEK'
-            })
+        const { result, error } = await initiate(SessionType.Video, advertId, {
+            clientId: rootState.authentication.user.id,
+            performerId: payload.performerId,
+            type: 'VOYEURPEEK'
         });
 
-        if(!performerResult.ok){
+        if(error){
             throw 'Performer declined';
         }
-
-        const data = await performerResult.json();
 
         const tile: PerformerTile = {
             iterationsAlive: 0,
             performer: payload.performerId,
             streamData: {
-                id: data.id,
-                wowza: data.wowza,
-                playStream: data.playStream
+                id: result.id,
+                wowza: result.wowza,
+                playStream: result.playStream
             }
         };
 
         if(state.activeTiles[payload.position]){
-
-            await fetch(`${config.BaseUrl}/session/end`, {
-                credentials: 'include',
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify({
-                    clientId: rootState.authentication.user.id,
-                    performerId: state.activeTiles[payload.position].performer,
-                    type: 'VOYEURPEEK'
-                })
+            await end({
+                clientId: rootState.authentication.user.id,
+                performerId: state.activeTiles[payload.position].performer,
+                type: 'VOYEURPEEK'
             });
         }
 
@@ -139,32 +108,23 @@ const actions = {
     async loadMainTile({ commit, getters, rootState }: VoyeurContext, payload: { performerId: number }){
         const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
 
-        const performerResult = await fetch(`${config.BaseUrl}/session/performer_account/performer_number/${advertId}/initiate_videochat`, {
-            credentials: 'include',
-            method: 'POST',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                clientId: rootState.authentication.user.id,
-                performerId: payload.performerId,
-                type: 'VOYEUR'
-            })
+        const { result, error } = await initiate(SessionType.Video, advertId, {
+            clientId: rootState.authentication.user.id,
+            performerId: payload.performerId,
+            type: 'VOYEUR'
         });
 
-        if(!performerResult.ok){
+        if(error){
             throw 'Performer declined';
         }
-
-        const data = await performerResult.json();
 
         const tile: PerformerTile = {
             iterationsAlive: 0,
             performer: payload.performerId,
             streamData: {
-                id: data.id,
-                wowza: data.wowza,
-                playStream: data.playStream
+                id: result.id,
+                wowza: result.wowza,
+                playStream: result.playStream
             }
         };
 
@@ -186,17 +146,9 @@ const actions = {
             });
         }
 
-        const result = await fetch(`${config.BaseUrl}/session/performer_account/${payload.performerId}/voyeur`,
-            {
-                credentials: 'include',
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                })
-            }
-        );
+        const { error } = await switchVoyeur(payload.performerId);
 
-        if(result.ok){
+        if(error){
             commit('swap', payload.performerId);
         }
     },
@@ -206,16 +158,9 @@ const actions = {
         }
 
         if(!silent){
-            await fetch(`${config.BaseUrl}/session/end`, {
-                credentials: 'include',
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify({
-                    clientId: rootState.authentication.user.id,
-                    type: 'VOYEURCLIENT'
-                })
+            end({
+                clientId: rootState.authentication.user.id,
+                type: 'VOYEURCLIENT'
             });
         }
 
@@ -241,18 +186,14 @@ const actions = {
             return;
         }
 
-        const performerResult = await fetch(`${config.BaseUrl}/performer/performer_accounts/${payload.performerId}`, {
-            credentials: 'include'
-        });
+        const { result, error } = await get(payload.performerId);
 
-        if(!performerResult.ok){
+        if(error){
             console.log('Wtf? This api call never fails, get outta here');
             return;
         }
 
-        const data = await performerResult.json();
-
-        commit('addPerformer', data.performerAccount);
+        commit('addPerformer', result);
     }
 };
 

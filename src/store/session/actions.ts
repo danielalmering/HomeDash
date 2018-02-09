@@ -123,7 +123,7 @@ const actions = {
             store.commit('setIvrCode', undefined);
         }
 
-        const { error } = await end();
+        const { error } = await end({});
 
         if(!error){
             store.commit('setState', State.Idle);
