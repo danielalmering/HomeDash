@@ -23,10 +23,11 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { webrtcPossible, noFlash, tagHotjar } from '../../../util';
+import { tagHotjar } from '../../../util';
 import { Performer } from '../../../models/Performer';
 import { addFavourite, removeFavourite } from '../../../../../SenseCore-FrontNew/performer/favourite';
 import { clientSeen } from 'SenseJS/session/index';
+import { webrtcPossible, noFlash } from 'sensejs/util/platform';
 const Platform = require('platform');
 
 interface BroadcastConfiguration {

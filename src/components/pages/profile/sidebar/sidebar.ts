@@ -2,7 +2,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { openModal, openRoute, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
+import { openModal, openRoute, getAvatarImage, getPerformerStatus } from '../../../../util';
 import config from '../../../../config';
 
 import './sidebar.scss';
@@ -12,9 +12,10 @@ import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
-import { listRecommended, listBusy } from 'SenseJS/performer/performer';
-import { listFavourites } from 'SenseJS/performer/favourite';
-import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
+import { listRecommended, listBusy } from 'sensejs/performer/performer';
+import { listFavourites } from 'sensejs/performer/favourite';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
+import { isInSession, isOutOfSession } from 'sensejs/util/performer';
 
 type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
 

@@ -6,9 +6,9 @@ import { Performer } from '../../models/Performer';
 import { UserRole } from '../../models/User';
 import { SessionType, State, PaymentType } from '../../models/Sessions';
 import config from '../../config';
+import { match } from 'sensejs/util/platform';
 
 import notificationSocket from '../../socket';
-import { match } from '../../util';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import getters from './getters';
 import mutations from './mutations';

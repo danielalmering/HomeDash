@@ -25,7 +25,7 @@ import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
 import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor, hotjarInterceptor } from './interceptors';
-import { scrollToTop } from '../util';
+import { scrollToTop } from 'sensejs/util/dom';
 
 Vue.use(Router);
 
