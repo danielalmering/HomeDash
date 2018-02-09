@@ -2,7 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import Pagination from '../../layout/Pagination.vue';
+import Pagination from 'sensejs/vue/components/pagination';
 import notificationSocket from '../../../socket';
 import { getAvatarImage, getPerformerStatus, getPerformerLabel } from '../../../util';
 import config from '../../../config';

@@ -4,6 +4,7 @@
       "sourceMap": true,
       "experimentalDecorators": true,
       "allowSyntheticDefaultImports": true,
+      "preserveSymlinks": true,
       "noImplicitAny": true,
       "noImplicitReturns": true,
       // "noImplicitThis": true,

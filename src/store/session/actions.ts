@@ -9,7 +9,7 @@ import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
 import { tagHotjar } from '../../util';
 import i18n from '../../localization';
-import { startRequest, deleteVideorequest, cancel, end, performerTimeout, startCall, endCall } from 'SenseJS/session/index';
+import { startRequest, deleteVideorequest, cancel, end, performerTimeout, startCall, endCall, initiate, InitiatePayload } from 'SenseJS/session/index';
 
 const actions = {
     async startRequest(store: ActionContext<SessionState, RootState>, payload: RequestPayload){
@@ -194,47 +194,30 @@ const actions = {
     async initiate(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Initializing);
 
-        if(!store.state.activePerformer){
+        if(!store.state.activePerformer || !store.state.activeSessionType){
             return; //Do something else
         }
 
-        const isVideoChat = store.state.activeSessionType === SessionType.Video || store.state.activeSessionType === SessionType.Peek;
+        const advertNumber = store.state.activePerformer.advert_numbers[0].advertNumber;
+        const payload: InitiatePayload = {
+            chatroomName: store.state.activeDisplayName
+        };
 
-        const url = isVideoChat ?
-            `/performer_account/performer_number/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videochat` :
-            `/performer_account/${store.state.activePerformer.advert_numbers[0].advertNumber}/initiate_videocall`;
-
-        let body: string;
         if(store.state.activeIvrCode){
-            body = JSON.stringify({
-                chatroomName: store.state.activeDisplayName,
-                ivrCode: store.state.activeIvrCode
-            });
+            payload.ivrCode = store.state.activeIvrCode;
         } else {
-            body = JSON.stringify({
-                clientId: store.rootState.authentication.user.id,
-                chatroomName: store.state.activeDisplayName
-            });
+            payload.clientId = store.rootState.authentication.user.id
         }
 
-        const initiateResult = await fetch(`${config.BaseUrl}/session${url}`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body
-        });
+        const { result, error } = await initiate(store.state.activeSessionType, advertNumber, payload);
 
-        if(!initiateResult.ok){
+        if(!error){
             store.dispatch('cancel', 'INITIATE_FAILED');
 
             tagHotjar(`ERROR_INITIATE`);
         }
 
-        const data = await initiateResult.json();
-
-        store.state.activeSessionData = data;
+        store.state.activeSessionData = result;
     },
     setActive(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Active);

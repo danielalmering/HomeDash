@@ -1,7 +1,7 @@
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import Pagination from '../../../layout/Pagination.vue';
+import Pagination from 'sensejs/vue/components/pagination';
 
 import config from '../../../../config';
 import WithRender from './history.tpl.html';

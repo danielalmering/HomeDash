@@ -6,8 +6,8 @@ import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
-import PhotoSlider from './photo-slider.vue';
-import FullSlider from './photo-slider-fullscreen.vue';
+import PhotoSlider from 'SenseJS/vue/components/photo-slider';
+import FullSlider from 'SenseJS/vue/components/photo-slider-full';
 import Tabs from './tabs/tabs';
 import config from '../../../config';
 
@@ -16,7 +16,7 @@ import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/S
 import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
-import { getByAdvert } from 'SenseJS/performer/performer';
+import { getByAdvert } from 'sensejs/performer/performer';
 
 import './profile.scss';
 import './photo-slider.scss';

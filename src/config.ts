@@ -17,7 +17,8 @@ const config = require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfi
 const isGigacams = window.location.hostname.indexOf('gigacams.com') > -1;
 
 setConfig({
-    ApiUrl: config.BaseUrl
+    ApiUrl: config.BaseUrl,
+    ImageUrl: config.ImageUrl
 });
 
 if(isGigacams){

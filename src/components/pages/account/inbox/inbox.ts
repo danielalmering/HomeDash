@@ -3,7 +3,7 @@ import Vue from 'vue';
 import notificationSocket from '../../../../socket';
 import { SocketMessageEventArgs } from '../../../../models/Socket';
 
-import Pagination from '../../../layout/Pagination.vue';
+import Pagination from 'sensejs/vue/components/pagination';
 import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './inbox.tpl.html';
