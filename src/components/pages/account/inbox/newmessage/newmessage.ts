@@ -7,7 +7,7 @@ import config from '../../../../../config';
 import WithRender from './newmessage.tpl.html';
 import notificationSocket from '../../../../../socket';
 import { tagHotjar } from '../../../../../util';
-import { listUsernames, SimplePerformer } from 'SenseJS/performer/performer';
+import { listUsernames, SimplePerformer } from 'SenseJS/performer';
 import { postNotification, PostNotificationParams } from 'SenseJS/consumer/notification';
 
 interface MessageForm {

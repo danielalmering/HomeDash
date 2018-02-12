@@ -12,7 +12,7 @@ import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
-import { listRecommended, listBusy } from 'sensejs/performer/performer';
+import { listRecommended, listBusy } from 'sensejs/performer';
 import { listFavourites } from 'sensejs/performer/favourite';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { isInSession, isOutOfSession } from 'sensejs/util/performer';

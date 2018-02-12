@@ -5,7 +5,7 @@ import Pagination from 'sensejs/vue/components/pagination';
 
 import config from '../../../../config';
 import WithRender from './history.tpl.html';
-import { getConsumerHistory } from 'SenseJS/consumer/consumer';
+import { getConsumerHistory } from 'SenseJS/consumer';
 import { ConsumerHistoryItem } from 'SenseJS/core/models/user';
 
 interface HistoryItem {

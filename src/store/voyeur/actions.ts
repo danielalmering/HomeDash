@@ -3,11 +3,8 @@ import { initiateVoyeur, switchVoyeur } from 'sensejs/session/voyeur';
 
 import store from '../';
 import config from '../../config';
-import { listBusy } from '../../../../SenseCore-FrontNew/performer/performer';
-import { initiate, end } from 'SenseJS/session';
-import { SessionType } from '../../models/Sessions';
-import { get } from 'SenseJS/performer/performer';
-
+import { initiate, end, SessionType } from 'SenseJS/session';
+import { get, listBusy } from 'sensejs/performer';
 
 //Switcheroo interval callback
 let switcherooCb: number | undefined = undefined;

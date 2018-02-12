@@ -11,7 +11,7 @@ import './performers.scss';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
 import WithRender from './performers.tpl.html';
 import { RawLocation } from 'vue-router/types/router';
-import { listPerformers } from 'SenseJS/performer/performer';
+import { listPerformers } from 'SenseJS/performer';
 import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
 import { addFavourite, removeFavourite } from 'SenseJS/performer/favourite';
 

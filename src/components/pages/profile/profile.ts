@@ -16,7 +16,7 @@ import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/S
 import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
-import { getByAdvert } from 'sensejs/performer/performer';
+import { getByAdvert } from 'sensejs/performer';
 
 import './profile.scss';
 import './photo-slider.scss';

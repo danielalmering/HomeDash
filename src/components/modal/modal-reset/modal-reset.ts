@@ -4,7 +4,7 @@ import { Component } from 'vue-property-decorator';
 import config from '../../../config';
 import WithRender from './modal-reset.tpl.html';
 import { tagHotjar } from '../../../util';
-import { resetPassword } from 'SenseJS/auth/auth';
+import { resetPassword } from 'SenseJS/auth';
 
 @WithRender
 @Component
