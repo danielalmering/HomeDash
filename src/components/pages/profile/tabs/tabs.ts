@@ -87,12 +87,12 @@ export default class Tabs extends Vue {
 
         const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
 
-        // Sidebar overwrite
-        if(this.$route.params.category === 'teasers'){
+        // Sidebar overwrites
+        if(this.$route.params.category === 'teasers' && this.performer.isVoyeur){
             return 'voyeur';
         }
 
-        if(this.$route.params.category === 'peek'){
+        if(this.$route.params.category === 'peek' && this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
             return 'cam';
         }
 
