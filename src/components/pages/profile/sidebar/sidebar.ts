@@ -235,7 +235,7 @@ export default class Sidebar extends Vue {
         });
     }
 
-    async goToPerformer(performer: Performer){
+    async goToPerformer(performer: Performer, category: string){
         const session = this.$store.state.session;
 
         //peek with another lady if you're currently peeking and the lady is peekable
@@ -263,7 +263,8 @@ export default class Sidebar extends Vue {
         this.$router.push(this.$localize({
             name: 'Profile',
             params: {
-                id: performer.advert_numbers[0].advertNumber.toString()
+                id: performer.advert_numbers[0].advertNumber.toString(),
+                category: category
             }
         }));
     }

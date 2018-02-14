@@ -43,7 +43,7 @@
             <ul class="sidebar__performers nomar nopad" v-on:scroll="onScroll" :class="{ 'collapse': !toggleUserinfo }">
 
                 <!-- Performerlist -->
-                <li class="sidebar__performer" v-if="category !== 'voyeur'" v-for="performer in performers" v-on:click="goToPerformer(performer)">
+                <li class="sidebar__performer" v-if="category !== 'voyeur'" v-for="performer in performers" v-on:click="goToPerformer(performer, category)">
                     <div class="sidebar__performer-image col-xs-5 nopad">
                         <img :src="getAvatarImage(performer, 'small')" />
                         <span class="status" :class="getPerformerStatus(performer)"></span>
