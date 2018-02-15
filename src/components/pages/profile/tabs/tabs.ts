@@ -2,6 +2,7 @@ import { Component, Watch, Prop } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 import { UserRole, User } from '../../../../models/User';
+import { serviceEnabled } from '../../../../util';
 
 import config from '../../../../config';
 
@@ -34,6 +35,7 @@ export default class Tabs extends Vue {
     emailForm: EmailForm = { subject: '', content: '' };
     selectedTab: string = 'cam';
     openModal = openModal;
+    serviceEnabled = serviceEnabled;
 
     tabs = {
         'cam': 'video-camera',
@@ -48,36 +50,6 @@ export default class Tabs extends Vue {
 
     mounted(){
         this.selectedTab = this.firstAvailable;
-    }
-
-    enabled(service: string): boolean{
-        if (!this.performer){
-            return false;
-        }
-
-        //services:
-        //cam,email,peek,phone,sms,videocall,voicemail
-        //voyeur is an exception..
-        if (service === 'voyeur'){
-            return this.performer.isVoyeur;
-        }
-
-        if (!(service in this.performer.performer_services) ){
-            throw new Error(`${service} ain't no service I ever heard of!`);
-        }
-
-        const allowedInSession = ['email', 'sms'];
-
-        //If the performer is in a session you may only use certain services
-        if(this.performer.performerStatus === PerformerStatus.Busy || this.performer.performerStatus === PerformerStatus.OnCall){
-            return service === 'cam' && this.performer.performer_services['peek'] ? true : allowedInSession.indexOf(service) !== -1;
-        }
-
-        if (this.performer.performer_services[service]){
-            return true;
-        }
-
-        return false;
     }
 
     get firstAvailable(){
@@ -101,7 +73,7 @@ export default class Tabs extends Vue {
         }
 
         for (const service in this.performer.performer_services){
-            if(this.enabled(service) && ignoredServices.indexOf(service) === -1){
+            if(this.serviceEnabled(service, this.performer) && ignoredServices.indexOf(service) === -1){
                 return service;
             }
         }
@@ -184,13 +156,13 @@ export default class Tabs extends Vue {
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        if(!newPerformer.performer_services[this.selectedTab] || !this.enabled(this.selectedTab)){
+        if(!newPerformer.performer_services[this.selectedTab] || !this.serviceEnabled(this.selectedTab, this.performer)){
             this.selectedTab = this.firstAvailable;
         }
     }
 
     selectTab(newTab: string){
-        if (this.enabled(newTab)){
+        if (this.serviceEnabled(newTab, this.performer)){
             this.selectedTab = newTab;
         }
     }
