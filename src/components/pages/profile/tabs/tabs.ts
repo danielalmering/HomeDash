@@ -1,4 +1,5 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import Vue from 'vue';
 import { UserRole, User } from '../../../../models/User';
 
@@ -86,6 +87,15 @@ export default class Tabs extends Vue {
 
         const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
 
+        // Sidebar overwrites
+        if(this.$route.params.category === 'teasers' && this.performer.isVoyeur){
+            return 'voyeur';
+        }
+
+        if(this.$route.params.category === 'peek' && this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
+            return 'cam';
+        }
+
         if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 ) && this.performer.isVoyeur){
             return 'voyeur';
         }
@@ -165,6 +175,11 @@ export default class Tabs extends Vue {
 
     set ivrCode(value:string){
         this.$store.commit('setIvrCode', value);
+    }
+
+    @Watch('$route')
+    onRouteChange(to: Route, from: Route){
+        this.selectedTab = this.firstAvailable;
     }
 
     @Watch('performer', { deep: true })
