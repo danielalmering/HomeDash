@@ -150,6 +150,10 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionData.playStream;
     }
 
+    get isSwitchModal(): boolean {
+        return this.$store.state.session.isSwitchModal;
+    }
+
     public userHasCam:boolean = false;
 
     private detectCam(){
@@ -401,6 +405,27 @@ export default class VideoChat extends Vue {
                 this.navigation.next(true);
             }
         }
+    }
+
+    async switchPeek(){
+        try {
+            await this.$store.dispatch('switchPeek', this.$store.state.session.switchingPerformer);
+        } catch(e){
+            this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
+        }
+        
+        this.$store.commit('toggleSwitchModal', { state: false });
+
+        this.$router.push({
+            name: 'Peek',
+            params: {
+                id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
+            }
+        });
+    }
+
+    cancelSwitch(){
+        this.$store.commit('toggleSwitchModal', { state: false });
     }
 
     async leave(){

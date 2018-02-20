@@ -19,7 +19,7 @@
     </div>
 
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
-    <div class="videochat__favourite" v-on:click="toggleFavourite(performerData.id)"><i class="fa fa-star" :class="{ 'is-favourite': performerData.isFavourite }"></i></div>
+    <div class="videochat__favourite" v-if="mainTile" v-on:click="toggleFavourite(performerData.id)"><i class="fa fa-star" :class="{ 'is-favourite': performerData.isFavourite }"></i></div>
 
     <div class="voyeur__block">
 
@@ -36,11 +36,11 @@
         </div>
 
         <div class="col-xs-12 col-sm-4">
-            <div class="blocks center">
+            <div class="blocks center" v-if="mainTile">
                 <div class="blocks__title">{{ performerData.nickname }} <i>( {{performerData.advert_numbers[0].advertNumber}} )</i></div>
             </div>
 
-            <div class="buttons">
+            <div class="buttons" v-if="mainTile">
                 <a class="btn btn-black btn-small btn-icon" v-if="performerData.performerStatus === 'AVAILABLE' && performerData.performer_services.cam" v-on:click="startVideoChat(performerData.id)">
                     <i class="online"></i>{{ $t('voyeur.now1on1') }}
                 </a>

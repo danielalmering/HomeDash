@@ -13,7 +13,7 @@ import Tabs from './tabs/tabs';
 import config from '../../../config';
 
 import notificationSocket from '../../../socket';
-import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
+import { SocketServiceEventArgs, SocketStatusEventArgs, SocketVoyeurEventArgs } from '../../../models/Socket';
 import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
@@ -49,6 +49,7 @@ export default class Profile extends Vue {
 
     private serviceSocketId: number;
     private statusSocketId: number;
+    private voyeurSocketId: number;
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
@@ -88,6 +89,7 @@ export default class Profile extends Vue {
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
 
+        // Update performer services
         this.serviceSocketId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
             if(!this.performer || data.performerId !== this.performer.id){
                 return;
@@ -100,6 +102,7 @@ export default class Profile extends Vue {
             }
         });
 
+        // Update performer status
         this.statusSocketId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
             if(!this.performer || data.performerId !== this.performer.id){
                 return;
@@ -108,12 +111,21 @@ export default class Profile extends Vue {
             this.performer.performerStatus = data.status as PerformerStatus;
         });
 
+        // Update voyeur status
+        this.voyeurSocketId = notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
+            if(this.performer && this.performer.id === data.performerId && data.type === 'STREAMING'){
+                this.performer.isVoyeur = data.value;
+            }
+        });
+
         this.minHeight();
 
     }
 
     beforeDestroy(){
         notificationSocket.unsubscribe(this.serviceSocketId);
+        notificationSocket.unsubscribe(this.statusSocketId);
+        notificationSocket.unsubscribe(this.voyeurSocketId);
     }
 
     @Watch('$route')
