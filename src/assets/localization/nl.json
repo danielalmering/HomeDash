@@ -274,6 +274,7 @@
         "leaving": "Huidige sessie verlaten",
         "flashchecktext": "Om terug te kunnen cammen moet Flash het doen. Klik hieronder voor instructies.",
         "anonymous": "Anoniem",
+        "switchpeek": "Meekijk sessie wisselen?",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
             "socketErrors": {

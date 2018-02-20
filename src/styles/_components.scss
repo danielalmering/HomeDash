@@ -110,6 +110,7 @@
     box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.08);
     @include rem(padding, 5px 10px);
     @include border-radius(1px);
+    &.none { display: none;}
     &.busy-label { background: $pallete-15; }
     &.peek-label { background: $pallete-19; }
     &.teaser-label { background: $pallete-22; }

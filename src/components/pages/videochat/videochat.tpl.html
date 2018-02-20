@@ -62,5 +62,6 @@
 
     <chat v-if="sessionType != 'PEEK'" :performer-name="performer ? performer.nickname : ''" :user-name="displayName"></chat>
 
+    <confirmation v-if="isSwitchModal" :type="'dialog'" :title="'videochat.switchpeek'" v-on:accept="switchPeek" v-on:cancel="cancelSwitch"></confirmation>
     <confirmation v-if="askToLeave" :type="'dialog'" :title="'videochat.leaving'" v-on:accept="leave" v-on:cancel="stay"></confirmation>
 </div>

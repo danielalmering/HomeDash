@@ -105,6 +105,7 @@ export default class Confirmations extends Vue {
         @include border-radius(5px);
 
         h2 {
+            @include rem(font-size, 20px);
             @include rem(margin-top, 0);
             color: $pallete-3;
         }
