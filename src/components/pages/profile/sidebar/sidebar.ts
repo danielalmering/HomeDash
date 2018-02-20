@@ -246,18 +246,7 @@ export default class Sidebar extends Vue {
                 return;
             }
 
-            try {
-                await this.$store.dispatch('switchPeek', performer);
-            } catch(e){
-                this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
-            }
-
-            this.$router.push({
-                name: 'Peek',
-                params: {
-                    id: session.activePerformer.advert_numbers[0].advertNumber.toString()
-                }
-            });
+            this.$store.commit('toggleSwitchModal', { state: true, performer });
 
             return;
         }

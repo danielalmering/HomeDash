@@ -41,6 +41,10 @@ export interface SessionState {
     activeIvrCode: string | undefined;
     activePaymentType: PaymentType | undefined;
     isSwitching: boolean;
+
+    isSwitchModal: boolean;
+    switchingPerformer?: Performer;
+
     fromVoyeur: boolean;
     //ID of the timeout for the request
     performerTimeout:any;
@@ -174,6 +178,8 @@ const sessionStore: Module<SessionState, RootState> = {
         activeIvrCode: undefined,
         activePaymentType: undefined,
         isSwitching: false,
+        isSwitchModal: false,
+        switchingPerformer: undefined,
         fromVoyeur: false,
         performerTimeout: Number.NaN
     },
