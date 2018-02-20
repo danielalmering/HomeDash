@@ -12,10 +12,11 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal, tagHotjar, serviceEnabled } from '../../../../util';
+import { openModal, tagHotjar } from '../../../../util';
 import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';
+import { tabEnabled } from '../../../../performer-util';
 
 @WithRender
 @Component({
@@ -34,7 +35,7 @@ export default class Tabs extends Vue {
     emailForm: EmailForm = { subject: '', content: '' };
     selectedTab: string = 'cam';
     openModal = openModal;
-    serviceEnabled = serviceEnabled;
+    tabEnabled = tabEnabled;
 
     tabs = {
         'cam': 'video-camera',
@@ -72,7 +73,7 @@ export default class Tabs extends Vue {
         }
 
         for (const service in this.performer.performer_services){
-            if(this.serviceEnabled(service, this.performer) && ignoredServices.indexOf(service) === -1){
+            if(this.tabEnabled(service, this.performer) && ignoredServices.indexOf(service) === -1){
                 return service;
             }
         }
@@ -155,13 +156,13 @@ export default class Tabs extends Vue {
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        if(!newPerformer.performer_services[this.selectedTab] || !this.serviceEnabled(this.selectedTab, this.performer)){
+        if(!newPerformer.performer_services[this.selectedTab] || !this.tabEnabled(this.selectedTab, this.performer)){
             this.selectedTab = this.firstAvailable;
         }
     }
 
     selectTab(newTab: string){
-        if (this.serviceEnabled(newTab, this.performer)){
+        if (this.tabEnabled(newTab, this.performer)){
             this.selectedTab = newTab;
         }
     }

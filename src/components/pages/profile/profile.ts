@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
-import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio, serviceEnabled  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -20,6 +20,7 @@ import { setTitle, setDescription, setKeywords, setGraphData } from '../../../se
 import './profile.scss';
 import './photo-slider.scss';
 import WithRender from './profile.tpl.html';
+import { tabEnabled } from '../../../performer-util';
 
 const swfobject = require('swfobject');
 
@@ -51,7 +52,7 @@ export default class Profile extends Vue {
     private statusSocketId: number;
     private voyeurSocketId: number;
 
-    private serviceEnabled = serviceEnabled;
+    private serviceEnabled = tabEnabled;
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
