@@ -12,7 +12,7 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal, tagHotjar } from '../../../../util';
+import { openModal, tagHotjar, serviceEnabled } from '../../../../util';
 import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';
