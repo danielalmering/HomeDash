@@ -2,7 +2,6 @@ import { Component, Watch, Prop } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 import { UserRole, User } from '../../../../models/User';
-import { serviceEnabled } from '../../../../util';
 
 import config from '../../../../config';
 
@@ -13,7 +12,7 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal, tagHotjar } from '../../../../util';
+import { openModal, tagHotjar, serviceEnabled } from '../../../../util';
 import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';

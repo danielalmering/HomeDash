@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
-import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio, serviceEnabled  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -50,6 +50,8 @@ export default class Profile extends Vue {
     private serviceSocketId: number;
     private statusSocketId: number;
     private voyeurSocketId: number;
+
+    private serviceEnabled = serviceEnabled;
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
@@ -152,10 +154,6 @@ export default class Profile extends Vue {
     openFullSlider(id: number){
         this.fullSliderVisible = true;
         this.displayPic = id;
-    }
-
-    hasService(service: string){
-        return !this.performer ? false : this.performer.performer_services[service];
     }
 
     minHeight(){
