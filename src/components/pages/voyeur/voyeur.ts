@@ -49,6 +49,7 @@ export default class Voyeur extends Vue {
 
     get performerData(){
         const performerId = this.$store.state.voyeur.mainTile.performer;
+
         return this.$store.getters['voyeur/performer'](performerId);
     }
 

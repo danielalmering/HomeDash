@@ -89,16 +89,16 @@ export default class NanoCosmos extends Stream {
 
     private getStyle(): H5Style {
         return <H5Style>{
-          height: this.width,
-          width: this.height,
-          aspectratio: this.aspectratio,
-          controls: this.controls,
-          interactive: this.interactive,
-          view: this.view,
-          scaling: this.scaling,
-          keepFrame: this.keepFrame,
-          displayAudioOnly: this.displayAudioOnly,
-          audioPlayer: this.audioPlayer
+            height: this.width,
+            width: this.height,
+            aspectratio: this.aspectratio,
+            controls: this.controls,
+            interactive: this.interactive,
+            view: this.view,
+            scaling: this.scaling,
+            keepFrame: this.keepFrame,
+            displayAudioOnly: this.displayAudioOnly,
+            audioPlayer: this.audioPlayer
         };
     }
 

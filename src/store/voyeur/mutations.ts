@@ -18,12 +18,15 @@ const mutations = {
         }
     },
     removePerformer(state: VoyeurState, performerId: number){
+        console.log('Removing performer with id of ', performerId);
+
         state.performers = state.performers.filter(p => p.id !== performerId);
         state.activeTiles = state.activeTiles.filter(t => t.performer !== performerId);
 
         state.queue = state.queue.filter(id => id !== performerId);
 
         if(state.mainTile && state.mainTile.performer === performerId){
+            console.log('Setting maintile to undefined for performer ', performerId);
             state.mainTile = undefined;
         }
     },
