@@ -55,10 +55,10 @@
         </div>
 
         <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer">
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="serviceEnabled('cam', performer)" v-on:click="authenticated ? startSession({sessionType: canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="serviceEnabled('phone', performer)" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
-            <button style="display: none" class="btn btn-full btn-xxl btn-green btn-fa fa-eye" v-if="serviceEnabled('voyeur', performer)" v-on:click="authenticated ? startVoyeur(true) : openModal('login')"><span >{{ $t('tabs.voyeurbtn') }}</span></button>
-            <router-link  v-if="serviceEnabled('email', performer)" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="tabEnabled('cam', performer)" v-on:click="authenticated ? startSession({sessionType: canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="tabEnabled('phone', performer)" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
+            <button style="display: none" class="btn btn-full btn-xxl btn-green btn-fa fa-eye" v-if="tabEnabled('voyeur', performer)" v-on:click="authenticated ? startVoyeur(true) : openModal('login')"><span >{{ $t('tabs.voyeurbtn') }}</span></button>
+            <router-link  v-if="tabEnabled('email', performer)" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
                 <button class="btn btn-full btn-xxl btn-green btn-fa fa-envelope"><span>{{ $t('tabs.mailbtn') }}</span></button>
             </router-link>
         </div>

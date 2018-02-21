@@ -67,25 +67,26 @@ test('util/tabEnabled', (assert: test.Test) => {
     const performerPeekable: Performer = { ...performer, performer_services: { ...performer.performer_services, cam: true, peek: true, phone: true }, performerStatus: PerformerStatus.Busy };
     const performerOnCall: Performer = { ...performer, performer_services: { ...performer.performer_services, cam: true, phone: true }, performerStatus: PerformerStatus.OnCall };
     const performerBusy: Performer = { ...performer, performer_services: { ...performer.performer_services, cam: true, phone: true }, performerStatus: PerformerStatus.Busy };
-    const performerOffline: Performer = { ...performer, performer_services: { ...performer.performer_services, phone: true }, performerStatus: PerformerStatus.Offline };
+    const performerOffline: Performer = { ...performer, performer_services: { ...performer.performer_services }, performerStatus: PerformerStatus.Offline };
+    const performerOfflineAllServices: Performer = { ...performer, performer_services: { ...performer.performer_services, phone: true, cam: true, videocall: true, sms: true, email: true }, performerStatus: PerformerStatus.Offline };
     const performerAvailable: Performer = { ...performer, performer_services: { ...performer.performer_services, cam: true, videocall: true, phone: true, sms: true, email: true }, performerStatus: PerformerStatus.Available };
     const performerAvailableNoServices: Performer = { ...performer, performer_services: { ...performer.performer_services, cam: false, videocall: false, phone: false, sms: false, email: false }, performerStatus: PerformerStatus.Available };
 
     const performerTeaser = { ...performer, isVoyeur: true };
     const performerNoTeaser = { ...performer, isVoyeur: false };
     const performerTeaserOffline = { ...performer, isVoyeur: true, performerStatus: PerformerStatus.Offline };
-    
+
     const tests = [
         //Are tabs visible with peek enabled and while in session
         { expected: true, service: 'cam', performer: performerPeekable },
         { expected: false, service: 'videocall', performer: performerPeekable },
         { expected: false, service: 'phone', performer: performerPeekable },
-        
+
         //Are tabs visible with on call performer
         { expected: false, service: 'cam', performer: performerOnCall },
         { expected: false, service: 'videocall', performer: performerOnCall },
         { expected: false, service: 'phone', performer: performerOnCall },
-        
+
         //Are tabs visible with busy performer
         { expected: false, service: 'cam', performer: performerBusy },
         { expected: false, service: 'videocall', performer: performerBusy },
@@ -94,8 +95,8 @@ test('util/tabEnabled', (assert: test.Test) => {
         //Are tabs visible with offline performer
         { expected: false, service: 'cam', performer: performerOffline },
         { expected: false, service: 'videocall', performer: performerOffline },
-        { expected: true, service: 'phone', performer: performerOffline },
-        
+        { expected: false, service: 'phone', performer: performerOffline },
+
         //Are tabs visible with available performer
         { expected: true, service: 'cam', performer: performerAvailable },
         { expected: true, service: 'videocall', performer: performerAvailable },
@@ -109,6 +110,13 @@ test('util/tabEnabled', (assert: test.Test) => {
         { expected: false, service: 'phone', performer: performerAvailableNoServices },
         { expected: false, service: 'email', performer: performerAvailableNoServices },
         { expected: false, service: 'sms', performer: performerAvailableNoServices },
+
+        //Are tabs visible with offline performer and all services on
+        { expected: false, service: 'cam', performer: performerOfflineAllServices },
+        { expected: false, service: 'videocall', performer: performerOfflineAllServices },
+        { expected: true, service: 'phone', performer: performerOfflineAllServices },
+        { expected: true, service: 'email', performer: performerOfflineAllServices },
+        { expected: true, service: 'sms', performer: performerOfflineAllServices },
 
         //Is the teaser tab enabled properly
         { expected: true, service: 'voyeur', performer: performerTeaser },

@@ -52,7 +52,7 @@ export default class Profile extends Vue {
     private statusSocketId: number;
     private voyeurSocketId: number;
 
-    private serviceEnabled = tabEnabled;
+    private tabEnabled = tabEnabled;
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
