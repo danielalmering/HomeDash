@@ -1,6 +1,6 @@
 import { Performer, PerformerStatus } from "./models/Performer";
 
-export function tabEnabled(service: string, forPerformer: Performer):boolean { 
+export function tabEnabled(service: string, forPerformer: Performer):boolean {
     if (!forPerformer){
         return false;
     }
@@ -19,6 +19,10 @@ export function tabEnabled(service: string, forPerformer: Performer):boolean {
     // Email & sms enabled independently of status from performer!
     if(service === 'email' || service === 'sms'){
         return forPerformer.performer_services[service];
+    }
+
+    if(forPerformer.performerStatus === PerformerStatus.Offline && service !== 'phone'){
+        return false;
     }
 
     // If performer is calling no service enabled
