@@ -153,3 +153,42 @@ export function hotjarInterceptor(to: Route, previous: Route, next: (to?: string
 
     next();
 }
+
+export function setScrollPosition(to: Route, previous: Route, next: (to?: string | Location) => void){
+    let supportPageOffset = window.pageXOffset !== undefined;
+    let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+    const scrollTop = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+
+    if(previous.name === 'Performers' && to.name === 'Profile'){
+        store.commit('setPagePosition', scrollTop);
+        console.log('1: from:', previous.name, 'to:', to.name);
+        console.log('position 1:', scrollTop)
+    }
+
+    next();
+}
+
+export function scrollInterceptor(to: Route, from: Route){
+
+    let supportPageOffset = window.pageXOffset !== undefined;
+    let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+    const scrollTop = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+    
+    if(from.name === 'Performers' && to.name === 'Profile'){
+        store.commit('setPagePosition', scrollTop);
+    }
+
+    if(from.name === 'Profile' && to.name === 'Performers'){
+        setTimeout(function() { 
+            window.scrollTo(0, store.state.pagePosition);
+            store.commit('setPagePosition', 0);
+        },500)
+
+        return;
+    }
+
+    setTimeout(function() { 
+        window.scrollTo(0, 0);
+    },500)
+
+}

@@ -75,12 +75,14 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
-export function scrollToTop(scrollDuration: number) {
-    const scrollStep = -window.scrollY / (scrollDuration / 15);
+export function scrollToTop(scrollDuration: number, route: string) {
+    //const scrollStep = -window.scrollY / (scrollDuration / 15);
+    console.log('scroolltop', window);
+    console.log('router', route);
 
-    const scrollInterval = setInterval(() => {
-        window.scrollY !== 0 ? window.scrollBy(0, scrollStep) : clearInterval(scrollInterval)
-    }, 15);
+    // const scrollInterval = setInterval(() => {
+    //     window.pageYOffset > 0 ? window.scrollTo(0, window.pageYOffset - 20) : clearInterval(scrollInterval)
+    // }, 16);
 }
 
 export function webrtcPossible(platform:Platform):boolean{

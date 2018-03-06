@@ -5,7 +5,7 @@
         <div class="sidebar__content-top" :class="{ 'collapse': !toggleUserinfo }">
 
             <div class="sidebar__content-logo">
-                <router-link :to="$localize({ path: '/'})"><img :src="logo" alt=""></router-link>
+                <a v-on:click="goBack()"><img :src="logo" alt=""></a>
             </div>
 
             <div class="sidebar__content-user" :class="{ 'collapse': !toggleUserinfo }">
