@@ -2,15 +2,14 @@
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
 
-        <div class="numbers" v-if="$parent.info">
-            <i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }}
-            <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span>
+        <div class="numbers" v-for="(campaign, index) in $parent.activeCampaign">
+            <i class="flag flag-nl" v-if="$parent.branding && index === 0"></i>
+            <i class="flag flag-be" v-if="$parent.branding && index === 1"></i>
+            {{ campaign.number }} <span>{{ campaign.cpm | euro }} {{ $t('top.numbers.pm') }}</span>
             <strong v-if="$parent.info.marketing.current" v-t="'top.banner.happyhour'"></strong>
         </div>
-        <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
 
-        <form class="form"
-        v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:'VIDEOCALL'})">
+        <form class="form" v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:'VIDEOCALL'})">
             <p v-t="'tabs.webcamwithphonedesc'"></p>
             <div class="col-xs-12 col-sm-6">
                 <div class="row rowpad">
@@ -28,9 +27,9 @@
         </form>
     </div>
 
-    <div class="tabs__servicescontent-method">
+    <div class="tabs__servicescontent-method" v-if="$parent.info.ivr1.phone_number_free">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
-        <div class="numbers" v-if="$parent.info && $parent.authenticated">{{ $parent.info.phone_number_free }} <span>(Local )</span></div>
+        <div class="numbers" v-if="$parent.info && $parent.authenticated">{{ $parent.info.ivr1.phone_number_free }} <span>(Local )</span></div>
 
         <p><span v-t="$parent.authenticated ? 'tabs.videochatwithcreditsdesc1' : 'tabs.registeraccount'"></span> <span v-if="$parent.authenticated"><i>{{ $parent.user.credits_ivr_code }}</i> <span v-t="'tabs.videochatwithcreditsdesc2'"></span></span></span></p>
         <a class="btn btn-full btn-large" :class="$parent.authenticated ? 'btn-green' : 'btn-orange'" v-t="$parent.authenticated ? 'tabs.videochatbtn' : 'modals.login.login'" v-on:click="$parent.authenticated ? $parent.startSession({sessionType:'VIDEOCALL', payment:'IVRCREDITS',ivrCode:$parent.user.credits_ivr_code}) : $parent.openModal('login')"></a>

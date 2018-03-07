@@ -21,12 +21,25 @@ export interface Info {
             phone_cpm: number;
         }
     },
-    phone_cpm: number;
-    phone_enabled: number;
-    phone_number: string;
-    phone_number_free: string;
-    sms_cpt: number;
-    sms_enabled: number;
-    sms_number: 4500;
+    ivr1: {
+        phone_cpm: number;
+        phone_enabled: number;
+        phone_number: string;
+        phone_number_free: string;
+        sms_cpt: number;
+        sms_enabled: number;
+        sms_number: 4500;
+        marketing: number;
+    }
+    ivr2: {
+        phone_cpm: number;
+        phone_enabled: number;
+        phone_number: string;
+        phone_number_free: string;
+        sms_cpt: number;
+        sms_enabled: number;
+        sms_number: 4500;
+        marketing: number;
+    }
     tags: string[];
 }

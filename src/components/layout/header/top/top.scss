@@ -42,9 +42,9 @@
         &-number {
             color: $pallete-3;
             padding: 0;
-            @include rem(font-size, 30px);
+            @include rem(font-size, 23px);
             font-weight: 700;
-            line-height: 70%;
+            line-height: 90%;
 
             &.large {
                 @include rem(padding, 15px 10px);
@@ -60,6 +60,7 @@
                 font-weight: 300;
                 color: $pallete-2;
                 @include rem(font-size, 11px);
+                letter-spacing: -0.3px;
             }
 
             .flag {

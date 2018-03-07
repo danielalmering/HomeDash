@@ -5,7 +5,7 @@
     "top": {
         "numbers": {
             "callnow": "CALL NOW",
-            "cpm": "CPM",
+            "cpm": "pm",
             "pm": "pm"
         },
         "banner": {
@@ -160,7 +160,8 @@
         "smscost": "per received message*",
         "registeraccount": "Register an account, and take advantage of promotions!",
         "noServices": "No service (s) available!",
-        "errorNoIvrCode": "Enter your access code"
+        "errorNoIvrCode": "Enter your access code",
+        "nosmsservice": "Kein SMS-Dienst verfügbar!"
     },
     "pagination": {
         "pageOf": "Page {page} till {total}",
@@ -326,7 +327,7 @@
         "creditscap": "Credits",
         "price": "Price",
         "paying": "Buy",
-        "paywith": "Pay with {title}",
+        "paywith": "Pay with",
         "subtotal": "Subtotal",
         "bonuscredits": "Bonus credits",
         "totalcredits": "Total credits",
@@ -336,6 +337,12 @@
         "bonusdiscountdesc": "The above promotion is only valid for purchases with iDeal & Mister Cash. And not for purchases with credit card and visa via Click and Buy. * ",
         "discountcode": "Discountcode?",
         "mostlybought": "Mostly sold!",
+        "packages": {
+            "pack1": "Basic",
+            "pack2": "Medium",
+            "pack3": "High",
+            "pack4": "XXXL"
+        },
         "alerts": {
             "errorIncorrectPromo": "Incorrect promocode!",
             "errorUsedPromo": "Promocode already used!",

@@ -63,25 +63,35 @@ const rootStore = new Vuex.Store<RootState>({
         },
         getCampaignData: state => {
             if(!state.info){
-                return {
-                    number: '',
-                    cpm: ''
-                };
+                const numbers = [
+                    {number: 0, cpm: 0},
+                    {number: 0, cpm: 0}
+                ];
+
+                return numbers;
             }
 
             if(!state.info.marketing.current){
-                return {
-                    number: state.info.phone_number,
-                    cpm: state.info.phone_cpm
-                };
-            } else {
-                const activeCampaign = state.info.marketing.current.replace(' ', '_');
-                const marketing: any = state.info.marketing;
+                const numbers = [
+                    {number: state.info.ivr1.phone_number, cpm: state.info.ivr1.phone_cpm},
+                    {number: state.info.ivr2.phone_number, cpm: state.info.ivr2.phone_cpm}
+                ];
 
-                return {
-                    number: marketing[activeCampaign].phone_number,
-                    cpm: marketing[activeCampaign].phone_cpm
-                };
+                return numbers;
+            } else {
+                const activeCampaign = state.info.marketing.current;
+                const marketing: any = state.info.marketing;
+                const nr1 = state.info.ivr1.marketing === 1 ? marketing[activeCampaign].phone_number : state.info.ivr1.phone_number;
+                const nr2 = state.info.ivr2.marketing === 1 ? marketing[activeCampaign].phone_number : state.info.ivr2.phone_number;
+                const cpm1 = state.info.ivr1.marketing === 1 ? marketing[activeCampaign].phone_cpm : state.info.ivr1.phone_cpm;
+                const cpm2 = state.info.ivr2.marketing === 1 ? marketing[activeCampaign].phone_cpm : state.info.ivr2.phone_cpm;
+
+                const numbers = [
+                    {number: nr1, cpm: cpm1},
+                    {number: nr2, cpm: cpm2}
+                ];
+
+                return numbers;
             }
         },
         getBranding: state => {

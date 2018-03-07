@@ -3,8 +3,12 @@
         <h2>{{ $t('tabs.calltitle') }} <span>{{ $parent.performer.nickname }}</span></h2>
         <p v-t="'tabs.calldesc'"></p>
 
-        <div class="numbers" v-if="$parent.info"><i :class="'flag flag-' + $parent.info.country"></i> {{ $parent.activeCampaign.number }} <span>({{ $parent.activeCampaign.cpm | euro }} {{ $t('top.numbers.pm') }})</span></div>
-        <div class="numbers" v-if="$parent.branding"><i class="flag flag-be"></i> 0907-23000 <span>(€1.25 pm)</span></div>
+        <div class="numbers" v-for="(campaign, index) in $parent.activeCampaign">
+            <i class="flag flag-nl" v-if="$parent.branding && index === 0"></i>
+            <i class="flag flag-be" v-if="$parent.branding && index === 1"></i>
+            {{ campaign.number }} <span>{{ campaign.cpm | euro }} {{ $t('top.numbers.pm') }}</span>
+            <strong v-if="$parent.info.marketing.current" v-t="'top.banner.happyhour'"></strong>
+        </div>
 
         <p><span v-html="$t('tabs.callmenu1')"></span> <i>{{ $parent.advertNumber }}</i> <span v-t="'tabs.callmenu2'"></span></p>
         <h3>{{ $t('tabs.callbyebye') }} <span>{{ $parent.performer.nickname }}</span></h3>
