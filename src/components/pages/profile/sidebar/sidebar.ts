@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal, openRoute, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
+import { openModal, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
 import config from '../../../../config';
 
 import './sidebar.scss';
@@ -33,7 +33,6 @@ export default class Sidebar extends Vue {
     toggleUserinfo: boolean = true;
 
     openModal = openModal;
-    openRoute = openRoute;
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
     isOutOfSession = isOutOfSession;
@@ -200,8 +199,10 @@ export default class Sidebar extends Vue {
         }
     }
 
-    goBack(){
-        window.history.back();
+    openRoute(location: string){
+        if(this.authenticated){
+            this.$router.push({ name: location });
+        }
     }
 
     toggleSidebar(check: boolean){
