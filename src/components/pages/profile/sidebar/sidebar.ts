@@ -200,6 +200,10 @@ export default class Sidebar extends Vue {
         }
     }
 
+    goBack(){
+        window.history.back();
+    }
+
     toggleSidebar(check: boolean){
         this.$store.commit('toggleSidebar');
     }

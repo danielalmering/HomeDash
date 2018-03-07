@@ -340,7 +340,8 @@
             "errorUsedPromo": "Promocode bereits benutzt!",
             "successCorrectPromo": "Promocode eingelöst!",
             "errorNoPackage": "Kein Paket ausgewählt!",
-            "errorNoPayment": "Keine Zahlungsweise ausgewählt!"
+            "errorNoPayment": "Keine Zahlungsweise ausgewählt!",
+            "errorToHighPurchase": "Zu großen Kaufbetrag ausgewählt!"
         }
     },
     "contact": {
