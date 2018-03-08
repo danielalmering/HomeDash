@@ -3,6 +3,7 @@ export interface Info {
     categories: { slug: string, title: string }[];
     countries: string[];
     country: string;
+    credits_status: string;
     credits_per_email: string;
     credits_per_minute: string;
     credits_per_sms: string;
@@ -14,10 +15,14 @@ export interface Info {
         current: string;
         happy_hour: {
             phone_number: string;
+            phone_number_mobile?: string;
+            phone_mobile_cpm?: number;
             phone_cpm: number;
         },
-        happy_days: {
+        happy_days?: {
             phone_number: string;
+            phone_number_mobile?: string;
+            phone_mobile_cpm?: number;
             phone_cpm: number;
         }
     },
@@ -25,21 +30,21 @@ export interface Info {
         phone_cpm: number;
         phone_enabled: number;
         phone_number: string;
-        phone_number_free: string;
-        sms_cpt: number;
+        phone_number_free?: string;
+        sms_cpt?: number;
         sms_enabled: number;
-        sms_number: 4500;
-        marketing: number;
+        sms_number?: 4500;
+        marketing?: number;
     }
-    ivr2: {
+    ivr2?: {
         phone_cpm: number;
         phone_enabled: number;
         phone_number: string;
-        phone_number_free: string;
-        sms_cpt: number;
+        phone_number_free?: string;
+        sms_cpt?: number;
         sms_enabled: number;
-        sms_number: 4500;
-        marketing: number;
+        sms_number?: 4500;
+        marketing?: number;
     }
     tags: string[];
 }

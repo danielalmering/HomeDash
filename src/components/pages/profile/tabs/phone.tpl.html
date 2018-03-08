@@ -6,8 +6,9 @@
         <div class="numbers" v-for="(campaign, index) in $parent.activeCampaign">
             <i class="flag flag-nl" v-if="$parent.branding && index === 0"></i>
             <i class="flag flag-be" v-if="$parent.branding && index === 1"></i>
-            {{ campaign.number }} <span>{{ campaign.cpm | euro }} {{ $t('top.numbers.pm') }}</span>
-            <strong v-if="$parent.info.marketing.current" v-t="'top.banner.happyhour'"></strong>
+            {{ campaign.number }}
+            <strong v-if="campaign.marketing === 1" v-t="'top.banner.happyhour'"></strong>
+            <span>{{ campaign.cpm | euro }} {{ $t('top.numbers.pm') }}</span>
         </div>
 
         <p><span v-html="$t('tabs.callmenu1')"></span> <i>{{ $parent.advertNumber }}</i> <span v-t="'tabs.callmenu2'"></span></p>

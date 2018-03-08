@@ -5,8 +5,9 @@
         <div class="numbers" v-for="(campaign, index) in $parent.activeCampaign">
             <i class="flag flag-nl" v-if="$parent.branding && index === 0"></i>
             <i class="flag flag-be" v-if="$parent.branding && index === 1"></i>
-            {{ campaign.number }} <span>{{ campaign.cpm | euro }} {{ $t('top.numbers.pm') }}</span>
-            <strong v-if="$parent.info.marketing.current" v-t="'top.banner.happyhour'"></strong>
+            {{ campaign.number }} 
+            <strong v-if="campaign.marketing === 1" v-t="'top.banner.happyhour'"></strong>
+            <span>{{ campaign.cpm | euro }} {{ $t('top.numbers.pm') }}</span>
         </div>
 
         <form class="form" v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO'})">

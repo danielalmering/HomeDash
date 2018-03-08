@@ -10,6 +10,7 @@
         },
         "banner": {
             "happyhour": "HappyHour",
+            "happyhour_cpm": "/min",
             "seeactionpage": "Unsere Aktions-Seite",
             "extra": "Extra",
             "credits": "Credits",
@@ -106,14 +107,14 @@
             "xlarge": "Extra groß"
         },
         "eyecolors":{
-            "brown": "Brown",
-            "hazel": "Hazel",
-            "blue": "Blue",
-            "green": "Green",
-            "silver": "Silver",
-            "amber": "Amber",
-            "grey": "Grey",
-            "redviolet": "Red & violet"
+            "brown": "Braun",
+            "hazel": "Hasel",
+            "blue": "Blau",
+            "green": "Grün",
+            "silver": "Silber",
+            "amber": "Bernstein",
+            "grey": "Grau",
+            "redviolet": "Rot & violett"
         },
         "flash": {
             "no": "Flash ist deaktiviert.",
@@ -161,7 +162,7 @@
         "registeraccount": "Registriere kostenlos ein Account und profitiere von zahlreichen Angeboten!",
         "noServices": "Kein(e) Service(s) verfügbar!",
         "errorNoIvrCode": "Gib deinen Zugangscode ein",
-        "nosmsservice": "No sms service available!"
+        "nosmsservice": "Kein SMS Service verfügbar!"
     },
     "pagination": {
         "pageOf": "Seite {page} bis {total}",

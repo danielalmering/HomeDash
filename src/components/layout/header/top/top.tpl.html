@@ -6,7 +6,7 @@
 
         <div class="top__numbers hidden-xs col-xs-12 col-sm-5 col-md-6">
             <div class="row" v-if="info">
-                <div class="top__numbers-number" v-for="(campaign, index) in activeCampaign">
+                <div class="top__numbers-number" v-for="(campaign, index) in activeCampaign" v-bind:class="{ 'large': countNumbers(activeCampaign) === 1 }" >
                     <span class="flag flag-nl" v-if="branding && index === 0"></span>
                     <span class="flag flag-be" v-if="branding && index === 1"></span>
                     {{ campaign.number }} <i>{{ campaign.cpm | euro }} {{ $t('top.numbers.cpm') }}</i>
@@ -21,7 +21,7 @@
                     <span class="h2">{{ activeCampaign[0].number }}</span>
                 </div>
                 <div class="col-2">
-                    <span class="h3">{{ activeCampaign[0].cpm }} {{ $t('top.numbers.cpm') }}</span>
+                    <span class="h3">{{ activeCampaign[0].cpm }} {{ $t('top.banner.happyhour_cpm') }}</span>
                     <span class="h4" v-t="'top.banner.seeactionpage'"></span>
                 </div>
             </div>

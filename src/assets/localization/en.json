@@ -10,6 +10,7 @@
         },
         "banner": {
             "happyhour": "HappyHour",
+            "happyhour_cpm": "pm",
             "seeactionpage": "See action page",
             "extra": "extra",
             "credits": "credits",

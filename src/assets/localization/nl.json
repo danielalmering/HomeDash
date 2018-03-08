@@ -10,6 +10,7 @@
         },
         "banner": {
             "happyhour": "HappyHour",
+            "happyhour_cpm": "pm",
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
