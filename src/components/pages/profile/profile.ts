@@ -105,14 +105,21 @@ export default class Profile extends Vue {
             }
         });
 
-        // Update performer status
-        this.statusSocketId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
-            if(!this.performer || data.performerId !== this.performer.id){
+        const onSocketStatus = (data: SocketStatusEventArgs) => {
+            if(!this.performer){
+                setTimeout(() => onSocketStatus(data), 100);
+                return;
+            }
+
+            if(data.performerId !== this.performer.id){
                 return;
             }
 
             this.performer.performerStatus = data.status as PerformerStatus;
-        });
+        };
+
+        // Update performer status
+        this.statusSocketId = notificationSocket.subscribe('status', onSocketStatus);
 
         // Update voyeur status
         this.voyeurSocketId = notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
@@ -122,7 +129,6 @@ export default class Profile extends Vue {
         });
 
         this.minHeight();
-
     }
 
     beforeDestroy(){
@@ -195,7 +201,7 @@ export default class Profile extends Vue {
             return;
         }
 
-        //Uncomment if you need to offer the user the possibility to use flash 
+        //Uncomment if you need to offer the user the possibility to use flash
         //if you need the user to hear the performer
         // if (payload.sessionType != 'PEEK' && !hasWebAudio()){
         //     this.enableFlash = ! (await this.checkFlash());
