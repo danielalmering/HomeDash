@@ -1,5 +1,6 @@
 <div class="videochat__chat">
     <div class="videochat__chat-top hidden-xs">
+        <span class="typing" v-if="showTyping">&hellip;</span>
         <span class="close" v-on:click="chatOpened = !chatOpened">
             <i class="fa" :class="chatOpened ? 'fa-caret-down' : 'fa-caret-up'"></i>
         </span>
@@ -12,7 +13,7 @@
     </ul>
     <div class="videochat__chat-input" :class="{ 'vhidden': !chatOpened }">
         <form v-on:submit.prevent="sendMessage">
-            <input type="text" name="text" @focus="setFocus(true)" @blur="setFocus(false)" class="searching" autocomplete="off" v-model="chatMessage" data-hj-whitelist>
+            <input type="text" name="text" @focus="setFocus(true)" @blur="setFocus(false)" class="searching" autocomplete="off" v-on:keyup="setTyping" v-model="chatMessage" data-hj-whitelist>
             <span v-if="newMessage" class="notifier">
                 <i class="fa fa-comments" aria-hidden="true"></i>
             </span>

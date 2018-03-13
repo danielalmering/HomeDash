@@ -10,6 +10,10 @@ interface ChatMessage {
     senderType: string;
     message: string;
 }
+interface TypingReceivedMessage {
+    recentTyping: boolean;
+    inBuffer: boolean;
+}
 import WithRender from './chat.tpl.html';
 
 @WithRender
@@ -33,12 +37,17 @@ export default class Chat extends Vue {
     chatOpened: boolean = true;
     smiliesOpened: boolean = false;
 
+    typingTimer: number = 0;
+    lastTypingMessage: number = 0;
+    showTyping: boolean = false;
+
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
     newMessage: boolean = false;
     chatSmall: boolean = false;
 
     chatSocketRef: number;
+    typingSocketRef: number;
 
     mounted(){
         this.chatSocketRef = notificationSocket.subscribe('msg', (content: ChatMessage) => {
@@ -56,6 +65,18 @@ export default class Chat extends Vue {
 
             this.setNotifier(content.senderType);
         });
+      
+        this.typingSocketRef = notificationSocket.subscribe('typing_received', (content: TypingReceivedMessage) => {
+            this.showTyping = content.recentTyping || content.inBuffer;
+
+            if (this.typingTimer) {
+                clearTimeout(this.typingTimer);
+            }
+
+            this.typingTimer = setTimeout(() => {
+                this.showTyping = false;
+            }, 3*1000);
+        });
     }
 
     setNotifier(sender: string){
@@ -67,6 +88,7 @@ export default class Chat extends Vue {
     }
 
     beforeDestroy(){
+        notificationSocket.unsubscribe(this.typingSocketRef);
         notificationSocket.unsubscribe(this.chatSocketRef);
     }
 
@@ -95,10 +117,31 @@ export default class Chat extends Vue {
         notificationSocket.sendCustomEvent('msg', {
             message: santizedChatMessage,
             receiverId: this.$store.state.session.activePerformer.id,
-            recceiverType: 'ROLE_PERFORMER'
+            receiverType: 'ROLE_PERFORMER'
         });
 
         this.chatMessage = '';
+    }
+
+    sendTypingMessage(inBuffer: boolean){
+        notificationSocket.sendCustomEvent('event', {
+            event: 'typing_received',
+            receiverId: this.$store.state.session.activePerformer.id,
+            receiverType: 'ROLE_PERFORMER',
+            content: encodeURIComponent('{"recentTyping":true,"inBuffer":'+(inBuffer?'true':'false')+'}')
+        });
+    }
+
+    setTyping(){
+        var currentTime = (new Date()).getTime() / 1000;
+
+        // protect against sending to many 'is typing' updates
+        // @note the inBuffer boolean is not considered, so possibly the inBuffer status on
+        //       the client side is incorrect
+        if (currentTime - this.lastTypingMessage >= 3) {
+            this.sendTypingMessage(this.chatMessage !== '');
+            this.lastTypingMessage = currentTime;
+        }
     }
 
     emojiSelected(name: string){
