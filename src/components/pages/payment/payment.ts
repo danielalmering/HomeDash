@@ -212,6 +212,11 @@ export default class Payment extends Vue {
             return;
         }
 
+        if((this.totalAmount/100) > 1099){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorToHighPurchase');
+            return;
+        }
+
         if(this.selectedPayment === ''){
             this.$store.dispatch('errorMessage', 'payment.alerts.errorNoPayment');
             return;
