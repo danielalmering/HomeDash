@@ -96,6 +96,9 @@ export default class Performers extends Vue {
     }
 
     countriesList(countries: string){
+        if (!countries){
+            return [];
+        }
         return countries.split(';').slice(0, -1);
     }
 

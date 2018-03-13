@@ -64,6 +64,9 @@ export default class Seo extends Vue {
 
     async loadSeo(category: string){
         const seoResults = await fetch(`${config.BaseUrl}/category/${category}`);
+        if (seoResults.status != 200){
+            return;
+        }
         const data: SeoData = await seoResults.json();
 
         this.seoMain = data.texts[0];
