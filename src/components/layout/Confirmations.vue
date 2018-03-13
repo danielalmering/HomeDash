@@ -15,6 +15,13 @@
             <a class="btn btn-large btn-full btn-black" v-on:click="cancel">{{ $t('confirmations.cancel') }}</a>
         </div>
 
+        <div class="confirmations__content" v-if="type === 'flashNagger'">
+            <h2>{{ $t('profile.flash.no') }}</h2>
+            <a href="//www.adobe.com/go/getflashplayer" target="_blank"><img alt="Get Adobe Flash player" src="//www.adobe.com/images/shared/download_buttons/get_flash_player.gif" /></a>
+            <p>{{ $t('profile.flash.checktext') }}</p>
+            <a class="btn btn-large btn-orange btn-full" href="//www.adobe.com/go/getflashplayer" target="_blank" v-on:click="accept">{{ $t('profile.flash.enable')}}</a>
+        </div>
+
     </div>
 </template>
 
@@ -98,6 +105,7 @@ export default class Confirmations extends Vue {
         @include border-radius(5px);
 
         h2 {
+            @include rem(font-size, 20px);
             @include rem(margin-top, 0);
             color: $pallete-3;
         }

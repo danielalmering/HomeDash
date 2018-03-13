@@ -112,6 +112,10 @@ export default class Payment extends Vue {
         }));
     }
 
+    get info(){
+        return this.$store.state.info;
+    }
+
     get user(){
         return this.$store.state.authentication.user;
     }
@@ -133,7 +137,7 @@ export default class Payment extends Vue {
 
     get bonusAmount(){
         return (credits: number) => {
-            const applicableBonus =  this.fees.reduce((result, fee) => {
+            const applicableBonus = this.fees.reduce((result, fee) => {
                 if(credits >= fee.amount && fee.amount > result) {
                     result = fee.percentage;
                 }
@@ -146,7 +150,7 @@ export default class Payment extends Vue {
     }
 
     get nextBonus(){
-        const nextBonus =  this.fees.reduce<undefined | Fee>((result, fee) => {
+        const nextBonus = this.fees.reduce<undefined | Fee>((result, fee) => {
             if(this.credits < fee.amount && (!result || fee.amount < result.amount)) {
                 result = fee;
             }
@@ -205,6 +209,11 @@ export default class Payment extends Vue {
     async submitPurchase(){
         if(this.credits === 0){
             this.$store.dispatch('errorMessage', 'payment.alerts.errorNoPackage');
+            return;
+        }
+
+        if((this.totalAmount/100) > 1099){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorToHighPurchase');
             return;
         }
 

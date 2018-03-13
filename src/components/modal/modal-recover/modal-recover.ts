@@ -3,6 +3,7 @@ import { Component } from 'vue-property-decorator';
 
 import config from '../../../config';
 import WithRender from './modal-recover.tpl.html';
+import { tagHotjar } from '../../../util';
 
 @WithRender
 @Component
@@ -26,6 +27,7 @@ export default class ModalRecover extends Vue {
             })
         });
 
+        tagHotjar(`RECOVER`);
         this.$store.dispatch('successMessage', 'modals.recover.alerts.successMessage');
 
         this.close();

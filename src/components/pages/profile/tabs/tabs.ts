@@ -1,4 +1,5 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import Vue from 'vue';
 import { UserRole, User } from '../../../../models/User';
 
@@ -11,10 +12,11 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal } from '../../../../util';
+import { openModal, tagHotjar } from '../../../../util';
 import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';
+import { tabEnabled } from '../../../../performer-util';
 
 @WithRender
 @Component({
@@ -33,6 +35,7 @@ export default class Tabs extends Vue {
     emailForm: EmailForm = { subject: '', content: '' };
     selectedTab: string = 'cam';
     openModal = openModal;
+    tabEnabled = tabEnabled;
 
     tabs = {
         'cam': 'video-camera',
@@ -49,36 +52,6 @@ export default class Tabs extends Vue {
         this.selectedTab = this.firstAvailable;
     }
 
-    enabled(service: string): boolean{
-        if (!this.performer){
-            return false;
-        }
-
-        //services:
-        //cam,email,peek,phone,sms,videocall,voicemail
-        //voyeur is an exception..
-        if (service === 'voyeur'){
-            return this.performer.isVoyeur;
-        }
-
-        if (!(service in this.performer.performer_services) ){
-            throw new Error(`${service} ain't no service I ever heard of!`);
-        }
-
-        const allowedInSession = ['email', 'sms'];
-
-        //If the performer is in a session you may only use certain services
-        if(this.performer.performerStatus === PerformerStatus.Busy || this.performer.performerStatus === PerformerStatus.OnCall){
-            return service === 'cam' && this.performer.performer_services['peek'] ? true : allowedInSession.indexOf(service) !== -1;
-        }
-
-        if (this.performer.performer_services[service]){
-            return true;
-        }
-
-        return false;
-    }
-
     get firstAvailable(){
         if(!this.performer){
             return 'none';
@@ -86,8 +59,21 @@ export default class Tabs extends Vue {
 
         const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
 
+        // Sidebar overwrites
+        if(this.$route.params.category === 'teasers' && this.performer.isVoyeur){
+            return 'voyeur';
+        }
+
+        if(this.$route.params.category === 'peek' && this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
+            return 'cam';
+        }
+
+        if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 ) && this.performer.isVoyeur){
+            return 'voyeur';
+        }
+
         for (const service in this.performer.performer_services){
-            if(this.enabled(service) && ignoredServices.indexOf(service) === -1){
+            if(this.tabEnabled(service, this.performer) && ignoredServices.indexOf(service) === -1){
                 return service;
             }
         }
@@ -151,7 +137,7 @@ export default class Tabs extends Vue {
         if (!this.performer.advert_numbers.length){
             return "0000";
         }
-        
+
         return this.performer.advert_numbers[0].advertNumber.toString();
     }
 
@@ -163,15 +149,20 @@ export default class Tabs extends Vue {
         this.$store.commit('setIvrCode', value);
     }
 
+    @Watch('$route')
+    onRouteChange(to: Route, from: Route){
+        this.selectedTab = this.firstAvailable;
+    }
+
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        if(!newPerformer.performer_services[this.selectedTab] || !this.enabled(this.selectedTab)){
+        if(!newPerformer.performer_services[this.selectedTab] || !this.tabEnabled(this.selectedTab, this.performer)){
             this.selectedTab = this.firstAvailable;
         }
     }
 
     selectTab(newTab: string){
-        if (this.enabled(newTab)){
+        if (this.tabEnabled(newTab, this.performer)){
             this.selectedTab = newTab;
         }
     }
@@ -221,7 +212,7 @@ export default class Tabs extends Vue {
                     clientId : this.user.id,
                     performerId : this.performer.id,
                     sentBy : 'CLIENT',
-                    type : 'EMAIL'	
+                    type : 'EMAIL'
                 }
             });
 
@@ -229,6 +220,8 @@ export default class Tabs extends Vue {
                 content: 'contact.alerts.successSend',
                 class: 'success'
             });
+
+            tagHotjar('MESSAGE_SEND_PROFILE');
 
             this.emailForm = {content: '', subject: ''};
         }

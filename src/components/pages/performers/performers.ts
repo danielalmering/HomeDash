@@ -52,7 +52,6 @@ export default class Performers extends Vue {
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
-        console.log('route change');
         this.query.category = to.params.category ? to.params.category : '';
         this.query.search = to.query.search ? to.query.search : '';
         this.noperformers = false;
@@ -63,7 +62,6 @@ export default class Performers extends Vue {
     }
 
     mounted(){
-        console.log('cat', this.$route.params);
         this.query.category = this.$route.params.category ? this.$route.params.category : '';
         this.query.search = this.$route.query.search ? this.$route.query.search : '';
 
@@ -98,6 +96,9 @@ export default class Performers extends Vue {
     }
 
     countriesList(countries: string){
+        if (!countries){
+            return [];
+        }
         return countries.split(';').slice(0, -1);
     }
 

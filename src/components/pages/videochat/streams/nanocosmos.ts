@@ -21,7 +21,7 @@ export class H5Style {
 }
 
 @Component({
-    template: '<div :id="id"></div>',
+    template: '<div class="nanocosmos" :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 
@@ -54,7 +54,7 @@ export default class NanoCosmos extends Stream {
     @Prop({ default: true, type: Boolean })
     public view: Boolean;
 
-    @Prop({ default: 'crop', type: String})
+    @Prop({ default: 'letterbox', type: String})
     public scaling: String;
 
     @Prop({ default: true, type: Boolean})
@@ -75,7 +75,7 @@ export default class NanoCosmos extends Stream {
     @Prop({required: true, type: String})
     public token: string;*/
 
-    @Prop({default: true, type: Boolean})
+    @Prop({default: false, type: Boolean})
     public debug: Boolean;
 
     //TODO typescript declaration of NanoPlayer
@@ -89,21 +89,20 @@ export default class NanoCosmos extends Stream {
 
     private getStyle(): H5Style {
         return <H5Style>{
-          height: this.width,
-          width: this.height,
-          aspectratio: this.aspectratio,
-          controls: this.controls,
-          interactive: this.interactive,
-          view: this.view,
-          scaling: this.scaling,
-          keepFrame: this.keepFrame,
-          displayAudioOnly: this.displayAudioOnly,
-          audioPlayer: this.audioPlayer
+            height: this.width,
+            width: this.height,
+            aspectratio: this.aspectratio,
+            controls: this.controls,
+            interactive: this.interactive,
+            view: this.view,
+            scaling: this.scaling,
+            keepFrame: this.keepFrame,
+            displayAudioOnly: this.displayAudioOnly,
+            audioPlayer: this.audioPlayer
         };
     }
 
     mounted(){
-       this.muted = true;
        this.load();
     }
 
@@ -173,8 +172,7 @@ export default class NanoCosmos extends Stream {
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {
-            this.log('setup success');
-            this.log(`config:  ${JSON.stringify(s, undefined, 4)}`);
+            //na da?
         }, function (error: any) {
             console.log(error.message);
         });

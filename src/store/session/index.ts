@@ -41,6 +41,10 @@ export interface SessionState {
     activeIvrCode: string | undefined;
     activePaymentType: PaymentType | undefined;
     isSwitching: boolean;
+
+    isSwitchModal: boolean;
+    switchingPerformer?: Performer;
+
     fromVoyeur: boolean;
     //ID of the timeout for the request
     performerTimeout:any;
@@ -75,7 +79,7 @@ const transitions: { [key: string]: State[] } = { //TODO: Added by Lorenzo: Ask 
     [State.InRequest]:      [State.Pending, State.Accepted, State.Canceling, State.Idle],
     [State.Pending]:        [State.Accepted, State.Canceling],
     [State.Accepted]:       [State.Initializing, State.Canceling],
-    [State.Initializing]:   [State.Active, State.Canceling],
+    [State.Initializing]:   [State.Active, State.Canceling, State.Ending],
     [State.Active]:         [State.Ending],
     [State.Canceling]:      [State.Idle],
     [State.Ending]:         [State.Idle]
@@ -174,6 +178,8 @@ const sessionStore: Module<SessionState, RootState> = {
         activeIvrCode: undefined,
         activePaymentType: undefined,
         isSwitching: false,
+        isSwitchModal: false,
+        switchingPerformer: undefined,
         fromVoyeur: false,
         performerTimeout: Number.NaN
     },

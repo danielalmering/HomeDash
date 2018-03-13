@@ -1,116 +1,120 @@
 <main class="payment">
     <div class="container-fluid">
 
-        <div class="payment__title">
-            <i class="fa fa-check active"></i>
-            <span v-t="'payment.pickpackage'"></span>
-        </div>
+        <form class="row" v-on:submit.prevent="submitPurchase">
 
-        <div class="payment__package">
-            <ul>
-                <li class="col-xs-12 col-sm-4" v-for="(package, key) in packages" v-on:click="addPackage(package)">
-                    <div class="payment__package-item" :class="package.title">
-                        <span v-if="key == '1'" class="mostlybought">{{ $t('payment.mostlybought') }}</span>
-                        <h2>{{package.title}}</h2>
-                        <span class="time" v-html="package.subtitle"></span>
-                        <span class="credits">{{ package.quantity }}</span>
-                        <span v-t="'payment.credits'"></span>
-                        <span class="price">{{ package.price | euro }}</span>
-                        <span class="plus"></span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="payment__title">
-            <i class="fa fa-shopping-cart"></i>
-            <span v-t="'payment.shoppingcart'"></span>
-        </div>
-
-        <div class="payment__cart">
-            <table>
-                <tr>
-                    <th v-t="'payment.product'"></th>
-                    <th v-t="'payment.quanity'"></th>
-                    <th v-t="'payment.creditscap'"></th>
-                    <th v-t="'payment.price'"></th>
-                    <th></th>
-                </tr>
-                <tr v-for="(value, key) in selectedPackages" v-if="value > 0">
-                    <td>{{ package(key).title }}</td>
-                    <td>{{ value }}</td>
-                    <td>{{ package(key).quantity }}</td>
-                    <td>{{ package(key).price | euro }}</td>
-                    <td><i class="fa fa-remove" v-on:click="clearSelection(key)"></i></td>
-                </tr>
-            </table>
-
-            <div class="col-xs-12 col-sm-7">
-                <p v-t="'payment.bonusdiscountdesc'"></p>
-                <br />
-
-                <div class="payment__cart-form form" v-if="promoData && promoData.active">
-                    <input type="text" :placeholder="$t('payment.discountcode')" v-model="promoCode">
-                    <i class="fa fa-share" v-on:click="verifyPromo"></i>
-                </div>
-
+            <div class="payment__title">
+                <i class="fa fa-check active"></i>
+                <span v-t="'payment.pickpackage'"></span>
             </div>
 
-            <div class="col-xs-12 col-sm-5">
-                <div class="payment__cart-subtotal">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <span v-t="'payment.subtotal'"></span>
-                            <span v-t="'payment.bonuscredits'"></span>
-                            <span v-t="'payment.totalcredits'"></span>
-                            <span v-if="credits != 0" v-t="'payment.newbalance'"></span>
-                            <span v-t="'payment.total'"></span>
+            <div class="payment__package">
+                <ul>
+                    <li class="col-xs-12 col-sm-4" v-for="(package, key) in packages" v-on:click="addPackage(package)">
+                        <div class="payment__package-item" :class="package.title">
+                            <span v-if="key == '1'" class="mostlybought">{{ $t('payment.mostlybought') }}</span>
+                            <h2>{{package.title}}</h2>
+                            <span class="time" v-html="package.subtitle"></span>
+                            <span class="credits">{{ package.quantity }}</span>
+                            <span v-t="'payment.credits'"></span>
+                            <span class="price">{{ package.price | euro }}</span>
+                            <span class="plus"></span>
                         </div>
-                        <div class="col-xs-6 text-right">
-                            <span>{{ credits }}</span>
-                            <span>{{ bonusAmount(credits) }}</span>
-                            <span>{{ credits + bonusAmount(credits) }}</span>
-                            <span v-if="credits != 0">{{ user.credits + credits + bonusAmount(credits) }}</span>
-                            <p>{{ totalAmount | euro }}</p>
-                        </div>
-                        <div class="col-xs-12" v-if="nextBonus">
-                            <div class="payment__cart-bonus">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                {{ $t('payment.bonusbanner', { credits: nextBonus.amount * 1000, percentage: nextBonus.percentage }) }}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="payment__title">
+                <i class="fa fa-shopping-cart"></i>
+                <span v-t="'payment.shoppingcart'"></span>
+            </div>
+
+            <div class="payment__cart">
+                <table>
+                    <tr>
+                        <th v-t="'payment.product'"></th>
+                        <th v-t="'payment.quanity'"></th>
+                        <th v-t="'payment.creditscap'"></th>
+                        <th v-t="'payment.price'"></th>
+                        <th></th>
+                    </tr>
+                    <tr v-for="(value, key) in selectedPackages" v-if="value > 0">
+                        <td>{{ package(key).title }}</td>
+                        <td>{{ value }}</td>
+                        <td>{{ package(key).quantity }}</td>
+                        <td>{{ package(key).price | euro }}</td>
+                        <td><i class="fa fa-remove" v-on:click="clearSelection(key)"></i></td>
+                    </tr>
+                </table>
+
+                <div class="col-xs-12 col-sm-7">
+                    <p v-t="'payment.bonusdiscountdesc'"></p>
+                    <br />
+
+                    <div class="payment__cart-form form" v-if="promoData && promoData.active">
+                        <input type="text" :placeholder="$t('payment.discountcode')" v-model="promoCode">
+                        <i class="fa fa-share" v-on:click="verifyPromo"></i>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-5">
+                    <div class="payment__cart-subtotal">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <span v-t="'payment.subtotal'"></span>
+                                <span v-t="'payment.bonuscredits'"></span>
+                                <span v-t="'payment.totalcredits'"></span>
+                                <span v-if="credits != 0" v-t="'payment.newbalance'"></span>
+                                <span v-t="'payment.total'"></span>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <span>{{ credits }}</span>
+                                <span>{{ bonusAmount(credits) }}</span>
+                                <span>{{ credits + bonusAmount(credits) }}</span>
+                                <span v-if="credits != 0">{{ user.credits + credits + bonusAmount(credits) }}</span>
+                                <p>{{ totalAmount | euro }}</p>
+                            </div>
+                            <div class="col-xs-12" v-if="nextBonus && info && !info.marketing.current">
+                                <div class="payment__cart-bonus">
+                                    {{ $t('payment.bonusbanner', { credits: nextBonus.amount, percentage: nextBonus.percentage }) }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
             </div>
 
-            <div class="clearfix"></div>
-        </div>
+            <div class="payment__title">
+                <i class="fa fa-money"></i>
+                <span v-t="'payment.methods'"></span>
+            </div>
 
-        <div class="payment__title">
-            <i class="fa fa-money"></i>
-            <span v-t="'payment.methods'"></span>
-        </div>
+            <div class="payment__method">
+                <ul>
+                    <li class="col-xs-12 col-sm-4" v-for="paymentMethod in paymentMethods">
+                        <a v-on:click="selectPayment(paymentMethod.abbr)">
+                            <div class="payment__method-item" :class="{ 'special': paymentMethod.abbr === selectedPayment }" :id="paymentMethod.abbr">
+                                <i></i>
+                                <span></span>
+                            </div>
+                            <div class="payment__method-name">
+                                {{ $t('payment.paywith', { title: paymentMethod.title }) }}
+                                <span v-if="!paymentMethod.addBonus">*</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="payment__method">
-            <ul>
-                <li class="col-xs-12 col-sm-4" v-for="paymentMethod in paymentMethods" v-on:click="selectPayment(paymentMethod.abbr)">
-                    <div class="payment__method-item" :class="{ 'special': paymentMethod.abbr === selectedPayment }" :id="paymentMethod.abbr">
-                        <i></i>
-                        <span></span>
-                    </div>
-                    <div class="payment__method-name">
-                        {{ $t('payment.paywith', { title: paymentMethod.title }) }}
-                        <span v-if="!paymentMethod.addBonus">*</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+            <div class="payment__finish">
+                <button type="submit" class="btn btn-xxl btn-orange" v-t="'payment.paying'"></button>
 
-        <div class="payment__finish">
-            <a v-on:click="submitPurchase" class="btn btn-xxl btn-orange" v-t="'payment.paying'"></a>
-
-            <img src="../../../assets/images/comodo.png" />
-        </div>
+                <img src="../../../assets/images/comodo.png" />
+            </div>
+        </form>
 
     </div>
 </main>

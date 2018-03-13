@@ -22,6 +22,10 @@ export function getSliderImage(performer: Performer, photoname: string, size: st
 
 export function getPerformerStatus(performer: Performer){
 
+    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
+        return 'teaser';
+    }
+
     if(performer.performerStatus === PerformerStatus.OnCall){
         return 'busy';
     }
@@ -31,8 +35,8 @@ export function getPerformerStatus(performer: Performer){
     }
 
     if(performer.performerStatus === PerformerStatus.Available &&
-        performer.performer_services['cam'] || 
-        performer.performer_services['phone'] || 
+        performer.performer_services['cam'] ||
+        performer.performer_services['phone'] ||
         performer.performer_services['videocall']){
 
         return 'available';
@@ -47,6 +51,9 @@ export function getPerformerStatus(performer: Performer){
 }
 
 export function getPerformerLabel(performer: Performer){
+    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
+        return 'teaser-label';
+    }
 
     if(performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === true){
         return 'peek-label';
@@ -68,12 +75,14 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
-export function scrollToTop(scrollDuration: number) {
-    const scrollStep = -window.scrollY / (scrollDuration / 15);
+export function scrollToTop(scrollDuration: number, route: string) {
+    //const scrollStep = -window.scrollY / (scrollDuration / 15);
+    console.log('scroolltop', window);
+    console.log('router', route);
 
-    const scrollInterval = setInterval(() => {
-        window.scrollY !== 0 ? window.scrollBy(0, scrollStep) : clearInterval(scrollInterval)
-    }, 15);
+    // const scrollInterval = setInterval(() => {
+    //     window.pageYOffset > 0 ? window.scrollTo(0, window.pageYOffset - 20) : clearInterval(scrollInterval)
+    // }, 16);
 }
 
 export function webrtcPossible(platform:Platform):boolean{
@@ -88,6 +97,10 @@ export function webrtcPossible(platform:Platform):boolean{
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function hasWebAudio():boolean{
+    return ("AudioContext" in window) || ("webkitAudioContext" in window);
 }
 
 export function noFlash(platform:Platform):boolean{
@@ -105,6 +118,24 @@ export function noFlash(platform:Platform):boolean{
     ];
 
     return noFlashers.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isApple(platform:Platform):boolean{
+    console.log(platform);
+    const apples = [
+        {
+            os:{
+                famlily: 'iOS'
+            }
+        },
+        {
+            os:{
+                family: 'OS X'
+            }
+        }
+    ];
+
+    return apples.find( pattern => match(platform, pattern) ) != null;
 }
 
 // checks if 'pattern' is a subset of 'message'
@@ -177,4 +208,10 @@ export function isInSession(status: PerformerStatus){
 
 export function isOutOfSession(status: PerformerStatus){
     return status === PerformerStatus.Offline || status === PerformerStatus.Available;
+}
+
+export function tagHotjar(tag: string){
+    if(window.hj){
+        window.hj('tagRecording', [tag]);
+    }
 }

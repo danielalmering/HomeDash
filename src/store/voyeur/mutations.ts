@@ -10,11 +10,18 @@ const mutations = {
     },
     addPerformer(state: VoyeurState, performer: Performer){
         state.performers.push(performer);
-        state.queue.unshift(performer.id);
+
+        if(state.queue.length >= 3){
+            state.queue.splice(3, 0, performer.id);
+        } else {
+            state.queue.push(performer.id);
+        }
     },
     removePerformer(state: VoyeurState, performerId: number){
         state.performers = state.performers.filter(p => p.id !== performerId);
         state.activeTiles = state.activeTiles.filter(t => t.performer !== performerId);
+
+        state.queue = state.queue.filter(id => id !== performerId);
 
         if(state.mainTile && state.mainTile.performer === performerId){
             state.mainTile = undefined;
@@ -45,11 +52,17 @@ const mutations = {
     storeIvrCode(state: VoyeurState, ivrCode: string){
         state.ivrCode = ivrCode;
     },
+    storeDisplayName(state: VoyeurState, displayName: string){
+        state.displayName = displayName;
+    },
     addReservation(state: VoyeurState, performerId: number){
         state.reservations.push(performerId);
     },
     removeReservation(state: VoyeurState, performerId: number){
-        state.reservations = state.reservations.filter(r => r !== performerId);
+        const ix = state.reservations.indexOf(performerId);
+        if(ix > -1){
+            state.reservations.splice(ix, 1);
+        }
     },
     setTile(state: VoyeurState, payload: { tile: PerformerTile, position: number }){
         if(state.activeTiles[payload.position]){
@@ -92,6 +105,7 @@ const mutations = {
         state.mainTile = undefined;
         state.isActive = false;
         state.ivrCode = undefined;
+        state.displayName = undefined;
     },
     increaseAlive(state: VoyeurState){
         state.activeTiles.forEach(t => t.iterationsAlive++);

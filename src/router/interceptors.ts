@@ -98,6 +98,8 @@ export async function preloadUserInterceptor(to: Route, from: Route, next: (to?:
 export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     if(to.query.safe !== undefined){
         store.commit('activateSafeMode');
+    } else {
+        store.commit('deactivateSafeMode');
     }
 
     next();
@@ -150,4 +152,29 @@ export function hotjarInterceptor(to: Route, previous: Route, next: (to?: string
     }
 
     next();
+}
+
+export function scrollInterceptor(to: Route, from: Route){
+
+    let supportPageOffset = window.pageXOffset !== undefined;
+    let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+    const scrollTop = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+    
+    if(from.name === 'Performers' && to.name === 'Profile'){
+        store.commit('setPagePosition', scrollTop);
+    }
+
+    if(from.name === 'Profile' && to.name === 'Performers'){
+        setTimeout(function() { 
+            window.scrollTo(0, store.state.pagePosition);
+            store.commit('setPagePosition', 0);
+        },500)
+
+        return;
+    }
+
+    setTimeout(function() { 
+        window.scrollTo(0, 0);
+    },500)
+
 }

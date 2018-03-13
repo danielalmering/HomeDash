@@ -3,6 +3,7 @@ import { Component } from 'vue-property-decorator';
 
 import config from '../../../config';
 import WithRender from './modal-reset.tpl.html';
+import { tagHotjar } from '../../../util';
 
 @WithRender
 @Component
@@ -39,8 +40,10 @@ export default class ModalReset extends Vue {
         });
 
         if(!resetResult.ok){
+            tagHotjar(`RESET_FAIL`);
             this.$store.dispatch('errorMessage', 'modals.reset.alerts.errorMessage');
         } else {
+            tagHotjar('RESET_SUCCESS');
             this.$store.dispatch('successMessage', 'modals.reset.alerts.successMessage');
         }
 

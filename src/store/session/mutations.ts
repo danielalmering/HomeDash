@@ -1,5 +1,6 @@
 import { SessionState, isStateChangeAllowed } from './index';
 import { State } from '../../models/Sessions';
+import { Performer } from '../../models/Performer';
 
 const mutations = {
     setState(state: SessionState, toState: State){
@@ -20,6 +21,15 @@ const mutations = {
             return;
         }
         state.activePerformer.performer_services[payload.service] = payload.enabled;
+    },
+    toggleSwitchModal(state: SessionState, payload: { state: boolean, performer: Performer }){
+        state.isSwitchModal = payload.state;
+
+        if(state.isSwitchModal){
+            state.switchingPerformer = payload.performer;
+        } else {
+            state.switchingPerformer = undefined;
+        }
     }
 }
 

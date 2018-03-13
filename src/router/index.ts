@@ -24,7 +24,7 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor, hotjarInterceptor } from './interceptors';
+import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor, hotjarInterceptor, scrollInterceptor } from './interceptors';
 import { scrollToTop } from '../util';
 
 Vue.use(Router);
@@ -142,6 +142,17 @@ const routes = [{
                     component: Favourites
                 },
                 {
+                    path: 'main1/:category?/',
+                    name: 'Adwords',
+                    beforeEnter: (to, from, next) => {
+                        next({
+                            name: 'Performers',
+                            query: { ...to.query, safe: 'true' },
+                            params: { category: to.params.category }
+                        });
+                    }
+                },
+                {
                     path: ':category?/',
                     name: 'Performers',
                     component: Performers
@@ -188,7 +199,7 @@ router.beforeEach(preloadUserInterceptor);
 router.beforeEach(countryInterceptor);
 router.beforeEach(safeInterceptor);
 router.beforeEach(hotjarInterceptor);
-router.afterEach(() => scrollToTop(600)); //Scroll to top after page changes
+router.afterEach(scrollInterceptor); //Scroll to top or position Y after page changes
 router.afterEach(seoInterceptor);
 
 function makeRoutesStrict(routes: RouteConfig[]){

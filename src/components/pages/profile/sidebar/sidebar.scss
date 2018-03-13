@@ -309,8 +309,13 @@ $sidebar-top-height: 315px;
         @include rem(margin, 10px);
         cursor: pointer;
 
-        canvas {
+        .jsmpeg {
             width: 230px;
+        }
+
+        .nanocosmos {
+            width: 230px !important;
+            height: 187px !important;
         }
 
         &-misc {
@@ -352,7 +357,7 @@ $sidebar-top-height: 315px;
         &-hover {
             position: absolute;
             z-index: 1;
-            bottom:4px;
+            bottom:0px;
             display: block;
             height: 50px;
             width: 100%;
@@ -361,15 +366,19 @@ $sidebar-top-height: 315px;
                 &.btn-icon {
                     position: relative;
                     display: table;
-                    @include rem(padding, 9px 10px 9px 35px);
+                    @include rem(padding, 12px 10px 11px 35px);
                     @include rem(margin, 5px auto);
+                    max-width: 121px;
+                    line-height: 88%;
+                    height: 36px;
 
                     i {
                         position: absolute;
                         top: 0;
                         left: 0;
                         width: 25px;
-                        height: 36px;
+                        height: 100%;
+                        line-height: 180%;
                         @include rem(padding, 13px 4px);
                         background: black;
                         font: normal normal normal 12px/1 FontAwesome; 

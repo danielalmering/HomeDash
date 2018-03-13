@@ -23,6 +23,7 @@ import agecheck from './components/layout/Agecheck.vue';
 import countryselection from './components/layout/Countryselection.vue';
 
 import config from './config';
+import Raven from 'raven-js';
 
 @Component({
     components: {
@@ -59,6 +60,31 @@ export default class Cookies extends Vue {
         const defaultCountryselected = localStorage.getItem(`${config.StorageKey}.defaultCountry`);
         this.displayCountryselection = (this.$store.state.localization.country === 'gl' && !defaultCountryselected);
 
+
+        let registrationAttempts = 0;
+
+        registerHotjarToSentry();
+
+        function registerHotjarToSentry(){
+            const hj = window.hj as any;
+            registrationAttempts += 1;
+
+            if(Raven.isSetup() && hj && hj.pageVisit && hj.pageVisit.property){
+                const hotjarUserId = hj.pageVisit.property.get('userId');
+
+                Raven.captureBreadcrumb({
+                    message: `Sentry session started with hotjar user ${hotjarUserId}`,
+                    category: 'data'
+                });
+            } else if(registrationAttempts < 5) {
+                setTimeout(registerHotjarToSentry, 2000);
+            } else {
+                Raven.captureBreadcrumb({
+                    message: `Could not register hotjar`,
+                    category: 'data'
+                });
+            }
+        }
     }
 }
 </script>

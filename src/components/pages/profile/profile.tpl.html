@@ -1,16 +1,21 @@
 <div class="profile">
-
+    <div class="profile__flash">
+        <div id="profile__flash-check"></div>
+    </div>
     <div class="profile__info" v-if="performer">
 
         <div class="profile__info-image col-sm-12 col-md-3">
-            <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }"></div>
+            <div class="image" v-on:click="toggleSlider" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }">
+                <div class="labelwrapper">
+                    <div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>                                            
+                </div>
+            </div>
         </div>
-
 
         <div class="profile__info-content col-sm-12 col-md-9">
 
             <div class="profile__content col-sm-12 col-md-8 col-lg-9">
-                <h1 class="profile__content-nick"><span>{{ performer.nickname }}</span><div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div></h1>
+                <h1 class="profile__content-nick"><span>{{ performer.nickname }}</span></h1>
                 <div class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</div>
                 <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                     <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
@@ -50,14 +55,15 @@
         </div>
 
         <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer">
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="hasService('cam')" v-on:click="authenticated ? startSession({sessionType: canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="canCall" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-eye" v-if="performer.isVoyeur" v-on:click="authenticated ? startVoyeur(true) : openModal('login')"><span >{{ $t('tabs.voyeurbtn') }}</span></button>
-            <router-link  v-if="hasService('email')" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="tabEnabled('cam', performer)" v-on:click="authenticated ? startSession({sessionType: canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="tabEnabled('phone', performer)" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
+            <button style="display: none" class="btn btn-full btn-xxl btn-green btn-fa fa-eye" v-if="tabEnabled('voyeur', performer)" v-on:click="authenticated ? startVoyeur(true) : openModal('login')"><span >{{ $t('tabs.voyeurbtn') }}</span></button>
+            <router-link  v-if="tabEnabled('email', performer)" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
                 <button class="btn btn-full btn-xxl btn-green btn-fa fa-envelope"><span>{{ $t('tabs.mailbtn') }}</span></button>
             </router-link>
         </div>
     </div>
 
     <confirmation v-if="activeState === 'pending'" v-on:cancel="cancel" :type="'loader'"></confirmation>
+    <confirmation v-if="enableFlash" :type="'flashNagger'" v-on:accept="unNagFlash"></confirmation>
 </div>

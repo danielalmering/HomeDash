@@ -44,6 +44,7 @@ export default class Chat extends Vue {
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
     newMessage: boolean = false;
+    chatSmall: boolean = false;
 
     chatSocketRef: number;
     typingSocketRef: number;
@@ -64,6 +65,7 @@ export default class Chat extends Vue {
 
             this.setNotifier(content.senderType);
         });
+      
         this.typingSocketRef = notificationSocket.subscribe('typing_received', (content: TypingReceivedMessage) => {
             this.showTyping = content.recentTyping || content.inBuffer;
 
@@ -88,6 +90,25 @@ export default class Chat extends Vue {
     beforeDestroy(){
         notificationSocket.unsubscribe(this.typingSocketRef);
         notificationSocket.unsubscribe(this.chatSocketRef);
+    }
+
+    setFocus(selected: boolean){
+        if((window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) > 480){
+            return;
+        }
+
+        const screen = document.getElementsByClassName('videochat__screen-object') as any;
+
+        if(selected){
+            this.chatSmall = true;
+            screen[0].style.top = 'auto';
+            screen[0].style.bottom = 125 + 'px';
+        } else {
+            this.chatSmall = false;
+            screen[0].style.top = 0 + 'px';
+            screen[0].style.bottom = 'auto';
+            this.chatSmall = false;
+        }
     }
 
     sendMessage(){

@@ -3,34 +3,36 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal, openRoute, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
+import { openModal, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
 import config from '../../../../config';
 
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
+import NanoCosmos from '../../videochat/streams/nanocosmos';
 import { RequestPayload } from '../../../../store/session/';
 import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
 
-type SidebarCategory = 'recommended' | 'peek' | 'favourites' | 'voyeur';
+type SidebarCategory = 'recommended' | 'teasers' | 'peek' | 'favourites' | 'voyeur';
 
 @WithRender
 @Component({
     components: {
-        jsmpeg: JSMpeg
+        jsmpeg: JSMpeg,
+        nanocosmos: NanoCosmos
     }
 })
 export default class Sidebar extends Vue {
 
     performers: Performer[] = [];
-    category: SidebarCategory = 'recommended';
+    defaultCategory: any = 'recommended'; // Toggle first tab, see categoryLoads!
+    category: SidebarCategory = this.defaultCategory;
     services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
     toggleUserinfo: boolean = true;
 
     openModal = openModal;
-    openRoute = openRoute;
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
     isOutOfSession = isOutOfSession;
@@ -47,6 +49,7 @@ export default class Sidebar extends Vue {
 
     categoryLoads = {
         'recommended': this.loadRecommended,
+        'teasers': this.loadTeasers,
         'favourites': this.loadFavorites,
         'peek': this.loadPeek
     };
@@ -86,14 +89,14 @@ export default class Sidebar extends Vue {
 
     get isReserved(){
         return (id: number) => {
-            return this.$store.getters['voyeur/reservations'].indexOf(id) > -1;
+            return this.$store.getters['voyeur/isReservation'](id);
         };
     }
 
     @Watch('isVoyeurActive')
     onVoyeurStateChange(newValue: boolean){
         //When voyeur gets activated switch the voyeur tab, when the session ends, switch back
-        this.setCategory(newValue ? 'voyeur' : 'recommended');
+        this.setCategory(newValue ? 'voyeur' : this.defaultCategory);
     }
 
     mounted(){
@@ -125,7 +128,10 @@ export default class Sidebar extends Vue {
                     return;
                 }
 
-                this.performers.push(newPerformer);
+                //Extra check because this can be triggered twice if the performer quickly goes online and offline
+                if(!this.performers.find(p => p.id === data.performerId)){
+                    this.performers.push(newPerformer);
+                }
 
                 return;
             }
@@ -164,7 +170,11 @@ export default class Sidebar extends Vue {
                     return;
                 }
 
-                this.performers.push(newPerformer);
+                //Extra check because this can be triggered twice if the performer quickly goes online and offline
+                if(!this.performers.find(p => p.id === data.performerId)){
+                    this.performers.push(newPerformer);
+                }
+
                 return;
             }
 
@@ -186,6 +196,12 @@ export default class Sidebar extends Vue {
         if(to.name === 'Peek' && this.category !== 'peek'){
 
             this.setCategory('peek');
+        }
+    }
+
+    openRoute(location: string){
+        if(this.authenticated){
+            this.$router.push({ name: location });
         }
     }
 
@@ -221,11 +237,12 @@ export default class Sidebar extends Vue {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
             fromVoyeur: true,
-            ivrCode: this.$store.state.voyeur.ivrCode
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
         });
     }
 
-    async goToPerformer(performer: Performer){
+    async goToPerformer(performer: Performer, category: string){
         const session = this.$store.state.session;
 
         //peek with another lady if you're currently peeking and the lady is peekable
@@ -234,18 +251,7 @@ export default class Sidebar extends Vue {
                 return;
             }
 
-            try {
-                await this.$store.dispatch('switchPeek', performer);
-            } catch(e){
-                this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
-            }
-
-            this.$router.push({
-                name: 'Peek',
-                params: {
-                    id: session.activePerformer.advert_numbers[0].advertNumber.toString()
-                }
-            });
+            this.$store.commit('toggleSwitchModal', { state: true, performer });
 
             return;
         }
@@ -253,7 +259,8 @@ export default class Sidebar extends Vue {
         this.$router.push(this.$localize({
             name: 'Profile',
             params: {
-                id: performer.advert_numbers[0].advertNumber.toString()
+                id: performer.advert_numbers[0].advertNumber.toString(),
+                category: category
             }
         }));
     }
@@ -330,7 +337,7 @@ export default class Sidebar extends Vue {
     }
 
     async loadPerformer(id: number): Promise<Performer> {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/${id}?limit=0`, {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/${id}?data=1`, {
             credentials: 'include'
         });
 
@@ -341,6 +348,14 @@ export default class Sidebar extends Vue {
 
     async loadRecommended() {
         const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}${this.query.search !== '' ? '&search=' : '' }${this.query.search}`, {
+            credentials: 'include'
+        });
+
+        return performerResults.json();
+    }
+
+    async loadTeasers() {
+        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}&voyeur=2`, {
             credentials: 'include'
         });
 

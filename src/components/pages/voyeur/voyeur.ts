@@ -6,6 +6,8 @@ import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
 import Confirmation from '../../layout/Confirmations.vue';
 
+require('../../../../static/nanoplayer.3.min.js');
+
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
 import { RequestPayload } from '../../../store/session/';
@@ -26,6 +28,9 @@ export default class Voyeur extends Vue {
     showFavo: boolean = false;
     showReserve: boolean = false;
 
+    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);    
+    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+
     get mainTile(){
         return this.$store.state.voyeur.mainTile;
     }
@@ -42,6 +47,12 @@ export default class Voyeur extends Vue {
         return this.$store.getters['voyeur/availableReservations'][0];
     }
 
+    get performerData(){
+        const performerId = this.$store.state.voyeur.mainTile.performer;
+
+        return this.$store.getters['voyeur/performer'](performerId);
+    }
+
     get performer(){
         return (id: number) => {
             return this.$store.getters['voyeur/performer'](id);
@@ -56,12 +67,18 @@ export default class Voyeur extends Vue {
         return this.$store.state.session.activeState;
     }
 
+    get isReserved(){
+        return (id: number) => {
+            return this.$store.getters['voyeur/isReservation'](id);
+        };
+    }
+
     mounted(){
         this.intervalTimer = window.setInterval(async () => {
             const result = await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
 
             if(!result.ok){
-                close();
+                this.close();
             }
         }, 5000);
 
@@ -73,6 +90,7 @@ export default class Voyeur extends Vue {
                 }
             });
         }
+        
     }
 
     async close(){
@@ -102,6 +120,40 @@ export default class Voyeur extends Vue {
         });
     }
 
+    removeFavorite(performer: any){
+        if(!performer){
+            return;
+        }
+
+        this.removeFavourite(performer);
+    }
+
+    reserve(performerId: number){
+        if(this.$store.state.session.activeState === 'pending'){
+            return;
+        }
+
+        this.isReserved(performerId) ?
+            this.$store.commit('voyeur/removeReservation', performerId) :
+            this.$store.commit('voyeur/addReservation', performerId);
+        this.showReserve = true;
+    }
+
+    toggleFavourite(performerId: number){
+        const performer = this.performer(performerId);
+
+        performer.isFavourite ? this.removeFavourite(performer) : this.addFavourite(performer);
+        this.showFavo = true;
+    }
+
+    async removeReservation(performerId: number){
+        if(!performerId){
+            return;
+        }
+
+        this.$store.commit('voyeur/removeReservation', performerId);
+    }
+
     async acceptReservation(){
 
         await this.$store.dispatch<RequestPayload>({
@@ -109,7 +161,8 @@ export default class Voyeur extends Vue {
             performer: this.availableReservation,
             sessionType: SessionType.Video,
             fromVoyeur: true,
-            ivrCode: this.$store.state.voyeur.ivrCode
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
         });
 
         this.$store.dispatch('succesMessage', 'voyeur.alerts.succesAddedreserve');
@@ -121,6 +174,17 @@ export default class Voyeur extends Vue {
 
     async cancelReservation(){
         this.$store.commit('voyeur/removeReservation', this.availableReservation.id);
+    }
+
+    async startVideoChat(performerId: number){
+        await this.$store.dispatch<RequestPayload>({
+            type: 'startRequest',
+            performer: this.performer(performerId),
+            sessionType: SessionType.Video,
+            fromVoyeur: true,
+            ivrCode: this.$store.state.voyeur.ivrCode,
+            displayName: this.$store.state.voyeur.displayName
+        });
     }
 
     viewerStateChange(state: string){
@@ -149,6 +213,10 @@ export default class Voyeur extends Vue {
         if(newState !== State.Accepted){
             return;
         }
+
+        // Close voyeur session first, this changes the isActive state to false and should trigger the close() function
+        // This doesn't happen tho because before it gets a chance we go to another component and this one gets broken down
+        await this.$store.dispatch('voyeur/end');
 
         await this.$store.dispatch('initiate');
 

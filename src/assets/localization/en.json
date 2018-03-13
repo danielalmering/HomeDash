@@ -25,7 +25,7 @@
             "menu": "Menu",
             "lang": "Lang",
             "account": "Account",
-            "voyeur": "Voyeur",
+            "voyeur": "Teaser",
             "actions": "Promos",
             "editdata": "Edit account",
             "favourites": "Favo",
@@ -44,7 +44,7 @@
         "labels": {
             "peek-label": "Peek",
             "busy-label": "Busy",
-            "voyeur-label": "Voyeur",
+            "teaser-label": "Teaser",
             "none": ""
         }
     },
@@ -67,9 +67,10 @@
         "age": "year",
         "view": "View",
         "recommended": "Recommended",
+        "teasers": "Teasers",
         "peek": "Peek",
         "favorite": "Favorite",
-        "voyeur": "Voyeur",
+        "voyeur": "Teaser",
         "noperformers": "No performers",
         "currentcredits": "Current balance",
         "youraccount": "Your account?",
@@ -113,13 +114,18 @@
             "amber": "Amber",
             "grey": "Grey",
             "redviolet": "Red & violet"
+        },
+        "flash": {
+            "no": "Flash is disabled.",
+            "checktext": "To be able to cam, you need to enable Flash. Click below for the instructions for enabling Flash",
+            "enable": "Enable"
         }
     },
     "tabs": {
         "service-cam": "Chat and cam",
         "service-peek": "Peek",
         "service-videocall": "Video call",
-        "service-voyeur": "Voyeur",
+        "service-voyeur": "Teaser",
         "service-phone": "Phone",
         "service-email": "E-mail",
         "service-sms": "SMS",
@@ -131,7 +137,7 @@
         "webcamwithphonedesc": "Press # in the main menu for the access code page",
         "webcamwithcreditsdesc": "Below you can chat and cam and pay this session with credits, the costs are",
         "peekbtn": "Peek",
-        "voyeurbtn": "Voyeur",
+        "voyeurbtn": "Teaser",
         "videochatbtn": "Video call",
         "videochatwithcreditsdesc1": "Press",
         "videochatwithcreditsdesc2": "and finish with one # and then choose the Video call option from the menu (#)",
@@ -267,6 +273,8 @@
     "videochat": {
         "leaving": "Leave current session",
         "flashchecktext": "To be able to cam back, you need to have Flash enabled. Please click below for instructions.",
+        "anonymous": "Anonymous",
+        "switchpeek": "Change peek session?",
         "alerts": {
             "successChatEnded": "Session ended!",
             "socketErrors": {
@@ -333,7 +341,8 @@
             "errorUsedPromo": "Promocode already used!",
             "successCorrectPromo": "Promo code applied!",
             "errorNoPackage": "No package selected!",
-            "errorNoPayment": "No payment method selected!"
+            "errorNoPayment": "No payment method selected!",
+            "errorToHighPurchase": "To big purchase amount selected!"
         }
     },
     "contact": {
@@ -387,7 +396,7 @@
         "successMessage": "Your account has been successfully activated"
     },
     "services": {
-        "VOYEURCLIENT": "Voyeur",
+        "VOYEURCLIENT": "Teaser",
         "PEEK": "Peek",
         "MANUAL": "Manual payment",
         "VIDEO": "Video",
@@ -413,6 +422,8 @@
         "nl": "The Netherlands"
     },
     "videocall": {
-        "callEnded": "Call ended!"
+        "callEnded": "Call ended!",
+        "callFailed": "Call failed!",
+        "callAccepted": "The call successfully started!"
     }
 }

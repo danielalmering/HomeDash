@@ -10,6 +10,7 @@ import performers, { PerformersState } from './performers';
 import session, { SessionState } from './session/';
 import alerts, { AlertsState } from './alerts';
 import voyeur, { VoyeurState } from './voyeur';
+import sentryPlugin from './plugins/sentry';
 
 import { Info } from '../models/Info';
 
@@ -21,6 +22,7 @@ export interface RootState {
     displaySidebar: boolean;
     info: Info | undefined;
     safeMode: boolean;
+    pagePosition: number;
 
     authentication?: any;
     localization?: any;
@@ -34,8 +36,10 @@ const rootStore = new Vuex.Store<RootState>({
     state: {
         displaySidebar: false,
         info: undefined,
-        safeMode: false
+        safeMode: false,
+        pagePosition: 0
     },
+    plugins: [sentryPlugin],
     getters: {
         getLogoLight: state => {
             const thuis    = require('../assets/images/thuis.png');
@@ -91,10 +95,16 @@ const rootStore = new Vuex.Store<RootState>({
         setInfo: function(state: RootState, info: Info){
             state.info = info;
         },
+        setPagePosition: function(state: RootState, position: number){
+            state.pagePosition = position;
+        },
         activateSafeMode: function(state: RootState){
             state.safeMode = true;
+        },
+        deactivateSafeMode: function(state: RootState){
+            state.safeMode = false;
         }
-    },
+    }, 
     actions: {
         loadInfo: async function(store: RootContext){
             const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`, {

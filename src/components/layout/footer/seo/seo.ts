@@ -43,11 +43,19 @@ export default class Seo extends Vue {
         return this.seoTabs[1].description != "" && this.seoTabs[1].title != "";
     }
 
+    get isVisible(){
+        return this.$route.name === 'Performers' && !this.isSafeMode;
+    }
+
+    get isSafeMode(){
+        return this.$store.state.safeMode;
+    }
+
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
         const category = to.params.category && to.params.category !== '' ? to.params.category : 'home';
 
-        if(this.seoData && category === this.seoData.slug){
+        if((this.seoData && category === this.seoData.slug) || to.name !== 'Performers'){
             return;
         }
 
@@ -56,6 +64,9 @@ export default class Seo extends Vue {
 
     async loadSeo(category: string){
         const seoResults = await fetch(`${config.BaseUrl}/category/${category}`);
+        if (seoResults.status != 200){
+            return;
+        }
         const data: SeoData = await seoResults.json();
 
         this.seoMain = data.texts[0];

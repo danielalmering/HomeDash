@@ -1,7 +1,7 @@
 import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import WithRender from './modal-login.tpl.html';
-import { openModal } from '../../../util';
+import { openModal, tagHotjar } from '../../../util';
 
 @WithRender
 @Component
@@ -19,6 +19,9 @@ export default class ModalLogin extends Vue {
 
         if(this.$store.getters.isLoggedIn){
             this.close();
+            tagHotjar('LOGIN_SUCCESS');
+        } else {
+            tagHotjar('LOGIN_FAIL');
         }
     }
 

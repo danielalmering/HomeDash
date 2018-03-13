@@ -6,7 +6,9 @@
         <div class="performers">
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
                 <div class="performers__block">
-                    <div class="label" v-if="performer" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
+                    <router-link v-if="performer" :to="$localize({ name: 'Profile', params: { id: performer.advert_numbers[0].advertNumber }})">
+                        <div class="label" v-if="performer" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
+                    </router-link>
                     <div class="performers__info" v-if="performer">
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
@@ -15,7 +17,7 @@
                                 <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
                             </span>
                         </div>
-                        <div class="performers__info-services" v-if="performer && getPerformerLabel(performer) === 'none'">
+                        <div class="performers__info-services" v-if="performer">
                             <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
                     </div>

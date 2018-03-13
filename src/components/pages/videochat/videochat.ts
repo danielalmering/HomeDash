@@ -23,7 +23,7 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { webrtcPossible, noFlash } from '../../../util';
+import { webrtcPossible, noFlash, hasWebAudio, isApple, tagHotjar } from '../../../util';
 import { Performer } from '../../../models/Performer';
 const Platform = require('platform');
 
@@ -89,17 +89,28 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        // return this.$store.state.session.activeSessionData.streamTransportType.toLowerCase();
+        //Uncomment if you need the user to be able to watch using flash
+        //playback using flash for devices that do not support webAudio (so devices that can't play sound in jsmpeg)
+        //Peeking is mute, so no need for flash in that scenario.
+        // if ( this.sessionType !== SessionType.Peek && !hasWebAudio() ){
+        //     return 'rtmp';
+        // }
         return 'jsmpeg';
     }
 
     get broadcastType():string{
+        if (!this.userHasCam){
+            return 'none';
+        }
+
         if (this.sessionType == SessionType.Peek){
             return 'none';
         }
 
-        var platform = Platform.parse(navigator.userAgent);
+        const platform = Platform.parse(navigator.userAgent);
+
         //disabled camback on mobile for now
+        //move to below webrtcPossible, and those platforms that support webrtc will cam back.
         if (noFlash(platform)){
             return 'none';
         }
@@ -137,6 +148,29 @@ export default class VideoChat extends Vue {
             return undefined;
         }
         return this.$store.state.session.activeSessionData.playStream;
+    }
+
+    get isSwitchModal(): boolean {
+        return this.$store.state.session.isSwitchModal;
+    }
+
+    public userHasCam:boolean = false;
+
+    private detectCam(){
+        var platform = Platform.parse(navigator.userAgent);
+        //apples always have cameras. can't count the # of cameras until I ask permission to use the cameras :-(
+        if (isApple(platform)){
+            this.userHasCam = true;
+            return;
+        }
+
+        //if webrtc is not possible, we'll try to use flash to do the determining
+        if (!webrtcPossible(platform)){
+            this.userHasCam = true;
+            return;
+        }
+
+        new Devices().getCameras().then( cams => this.userHasCam = cams.length > 0 );
     }
 
     get performer(): Performer {
@@ -188,10 +222,12 @@ export default class VideoChat extends Vue {
         this.intervalTimer = window.setInterval(async () => {
             const result = await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
 
-            if(!result.ok){
+            if(!result.ok && !this.isSwitching){
                 this.close();
             }
         }, 5000);
+
+        this.detectCam();
     }
 
     close(){
@@ -207,11 +243,14 @@ export default class VideoChat extends Vue {
     }
 
     async gotoVoyeur(next:(yes?:boolean | RawLocation)=>void){
-
         try {
             await this.$store.dispatch('end', 'PLAYER_END');
 
-            await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.$store.state.session.activePerformer.id, ivrCode: this.$store.state.session.activeIvrCode });
+            await this.$store.dispatch('voyeur/startVoyeur', {
+                performerId: this.$store.state.session.activePerformer.id,
+                ivrCode: this.$store.state.session.activeIvrCode,
+                displayName: this.$store.state.session.displayName
+            });
 
             next({
                 name: 'Voyeur',
@@ -242,6 +281,8 @@ export default class VideoChat extends Vue {
         if (!this.broadcasting.cam){
             this.broadcasting.settings = false;
         }
+
+        tagHotjar(`TOGGLE_CAM`);
     }
 
     toggleMic(){
@@ -254,6 +295,8 @@ export default class VideoChat extends Vue {
                 this.broadcasting.mic = selected.id;
             }
         }
+
+        tagHotjar(`TOGGLE_MIC`);
     }
 
     setCamera(event: Event){
@@ -364,6 +407,27 @@ export default class VideoChat extends Vue {
         }
     }
 
+    async switchPeek(){
+        try {
+            await this.$store.dispatch('switchPeek', this.$store.state.session.switchingPerformer);
+        } catch(e){
+            this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
+        }
+        
+        this.$store.commit('toggleSwitchModal', { state: false });
+
+        this.$router.push({
+            name: 'Peek',
+            params: {
+                id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
+            }
+        });
+    }
+
+    cancelSwitch(){
+        this.$store.commit('toggleSwitchModal', { state: false });
+    }
+
     async leave(){
         this.askToLeave = false;
 
@@ -386,6 +450,7 @@ export default class VideoChat extends Vue {
         clearInterval(this.intervalTimer);
         //Send end API call and update state to ending
         if(this.$store.state.session.activeState !== State.Idle){
+            console.log("ok, waarom destroyen??");
             this.$store.dispatch('end', 'PLAYER_END');
         }
     }

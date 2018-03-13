@@ -14,37 +14,63 @@
     z-index: 2;
     right: 0px;
     width: 100%;
-    background: $pallete-16;
+    @include breakpoint(xs) { height: 100vh; }
+    background: $pallete-13;
 
     &__screen{
         position: relative;
         z-index: 1;
         display: table;
         height: 100vh;
+        @include breakpoint(xs) { height: auto; }
         width: 100%;
 
         &-object {
-            position: relative;
-            display: table;
-            height: 100vh;
+            position: absolute;
+            display: block;
             width: 100%;
-            canvas {
+            height: auto;
+
+            @include breakpoint(xs) { position: relative; }
+            @include breakpoint(md) { height: 100%; }
+            @include breakpoint(lg) { height: 100%; }
+            
+            .jsmpeg {
                 display: table-cell;
                 vertical-align: middle;
-                object-fit: cover;
                 width: 100%;
                 height: 100%;
-            }
-            div {
-                width: 100%;
-                height: 100%;
-            }
-        }
 
-        @include breakpoint(xs) {
-            height: auto;
-            &-object {
-                height: auto;
+                @include breakpoint(md) {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%); 
+                }
+
+                @include breakpoint(lg) {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%); 
+                }
+            }
+            
+            .nanocosmos {
+                div { width: 80px !important; height: 80px !important; }
+                video {
+                    @media screen and (max-width: 992px) {
+                        transform: none !important;
+                        position: relative !important;
+                        left: 0px !important;
+                        top: 0px !important;
+                    }
+                }
+            }
+
+            div, video {
+                width: 100%;
+                height: 100%;
             }
         }
     }
@@ -53,23 +79,122 @@
         position: fixed;
         z-index: 1;
         bottom: 0;
-        background: $pallete-11;
-        min-width: 250px;
-        @include border-top-radius(5px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        height: 0;
 
-        &.left {
-            left: 100px;
+        @include breakpoint(xs) {
+            position: relative;
+        }
+
+        @include breakpoint(md) {
+            width: calc(100% - 250px);
+        }
+
+        .col-sm-4 { 
             @include breakpoint(xs) {
+                position: static;
+            } 
+        }
+
+        .blocks {
+            position: absolute;
+            @include breakpoint(xs) {
+                position: relative;
+                display: table;
+                width: 100%;
                 left: 0;
+                &.center {
+                    position: absolute;
+                    bottom: 0px;
+                    left: 15px;
+                    width: calc(100% - 30px);
+                }
             }
-            @include breakpoint(md) {
-                left: 350px;
+            left: 20px;
+            bottom: 0;
+            @include border-top-radius(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: $pallete-11;
+            width: calc(100% - 40px);
+
+            &__title {
+                color: $pallete-2;
+                font-weight: 600;
+                @include rem(font-size, 15px);
+                @include rem(padding,10px 15px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+                text-transform: capitalize;
+    
+                i {
+                    @include rem(margin-right, 5px);
+                    color: $pallete-3;
+                }
+    
+                span{
+                    float: right;
+                    &:before {
+                        font: normal normal normal 20px/1 FontAwesome;
+                        content: "\f068";
+                    }
+    
+                    &.active {
+                        &:before {
+                            content: "\f067";
+                        }
+                    }
+                }
+            }
+
+            &__list {
+                @include rem(padding,10px 15px);
+                margin: 0;
+                list-style: none;
+                li {
+                    @include rem(font-size, 13px);
+                    color: $pallete-2;
+                    line-height: 150%;
+                    cursor: pointer;
+                    i {
+                        @include rem(margin-left,10px);
+                        @include rem(font-size, 15px);
+                        font-style: normal;
+                        color: $pallete-3; 
+                    }
+                }
             }
         }
 
-        &.right {
-            right: 100px;
+        .buttons {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+
+            .btn {
+                display: table;
+                @include rem(margin,10px auto);
+                &.btn-icon {
+                    position: relative;
+                    display: table;
+                    @include rem(padding, 9px 10px 9px 35px);
+                    @include rem(margin, 5px auto);
+
+                    i {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 25px;
+                        height: 36px;
+                        @include rem(padding, 13px 4px);
+                        background: black;
+                        font: normal normal normal 12px/1 FontAwesome; 
+                        @include border-left-radius(3px);
+
+                        &.reserve { background: $pallete-19; &:before { content: "\f017"; } }
+                        &.online { background: $pallete-12; &:before { content: "\f03d"; } }
+                    }
+                }
+            }
         }
 
         @include breakpoint(xs) {
@@ -105,24 +230,6 @@
                     &:before {
                         content: "\f067";
                     }
-                }
-            }
-        }
-
-        &-list {
-            @include rem(padding,10px 15px);
-            margin: 0;
-            list-style: none;
-            li {
-                @include rem(font-size, 13px);
-                color: $pallete-2;
-                line-height: 150%;
-                cursor: pointer;
-                i {
-                    @include rem(margin-left,10px);
-                    @include rem(font-size, 11px);
-                    font-style: normal;
-                    color: $pallete-3; 
                 }
             }
         }

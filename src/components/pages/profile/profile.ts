@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
-import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -13,13 +13,16 @@ import Tabs from './tabs/tabs';
 import config from '../../../config';
 
 import notificationSocket from '../../../socket';
-import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../models/Socket';
+import { SocketServiceEventArgs, SocketStatusEventArgs, SocketVoyeurEventArgs } from '../../../models/Socket';
 import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
 import './profile.scss';
 import './photo-slider.scss';
 import WithRender from './profile.tpl.html';
+import { tabEnabled } from '../../../performer-util';
+
+const swfobject = require('swfobject');
 
 @WithRender
 @Component({
@@ -47,6 +50,9 @@ export default class Profile extends Vue {
 
     private serviceSocketId: number;
     private statusSocketId: number;
+    private voyeurSocketId: number;
+
+    private tabEnabled = tabEnabled;
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
@@ -86,6 +92,7 @@ export default class Profile extends Vue {
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
 
+        // Update performer services
         this.serviceSocketId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
             if(!this.performer || data.performerId !== this.performer.id){
                 return;
@@ -98,20 +105,36 @@ export default class Profile extends Vue {
             }
         });
 
-        this.statusSocketId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
-            if(!this.performer || data.performerId !== this.performer.id){
+        const onSocketStatus = (data: SocketStatusEventArgs) => {
+            if(!this.performer){
+                setTimeout(() => onSocketStatus(data), 100);
+                return;
+            }
+
+            if(data.performerId !== this.performer.id){
                 return;
             }
 
             this.performer.performerStatus = data.status as PerformerStatus;
+        };
+
+        // Update performer status
+        this.statusSocketId = notificationSocket.subscribe('status', onSocketStatus);
+
+        // Update voyeur status
+        this.voyeurSocketId = notificationSocket.subscribe('voyeur', (data: SocketVoyeurEventArgs) => {
+            if(this.performer && this.performer.id === data.performerId && data.type === 'STREAMING'){
+                this.performer.isVoyeur = data.value;
+            }
         });
 
         this.minHeight();
-
     }
 
     beforeDestroy(){
         notificationSocket.unsubscribe(this.serviceSocketId);
+        notificationSocket.unsubscribe(this.statusSocketId);
+        notificationSocket.unsubscribe(this.voyeurSocketId);
     }
 
     @Watch('$route')
@@ -138,10 +161,6 @@ export default class Profile extends Vue {
     openFullSlider(id: number){
         this.fullSliderVisible = true;
         this.displayPic = id;
-    }
-
-    hasService(service: string){
-        return !this.performer ? false : this.performer.performer_services[service];
     }
 
     minHeight(){
@@ -177,10 +196,19 @@ export default class Profile extends Vue {
         }
     }
 
-    async startSession(payload = {}){
+    async startSession(payload:any = {}){
         if(!this.performer){
             return;
         }
+
+        //Uncomment if you need to offer the user the possibility to use flash
+        //if you need the user to hear the performer
+        // if (payload.sessionType != 'PEEK' && !hasWebAudio()){
+        //     this.enableFlash = ! (await this.checkFlash());
+        //     if (this.enableFlash){
+        //         return;
+        //     }
+        // }
 
         const self = this;
 
@@ -194,6 +222,34 @@ export default class Profile extends Vue {
         const toSend = {...defaults, ...payload};
 
         await this.$store.dispatch<RequestPayload>( toSend );
+    }
+
+
+    enableFlash:boolean = false;
+
+    unNagFlash(){
+        this.enableFlash = false;
+    }
+
+    async checkFlash():Promise<boolean>{
+        return new Promise<boolean>( (resolve, reject)=>{
+            let timeout = window.setTimeout( ()=>{
+                timeout = Number.NaN;
+                resolve(false);
+            }, 1000);
+
+            window.flashCheckCallback = ()=>{
+                if (isNaN(timeout)){
+                    return;
+                }
+                window.clearTimeout(timeout);
+                resolve(true);
+            };
+
+            swfobject.embedSWF(
+                '/static/checkflash.swf', 'profile__flash-check', '100%', '100%', '10.2.0', true, {}, {wmode:'transparent'}
+            );
+        })
     }
 
     cancel(){
@@ -257,7 +313,6 @@ export default class Profile extends Vue {
 
         return this.$t(`profile.eyecolors.${color}`).toString();
     }
-
 
     setSeoParameters(){
         if(!this.performer){
