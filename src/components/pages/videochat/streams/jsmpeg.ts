@@ -62,7 +62,8 @@ export default class JSMpeg extends Stream {
             poster: poster,
             pauseWhenHidden: false,
             disableGl: platform.name === 'Chrome',
-            playingStateChange: (playing: boolean) => playing ? this.onStateChange('active') : this.onStateChange('disconnected')
+            playingStateChange: (playing: boolean) => playing ? this.onStateChange('connected') : this.onStateChange('disconnected'),
+            dataLoaded: ()=>this.onStateChange('active')
         });
     }
 
