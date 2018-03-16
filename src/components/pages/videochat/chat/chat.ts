@@ -47,6 +47,7 @@ export default class Chat extends Vue {
 
     chatSocketRef: number;
     chatSocketTyping: number;
+    fontSize: number = 12;
 
     mounted(){
         let typingTimeoutRef: number = 0;
@@ -76,6 +77,18 @@ export default class Chat extends Vue {
         
             typingTimeoutRef = window.setTimeout(() => this.isPerformerTyping = false, 3000);
         });
+    }
+
+    resizeFont(size: string){
+        const fonts = document.getElementsByClassName('videochat__chat-list') as any;
+        if(fonts[0].classList.contains('medium')){
+            fonts[0].classList.remove('medium');
+            fonts[0].classList.add("large");
+        } else if(fonts[0].classList.contains('large')){
+            fonts[0].classList.remove('large');
+        } else {
+            fonts[0].classList.add("medium");
+        }
     }
 
     setNotifier(sender: string){

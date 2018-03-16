@@ -282,8 +282,31 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 cursor: pointer;
             }
 
+            .resize { 
+                float: left;
+                position: relative ;
+                @include rem(font-size, 24px);
+                color: $pallete-2;
+                background: $pallete-1;
+                width: 38px;
+                height: 35px;
+                background: $pallete-9;
+                @include rem(padding,3px 10px);
+                @include border-radius(5px);
+                @include rem(margin-right, 5px);
+                cursor: pointer;
+                i { 
+                    position: absolute;
+                    top: 6px;
+                    &:last-child {
+                        left: 3px;
+                        @include rem(font-size, 20px);
+                    }
+                }
+            }
+
             .notifier {
-                float: right;
+                float: left;
                 @include rem(font-size, 24px);
                 color: $pallete-2;
                 background: $pallete-3;
@@ -300,6 +323,17 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
             list-style: none;
             height: 211px;
             background: $pallete-11;
+
+            &.medium { 
+                h3 { @include rem(font-size, 18px); }
+                p { @include rem(font-size, 16px); }
+            }
+            
+            &.large { 
+                h3 { @include rem(font-size, 22px); }
+                p { @include rem(font-size, 20px); }
+            }
+            
             &.small {
                 height: 105px;
             }
