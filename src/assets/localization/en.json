@@ -275,6 +275,7 @@
         "flashchecktext": "To be able to cam back, you need to have Flash enabled. Please click below for instructions.",
         "anonymous": "Anonymous",
         "switchpeek": "Change peek session?",
+        "typing": "{name} is typing...",
         "alerts": {
             "successChatEnded": "Session ended!",
             "socketErrors": {

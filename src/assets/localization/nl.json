@@ -275,6 +275,7 @@
         "flashchecktext": "Om terug te kunnen cammen moet Flash het doen. Klik hieronder voor instructies.",
         "anonymous": "Anoniem",
         "switchpeek": "Meekijk sessie wisselen?",
+        "typing": "{name} is aan het typen...",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
             "socketErrors": {

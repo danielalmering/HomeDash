@@ -114,9 +114,9 @@
         &-right, &-left {
             position: absolute;
             display: table;
-            top: 0px;
+            top: 45px;
             right: 0px;
-            height: 100%;
+            height: calc(100% - 45px);
             width: 39px;
             text-align: center;
             cursor: pointer;
@@ -151,7 +151,7 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 100%;
+            width: 45;
             i {
                 display: table;
                 margin: 0 auto;
@@ -160,7 +160,7 @@
                 @include rem(font-size,25px);
                 background-color: $pallete-3;
                 cursor: pointer;
-                @include border-bottom-radius(5px);
+                @include border-bottom-left-radius(5px);
             }
         }
 

@@ -173,10 +173,6 @@ export default class Profile extends Vue {
         }
     }
 
-    toggleSlider(){
-        this.displaySlider = !this.displaySlider;
-    }
-
     async startVoyeur(payload: { ivrCode?: string }){
         if(!this.performer){
             return;
