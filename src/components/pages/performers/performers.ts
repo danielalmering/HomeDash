@@ -130,7 +130,7 @@ export default class Performers extends Vue {
         this.performers = new Array(this.query.limit).fill(undefined, 0, this.query.limit);
 
         const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts?limit=${this.query.limit}&offset=${this.query.offset}&category=${this.query.category}&search=${this.query.search}`, {
-            credentials: 'include'
+          credentials: 'include'
         });
 
         if(performerResults.status !== 200){
