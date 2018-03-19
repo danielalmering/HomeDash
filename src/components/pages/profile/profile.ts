@@ -45,8 +45,7 @@ export default class Profile extends Vue {
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
     displayFullDescription: boolean = false;
-    displaySlider: boolean = false;
-    displayHeight: boolean = false;
+    displaySlider: boolean = true;
 
     private serviceSocketId: number;
     private statusSocketId: number;
@@ -164,10 +163,10 @@ export default class Profile extends Vue {
     }
 
     minHeight(){
-        if(window.outerHeight > 1080){
-            this.displaySlider = false;
-        } else {
+        if(window.outerHeight > 1070){
             this.displaySlider = true;
+        } else {
+            this.displaySlider = false;
         }
     }
 

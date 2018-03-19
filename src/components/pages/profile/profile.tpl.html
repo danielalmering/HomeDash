@@ -47,7 +47,7 @@
 
         <div class="profile__slider" v-if="perfphotos.length != 0">
             <div class="slider">
-                <photo-slider v-if="performer && !displaySlider" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
+                <photo-slider v-if="performer && displaySlider" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
                 <photo-slider-full v-if="performer && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
             </div>
         </div>
