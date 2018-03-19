@@ -19,7 +19,7 @@
         display: table;
         width: 100%;
         position: relative;
-        @include rem(padding, 60px 0px 60px 0px);
+        @include rem(padding, 50px 0px 50px 0px);
 
         &-image {
             .image {
@@ -141,12 +141,6 @@
                 content: "\f03e";
                 @include rem(margin-right, 10px);
                 font: normal normal normal 14px/1 FontAwesome;
-            }
-        }
-
-        &.collapse {
-            .slider {
-                display: none;
             }
         }
     }

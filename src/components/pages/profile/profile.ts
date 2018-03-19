@@ -164,11 +164,9 @@ export default class Profile extends Vue {
     }
 
     minHeight(){
-        if(window.outerHeight > 1100){
-            this.displayHeight = true;
+        if(window.outerHeight > 1080){
             this.displaySlider = false;
         } else {
-            this.displayHeight = false;
             this.displaySlider = true;
         }
     }
