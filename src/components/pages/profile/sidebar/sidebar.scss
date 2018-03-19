@@ -194,7 +194,7 @@ $sidebar-top-height: 315px;
 
     &__toggle {
         position: absolute;
-        top: 10px;
+        top: 69px;
         left: 250px;
 
         &-icon {
@@ -206,7 +206,7 @@ $sidebar-top-height: 315px;
             @include border-bottom-right-radius(5px);
             cursor: pointer;
             @include rem(margin,0px 0px 10px 0px);
-            &.black { background: $pallete-1; }
+            &.black { background: rgba(0, 0, 0, 0.6); }
             a {
                 display: table;
                 height: 100%;

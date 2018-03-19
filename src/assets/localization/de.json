@@ -275,6 +275,7 @@
         "flashchecktext": "Du hast kein Flash installiert, klick hier unten um es zu downloaden.",
         "anonymous": "Anonym",
         "switchpeek": "Voyeur Session ändern?",
+        "typing": "{name} is typing...",
         "alerts": {
             "successChatEnded": "Session beendet!",
             "socketErrors": {

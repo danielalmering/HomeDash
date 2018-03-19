@@ -10,10 +10,12 @@ interface ChatMessage {
     senderType: string;
     message: string;
 }
+
 interface TypingReceivedMessage {
     recentTyping: boolean;
     inBuffer: boolean;
 }
+
 import WithRender from './chat.tpl.html';
 
 @WithRender
@@ -45,11 +47,15 @@ export default class Chat extends Vue {
     chatMessages: ChatMessage[] = [];
     newMessage: boolean = false;
     chatSmall: boolean = false;
+    isPerformerTyping: boolean = false;
 
     chatSocketRef: number;
-    typingSocketRef: number;
+    chatSocketTyping: number;
+    fontSize: number = 12;
 
     mounted(){
+        let typingTimeoutRef: number = 0;
+
         this.chatSocketRef = notificationSocket.subscribe('msg', (content: ChatMessage) => {
             content.message = content.message.replace(/:\w+:/g, (w) => {
                 return `<i class="e1a-med e1a-${w.substring(1, w.length - 1)}"></i>`;
@@ -65,18 +71,28 @@ export default class Chat extends Vue {
 
             this.setNotifier(content.senderType);
         });
-      
-        this.typingSocketRef = notificationSocket.subscribe('typing_received', (content: TypingReceivedMessage) => {
-            this.showTyping = content.recentTyping || content.inBuffer;
 
-            if (this.typingTimer) {
-                clearTimeout(this.typingTimer);
+        this.chatSocketTyping = notificationSocket.subscribe('typing_received', (content: TypingReceivedMessage) => {
+            this.isPerformerTyping = content.recentTyping || content.inBuffer;
+        
+            if(typingTimeoutRef){
+                window.clearTimeout(typingTimeoutRef);
             }
-
-            this.typingTimer = setTimeout(() => {
-                this.showTyping = false;
-            }, 3*1000);
+        
+            typingTimeoutRef = window.setTimeout(() => this.isPerformerTyping = false, 3000);
         });
+    }
+
+    resizeFont(size: string){
+        const fonts = document.getElementsByClassName('videochat__chat-list') as any;
+        if(fonts[0].classList.contains('medium')){
+            fonts[0].classList.remove('medium');
+            fonts[0].classList.add("large");
+        } else if(fonts[0].classList.contains('large')){
+            fonts[0].classList.remove('large');
+        } else {
+            fonts[0].classList.add("medium");
+        }
     }
 
     setNotifier(sender: string){
@@ -88,8 +104,8 @@ export default class Chat extends Vue {
     }
 
     beforeDestroy(){
-        notificationSocket.unsubscribe(this.typingSocketRef);
         notificationSocket.unsubscribe(this.chatSocketRef);
+        notificationSocket.unsubscribe(this.chatSocketTyping);
     }
 
     setFocus(selected: boolean){
