@@ -7,7 +7,7 @@
         <div class="profile__info-image col-sm-12 col-md-3">
             <div class="image" v-on:click="openFullSlider(perfphotos[0].id)" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }">
                 <div class="image__fullslider">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <i class="fa fa-search-plus" aria-hidden="true"></i>
                 </div>
                 <div class="labelwrapper">
                     <div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>                                            
@@ -45,9 +45,9 @@
 
     <div class="profile__sticky">
 
-        <div class="profile__slider" v-if="perfphotos.length != 0" :class="{ 'collapse': displaySlider }">
+        <div class="profile__slider" v-if="perfphotos.length != 0">
             <div class="slider">
-                <photo-slider v-if="performer" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
+                <photo-slider v-if="performer && !displaySlider" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
                 <photo-slider-full v-if="performer && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
             </div>
         </div>
