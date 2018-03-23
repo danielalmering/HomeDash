@@ -39,19 +39,15 @@ export default class Chat extends Vue {
     chatOpened: boolean = true;
     smiliesOpened: boolean = false;
 
-    typingTimer: number = 0;
-    lastTypingMessage: number = 0;
-    showTyping: boolean = false;
-
     chatMessage: string = '';
     chatMessages: ChatMessage[] = [];
     newMessage: boolean = false;
     chatSmall: boolean = false;
     
     chatSocketRef: number;
-    chatSocketTyping: number;
     fontSize: number = 12;
     
+    chatSocketTyping: number;
     isPerformerTyping: boolean = false;
     lastTypingMessage: number = 0;
 
