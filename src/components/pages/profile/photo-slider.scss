@@ -9,12 +9,14 @@
 
 // Styling
 
+$slidersmall-height: 275px;
+
 .slider {
 
     &__small {
         position: relative;
         overflow: hidden;
-        height: 300px;
+        height: $slidersmall-height;
 
         &-list {
             display: block;
@@ -24,7 +26,7 @@
 
             width: 99999px;
             max-width: none;
-            height: 300px;
+            height: $slidersmall-height;
             font-size:0;
             @include rem(padding, 0px);
             background: $pallete-9;
@@ -43,7 +45,7 @@
             display: table;
             top: 0px;
             right: 0px;
-            height: 300px;
+            height: $slidersmall-height;
             width: 50px;
             background-color: $pallete-11;
             text-align: center;
