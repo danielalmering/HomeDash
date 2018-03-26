@@ -276,6 +276,8 @@
         "anonymous": "Anoniem",
         "switchpeek": "Meekijk sessie wisselen?",
         "typing": "{name} is aan het typen...",
+        "videocall-on": "Beeldbellen aan",
+        "videocall-off": "Beeldbellen uit",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
             "socketErrors": {

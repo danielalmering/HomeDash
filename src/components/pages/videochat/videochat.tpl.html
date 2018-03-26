@@ -13,9 +13,6 @@
     </div>
     <div class="videochat__broadcast" v-if="broadcastType != 'none'">
 
-        <div class="videochat__start-stop" v-if="canSwitchToVideoCall" v-on:click="startCalling">{{ $t('tabs.service-videocall') }}</div>
-        <div class="videochat__start-stop" v-if="sessionType === 'VIDEOCALL' && paymentMethod == 'IVR'" v-on:click="stopCalling">{{ $t('tabs.service-cam') }}</div>
-
         <div class="videochat__broadcast-object" v-if="broadcasting.cam">
             <component :is="broadcastType"
                 v-on:stateChange="broadcastStateChange"
@@ -55,6 +52,11 @@
             <p style="display: none" v-for="message in stateMessages">{{ message }}</p>
         </div>
 
+    </div>
+
+    <div class="videochat__gotoservice visible-lg">
+        <div class="videochat__gotoservice-start-stop" v-if="!canSwitchToVideoCall" v-on:click="startCalling">{{ $t('videochat.videocall-on') }}</div>
+        <div class="videochat__gotoservice-start-stop" v-if="sessionType === 'VIDEOCALL' && paymentMethod == 'IVR'" v-on:click="stopCalling">{{ $t('videochat.videocall-off') }}</div>
     </div>
 
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
