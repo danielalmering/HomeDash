@@ -55,7 +55,7 @@
     </div>
 
     <div class="videochat__gotoservice visible-lg">
-        <div class="videochat__gotoservice-start-stop" v-if="!canSwitchToVideoCall" v-on:click="startCalling">{{ $t('videochat.videocall-on') }}</div>
+        <div class="videochat__gotoservice-start-stop" v-if="canSwitchToVideoCall" v-on:click="startCalling">{{ $t('videochat.videocall-on') }}</div>
         <div class="videochat__gotoservice-start-stop" v-if="sessionType === 'VIDEOCALL' && paymentMethod == 'IVR'" v-on:click="stopCalling">{{ $t('videochat.videocall-off') }}</div>
     </div>
 
