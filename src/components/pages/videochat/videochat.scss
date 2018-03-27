@@ -76,16 +76,6 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         }
     }
 
-    &__start-stop {
-        font-weight: 600;
-        color: $pallete-2;
-        float: left;
-        background: $pallete-3;
-        @include rem(padding, 12.5px);
-        @include border-radius(5px);
-        cursor: pointer;
-    }
-
     &__broadcast{
         position: absolute;
         top: 10px;
@@ -246,13 +236,20 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         }
     }
 
-    &__videocall {
+    &__gotoservice {
         position: absolute;
         z-index: 2;
-        top: 10px;
-        right: 70px;
-        background-color: greenyellow;
-        padding: 10px;
+        bottom: 10px;
+        left: 10px;
+        &-start-stop {
+            font-weight: 600;
+            color: $pallete-2;
+            float: left;
+            background: $pallete-3;
+            @include rem(padding, 12.5px);
+            @include border-radius(5px);
+            cursor: pointer;
+        }
     }
 
     &__chat {
@@ -352,6 +349,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                     color: $pallete-3;
                     margin: 0;
                     @include rem(font-size, 14px);
+                    word-break: break-word;
                 }
 
                 p {

@@ -3,7 +3,7 @@ import { Watch, Component } from 'vue-property-decorator';
 import { WRTCUtils, Publisher } from 'typertc';
 
 @Component({
-    template: '<video playsinline webkit-playsinline autoplay :cam="true" :mic="false"></video>'
+    template: '<video playsinline muted webkit-playsinline autoplay :cam="true" :mic="false"></video>'
 })
 export class WebRTC extends Broadcast{
 
@@ -44,7 +44,8 @@ export class WebRTC extends Broadcast{
             streamName : this.publishStream,
             element: (this.$el as HTMLVideoElement) || undefined,
             useWebSockets: true,
-            debug: false
+            debug: false,
+            audio: true
         };
 
         this.wrtc = new Publisher( options );

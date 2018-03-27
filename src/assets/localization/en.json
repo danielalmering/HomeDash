@@ -276,6 +276,8 @@
         "anonymous": "Anonymous",
         "switchpeek": "Change peek session?",
         "typing": "{name} is typing...",
+        "videocall-on": "Videocall on",
+        "videocall-off": "Videocall off",
         "alerts": {
             "successChatEnded": "Session ended!",
             "socketErrors": {
