@@ -45,7 +45,7 @@ export class WebRTC extends Broadcast{
             element: (this.$el as HTMLVideoElement) || undefined,
             useWebSockets: true,
             debug: false,
-            audio: true
+            audio: false
         };
 
         this.wrtc = new Publisher( options );
