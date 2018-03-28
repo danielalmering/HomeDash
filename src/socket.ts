@@ -65,7 +65,7 @@ export class NotificationSocket {
         this.messageQueue = [];
         this.subscribedEvents = [];
 
-        this.checkAliveInterval = 5000;
+        this.checkAliveInterval = 6000;
         this.pingTimeout = 10000;
         this.reconnectTimeout = 10000;
 
