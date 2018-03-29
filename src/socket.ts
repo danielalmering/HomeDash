@@ -78,8 +78,8 @@ export class NotificationSocket {
      */
     connect() {
         const options: SocketIOClient.ConnectOpts = {
-            forceNew: true,
-            transports: ['polling', 'websocket']
+            forceNew: false,
+            transports: ['websocket']
         };
 
         //Check if the socket connection is alive on interval
