@@ -51,7 +51,8 @@ const authenticationStore: Module<AuthState, RootState> = {
                 credentials: 'include',
                 body: JSON.stringify(payload),
                 headers: new Headers({
-                    role: 'ROLE_CLIENT'
+                    role: 'ROLE_CLIENT',
+		    ver: config.ApiVersion
                 })
             });
 
@@ -119,7 +120,11 @@ const authenticationStore: Module<AuthState, RootState> = {
         },
         async getSession(store: AuthContext){
             const checkSessionResult = await fetch(`${config.BaseUrl}/check_session`, {
-                credentials: 'include'
+                credentials: 'include',
+                headers: new Headers({
+                    ver: config.ApiVersion                                                                                                                                                                                                                                
+                })
+
             });
 
             let sessionData: AnonymousUser | undefined = undefined;
