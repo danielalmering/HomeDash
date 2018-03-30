@@ -66,8 +66,8 @@ export class NotificationSocket {
         this.subscribedEvents = [];
 
         this.checkAliveInterval = 6000;
-        this.pingTimeout = 10000;
-        this.reconnectTimeout = 10000;
+        this.pingTimeout = 15000;
+        this.reconnectTimeout = 20000;
 
         this.lastPongTime = Date.now();
         this.lastReconnectTime = Date.now();
@@ -79,6 +79,8 @@ export class NotificationSocket {
     connect() {
         const options: SocketIOClient.ConnectOpts = {
             forceNew: false,
+            reconnectionDelay: 5000,
+            reconnectionDelayMax: 10000,
             transports: ['websocket']
         };
 
