@@ -1,6 +1,6 @@
 
 export interface ProjectConfig {
-    ApiUrl: string;
+    ApiVersion: string;
     BaseUrl: string;
     FullApiUrl: string;
     SocketUrl: string;
@@ -21,7 +21,7 @@ if(isGigacams){
 }
 
 // Client (API) version
-config.ApiUrl = '2.0';
+config.ApiVersion = '2.0';
 
 const tagManagerKey = isGigacams ? 'GTM-MPS978H' : 'GTM-WQN9TVH';
 
