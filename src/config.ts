@@ -1,6 +1,5 @@
 
 export interface ProjectConfig {
-    ApiVersion: string;
     BaseUrl: string;
     FullApiUrl: string;
     SocketUrl: string;
@@ -19,9 +18,6 @@ const isGigacams = window.location.hostname.indexOf('gigacams.com') > -1;
 if(isGigacams){
     config.AutomaticCountryRedirect = true;
 }
-
-// Client (API) version
-config.ApiVersion = '2.0';
 
 const tagManagerKey = isGigacams ? 'GTM-MPS978H' : 'GTM-WQN9TVH';
 
