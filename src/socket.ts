@@ -81,7 +81,7 @@ export class NotificationSocket {
             forceNew: false,
             reconnectionDelay: 5000,
             reconnectionDelayMax: 10000,
-            transports: ['websocket']
+            transports: ['polling', 'websocket']
         };
 
         //Check if the socket connection is alive on interval
