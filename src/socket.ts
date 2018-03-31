@@ -78,7 +78,7 @@ export class NotificationSocket {
      */
     connect() {
         const options: SocketIOClient.ConnectOpts = {
-            forceNew: true,
+            forceNew: false,
             reconnection: false, //handle reconnections are self (ping pong)
             reconnectionDelay: 5000,
             reconnectionDelayMax: 10000,
