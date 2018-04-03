@@ -1,3 +1,4 @@
+import { PerformerStatus } from "./Performer";
 
 export interface SocketVoyeurEventArgs {
     id: string;
@@ -16,6 +17,8 @@ export interface SocketServiceEventArgs {
     performerId: number;
     serviceName: string;
     serviceStatus: boolean;
+    status?: PerformerStatus;
+    services?: { [key: string]: boolean };
 }
 
 export interface SocketMessageEventArgs {

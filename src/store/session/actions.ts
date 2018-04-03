@@ -360,7 +360,13 @@ const actions = {
             return;
         }
 
-        store.commit('updateService', {service:content.serviceName,enabled:content.serviceStatus});
+        if(content.services && content.status){
+            for(const service in content.services){
+                store.commit('updateService', { service: service, enabled: content.services[service] });
+            }
+        } else {
+            store.commit('updateService', {service:content.serviceName,enabled:content.serviceStatus});
+        }
     }
 };
 
