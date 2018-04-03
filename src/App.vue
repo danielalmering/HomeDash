@@ -25,6 +25,16 @@ import countryselection from './components/layout/Countryselection.vue';
 import config from './config';
 import Raven from 'raven-js';
 
+function getParameterByName(name: string, url?: string) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 @Component({
     components: {
         modalWrapper: modalWrapper,
@@ -40,8 +50,14 @@ export default class Cookies extends Vue {
     displayCountryselection: boolean = false;
 
     async created(){
+        const utmMedium = getParameterByName('utm_medium');
+
         await this.$store.dispatch('getSession');
-        notificationSocket.connect();
+
+        if(!utmMedium || utmMedium.toLowerCase() !== 'advertising'){
+            notificationSocket.connect();
+        }
+
         notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
         });
