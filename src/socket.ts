@@ -53,7 +53,7 @@ export class NotificationSocket {
     private lastPongTime: number;
     private lastReconnectTime: number;
 
-    private intervalHandle?: number;
+    private intervalHandle: number;
 
     constructor(){
 
@@ -65,9 +65,9 @@ export class NotificationSocket {
         this.messageQueue = [];
         this.subscribedEvents = [];
 
-        this.checkAliveInterval = 3000;
-        this.pingTimeout = 10000;
-        this.reconnectTimeout = 10000;
+        this.checkAliveInterval = 6000;
+        this.pingTimeout = 15000;
+        this.reconnectTimeout = 20000;
 
         this.lastPongTime = Date.now();
         this.lastReconnectTime = Date.now();
@@ -79,7 +79,10 @@ export class NotificationSocket {
     connect() {
         const options: SocketIOClient.ConnectOpts = {
             forceNew: false,
-            transports: ['websocket']
+            reconnection: false, //handle reconnections are self (ping pong)
+            reconnectionDelay: 5000,
+            reconnectionDelayMax: 10000,
+            transports: ['polling', 'websocket']
         };
 
         //Check if the socket connection is alive on interval
@@ -104,13 +107,14 @@ export class NotificationSocket {
      * Breaks the connection to the socket server, the subscribed events will remain
      */
     disconnect() {
-
-        if (!this.isConnected()) {
+        if (!this.socket) {
+            console.log('Disconnecting socket disallowed');
             return;
         }
 
         this.socket.removeAllListeners();
         this.socket.disconnect();
+        delete this.socket;
 
         if(this.intervalHandle){
             clearInterval(this.intervalHandle);
@@ -250,10 +254,9 @@ export class NotificationSocket {
 
     private checkSocketAlive(){
 
-        if(this.socket){
+        if(this.isConnected()){
             this.socket.emit(this.pingMessage, '');
         }
-
 
         const timeSinceLastPong = Date.now() - this.lastPongTime;
         const timeSinceLastReconnect = Date.now() - this.lastReconnectTime;

@@ -56,9 +56,9 @@ export default class Cookies extends Vue {
         const AgeCheckAccepted = localStorage.getItem(`${config.StorageKey}.agecheck`);
         this.displayAgecheck = config.NoAgeCheckCountries.indexOf(this.$store.state.localization.country) > -1 ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
 
-        // Country selection
-        const defaultCountryselected = localStorage.getItem(`${config.StorageKey}.defaultCountry`);
-        this.displayCountryselection = (this.$store.state.localization.country === 'gl' && !defaultCountryselected);
+        // Country selection ( deactivated country select popup )
+        // const defaultCountryselected = localStorage.getItem(`${config.StorageKey}.defaultCountry`);
+        // this.displayCountryselection = (this.$store.state.localization.country === 'gl' && !defaultCountryselected);
 
 
         let registrationAttempts = 0;
