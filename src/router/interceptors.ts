@@ -4,6 +4,7 @@ import { setCanonical, setTitle, setDescription } from '../seo';
 import config from '../config';
 import Page from '../components/pages/page';
 import i18n from '../localization';
+import notificationSocket from '../socket';
 
 export async function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     const acceptedCountries = ['uk', 'nl', 'de', 'gl', 'at'];
@@ -42,6 +43,18 @@ export async function countryInterceptor(to: Route, from: Route, next: (to?: str
         } else {
             next();
         }
+    }
+}
+
+export function socketInterceptor(to: Route, from: Route, next?: (to?: string | Location) => void){
+
+    if(store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
+        // console.log('Should make a socket connection now!');
+        notificationSocket.connect();
+    }
+
+    if(next){
+        next();
     }
 }
 
@@ -159,13 +172,13 @@ export function scrollInterceptor(to: Route, from: Route){
     let supportPageOffset = window.pageXOffset !== undefined;
     let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
     const scrollTop = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-    
+
     if(from.name === 'Performers' && to.name === 'Profile'){
         store.commit('setPagePosition', scrollTop);
     }
 
     if(from.name === 'Profile' && to.name === 'Performers'){
-        setTimeout(function() { 
+        setTimeout(function() {
             window.scrollTo(0, store.state.pagePosition);
             store.commit('setPagePosition', 0);
         },500)
@@ -173,7 +186,7 @@ export function scrollInterceptor(to: Route, from: Route){
         return;
     }
 
-    setTimeout(function() { 
+    setTimeout(function() {
         window.scrollTo(0, 0);
     },500)
 
