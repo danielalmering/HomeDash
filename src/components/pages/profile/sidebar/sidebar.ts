@@ -110,6 +110,11 @@ export default class Sidebar extends Vue {
 
             const performer = this.performers.find(p => p.id === data.performerId);
 
+            //Temp for services map
+            if(performer && data.services && data.status){
+                performer.performer_services = { ...performer.performer_services, ...data.services };
+            }
+
             //If the performer is in a session and turns of peeking, remove from list
             if(performer && isInSession(performer.performerStatus) &&
                 data.serviceName === 'peek' && !data.serviceStatus &&
