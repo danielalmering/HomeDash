@@ -97,14 +97,17 @@ export default class Profile extends Vue {
                 return;
             }
 
-            if(data.serviceName === 'voyeur'){
-                this.performer.isVoyeur = data.serviceStatus;
-            } else if(data.services && data.services['voyeur']){
+            if(data.services && data.services['voyeur']){
                 this.performer.isVoyeur = data.services['voyeur'];
+            } else if(data.serviceName === 'voyeur'){
+                this.performer.isVoyeur = data.serviceStatus;
             }
 
             if(data.services && data.status){
+                console.log(data.services);
                 this.performer.performer_services = { ...this.performer.performer_services, ...data.services };
+
+                this.performer.performerStatus = data.status;
             } else {
                 this.performer.performer_services[data.serviceName] = data.serviceStatus;
             }
