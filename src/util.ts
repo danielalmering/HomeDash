@@ -215,3 +215,13 @@ export function tagHotjar(tag: string){
         window.hj('tagRecording', [tag]);
     }
 }
+
+export function logKPI(value:string){
+    fetch(`${config.BaseUrl}/session/kpi/${value}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+}

@@ -23,7 +23,7 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { webrtcPossible, noFlash, hasWebAudio, isApple, tagHotjar } from '../../../util';
+import { webrtcPossible, noFlash, hasWebAudio, isApple, tagHotjar, logKPI } from '../../../util';
 import { Performer } from '../../../models/Performer';
 const Platform = require('platform');
 
@@ -282,6 +282,10 @@ export default class VideoChat extends Vue {
             this.broadcasting.settings = false;
         }
 
+        if (this.broadcasting.cam){
+            logKPI("cl_camback_intention");
+        }
+
         tagHotjar(`TOGGLE_CAM`);
     }
 
@@ -313,10 +317,14 @@ export default class VideoChat extends Vue {
 
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
+        if (state == 'active'){
+            logKPI("cl_camback_active");
+        }
     }
 
     broadcastError(message: string){
         this.stateMessages.push(message);
+        logKPI("cl_camback_error");
     }
 
     viewerStateChange(state: string){
