@@ -76,7 +76,13 @@ export default class Performers extends Vue {
                 return;
             }
 
-            performer.performer_services[data.serviceName] = data.serviceStatus;
+            if(data.services && data.status){
+                performer.performer_services = { ...performer.performer_services, ...data.services };
+
+                performer.performerStatus = data.status;
+            } else {
+                performer.performer_services[data.serviceName] = data.serviceStatus;
+            }
         });
 
         this.statusEventId = notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {

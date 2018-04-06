@@ -64,11 +64,21 @@ notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
 notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
     if(!data) return;
 
-    rootState.commit('voyeur/setPerformerService', {
-        performerId: data.performerId,
-        serviceName: data.serviceName,
-        status: data.serviceStatus
-    });
+    if(data.services && data.status){
+        for(const service in data.services){
+            rootState.commit('voyeur/setPerformerService', {
+                performerId: data.performerId,
+                serviceName: service,
+                status: data.services[service]
+           });
+        }
+    } else {
+        rootState.commit('voyeur/setPerformerService', {
+            performerId: data.performerId,
+            serviceName: data.serviceName,
+            status: data.serviceStatus
+       });
+    }
 });
 
 export interface PerformerTile {
