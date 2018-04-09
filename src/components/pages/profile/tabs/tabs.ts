@@ -57,7 +57,7 @@ export default class Tabs extends Vue {
             return 'none';
         }
 
-        const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
+        const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat']; 
 
         // Sidebar overwrites
         if(this.$route.params.category === 'teasers' && this.performer.isVoyeur){
@@ -73,7 +73,7 @@ export default class Tabs extends Vue {
         }
 
         for (const service in this.performer.performer_services){
-            if(this.tabEnabled(service, this.performer) && ignoredServices.indexOf(service) === -1){
+            if(this.tabEnabled(service, this.performer, this.$store.state.info.country) && ignoredServices.indexOf(service) === -1){
                 return service;
             }
         }
@@ -156,13 +156,13 @@ export default class Tabs extends Vue {
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        if(!newPerformer.performer_services[this.selectedTab] || !this.tabEnabled(this.selectedTab, this.performer)){
+        if(!newPerformer.performer_services[this.selectedTab] || !this.tabEnabled(this.selectedTab, this.performer, this.$store.state.info.country)){
             this.selectedTab = this.firstAvailable;
         }
     }
 
     selectTab(newTab: string){
-        if (this.tabEnabled(newTab, this.performer)){
+        if (this.tabEnabled(newTab, this.performer, this.$store.state.info.country)){
             this.selectedTab = newTab;
         }
     }

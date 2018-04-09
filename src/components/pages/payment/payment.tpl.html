@@ -13,7 +13,7 @@
                     <li class="col-xs-12 col-sm-4" v-for="(package, key) in packages" v-on:click="addPackage(package)">
                         <div class="payment__package-item" :class="package.title">
                             <span v-if="key == '1'" class="mostlybought">{{ $t('payment.mostlybought') }}</span>
-                            <h2>{{package.title}}</h2>
+                            <h2 v-t="'payment.packages.pack' + package.id"></h2>
                             <span class="time" v-html="package.subtitle"></span>
                             <span class="credits">{{ package.quantity }}</span>
                             <span v-t="'payment.credits'"></span>
@@ -101,7 +101,7 @@
                                 <span></span>
                             </div>
                             <div class="payment__method-name">
-                                {{ $t('payment.paywith', { title: paymentMethod.title }) }}
+                                {{ $t('payment.paywith') }}
                                 <span v-if="!paymentMethod.addBonus">*</span>
                             </div>
                         </a>
@@ -113,6 +113,8 @@
                 <button type="submit" class="btn btn-xxl btn-orange" v-t="'payment.paying'"></button>
 
                 <img src="../../../assets/images/comodo.png" />
+                <img v-if="info.country === 'de'" src="../../../assets/images/tuv.png" />
+
             </div>
         </form>
 
