@@ -259,13 +259,13 @@ export default class Sidebar extends Vue {
             return;
         }
 
-        this.$router.push(this.$localize({
+        this.$router.push({
             name: 'Profile',
             params: {
                 id: performer.advert_numbers[0].advertNumber.toString(),
                 category: category
             }
-        }));
+        });
     }
 
     onScroll(event: Event){
