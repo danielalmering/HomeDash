@@ -60,7 +60,7 @@ export default class Cookies extends Vue {
 
         setInterval(() => this.$store.dispatch('getSession'), 60 * 1000); //Update user data every minute
 
-        this.$store.dispatch('loadInfo');
+        await this.$store.dispatch('setLanguage', config.locale.DefaultLanguage);
 
         // Cookies
         const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
