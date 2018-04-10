@@ -1,7 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import config from '../../../../config';
+import config, { logo } from '../../../../config';
 
 import { openRoute } from '../../../../util';
 
@@ -21,10 +21,7 @@ export default class Top extends Vue {
     fees: any[] = [];
 
     openRoute = openRoute;
-
-    get logo(){
-        return this.$store.getters.getLogoLight;
-    }
+    logo = logo;
 
     get info(){
         return this.$store.state.info;

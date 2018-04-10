@@ -2,7 +2,6 @@
     <div id="app">
         <modal-wrapper></modal-wrapper>
         <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
-        <countryselection v-if="displayCountryselection" v-on:close="displayCountryselection = false"></countryselection>
         <router-view/>
         <agecheck v-if="displayAgecheck" v-on:close="displayAgecheck = false"></agecheck>
         <alerts></alerts>
@@ -20,7 +19,6 @@ import { SocketMessageEventArgs } from './models/Socket';
 import alerts from './components/layout/Alerts.vue';
 import cookies from './components/layout/Cookies.vue';
 import agecheck from './components/layout/Agecheck.vue';
-import countryselection from './components/layout/Countryselection.vue';
 
 import config from './config';
 import Raven from 'raven-js';
@@ -40,14 +38,12 @@ function getParameterByName(name: string, url?: string) {
         modalWrapper: modalWrapper,
         alerts: alerts,
         cookies: cookies,
-        agecheck: agecheck,
-        countryselection: countryselection
+        agecheck: agecheck
     }
 })
 export default class Cookies extends Vue {
     displayCookies: boolean = false;
     displayAgecheck: boolean = false;
-    displayCountryselection: boolean = false;
 
     async created(){
         const utmMedium = getParameterByName('utm_medium');
@@ -64,18 +60,15 @@ export default class Cookies extends Vue {
 
         setInterval(() => this.$store.dispatch('getSession'), 60 * 1000); //Update user data every minute
 
+        this.$store.dispatch('loadInfo');
+
         // Cookies
         const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
         this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
 
         // Agecheck
         const AgeCheckAccepted = localStorage.getItem(`${config.StorageKey}.agecheck`);
-        this.displayAgecheck = config.NoAgeCheckCountries.indexOf(this.$store.state.localization.country) > -1 ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
-
-        // Country selection ( deactivated country select popup )
-        // const defaultCountryselected = localStorage.getItem(`${config.StorageKey}.defaultCountry`);
-        // this.displayCountryselection = (this.$store.state.localization.country === 'gl' && !defaultCountryselected);
-
+        this.displayAgecheck = !config.locale.AgeCheck ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
 
         let registrationAttempts = 0;
 

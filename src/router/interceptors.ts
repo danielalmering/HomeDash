@@ -6,46 +6,6 @@ import Page from '../components/pages/page';
 import i18n from '../localization';
 import notificationSocket from '../socket';
 
-export async function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    const acceptedCountries = ['uk', 'nl', 'de', 'gl', 'at'];
-    let currentCountry;
-
-    if(config.AutomaticCountryRedirect){
-        let country = store.state.localization.country;
-
-        if(!country){
-            country = to.params.country ? to.params.country : from.params.country;
-        }
-
-        currentCountry = country;
-    }
-
-    if(to.params.country && acceptedCountries.indexOf(to.params.country) === -1){
-        const newParams = to.params;
-
-        if(to.name === 'Performers'){
-            newParams.category = newParams.country;
-        }
-
-        delete newParams.country;
-
-        next({ name: to.name, params: newParams, query: to.query });
-    } else {
-        if(currentCountry) {
-            await store.dispatch('setCountry', currentCountry);
-        }
-
-        if(config.AutomaticCountryRedirect && to.params.country !== currentCountry && currentCountry !== 'gl'){
-            const newParams = to.params;
-            newParams.country = currentCountry;
-
-            next({ name: to.name, params: newParams, query: to.query });
-        } else {
-            next();
-        }
-    }
-}
-
 export function socketInterceptor(to: Route, from: Route, next?: (to?: string | Location) => void){
 
     if(store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
@@ -93,19 +53,6 @@ export function waitAuthenticated(authenticatedRequired: boolean, next: (to?: st
 
 export function authenticatedInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     return waitAuthenticated(true, next);
-}
-
-export async function preloadUserInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    if(to.params.country && !store.state.localization.country && config.AutomaticCountryRedirect){
-        await store.dispatch('setCountry', to.params.country);
-    } else if(!store.state.localization.country && config.AutomaticCountryRedirect) {
-        const locationResult = await fetch(`${config.BaseUrl}/client/geo/location`);
-        const locationData = await locationResult.json();
-
-        await store.dispatch('setCountry', locationData.country);
-    }
-
-    return waitAuthenticated(false, next);
 }
 
 export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){

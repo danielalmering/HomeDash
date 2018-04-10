@@ -24,170 +24,164 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor } from './interceptors';
+import { authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor } from './interceptors';
 import { scrollToTop } from '../util';
 
 Vue.use(Router);
 
 const routes = [{
-    path: '/:country?/',
-    component: { template: '<router-view></router-view>' },
+    path: '',
+    component: Page,
     children: [
         {
-            path: '',
-            component: Page,
+            path: 'my-account',
+            name: 'Account',
+            component: Account,
+            beforeEnter: authenticatedInterceptor,
             children: [
                 {
-                    path: 'my-account',
-                    name: 'Account',
-                    component: Account,
-                    beforeEnter: authenticatedInterceptor,
-                    children: [
-                        {
-                            path: 'edit-data/',
-                            name: 'Editdata',
-                            component: Editdata
-                        },
-                        {
-                            path: 'account-history/',
-                            name: 'History',
-                            component: History
-                        },
-                        {
-                            path: 'notifications/',
-                            name: 'Inbox',
-                            component: Inbox
-                        },
-                        {
-                            path: 'notifications/:performerid/:messageid/',
-                            name: 'Readmessage',
-                            component: Readmessage
-                        },
-                        {
-                            path: 'new-message/:advertId?/',
-                            name: 'Newmessage',
-                            component: Newmessage
-                        },
-                        {
-                            path: 'gift-voucher/',
-                            name: 'Giftvoucher',
-                            component: Giftvoucher
-                        }
-                    ]
+                    path: 'edit-data/',
+                    name: 'Editdata',
+                    component: Editdata
                 },
                 {
-                    path: 'login/',
-                    beforeEnter: modalInterceptor('login')
+                    path: 'account-history/',
+                    name: 'History',
+                    component: History
                 },
                 {
-                    path: 'register/',
-                    beforeEnter: modalInterceptor('register')
+                    path: 'notifications/',
+                    name: 'Inbox',
+                    component: Inbox
                 },
                 {
-                    path: 'reset-password/:userId/:token/',
-                    beforeEnter: modalInterceptor('reset'),
-                    component: Performers
+                    path: 'notifications/:performerid/:messageid/',
+                    name: 'Readmessage',
+                    component: Readmessage
                 },
                 {
-                    path: 'confirm/:userId/:token/',
-                    beforeEnter: confirmInterceptor
+                    path: 'new-message/:advertId?/',
+                    name: 'Newmessage',
+                    component: Newmessage
                 },
                 {
-                    path: 'promos/',
-                    name: 'Promos',
-                    component: Promos,
-                    meta: {
-                        title: 'footer.metaTitlePromos'
-                    }
-                },
-                {
-                    path: 'payment-success/',
-                    name: 'Thankyou',
-                    beforeEnter: authenticatedInterceptor,
-                    component: Thankyou
-                },
-                {
-                    path: 'payment/',
-                    name: 'Payment',
-                    beforeEnter: authenticatedInterceptor,
-                    component: Payment
-                },
-                {
-                    path: 'contact/',
-                    name: 'Contact',
-                    component: Contact,
-                    meta: {
-                        title: 'footer.metaTitleContact'
-                    }
-                },
-                {
-                    path: 'privacy-policy/',
-                    name: 'Policy',
-                    component: Policy,
-                    meta: {
-                        title: 'footer.metaTitlePrivacy'
-                    }
-                },
-                {
-                    path: 'terms/',
-                    name: 'Terms',
-                    component: Terms,
-                    meta: {
-                        title: 'footer.metaTitleTerms'
-                    }
-                },
-                {
-                    path: 'favourites/',
-                    name: 'Favourites',
-                    component: Favourites
-                },
-                {
-                    path: 'main1/:category?/',
-                    name: 'Adwords',
-                    beforeEnter: (to, from, next) => {
-                        next({
-                            name: 'Performers',
-                            query: { ...to.query, safe: 'true' },
-                            params: { category: to.params.category }
-                        });
-                    }
-                },
-                {
-                    path: ':category?/',
-                    name: 'Performers',
-                    component: Performers
+                    path: 'gift-voucher/',
+                    name: 'Giftvoucher',
+                    component: Giftvoucher
                 }
             ]
         },
         {
-            path: 'performer/:id',
-            name: 'Performer',
-            component: Performer,
-            children: [
-                {
-                    path: 'profile/',
-                    name: 'Profile',
-                    component: Profile
-                },
-                {
-                    path: 'chat/',
-                    name: 'Videochat',
-                    component: VideoChat
-                },
-                {
-                    path: 'peek/',
-                    name: 'Peek',
-                    component: VideoChat
-                },
-                {
-                    path: 'voyeur/',
-                    name: 'Voyeur',
-                    component: Voyeur
-                }
-            ]
+            path: 'login/',
+            beforeEnter: modalInterceptor('login')
         },
-    ]
-}] as RouteConfig[];
+        {
+            path: 'register/',
+            beforeEnter: modalInterceptor('register')
+        },
+        {
+            path: 'reset-password/:userId/:token/',
+            beforeEnter: modalInterceptor('reset'),
+            component: Performers
+        },
+        {
+            path: 'confirm/:userId/:token/',
+            beforeEnter: confirmInterceptor
+        },
+        {
+            path: 'promos/',
+            name: 'Promos',
+            component: Promos,
+            meta: {
+                title: 'footer.metaTitlePromos'
+            }
+        },
+        {
+            path: 'payment-success/',
+            name: 'Thankyou',
+            beforeEnter: authenticatedInterceptor,
+            component: Thankyou
+        },
+        {
+            path: 'payment/',
+            name: 'Payment',
+            beforeEnter: authenticatedInterceptor,
+            component: Payment
+        },
+        {
+            path: 'contact/',
+            name: 'Contact',
+            component: Contact,
+            meta: {
+                title: 'footer.metaTitleContact'
+            }
+        },
+        {
+            path: 'privacy-policy/',
+            name: 'Policy',
+            component: Policy,
+            meta: {
+                title: 'footer.metaTitlePrivacy'
+            }
+        },
+        {
+            path: 'terms/',
+            name: 'Terms',
+            component: Terms,
+            meta: {
+                title: 'footer.metaTitleTerms'
+            }
+        },
+        {
+            path: 'favourites/',
+            name: 'Favourites',
+            component: Favourites
+        },
+        {
+            path: 'main1/:category?/',
+            name: 'Adwords',
+            beforeEnter: (to, from, next) => {
+                next({
+                    name: 'Performers',
+                    query: { ...to.query, safe: 'true' },
+                    params: { category: to.params.category }
+                });
+            }
+        },
+        {
+            path: ':category?/',
+            name: 'Performers',
+            component: Performers
+        }
+    ]},
+    {
+        path: 'performer/:id',
+        name: 'Performer',
+        component: Performer,
+        children: [
+            {
+                path: 'profile/',
+                name: 'Profile',
+                component: Profile
+            },
+            {
+                path: 'chat/',
+                name: 'Videochat',
+                component: VideoChat
+            },
+            {
+                path: 'peek/',
+                name: 'Peek',
+                component: VideoChat
+            },
+            {
+                path: 'voyeur/',
+                name: 'Voyeur',
+                component: Voyeur
+            }
+        ]
+    }
+] as RouteConfig[];
 
 const router = new Router({
     mode: 'history',
@@ -195,8 +189,6 @@ const router = new Router({
     routes: makeRoutesStrict(routes)
 });
 
-router.beforeEach(preloadUserInterceptor);
-router.beforeEach(countryInterceptor);
 router.beforeEach(safeInterceptor);
 router.beforeEach(hotjarInterceptor);
 router.beforeEach(socketInterceptor);
