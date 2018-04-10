@@ -64,7 +64,7 @@ notificationSocket.subscribe('status', (data: SocketStatusEventArgs) => {
 notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
     if(!data) return;
 
-    if(data.services && data.status){
+    if(data.services){
         for(const service in data.services){
             rootState.commit('voyeur/setPerformerService', {
                 performerId: data.performerId,

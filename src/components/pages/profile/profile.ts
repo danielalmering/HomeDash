@@ -103,12 +103,15 @@ export default class Profile extends Vue {
                 this.performer.isVoyeur = data.serviceStatus;
             }
 
-            if(data.services && data.status){
-                console.log(data.services);
+            if(data.services){
                 this.performer.performer_services = { ...this.performer.performer_services, ...data.services };
+            }
 
+            if(data.status){
                 this.performer.performerStatus = data.status;
-            } else {
+            }
+
+            if(data.serviceName){
                 this.performer.performer_services[data.serviceName] = data.serviceStatus;
             }
         });
