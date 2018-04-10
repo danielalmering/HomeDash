@@ -76,11 +76,15 @@ export default class Performers extends Vue {
                 return;
             }
 
-            if(data.services && data.status){
+            if(data.services){
                 performer.performer_services = { ...performer.performer_services, ...data.services };
+            }
 
+            if(data.status){
                 performer.performerStatus = data.status;
-            } else {
+            }
+
+            if(data.serviceName){
                 performer.performer_services[data.serviceName] = data.serviceStatus;
             }
         });
