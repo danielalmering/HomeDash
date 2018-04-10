@@ -31,157 +31,160 @@ Vue.use(Router);
 
 const routes = [{
     path: '',
-    component: Page,
-    children: [
-        {
-            path: 'my-account',
-            name: 'Account',
-            component: Account,
-            beforeEnter: authenticatedInterceptor,
-            children: [
-                {
-                    path: 'edit-data/',
-                    name: 'Editdata',
-                    component: Editdata
-                },
-                {
-                    path: 'account-history/',
-                    name: 'History',
-                    component: History
-                },
-                {
-                    path: 'notifications/',
-                    name: 'Inbox',
-                    component: Inbox
-                },
-                {
-                    path: 'notifications/:performerid/:messageid/',
-                    name: 'Readmessage',
-                    component: Readmessage
-                },
-                {
-                    path: 'new-message/:advertId?/',
-                    name: 'Newmessage',
-                    component: Newmessage
-                },
-                {
-                    path: 'gift-voucher/',
-                    name: 'Giftvoucher',
-                    component: Giftvoucher
-                }
-            ]
-        },
-        {
-            path: 'login/',
-            beforeEnter: modalInterceptor('login')
-        },
-        {
-            path: 'register/',
-            beforeEnter: modalInterceptor('register')
-        },
-        {
-            path: 'reset-password/:userId/:token/',
-            beforeEnter: modalInterceptor('reset'),
-            component: Performers
-        },
-        {
-            path: 'confirm/:userId/:token/',
-            beforeEnter: confirmInterceptor
-        },
-        {
-            path: 'promos/',
-            name: 'Promos',
-            component: Promos,
-            meta: {
-                title: 'footer.metaTitlePromos'
-            }
-        },
-        {
-            path: 'payment-success/',
-            name: 'Thankyou',
-            beforeEnter: authenticatedInterceptor,
-            component: Thankyou
-        },
-        {
-            path: 'payment/',
-            name: 'Payment',
-            beforeEnter: authenticatedInterceptor,
-            component: Payment
-        },
-        {
-            path: 'contact/',
-            name: 'Contact',
-            component: Contact,
-            meta: {
-                title: 'footer.metaTitleContact'
-            }
-        },
-        {
-            path: 'privacy-policy/',
-            name: 'Policy',
-            component: Policy,
-            meta: {
-                title: 'footer.metaTitlePrivacy'
-            }
-        },
-        {
-            path: 'terms/',
-            name: 'Terms',
-            component: Terms,
-            meta: {
-                title: 'footer.metaTitleTerms'
-            }
-        },
-        {
-            path: 'favourites/',
-            name: 'Favourites',
-            component: Favourites
-        },
-        {
-            path: 'main1/:category?/',
-            name: 'Adwords',
-            beforeEnter: (to, from, next) => {
-                next({
-                    name: 'Performers',
-                    query: { ...to.query, safe: 'true' },
-                    params: { category: to.params.category }
-                });
-            }
-        },
-        {
-            path: ':category?/',
-            name: 'Performers',
-            component: Performers
-        }
-    ]},
-    {
-        path: 'performer/:id',
-        name: 'Performer',
-        component: Performer,
+    component: { template: '<router-view></router-view>' },
+    children: [{
+        path: '',
+        component: Page,
         children: [
             {
-                path: 'profile/',
-                name: 'Profile',
-                component: Profile
+                path: 'my-account',
+                name: 'Account',
+                component: Account,
+                beforeEnter: authenticatedInterceptor,
+                children: [
+                    {
+                        path: 'edit-data/',
+                        name: 'Editdata',
+                        component: Editdata
+                    },
+                    {
+                        path: 'account-history/',
+                        name: 'History',
+                        component: History
+                    },
+                    {
+                        path: 'notifications/',
+                        name: 'Inbox',
+                        component: Inbox
+                    },
+                    {
+                        path: 'notifications/:performerid/:messageid/',
+                        name: 'Readmessage',
+                        component: Readmessage
+                    },
+                    {
+                        path: 'new-message/:advertId?/',
+                        name: 'Newmessage',
+                        component: Newmessage
+                    },
+                    {
+                        path: 'gift-voucher/',
+                        name: 'Giftvoucher',
+                        component: Giftvoucher
+                    }
+                ]
             },
             {
-                path: 'chat/',
-                name: 'Videochat',
-                component: VideoChat
+                path: 'login/',
+                beforeEnter: modalInterceptor('login')
             },
             {
-                path: 'peek/',
-                name: 'Peek',
-                component: VideoChat
+                path: 'register/',
+                beforeEnter: modalInterceptor('register')
             },
             {
-                path: 'voyeur/',
-                name: 'Voyeur',
-                component: Voyeur
+                path: 'reset-password/:userId/:token/',
+                beforeEnter: modalInterceptor('reset'),
+                component: Performers
+            },
+            {
+                path: 'confirm/:userId/:token/',
+                beforeEnter: confirmInterceptor
+            },
+            {
+                path: 'promos/',
+                name: 'Promos',
+                component: Promos,
+                meta: {
+                    title: 'footer.metaTitlePromos'
+                }
+            },
+            {
+                path: 'payment-success/',
+                name: 'Thankyou',
+                beforeEnter: authenticatedInterceptor,
+                component: Thankyou
+            },
+            {
+                path: 'payment/',
+                name: 'Payment',
+                beforeEnter: authenticatedInterceptor,
+                component: Payment
+            },
+            {
+                path: 'contact/',
+                name: 'Contact',
+                component: Contact,
+                meta: {
+                    title: 'footer.metaTitleContact'
+                }
+            },
+            {
+                path: 'privacy-policy/',
+                name: 'Policy',
+                component: Policy,
+                meta: {
+                    title: 'footer.metaTitlePrivacy'
+                }
+            },
+            {
+                path: 'terms/',
+                name: 'Terms',
+                component: Terms,
+                meta: {
+                    title: 'footer.metaTitleTerms'
+                }
+            },
+            {
+                path: 'favourites/',
+                name: 'Favourites',
+                component: Favourites
+            },
+            {
+                path: 'main1/:category?/',
+                name: 'Adwords',
+                beforeEnter: (to, from, next) => {
+                    next({
+                        name: 'Performers',
+                        query: { ...to.query, safe: 'true' },
+                        params: { category: to.params.category }
+                    });
+                }
+            },
+            {
+                path: ':category?/',
+                name: 'Performers',
+                component: Performers
             }
-        ]
-    }
-] as RouteConfig[];
+        ]}, {
+            path: 'performer/:id',
+            name: 'Performer',
+            component: Performer,
+            children: [
+                {
+                    path: 'profile/',
+                    name: 'Profile',
+                    component: Profile
+                },
+                {
+                    path: 'chat/',
+                    name: 'Videochat',
+                    component: VideoChat
+                },
+                {
+                    path: 'peek/',
+                    name: 'Peek',
+                    component: VideoChat
+                },
+                {
+                    path: 'voyeur/',
+                    name: 'Voyeur',
+                    component: Voyeur
+                }
+            ]
+        }
+    ]
+}] as RouteConfig[];
 
 const router = new Router({
     mode: 'history',
