@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import config from '../config';
 import { ActionContext } from 'vuex';
 
 import localization, { LocalizationState } from './localization';
@@ -14,7 +15,6 @@ import sentryPlugin from './plugins/sentry';
 
 import { Info } from '../models/Info';
 
-import config from '../config';
 
 Vue.use(Vuex);
 
@@ -41,26 +41,6 @@ const rootStore = new Vuex.Store<RootState>({
     },
     plugins: [sentryPlugin],
     getters: {
-        getLogoLight: state => {
-            const thuis    = require('../assets/images/thuis.png');
-            const gigacams = require('../assets/images/gigacams.png');
-
-            if(!state.info){
-                return '';
-            }
-
-            return state.info.country === 'nl' ? thuis : gigacams;
-        },
-        getLogoDark: state => {
-            const thuis    = require('../assets/images/thuis-dark.png');
-            const gigacams = require('../assets/images/gigacams-dark.png');
-
-            if(!state.info){
-                return '';
-            }
-
-            return state.info.country === 'nl' ? thuis : gigacams;
-        },
         getCampaignData: state => {
             if(!state.info){
                 return {
@@ -104,7 +84,7 @@ const rootStore = new Vuex.Store<RootState>({
         deactivateSafeMode: function(state: RootState){
             state.safeMode = false;
         }
-    }, 
+    },
     actions: {
         loadInfo: async function(store: RootContext){
             const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`, {

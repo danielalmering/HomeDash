@@ -13,7 +13,7 @@ const messages = {
 };
 
 const i18n = new VueI18n({
-    locale: config.AutomaticCountryRedirect ? 'en' : 'nl',
+    locale: config.locale.DefaultLanguage, //Change to default
     messages,
 });
 

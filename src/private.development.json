@@ -5,8 +5,7 @@
     "SocketUrl": "wss://accept-socket.thuis.nl/",
     "JsmpegUrl": "wss://accept-push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
-    "NoAgeCheckCountries": ["nl"],
-    "AutomaticCountryRedirect": false,
+    "Country": "nl",
     "H5Server": "accept-stream01.thuis.nl",
     "H5FlashSwf": "//demo.nanocosmos.de/nanoplayer/nano.player.swf"
 }
