@@ -5,14 +5,11 @@
         </div>
 
         <div class="top__numbers hidden-xs col-xs-12 col-sm-5 col-md-6">
-            <div class="row" v-if="info && info.phone_enabled === 1">
-                <div class="top__numbers-number" v-bind:class="{ 'large': !branding }" >
-                    <span :class="'flag flag-' + info.country"></span>
-                    {{ activeCampaign.number }} <i>{{ activeCampaign.cpm }} {{ $t('top.numbers.cpm') }}</i>
-                </div>
-                <div class="top__numbers-number" v-if="branding">
-                    <span class="flag flag-be"></span>
-                    0907-23000 <i>125 {{ $t('top.numbers.cpm') }}</i>
+            <div class="row" v-if="info">
+                <div class="top__numbers-number" v-for="(campaign, index) in activeCampaign" v-bind:class="{ 'large': countNumbers(activeCampaign) === 1 }" >
+                    <span class="flag flag-nl" v-if="branding && index === 0"></span>
+                    <span class="flag flag-be" v-if="branding && index === 1"></span>
+                    {{ campaign.number }} <i>{{ campaign.cpm | euro }} {{ $t('top.numbers.cpm') }}</i>
                 </div>
             </div>
         </div>
@@ -21,10 +18,10 @@
             <div class="top__banner-happyhour" v-if="info.marketing.current" v-on:click="openRoute('Promos')">
                 <div class="col-1">
                     <span class="h1" v-t="'top.banner.happyhour'"></span>
-                    <span class="h2">{{ activeCampaign.number }}</span>
+                    <span class="h2">{{ activeCampaign[0].number }}</span>
                 </div>
                 <div class="col-2">
-                    <span class="h3">{{ activeCampaign.cpm }} {{ $t('top.numbers.cpm') }}</span>
+                    <span class="h3">{{ activeCampaign[0].cpm }} {{ $t('top.banner.happyhour_cpm') }}</span>
                     <span class="h4" v-t="'top.banner.seeactionpage'"></span>
                 </div>
             </div>

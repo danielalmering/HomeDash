@@ -5,11 +5,12 @@
     "top": {
         "numbers": {
             "callnow": "Wähle jetzt",
-            "cpm": "PM.",
-            "pm": "pro Min."
+            "cpm": "/min Festnetz",
+            "pm": "pro Minute aus dem dt. Festnetz. Preise aus dem Mobilfunknetz abweichend"
         },
         "banner": {
             "happyhour": "HappyHour",
+            "happyhour_cpm": "/min",
             "seeactionpage": "Unsere Aktions-Seite",
             "extra": "Extra",
             "credits": "Credits",
@@ -106,14 +107,14 @@
             "xlarge": "Extra groß"
         },
         "eyecolors":{
-            "brown": "Brown",
-            "hazel": "Hazel",
-            "blue": "Blue",
-            "green": "Green",
-            "silver": "Silver",
-            "amber": "Amber",
-            "grey": "Grey",
-            "redviolet": "Red & violet"
+            "brown": "Braun",
+            "hazel": "Hasel",
+            "blue": "Blau",
+            "green": "Grün",
+            "silver": "Silber",
+            "amber": "Bernstein",
+            "grey": "Grau",
+            "redviolet": "Rot & violett"
         },
         "flash": {
             "no": "Flash ist deaktiviert.",
@@ -160,7 +161,8 @@
         "smscost": "pro empfangene Nachricht*",
         "registeraccount": "Registriere kostenlos ein Account und profitiere von zahlreichen Angeboten!",
         "noServices": "Kein(e) Service(s) verfügbar!",
-        "errorNoIvrCode": "Gib deinen Zugangscode ein"
+        "errorNoIvrCode": "Gib deinen Zugangscode ein",
+        "nosmsservice": "Kein SMS Service verfügbar!"
     },
     "pagination": {
         "pageOf": "Seite {page} bis {total}",
@@ -328,16 +330,22 @@
         "creditscap": "Credits",
         "price": "Preis",
         "paying": "Kaufen",
-        "paywith": "Zahlung mit {title}",
+        "paywith": "Zahlung mit",
         "subtotal": "Zwischensumme",
         "bonuscredits": "Bonus Credits",
         "totalcredits": "Total Credits",
         "newbalance": "Neues Credits Guthaben",
         "total": "Total",
         "bonusbanner": "Kaufe {credits} Credits und bekomme zusätzlich {percentage}% Gratis dazu",
-        "bonusdiscountdesc": "Das obige Angebot ist nur gültig beim Kauf mit iDeal & Mister Cash und nicht gültig beim Kauf mit Kreditkarte und Visa per Click and Buy. * ",
+        "bonusdiscountdesc": "",
         "discountcode": "Rabattcode?",
         "mostlybought": "Meistgekauft!",
+        "packages": {
+            "pack1": "Basic",
+            "pack2": "Medium",
+            "pack3": "High",
+            "pack4": "XXXL"
+        },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",
             "errorUsedPromo": "Promocode bereits benutzt!",

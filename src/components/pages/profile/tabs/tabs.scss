@@ -112,33 +112,6 @@
                 i { font-style: normal; color: $pallete-3; }
             }
 
-            .numbers {
-                display: block;
-                line-height: 160%;
-                color: $pallete-3;
-                font-weight: 600;
-                @include rem(font-size,20px);
-
-                i { 
-                    float: left; 
-                    @include rem(margin, 0px 10px 0px 0px);
-                }
-
-                span {
-                    font-weight: 400;
-                    color: $pallete-2;
-                    @include rem(font-size,12px);
-                }
-
-                strong {
-                    text-transform: capitalize;
-                    font-weight: 700;
-                    color: $pallete-3;
-                    @include rem(font-size,12px);
-                    font-style: italic;
-                }
-            }
-
             .btn {
                 position: absolute;
                 bottom: 15px;
@@ -148,11 +121,13 @@
             }
 
             .numbers {
+                position: relative;
                 display: block;
-                line-height: 160%;
+                line-height: 70%;
                 color: $pallete-3;
                 font-weight: 600;
                 @include rem(font-size,20px);
+                @include rem(padding, 5px 0px 0px 0px);
 
                 i { 
                     float: left; 
@@ -160,9 +135,19 @@
                 }
 
                 span {
+                    display: block;
                     font-weight: 400;
                     color: $pallete-2;
+                    @include rem(font-size,9px);
+                    @include rem(padding, 5px 6px 0px 6px);
+                }
+
+                strong {
+                    text-transform: capitalize;
+                    font-weight: 700;
+                    color: $pallete-3;
                     @include rem(font-size,12px);
+                    font-style: italic;
                 }
             }
 

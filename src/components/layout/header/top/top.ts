@@ -35,6 +35,10 @@ export default class Top extends Vue {
         return this.$store.getters.getBranding;
     }
 
+    countNumbers(obj: any){
+        return Object.keys(obj).length;
+    }
+
     mounted(){
         this.getFees();
     }

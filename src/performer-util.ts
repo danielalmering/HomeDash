@@ -1,6 +1,6 @@
 import { Performer, PerformerStatus } from "./models/Performer";
 
-export function tabEnabled(service: string, forPerformer: Performer):boolean {
+export function tabEnabled(service: string, forPerformer: Performer, country: string):boolean {
     if (!forPerformer){
         return false;
     }
@@ -14,6 +14,11 @@ export function tabEnabled(service: string, forPerformer: Performer):boolean {
 
     if (!(service in forPerformer.performer_services) ){
         throw new Error(`${service} ain't no service I ever heard of!`);
+    }
+
+    // SMS tab disabled germany
+    if(country === 'de' && service === 'sms'){
+        return false;
     }
 
     // Email & sms enabled independently of status from performer!

@@ -43,25 +43,30 @@ const rootStore = new Vuex.Store<RootState>({
     getters: {
         getCampaignData: state => {
             if(!state.info){
-                return {
-                    number: '',
-                    cpm: ''
-                };
+                return [];
             }
 
+            const info = state.info;
+
             if(!state.info.marketing.current){
-                return {
-                    number: state.info.phone_number,
-                    cpm: state.info.phone_cpm
-                };
+                const numbers = [];
+                const ivr1 = info.ivr1 ? numbers.push({number: info.ivr1.phone_number, cpm: info.ivr1.phone_cpm, marketing: 0}) : '';
+                const ivr2 = info.ivr2 ? numbers.push({number: info.ivr2.phone_number, cpm: info.ivr2.phone_cpm, marketing: 0}) : '';
+
+                return numbers;
             } else {
-                const activeCampaign = state.info.marketing.current.replace(' ', '_');
+                const activeCampaign = state.info.marketing.current;
                 const marketing: any = state.info.marketing;
 
-                return {
-                    number: marketing[activeCampaign].phone_number,
-                    cpm: marketing[activeCampaign].phone_cpm
-                };
+                const numbers = [];
+                if(info.ivr1){
+                    const ivr1 = info.ivr1.marketing != 0 ? numbers.push({number: marketing[activeCampaign].phone_number, cpm: marketing[activeCampaign].phone_cpm, marketing: 1}) : numbers.push({number: info.ivr1.phone_number, cpm: info.ivr1.phone_cpm, marketing: 0});
+                }
+                if(info.ivr2){
+                    const ivr1 = info.ivr2.marketing != 0 ? numbers.push({number: marketing[activeCampaign].phone_number, cpm: marketing[activeCampaign].phone_cpm, marketing: 1}) : numbers.push({number: info.ivr2.phone_number, cpm: info.ivr2.phone_cpm, marketing: 0});
+                }
+
+                return numbers;
             }
         },
         getBranding: state => {
