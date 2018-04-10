@@ -24,7 +24,7 @@ const allowedLanguages: { [country: string]: string[] } = {
 const localizationStore: Module<LocalizationState, RootState> = {
     state: {
         country: config.Country,
-        language: config.locale.DefaultLanguage
+        language: undefined
     },
     mutations: {
         setLanguage(state: LocalizationState, language: string){
@@ -34,7 +34,7 @@ const localizationStore: Module<LocalizationState, RootState> = {
     actions: {
         async setLanguage(store: LocalizationContext, language: string){
             if(language !== store.state.language){
-                await fetch(`${config.BaseUrl}/localize?language=${language}`, {
+                await fetch(`${config.BaseUrl}/localize?language=${language}&country=${store.state.country}`, {
                     credentials: 'include'
                 });
 
