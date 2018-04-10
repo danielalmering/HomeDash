@@ -4,7 +4,7 @@ import Vue from 'vue';
 
 import { Performer, PerformerStatus } from '../../../../models/Performer';
 import { openModal, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
-import config from '../../../../config';
+import config, { logo } from '../../../../config';
 
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
@@ -36,6 +36,7 @@ export default class Sidebar extends Vue {
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
     isOutOfSession = isOutOfSession;
+    logo = logo;
 
     query: any = {
         limit: 20,
@@ -59,10 +60,6 @@ export default class Sidebar extends Vue {
 
     get displaySidebar(){
         return this.$store.state.displaySidebar;
-    }
-
-    get logo(){
-        return this.$store.getters.getLogoLight;
     }
 
     get authenticated(){
@@ -262,13 +259,13 @@ export default class Sidebar extends Vue {
             return;
         }
 
-        this.$router.push(this.$localize({
+        this.$router.push({
             name: 'Profile',
             params: {
                 id: performer.advert_numbers[0].advertNumber.toString(),
                 category: category
             }
-        }));
+        });
     }
 
     onScroll(event: Event){
