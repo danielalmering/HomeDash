@@ -24,7 +24,7 @@ const allowedLanguages: { [country: string]: string[] } = {
 const localizationStore: Module<LocalizationState, RootState> = {
     state: {
         country: config.Country,
-        language: config.locale.DefaultLanguage
+        language: undefined
     },
     mutations: {
         setLanguage(state: LocalizationState, language: string){
