@@ -34,7 +34,7 @@ const localizationStore: Module<LocalizationState, RootState> = {
     actions: {
         async setLanguage(store: LocalizationContext, language: string){
             if(language !== store.state.language){
-                await fetch(`${config.BaseUrl}/localize?language=${language}&country=${store.state.country}`, {
+                await fetch(`${config.BaseUrl}/localize?language=${language}`, {
                     credentials: 'include'
                 });
 
