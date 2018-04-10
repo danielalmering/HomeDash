@@ -48,6 +48,8 @@ export default class Cookies extends Vue {
     async created(){
         const utmMedium = getParameterByName('utm_medium');
 
+        await this.$store.dispatch('setLanguage', config.locale.DefaultLanguage);
+
         await this.$store.dispatch('getSession');
 
         if(!utmMedium || utmMedium.toLowerCase() !== 'advertising'){
@@ -59,8 +61,6 @@ export default class Cookies extends Vue {
         });
 
         setInterval(() => this.$store.dispatch('getSession'), 60 * 1000); //Update user data every minute
-
-        await this.$store.dispatch('setLanguage', config.locale.DefaultLanguage);
 
         // Cookies
         const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
