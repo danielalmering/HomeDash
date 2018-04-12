@@ -57,6 +57,10 @@ export default class Profile extends Vue {
         return this.$store.getters.isLoggedIn;
     }
 
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
     get activeState(): string {
         return this.$store.state.session.activeState;
     }
