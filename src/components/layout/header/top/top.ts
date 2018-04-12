@@ -35,6 +35,10 @@ export default class Top extends Vue {
         return this.$store.getters.getBranding;
     }
 
+    get authenticated(){
+        return this.$store.getters.isLoggedIn;
+    }
+
     countNumbers(obj: any){
         return Object.keys(obj).length;
     }
@@ -50,6 +54,10 @@ export default class Top extends Vue {
 
         const data = await infoResults.json();
         this.fees = data.fees.slice().reverse();
+    }
+
+    goPayment(){
+        const goto = this.authenticated ? this.openRoute('Payment') : '';
     }
 
 }
