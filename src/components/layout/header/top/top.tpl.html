@@ -9,7 +9,7 @@
                 <div class="top__numbers-number" v-for="(campaign, index) in activeCampaign" v-bind:class="{ 'large': countNumbers(activeCampaign) === 1 }" >
                     <span class="flag flag-nl" v-if="branding && index === 0"></span>
                     <span class="flag flag-be" v-if="branding && index === 1"></span>
-                    {{ campaign.number }} <i>{{ campaign.cpm | euro }} {{ $t('top.numbers.cpm') }}</i>
+                    {{ campaign.number }} <i v-if="campaign.cpm != '0'">{{ campaign.cpm | euro }} {{ $t('top.numbers.cpm') }}</i>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="top__banner-credits hidden-xs" v-if="!info.marketing.current" v-on:click="openRoute('Payment')">
+            <div class="top__banner-credits hidden-xs" v-if="!info.marketing.current" v-on:click="goPayment()">
                 <div class="discount" v-for="fee in fees">
                     <span class="discount__percent">{{ fee.percentage.split('.')[0] }}<i>%</i></span>
                     <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="'top.banner.credits'"></i></span></span>
