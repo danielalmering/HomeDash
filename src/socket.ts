@@ -209,6 +209,8 @@ export class NotificationSocket {
             throw new Error('No user session exists. Can not connect to the socket server');
         }
 
+        this.processEvent('connected', {});
+
         setTimeout(() => {
 
             this.socket.emit('user', {
@@ -218,11 +220,15 @@ export class NotificationSocket {
             }, this.processQueue.bind(this));
 
             console.info('[NotificationSocket] Connected with user: ', user);
+
+            this.processEvent('authenticated', {});
         }, 1000);
     }
 
     private socketDisconnect(reason: string) {
         console.info(`[NotificationSocket] Disconnect with reason: ${reason}`);
+
+        this.processEvent('disconnected', {});
     }
 
     private socketReceivedEvent(data: string) {
