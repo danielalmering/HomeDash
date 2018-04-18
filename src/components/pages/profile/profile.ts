@@ -219,8 +219,6 @@ export default class Profile extends Vue {
         //     }
         // }
 
-        const self = this;
-
         const defaults: RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
@@ -230,7 +228,17 @@ export default class Profile extends Vue {
 
         const toSend = {...defaults, ...payload};
 
-        await this.$store.dispatch<RequestPayload>( toSend );
+        if(!notificationSocket.isConnected()){
+            notificationSocket.connect();
+
+            const event = notificationSocket.subscribe('authenticated', () => {
+                this.$store.dispatch<RequestPayload>( toSend );
+
+                notificationSocket.unsubscribe(event);
+            });
+        } else {
+            this.$store.dispatch<RequestPayload>( toSend );
+        }
     }
 
 
