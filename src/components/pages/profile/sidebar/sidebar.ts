@@ -108,12 +108,22 @@ export default class Sidebar extends Vue {
             const performer = this.performers.find(p => p.id === data.performerId);
 
             //Temp for services map
-            if(performer && data.services){
-                performer.performer_services = { ...performer.performer_services, ...data.services };
+            if(data.services){
+                if(performer){
+                    performer.performer_services = { ...performer.performer_services, ...data.services };
+                }
+
+                if(data.services['peek'] !== undefined){
+                    data.serviceName = 'peek';
+                    data.serviceStatus = data.services['peek'];
+                }
             }
 
             if(performer && data.status){
-                performer.performerStatus = data.status;
+                await statusSocketCb.bind(this)({
+                    performerId: data.performerId,
+                    status: data.status
+                });
             }
 
             if(!data.serviceName){
@@ -130,7 +140,7 @@ export default class Sidebar extends Vue {
 
             //If the performer is not in the list and turns on peeking while in a session, add her to the list
             if(!performer && data.serviceName === 'peek' &&
-                data.serviceStatus && this.category === 'peek'){
+                data.serviceStatus === true && this.category === 'peek'){
 
                 const newPerformer = await this.loadPerformer(data.performerId);
 
@@ -153,12 +163,14 @@ export default class Sidebar extends Vue {
             performer.performer_services[data.serviceName] = data.serviceStatus;
         });
 
-        this.statusEventId = notificationSocket.subscribe('status', async (data: SocketStatusEventArgs) => {
+        this.statusEventId = notificationSocket.subscribe('status', statusSocketCb.bind(this));
+
+        async function statusSocketCb(data: SocketStatusEventArgs){
             if(this.category === 'voyeur'){
                 return;
             }
 
-            const performer = this.performers.find(p => p.id === data.performerId);
+            const performer = this.performers.find((p: Performer) => p.id === data.performerId);
 
             //Check if the performer is in a session and doesn't exist in the list yet
             const didPerformerJoinSession = !performer && isInSession(data.status as PerformerStatus);
@@ -168,7 +180,7 @@ export default class Sidebar extends Vue {
 
             //If the performer is offline or or left the session, remove her from the list
             if(data.status === PerformerStatus.Offline || (didPerformerLeaveSession && this.category === 'peek')){
-                this.performers = this.performers.filter(p => p.id !== data.performerId);
+                this.performers = this.performers.filter((p: Performer) => p.id !== data.performerId);
                 return;
             }
 
@@ -181,7 +193,7 @@ export default class Sidebar extends Vue {
                 }
 
                 //Extra check because this can be triggered twice if the performer quickly goes online and offline
-                if(!this.performers.find(p => p.id === data.performerId)){
+                if(!this.performers.find((p: Performer) => p.id === data.performerId)){
                     this.performers.push(newPerformer);
                 }
 
@@ -193,7 +205,7 @@ export default class Sidebar extends Vue {
             }
 
             performer.performerStatus = data.status as PerformerStatus;
-        });
+        }
     }
 
     @Watch('$route')

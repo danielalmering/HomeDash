@@ -1,6 +1,6 @@
-<div class="tabs">
+<div class="tabs" v-if="info">
     <ul class="tabs__services">
-        <li v-for="(icon, service) in tabs" :class="{ active: selectedTab === service, enabled: tabEnabled(service, performer, info.country) }" v-on:click="selectTab(service)">
+        <li v-for="(icon, service) in tabs" :class="{ active: selectedTab === service, enabled: tabEnabled(service, performer, user) }" v-on:click="selectTab(service)">
             <i class="fa" :class="`fa-${icon}`"></i>
             <span>{{ $t(`tabs.service-${service === 'cam' ? camLabel : service}`) }}</span>
         </li>

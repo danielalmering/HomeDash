@@ -1,7 +1,12 @@
 import { Performer, PerformerStatus } from "./models/Performer";
+import { User } from "./models/User";
 
-export function tabEnabled(service: string, forPerformer: Performer, country: string):boolean {
+export function tabEnabled(service: string, forPerformer: Performer, user: User):boolean {
     if (!forPerformer){
+        return false;
+    }
+
+    if(!user){
         return false;
     }
 
@@ -17,7 +22,7 @@ export function tabEnabled(service: string, forPerformer: Performer, country: st
     }
 
     // SMS tab disabled germany
-    if(country === 'de' && service === 'sms'){
+    if(user.country === 'de' && service === 'sms'){
         return false;
     }
 

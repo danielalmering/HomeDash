@@ -57,6 +57,10 @@ export default class Profile extends Vue {
         return this.$store.getters.isLoggedIn;
     }
 
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
     get activeState(): string {
         return this.$store.state.session.activeState;
     }
@@ -215,8 +219,6 @@ export default class Profile extends Vue {
         //     }
         // }
 
-        const self = this;
-
         const defaults: RequestPayload = {
             type: 'startRequest',
             performer: this.performer,
@@ -226,7 +228,17 @@ export default class Profile extends Vue {
 
         const toSend = {...defaults, ...payload};
 
-        await this.$store.dispatch<RequestPayload>( toSend );
+        if(!notificationSocket.isConnected()){
+            notificationSocket.connect();
+
+            const event = notificationSocket.subscribe('authenticated', () => {
+                this.$store.dispatch<RequestPayload>( toSend );
+
+                notificationSocket.unsubscribe(event);
+            });
+        } else {
+            this.$store.dispatch<RequestPayload>( toSend );
+        }
     }
 
 
