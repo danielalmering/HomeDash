@@ -65,7 +65,7 @@
         }
     },
     "sidebar": {
-        "age": "jaar",
+        "age": "{age} jaar",
         "view": "Bekijken",
         "recommended": "Aanbevolen",
         "teasers": "Teasers",
