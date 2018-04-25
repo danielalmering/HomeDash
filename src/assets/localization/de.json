@@ -14,7 +14,7 @@
             "seeactionpage": "Unsere Aktions-Seite",
             "extra": "Extra",
             "credits": "Credits",
-            "purchase": "beim Kauf von"
+            "purchase": "mit Kauf von"
         }
     },
     "nav": {
@@ -65,7 +65,7 @@
         }
     },
     "sidebar": {
-        "age": "Alter",
+        "age": "Alter {age}",
         "view": "Ansehen",
         "recommended": "Empfohlen",
         "teasers": "Teasers",
@@ -97,7 +97,7 @@
         "hide": "Weniger",
         "collapsphotos": "Fotos ansehen",
         "collapsedphotos": "Fotos verbergen",
-        "metaTitle": "Live Webcam, chatten und Videochat mit {nickname} , Echte Frauen - gigacams.com",
+        "metaTitle": "Live Webcam, chatten und Videochat mit {nickname} , Echte Frauen - zuhause.com",
         "metaDescription": "Live Webcam, telefonieren und chatten mit {nickname} , hier findest du echte Frauen.",
         "breastsizes": {
             "xsmall": "Extra klein",
@@ -382,13 +382,13 @@
     },
     "footer": {
         "contact": "Kontakt",
-        "metaTitleContact": "Kontakt - Gigacams.com",
+        "metaTitleContact": "Kontakt - Zuhause.com",
         "privacypolicy": "Datenschutzbestimmungen",
-        "metaTitlePrivacy": "atenschutzbestimmungen - Gigacams.com",
+        "metaTitlePrivacy": "atenschutzbestimmungen - Zuhause.com",
         "terms": "Allgemeine Geschäftsbedingungen",
-        "metaTitleTerms": "Allgemeine Geschäftsbedingungen - Gigacams.com",
+        "metaTitleTerms": "Allgemeine Geschäftsbedingungen - Zuhause.com",
         "promos": "Aktionen",
-        "metaTitlePromos": "Aktionen - Gigacams.com",
+        "metaTitlePromos": "Aktionen - Zuhause.com",
         "webcam": "Geld als Camgirl verdienen?",
         "sexstories": "Sex Stories",
         "sexstoriesurl": "#",
