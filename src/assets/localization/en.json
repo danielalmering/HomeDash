@@ -65,7 +65,7 @@
         }
     },
     "sidebar": {
-        "age": "year",
+        "age": "{age} years",
         "view": "View",
         "recommended": "Recommended",
         "teasers": "Teasers",

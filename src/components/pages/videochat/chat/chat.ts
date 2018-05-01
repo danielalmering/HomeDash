@@ -128,11 +128,11 @@ export default class Chat extends Vue {
     sendMessage(){
         const santizedChatMessage = this.encodeHTML(this.chatMessage);
 
-        notificationSocket.sendCustomEvent('msg', {
+        setTimeout(() => notificationSocket.sendCustomEvent('msg', {
             message: santizedChatMessage,
             receiverId: this.$store.state.session.activePerformer.id,
             receiverType: 'ROLE_PERFORMER'
-        });
+        }), 200);
 
         this.chatMessage = '';
     }

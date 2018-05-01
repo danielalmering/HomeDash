@@ -55,6 +55,10 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
     return waitAuthenticated(true, next);
 }
 
+export function userLoadedInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
+    return waitAuthenticated(false, next);
+}
+
 export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     if(to.query.safe !== undefined){
         store.commit('activateSafeMode');
