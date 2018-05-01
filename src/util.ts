@@ -16,7 +16,7 @@ export function getAvatarImage(performer: Performer, size: string){
     return require('./assets/images/placeholder.png');
 }
 
-export function getSliderImage(performer: Performer, photoname: string, size: string){
+export function getSliderImages(performer: Performer, photoname: string, size: string){
     return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
 }
 
@@ -48,6 +48,12 @@ export function getPerformerStatus(performer: Performer){
     }
 
     return 'offline';
+}
+
+export function sleep(delay: number):Promise<null>{
+    return new Promise( (resolve, reject)=>{
+        setTimeout(resolve, delay);
+    })
 }
 
 export function getPerformerLabel(performer: Performer){

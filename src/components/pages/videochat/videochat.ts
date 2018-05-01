@@ -416,12 +416,12 @@ export default class VideoChat extends Vue {
         
         this.$store.commit('toggleSwitchModal', { state: false });
 
-        setTimeout(() => this.$router.push({
+        this.$router.push({
             name: 'Peek',
             params: {
                 id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
             }
-        }), 1000);
+        });
     }
 
     cancelSwitch(){

@@ -7,8 +7,8 @@ import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio  } from '../.
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
-import PhotoSlider from './photo-slider.vue';
-import FullSlider from './photo-slider-fullscreen.vue';
+import Slider from './slider/slider';
+import FullSlider from './slider/slider-fullscreen.vue';
 import Tabs from './tabs/tabs';
 import config from '../../../config';
 
@@ -18,7 +18,6 @@ import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
 import './profile.scss';
-import './photo-slider.scss';
 import WithRender from './profile.tpl.html';
 import { tabEnabled } from '../../../performer-util';
 
@@ -27,8 +26,8 @@ const swfobject = require('swfobject');
 @WithRender
 @Component({
     components: {
-        photoSlider: PhotoSlider,
-        photoSliderFull: FullSlider,
+        slider: Slider,
+        sliderFull: FullSlider,
         tabs: Tabs,
         confirmation: Confirmation
     },
@@ -40,7 +39,8 @@ const swfobject = require('swfobject');
 })
 export default class Profile extends Vue {
     performer: Performer | null =  null;
-    perfphotos : Avatar[] = [];
+    //perfphotos : Avatar[] = [];
+    perfmedia : Avatar[] = [];
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
@@ -302,11 +302,16 @@ export default class Profile extends Vue {
         const data = await performerResults.json();
 
         this.performer = data.performerAccount as Performer;
-        this.perfphotos = data.photos.approved.photos;
+        this.perfmedia = data.photos.approved.photos;
 
         if(this.$store.state.safeMode){
-            this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
+            this.perfmedia = this.perfmedia.filter((photo: Avatar) => photo.safe_version);
         }
+
+        // // Add videos
+        // if(data.medias.approved.medias){
+        //     this.perfmedia.splice(3, 0, data.medias.approved.medias[0]);
+        // }
 
         this.setSeoParameters();
     }

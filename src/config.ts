@@ -8,6 +8,7 @@ export interface ProjectConfig {
     StorageKey: string;
     Country: string;
     H5Server: string;
+    VodServer: string;
     H5FlashSwf: string;
 
     locale: LocaleConfig;

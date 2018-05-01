@@ -123,6 +123,7 @@ const routes = [{
                 path: 'privacy-policy/',
                 name: 'Policy',
                 component: Policy,
+                beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitlePrivacy'
                 }
@@ -131,6 +132,7 @@ const routes = [{
                 path: 'terms/',
                 name: 'Terms',
                 component: Terms,
+                beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitleTerms'
                 }
