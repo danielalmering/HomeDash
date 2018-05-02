@@ -7,8 +7,8 @@ import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio  } from '../.
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
-import PhotoSlider from './photo-slider.vue';
-import FullSlider from './photo-slider-fullscreen.vue';
+import Slider from './slider/slider';
+import FullSlider from './slider/slider-fullscreen.vue';
 import Tabs from './tabs/tabs';
 import config from '../../../config';
 
@@ -18,7 +18,6 @@ import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 
 import './profile.scss';
-import './photo-slider.scss';
 import WithRender from './profile.tpl.html';
 import { tabEnabled } from '../../../performer-util';
 
@@ -27,8 +26,8 @@ const swfobject = require('swfobject');
 @WithRender
 @Component({
     components: {
-        photoSlider: PhotoSlider,
-        photoSliderFull: FullSlider,
+        slider: Slider,
+        sliderFull: FullSlider,
         tabs: Tabs,
         confirmation: Confirmation
     },
@@ -40,7 +39,7 @@ const swfobject = require('swfobject');
 })
 export default class Profile extends Vue {
     performer: Performer | null =  null;
-    perfphotos : Avatar[] = [];
+    perfmedia : Avatar[] = [];
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
@@ -82,7 +81,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        return this.performer.performer_services['phone']
+        return this.performer.performer_services['phone'];
     }
 
     openModal = openModal;
@@ -249,13 +248,13 @@ export default class Profile extends Vue {
     }
 
     async checkFlash():Promise<boolean>{
-        return new Promise<boolean>( (resolve, reject)=>{
-            let timeout = window.setTimeout( ()=>{
+        return new Promise<boolean>( (resolve, reject)=> {
+            let timeout = window.setTimeout( ()=> {
                 timeout = Number.NaN;
                 resolve(false);
             }, 1000);
 
-            window.flashCheckCallback = ()=>{
+            window.flashCheckCallback = ()=> {
                 if (isNaN(timeout)){
                     return;
                 }
@@ -266,7 +265,7 @@ export default class Profile extends Vue {
             swfobject.embedSWF(
                 '/static/checkflash.swf', 'profile__flash-check', '100%', '100%', '10.2.0', true, {}, {wmode:'transparent'}
             );
-        })
+        });
     }
 
     cancel(){
@@ -302,11 +301,16 @@ export default class Profile extends Vue {
         const data = await performerResults.json();
 
         this.performer = data.performerAccount as Performer;
-        this.perfphotos = data.photos.approved.photos;
+        this.perfmedia = data.photos.approved.photos;
 
         if(this.$store.state.safeMode){
-            this.perfphotos = this.perfphotos.filter((photo: Avatar) => photo.safe_version);
+            this.perfmedia = this.perfmedia.filter((photo: Avatar) => photo.safe_version);
         }
+
+        // // Add videos
+        // if(data.medias.approved.medias){
+        //     this.perfmedia.splice(3, 0, data.medias.approved.medias[0]);
+        // }
 
         this.setSeoParameters();
     }
@@ -322,7 +326,7 @@ export default class Profile extends Vue {
     }
 
     eyeColor(color:string):string{
-        if(color === 'red&violet'){ color = 'redviolet' }
+        if (color === 'red&violet'){ color = 'redviolet'; }
         const knownColors = ['brown','hazel','blue','green','silver','amber','grey','redviolet'];
         if (knownColors.indexOf(color) == -1){
             return color;

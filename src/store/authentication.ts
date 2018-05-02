@@ -124,9 +124,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             });
 
             let sessionData: AnonymousUser | undefined = undefined;
-            
-            let referer = router.currentRoute.query.utm_source ? `&referer=${router.currentRoute.query.utm_source}` : '';
-
+            const referer = router.currentRoute.query.utm_source ? `&referer=${router.currentRoute.query.utm_source}` : '';
             if(checkSessionResult.status === 403){
 
                 const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}${referer}`, {

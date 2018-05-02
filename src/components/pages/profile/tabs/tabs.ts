@@ -126,16 +126,16 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
-        var usr = {...this.user, displayName:value };
-        this.$store.commit("setUser", {...this.user, displayName:value });
+        const usr = {...this.user, displayName:value };
+        this.$store.commit('setUser', {...this.user, displayName:value });
     }
 
     get advertNumber():string{
         if (!this.performer){
-            return "0000";
+            return '0000';
         }
         if (!this.performer.advert_numbers.length){
-            return "0000";
+            return '0000';
         }
 
         return this.performer.advert_numbers[0].advertNumber.toString();

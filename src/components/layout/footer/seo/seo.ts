@@ -31,7 +31,7 @@ export default class Seo extends Vue {
         return `${config.ImageUrl}categories/${location}`;
     }
 
-    get hasTabs():boolean{
+    get hasTabs(): boolean{
         if (!this.seoTabs){
             return false;
         }
@@ -40,7 +40,7 @@ export default class Seo extends Vue {
             return false;
         }
 
-        return this.seoTabs[1].description != "" && this.seoTabs[1].title != "";
+        return this.seoTabs[1].description != '' && this.seoTabs[1].title != '';
     }
 
     get isVisible(){

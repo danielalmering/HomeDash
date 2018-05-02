@@ -120,8 +120,8 @@ export function hotjarInterceptor(to: Route, previous: Route, next: (to?: string
 
 export function scrollInterceptor(to: Route, from: Route){
 
-    let supportPageOffset = window.pageXOffset !== undefined;
-    let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+    const supportPageOffset = window.pageXOffset !== undefined;
+    const isCSS1Compat = ((document.compatMode || '') === 'CSS1Compat');
     const scrollTop = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
 
     if(from.name === 'Performers' && to.name === 'Profile'){
@@ -132,13 +132,13 @@ export function scrollInterceptor(to: Route, from: Route){
         setTimeout(function() {
             window.scrollTo(0, store.state.pagePosition);
             store.commit('setPagePosition', 0);
-        },500)
+        }, 500);
 
         return;
     }
 
     setTimeout(function() {
         window.scrollTo(0, 0);
-    },500)
+    }, 500);
 
 }

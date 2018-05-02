@@ -64,7 +64,7 @@ export class Rtmp extends Broadcast{
 
         let wowza = this.wowza;
         if (this.publishToken){
-            wowza = wowza.replace(/token=(.+)/i, `token=${this.publishToken}`)
+            wowza = wowza.replace(/token=(.+)/i, `token=${this.publishToken}`);
         }
 
         const flashvars = {

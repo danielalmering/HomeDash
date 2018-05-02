@@ -16,8 +16,8 @@ interface MessageForm {
 interface BarePerformer {
     id: number;
     username: string;
-    adv:string;
-    img:string;
+    adv: string;
+    img: string;
 }
 
 @WithRender
@@ -43,7 +43,7 @@ export default class Newmessage extends Vue {
         }
     }
 
-    selectPerformer(performer:BarePerformer){
+    selectPerformer(performer: BarePerformer){
         this.selectedPerformer = performer.id;
         this.performerSearchQuery = `${performer.username} (${performer.adv})`;
     }

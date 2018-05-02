@@ -7,7 +7,7 @@ import { Performer } from '../../models/Performer';
 import { UserRole } from '../../models/User';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
-import { tagHotjar } from '../../util';
+import { tagHotjar, sleep } from '../../util';
 import i18n from '../../localization';
 
 const actions = {
@@ -184,6 +184,8 @@ const actions = {
 
             await store.dispatch('end');
 
+            await sleep(1000);
+            
             await store.dispatch('startRequest', <RequestPayload>{
                 performer: performer,
                 sessionType: store.state.activeSessionType,

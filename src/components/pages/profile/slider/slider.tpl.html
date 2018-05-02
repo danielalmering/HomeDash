@@ -1,0 +1,6 @@
+<slider :items="photos">
+    <template slot-scope="props" ref="slider">
+        <img v-if="!props.item.wowza_sync" v-on:click="onClick(props.item.id)" :src="getSliderImages(performer, props.item.name, 'medium')" />
+        <nanocosmos v-if="props.item.wowza_sync" :videosrc="props.item.name"></nanocosmos>
+    </template>
+</slider>
