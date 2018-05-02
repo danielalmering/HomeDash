@@ -46,9 +46,9 @@ export interface SessionState {
     switchingPerformer?: Performer;
 
     fromVoyeur: boolean;
-    //ID of the timeout for the request
-    performerTimeout:any;
+    performerTimeout: any;
 }
+
 //don't work??
 // 'Cannot assign to 'performerTimeout' because it is not a variable.''
 //export var performerTimeout:number;

@@ -43,10 +43,10 @@ export default class Chat extends Vue {
     chatMessages: ChatMessage[] = [];
     newMessage: boolean = false;
     chatSmall: boolean = false;
-    
+
     chatSocketRef: number;
     fontSize: number = 12;
-    
+
     chatSocketTyping: number;
     isPerformerTyping: boolean = false;
     lastTypingMessage: number = 0;
@@ -56,7 +56,7 @@ export default class Chat extends Vue {
 
         this.chatSocketRef = notificationSocket.subscribe('msg', (content: ChatMessage) => {
             content.message = content.message.replace(/:\w+:/g, (w) => {
-                return `<i class="e1a-med e1a-${w.substring(1, w.length - 1)}"></i>`;
+                return `<i class='e1a-med e1a-${w.substring(1, w.length - 1)}'></i>`;
             });
 
             this.chatMessages.push(content);
@@ -72,11 +72,11 @@ export default class Chat extends Vue {
 
         this.chatSocketTyping = notificationSocket.subscribe('typing_received', (content: TypingReceivedMessage) => {
             this.isPerformerTyping = content.recentTyping || content.inBuffer;
-        
+
             if(typingTimeoutRef){
                 window.clearTimeout(typingTimeoutRef);
             }
-        
+
             typingTimeoutRef = window.setTimeout(() => this.isPerformerTyping = false, 3000);
         });
     }
@@ -85,11 +85,11 @@ export default class Chat extends Vue {
         const fonts = document.getElementsByClassName('videochat__chat-list') as any;
         if(fonts[0].classList.contains('medium')){
             fonts[0].classList.remove('medium');
-            fonts[0].classList.add("large");
+            fonts[0].classList.add('large');
         } else if(fonts[0].classList.contains('large')){
             fonts[0].classList.remove('large');
         } else {
-            fonts[0].classList.add("medium");
+            fonts[0].classList.add('medium');
         }
     }
 
@@ -116,10 +116,10 @@ export default class Chat extends Vue {
         if(selected){
             this.chatSmall = true;
             screen[0].style.top = 'auto';
-            screen[0].style.bottom = 125 + 'px';
+            screen[0].style.bottom = '125px';
         } else {
             this.chatSmall = false;
-            screen[0].style.top = 0 + 'px';
+            screen[0].style.top = '0px';
             screen[0].style.bottom = 'auto';
             this.chatSmall = false;
         }
@@ -147,7 +147,7 @@ export default class Chat extends Vue {
     }
 
     setTyping(){
-        var currentTime = (new Date()).getTime() / 1000;
+        const currentTime = (new Date()).getTime() / 1000;
 
         // protect against sending to many 'is typing' updates
         // @note the inBuffer boolean is not considered, so possibly the inBuffer status on

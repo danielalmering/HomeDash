@@ -125,7 +125,7 @@ export default class NanoCosmos extends Stream {
 
         let wowza = this.wowza;
         if (this.playToken){
-            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`)
+            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`);
         }
 
         const configH5LIVE = {

@@ -157,7 +157,7 @@ export default class VideoChat extends Vue {
     public userHasCam:boolean = false;
 
     private detectCam(){
-        var platform = Platform.parse(navigator.userAgent);
+        const platform = Platform.parse(navigator.userAgent);
         //apples always have cameras. can't count the # of cameras until I ask permission to use the cameras :-(
         if (isApple(platform)){
             this.userHasCam = true;
@@ -355,7 +355,7 @@ export default class VideoChat extends Vue {
                     this.broadcasting.mic = selected.id;
                 }
             } else {
-                var devices = new Devices();
+                const devices = new Devices();
                 devices.getCameras().then( cams => {
                     this.cameras=cams;
                     let selected = this.cameras.find(cam=>cam.selected);
