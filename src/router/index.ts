@@ -25,7 +25,6 @@ import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
 import { authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor, userLoadedInterceptor } from './interceptors';
-import { scrollToTop } from '../util';
 
 Vue.use(Router);
 
@@ -123,6 +122,7 @@ const routes = [{
                 path: 'privacy-policy/',
                 name: 'Policy',
                 component: Policy,
+                beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitlePrivacy'
                 }
@@ -131,6 +131,7 @@ const routes = [{
                 path: 'terms/',
                 name: 'Terms',
                 component: Terms,
+                beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitleTerms'
                 }

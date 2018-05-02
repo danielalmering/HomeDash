@@ -1,5 +1,5 @@
-import { Store } from "vuex";
-import { RootState } from "../index";
+import { Store } from 'vuex';
+import { RootState } from '../index';
 
 import Raven from 'raven-js';
 
@@ -24,6 +24,6 @@ const sentryPlugin = (store: Store<RootState>) => {
             data: data
         });
     });
-}
+};
 
 export default sentryPlugin;

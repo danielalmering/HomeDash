@@ -1,11 +1,11 @@
 //
-// Photo-slider
+// Slider
 // --------------------------------------------------
 
 // Imports
 
-@import "../../../styles/_mixins.scss";
-@import "../../../styles/_settings.scss";
+@import "../../../../styles/_mixins.scss";
+@import "../../../../styles/_settings.scss";
 
 // Styling
 
@@ -37,6 +37,11 @@ $slidersmall-height: 275px;
                 list-style: none;
                 cursor: pointer;
                 img { width: 100%; }
+                .nanocosmos { 
+                    width: 225px; 
+                    height: 275px; 
+                    div { z-index: 2 !important; }
+                }
             }
         }
 
@@ -61,6 +66,34 @@ $slidersmall-height: 275px;
 
         &-left {
             left: 0px;
+
+            &::before {
+                display: table;
+                text-align: center;
+                margin: 125px 0px 0px 0px;
+                height: 25px;
+                line-height: 100%;
+                width: 50px;
+                color: $pallete-2;
+                font: normal normal normal 25px/1 FontAwesome;
+                content: "\f053";
+                @include border-right-radius(3px); 
+            }
+        }
+
+        &-right {
+            &::before {
+                display: table;
+                text-align: center;
+                margin: 125px 0px 0px 0px;
+                height: 25px;
+                line-height: 100%;
+                width: 50px;
+                color: $pallete-2;
+                font: normal normal normal 25px/1 FontAwesome;
+                content: "\f054";
+                @include border-left-radius(3px); 
+            }
         }
 
     }
@@ -94,6 +127,12 @@ $slidersmall-height: 275px;
                     margin: 0 auto;
                     height: 100%;
                     // width: 100%;
+                }
+
+                .nanocosmos { 
+                    width: auto !important; 
+                    height: 100% !important; 
+                    div { z-index: 2 !important; }
                 }
 
                 &.current {

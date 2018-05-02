@@ -34,10 +34,10 @@ export class WebRTC extends Broadcast{
     }
 
     mounted(){
-        var wowzaParts = WRTCUtils.parseUrl(this.wowza);
+        const wowzaParts = WRTCUtils.parseUrl(this.wowza);
         WRTCUtils.validate(wowzaParts);
 
-        var options = {
+        const options = {
             wowza: wowzaParts.host + "/webrtc-session.json",
             applicationName: wowzaParts.application,
             token: this.publishToken ? this.publishToken : wowzaParts.parameters.token,

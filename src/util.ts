@@ -16,7 +16,7 @@ export function getAvatarImage(performer: Performer, size: string){
     return require('./assets/images/placeholder.png');
 }
 
-export function getSliderImage(performer: Performer, photoname: string, size: string){
+export function getSliderImages(performer: Performer, photoname: string, size: string){
     return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
 }
 
@@ -50,6 +50,12 @@ export function getPerformerStatus(performer: Performer){
     return 'offline';
 }
 
+export function sleep(delay: number):Promise<null>{
+    return new Promise( (resolve, reject)=>{
+        setTimeout(resolve, delay);
+    })
+}
+
 export function getPerformerLabel(performer: Performer){
     if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
         return 'teaser-label';
@@ -75,16 +81,6 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
-export function scrollToTop(scrollDuration: number, route: string) {
-    //const scrollStep = -window.scrollY / (scrollDuration / 15);
-    console.log('scroolltop', window);
-    console.log('router', route);
-
-    // const scrollInterval = setInterval(() => {
-    //     window.pageYOffset > 0 ? window.scrollTo(0, window.pageYOffset - 20) : clearInterval(scrollInterval)
-    // }, 16);
-}
-
 export function webrtcPossible(platform:Platform):boolean{
     const supported = [
         {
@@ -100,19 +96,19 @@ export function webrtcPossible(platform:Platform):boolean{
 }
 
 export function hasWebAudio():boolean{
-    return ("AudioContext" in window) || ("webkitAudioContext" in window);
+    return ('AudioContext' in window) || ('webkitAudioContext' in window);
 }
 
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
         {
             os:{
-                family:'iOS'
+                family: 'iOS'
             }
         },
         {
             os:{
-                family:'Android'
+                family: 'Android'
             }
         }
     ];
@@ -141,7 +137,7 @@ export function isApple(platform:Platform):boolean{
 // checks if 'pattern' is a subset of 'message'
 // eg match( {id:3, text:"bla"}, {text:"bla"} ) => true
 export function match(message:any, pattern:any):boolean{
-    for(var prop in pattern){
+    for(const prop in pattern){
         if (! (prop in message) ){
             return false;
         }
@@ -152,7 +148,7 @@ export function match(message:any, pattern:any):boolean{
                 return false;
             }
 
-        } else if (prop == "version"){
+        } else if (prop == 'version'){
             //the 'version' property in the message should be equal or bigger than the one in the pattern.
             if (smaller(message.version, pattern.version)){
                 return false;
@@ -167,8 +163,8 @@ export function match(message:any, pattern:any):boolean{
 //checks if version, formatted as <major>.<minor>.<evenmoreminor>... is smaller than 'than' formatted the same way.
 //eg smaller("47.0.2526.111", "47.0.2530.9") => true
 function smaller(version:string, than:string):boolean{
-    var versionList: number[] = toInts(version);
-    var thanList: number[] =  than.split(".").map(num=>parseInt(num));
+    const versionList: number[] = toInts(version);
+    const thanList: number[] =  than.split(".").map(num => parseInt(num));
 
     if (! (versionList.length && thanList.length) ){
         return false;
@@ -195,8 +191,8 @@ function smaller(version:string, than:string):boolean{
 }
 
 function toInts(version:string):number[]{
-    var result = version.split(".").map(num=>parseInt(num));
-    for(var num of result){
+    const result = version.split(".").map(num => parseInt(num));
+    for(const num of result){
         if ( isNaN(num) ) return [];
     }
     return result;

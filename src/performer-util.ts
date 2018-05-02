@@ -1,5 +1,5 @@
-import { Performer, PerformerStatus } from "./models/Performer";
-import { User } from "./models/User";
+import { Performer, PerformerStatus } from './models/Performer';
+import { User } from './models/User';
 
 export function tabEnabled(service: string, forPerformer: Performer, user: User):boolean {
     if (!forPerformer){
