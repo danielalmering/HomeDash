@@ -132,7 +132,7 @@ export default class Chat extends Vue {
             message: santizedChatMessage,
             receiverId: this.$store.state.session.activePerformer.id,
             receiverType: 'ROLE_PERFORMER'
-        }), 200);
+        }), 500);
 
         this.chatMessage = '';
     }
