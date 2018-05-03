@@ -9,7 +9,7 @@
                 <div class="top__numbers-number" v-for="(campaign, index) in activeCampaign" v-bind:class="{ 'large': countNumbers(activeCampaign) === 1 }" >
                     <span class="flag flag-nl" v-if="branding && index === 0"></span>
                     <span class="flag flag-be" v-if="branding && index === 1"></span>
-                    {{ campaign.number }} <i v-if="campaign.cpm != '0'">{{ campaign.cpm | euro }} {{ $t('top.numbers.cpm') }}</i>
+                    {{ campaign.number }} <i v-if="campaign.cpm != '0'">{{ campaign.cpm | euro }} <div v-html="$t('top.numbers.cpm-' + index)"></div></i>
                 </div>
             </div>
         </div>

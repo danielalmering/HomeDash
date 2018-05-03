@@ -61,6 +61,8 @@
                 color: $pallete-2;
                 @include rem(font-size, 11px);
                 letter-spacing: -0.3px;
+                div { display: inline-block; }
+                b { @include rem(font-size, 12px); letter-spacing: -1px; }
             }
 
             .flag {

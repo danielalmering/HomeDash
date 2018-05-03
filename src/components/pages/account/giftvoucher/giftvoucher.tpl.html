@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <h1><i class="fa fa-gift hidden-xs"></i><span v-t="'nav.info.giftvoucher'"></span></h1>
     <div class="account__view form">
-        <img alt="voucher" src="../../../../assets/images/giftvoucher.png">
+        <img alt="voucher" :src="voucher">
         <p v-html="$t('account.giftvoucherdesc')"></p>
         <form class="row" v-on:submit.prevent="activateVoucher">
             <div class="col-xs-12">

@@ -1,13 +1,14 @@
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import config from '../../../../config';
+import config, { voucher } from '../../../../config';
 import WithRender from './giftvoucher.tpl.html';
 
 @WithRender
 @Component
 export default class Giftvoucher extends Vue {
     voucherCode: string = '';
+    voucher = voucher;
 
     async activateVoucher(){
         const user = this.$store.state.authentication.user;
