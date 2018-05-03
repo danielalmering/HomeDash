@@ -31,6 +31,7 @@ config.locale = require(`./locale/locale.${config.Country}.json`) as LocaleConfi
 
 export const logo = require(`./assets/images/${config.Country}/logo.png`);
 export const logoDark = require(`./assets/images/${config.Country}/logo-dark.png`);
+export const voucher = require(`./assets/images/${config.Country}/voucher.png`);
 
 if(window.loadTagManager){
     window.loadTagManager(window, document, 'script', 'dataLayer', config.locale.GoogleTagCode);

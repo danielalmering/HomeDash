@@ -7,7 +7,7 @@
             <i class="flag flag-be" v-if="$parent.branding && index === 1"></i>
             {{ campaign.number }}
             <strong v-if="campaign.marketing === 1" v-t="'top.banner.happyhour'"></strong>
-            <span>{{ campaign.cpm | euro }} {{ $t('top.numbers.pm') }}</span>
+            <span>{{ campaign.cpm | euro }} <div v-html="$t('top.numbers.nr-' + index)"></div></span>
         </div>
 
         <form class="form" v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:'VIDEOCALL'})">

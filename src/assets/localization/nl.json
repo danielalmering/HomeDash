@@ -6,7 +6,12 @@
         "numbers": {
             "callnow": "BEL NU",
             "cpm": "pm",
-            "pm": "pm"
+            "cpm-0": "pm",
+            "cpm-1": "pm",
+            "pm": "pm",
+            "nr-0": "pm",
+            "nr-1": "pm"
+
         },
         "banner": {
             "happyhour": "HappyHour",

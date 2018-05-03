@@ -140,6 +140,14 @@
                     color: $pallete-2;
                     @include rem(font-size,9px);
                     @include rem(padding, 5px 6px 0px 6px);
+                    div {
+                        display: inline-block;
+
+                    }
+
+                    b {
+                        @include rem(font-size,11px);
+                    }
                 }
 
                 strong {

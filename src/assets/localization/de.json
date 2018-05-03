@@ -6,7 +6,11 @@
         "numbers": {
             "callnow": "Wähle jetzt",
             "cpm": "/min Festnetz",
-            "pm": "pro Minute aus dem dt. Festnetz. Preise aus dem Mobilfunknetz abweichend"
+            "cpm-0": "/min <b>Festnetz</b>",
+            "cpm-1": "/min <b>Mobilfunknetz</b>",
+            "pm": "pro Minute aus dem dt. Festnetz. Preise aus dem Mobilfunknetz abweichend",
+            "nr-0": "pro Minute aus dem <b>Festnetz</b>",
+            "nr-1": "pro Minute aus dem <b>Mobilfunknetz</b>"
         },
         "banner": {
             "happyhour": "HappyHour",
