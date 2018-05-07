@@ -2,7 +2,7 @@
     <div class="cookies">
         <div class="container-fluid">
             <div class="cookies__text">
-                <p v-t="'footer.cookies'"></p>
+                <p class="cookies__text-link" v-html="$t('footer.cookies')"></p>
                 <a v-on:click="acceptCookies" class="cookies__text-btn"></a>
             </div>
         </div>
@@ -26,7 +26,7 @@ export default class Cookies extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 // Imports
 
@@ -52,6 +52,10 @@ export default class Cookies extends Vue {
         text-align: left;
         @include rem(padding, 5px 30px 2px 0px);
         @include rem(font-size, 11px);
+
+        &-link { 
+            a { color: $pallete-2 !important; }
+        }
 
         &-btn {
             position: absolute;
