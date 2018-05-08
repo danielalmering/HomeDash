@@ -207,7 +207,7 @@ export function isOutOfSession(status: PerformerStatus){
 }
 
 export function tagHotjar(tag: string){
-    if(window.hj){
+    if(window.hj && config.locale.Hotjar){
         window.hj('tagRecording', [tag]);
     }
 }
