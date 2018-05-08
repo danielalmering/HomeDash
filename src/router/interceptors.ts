@@ -111,7 +111,7 @@ export function seoInterceptor(to: Route, previous: Route){
 }
 
 export function hotjarInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
-    if(window.hj){
+    if(window.hj && config.locale.Hotjar){
         window.hj('stateChange', to.fullPath);
     }
 

@@ -72,7 +72,8 @@ export default class Cookies extends Vue {
 
         let registrationAttempts = 0;
 
-        registerHotjarToSentry();
+        //  Hotjar
+        const HotjarAccepted = config.locale.Hotjar ? registerHotjarToSentry() : '';
 
         function registerHotjarToSentry(){
             const hj = window.hj as any;

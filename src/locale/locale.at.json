@@ -1,5 +1,6 @@
 {
     "DefaultLanguage": "de",
     "GoogleTagCode": "GTM-MPS978H",
-    "AgeCheck": true
+    "AgeCheck": true,
+    "Hotjar": true
 }
