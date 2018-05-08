@@ -6,7 +6,12 @@
         "numbers": {
             "callnow": "BEL NU",
             "cpm": "pm",
-            "pm": "pm"
+            "cpm-0": "pm",
+            "cpm-1": "pm",
+            "pm": "pm",
+            "nr-0": "pm",
+            "nr-1": "pm"
+
         },
         "banner": {
             "happyhour": "HappyHour",
@@ -395,7 +400,7 @@
         "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",
         "webcamurl": "http://www.club-sense.nl",
         "copyright": "Copyright 2018",
-        "cookies": "De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord",
+        "cookies": "<a href='../privacy-policy/'>De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord</a>",
         "agecheck": "Deze website bevat expliciet materiaal. Door gebruik te maken van deze website ga je hiermee akkoord",
         "olderthen": "Ouder dan 18jaar",
         "leavewebsite": "Verlaat de website",

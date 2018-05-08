@@ -6,7 +6,11 @@
         "numbers": {
             "callnow": "Wähle jetzt",
             "cpm": "/min Festnetz",
-            "pm": "pro Minute aus dem dt. Festnetz. Preise aus dem Mobilfunknetz abweichend"
+            "cpm-0": "/min <b>Festnetz</b>",
+            "cpm-1": "/min <b>Mobilfunknetz</b>",
+            "pm": "pro Minute aus dem dt. Festnetz. Preise aus dem Mobilfunknetz abweichend",
+            "nr-0": "pro Minute aus dem <b>Festnetz</b>. Preise aus dem Mobilfunknetz abweichend",
+            "nr-1": "pro Minute aus dem <b>Mobilfunknetz</b>. Preise aus dem Mobilfunknetz abweichend"
         },
         "banner": {
             "happyhour": "HappyHour",
@@ -394,7 +398,7 @@
         "sexstoriesurl": "#",
         "webcamurl": "http://www.club-sense.com",
         "copyright": "Copyright 2018",
-        "cookies": "Durch die Verwendung von Cookies können wir die Webseite nutzerfreundlich gestalten und deine Einstellungen speichern. \nMit der Nutzung dieser Webseite erklärst du dich damit einverstanden, dass wir Cookies verwenden",
+        "cookies": "<a href='../privacy-policy/'>Durch die Verwendung von Cookies können wir die Webseite nutzerfreundlich gestalten und deine Einstellungen speichern. \nMit der Nutzung dieser Webseite erklärst du dich damit einverstanden, dass wir Cookies verwenden</a>",
         "agecheck": "Diese Webseite enthält explizite Inhalte. Mit der Nutzung der Webseite, akzeptiere ich die Geschäftsbedingungen.",
         "olderthen": "Ja, ich bin mindestens 18 Jahre alt",
         "leavewebsite": "Nein, Webseite verlassen",
