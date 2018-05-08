@@ -18,6 +18,7 @@ interface LocaleConfig {
     DefaultLanguage: string;
     GoogleTagCode: string;
     AgeCheck: boolean;
+    Hotjar: boolean;
 
     Logo?: any;
     LogoDark?: any;
