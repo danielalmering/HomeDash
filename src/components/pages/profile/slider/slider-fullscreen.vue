@@ -22,7 +22,7 @@
 <script lang="ts">
 import Vue, { ComponentOptions } from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Avatar } from '../../../../models/Performer';
+import { PerformerAvatar } from 'SenseJS/performer/performer.model';
 
 import { getSliderImages } from '../../../../util';
 import NanoCosmos from './slider-player';
@@ -46,7 +46,7 @@ export default class SliderFullscreen extends Vue {
         required: true,
         type: Array
     })
-    photos: Avatar[];
+    photos: PerformerAvatar[];
 
     @Prop({
         required: true,

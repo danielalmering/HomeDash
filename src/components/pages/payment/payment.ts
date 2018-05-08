@@ -2,6 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import config from '../../../config';
+import { getPaymentInfo, submitPayment } from 'SenseJS/consumer/payment';
 
 import './payment.scss';
 import WithRender from './payment.tpl.html';
@@ -63,12 +64,13 @@ export default class Payment extends Vue {
     }
 
     async getInfo(){
+        const { result, error } = await getPaymentInfo();
 
-        const infoResults = await fetch(`${config.BaseUrl}/client/client_accounts/updatebalanceinfo`, {
-            credentials: 'include'
-        });
+        if(error){
+            return;
+        }
 
-        const data = await infoResults.json();
+        const data = result;
 
         this.packages = data.packages.slice().reverse();
         this.paymentMethods = data.payment_methods;
@@ -222,33 +224,29 @@ export default class Payment extends Vue {
             return;
         }
 
-        const paymentResult = await fetch(`${config.BaseUrl}/client/buy/${this.selectedPayment}/${this.credits}?promo=${this.promoCode}`, {
-            credentials: 'include'
-        });
+        const { result, error } = await submitPayment(this.selectedPayment, this.credits, this.promoCode);
 
-        const data = await paymentResult.json();
-
-        if(data.free !== undefined){
+        if(result.free !== undefined){
             this.$store.dispatch('openMessage', {
-                content: data.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
-                class: data.free ? 'success' : 'error'
+                content: result.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
+                class: result.free ? 'success' : 'error'
             });
 
             return;
         }
 
-        if(data.form){
+        if(result.form){
             const redirForm = document.createElement('form');
             redirForm.setAttribute('method', 'post');
             redirForm.setAttribute('name', 'redirform');
-            redirForm.setAttribute('action', data.redirectURL);
+            redirForm.setAttribute('action', result.redirectURL);
 
             var i, input;
-            for(i in data.form){
+            for(i in result.form){
                 input = document.createElement('input');
                 input.setAttribute('type', 'hidden');
                 input.setAttribute('name', i);
-                input.setAttribute('value', data.form[i]);
+                input.setAttribute('value', (<any>result.form)[i]);
                 redirForm.appendChild(input);
             }
 
@@ -258,6 +256,6 @@ export default class Payment extends Vue {
             return;
         }
 
-        window.location.href = data.redirectURL;
+        window.location.href = result.redirectURL;
     }
 }

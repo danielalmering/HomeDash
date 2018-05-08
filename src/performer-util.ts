@@ -1,4 +1,4 @@
-import { Performer, PerformerStatus } from './models/Performer';
+import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
 import { User } from './models/User';
 
 export function tabEnabled(service: string, forPerformer: Performer, user: User):boolean {
