@@ -3,24 +3,23 @@ import Vue from 'vue';
 
 import config from '../../../config';
 import WithRender from './promos.tpl.html';
+import { getPromos } from 'SenseJS/consumer/Category';
+import { Promo as PromoData } from 'SenseJS/core/models/category';
 
 @WithRender
 @Component
 export default class Promo extends Vue {
 
-    promos: any[] = [];
-    promoslist: any[] = [];
+    promos: PromoData[] = [];
 
     mounted(){
         this.loadPromos();
     }
 
     async loadPromos(){
-        const promosResult = await fetch(`${config.BaseUrl}/cms/account`, {
-            credentials: 'include'
-        });
+        const { result, error } = await getPromos();
 
-        if(!promosResult.ok){
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'promos.alerts.errorLoad',
                 class: 'error'
@@ -29,12 +28,7 @@ export default class Promo extends Vue {
             return;
         }
 
-        this.promos = await promosResult.json();
-
-        const positionId = 1;
-        this.promoslist = this.promos.filter((promo: any) => promo.position === positionId);
-        this.promos = this.promoslist;
-
+        //Position 1 means that it's actually a promo in the CMS
+        this.promos = result.filter(promo => promo.position === 1);
     }
-
 }

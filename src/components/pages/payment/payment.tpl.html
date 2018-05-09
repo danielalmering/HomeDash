@@ -99,7 +99,7 @@
                             <div class="payment__method-item" :class="{ 'special': paymentMethod.abbr === selectedPayment }" :id="paymentMethod.abbr">
                                 <i></i>
                                 <span></span>
-                                <div v-if="info.country === 'de' && paymentMethod.abbr === 'SOFORT'">
+                                <div v-if="user.country === 'de' && paymentMethod.abbr === 'SOFORT'">
                                     <p></p>
                                     <img src="../../../assets/images/tuv.png" />
                                 </div>
