@@ -10,7 +10,9 @@ export function socketInterceptor(to: Route, from: Route, next?: (to?: string | 
 
     if(store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
         // console.log('Should make a socket connection now!');
-        notificationSocket.connect();
+        notificationSocket.connect(); // activate socket
+
+        store.dispatch('intervalChecksession'); // activate checksession
     }
 
     if(next){
