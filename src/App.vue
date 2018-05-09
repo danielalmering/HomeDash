@@ -52,13 +52,13 @@ export default class Cookies extends Vue {
 
         if(!utmMedium || utmMedium.toLowerCase() !== 'advertising'){
             notificationSocket.connect();
+
+            this.$store.dispatch('intervalChecksession');
         }
 
         notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
         });
-
-        setInterval(() => this.$store.dispatch('getSession'), 60 * 1000); //Update user data every minute
 
         await this.$store.dispatch('setLanguage', config.locale.DefaultLanguage);
 
