@@ -25,7 +25,5 @@ export default class Favourites extends Performers {
 
         this.performers = result.performerAccounts;
         this.total = result.total;
-
-        console.log(this.performers);
     }
 }
