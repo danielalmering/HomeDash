@@ -283,7 +283,8 @@ export default class Sidebar extends Vue {
         this.$router.push({
             name: 'Profile',
             params: {
-                id: performer.advertId.toString()
+                id: performer.advertId.toString(),
+                category: category
             }
         });
     }

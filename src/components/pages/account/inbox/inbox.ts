@@ -21,7 +21,7 @@ export default class Inbox extends Vue {
 
     notifications: Notification[] = [];
     paymentDialogs: number[] = [];
-    total: any = 0;
+    total: number = 0;
     messageSocket: number;
 
     query = {

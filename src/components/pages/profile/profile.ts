@@ -42,7 +42,7 @@ const swfobject = require('swfobject');
 })
 export default class Profile extends Vue {
     performer: Performer | null =  null;
-    perfmedia: any;
+    perfmedia: PerformerAvatar[];
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
