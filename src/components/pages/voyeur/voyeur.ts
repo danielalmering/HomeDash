@@ -11,8 +11,9 @@ require('../../../../static/nanoplayer.3.min.js');
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
 import { RequestPayload } from '../../../store/session/';
-import { Performer } from '../../../models/Performer';
+import { Performer } from 'SenseJS/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
+import { clientSeen } from 'SenseJS/session/index';
 
 @WithRender
 @Component({
@@ -75,10 +76,12 @@ export default class Voyeur extends Vue {
 
     mounted(){
         this.intervalTimer = window.setInterval(async () => {
-            const result = await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
+            const { error } = await clientSeen({
+                app: 'VOYEUR'
+            });
 
-            if(!result.ok){
-                this.close();
+            if(error){
+                close();
             }
         }, 5000);
 
@@ -223,7 +226,7 @@ export default class Voyeur extends Vue {
         this.$router.push({
             name: 'Videochat',
             params: {
-                id: activePerformer.advert_numbers[0].advertNumber.toString()
+                id: activePerformer.advertId.toString()
             }
         });
     }

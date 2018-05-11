@@ -2,8 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer, Avatar, PerformerStatus } from '../../../models/Performer';
-import { openModal, getAvatarImage, getPerformerLabel, hasWebAudio  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -16,11 +15,15 @@ import notificationSocket from '../../../socket';
 import { SocketServiceEventArgs, SocketStatusEventArgs, SocketVoyeurEventArgs } from '../../../models/Socket';
 import Confirmation from '../../layout/Confirmations.vue';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
+import { tabEnabled } from '../../../performer-util';
+
+import { getByAdvert } from 'sensejs/performer';
 
 import './profile.scss';
 import WithRender from './profile.tpl.html';
-import { tabEnabled } from '../../../performer-util';
-
+import { Performer, PerformerStatus, PerformerAvatar } from 'SenseJS/performer/performer.model';
+import { createReservation } from 'SenseJS/session';
+import { removeFavourite, addFavourite } from 'SenseJS/performer/favourite';
 const swfobject = require('swfobject');
 
 @WithRender
@@ -39,7 +42,7 @@ const swfobject = require('swfobject');
 })
 export default class Profile extends Vue {
     performer: Performer | null =  null;
-    perfmedia : Avatar[] = [];
+    perfmedia: PerformerAvatar[];
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
@@ -84,12 +87,22 @@ export default class Profile extends Vue {
         return this.performer.performer_services['phone'];
     }
 
+    get performerPhotos(){
+        if(this.performer && this.performer.photos && this.performer.photos.approved){
+            return this.performer.photos.approved.photos.filter((photo: PerformerAvatar) => {
+                return !this.$store.state.safeMode || photo.safe_version;
+            });
+        }
+
+        return [];
+    }
+
     openModal = openModal;
     getAvatarImage = getAvatarImage;
     getPerformerLabel = getPerformerLabel;
 
-    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
-    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+    addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
@@ -166,7 +179,7 @@ export default class Profile extends Vue {
             this.$router.push({
                 name: this.$store.state.session.activeSessionType === SessionType.Peek ? 'Peek' : 'Videochat',
                 params: {
-                    id: this.performer.advert_numbers[0].advertNumber.toString()
+                    id: this.performer.advertId.toString()
                 }
             });
         }
@@ -196,7 +209,7 @@ export default class Profile extends Vue {
             this.$router.push({
                 name: 'Voyeur',
                 params: {
-                    id: this.performer.advert_numbers[0].advertNumber.toString()
+                    id: this.performer.advertId.toString()
                 }
             });
         } catch(ex){
@@ -220,7 +233,7 @@ export default class Profile extends Vue {
 
         const defaults: RequestPayload = {
             type: 'startRequest',
-            performer: this.performer,
+            performer: <any>this.performer,
             sessionType: SessionType.Video,
             payment: PaymentType.Ivr
         };
@@ -277,39 +290,30 @@ export default class Profile extends Vue {
             return;
         }
 
-        const reservationResult = await fetch(`${config.BaseUrl}/session/make_reservation/${this.performer.advert_numbers[0].advertNumber}/PHONE?_format=json`, {
-            credentials: 'include'
-        });
+        const { result, error } = await createReservation(this.performer.advertId);
 
-        if(!reservationResult.ok){
+        if(error){
             this.$store.dispatch('errorMessage', 'profile.errorReservationFailed');
             return;
         }
 
-        const data = await reservationResult.json();
-
-        if(data.DNIS){
-            window.open(`tel:${data.DNIS}`, '_self');
+        if(result.DNIS){
+            window.open(`tel:${result.DNIS}`, '_self');
         }
     }
 
     async loadPerformer(id: number){
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/performer_number/${id}?limit=10`, {
-            credentials: 'include'
-        });
+        const { result, error } = await getByAdvert(id);
 
-        const data = await performerResults.json();
+        this.performer = result;
 
-        this.performer = data.performerAccount as Performer;
-        this.perfmedia = data.photos.approved.photos;
-
-        if(this.$store.state.safeMode){
-            this.perfmedia = this.perfmedia.filter((photo: Avatar) => photo.safe_version);
-        }
+        if(!result.photos) { return; }
+        if(!result.photos.approved) { return; }
+        this.perfmedia = result.photos.approved.photos;
 
         // // Add videos
         // if(data.medias.approved.medias){
-        //     this.perfmedia.splice(3, 0, data.medias.approved.medias[0]);
+        //     this.perfmedia.splice(3, 0, result.medias.approved.medias[0]);
         // }
 
         this.setSeoParameters();
