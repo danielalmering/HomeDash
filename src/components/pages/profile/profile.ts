@@ -21,9 +21,9 @@ import { getByAdvert } from 'sensejs/performer';
 
 import './profile.scss';
 import WithRender from './profile.tpl.html';
-import { Performer, PerformerStatus, PerformerAvatar } from 'SenseJS/performer/performer.model';
-import { createReservation } from 'SenseJS/session';
-import { removeFavourite, addFavourite } from 'SenseJS/performer/favourite';
+import { Performer, PerformerStatus, PerformerAvatar } from 'sensejs/performer/performer.model';
+import { createReservation } from 'sensejs/session';
+import { removeFavourite, addFavourite } from 'sensejs/performer/favourite';
 const swfobject = require('swfobject');
 
 @WithRender

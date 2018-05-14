@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { VoyeurState, PerformerTile } from './index';
-import { PerformerStatus, Performer } from 'SenseJS/performer/performer.model';
+import { PerformerStatus, Performer } from 'sensejs/performer/performer.model';
 
 
 

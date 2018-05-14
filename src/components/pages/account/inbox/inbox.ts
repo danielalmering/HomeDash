@@ -8,8 +8,8 @@ import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './inbox.tpl.html';
 import { tagHotjar } from '../../../../util';
-import { Notification } from 'SenseJS/core/models/notification';
-import { getNotifications, removeNotifications, payNotification } from 'SenseJS/consumer/notification';
+import { Notification } from 'sensejs/core/models/notification';
+import { getNotifications, removeNotifications, payNotification } from 'sensejs/consumer/notification';
 
 @WithRender
 @Component({

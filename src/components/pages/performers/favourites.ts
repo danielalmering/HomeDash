@@ -4,7 +4,7 @@ import Vue from 'vue';
 
 import Pagination from 'sensejs/vue/components/pagination';
 import Performers from './performers';
-import { listFavourites } from 'SenseJS/performer/favourite';
+import { listFavourites } from 'sensejs/performer/favourite';
 import config from '../../../config';
 
 import './performers.scss';

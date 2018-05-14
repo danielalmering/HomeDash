@@ -2,7 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import config from '../../../config';
-import { getPaymentInfo, submitPayment } from 'SenseJS/consumer/payment';
+import { getPaymentInfo, submitPayment } from 'sensejs/consumer/payment';
 
 import './payment.scss';
 import WithRender from './payment.tpl.html';

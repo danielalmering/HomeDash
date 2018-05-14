@@ -1,6 +1,6 @@
 import store from './store';
 import config from './config';
-import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { isPeekable, isBusy } from 'sensejs/util/performer';
 
 export function getAvatarImage(performer: Performer, size: string){

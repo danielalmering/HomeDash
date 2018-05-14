@@ -3,8 +3,8 @@ import Vue from 'vue';
 
 import config from '../../../config';
 import WithRender from './promos.tpl.html';
-import { getPromos } from 'SenseJS/consumer/Category';
-import { Promo as PromoData } from 'SenseJS/core/models/category';
+import { getPromos } from 'sensejs/consumer/Category';
+import { Promo as PromoData } from 'sensejs/core/models/category';
 
 @WithRender
 @Component

@@ -1,4 +1,4 @@
-import { setConfig } from "SenseJS/core/config";
+import { setConfig } from "sensejs/core/config";
 
 export interface ProjectConfig {
     BaseUrl: string;

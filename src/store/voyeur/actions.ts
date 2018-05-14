@@ -3,7 +3,7 @@ import { initiateVoyeur, switchVoyeur } from 'sensejs/session/voyeur';
 
 import store from '../';
 import config from '../../config';
-import { initiate, end, SessionType } from 'SenseJS/session';
+import { initiate, end, SessionType } from 'sensejs/session';
 import { get, listBusy } from 'sensejs/performer';
 
 //Switcheroo interval callback
