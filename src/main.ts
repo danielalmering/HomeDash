@@ -11,9 +11,6 @@ import App from './App.vue';
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 
-import { euroFilter } from 'sensejs/vue/filters/euro';
-import { basicDateTime } from 'sensejs/vue/filters/date';
-
 //requiring the shim adds it to the build
 require('webrtc-adapter');
 require('./directives/clickOutside');
@@ -31,6 +28,9 @@ const app = new Vue({
     template: '<App/>',
     components: { App }
 });
+
+import { euroFilter } from './filters/euro';
+import { basicDateTime } from './filters/date';
 
 Vue.filter('euro', euroFilter);
 Vue.filter('date', basicDateTime);
