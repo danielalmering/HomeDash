@@ -5,15 +5,20 @@
     "top": {
         "numbers": {
             "callnow": "Wähle jetzt",
-            "cpm": "PM.",
-            "pm": "pro Min."
+            "cpm": "/min Festnetz",
+            "cpm-0": "/min <b>Festnetz</b>",
+            "cpm-1": "/min <b>Mobilfunknetz</b>",
+            "pm": "pro Minute aus dem dt. Festnetz. Preise aus dem Mobilfunknetz abweichend",
+            "nr-0": "pro Minute aus dem <b>Festnetz</b>. Preise aus dem Mobilfunknetz abweichend",
+            "nr-1": "pro Minute aus dem <b>Mobilfunknetz</b>. Preise aus dem Mobilfunknetz abweichend"
         },
         "banner": {
             "happyhour": "HappyHour",
+            "happyhour_cpm": "/min",
             "seeactionpage": "Unsere Aktions-Seite",
             "extra": "Extra",
             "credits": "Credits",
-            "purchase": "beim Kauf von"
+            "purchase": "mit Kauf von"
         }
     },
     "nav": {
@@ -64,7 +69,7 @@
         }
     },
     "sidebar": {
-        "age": "Alter",
+        "age": "Alter {age}",
         "view": "Ansehen",
         "recommended": "Empfohlen",
         "teasers": "Teasers",
@@ -96,7 +101,7 @@
         "hide": "Weniger",
         "collapsphotos": "Fotos ansehen",
         "collapsedphotos": "Fotos verbergen",
-        "metaTitle": "Live Webcam, chatten und Videochat mit {nickname} , Echte Frauen - gigacams.com",
+        "metaTitle": "Live Webcam, chatten und Videochat mit {nickname} , Echte Frauen - zuhause.com",
         "metaDescription": "Live Webcam, telefonieren und chatten mit {nickname} , hier findest du echte Frauen.",
         "breastsizes": {
             "xsmall": "Extra klein",
@@ -106,14 +111,14 @@
             "xlarge": "Extra groß"
         },
         "eyecolors":{
-            "brown": "Brown",
-            "hazel": "Hazel",
-            "blue": "Blue",
-            "green": "Green",
-            "silver": "Silver",
-            "amber": "Amber",
-            "grey": "Grey",
-            "redviolet": "Red & violet"
+            "brown": "Braun",
+            "hazel": "Hasel",
+            "blue": "Blau",
+            "green": "Grün",
+            "silver": "Silber",
+            "amber": "Bernstein",
+            "grey": "Grau",
+            "redviolet": "Rot & violett"
         },
         "flash": {
             "no": "Flash ist deaktiviert.",
@@ -156,11 +161,12 @@
         "mailloggedin": "Um E-mails zu senden, benötigst du einen Account. Du hast noch keinen Account?",
         "smsdesc": "Sende Privatnummer",
         "smsdesc1": "gefolgt von Leerschritt<br />und dann deine Nachricht an",
-        "smsterms": "Dieser Dienst ist für alle SMS fähigen Geräte zugänglich. Es wird KEIN Abo abgeschlossen. 1:1 Chatdienst, auf eine gesendete SMS folgt maximal 1 empfangene SMS (1,50€/sms). Mindestalter für die Nutzung ist 18 Jahre. Mit der Teilnahme an diesem Service akzeptierst du automatisch die daran gebundenen Allgemeinen Geschäftsbedingungen: AGB’s ansehen. Kein Widerruf oder Rücktrittsrecht. Nutzerdaten werden nicht mit Dritten geteilt. Der SMS Service unterliegt den Richtlinien und dem  Verhaltenskodex  für SMS Dienste. Dieser Service wird von Sensemakers BV, Postbus 89, 1300 AB Almere, The Netherlands angeboten. KvK Nummer: 33128110 , VAT ID NL803697041.B.01. Support: info@gigicams.com , Tel: +31(0)36 - 5458595",
+        "smsterms": "Dieser Dienst ist für alle SMS fähigen Geräte zugänglich. Es wird KEIN Abo abgeschlossen. 1:1 Chatdienst, auf eine gesendete SMS folgt maximal 1 empfangene SMS (1,50€/sms). Mindestalter für die Nutzung ist 18 Jahre. Mit der Teilnahme an diesem Service akzeptierst du automatisch die daran gebundenen Allgemeinen Geschäftsbedingungen: AGB’s ansehen. Kein Widerruf oder Rücktrittsrecht. Nutzerdaten werden nicht mit Dritten geteilt. Der SMS Service unterliegt den Richtlinien und dem  Verhaltenskodex  für SMS Dienste. Dieser Service wird von Sensemakers BV, Postbus 89, 1300 AB Almere, The Netherlands angeboten. KvK Nummer: 33128110 , VAT ID NL803697041.B.01. Support: info@zuhause.com , Tel: +31(0)36 - 5458595",
         "smscost": "pro empfangene Nachricht*",
         "registeraccount": "Registriere kostenlos ein Account und profitiere von zahlreichen Angeboten!",
         "noServices": "Kein(e) Service(s) verfügbar!",
-        "errorNoIvrCode": "Gib deinen Zugangscode ein"
+        "errorNoIvrCode": "Gib deinen Zugangscode ein",
+        "nosmsservice": "Kein SMS Service verfügbar!"
     },
     "pagination": {
         "pageOf": "Seite {page} bis {total}",
@@ -328,16 +334,22 @@
         "creditscap": "Credits",
         "price": "Preis",
         "paying": "Kaufen",
-        "paywith": "Zahlung mit {title}",
+        "paywith": "Zahlung mit",
         "subtotal": "Zwischensumme",
         "bonuscredits": "Bonus Credits",
         "totalcredits": "Total Credits",
         "newbalance": "Neues Credits Guthaben",
         "total": "Total",
         "bonusbanner": "Kaufe {credits} Credits und bekomme zusätzlich {percentage}% Gratis dazu",
-        "bonusdiscountdesc": "Das obige Angebot ist nur gültig beim Kauf mit iDeal & Mister Cash und nicht gültig beim Kauf mit Kreditkarte und Visa per Click and Buy. * ",
+        "bonusdiscountdesc": "",
         "discountcode": "Rabattcode?",
         "mostlybought": "Meistgekauft!",
+        "packages": {
+            "pack1": "Basic",
+            "pack2": "Medium",
+            "pack3": "High",
+            "pack4": "XXXL"
+        },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",
             "errorUsedPromo": "Promocode bereits benutzt!",
@@ -374,19 +386,19 @@
     },
     "footer": {
         "contact": "Kontakt",
-        "metaTitleContact": "Kontakt - Gigacams.com",
+        "metaTitleContact": "Kontakt - Zuhause.com",
         "privacypolicy": "Datenschutzbestimmungen",
-        "metaTitlePrivacy": "atenschutzbestimmungen - Gigacams.com",
+        "metaTitlePrivacy": "atenschutzbestimmungen - Zuhause.com",
         "terms": "Allgemeine Geschäftsbedingungen",
-        "metaTitleTerms": "Allgemeine Geschäftsbedingungen - Gigacams.com",
+        "metaTitleTerms": "Allgemeine Geschäftsbedingungen - Zuhause.com",
         "promos": "Aktionen",
-        "metaTitlePromos": "Aktionen - Gigacams.com",
+        "metaTitlePromos": "Aktionen - Zuhause.com",
         "webcam": "Geld als Camgirl verdienen?",
         "sexstories": "Sex Stories",
         "sexstoriesurl": "#",
         "webcamurl": "http://www.club-sense.com",
         "copyright": "Copyright 2018",
-        "cookies": "Durch die Verwendung von Cookies können wir die Webseite nutzerfreundlich gestalten und deine Einstellungen speichern. \nMit der Nutzung dieser Webseite erklärst du dich damit einverstanden, dass wir Cookies verwenden",
+        "cookies": "<a href='../privacy-policy/'>Durch die Verwendung von Cookies können wir die Webseite nutzerfreundlich gestalten und deine Einstellungen speichern. \nMit der Nutzung dieser Webseite erklärst du dich damit einverstanden, dass wir Cookies verwenden</a>",
         "agecheck": "Diese Webseite enthält explizite Inhalte. Mit der Nutzung der Webseite, akzeptiere ich die Geschäftsbedingungen.",
         "olderthen": "Ja, ich bin mindestens 18 Jahre alt",
         "leavewebsite": "Nein, Webseite verlassen",

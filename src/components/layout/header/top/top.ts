@@ -1,7 +1,8 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import config from '../../../../config';
+import config, { logo } from '../../../../config';
+import { getPaymentInfo } from 'SenseJS/consumer/payment';
 
 import { openRoute } from '../../../../util';
 
@@ -21,10 +22,7 @@ export default class Top extends Vue {
     fees: any[] = [];
 
     openRoute = openRoute;
-
-    get logo(){
-        return this.$store.getters.getLogoLight;
-    }
+    logo = logo;
 
     get info(){
         return this.$store.state.info;
@@ -38,17 +36,31 @@ export default class Top extends Vue {
         return this.$store.getters.getBranding;
     }
 
+    get authenticated(){
+        return this.$store.getters.isLoggedIn;
+    }
+
+    countNumbers(obj: any){
+        return Object.keys(obj).length;
+    }
+
     mounted(){
         this.getFees();
     }
 
     async getFees(){
-        const infoResults = await fetch(`${config.BaseUrl}/client/client_accounts/updatebalanceinfo`, {
-            credentials: 'include'
-        });
+        const { result, error } = await getPaymentInfo();
 
-        const data = await infoResults.json();
+        if(error){
+            return;
+        }
+
+        const data = result;
         this.fees = data.fees.slice().reverse();
+    }
+
+    goPayment(){
+        const goto = this.authenticated ? this.openRoute('Payment') : '';
     }
 
 }

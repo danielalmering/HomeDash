@@ -1,12 +1,12 @@
 <main class="index">
     <div class="container-fluid">
         <div class="performers-category visible-xs" v-if="query.category">{{ query.category }}</div>
-        <div class="performers-notfound" v-if="noperformers">{{ $t('performers.noperformersfound') }}</div>
+        <div class="performers-notfound" v-if="noPerformers">{{ $t('performers.noperformersfound') }}</div>
 
         <div class="performers">
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
                 <div class="performers__block">
-                    <router-link v-if="performer" :to="$localize({ name: 'Profile', params: { id: performer.advert_numbers[0].advertNumber }})">
+                    <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
                         <div class="label" v-if="performer" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
                     </router-link>
                     <div class="performers__info" v-if="performer">
@@ -22,14 +22,14 @@
                         </div>
                     </div>
                     <div class="performers__misc" v-if="performer">
-                        <span class="performers__misc-advert">{{ performer.advert_numbers[0].advertNumber }}</span>
+                        <span class="performers__misc-advert">{{ performer.advertId }}</span>
                         <span class="performers__misc-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                             <i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i>
                         </span>
                     </div>
                     <div class="performers__image">
                         <img v-if="!performer" src="../../../assets/images/loader.gif" />
-                        <router-link v-if="performer" :to="$localize({ name: 'Profile', params: { id: performer.advert_numbers[0].advertNumber }})">
+                        <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
                             <img :src="getAvatarImage(performer, 'medium')" />
                         </router-link>
                     </div>

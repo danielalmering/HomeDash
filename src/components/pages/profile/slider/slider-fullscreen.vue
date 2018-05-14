@@ -2,7 +2,8 @@
     <div class="slider__large" v-on:keyup.esc="close" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
         <ul class="slider__large-list">
             <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }" v-if="getSliderImage(performer, photo.name, '')">
-                <img :src="getSliderImage(performer, photo.name, '')" />
+                <img v-if="!photo.wowza_sync" :src="getSliderImages(performer, photo.name, '')" />
+                <nanocosmos v-if="photo.wowza_sync" :videosrc="photo.name"></nanocosmos>
             </li>
         </ul>
         <div class="slider__large-left" v-if="!isFirst" v-on:click="previous">
@@ -21,12 +22,19 @@
 <script lang="ts">
 import Vue, { ComponentOptions } from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Avatar } from '../../../models/Performer';
+import { PerformerAvatar } from 'SenseJS/performer/performer.model';
 
-import { getSliderImage }  from '../../../util';
+import { getSliderImages } from '../../../../util';
+import NanoCosmos from './slider-player';
 
-@Component
-export default class PhotoSliderFullscreen extends Vue {
+@Component({
+    components: {
+        nanocosmos: NanoCosmos
+    }
+})
+export default class SliderFullscreen extends Vue {
+
+    getSliderImages = getSliderImages;
 
     mounted(){
         this.currentSelected = this.photos.findIndex(p => p.id === this.displayPic);
@@ -38,7 +46,7 @@ export default class PhotoSliderFullscreen extends Vue {
         required: true,
         type: Array
     })
-    photos: Avatar[];
+    photos: PerformerAvatar[];
 
     @Prop({
         required: true,
@@ -60,7 +68,7 @@ export default class PhotoSliderFullscreen extends Vue {
 
     touchStart: number = 0;
 
-    getSliderImage = getSliderImage;
+    getSliderImage = getSliderImages;
 
     currentSelected:number = 1;
 

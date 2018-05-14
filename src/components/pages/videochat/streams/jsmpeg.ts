@@ -33,13 +33,13 @@ export default class JSMpeg extends Stream {
     }
 
     mounted(){
-        this.load();        
+        this.load();
         this.onResize();
-        window.addEventListener("resize", this.onResize);
+        window.addEventListener('resize', this.onResize);
     }
 
     destroyed(){
-        window.removeEventListener("resize", this.onResize);
+        window.removeEventListener('resize', this.onResize);
     }
 
     beforeDestroy(){
@@ -63,7 +63,7 @@ export default class JSMpeg extends Stream {
             pauseWhenHidden: false,
             disableGl: platform.name === 'Chrome',
             playingStateChange: (playing: boolean) => playing ? this.onStateChange('connected') : this.onStateChange('disconnected'),
-            dataLoaded: ()=>this.onStateChange('active')
+            dataLoaded: () => this.onStateChange('active')
         });
     }
 
@@ -78,7 +78,7 @@ export default class JSMpeg extends Stream {
     }
 
     private onResize(){
-        const canvas = <HTMLCanvasElement>this.$el.querySelector("canvas");
+        const canvas = <HTMLCanvasElement>this.$el.querySelector('canvas');
         const container = this.$el;
 
         const canvasRatio = canvas.width / canvas.height;
@@ -87,10 +87,10 @@ export default class JSMpeg extends Stream {
         //if the canvas is wider than the container, the canvas should fill out the width
         if (canvasRatio > containerRatio){
             canvas.style.width = '100%';
-            canvas.style.height = `${(containerRatio / canvasRatio)*100}%`;
+            canvas.style.height = `${(containerRatio / canvasRatio) * 100}%`;
         } else {
-            canvas.style.height = "100%";
-            canvas.style.width = `${(canvasRatio / containerRatio)*100}%`;
+            canvas.style.height = '100%';
+            canvas.style.width = `${(canvasRatio / containerRatio) * 100}%`;
         }
     }
 }

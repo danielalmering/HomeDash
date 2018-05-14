@@ -10,7 +10,7 @@
 
             <div class="thankyou__favo">
                 <div class="col-xs-12 col-sm-3 thankyou__favo-performer" v-for="performer in favorites">
-                    <router-link v-if="performer" :to="$localize({ name: 'Profile', params: { id: performer.advert_numbers[0].advertNumber }})">
+                    <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
                         <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }"></div>
                         <div class="name">{{ performer.nickname }}</div>
                     </router-link>

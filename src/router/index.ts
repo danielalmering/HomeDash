@@ -24,142 +24,142 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { countryInterceptor, authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, preloadUserInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor } from './interceptors';
-import { scrollToTop } from '../util';
+import { authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor, userLoadedInterceptor } from './interceptors';
+import { scrollToTop } from 'sensejs/util/dom';
 
 Vue.use(Router);
 
 const routes = [{
-    path: '/:country?/',
+    path: '',
     component: { template: '<router-view></router-view>' },
-    children: [
-        {
-            path: '',
-            component: Page,
-            children: [
-                {
-                    path: 'my-account',
-                    name: 'Account',
-                    component: Account,
-                    beforeEnter: authenticatedInterceptor,
-                    children: [
-                        {
-                            path: 'edit-data/',
-                            name: 'Editdata',
-                            component: Editdata
-                        },
-                        {
-                            path: 'account-history/',
-                            name: 'History',
-                            component: History
-                        },
-                        {
-                            path: 'notifications/',
-                            name: 'Inbox',
-                            component: Inbox
-                        },
-                        {
-                            path: 'notifications/:performerid/:messageid/',
-                            name: 'Readmessage',
-                            component: Readmessage
-                        },
-                        {
-                            path: 'new-message/:advertId?/',
-                            name: 'Newmessage',
-                            component: Newmessage
-                        },
-                        {
-                            path: 'gift-voucher/',
-                            name: 'Giftvoucher',
-                            component: Giftvoucher
-                        }
-                    ]
-                },
-                {
-                    path: 'login/',
-                    beforeEnter: modalInterceptor('login')
-                },
-                {
-                    path: 'register/',
-                    beforeEnter: modalInterceptor('register')
-                },
-                {
-                    path: 'reset-password/:userId/:token/',
-                    beforeEnter: modalInterceptor('reset'),
-                    component: Performers
-                },
-                {
-                    path: 'confirm/:userId/:token/',
-                    beforeEnter: confirmInterceptor
-                },
-                {
-                    path: 'promos/',
-                    name: 'Promos',
-                    component: Promos,
-                    meta: {
-                        title: 'footer.metaTitlePromos'
+    children: [{
+        path: '',
+        component: Page,
+        children: [
+            {
+                path: 'my-account',
+                name: 'Account',
+                component: Account,
+                beforeEnter: authenticatedInterceptor,
+                children: [
+                    {
+                        path: 'edit-data/',
+                        name: 'Editdata',
+                        component: Editdata
+                    },
+                    {
+                        path: 'account-history/',
+                        name: 'History',
+                        component: History
+                    },
+                    {
+                        path: 'notifications/',
+                        name: 'Inbox',
+                        component: Inbox
+                    },
+                    {
+                        path: 'notifications/:performerid/:messageid/',
+                        name: 'Readmessage',
+                        component: Readmessage
+                    },
+                    {
+                        path: 'new-message/:advertId?/',
+                        name: 'Newmessage',
+                        component: Newmessage
+                    },
+                    {
+                        path: 'gift-voucher/',
+                        name: 'Giftvoucher',
+                        component: Giftvoucher
                     }
-                },
-                {
-                    path: 'payment-success/',
-                    name: 'Thankyou',
-                    beforeEnter: authenticatedInterceptor,
-                    component: Thankyou
-                },
-                {
-                    path: 'payment/',
-                    name: 'Payment',
-                    beforeEnter: authenticatedInterceptor,
-                    component: Payment
-                },
-                {
-                    path: 'contact/',
-                    name: 'Contact',
-                    component: Contact,
-                    meta: {
-                        title: 'footer.metaTitleContact'
-                    }
-                },
-                {
-                    path: 'privacy-policy/',
-                    name: 'Policy',
-                    component: Policy,
-                    meta: {
-                        title: 'footer.metaTitlePrivacy'
-                    }
-                },
-                {
-                    path: 'terms/',
-                    name: 'Terms',
-                    component: Terms,
-                    meta: {
-                        title: 'footer.metaTitleTerms'
-                    }
-                },
-                {
-                    path: 'favourites/',
-                    name: 'Favourites',
-                    component: Favourites
-                },
-                {
-                    path: 'main1/:category?/',
-                    name: 'Adwords',
-                    beforeEnter: (to, from, next) => {
-                        next({
-                            name: 'Performers',
-                            query: { ...to.query, safe: 'true' },
-                            params: { category: to.params.category }
-                        });
-                    }
-                },
-                {
-                    path: ':category?/',
-                    name: 'Performers',
-                    component: Performers
+                ]
+            },
+            {
+                path: 'login/',
+                beforeEnter: modalInterceptor('login')
+            },
+            {
+                path: 'register/',
+                beforeEnter: modalInterceptor('register')
+            },
+            {
+                path: 'reset-password/:userId/:token/',
+                beforeEnter: modalInterceptor('reset'),
+                component: Performers
+            },
+            {
+                path: 'confirm/:userId/:token/',
+                beforeEnter: confirmInterceptor
+            },
+            {
+                path: 'promos/',
+                name: 'Promos',
+                component: Promos,
+                meta: {
+                    title: 'footer.metaTitlePromos'
                 }
-            ]
-        },
-        {
+            },
+            {
+                path: 'payment-success/',
+                name: 'Thankyou',
+                beforeEnter: authenticatedInterceptor,
+                component: Thankyou
+            },
+            {
+                path: 'payment/',
+                name: 'Payment',
+                beforeEnter: authenticatedInterceptor,
+                component: Payment
+            },
+            {
+                path: 'contact/',
+                name: 'Contact',
+                component: Contact,
+                meta: {
+                    title: 'footer.metaTitleContact'
+                }
+            },
+            {
+                path: 'privacy-policy/',
+                name: 'Policy',
+                component: Policy,
+                beforeEnter: userLoadedInterceptor,
+                meta: {
+                    title: 'footer.metaTitlePrivacy'
+                }
+            },
+            {
+                path: 'terms/',
+                name: 'Terms',
+                component: Terms,
+                beforeEnter: userLoadedInterceptor,
+                meta: {
+                    title: 'footer.metaTitleTerms'
+                }
+            },
+            {
+                path: 'favourites/',
+                name: 'Favourites',
+                component: Favourites,
+                beforeEnter: userLoadedInterceptor
+            },
+            {
+                path: 'main1/:category?/',
+                name: 'Adwords',
+                beforeEnter: (to, from, next) => {
+                    next({
+                        name: 'Performers',
+                        query: { ...to.query, safe: 'true' },
+                        params: { category: to.params.category }
+                    });
+                }
+            },
+            {
+                path: ':category?/',
+                name: 'Performers',
+                component: Performers
+            }
+        ]}, {
             path: 'performer/:id',
             name: 'Performer',
             component: Performer,
@@ -185,7 +185,7 @@ const routes = [{
                     component: Voyeur
                 }
             ]
-        },
+        }
     ]
 }] as RouteConfig[];
 
@@ -195,8 +195,6 @@ const router = new Router({
     routes: makeRoutesStrict(routes)
 });
 
-router.beforeEach(preloadUserInterceptor);
-router.beforeEach(countryInterceptor);
 router.beforeEach(safeInterceptor);
 router.beforeEach(hotjarInterceptor);
 router.beforeEach(socketInterceptor);

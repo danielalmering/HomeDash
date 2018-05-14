@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import config from '../config';
 import { ActionContext } from 'vuex';
 
 import localization, { LocalizationState } from './localization';
 import modals, { ModalsState } from './modals';
 import authentication, { AuthState } from './authentication';
-import performers, { PerformersState } from './performers';
 import session, { SessionState } from './session/';
 import alerts, { AlertsState } from './alerts';
 import voyeur, { VoyeurState } from './voyeur';
@@ -14,7 +14,6 @@ import sentryPlugin from './plugins/sentry';
 
 import { Info } from '../models/Info';
 
-import config from '../config';
 
 Vue.use(Vuex);
 
@@ -41,47 +40,32 @@ const rootStore = new Vuex.Store<RootState>({
     },
     plugins: [sentryPlugin],
     getters: {
-        getLogoLight: state => {
-            const thuis    = require('../assets/images/thuis.png');
-            const gigacams = require('../assets/images/gigacams.png');
-
-            if(!state.info){
-                return '';
-            }
-
-            return state.info.country === 'nl' ? thuis : gigacams;
-        },
-        getLogoDark: state => {
-            const thuis    = require('../assets/images/thuis-dark.png');
-            const gigacams = require('../assets/images/gigacams-dark.png');
-
-            if(!state.info){
-                return '';
-            }
-
-            return state.info.country === 'nl' ? thuis : gigacams;
-        },
         getCampaignData: state => {
             if(!state.info){
-                return {
-                    number: '',
-                    cpm: ''
-                };
+                return [];
             }
 
+            const info = state.info;
+
             if(!state.info.marketing.current){
-                return {
-                    number: state.info.phone_number,
-                    cpm: state.info.phone_cpm
-                };
+                const numbers = [];
+                const ivr1 = info.ivr1 ? numbers.push({number: info.ivr1.phone_number, cpm: info.ivr1.phone_cpm, marketing: 0}) : '';
+                const ivr2 = info.ivr2 ? numbers.push({number: info.ivr2.phone_number, cpm: info.ivr2.phone_cpm, marketing: 0}) : '';
+
+                return numbers;
             } else {
-                const activeCampaign = state.info.marketing.current.replace(' ', '_');
+                const activeCampaign = state.info.marketing.current;
                 const marketing: any = state.info.marketing;
 
-                return {
-                    number: marketing[activeCampaign].phone_number,
-                    cpm: marketing[activeCampaign].phone_cpm
-                };
+                const numbers = [];
+                if(info.ivr1){
+                    const ivr1 = info.ivr1.marketing != 0 ? numbers.push({number: marketing[activeCampaign].phone_number, cpm: marketing[activeCampaign].phone_cpm, marketing: 1}) : numbers.push({number: info.ivr1.phone_number, cpm: info.ivr1.phone_cpm, marketing: 0});
+                }
+                if(info.ivr2){
+                    const ivr1 = info.ivr2.marketing != 0 ? numbers.push({number: marketing[activeCampaign].phone_number, cpm: marketing[activeCampaign].phone_cpm, marketing: 1}) : numbers.push({number: info.ivr2.phone_number, cpm: info.ivr2.phone_cpm, marketing: 0});
+                }
+
+                return numbers;
             }
         },
         getBranding: state => {
@@ -104,7 +88,7 @@ const rootStore = new Vuex.Store<RootState>({
         deactivateSafeMode: function(state: RootState){
             state.safeMode = false;
         }
-    }, 
+    },
     actions: {
         loadInfo: async function(store: RootContext){
             const infoResult = await fetch(`${config.BaseUrl}/client/client_accounts/info`, {
@@ -113,13 +97,15 @@ const rootStore = new Vuex.Store<RootState>({
             const infoData: Info = await infoResult.json();
 
             store.commit('setInfo', infoData);
+        },
+        intervalChecksession: function(store: RootContext){
+            setInterval(() => store.dispatch('getSession'), 60 * 1000); //Update user data every minute
         }
     },
     modules: {
         localization: localization,
         modals: modals,
         authentication: authentication,
-        performers: performers,
         session: session,
         alerts: alerts,
         voyeur: voyeur

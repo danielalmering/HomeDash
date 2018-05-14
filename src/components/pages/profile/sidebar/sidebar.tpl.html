@@ -5,7 +5,7 @@
         <div class="sidebar__content-top" :class="{ 'collapse': !toggleUserinfo }">
 
             <div class="sidebar__content-logo">
-                <router-link :to="$localize({ path: '/'})"><img :src="logo" alt=""></router-link>
+                <router-link :to="{ path: '/'}"><img :src="logo" alt=""></router-link>
             </div>
 
             <div class="sidebar__content-user" :class="{ 'collapse': !toggleUserinfo }">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="sidebar__performer-info col-xs-7">
                         <h3>{{ performer.nickname }}</h3>
-                        <p>{{ performer.age }} {{ $t('sidebar.age') }}</p>
+                        <p>{{ $t('sidebar.age', { age: performer.age }) }}</p>
                         <p class="view"><span v-t="category !== 'peek' ? 'sidebar.view' : 'sidebar.peek'"></span> <i class="fa fa-chevron-right"></i></p>
                     </div>
                 </li>
@@ -102,7 +102,7 @@
 
     <div class="sidebar__toggle hidden-md hidden-lg">
         <div class="sidebar__toggle-icon black">
-            <router-link :to="$localize({ path: '/'})"><i class="fa fa-home" aria-hidden="true"></i></router-link>
+            <router-link :to="{ path: '/'}"><i class="fa fa-home" aria-hidden="true"></i></router-link>
         </div>
         <div class="sidebar__toggle-icon" v-on:click="toggleSidebar">
             <i class="fa" :class="{ 'fa-angle-double-left': displaySidebar, 'fa-angle-double-right': !displaySidebar }" aria-hidden="true"></i>

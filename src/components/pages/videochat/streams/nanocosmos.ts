@@ -125,7 +125,7 @@ export default class NanoCosmos extends Stream {
 
         let wowza = this.wowza;
         if (this.playToken){
-            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`)
+            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`);
         }
 
         const configH5LIVE = {
@@ -160,7 +160,7 @@ export default class NanoCosmos extends Stream {
             'playback': {
                 'autoplay': this.autoplay,
                 'muted': this.muted,
-                'flashplayer': config.H5FlashSwf,
+                'flashplayer': '../../../../../static/nano.player.swf',
                 'reconnect': {
                    minDelay: 2,
                    maxDelay: 5,

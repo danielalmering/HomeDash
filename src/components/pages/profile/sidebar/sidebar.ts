@@ -2,9 +2,8 @@ import { Component, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
-import config from '../../../../config';
+import { openModal, openRoute, getAvatarImage, getPerformerStatus } from '../../../../util';
+import config, { logo } from '../../../../config';
 
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
@@ -14,6 +13,10 @@ import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
+import { listRecommended, listBusy } from 'sensejs/performer';
+import { listFavourites } from 'sensejs/performer/favourite';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
+import { isInSession, isOutOfSession } from 'sensejs/util/performer';
 
 type SidebarCategory = 'recommended' | 'teasers' | 'peek' | 'favourites' | 'voyeur';
 
@@ -36,6 +39,7 @@ export default class Sidebar extends Vue {
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
     isOutOfSession = isOutOfSession;
+    logo = logo;
 
     query: any = {
         limit: 20,
@@ -59,10 +63,6 @@ export default class Sidebar extends Vue {
 
     get displaySidebar(){
         return this.$store.state.displaySidebar;
-    }
-
-    get logo(){
-        return this.$store.getters.getLogoLight;
     }
 
     get authenticated(){
@@ -111,9 +111,26 @@ export default class Sidebar extends Vue {
             const performer = this.performers.find(p => p.id === data.performerId);
 
             //Temp for services map
-            if(performer && data.services && data.status){
-                performer.performer_services = { ...performer.performer_services, ...data.services };
-                performer.performerStatus = data.status;
+            if(data.services){
+                if(performer){
+                    performer.performer_services = { ...performer.performer_services, ...data.services };
+                }
+
+                if(data.services['peek'] !== undefined){
+                    data.serviceName = 'peek';
+                    data.serviceStatus = data.services['peek'];
+                }
+            }
+
+            if(performer && data.status){
+                await statusSocketCb.bind(this)({
+                    performerId: data.performerId,
+                    status: data.status
+                });
+            }
+
+            if(!data.serviceName){
+                return;
             }
 
             //If the performer is in a session and turns of peeking, remove from list
@@ -126,7 +143,7 @@ export default class Sidebar extends Vue {
 
             //If the performer is not in the list and turns on peeking while in a session, add her to the list
             if(!performer && data.serviceName === 'peek' &&
-                data.serviceStatus && this.category === 'peek'){
+                data.serviceStatus === true && this.category === 'peek'){
 
                 const newPerformer = await this.loadPerformer(data.performerId);
 
@@ -149,12 +166,14 @@ export default class Sidebar extends Vue {
             performer.performer_services[data.serviceName] = data.serviceStatus;
         });
 
-        this.statusEventId = notificationSocket.subscribe('status', async (data: SocketStatusEventArgs) => {
+        this.statusEventId = notificationSocket.subscribe('status', statusSocketCb.bind(this));
+
+        async function statusSocketCb(data: SocketStatusEventArgs){
             if(this.category === 'voyeur'){
                 return;
             }
 
-            const performer = this.performers.find(p => p.id === data.performerId);
+            const performer = this.performers.find((p: Performer) => p.id === data.performerId);
 
             //Check if the performer is in a session and doesn't exist in the list yet
             const didPerformerJoinSession = !performer && isInSession(data.status as PerformerStatus);
@@ -164,7 +183,7 @@ export default class Sidebar extends Vue {
 
             //If the performer is offline or or left the session, remove her from the list
             if(data.status === PerformerStatus.Offline || (didPerformerLeaveSession && this.category === 'peek')){
-                this.performers = this.performers.filter(p => p.id !== data.performerId);
+                this.performers = this.performers.filter((p: Performer) => p.id !== data.performerId);
                 return;
             }
 
@@ -177,7 +196,7 @@ export default class Sidebar extends Vue {
                 }
 
                 //Extra check because this can be triggered twice if the performer quickly goes online and offline
-                if(!this.performers.find(p => p.id === data.performerId)){
+                if(!this.performers.find((p: Performer) => p.id === data.performerId)){
                     this.performers.push(newPerformer);
                 }
 
@@ -189,7 +208,7 @@ export default class Sidebar extends Vue {
             }
 
             performer.performerStatus = data.status as PerformerStatus;
-        });
+        }
     }
 
     @Watch('$route')
@@ -238,8 +257,7 @@ export default class Sidebar extends Vue {
     }
 
     async startVideoChat(performerId: number){
-        await this.$store.dispatch<RequestPayload>({
-            type: 'startRequest',
+        await this.$store.dispatch('startRequest', {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
             fromVoyeur: true,
@@ -262,13 +280,13 @@ export default class Sidebar extends Vue {
             return;
         }
 
-        this.$router.push(this.$localize({
+        this.$router.push({
             name: 'Profile',
             params: {
-                id: performer.advert_numbers[0].advertNumber.toString(),
+                id: performer.advertId.toString(),
                 category: category
             }
-        }));
+        });
     }
 
     onScroll(event: Event){
@@ -353,11 +371,12 @@ export default class Sidebar extends Vue {
     }
 
     async loadRecommended() {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}${this.query.search !== '' ? '&search=' : '' }${this.query.search}`, {
-            credentials: 'include'
+        const { result } = await listRecommended({
+            ...this.query,
+            search: this.query.search === '' ? undefined : this.query.search
         });
 
-        return performerResults.json();
+        return result;
     }
 
     async loadTeasers() {
@@ -370,19 +389,14 @@ export default class Sidebar extends Vue {
 
     async loadFavorites(){
         const userId = this.$store.state.authentication.user.id;
+        const { result } = await listFavourites(userId, this.query);
 
-        const performerResults = await fetch(`${config.BaseUrl}/client/client_accounts/${userId}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
-            credentials: 'include'
-        });
-
-        return performerResults.json();
+        return result;
     }
 
     async loadPeek(){
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
-            credentials: 'include'
-        });
+        const { result } = await listBusy(this.query);
 
-        return performerResults.json();
+        return result;
     }
 }

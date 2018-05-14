@@ -5,11 +5,17 @@
     "top": {
         "numbers": {
             "callnow": "BEL NU",
-            "cpm": "CPM",
-            "pm": "pm"
+            "cpm": "pm",
+            "cpm-0": "pm",
+            "cpm-1": "pm",
+            "pm": "pm",
+            "nr-0": "pm",
+            "nr-1": "pm"
+
         },
         "banner": {
             "happyhour": "HappyHour",
+            "happyhour_cpm": "pm",
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
@@ -64,7 +70,7 @@
         }
     },
     "sidebar": {
-        "age": "jaar",
+        "age": "{age} jaar",
         "view": "Bekijken",
         "recommended": "Aanbevolen",
         "teasers": "Teasers",
@@ -160,7 +166,8 @@
         "smscost": "per ontvangen bericht*",
         "registeraccount": "Registreer een account, en profiteer van doorlopende acties!",
         "noServices": "Geen dienst(en) beschikbaar!",
-        "errorNoIvrCode": "Vul je toegangscode in"
+        "errorNoIvrCode": "Vul je toegangscode in",
+        "nosmsservice": "Geen SMS dienst beschikbaar!"
     },
     "pagination": {
         "pageOf": "Pagina {page} van {total}",
@@ -329,7 +336,7 @@
         "creditscap": "Credits",
         "price": "Prijs",
         "paying": "Afrekenen",
-        "paywith": "Betaal met {title}",
+        "paywith": "Betaal met",
         "subtotal": "Subtotaal",
         "bonuscredits": "Bonus credits",
         "totalcredits": "Totaal credits",
@@ -339,6 +346,12 @@
         "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
         "discountcode": "Kortingscode?",
         "mostlybought": "Meest verkocht!",
+        "packages": {
+            "pack1": "Basis",
+            "pack2": "Medium",
+            "pack3": "High",
+            "pack4": "XXXL"
+        },
         "alerts": {
             "errorIncorrectPromo": "Incorrecte promocode!",
             "errorUsedPromo": "Promocode reeds gebruikt!",
@@ -387,7 +400,7 @@
         "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",
         "webcamurl": "http://www.club-sense.nl",
         "copyright": "Copyright 2018",
-        "cookies": "De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord",
+        "cookies": "<a href='../privacy-policy/'>De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord</a>",
         "agecheck": "Deze website bevat expliciet materiaal. Door gebruik te maken van deze website ga je hiermee akkoord",
         "olderthen": "Ouder dan 18jaar",
         "leavewebsite": "Verlaat de website",

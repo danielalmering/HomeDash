@@ -14,9 +14,9 @@ export default class Broadcast extends Stream{
 
     @Prop() publishToken?: string;
 
-    @Prop({default:true}) cam: boolean | string;
+    @Prop({default: true}) cam: boolean | string;
 
-    @Prop({default:false}) mic: boolean | string;
+    @Prop({default: false}) mic: boolean | string;
 
     @Prop() quality: Quality = Quality.MEDIUM;
 

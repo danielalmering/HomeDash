@@ -5,11 +5,16 @@
     "top": {
         "numbers": {
             "callnow": "CALL NOW",
-            "cpm": "CPM",
-            "pm": "pm"
+            "cpm": "pm",
+            "cpm-0": "pm",
+            "cpm-1": "pm",
+            "pm": "pm",
+            "nr-0": "pm",
+            "nr-1": "pm"
         },
         "banner": {
             "happyhour": "HappyHour",
+            "happyhour_cpm": "pm",
             "seeactionpage": "See action page",
             "extra": "extra",
             "credits": "credits",
@@ -64,7 +69,7 @@
         }
     },
     "sidebar": {
-        "age": "year",
+        "age": "{age} years",
         "view": "View",
         "recommended": "Recommended",
         "teasers": "Teasers",
@@ -160,7 +165,8 @@
         "smscost": "per received message*",
         "registeraccount": "Register an account, and take advantage of promotions!",
         "noServices": "No service (s) available!",
-        "errorNoIvrCode": "Enter your access code"
+        "errorNoIvrCode": "Enter your access code",
+        "nosmsservice": "Kein SMS-Dienst verfügbar!"
     },
     "pagination": {
         "pageOf": "Page {page} till {total}",
@@ -329,7 +335,7 @@
         "creditscap": "Credits",
         "price": "Price",
         "paying": "Buy",
-        "paywith": "Pay with {title}",
+        "paywith": "Pay with",
         "subtotal": "Subtotal",
         "bonuscredits": "Bonus credits",
         "totalcredits": "Total credits",
@@ -339,6 +345,12 @@
         "bonusdiscountdesc": "The above promotion is only valid for purchases with iDeal & Mister Cash. And not for purchases with credit card and visa via Click and Buy. * ",
         "discountcode": "Discountcode?",
         "mostlybought": "Mostly sold!",
+        "packages": {
+            "pack1": "Basic",
+            "pack2": "Medium",
+            "pack3": "High",
+            "pack4": "XXXL"
+        },
         "alerts": {
             "errorIncorrectPromo": "Incorrect promocode!",
             "errorUsedPromo": "Promocode already used!",
@@ -387,7 +399,7 @@
         "sexstoriesurl": "#",
         "webcamurl": "http://www.club-sense.com",
         "copyright": "Copyright 2018",
-        "cookies": "The website works with cookies so we can improve the website and remember your settings. \nBy continuing to use this website you agree with this",
+        "cookies": "<a href='../privacy-policy/'>The website works with cookies so we can improve the website and remember your settings. \nBy continuing to use this website you agree with this</a>",
         "agecheck": "This website contains explicit material. By using this website you agree to this",
         "olderthen": "Older than 18 years",
         "leavewebsite": "Leave the website",

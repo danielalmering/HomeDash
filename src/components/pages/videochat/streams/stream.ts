@@ -13,7 +13,7 @@ export default class Stream extends Vue {
         type: String,
         required: false
     })
-    playToken: string;    
+    playToken: string;
 
     @Prop({
         type: String,
@@ -22,7 +22,7 @@ export default class Stream extends Vue {
     wowza: string;
 
     @Prop({
-        type:Boolean,
+        type: Boolean,
         required: false
     })
     muted: boolean;

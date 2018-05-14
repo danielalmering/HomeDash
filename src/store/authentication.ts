@@ -7,6 +7,7 @@ import config from '../config';
 import notificationSocket from '../socket';
 import Raven from 'raven-js';
 import { tagHotjar } from '../util';
+import router from '../router';
 
 export interface AuthState {
     user: User | undefined;
@@ -123,10 +124,10 @@ const authenticationStore: Module<AuthState, RootState> = {
             });
 
             let sessionData: AnonymousUser | undefined = undefined;
-
+            const referer = router.currentRoute.query.utm_source ? `&referer=${router.currentRoute.query.utm_source}` : '';
             if(checkSessionResult.status === 403){
 
-                const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}`, {
+                const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}${referer}`, {
                     credentials: 'include'
                 });
 
@@ -141,7 +142,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
 
             store.commit('setUser', sessionData);
-            await store.dispatch('setCountry', sessionData.country);
+
             await store.dispatch('setLanguage', sessionData.language);
         }
     }

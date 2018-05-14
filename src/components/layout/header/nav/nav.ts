@@ -3,7 +3,7 @@ import Vue from 'vue';
 import { Route } from 'vue-router';
 import { User } from '../../../../models/User';
 import { openRoute, openModal } from '../../../../util';
-import config from '../../../../config';
+import config, { logoDark } from '../../../../config';
 
 import './nav.scss';
 import WithRender from './nav.tpl.html';
@@ -20,6 +20,7 @@ export default class Nav extends Vue {
 
     openRoute = openRoute;
     openModal = openModal;
+    logo = logoDark;
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
@@ -44,10 +45,6 @@ export default class Nav extends Vue {
 
     get acceptedLanguages(){
         return this.$store.state.info.languages ? this.$store.state.info.languages : [];
-    }
-
-    get logo(){
-        return this.$store.getters.getLogoDark;
     }
 
     closeAll(){

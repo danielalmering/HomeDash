@@ -1,7 +1,12 @@
-import { Performer, PerformerStatus } from "./models/Performer";
+import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
+import { User } from './models/User';
 
-export function tabEnabled(service: string, forPerformer: Performer):boolean {
+export function tabEnabled(service: string, forPerformer: Performer, user: User):boolean {
     if (!forPerformer){
+        return false;
+    }
+
+    if(!user){
         return false;
     }
 
@@ -14,6 +19,11 @@ export function tabEnabled(service: string, forPerformer: Performer):boolean {
 
     if (!(service in forPerformer.performer_services) ){
         throw new Error(`${service} ain't no service I ever heard of!`);
+    }
+
+    // SMS tab disabled germany
+    if(user.country === 'de' && service === 'sms'){
+        return false;
     }
 
     // Email & sms enabled independently of status from performer!

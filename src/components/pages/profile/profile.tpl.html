@@ -5,12 +5,12 @@
     <div class="profile__info" v-if="performer">
 
         <div class="profile__info-image col-sm-12 col-md-3">
-            <div class="image" v-on:click="openFullSlider(perfphotos[0].id)" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }">
+            <div class="image" v-on:click="openFullSlider(perfmedia[0].id)" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }">
                 <div class="image__fullslider">
                     <i class="fa fa-search-plus" aria-hidden="true"></i>
                 </div>
                 <div class="labelwrapper">
-                    <div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>                                            
+                    <div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
                 </div>
             </div>
         </div>
@@ -45,22 +45,22 @@
 
     <div class="profile__sticky">
 
-        <div class="profile__slider" v-if="perfphotos.length != 0">
+        <div class="profile__slider">
             <div class="slider">
-                <photo-slider v-if="performer && displaySlider" :performer="performer.id" :photos="perfphotos" v-on:photoSelected="openFullSlider"></photo-slider>
-                <photo-slider-full v-if="performer && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfphotos" :performer="performer.id"></photo-slider-full>
+                <slider v-if="perfmedia && displaySlider" :photos="perfmedia" :performer="performer.id"  v-on:photoSelected="openFullSlider"></slider>
+                <slider-full v-if="perfmedia && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfmedia" :performer="performer.id"></slider-full>
             </div>
         </div>
 
         <div class="profile__tabs hidden-xs">
-            <tabs :performer="performer" v-on:startSession="startSession" v-on:startVoyeur="startVoyeur"></tabs>
+            <tabs v-if="performer" :performer="performer" v-on:startSession="startSession" v-on:startVoyeur="startVoyeur"></tabs>
         </div>
 
-        <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer">
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="tabEnabled('cam', performer)" v-on:click="authenticated ? startSession({sessionType: canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
-            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="tabEnabled('phone', performer)" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
-            <button style="display: none" class="btn btn-full btn-xxl btn-green btn-fa fa-eye" v-if="tabEnabled('voyeur', performer)" v-on:click="authenticated ? startVoyeur(true) : openModal('login')"><span >{{ $t('tabs.voyeurbtn') }}</span></button>
-            <router-link  v-if="tabEnabled('email', performer)" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
+        <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer && user">
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-video-camera" v-if="tabEnabled('cam', performer, user)" v-on:click="authenticated ? startSession({sessionType: canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'}) : openModal('login')"><span v-t="canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></span></button>
+            <button class="btn btn-full btn-xxl btn-green btn-fa fa-phone" v-if="tabEnabled('phone', performer, user)" v-on:click="startCall()"><span >{{ $t('tabs.callbtn') }}</span></button>
+            <button style="display: none" class="btn btn-full btn-xxl btn-green btn-fa fa-eye" v-if="tabEnabled('voyeur', performer, user)" v-on:click="authenticated ? startVoyeur(true) : openModal('login')"><span >{{ $t('tabs.voyeurbtn') }}</span></button>
+            <router-link  v-if="tabEnabled('email', performer, user)" :to="{ name: 'Newmessage', params: { advertId: performer.id } }">
                 <button class="btn btn-full btn-xxl btn-green btn-fa fa-envelope"><span>{{ $t('tabs.mailbtn') }}</span></button>
             </router-link>
         </div>

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import { VoyeurState, PerformerTile } from './index';
-import { PerformerStatus, Performer } from '../../models/Performer';
+import { PerformerStatus, Performer } from 'SenseJS/performer/performer.model';
+
 
 
 const mutations = {

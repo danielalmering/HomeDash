@@ -2,13 +2,13 @@ import Vuex, { Payload } from 'vuex';
 import { Module, ActionContext } from 'vuex';
 
 import rootState, { RootState } from '../index';
-import { Performer } from '../../models/Performer';
+import { Performer } from 'SenseJS/performer/performer.model';
 import { UserRole } from '../../models/User';
 import { SessionType, State, PaymentType } from '../../models/Sessions';
 import config from '../../config';
+import { match } from 'sensejs/util/platform';
 
 import notificationSocket from '../../socket';
-import { match } from '../../util';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import getters from './getters';
 import mutations from './mutations';
@@ -46,9 +46,9 @@ export interface SessionState {
     switchingPerformer?: Performer;
 
     fromVoyeur: boolean;
-    //ID of the timeout for the request
-    performerTimeout:any;
+    performerTimeout: any;
 }
+
 //don't work??
 // 'Cannot assign to 'performerTimeout' because it is not a variable.''
 //export var performerTimeout:number;

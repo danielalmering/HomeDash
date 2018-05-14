@@ -6,51 +6,13 @@ import Page from '../components/pages/page';
 import i18n from '../localization';
 import notificationSocket from '../socket';
 
-export async function countryInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    const acceptedCountries = ['uk', 'nl', 'de', 'gl', 'at'];
-    let currentCountry;
-
-    if(config.AutomaticCountryRedirect){
-        let country = store.state.localization.country;
-
-        if(!country){
-            country = to.params.country ? to.params.country : from.params.country;
-        }
-
-        currentCountry = country;
-    }
-
-    if(to.params.country && acceptedCountries.indexOf(to.params.country) === -1){
-        const newParams = to.params;
-
-        if(to.name === 'Performers'){
-            newParams.category = newParams.country;
-        }
-
-        delete newParams.country;
-
-        next({ name: to.name, params: newParams, query: to.query });
-    } else {
-        if(currentCountry) {
-            await store.dispatch('setCountry', currentCountry);
-        }
-
-        if(config.AutomaticCountryRedirect && to.params.country !== currentCountry && currentCountry !== 'gl'){
-            const newParams = to.params;
-            newParams.country = currentCountry;
-
-            next({ name: to.name, params: newParams, query: to.query });
-        } else {
-            next();
-        }
-    }
-}
-
 export function socketInterceptor(to: Route, from: Route, next?: (to?: string | Location) => void){
 
     if(store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
         // console.log('Should make a socket connection now!');
-        notificationSocket.connect();
+        notificationSocket.connect(); // activate socket
+
+        store.dispatch('intervalChecksession'); // activate checksession
     }
 
     if(next){
@@ -95,16 +57,7 @@ export function authenticatedInterceptor(to: Route, from: Route, next: (to?: str
     return waitAuthenticated(true, next);
 }
 
-export async function preloadUserInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    if(to.params.country && !store.state.localization.country && config.AutomaticCountryRedirect){
-        await store.dispatch('setCountry', to.params.country);
-    } else if(!store.state.localization.country && config.AutomaticCountryRedirect) {
-        const locationResult = await fetch(`${config.BaseUrl}/client/geo/location`);
-        const locationData = await locationResult.json();
-
-        await store.dispatch('setCountry', locationData.country);
-    }
-
+export function userLoadedInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
     return waitAuthenticated(false, next);
 }
 
@@ -160,7 +113,7 @@ export function seoInterceptor(to: Route, previous: Route){
 }
 
 export function hotjarInterceptor(to: Route, previous: Route, next: (to?: string | Location) => void){
-    if(window.hj){
+    if(window.hj && config.locale.Hotjar){
         window.hj('stateChange', to.fullPath);
     }
 
@@ -169,8 +122,8 @@ export function hotjarInterceptor(to: Route, previous: Route, next: (to?: string
 
 export function scrollInterceptor(to: Route, from: Route){
 
-    let supportPageOffset = window.pageXOffset !== undefined;
-    let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+    const supportPageOffset = window.pageXOffset !== undefined;
+    const isCSS1Compat = ((document.compatMode || '') === 'CSS1Compat');
     const scrollTop = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
 
     if(from.name === 'Performers' && to.name === 'Profile'){
@@ -181,13 +134,13 @@ export function scrollInterceptor(to: Route, from: Route){
         setTimeout(function() {
             window.scrollTo(0, store.state.pagePosition);
             store.commit('setPagePosition', 0);
-        },500)
+        }, 500);
 
         return;
     }
 
     setTimeout(function() {
         window.scrollTo(0, 0);
-    },500)
+    }, 500);
 
 }

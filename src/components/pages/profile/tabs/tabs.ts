@@ -11,7 +11,7 @@ interface EmailForm {
 }
 
 import './tabs.scss';
-import { Performer, PerformerStatus } from '../../../../models/Performer';
+import { Performer, PerformerStatus, PerformerAvatar } from 'SenseJS/performer/performer.model';
 import { openModal, tagHotjar } from '../../../../util';
 import notificationSocket from '../../../../socket';
 
@@ -46,7 +46,7 @@ export default class Tabs extends Vue {
         'sms': 'mobile'
     };
 
-    @Prop() performer: Performer;
+    @Prop() performer: Performer | any;
 
     mounted(){
         this.selectedTab = this.firstAvailable;
@@ -57,7 +57,7 @@ export default class Tabs extends Vue {
             return 'none';
         }
 
-        const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
+        const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat']; 
 
         // Sidebar overwrites
         if(this.$route.params.category === 'teasers' && this.performer.isVoyeur){
@@ -73,7 +73,7 @@ export default class Tabs extends Vue {
         }
 
         for (const service in this.performer.performer_services){
-            if(this.tabEnabled(service, this.performer) && ignoredServices.indexOf(service) === -1){
+            if(this.tabEnabled(service, this.performer, this.user) && ignoredServices.indexOf(service) === -1){
                 return service;
             }
         }
@@ -126,19 +126,19 @@ export default class Tabs extends Vue {
     }
 
     set displayName(value:string){
-        var usr = {...this.user, displayName:value };
-        this.$store.commit("setUser", {...this.user, displayName:value });
+        const usr = {...this.user, displayName:value };
+        this.$store.commit('setUser', {...this.user, displayName:value });
     }
 
     get advertNumber():string{
         if (!this.performer){
-            return "0000";
+            return '0000';
         }
-        if (!this.performer.advert_numbers.length){
-            return "0000";
+        if (!this.performer.advertId){
+            return '0000';
         }
 
-        return this.performer.advert_numbers[0].advertNumber.toString();
+        return this.performer.advertId.toString();
     }
 
     get ivrCode():string{
@@ -156,13 +156,13 @@ export default class Tabs extends Vue {
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        if(!newPerformer.performer_services[this.selectedTab] || !this.tabEnabled(this.selectedTab, this.performer)){
+        if(!newPerformer.performer_services[this.selectedTab] || !this.tabEnabled(this.selectedTab, this.performer, this.user)){
             this.selectedTab = this.firstAvailable;
         }
     }
 
     selectTab(newTab: string){
-        if (this.tabEnabled(newTab, this.performer)){
+        if (this.tabEnabled(newTab, this.performer, this.user)){
             this.selectedTab = newTab;
         }
     }

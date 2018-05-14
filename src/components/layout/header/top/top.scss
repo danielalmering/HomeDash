@@ -42,12 +42,12 @@
         &-number {
             color: $pallete-3;
             padding: 0;
-            @include rem(font-size, 30px);
+            @include rem(font-size, 23px);
             font-weight: 700;
-            line-height: 70%;
+            line-height: 90%;
 
             &.large {
-                @include rem(padding, 15px 10px);
+                @include rem(padding, 13px 10px);
             }
 
             b {
@@ -60,6 +60,9 @@
                 font-weight: 300;
                 color: $pallete-2;
                 @include rem(font-size, 11px);
+                letter-spacing: -0.3px;
+                div { display: inline-block; }
+                b { @include rem(font-size, 12px); letter-spacing: -1px; }
             }
 
             .flag {
@@ -127,7 +130,7 @@
                     left: 0;
                     bottom: 8px;
                     line-height: 5%;
-                    @include rem(font-size, 10.5px);
+                    @include rem(font-size, 10.2px);
                     color: $pallete-20;
                     text-transform: uppercase;
                     font-style: italic;
