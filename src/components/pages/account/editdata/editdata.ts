@@ -5,8 +5,8 @@ import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './editdata.tpl.html';
 
-import { updateConsumer } from 'SenseJS/consumer';
-import { Consumer } from 'SenseJS/core/models/user';
+import { updateConsumer } from 'sensejs/consumer';
+import { Consumer } from 'sensejs/core/models/user';
 
 @WithRender
 @Component

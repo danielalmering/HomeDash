@@ -11,9 +11,9 @@ require('../../../../static/nanoplayer.3.min.js');
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
 import { RequestPayload } from '../../../store/session/';
-import { Performer } from 'SenseJS/performer/performer.model';
+import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
-import { clientSeen } from 'SenseJS/session/index';
+import { clientSeen } from 'sensejs/session/index';
 
 @WithRender
 @Component({

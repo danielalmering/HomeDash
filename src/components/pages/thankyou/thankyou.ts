@@ -6,8 +6,8 @@ import config from '../../../config';
 
 import './thankyou.scss';
 import WithRender from './thankyou.tpl.html';
-import { listFavourites } from 'SenseJS/performer/favourite';
-import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
+import { listFavourites } from 'sensejs/performer/favourite';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 
 @WithRender
 @Component

@@ -2,7 +2,7 @@ import Vuex, { Payload } from 'vuex';
 import { Module, ActionContext } from 'vuex';
 
 import rootState, { RootState } from '../index';
-import { Performer } from 'SenseJS/performer/performer.model';
+import { Performer } from 'sensejs/performer/performer.model';
 import { UserRole } from '../../models/User';
 import { SessionType, State, PaymentType } from '../../models/Sessions';
 import config from '../../config';

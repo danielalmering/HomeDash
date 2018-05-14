@@ -3,13 +3,13 @@ import { SessionState, RequestPayload, translate, VideoEventSocketMessage } from
 import { RootState } from '../index';
 import { State, SessionType } from '../../models/Sessions';
 import config from '../../config';
-import { Performer } from 'SenseJS/performer/performer.model';
+import { Performer } from 'sensejs/performer/performer.model';
 import { UserRole } from '../../models/User';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
 import { tagHotjar, sleep } from '../../util';
 import i18n from '../../localization';
-import { startRequest, deleteVideorequest, cancel, end, performerTimeout, startCall, endCall, initiate, InitiatePayload } from 'SenseJS/session/index';
+import { startRequest, deleteVideorequest, cancel, end, performerTimeout, startCall, endCall, initiate, InitiatePayload } from 'sensejs/session/index';
 
 const actions = {
     async startRequest(store: ActionContext<SessionState, RootState>, payload: RequestPayload){

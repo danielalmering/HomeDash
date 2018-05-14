@@ -1,7 +1,7 @@
 import * as test from 'tape';
 import { tabEnabled } from './performer-util';
-import { Performer, PerformerStatus } from 'SenseJS/performer/performer.model';
-import { UserStatus, UserRole } from 'SenseJS/core/models/user';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
+import { UserStatus, UserRole } from 'sensejs/core/models/user';
 
 const performer: Performer = {
     'username': 'Een Performer',

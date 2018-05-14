@@ -5,7 +5,7 @@ import './contact.scss';
 
 import config from '../../../config';
 import WithRender from './contact.tpl.html';
-import { PostContactPayload, postContactMessage } from 'SenseJS/admin';
+import { PostContactPayload, postContactMessage } from 'sensejs/admin';
 
 interface Message {
     email: string;

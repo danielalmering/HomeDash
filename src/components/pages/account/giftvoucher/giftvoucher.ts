@@ -3,7 +3,7 @@ import Vue from 'vue';
 
 import config, { voucher } from '../../../../config';
 import WithRender from './giftvoucher.tpl.html';
-import { activateVoucher } from 'SenseJS/consumer/payment';
+import { activateVoucher } from 'sensejs/consumer/payment';
 
 @WithRender
 @Component

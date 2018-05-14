@@ -2,7 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import config, { logo } from '../../../../config';
-import { getPaymentInfo } from 'SenseJS/consumer/payment';
+import { getPaymentInfo } from 'sensejs/consumer/payment';
 
 import { openRoute } from '../../../../util';
 
