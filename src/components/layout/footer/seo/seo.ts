@@ -12,7 +12,7 @@ import { getCategory } from 'sensejs/consumer/category';
 @Component
 export default class Seo extends Vue {
 
-    seoMain: SeoText | boolean = false;
+    seoMain: any;
     seoTabs : SeoText[] = [];
     selectedTab: number = 0;
 
@@ -70,8 +70,8 @@ export default class Seo extends Vue {
             return;
         }
 
-        this.seoMain = result.texts[0];
-        this.seoTabs = result.texts.slice(1);
+        this.seoMain = result.mainText;
+        this.seoTabs = result.texts;
         this.selectedTab = this.seoTabs[0].id;
 
         this.seoData = result;
