@@ -23,8 +23,11 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { webrtcPossible, noFlash, hasWebAudio, isApple, tagHotjar } from '../../../util';
-import { Performer } from '../../../models/Performer';
+import { tagHotjar, isApple } from '../../../util';
+import { Performer } from 'sensejs/performer/performer.model';
+import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import { clientSeen } from 'sensejs/session/index';
+import { webrtcPossible, noFlash } from 'sensejs/util/platform';
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
@@ -220,9 +223,9 @@ export default class VideoChat extends Vue {
         });
 
         this.intervalTimer = window.setInterval(async () => {
-            const result = await fetch(`${config.BaseUrl}/session/client_seen`, { credentials: 'include' });
+            const { error } = await clientSeen();
 
-            if(!result.ok && !this.isSwitching){
+            if(error && !this.isSwitching){
                 this.close();
             }
         }, 5000);
@@ -236,8 +239,8 @@ export default class VideoChat extends Vue {
 
     toggleFavourite(){
         this.performer.isFavourite ?
-            this.$store.dispatch('addFavourite', this.performer.id) :
-            this.$store.dispatch('removeFavourite', this.performer.id);
+            addFavourite(this.$store.state.authentication.user.id, this.performer.id) :
+            removeFavourite(this.$store.state.authentication.user.id, this.performer.id);
 
         this.performer.isFavourite = !this.performer.isFavourite;
     }
@@ -255,7 +258,7 @@ export default class VideoChat extends Vue {
             next({
                 name: 'Voyeur',
                 params: {
-                    id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
+                    id: this.$store.state.session.activePerformer.advertId.toString()
                 }
             });
         } catch(ex){
@@ -419,7 +422,7 @@ export default class VideoChat extends Vue {
         this.$router.push({
             name: 'Peek',
             params: {
-                id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
+                id: this.$store.state.session.activePerformer.advertId.toString()
             }
         });
     }

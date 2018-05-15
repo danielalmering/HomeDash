@@ -3,6 +3,7 @@ import Vue from 'vue';
 
 import config, { voucher } from '../../../../config';
 import WithRender from './giftvoucher.tpl.html';
+import { activateVoucher } from 'sensejs/consumer/payment';
 
 @WithRender
 @Component
@@ -14,11 +15,9 @@ export default class Giftvoucher extends Vue {
         const user = this.$store.state.authentication.user;
         const voucherCode = this.voucherCode.toUpperCase();
 
-        const voucherResult = await fetch(`${config.BaseUrl}/client/client_accounts/${user.id}/promo_credit/${voucherCode}`, {
-            credentials: 'include'
-        });
+        const { error } = await activateVoucher(user.id, this.voucherCode);
 
-        if(!voucherResult.ok){
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'account.alerts.errorVoucher',
                 class: 'error'

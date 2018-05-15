@@ -1,5 +1,5 @@
 import { VoyeurState, maxTilesAllowed, PerformerTile } from './index';
-import { PerformerStatus } from '../../models/Performer';
+import { PerformerStatus } from 'sensejs/performer/performer.model';
 
 const getters = {
     favourites(state: VoyeurState){

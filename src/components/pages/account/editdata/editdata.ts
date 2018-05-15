@@ -5,11 +5,14 @@ import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './editdata.tpl.html';
 
+import { updateConsumer } from 'sensejs/consumer';
+import { Consumer } from 'sensejs/core/models/user';
+
 @WithRender
 @Component
 export default class Editdata extends Vue {
 
-    user: User;
+    user: Consumer;
 
     confirmPassword: string = '';
     pushcrewSubscribed: boolean = false;
@@ -36,22 +39,16 @@ export default class Editdata extends Vue {
             return;
         }
 
-        const userResult = await fetch(`${config.BaseUrl}/client/client_accounts/${this.user.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(this.user),
-            credentials: 'include'
-        });
+        const { error, result } = await updateConsumer(this.user);
 
-        if(!userResult.ok){
+        if(error){
             this.$store.dispatch('errorMessage', 'account.alerts.errorEditData');
             return;
         }
 
         this.$store.dispatch('successMessage', 'account.alerts.successEditData');
 
-        const userData = await userResult.json();
-
-        this.$store.commit('setUser', userData);
+        this.$store.commit('setUser', result);
     }
 
     subscribePushMessages(){

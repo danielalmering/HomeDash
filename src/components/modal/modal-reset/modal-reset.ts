@@ -4,6 +4,7 @@ import { Component } from 'vue-property-decorator';
 import config from '../../../config';
 import WithRender from './modal-reset.tpl.html';
 import { tagHotjar } from '../../../util';
+import { resetPassword } from 'sensejs/auth';
 
 @WithRender
 @Component
@@ -26,20 +27,13 @@ export default class ModalReset extends Vue {
         const userId = this.$route.params.userId;
         const token = this.$route.params.token;
 
-        const resetResult = await fetch(`${config.BaseUrl}/client/client_accounts/reset_password`, {
-            credentials: 'include',
-            method: 'PUT',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                id: userId,
-                password: this.password,
-                token: token
-            })
+        const { error } = await resetPassword({
+            id: parseInt(userId),
+            password: this.password,
+            token: token
         });
 
-        if(!resetResult.ok){
+        if(error){
             tagHotjar(`RESET_FAIL`);
             this.$store.dispatch('errorMessage', 'modals.reset.alerts.errorMessage');
         } else {

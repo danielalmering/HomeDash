@@ -2,8 +2,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { Performer, PerformerStatus } from '../../../../models/Performer';
-import { openModal, getAvatarImage, getPerformerStatus, isInSession, isOutOfSession } from '../../../../util';
+import { openModal, openRoute, getAvatarImage, getPerformerStatus } from '../../../../util';
 import config, { logo } from '../../../../config';
 
 import './sidebar.scss';
@@ -14,6 +13,11 @@ import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
 import { SocketServiceEventArgs, SocketStatusEventArgs } from '../../../../models/Socket';
+import { listRecommended, listBusy } from 'sensejs/performer';
+import { listFavourites } from 'sensejs/performer/favourite';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
+import { isInSession, isOutOfSession } from 'sensejs/util/performer';
+import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 
 type SidebarCategory = 'recommended' | 'teasers' | 'peek' | 'favourites' | 'voyeur';
 
@@ -55,8 +59,8 @@ export default class Sidebar extends Vue {
         'peek': this.loadPeek
     };
 
-    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
-    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+    addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     get displaySidebar(){
         return this.$store.state.displaySidebar;
@@ -254,8 +258,7 @@ export default class Sidebar extends Vue {
     }
 
     async startVideoChat(performerId: number){
-        await this.$store.dispatch<RequestPayload>({
-            type: 'startRequest',
+        await this.$store.dispatch('startRequest', {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
             fromVoyeur: true,
@@ -281,7 +284,7 @@ export default class Sidebar extends Vue {
         this.$router.push({
             name: 'Profile',
             params: {
-                id: performer.advert_numbers[0].advertNumber.toString(),
+                id: performer.advertId.toString(),
                 category: category
             }
         });
@@ -369,11 +372,12 @@ export default class Sidebar extends Vue {
     }
 
     async loadRecommended() {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/recommended?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}${this.query.search !== '' ? '&search=' : '' }${this.query.search}`, {
-            credentials: 'include'
+        const { result } = await listRecommended({
+            ...this.query,
+            search: this.query.search === '' ? undefined : this.query.search
         });
 
-        return performerResults.json();
+        return result;
     }
 
     async loadTeasers() {
@@ -386,19 +390,14 @@ export default class Sidebar extends Vue {
 
     async loadFavorites(){
         const userId = this.$store.state.authentication.user.id;
+        const { result } = await listFavourites(userId, this.query);
 
-        const performerResults = await fetch(`${config.BaseUrl}/client/client_accounts/${userId}/favorite_performers?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
-            credentials: 'include'
-        });
-
-        return performerResults.json();
+        return result;
     }
 
     async loadPeek(){
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}`, {
-            credentials: 'include'
-        });
+        const { result } = await listBusy(this.query);
 
-        return performerResults.json();
+        return result;
     }
 }

@@ -1,6 +1,6 @@
 import { SessionState, isStateChangeAllowed } from './index';
 import { State } from '../../models/Sessions';
-import { Performer } from '../../models/Performer';
+import { Performer } from 'sensejs/performer/performer.model';
 
 const mutations = {
     setState(state: SessionState, toState: State){

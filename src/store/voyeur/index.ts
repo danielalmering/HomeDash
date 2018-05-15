@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex, { Module, ActionContext } from 'vuex';
 import { RootState } from '../index';
 import { SocketVoyeurEventArgs, SocketServiceEventArgs, SocketStatusEventArgs } from '../../models/Socket';
-import { Performer } from '../../models/Performer';
+import { Performer } from 'sensejs/performer/performer.model';
 
 import rootState from '../index';
 import notificationSocket from '../../socket';

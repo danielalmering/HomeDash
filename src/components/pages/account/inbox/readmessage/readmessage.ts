@@ -6,6 +6,7 @@ import { User } from '../../../../../models/User';
 
 import config from '../../../../../config';
 import WithRender from './readmessage.tpl.html';
+import { getNotification, PostNotificationParams, postNotification } from 'sensejs/consumer/notification';
 
 @WithRender
 @Component
@@ -27,11 +28,12 @@ export default class Readmessage extends Vue {
     }
 
     async loadMessage(){
-        const messageResults = await fetch(`${config.BaseUrl}/performer/performer_account/${this.$route.params.performerid}/email/${this.$route.params.messageid}`, {
-            credentials: 'include'
-        });
+        const performerId = parseInt(this.$route.params.performerid);
+        const messageId = parseInt(this.$route.params.messageid);
 
-        if(!messageResults.ok){
+        const { result, error } = await getNotification(performerId, messageId);
+
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'account.alerts.errorInboxMessageLoad',
                 class: 'error'
@@ -40,14 +42,12 @@ export default class Readmessage extends Vue {
             return;
         }
 
-        this.message = await messageResults.json();
-
+        this.message = result;
     }
 
     async sendMessage(){
 
-        const replymessage = {
-            attachments: [],
+        const replyMessage: PostNotificationParams = {
             clientid: { id: this.message.client.id  },
             content: this.reply,
             performer_account: { id: this.message.performer_account.id },
@@ -56,13 +56,9 @@ export default class Readmessage extends Vue {
             subject: this.message.subject
         };
 
-        const newmessageResult = await fetch(`${config.BaseUrl}/performer/performer_account/${this.message.performer_account.id}/email`, {
-            method: 'POST',
-            body: JSON.stringify(replymessage),
-            credentials: 'include'
-        });
+        const { result, error } = await postNotification(replyMessage);
 
-        if(!newmessageResult.ok){
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'account.alerts.errorReplyMessage',
                 class: 'error'

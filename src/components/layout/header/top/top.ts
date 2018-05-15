@@ -2,6 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import config, { logo } from '../../../../config';
+import { getPaymentInfo } from 'sensejs/consumer/payment';
 
 import { openRoute } from '../../../../util';
 
@@ -48,11 +49,13 @@ export default class Top extends Vue {
     }
 
     async getFees(){
-        const infoResults = await fetch(`${config.BaseUrl}/client/client_accounts/updatebalanceinfo`, {
-            credentials: 'include'
-        });
+        const { result, error } = await getPaymentInfo();
 
-        const data = await infoResults.json();
+        if(error){
+            return;
+        }
+
+        const data = result;
         this.fees = data.fees.slice().reverse();
     }
 

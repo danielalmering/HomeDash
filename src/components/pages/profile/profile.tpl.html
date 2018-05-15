@@ -10,7 +10,7 @@
                     <i class="fa fa-search-plus" aria-hidden="true"></i>
                 </div>
                 <div class="labelwrapper">
-                    <div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>                                            
+                    <div class="label" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
                 </div>
             </div>
         </div>
@@ -45,15 +45,15 @@
 
     <div class="profile__sticky">
 
-        <div class="profile__slider" v-if="perfmedia.length != 0">
+        <div class="profile__slider">
             <div class="slider">
-                <slider v-if="performer && displaySlider" :photos="perfmedia" :performer="performer.id"  v-on:photoSelected="openFullSlider"></slider>
-                <slider-full v-if="performer && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfmedia" :performer="performer.id"></slider-full>
+                <slider v-if="perfmedia && displaySlider" :photos="perfmedia" :performer="performer.id"  v-on:photoSelected="openFullSlider"></slider>
+                <slider-full v-if="perfmedia && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfmedia" :performer="performer.id"></slider-full>
             </div>
         </div>
 
         <div class="profile__tabs hidden-xs">
-            <tabs :performer="performer" v-on:startSession="startSession" v-on:startVoyeur="startVoyeur"></tabs>
+            <tabs v-if="performer" :performer="performer" v-on:startSession="startSession" v-on:startVoyeur="startVoyeur"></tabs>
         </div>
 
         <div class="profile__buttons hidden-sm hidden-md hidden-lg" v-if="performer && user">

@@ -5,19 +5,20 @@ import { setTitle, setDescription, setKeywords } from '../../../../seo';
 
 import config from '../../../../config';
 import WithRender from './seo.tpl.html';
-import { SeoText, SeoData } from '../../../../models/Seo';
+import { SeoText, CategoryData } from 'sensejs/core/models/category';
+import { getCategory } from 'sensejs/consumer/category';
 
 @WithRender
 @Component
 export default class Seo extends Vue {
 
-    seoMain: SeoText | boolean = false;
+    seoMain: any;
     seoTabs : SeoText[] = [];
     selectedTab: number = 0;
 
-    seoData?: SeoData = undefined;
+    seoData?: CategoryData = undefined;
 
-    mounted(){
+    async mounted(){
         const category = this.$route.params.category && this.$route.params.category !== '' ? this.$route.params.category : 'home';
 
         this.loadSeo(category);
@@ -31,7 +32,7 @@ export default class Seo extends Vue {
         return `${config.ImageUrl}categories/${location}`;
     }
 
-    get hasTabs(): boolean{
+    get hasTabs():boolean{
         if (!this.seoTabs){
             return false;
         }
@@ -63,20 +64,20 @@ export default class Seo extends Vue {
     }
 
     async loadSeo(category: string){
-        const seoResults = await fetch(`${config.BaseUrl}/category/${category}`);
-        if (seoResults.status != 200){
+        const { result, error } = await getCategory(category);
+
+        if(error){
             return;
         }
-        const data: SeoData = await seoResults.json();
 
-        this.seoMain = data.texts[0];
-        this.seoTabs = data.texts.slice(1);
+        this.seoMain = result.mainText;
+        this.seoTabs = result.texts;
         this.selectedTab = this.seoTabs[0].id;
 
-        this.seoData = data;
+        this.seoData = result;
 
-        setTitle(data.meta_title);
-        setDescription(data.meta_description);
-        setKeywords(data.meta_keywords);
+        setTitle(result.meta_title);
+        setDescription(result.meta_description);
+        setKeywords(result.meta_keywords);
     }
 }

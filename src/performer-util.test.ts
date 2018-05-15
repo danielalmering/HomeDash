@@ -1,16 +1,21 @@
 import * as test from 'tape';
 import { tabEnabled } from './performer-util';
-import { Performer, PerformerStatus, Role } from './models/Performer';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
+import { UserStatus, UserRole } from 'sensejs/core/models/user';
 
 const performer: Performer = {
     'username': 'Een Performer',
-    'roles': [Role.Performer],
+    'role': UserRole.Performer,
     'socketToken': 'cb644eb332cf85203179e9e20788588f',
     'language': 'nl',
     'country': 'nl',
     'description': 'Hallo lieve mannen,\n\nDe koude dagen staan weer voor de deur maar samen kunnen wij binnen een gezellig feestje van maken kom jij ook Schatje?!\nIk ben Tatiana een meid van 24 jaar. Ik hou van spannende en ondeugende dingen. lekker teasen maar vooral heerlijk samen genieten. Ook ben ik gek op geile fantasie\u00ebn. of een leuke of geile babbel. IK CAM OOK MET GEZICHT!! . Heb jij zin om met mij te genieten schatje dan wacht ik op jou en maken wij er samen een feestje van!!\n\nDikke kus',
     'safeDescription': 'Hallo leuk mannen,\n\nDe zwoele avonden komen er weer aan lekker genieten van die heerlijk zwoele avonden??\nben jij in voor een leuke beeldchat !!! ... of wil je gezellig babbelen ik wacht op jou baby!!\nXOXO tatiana',
     'nickname': 'Eem Performer',
+    'birthday': 0,
+    'email': 'test@hotmail.com',
+    'registerDate': 0,
+    'status': UserStatus.Approved,
     'location': 'nl \/  \/ ',
     'eyeColor': 'blue',
     'id': 12345,
@@ -28,35 +33,27 @@ const performer: Performer = {
     'avatar': {
         'id': 65899,
         'name': '67c60d883de48b506392d54298e5a31519122912.PNG',
+        'tags': [],
         'selected': false,
-        'safe_version': true
+        'safe_version': true,
+        'wowza_sync': false
     },
     'safe_avatar': {
         'id': 55855,
         'name': '8bff7f206ebed82d7e1f09b7bef1091502397709.JPG',
+        'tags': [],
         'selected': false,
-        'safe_version': true
-    },
-    'avatar_media': {
-        'id': 145,
-        'name': '12123_565173.mp4',
-        'selected': false,
-        'safe_version': false,
-        'wowza_sync': true
+        'safe_version': true,
+        'wowza_sync': false
     },
     'age': 25,
     'cupSize': 'medium',
     'weight': '58',
     'height': '168',
     'performerStatus': PerformerStatus.Busy,
-    'performerLanguages': 'nl;',
     'isFavourite': false,
     'isVoyeur': false,
-    'advert_numbers': [{
-        'advertNumber': 34324
-    }],
-    'mediaId': 1,
-    'userAgent': 'Chrome 63.0, Win8.1'
+    'advertId': 34324,
 };
 
 const services = ['cam', 'peek', 'email', 'sms', 'phone', 'videocall'];
@@ -132,6 +129,5 @@ test('util/tabEnabled', (assert: test.Test) => {
     //     const actual = tabEnabled(test.service, test.performer, 'de');
     //     assert.equal(actual, test.expected);
     // });
-
     assert.end();
 });

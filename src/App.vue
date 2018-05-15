@@ -79,14 +79,14 @@ export default class Cookies extends Vue {
             const hj = window.hj as any;
             registrationAttempts += 1;
 
-            if(Raven.isSetup() && hj && hj.pageVisit && hj.pageVisit.property){
-                const hotjarUserId = hj.pageVisit.property.get('userId');
+            if(Raven.isSetup() && hj && hj.pageVisit && hj.pageVisit.property && hj.pageVisit.property.key){
+                const hotjarUserId = hj.pageVisit.property.key;
 
                 Raven.captureBreadcrumb({
                     message: `Sentry session started with hotjar user ${hotjarUserId}`,
                     category: 'data'
                 });
-            } else if(registrationAttempts < 5) {
+            } else if(registrationAttempts <= 5) {
                 setTimeout(registerHotjarToSentry, 2000);
             } else {
                 Raven.captureBreadcrumb({

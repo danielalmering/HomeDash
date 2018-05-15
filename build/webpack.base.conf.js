@@ -24,7 +24,8 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-    }
+    },
+    symlinks: false
   },
   module: {
     rules: [
@@ -45,7 +46,7 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-        test: /\.ts$/,
+        test: /\.(ts|service\.ts)$/,
         loader: 'ts-loader',
         // esModule: true,
         // include: [resolve('src')],

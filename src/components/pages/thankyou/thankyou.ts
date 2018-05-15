@@ -5,15 +5,16 @@ import { getAvatarImage } from '../../../util';
 import config from '../../../config';
 
 import './thankyou.scss';
-import { Performer, PerformerStatus } from '../../../models/Performer';
 import WithRender from './thankyou.tpl.html';
+import { listFavourites } from 'sensejs/performer/favourite';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 
 @WithRender
 @Component
 export default class Thankyou extends Vue {
+    favorites: Performer[] = [];
 
     getAvatarImage = getAvatarImage;
-    favorites: Performer[] = [];
 
     mounted(){
         this.loadFavorites();
@@ -25,12 +26,11 @@ export default class Thankyou extends Vue {
     async loadFavorites(){
         const userId = this.$store.state.authentication.user.id;
 
-        const performerResults = await fetch(`${config.BaseUrl}/client/client_accounts/${this.$store.state.authentication.user.id}/favorite_performers?limit=100&offset=0`, {
-            credentials: 'include'
+        const { result } = await listFavourites(userId, {
+            limit: 100,
+            offset: 0
         });
 
-        const data = await performerResults.json();
-
-        this.favorites = data.performerAccounts.filter((performer: Performer) => performer.performerStatus === PerformerStatus.Available);
+        this.favorites = result.performerAccounts.filter((performer: Performer) => performer.performerStatus === PerformerStatus.Available);
     }
 }

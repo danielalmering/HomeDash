@@ -11,8 +11,10 @@ require('../../../../static/nanoplayer.3.min.js');
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
 import { RequestPayload } from '../../../store/session/';
-import { Performer } from '../../../models/Performer';
+import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
+import { clientSeen } from 'sensejs/session/index';
+import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 
 @WithRender
 @Component({
@@ -28,8 +30,8 @@ export default class Voyeur extends Vue {
     showFavo: boolean = false;
     showReserve: boolean = false;
 
-    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);    
-    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+    addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     get mainTile(){
         return this.$store.state.voyeur.mainTile;
@@ -75,10 +77,12 @@ export default class Voyeur extends Vue {
 
     mounted(){
         this.intervalTimer = window.setInterval(async () => {
-            const result = await fetch(`${config.BaseUrl}/session/client_seen?app=VOYEUR`, { credentials: 'include' });
+            const { error } = await clientSeen({
+                app: 'VOYEUR'
+            });
 
-            if(!result.ok){
-                this.close();
+            if(error){
+                close();
             }
         }, 5000);
 
@@ -223,7 +227,7 @@ export default class Voyeur extends Vue {
         this.$router.push({
             name: 'Videochat',
             params: {
-                id: activePerformer.advert_numbers[0].advertNumber.toString()
+                id: activePerformer.advertId.toString()
             }
         });
     }

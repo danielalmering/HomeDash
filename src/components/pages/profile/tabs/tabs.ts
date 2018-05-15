@@ -11,7 +11,7 @@ interface EmailForm {
 }
 
 import './tabs.scss';
-import { Performer, PerformerStatus } from '../../../../models/Performer';
+import { Performer, PerformerStatus, PerformerAvatar } from 'sensejs/performer/performer.model';
 import { openModal, tagHotjar } from '../../../../util';
 import notificationSocket from '../../../../socket';
 
@@ -46,7 +46,7 @@ export default class Tabs extends Vue {
         'sms': 'mobile'
     };
 
-    @Prop() performer: Performer;
+    @Prop() performer: Performer | any;
 
     mounted(){
         this.selectedTab = this.firstAvailable;
@@ -134,11 +134,11 @@ export default class Tabs extends Vue {
         if (!this.performer){
             return '0000';
         }
-        if (!this.performer.advert_numbers.length){
+        if (!this.performer.advertId){
             return '0000';
         }
 
-        return this.performer.advert_numbers[0].advertNumber.toString();
+        return this.performer.advertId.toString();
     }
 
     get ivrCode():string{

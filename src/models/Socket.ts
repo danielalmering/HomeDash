@@ -1,4 +1,4 @@
-import { PerformerStatus } from "./Performer";
+import { PerformerStatus } from 'sensejs/performer/performer.model';
 
 export interface SocketVoyeurEventArgs {
     id: string;

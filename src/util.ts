@@ -1,7 +1,7 @@
 import store from './store';
 import config from './config';
-
-import { Performer, PerformerStatus } from './models/Performer';
+import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
+import { isPeekable, isBusy } from 'sensejs/util/performer';
 
 export function getAvatarImage(performer: Performer, size: string){
 
@@ -61,12 +61,11 @@ export function getPerformerLabel(performer: Performer){
         return 'teaser-label';
     }
 
-    if(performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === true){
+    if(isPeekable(performer)){
         return 'peek-label';
     }
 
-    if(performer.performerStatus === PerformerStatus.OnCall
-        || (performer.performerStatus === PerformerStatus.Busy && performer.performer_services['peek'] === false)){
+    if(isBusy(performer)){
         return 'busy-label';
     }
 
@@ -164,7 +163,7 @@ export function match(message:any, pattern:any):boolean{
 //eg smaller("47.0.2526.111", "47.0.2530.9") => true
 function smaller(version:string, than:string):boolean{
     const versionList: number[] = toInts(version);
-    const thanList: number[] =  than.split(".").map(num => parseInt(num));
+    const thanList: number[] =  than.split('.').map(num => parseInt(num));
 
     if (! (versionList.length && thanList.length) ){
         return false;
@@ -191,7 +190,7 @@ function smaller(version:string, than:string):boolean{
 }
 
 function toInts(version:string):number[]{
-    const result = version.split(".").map(num => parseInt(num));
+    const result = version.split('.').map(num => parseInt(num));
     for(const num of result){
         if ( isNaN(num) ) return [];
     }
