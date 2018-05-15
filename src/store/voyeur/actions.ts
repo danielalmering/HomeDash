@@ -138,11 +138,11 @@ const actions = {
     },
     async swap({ commit, dispatch, state, getters }: VoyeurContext, payload: { performerId: number }){
         //If the performer is already in the main screen, we can jsut ignore this
-        console.log('hij komt hier wel');
+
         if(state.mainTile && state.mainTile.performer === payload.performerId){
             return;
         }
-        console.log('hij komt hier wel2');
+
         const tile = state.activeTiles.find(p => p.performer === payload.performerId);
 
         //If there is no loaded tile for this performer, switch another tile out for her first
