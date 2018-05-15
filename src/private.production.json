@@ -1,0 +1,10 @@
+{
+    "BaseUrl": "/api",
+    "FullApiUrl": "http://www.zuhause.com",
+    "ImageUrl": "//img.thuis.nl/files/",
+    "SocketUrl": "wss://socket.thuis.nl/",
+    "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
+    "StorageKey": "thuis",
+    "Country": "de",
+    "H5Server": "accept-stream01.thuis.nl"
+}

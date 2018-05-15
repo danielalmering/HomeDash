@@ -11,7 +11,7 @@ interface EmailForm {
 }
 
 import './tabs.scss';
-import { Performer, PerformerStatus, PerformerAvatar } from 'SenseJS/performer/performer.model';
+import { Performer, PerformerStatus, PerformerAvatar } from 'sensejs/performer/performer.model';
 import { openModal, tagHotjar } from '../../../../util';
 import notificationSocket from '../../../../socket';
 

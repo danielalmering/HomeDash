@@ -24,9 +24,9 @@ import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
 import { tagHotjar, isApple } from '../../../util';
-import { Performer } from 'SenseJS/performer/performer.model';
-import { addFavourite, removeFavourite } from 'SenseJS/performer/favourite';
-import { clientSeen } from 'SenseJS/session/index';
+import { Performer } from 'sensejs/performer/performer.model';
+import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import { clientSeen } from 'sensejs/session/index';
 import { webrtcPossible, noFlash } from 'sensejs/util/platform';
 const Platform = require('platform');
 

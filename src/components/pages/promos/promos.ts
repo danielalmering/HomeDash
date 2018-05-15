@@ -3,8 +3,8 @@ import Vue from 'vue';
 
 import config from '../../../config';
 import WithRender from './promos.tpl.html';
-import { getPromos } from 'SenseJS/consumer/Category';
-import { Promo as PromoData } from 'SenseJS/core/models/category';
+import { getPromos } from 'sensejs/consumer/category';
+import { Promo as PromoData } from 'sensejs/core/models/category';
 
 @WithRender
 @Component
@@ -29,6 +29,10 @@ export default class Promo extends Vue {
         }
 
         //Position 1 means that it's actually a promo in the CMS
+        if(!result.length){
+            return;
+        }
+
         this.promos = result.filter(promo => promo.position === 1);
     }
 }

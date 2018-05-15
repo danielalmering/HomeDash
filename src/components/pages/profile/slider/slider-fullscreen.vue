@@ -22,7 +22,7 @@
 <script lang="ts">
 import Vue, { ComponentOptions } from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { PerformerAvatar } from 'SenseJS/performer/performer.model';
+import { PerformerAvatar } from 'sensejs/performer/performer.model';
 
 import { getSliderImages } from '../../../../util';
 import NanoCosmos from './slider-player';

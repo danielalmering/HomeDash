@@ -6,7 +6,7 @@ import { User } from '../../../../../models/User';
 
 import config from '../../../../../config';
 import WithRender from './readmessage.tpl.html';
-import { getNotification, PostNotificationParams, postNotification } from 'SenseJS/consumer/notification';
+import { getNotification, PostNotificationParams, postNotification } from 'sensejs/consumer/notification';
 
 @WithRender
 @Component
