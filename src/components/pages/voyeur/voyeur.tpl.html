@@ -28,7 +28,7 @@
                 <div class="blocks__title" v-on:click="showFavo = !showFavo"><i class="fa fa-star"></i> {{ $t("voyeur.favorites") }}<span :class="{ active:!showFavo }"></span></div>
                 <ul class="blocks__list" v-if="showFavo">
                     <li v-for="favorite in favoritePerformers">
-                        <span  v-on:click="swap(favorite.id)">{{ favorite.nickname }} <i v-if="favorite.advert_numbers">({{ favorite.advert_numbers[0].advertNumber }})</i></span>
+                        <span  v-on:click="swap(favorite.id)">{{ favorite.nickname }} <i v-if="favorite.advertId">({{ favorite.advertId }})</i></span>
                         <i class="fa fa-times" aria-hidden="true" v-on:click="removeFavorite(favorite)"></i>
                     </li>
                 </ul>
@@ -37,7 +37,7 @@
 
         <div class="col-xs-12 col-sm-4">
             <div class="blocks center" v-if="mainTile">
-                <div class="blocks__title">{{ performerData.nickname }} <i>( {{performerData.advert_numbers[0].advertNumber}} )</i></div>
+                <div class="blocks__title">{{ performerData.nickname }} <i>( {{performerData.advertId}} )</i></div>
             </div>
 
             <div class="buttons" v-if="mainTile">
@@ -55,7 +55,7 @@
                 <div class="blocks__title" v-on:click="showReserve = !showReserve"><i class="fa fa-clock-o"></i> {{ $t("voyeur.reserving") }}<span :class="{ active:!showReserve }"></span></div>
                 <ul class="blocks__list" v-if="showReserve">
                     <li v-for="reservation in reservations">
-                        <span  v-on:click="swap(reservation.id)">{{ reservation.nickname }} <i v-if="reservation.advert_numbers">({{ reservation.advert_numbers[0].advertNumber }})</i></span>
+                        <span  v-on:click="swap(reservation.id)">{{ reservation.nickname }} <i v-if="reservation.advertId">({{ reservation.advertId }})</i></span>
                         <i class="fa fa-times" aria-hidden="true" v-on:click="removeReservation(reservation.id)"></i>
                     </li>
                 </ul>

@@ -258,7 +258,7 @@ export default class VideoChat extends Vue {
             next({
                 name: 'Voyeur',
                 params: {
-                    id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
+                    id: this.$store.state.session.activePerformer.advertId.toString()
                 }
             });
         } catch(ex){
@@ -422,7 +422,7 @@ export default class VideoChat extends Vue {
         this.$router.push({
             name: 'Peek',
             params: {
-                id: this.$store.state.session.activePerformer.advert_numbers[0].advertNumber.toString()
+                id: this.$store.state.session.activePerformer.advertId.toString()
             }
         });
     }
