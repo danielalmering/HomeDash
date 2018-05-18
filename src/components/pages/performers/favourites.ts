@@ -21,7 +21,7 @@ export default class Favourites extends Performers {
     async loadPerformers(){
         const userId = this.$store.state.authentication.user.id;
 
-        const { result } = await listFavourites(userId);
+        const { result } = await listFavourites(userId, this.query);
 
         this.performers = result.performerAccounts;
         this.total = result.total;
