@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="payment__method-name">
-                                {{ $t('payment.paywith') }}
+                                {{ $t('payment.paywith') }} {{ $t('payment.methods.' + paymentMethod.info) }}
                                 <span v-if="!paymentMethod.addBonus">*</span>
                             </div>
                         </a>
