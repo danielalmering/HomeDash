@@ -352,6 +352,12 @@
             "pack3": "High",
             "pack4": "XXXL"
         },
+        "methods": {
+            "paymentmethod-1-info": "iDeal",
+            "paymentmethod-2-info": "Mister Cash",
+            "paymentmethod-4-info": "Creditcard",
+            "paymentmethod-5-info": "Sofort"
+        },
         "alerts": {
             "errorIncorrectPromo": "Incorrecte promocode!",
             "errorUsedPromo": "Promocode reeds gebruikt!",
