@@ -353,7 +353,7 @@
         "methods": {
             "paymentmethod-1-info": "iDeal",
             "paymentmethod-2-info": "Mister Cash",
-            "paymentmethod-4-info": "Kreditcard",
+            "paymentmethod-4-info": "Kreditkarte",
             "paymentmethod-5-info": "Sofort Uberweisung"
         },
         "alerts": {
