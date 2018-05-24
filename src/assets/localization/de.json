@@ -327,7 +327,7 @@
     "payment": {
         "pickpackage": "Wähle ein Paket",
         "shoppingcart": "Warenkorb",
-        "methods": "Zahlungsweise",
+        "methodes": "Zahlungsweise",
         "credits": "Credits",
         "product": "Produkt",
         "quanity": "Anzahl",

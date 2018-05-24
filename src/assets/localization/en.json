@@ -328,7 +328,7 @@
     "payment": {
         "pickpackage": "Choose a package",
         "shoppingcart": "Shopping cart",
-        "methods": "Payment method",
+        "methodes": "Payment method",
         "credits": "credits",
         "product": "Product",
         "quanity": "Amount",
