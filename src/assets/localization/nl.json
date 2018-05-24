@@ -329,7 +329,7 @@
     "payment": {
         "pickpackage": "Kies een pakket",
         "shoppingcart": "Winkelwagen",
-        "methods": "Betaalmethode",
+        "methodes": "Betaalmethode",
         "credits": "credits",
         "product": "Product",
         "quanity": "Aantal",
