@@ -33,8 +33,9 @@
                         {{ $t('profile.description') }}
                     </div>
                     <div class="profile__tab-content">
-                        <p>{{ performer.description | truncate(displayFullDescription) }}</p>
-                        <a class="btn btn-orange btn-fa" :class="{ 'fa-minus': displayFullDescription, 'fa-plus': !displayFullDescription }" v-if="performer.description.length > 400" v-on:click="displayFullDescription = !displayFullDescription">
+                        <p class="hidden-xs">{{ performer.description | truncate(displayFullDescription) }}</p>
+                        <p class="visible-xs">{{ performer.description }}</p>
+                        <a class="btn btn-orange btn-fa hidden-xs" :class="{ 'fa-minus': displayFullDescription, 'fa-plus': !displayFullDescription }" v-if="performer.description.length > 400" v-on:click="displayFullDescription = !displayFullDescription">
                             <span>{{ displayFullDescription ? $t('profile.hide') : $t('profile.expand') }}</span>
                         </a>
                     </div>
