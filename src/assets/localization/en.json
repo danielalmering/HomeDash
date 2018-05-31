@@ -92,6 +92,7 @@
         "favorite-add": "Add favorite",
         "favorite-remove": "Delete favorite",
         "property": "Characteristics",
+        "description": "Description",
         "age": "Age",
         "height": "Height",
         "weight": "Weight",

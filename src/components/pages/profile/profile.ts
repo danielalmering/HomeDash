@@ -319,6 +319,21 @@ export default class Profile extends Vue {
         this.setSeoParameters();
     }
 
+    openTab(event: Event){
+        if(!event){ return }
+        const target = event.target as HTMLElement;
+        if(!target.parentElement){ return }
+        const parent = target.parentElement.lastChild as HTMLElement;
+
+        if(target.classList.contains('active')){
+            target.classList.remove('active')
+            parent.style.display = "none";
+        } else {
+            target.classList.add('active')
+            parent.style.display = "block";
+        }
+    }
+
     breastSize(cupSize:string):string{
         const knownSizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
         if (knownSizes.indexOf(cupSize) == -1){
