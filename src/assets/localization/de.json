@@ -92,6 +92,7 @@
         "favorite-add": "Favorit hinzufügen",
         "favorite-remove": "Favorit entfernen",
         "property": "Eigenschaften",
+        "description": "Beschreibung",
         "age": "Alter",
         "height": "Größe",
         "weight": "Gewicht",
@@ -327,7 +328,7 @@
     "payment": {
         "pickpackage": "Wähle ein Paket",
         "shoppingcart": "Warenkorb",
-        "methods": "Zahlungsweise",
+        "methodes": "Zahlungsweise",
         "credits": "Credits",
         "product": "Produkt",
         "quanity": "Anzahl",
@@ -349,6 +350,12 @@
             "pack2": "Medium",
             "pack3": "High",
             "pack4": "XXXL"
+        },
+        "methods": {
+            "paymentmethod-1-info": "iDeal",
+            "paymentmethod-2-info": "Mister Cash",
+            "paymentmethod-4-info": "Kreditkarte",
+            "paymentmethod-5-info": "Sofort Uberweisung"
         },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",

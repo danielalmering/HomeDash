@@ -30,13 +30,15 @@
             </div>
 
             <ul class="sidebar__content-filters">
-                <li v-t="'sidebar.recommended'"  v-if="!isVoyeurActive && defaultCategory === 'recommended'" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
-                <li v-t="'sidebar.teasers'"  v-if="!isVoyeurActive && defaultCategory === 'teasers'" :class="{ 'active': category === 'teasers' }" v-on:click="setCategory('teasers')"></li>
+                <li v-t="'sidebar.recommended'" v-if="!isVoyeurActive && defaultCategory === 'recommended'" :class="{ 'active': category === 'recommended' }" v-on:click="setCategory('recommended')"></li>
+                <li v-t="'sidebar.teasers'" :class="{ 'active': category === 'teasers' }" v-on:click="setCategory('teasers')"></li>
                 <li v-t="'sidebar.peek'" :class="{ 'active': category === 'peek' }" v-on:click="setCategory('peek')"></li>
-                <li v-t="'sidebar.favorite'" :class="{ 'active': category === 'favourites' }" v-on:click="setCategory('favourites')"></li>
+                <li class="favo" :class="{ 'active': category === 'favourites' }" v-on:click="setCategory('favourites')">
+                    <i aria-hidden="true" class="fa fa-star"></i>
+                </li>
                 <li v-t="'sidebar.voyeur'" v-if="isVoyeurActive" :class="{ 'active': category === 'voyeur' }" v-on:click="setCategory('voyeur')"></label></li>
             </ul>
-
+            
         </div>
 
         <div class="sidebar__content-bottom" :class="{ 'collapse': !toggleUserinfo }">
@@ -75,7 +77,7 @@
                         </nanocosmos>
                     </div>
                     <div class="sidebar__voyeur-misc">
-                        <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advert_numbers[0].advertNumber }}</span>
+                        <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advertId }}</span>
                         <span class="sidebar__voyeur-misc-favorite" v-on:click="toggleFavourite(tile.performer)">
                             <i class="fa fa-star" :class="{ 'is-favourite': performer(tile.performer).isFavourite }"></i>
                         </span>

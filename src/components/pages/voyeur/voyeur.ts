@@ -14,6 +14,7 @@ import { RequestPayload } from '../../../store/session/';
 import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
+import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 
 @WithRender
 @Component({
@@ -29,8 +30,8 @@ export default class Voyeur extends Vue {
     showFavo: boolean = false;
     showReserve: boolean = false;
 
-    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);    
-    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+    addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     get mainTile(){
         return this.$store.state.voyeur.mainTile;

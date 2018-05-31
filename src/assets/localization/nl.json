@@ -93,6 +93,7 @@
         "favorite-add": "Maak favoriet",
         "favorite-remove": "Favoriet verwijderen",
         "property": "Kenmerken",
+        "description": "Omschrijving",
         "age": "Leeftijd",
         "height": "Lengte",
         "weight": "Gewicht",
@@ -329,7 +330,7 @@
     "payment": {
         "pickpackage": "Kies een pakket",
         "shoppingcart": "Winkelwagen",
-        "methods": "Betaalmethode",
+        "methodes": "Betaalmethode",
         "credits": "credits",
         "product": "Product",
         "quanity": "Aantal",
@@ -351,6 +352,12 @@
             "pack2": "Medium",
             "pack3": "High",
             "pack4": "XXXL"
+        },
+        "methods": {
+            "paymentmethod-1-info": "iDeal",
+            "paymentmethod-2-info": "Mister Cash",
+            "paymentmethod-4-info": "Creditcard",
+            "paymentmethod-5-info": "Sofort"
         },
         "alerts": {
             "errorIncorrectPromo": "Incorrecte promocode!",

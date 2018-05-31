@@ -170,16 +170,18 @@ $sidebar-top-height: 315px;
         }
 
         &-filters {
+            display: table;
             list-style: none;
-            @include rem(margin, 0px 0px 10px 0px);
+            @include rem(margin, 1px auto);
             @include rem(padding, 0 10px);
             li {
                 color: $pallete-7;
-                @include rem(font-size, 12px);
+                @include rem(font-size, 11px);
                 font-weight: 600;
                 display: inline-block;
                 @include border-radius(5px);
-                @include rem(padding, 8px 6.8px);
+                @include rem(margin, 0px 5px 0px 0px);
+                @include rem(padding, 10px 4.5px);
                 border: 1px solid $pallete-16;
                 background: $pallete-13;
                 cursor: pointer;
@@ -187,6 +189,18 @@ $sidebar-top-height: 315px;
                 &.active {
                     color: $pallete-2;
                     background: $pallete-3;
+                }
+
+                &.favo {
+                    @include rem(padding, 10px 5.5px);
+                }
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
                 }
             }
         }

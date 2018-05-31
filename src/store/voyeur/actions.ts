@@ -78,7 +78,7 @@ const actions = {
         }, tileSwitchDelay);
     },
     async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
-        const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
+        const advertId = getters.performer(payload.performerId).advertId;
 
         const { result, error } = await initiate(SessionType.Video, advertId, {
             clientId: rootState.authentication.user.id,
@@ -112,7 +112,7 @@ const actions = {
         commit('setTile',  { tile, position: payload.position });
     },
     async loadMainTile({ commit, getters, rootState }: VoyeurContext, payload: { performerId: number }){
-        const advertId = getters.performer(payload.performerId).advert_numbers[0].advertNumber;
+        const advertId = getters.performer(payload.performerId).advertId;
 
         const { result, error } = await initiate(SessionType.Video, advertId, {
             clientId: rootState.authentication.user.id,
@@ -138,6 +138,7 @@ const actions = {
     },
     async swap({ commit, dispatch, state, getters }: VoyeurContext, payload: { performerId: number }){
         //If the performer is already in the main screen, we can jsut ignore this
+
         if(state.mainTile && state.mainTile.performer === payload.performerId){
             return;
         }
@@ -158,7 +159,7 @@ const actions = {
 
         const { error } = await switchVoyeur(payload.performerId);
 
-        if(error){
+        if(!error){
             commit('swap', payload.performerId);
         }
     },

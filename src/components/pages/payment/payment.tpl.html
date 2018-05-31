@@ -89,7 +89,7 @@
 
             <div class="payment__title">
                 <i class="fa fa-money"></i>
-                <span v-t="'payment.methods'"></span>
+                <span v-t="'payment.methodes'"></span>
             </div>
 
             <div class="payment__method">
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="payment__method-name">
-                                {{ $t('payment.paywith') }}
+                                {{ $t('payment.paywith') }} {{ $t('payment.methods.' + paymentMethod.info) }}
                                 <span v-if="!paymentMethod.addBonus">*</span>
                             </div>
                         </a>

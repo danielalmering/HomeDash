@@ -17,6 +17,7 @@ import { listRecommended, listBusy } from 'sensejs/performer';
 import { listFavourites } from 'sensejs/performer/favourite';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { isInSession, isOutOfSession } from 'sensejs/util/performer';
+import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 
 type SidebarCategory = 'recommended' | 'teasers' | 'peek' | 'favourites' | 'voyeur';
 
@@ -58,8 +59,8 @@ export default class Sidebar extends Vue {
         'peek': this.loadPeek
     };
 
-    addFavourite = (performer: Performer) => this.$store.dispatch('addFavourite', performer.id).then(() => performer.isFavourite = true);
-    removeFavourite = (performer: Performer) => this.$store.dispatch('removeFavourite', performer.id).then(() => performer.isFavourite = false);
+    addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
+    removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     get displaySidebar(){
         return this.$store.state.displaySidebar;
@@ -380,11 +381,17 @@ export default class Sidebar extends Vue {
     }
 
     async loadTeasers() {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}&voyeur=2`, {
-            credentials: 'include'
-        });
+        const query = {
+            limit: 20,
+            offset: 0,
+            performer: this.query.performer,
+            search: '',
+            voyeur: 2
+        };
 
-        return performerResults.json();
+        const { result } = await listBusy(query);
+
+        return result;
     }
 
     async loadFavorites(){
