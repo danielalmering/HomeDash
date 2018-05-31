@@ -381,11 +381,17 @@ export default class Sidebar extends Vue {
     }
 
     async loadTeasers() {
-        const performerResults = await fetch(`${config.BaseUrl}/performer/performer_accounts/busy?limit=${this.query.limit}&offset=${this.query.offset}&performer=${this.query.performer}&search=${this.query.search}&voyeur=2`, {
-            credentials: 'include'
-        });
+        const query = {
+            limit: 20,
+            offset: 0,
+            performer: this.query.performer,
+            search: '',
+            voyeur: 2
+        };
 
-        return performerResults.json();
+        const { result } = await listBusy(query);
+
+        return result;
     }
 
     async loadFavorites(){
