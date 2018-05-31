@@ -26,13 +26,14 @@
                 </div>
             </div>
 
-            <div class="top__banner-credits hidden-xs" v-if="!info.marketing.current && fees" v-on:click="goPayment()">
+            <div class="top__banner-credits " v-if="!info.marketing.current && fees" v-on:click="goPayment()">
                 <div class="discount" v-for="fee in fees">
                     <span class="discount__percent">{{ fee.percentage }}</span><i>%</i></span>
                     <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="'top.banner.credits'"></i></span></span>
                     <span class="discount__buy">{{ $t('top.banner.purchase') }} €{{ fee.amount/100 }} </span>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
