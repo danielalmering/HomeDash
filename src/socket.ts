@@ -82,7 +82,7 @@ export class NotificationSocket {
             reconnection: false, //handle reconnections are self (ping pong)
             reconnectionDelay: 5000,
             reconnectionDelayMax: 10000,
-            transports: ['polling', 'websocket']
+            transports: ['websocket', 'polling']
         };
 
         //Check if the socket connection is alive on interval
