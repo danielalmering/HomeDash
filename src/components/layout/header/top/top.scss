@@ -138,6 +138,13 @@
                     letter-spacing: -1px;
                 }
             }
+
+            // Mobile Credits
+            @include breakpoint(xs) {
+                display: table;
+                float: unset;
+                @include rem(margin, 5px auto);
+            }
         }
 
 
