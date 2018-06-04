@@ -332,6 +332,15 @@ $sidebar-top-height: 315px;
             height: 187px !important;
         }
 
+        &-click {
+            position: absolute;
+            left: 0;
+            height: 140px;
+            z-index: 999;
+            top: 0px;
+            width: 230px;
+        }
+
         &-misc {
 
             &-advert {

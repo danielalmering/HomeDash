@@ -19,7 +19,8 @@
         display: table;
         width: 100%;
         position: relative;
-        @include rem(padding, 50px 0px 50px 0px);
+        @include rem(padding, 50px 0px 10px 0px);
+
         @include breakpoint(xs) {
             @include rem(padding, 20px 0px 0px 0px);
         }
@@ -139,6 +140,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             @include rem(padding, 5px 0px);
+            word-break: break-word;
 
             p {
                 color: $pallete-7;

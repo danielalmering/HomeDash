@@ -63,7 +63,8 @@
 
                 <!-- Voyeurlist -->
                 <li class="sidebar__voyeur" v-if="category === 'voyeur'" v-for="tile in voyeurTiles">
-                    <div v-on:click="swap(tile.performer)">
+                    <div class="sidebar__voyeur-click" v-on:click="swap(tile.performer)"></div>
+                    <div>
                         <!-- <jsmpeg
                             :wowza="tile.streamData.wowza"
                             :playStream="tile.streamData.playStream"

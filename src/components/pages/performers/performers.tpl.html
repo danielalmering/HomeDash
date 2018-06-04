@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="performers__misc" v-if="performer">
-                        <span class="performers__misc-advert">{{ performer.advertId }}</span>
+                        <span class="performers__misc-advert hidden-xs">{{ performer.advertId }}</span>
                         <span class="performers__misc-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                             <i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i>
                         </span>
