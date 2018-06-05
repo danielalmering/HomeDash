@@ -98,4 +98,3 @@ export default class Cookies extends Vue {
     }
 }
 </script>
-
