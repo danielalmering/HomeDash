@@ -116,28 +116,6 @@
             height: 51px;
         }
 
-        .colum {
-            display: table;
-            width: 100%;
-            background: $pallete-11;
-            color: $pallete-7;
-            @include rem(padding, 10px);
-            border: 2px solid rgba(125, 106, 109, 0.12);
-            margin-left: -20px;
-        }
-
-        .popout {
-            position: absolute;
-            z-index: 2;
-            left: 20px;
-            top: 20px;
-            width: calc(100% - 40px);
-            @include rem(padding, 12px);
-            background: $pallete-1;
-            border: 2px solid $pallete-3;
-            .btn { display: inherit }
-        }
-
         &-table {
             width: 100%;
             tr {
