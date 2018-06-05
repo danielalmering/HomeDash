@@ -81,15 +81,11 @@ export class NotificationSocket {
             forceNew: false,
             reconnection: false, //handle reconnections are self (ping pong)
             reconnectionDelay: 5000,
-            reconnectionDelayMax: 10000/*,
-            transports: ['websocket', 'polling']*/
+            reconnectionDelayMax: 10000,
+            transports: ['polling','websocket']
         };
 
         //Check if the socket connection is alive on interval
-        if(!this.intervalHandle){
-            this.intervalHandle = setInterval(this.checkSocketAlive.bind(this), this.checkAliveInterval);
-        }
-
         if(this.isConnected()){
             throw new Error('You already have an active socket connection. Close it before proceeding');
         }
@@ -222,7 +218,11 @@ export class NotificationSocket {
             console.info('[NotificationSocket] Connected with user: ', user);
 
             this.processEvent('authenticated', {});
-        }, 1000);
+
+            if(!this.intervalHandle){
+                this.intervalHandle = setInterval(this.checkSocketAlive.bind(this), this.checkAliveInterval);
+            }
+        }, 3000);
     }
 
     private socketDisconnect(reason: string) {
