@@ -120,7 +120,7 @@ export function isApple(platform:Platform):boolean{
     const apples = [
         {
             os:{
-                famlily: 'iOS'
+                family: 'iOS'
             }
         },
         {
@@ -128,6 +128,18 @@ export function isApple(platform:Platform):boolean{
                 family: 'OS X'
             }
         }
+    ];
+    console.log(apples);
+    return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isIOS(platform:Platform):boolean{
+    const apples = [
+        {
+            os:{
+                family: 'iOS'
+            }
+        } 
     ];
 
     return apples.find( pattern => match(platform, pattern) ) != null;
