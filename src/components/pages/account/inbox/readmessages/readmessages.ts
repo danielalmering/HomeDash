@@ -26,7 +26,7 @@ export default class Readmessages extends Vue {
     getPerformerStatus = getPerformerStatus;
 
     query = {
-        limit: 20,
+        limit: 5,
         offset: 0
     };
 
@@ -53,34 +53,22 @@ export default class Readmessages extends Vue {
         }
     }
 
-    handleScroll(event: any){
+    handleScroll(el: any){
+        const elHeight = el.target.scrollTop + el.target.offsetHeight;
 
-        console.log(event);
-
-        if(event === null){ return }
-
-        if ((event.target.scrollTop + event.target.offsetHeight) >= event.target.scrollHeight) {
-            this.loadMessages();
+        if(elHeight >= el.target.scrollHeight){
+            const pages = Math.round(this.total / this.query.limit);
+            if((pages * this.query.limit) > this.query.offset) {
+                this.query.offset = this.query.offset + this.query.limit;
+                this.loadMessages();
+            }
         }
-
-        // if(window.scrollY < 1){
-        //     this.query.offset = this.query.offset - 20;
-        //     this.loadMessages();
-        //     console.log(this.query.offset);
-        // }
-
-        // if(window.scrollY === window.pageYOffset){
-        //     this.query.offset = this.query.offset + 20;
-        //     this.loadMessages();
-        //     console.log(' offset plus');
-        // }
     }
 
     async loadMessages(){
         const messageType   = this.$route.params.messageType;
         const messageId     = parseInt(this.$route.params.messageId);
         this.subject        = this.$route.params.messageSubject;
-
 
         const { result, error } = await getNotificationThread(messageType, messageId, this.query);
 
@@ -93,7 +81,10 @@ export default class Readmessages extends Vue {
             return;
         }
 
-        this.messages = result.messages;
+        for (let message of result.messages) {
+            this.messages.push(message);
+        }
+
         this.performer = result.performer;
         this.client = result.client;
         this.total = + result.total
@@ -127,7 +118,16 @@ export default class Readmessages extends Vue {
             class: 'success'
         });
 
-        this.loadMessages();
+        const addMessage = {
+            account_id: this.messages[0].account_id,
+            date: result.date,
+            folder: result.status,
+            content: result.content,
+            id: result.id,
+            type: 'email'
+        }
+
+        this.messages.push(addMessage);
 
         this.reply = '';
     }
@@ -160,11 +160,10 @@ export default class Readmessages extends Vue {
             class: 'success'
         });
 
-        this.loadMessages();
+        notification.billing_status = 'PAID';
     }
 
     async removeMessage(notification: NotificationThreadsMessage){
-
         const { result, error } = await removeNotificationThread(notification.type, notification.id, this.query);
 
         if(error){
@@ -181,7 +180,9 @@ export default class Readmessages extends Vue {
             class: 'success'
         });
 
-        this.messages = result.messages;
+        const removeIndex = this.messages.map(function(message: NotificationThreadsMessage) { return message.id; }).indexOf(notification.id);
+        this.messages.splice(removeIndex, 1);
+
         this.total = + result.total
     }
 }

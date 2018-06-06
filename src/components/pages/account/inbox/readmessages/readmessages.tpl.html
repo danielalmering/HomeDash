@@ -12,9 +12,9 @@
     </h1>
     <div class="account__view">
 
-        <h3 v-if="subject">{{ subject }}</h3>
+        <h3 class="readmessagesheading" v-if="subject">{{ subject }}</h3>
 
-        <div class="readmessages" v-scroll="handleScroll($event)">
+        <div class="readmessages" v-scroll="handleScroll">
 
             <div class="readmessages__item" v-for="message in messages" :class="{ 'even': message.sent_by === 'PERFORMER' }">
 

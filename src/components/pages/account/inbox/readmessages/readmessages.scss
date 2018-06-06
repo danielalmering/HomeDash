@@ -9,12 +9,14 @@
 
 // Styling
 
-.readmessages {
-    max-height: 685px;
+.readmessagesheading {
+    font-size: 1.7rem !important;
+}
 
-    h3 {
-        @include rem(font-size, 18px);
-    }
+.readmessages {
+    overflow: auto;
+    max-height: 300px;
+    @include rem(padding, 10px);
 
     &__item {
         position: relative;
