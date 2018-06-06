@@ -37,7 +37,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         &-object {
             position: absolute;
             top: 0px;
-            display: block;
+            display: table;
             width: 100%;
             height: auto;
 
@@ -67,6 +67,14 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
 
             .nanocosmos {
                 div { width: 80px !important; height: 80px !important; }
+                video {
+                    @media screen and (max-width: 992px) {
+                        transform: none !important;
+                        position: relative !important;
+                        left: 0px !important;
+                        top: 0px !important;
+                    }
+                }
             }
 
             div, video {

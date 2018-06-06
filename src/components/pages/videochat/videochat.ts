@@ -98,9 +98,9 @@ export default class VideoChat extends Vue {
         // if ( this.sessionType !== SessionType.Peek && !hasWebAudio() ){
         //     return 'rtmp';
         // }
+        
         const platform = Platform.parse(navigator.userAgent);
         if(isIOS(platform)){
-            console.log('using nanocosmos on ios device');
             return 'nanocosmos';
         }
 
