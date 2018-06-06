@@ -116,11 +116,10 @@ export function noFlash(platform:Platform):boolean{
 }
 
 export function isApple(platform:Platform):boolean{
-    console.log(platform);
     const apples = [
         {
             os:{
-                famlily: 'iOS'
+                family: 'iOS'
             }
         },
         {
@@ -128,6 +127,17 @@ export function isApple(platform:Platform):boolean{
                 family: 'OS X'
             }
         }
+    ];
+    return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isIOS(platform:Platform):boolean{
+    const apples = [
+        {
+            os:{
+                family: 'iOS'
+            }
+        } 
     ];
 
     return apples.find( pattern => match(platform, pattern) ) != null;
