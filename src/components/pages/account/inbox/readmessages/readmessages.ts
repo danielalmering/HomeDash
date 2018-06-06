@@ -2,7 +2,6 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 import { getAvatarImage, getPerformerStatus } from '../../../../../util';
 import { Route } from 'vue-router';
-import Pagination from 'sensejs/vue/components/pagination';
 import { User } from '../../../../../models/User';
 
 import config from '../../../../../config';
@@ -13,11 +12,7 @@ import { getNotificationThread, PostNotificationParams, postNotification, payNot
 
 import './readmessages.scss';
 @WithRender
-@Component({
-    components: {
-        pagination: Pagination
-    }
-})
+@Component
 export default class Readmessages extends Vue {
 
     messages: any = [];
@@ -58,8 +53,27 @@ export default class Readmessages extends Vue {
         }
     }
 
-    pageChanged(){
-        this.loadMessages();
+    handleScroll(event: any){
+
+        console.log(event);
+
+        if(event === null){ return }
+
+        if ((event.target.scrollTop + event.target.offsetHeight) >= event.target.scrollHeight) {
+            this.loadMessages();
+        }
+
+        // if(window.scrollY < 1){
+        //     this.query.offset = this.query.offset - 20;
+        //     this.loadMessages();
+        //     console.log(this.query.offset);
+        // }
+
+        // if(window.scrollY === window.pageYOffset){
+        //     this.query.offset = this.query.offset + 20;
+        //     this.loadMessages();
+        //     console.log(' offset plus');
+        // }
     }
 
     async loadMessages(){
