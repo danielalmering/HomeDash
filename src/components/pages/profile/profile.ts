@@ -241,6 +241,7 @@ export default class Profile extends Vue {
         const toSend = {...defaults, ...payload};
 
         if(!notificationSocket.isConnected()){
+          
             notificationSocket.connect();
 
             const event = notificationSocket.subscribe('authenticated', () => {

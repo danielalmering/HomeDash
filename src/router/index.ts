@@ -11,7 +11,7 @@ import Account from '../components/pages/account/account';
 import Editdata from '../components/pages/account/editdata/editdata';
 import History from '../components/pages/account/history/history';
 import Inbox from '../components/pages/account/inbox/inbox';
-import Readmessage from '../components/pages/account/inbox/readmessage/readmessage';
+import Readmessages from '../components/pages/account/inbox/readmessages/readmessages';
 import Newmessage from '../components/pages/account/inbox/newmessage/newmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
 import Promos from '../components/pages/promos/promos';
@@ -58,9 +58,9 @@ const routes = [{
                         component: Inbox
                     },
                     {
-                        path: 'notifications/:performerid/:messageid/',
-                        name: 'Readmessage',
-                        component: Readmessage
+                        path: 'notifications/:messageid/',
+                        name: 'Readmessages',
+                        component: Readmessages
                     },
                     {
                         path: 'new-message/:advertId?/',

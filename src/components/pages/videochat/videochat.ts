@@ -23,7 +23,7 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { tagHotjar, isApple } from '../../../util';
+import { tagHotjar, isApple, isIOS } from '../../../util';
 import { Performer } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import { clientSeen } from 'sensejs/session/index';
@@ -98,6 +98,12 @@ export default class VideoChat extends Vue {
         // if ( this.sessionType !== SessionType.Peek && !hasWebAudio() ){
         //     return 'rtmp';
         // }
+        
+        const platform = Platform.parse(navigator.userAgent);
+        if(isIOS(platform)){
+            return 'nanocosmos';
+        }
+
         return 'jsmpeg';
     }
 
@@ -424,7 +430,7 @@ export default class VideoChat extends Vue {
         } catch(e){
             this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
         }
-        
+
         this.$store.commit('toggleSwitchModal', { state: false });
 
         this.$router.push({

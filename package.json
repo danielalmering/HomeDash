@@ -23,7 +23,7 @@
     "jsmpeg": "git+https://github.com/EpicOkapi/jsmpeg.git",
     "platform": "^1.3.4",
     "raven-js": "^3.21.0",
-    "sensejs": "git+ssh://git@github.com/Sensemakers-NL/SenseJS.git#websocket",
+    "sensejs": "git+ssh://git@github.com/Sensemakers-NL/SenseJS.git",
     "socket.io-client": "^1.7.4",
     "swfobject": "^2.2.1",
     "typedoc": "^0.10.0",
