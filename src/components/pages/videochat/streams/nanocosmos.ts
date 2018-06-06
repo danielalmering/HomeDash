@@ -36,10 +36,10 @@ export default class NanoCosmos extends Stream {
     public autoplay: Boolean;
 
     //style properties
-    @Prop({ default: '100%', type: String})
+    @Prop({ default: 'auto', type: String})
     public width: string;
 
-    @Prop({ default: '100%', type: String})
+    @Prop({ default: 'auto', type: String})
     public height: string;
 
     @Prop({ default: '4/3', type: String})
