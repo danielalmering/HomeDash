@@ -8,7 +8,7 @@ import WithRender from './newmessage.tpl.html';
 import notificationSocket from '../../../../../socket';
 import { tagHotjar } from '../../../../../util';
 import { listUsernames, SimplePerformer } from 'sensejs/performer';
-import { postNotification, PostNotificationParams } from 'sensejs/consumer/notification';
+import { postNotificationThread, PostNotificationParams } from 'sensejs/consumer/notification';
 
 interface MessageForm {
     subject: string;
@@ -89,16 +89,15 @@ export default class Newmessage extends Vue {
             return;
         }
 
-        const message: PostNotificationParams = {
-            clientid: { id: user.id },
+        let message = {
+            account_id: this.selectedPerformer,
             content: this.message.content,
-            performer_account: { id: this.selectedPerformer },
-            sent_by: 'CLIENT',
-            status: 'INBOX',
+            type: 'email',
+            reply_id: 0,
             subject: this.message.subject
         };
 
-        const { result, error } = await postNotification(message);
+        const { result, error } = await postNotificationThread(message);
 
         if(!error){
             tagHotjar('MESSAGE_SEND');
