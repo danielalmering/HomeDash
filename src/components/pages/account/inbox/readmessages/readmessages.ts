@@ -154,6 +154,8 @@ export default class Readmessages extends Vue {
 
         tagHotjar('MESSAGE_PAID');
 
+        this.$store.dispatch('getSession');
+
         this.$store.dispatch('openMessage', {
             content: 'account.alerts.succesInboxMessagePay',
             class: 'success'
