@@ -14,8 +14,6 @@
 }
 
 .readmessages {
-    overflow: auto;
-    max-height: 300px;
     @include rem(padding, 10px);
 
     &__item {
@@ -56,6 +54,7 @@
             width: 100%;
             color: $pallete-2;
             font-weight: 600;
+            word-break: break-all;
         }
 
         span {

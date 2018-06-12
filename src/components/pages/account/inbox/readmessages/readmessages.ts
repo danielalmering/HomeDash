@@ -8,18 +8,18 @@ import config from '../../../../../config';
 import WithRender from './readmessages.tpl.html';
 import { tagHotjar } from '../../../../../util';
 import { NotificationThreadsMessage } from 'sensejs/core/models/notification';
-import { getNotificationThread, PostNotificationParams, postNotification, payNotification, removeNotificationThread } from 'sensejs/consumer/notification';
+import { getNotificationThread, PostNotificationParams, postNotificationThread, payNotification, removeNotificationThread } from 'sensejs/consumer/notification';
 
 import './readmessages.scss';
 @WithRender
 @Component
 export default class Readmessages extends Vue {
 
+    firstThreadMessage: NotificationThreadsMessage;
     messages: any = [];
     message: any;
     performer: any;
     client: any;
-    subject: string = '';
     reply: string = '';
     total: number = 0;
 
@@ -31,7 +31,7 @@ export default class Readmessages extends Vue {
     };
 
     async mounted(){
-        await this.loadMessages();
+        await this.loadMessages(true);
         await this.$store.dispatch('getSession');
     }
 
@@ -49,26 +49,28 @@ export default class Readmessages extends Vue {
 
     get getName(){
         return (sent_by: string) => {
-            return (sent_by === 'PERFORMER') ? this.performer.nickname : this.client.username;
+            const client = this.client ? this.client.username : 'SMS';
+            return (sent_by === 'PERFORMER') ? this.performer.nickname : client;
         }
     }
 
     handleScroll(el: any){
-        const elHeight = el.target.scrollTop + el.target.offsetHeight;
+        const scrollTop = el.srcElement.scrollingElement.scrollTop;
+        const scrollHeight = el.srcElement.scrollingElement.scrollHeight;
+        const bodyHeight = el.srcElement.scrollingElement.offsetHeight;
 
-        if(elHeight >= el.target.scrollHeight){
+        if((scrollHeight - scrollTop) === bodyHeight){
             const pages = Math.round(this.total / this.query.limit);
             if((pages * this.query.limit) > this.query.offset) {
                 this.query.offset = this.query.offset + this.query.limit;
-                this.loadMessages();
+                this.loadMessages(false);
             }
         }
     }
 
-    async loadMessages(){
+    async loadMessages(inherit: boolean){
         const messageType   = this.$route.params.messageType;
         const messageId     = parseInt(this.$route.params.messageId);
-        this.subject        = this.$route.params.messageSubject;
 
         const { result, error } = await getNotificationThread(messageType, messageId, this.query);
 
@@ -81,28 +83,36 @@ export default class Readmessages extends Vue {
             return;
         }
 
-        for (let message of result.messages) {
-            this.messages.push(message);
-        }
-
         this.performer = result.performer;
         this.client = result.client;
         this.total = + result.total
+
+        if(inherit){
+            this.firstThreadMessage = result.messages[0];
+            this.messages = result.messages;
+            this.messages.reverse();
+            return;
+        }
+
+        for (let message of result.messages) {
+            this.messages.unshift(message);
+        }
     }
 
-    async sendMessage(){
-        const user: User = this.$store.state.authentication.user;
+    async sendMessage(message: NotificationThreadsMessage){
+        if(this.reply === ''){
+            return;
+        }
 
-        const replyMessage: PostNotificationParams = {
-            clientid: { id: user.id  },
+        let reply = {
+            account_id: message.account_id,
             content: this.reply,
-            performer_account: { id: this.messages[0].account_id },
-            sent_by: 'CLIENT',
-            status: 'INBOX',
-            subject: this.subject
+            type: message.type,
+            reply_id: message.id,
+            subject: message.subject
         };
 
-        const { result, error } = await postNotification(replyMessage);
+        const { result, error } = await postNotificationThread(reply);
 
         if(error){
             this.$store.dispatch('openMessage', {
@@ -118,16 +128,7 @@ export default class Readmessages extends Vue {
             class: 'success'
         });
 
-        const addMessage = {
-            account_id: this.messages[0].account_id,
-            date: result.date,
-            folder: result.status,
-            content: result.content,
-            id: result.id,
-            type: 'email'
-        }
-
-        this.messages.push(addMessage);
+        this.messages.push(result);
 
         this.reply = '';
     }
@@ -153,13 +154,12 @@ export default class Readmessages extends Vue {
 
         tagHotjar('MESSAGE_PAID');
 
-        this.$store.dispatch('getSession');
-
         this.$store.dispatch('openMessage', {
             content: 'account.alerts.succesInboxMessagePay',
             class: 'success'
         });
 
+        notification.content = result.content;
         notification.billing_status = 'PAID';
     }
 
