@@ -14,12 +14,12 @@
     <div class="account__view">
         <table class="account__view-table">
             <tr v-for="(notification, index) in notifications" :key="notification.id" :class="{ 'even': index % 2 === 0 }">
-                <!-- <td width="5%" v-on:click="notification.read_status === 'OLD'">
-                    <i class="fa" :class="{ 'fa-square-o': notification.read_status != 'NEW', 'fa-check-square-o': notification.read_status === 'NEW' }"></i>
-                </td> -->
+                <td width="5%">
+                    <i class="fa" :class="{ 'fa-phone': notification.type === 'sms', 'fa-envelope': notification.type === 'email' }"></i>
+                </td>
                 <td width="50%">
                     <a v-on:click.prevent="openMessage(notification)">
-                        <span>{{ notification.type }}</span>
+                        <span>{{ notification.username }}</span>
                         <p :class="{ 'active': newNotifications(notification.read_status) }">{{ notification.subject }}</p>
                     </a>
                 </td>
