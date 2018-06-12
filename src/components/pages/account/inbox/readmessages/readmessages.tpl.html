@@ -12,7 +12,7 @@
     </h1>
     <div class="account__view">
 
-        <h3 class="readmessagesheading" v-if="subject">{{ subject }}</h3>
+        <h3 class="readmessagesheading" v-if="firstThreadMessage">{{ firstThreadMessage.subject }}</h3>
 
         <div class="readmessages" v-scroll="handleScroll">
 
@@ -40,7 +40,7 @@
         </div>
 
         <div class="form">
-            <form class="row" v-on:submit.prevent="sendMessage">
+            <form class="row" v-on:submit.prevent="sendMessage(firstThreadMessage)" v-if="firstThreadMessage && firstThreadMessage.sent_by === 'PERFORMER'">
                 <div class="col-xs-12">
                     <div class="form__group">
                         <textarea v-model="reply"></textarea>
