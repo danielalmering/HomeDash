@@ -8,8 +8,8 @@ import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './inbox.tpl.html';
 import { tagHotjar } from '../../../../util';
-import { Notification } from 'sensejs/core/models/notification';
-import { getNotifications, removeNotifications, payNotification } from 'sensejs/consumer/notification';
+import { NotificationThreadsMessage, Notification } from 'sensejs/core/models/notification';
+import { getNotificationThreads, payNotification } from 'sensejs/consumer/notification';
 
 @WithRender
 @Component({
@@ -19,7 +19,7 @@ import { getNotifications, removeNotifications, payNotification } from 'sensejs/
 })
 export default class Inbox extends Vue {
 
-    notifications: Notification[] = [];
+    notifications: NotificationThreadsMessage[] = [];
     paymentDialogs: number[] = [];
     total: number = 0;
     messageSocket: number;
@@ -29,15 +29,9 @@ export default class Inbox extends Vue {
         offset: 0
     };
 
-    get hasPaymentDialog(){
-        return (id: number) => {
-            return this.paymentDialogs.indexOf(id) > -1;
-        };
-    }
-
-    get creditsPerType(){
-        return (type: string) => {
-            return this.$store.state.info[`credits_per_${type.toLocaleLowerCase()}`];
+    get newNotifications(){
+        return (status: string) => {
+            return status.search("NEW")  ? false : true;
         }
     }
 
@@ -58,40 +52,10 @@ export default class Inbox extends Vue {
         notificationSocket.unsubscribe(this.messageSocket);
     }
 
-    async removeMessages(){
-        const deletedMessages = this.notifications.filter(n => n.checked);
-
-        if(deletedMessages.length === 0){
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.errorInboxNoSelected',
-                class: 'error'
-            });
-            return;
-        }
-
-        const { result, error } = await removeNotifications(deletedMessages);
-
-        if(error){
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.errorInboxRemove',
-                class: 'error'
-            });
-
-            return;
-        }
-
-        this.$store.dispatch('openMessage', {
-            content: 'account.alerts.successInboxRemove',
-            class: 'success'
-        });
-
-        this.pageChanged();
-    }
-
     async loadInbox(){
         const user: User = this.$store.state.authentication.user;
 
-        const { result, error } = await getNotifications(user.id, this.query);
+        const { result, error } = await getNotificationThreads(this.query);
 
         if(error){
             this.$store.dispatch('openMessage', {
@@ -102,58 +66,18 @@ export default class Inbox extends Vue {
             return;
         }
 
-        result.notifications.forEach((notification: Notification) => notification.checked = false);
-
-        this.notifications = result.notifications;
+        this.notifications = result.messages;
         this.total = + result.total
     }
 
-    openMessage(notification: Notification, force = false){
-
-        if(notification.status !== 'NEW' || force){
-
-            this.$router.push({
-                name: 'Readmessage',
-                params: {
-                    messageid: notification.id.toString(),
-                    performerid: notification.performer_id.toString()
-                }
-            });
-
-            return;
-        }
-
-        this.paymentDialogs.push(notification.id);
-    }
-
-    async payMessage(notification: Notification){
-        const user: User = this.$store.state.authentication.user;
-
-        const payload = {
-            serviceType: notification.type.toUpperCase(),
-            emailId: notification.id
-        };
-
-        const { result, error } = await payNotification(user.id, notification.performer_id, payload);
-
-        if(error){
-            this.$store.dispatch('openMessage', {
-                content: 'account.alerts.errorInboxMessagePay',
-                class: 'error'
-            });
-
-            return;
-        }
-
-        tagHotjar('MESSAGE_PAID');
-
-        this.$store.dispatch('getSession');
-
-        this.$store.dispatch('openMessage', {
-            content: 'account.alerts.succesInboxMessagePay',
-            class: 'success'
+    openMessage(notification: NotificationThreadsMessage){
+        this.$router.push({
+            name: 'Readmessages',
+            params: {
+                messageType: notification.type.toString(),
+                messageId: notification.id.toString(),
+                messageSubject: notification.subject.toString()
+            }
         });
-
-        this.openMessage(notification, true);
     }
 }
