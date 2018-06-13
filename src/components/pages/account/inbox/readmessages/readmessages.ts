@@ -54,17 +54,11 @@ export default class Readmessages extends Vue {
         }
     }
 
-    handleScroll(el: any){
-        const scrollTop = el.srcElement.scrollingElement.scrollTop;
-        const scrollHeight = el.srcElement.scrollingElement.scrollHeight;
-        const bodyHeight = el.srcElement.scrollingElement.offsetHeight;
-
-        if((scrollHeight - scrollTop) === bodyHeight){
-            const pages = Math.round(this.total / this.query.limit);
-            if((pages * this.query.limit) > this.query.offset) {
-                this.query.offset = this.query.offset + this.query.limit;
-                this.loadMessages(false);
-            }
+    loadMore(){
+        const pages = Math.round(this.total / this.query.limit);
+        if((pages * this.query.limit) > this.query.offset) {
+            this.query.offset = this.query.offset + this.query.limit;
+            this.loadMessages(false);
         }
     }
 

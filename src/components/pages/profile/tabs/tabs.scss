@@ -123,39 +123,52 @@
             .numbers {
                 position: relative;
                 display: block;
-                line-height: 70%;
-                color: $pallete-3;
-                font-weight: 600;
-                @include rem(font-size,20px);
-                @include rem(padding, 5px 0px 0px 0px);
+                @include rem(padding, 2px 0px);
+                
 
-                i { 
+                &__flag {
                     float: left; 
                     @include rem(margin, 0px 10px 0px 0px);
                 }
 
-                span {
-                    display: block;
-                    font-weight: 400;
-                    color: $pallete-2;
-                    @include rem(font-size,9px);
-                    @include rem(padding, 5px 6px 0px 6px);
-                    div {
-                        display: inline-block;
-
-                    }
-
-                    b {
-                        @include rem(font-size,11px);
-                    }
+                &__icon {
+                    float: left;
+                    @include rem(font-size, 20px);
+                    width: 15px;
+                    text-align: center;
+                    color: $pallete-3;
+                    @include rem(margin, 0px 10px 0px 0px);
                 }
 
-                strong {
+                &__nr {
+                    color: $pallete-3;
+                    font-weight: 600;
+                    @include rem(font-size,20px);
+                }
+
+                &__happyhour {
                     text-transform: capitalize;
                     font-weight: 700;
                     color: $pallete-3;
                     @include rem(font-size,12px);
                     font-style: italic;
+                }
+
+                &__cost {
+                    display: inline-block;
+                    color: $pallete-2;
+                    font-weight: 300;
+                    @include rem(font-size,11px);
+                    @include rem(padding, 0px 5px);
+                }
+
+                &__desc {
+                    display: block;
+                    font-style: normal;
+                    font-weight: 300;
+                    color: $pallete-2;
+                    @include rem(font-size, 8px);
+                    line-height: 8px;
                 }
             }
 
