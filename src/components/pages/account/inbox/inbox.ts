@@ -37,7 +37,6 @@ export default class Inbox extends Vue {
 
     async mounted(){
         await this.loadInbox();
-        await this.$store.dispatch('getSession');
 
         this.messageSocket = notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
             this.loadInbox();
@@ -75,8 +74,7 @@ export default class Inbox extends Vue {
             name: 'Readmessages',
             params: {
                 messageType: notification.type.toString(),
-                messageId: notification.id.toString(),
-                messageSubject: notification.subject.toString()
+                messageId: notification.id.toString()
             }
         });
     }

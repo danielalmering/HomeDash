@@ -58,7 +58,7 @@ const routes = [{
                         component: Inbox
                     },
                     {
-                        path: 'notifications/:messageid/',
+                        path: 'notifications/:messageId/:messageType',
                         name: 'Readmessages',
                         component: Readmessages
                     },

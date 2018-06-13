@@ -10,7 +10,9 @@
             "cpm-1": "pm",
             "pm": "pm",
             "nr-0": "pm",
-            "nr-1": "pm"
+            "nr-1": "pm",
+            "nrdesc-0": "",
+            "nrdesc-1": ""
         },
         "banner": {
             "happyhour": "HappyHour",
@@ -258,6 +260,7 @@
         "pushmessages": "Receive push messages",
         "datetill": "Date till",
         "datefrom": "Date from",
+        "readold": "Read more..",
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
             "errorEditData": "Your account has not been edited successfully!",
