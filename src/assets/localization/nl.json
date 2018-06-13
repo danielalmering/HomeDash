@@ -36,13 +36,13 @@
             "editdata": "Bewerk account",
             "favourites": "Favo",
             "inbox": "Inbox",
-            "upgradebalance": "Saldo Opwaarderen",
-            "logout": "Logout",
+            "upgradebalance": "Saldo opwaarderen",
+            "logout": "Log uit",
             "login": "Login",
-            "history": "Account historie",
+            "history": "Accounthistorie",
             "giftvoucher": "Cadeaubon",
             "welcome": "Welkom",
-            "thankyou": "Bedankt voor u aankoop!"
+            "thankyou": "Bedankt voor uw aankoop!"
         }
     },
     "performers": {
@@ -59,13 +59,13 @@
         "registeraccount": "Registeer gebruiker",
         "login": "Login",
         "register": "Registeer",
-        "email": "Email",
+        "email": "E-mail",
         "lostpassword": "Wachtwoord vergeten?",
-        "missingfields": "Niet alle velden ingevuld",
+        "missingfields": "Niet alle velden zijn ingevuld",
         "alerts": {
             "successlogin": "Welkom, {username}",
             "successlogout": "U bent succesvol uitgelogd!",
-            "errorlogin": "Foutieve logingegevens",
+            "errorlogin": "Foutieve inloggegevens",
             "errorNotLoggedin": "Niet meer ingelogd!"
         }
     },
@@ -97,12 +97,12 @@
         "age": "Leeftijd",
         "height": "Lengte",
         "weight": "Gewicht",
-        "cupsize": "Cup maat",
+        "cupsize": "Cupmaat",
         "eyecolor": "Kleur ogen",
         "expand": "Meer",
         "hide": "Minder",
-        "collapsphotos": "Fotos bekijken",
-        "collapsedphotos": "Fotos verbergen",
+        "collapsphotos": "Foto's bekijken",
+        "collapsedphotos": "Foto's verbergen",
         "metaTitle": "Live webcammen, chatten en beeldbellen met {nickname} , echte Hollandse vrouwen - thuis.nl",
         "metaDescription": "Nu live webcammen, bellen en chatten met {nickname} , echte Hollandse vrouwen vind je hier.",
         "breastsizes": {
@@ -155,15 +155,15 @@
         "callmenu2": "in en sluit af met #",
         "callbyebye": "Tot zo, ",
         "mailbtn": "Verstuur bericht",
-        "mailtitle": "Wil je me een leuk e-mailbericht sturen?",
+        "mailtitle": ", wil je me een leuke e-mail sturen?",
         "mailsubject": "Onderwerp",
         "mailmessage": "Bericht",
         "mailsend": "Versturen",
-        "mailinfo": "Een e-mail versturen is gratis, u betaalt wanneer u een antwoord ontvangt.",
-        "mailloggedin": "Om een e-mail te versturen heeft u een account nodig Nog geen account?",
+        "mailinfo": "Een e-mail versturen is gratis. U betaalt wanneer u een antwoord ontvangt.",
+        "mailloggedin": "Om een e-mail te versturen heeft u een account nodig. Nog geen account?",
         "smsdesc": "Verstuur privénummer",
         "smsdesc1": "gevolgd door een spatie<br />en dan jouw bericht naar",
-        "smsterms": "Deze dienst is toegankelijk voor alle toestellen met SMS. Geen abonnementsdienst. 1:1 Chatdienst, 1 bericht sturen, is max. 1 bericht ontvangen (€ 1,50/bericht). Minimale gebruikersleeftijd is 18 jaar. Met deelname aan deze dienst aanvaardt gebruiker automatisch de Algemene voorwaarden: Bekijk de Algemene voorwaarden. Geen herroepingsrecht of inzichttermijn. Gegevens van gebruiker worden niet met derden gedeeld. De Reclamecode SMS-dienstverlening en Gedragscode SMS-dienstverlening worden nageleefd. Deze dienst wordt u aangeboden door Sensemakers BV, Postbus 89, 1300 AB Almere, KvK: 33128110, BTW: NL803697041.B.01. Helpdesk: info@thuis.nl en 036 - 5458595",
+        "smsterms": "Deze dienst is toegankelijk voor alle toestellen met SMS. Geen abonnementsdienst. 1:1 Chatdienst, 1 bericht sturen, is max. 1 bericht ontvangen (€1,50/bericht). Minimale gebruikersleeftijd is 18 jaar. Met deelname aan deze dienst aanvaardt gebruiker automatisch de Algemene voorwaarden. Geen herroepingsrecht of inzichttermijn. Gegevens van gebruiker worden niet met derden gedeeld. De Reclamecode SMS-dienstverlening en Gedragscode SMS-dienstverlening worden nageleefd. Deze dienst wordt u aangeboden door Sensemakers BV, Postbus 89, 1300 AB Almere, KvK: 33128110, BTW: NL803697041.B.01. Helpdesk: info@thuis.nl en 036 - 5458595",
         "smscost": "per ontvangen bericht*",
         "registeraccount": "Registreer een account, en profiteer van doorlopende acties!",
         "noServices": "Geen dienst(en) beschikbaar!",
@@ -194,7 +194,7 @@
             "register": "Registreer",
             "alerts": {
                 "successMessage": "Je hebt een bevestigingsmail ontvangen",
-                "errorMessage": "Er is iets mis gegaan tijdens de registratie"
+                "errorMessage": "Er is iets misgegaan tijdens de registratie"
             }
         },
         "recover": {
@@ -218,7 +218,7 @@
             }
         },
         "countryselect": {
-            "title": "Kies uw land van afkomst",
+            "title": "Kies uw land van herkomst",
             "desc": "selecteer het gewenste land",
             "defaultcountry": "(overige landen)",
             "country-nl": "Nederland",
@@ -239,7 +239,7 @@
         "newmessage": "Nieuw bericht",
         "removemessage": "Verwijder bericht",
         "sendmessage": "Verstuur bericht",
-        "historydesc": "Hier vindt u een uitgebreid overzicht van uw uitgevoerde acties binnen het platform",
+        "historydesc": "Hier vindt u een uitgebreid overzicht van uw uitgevoerde acties op Thuis.nl",
         "date": "Datum",
         "paymentmethod": "Betaalmethode",
         "amount": "Bedrag",
@@ -266,13 +266,13 @@
             "errorVoucher": "Deze code was onjuist of is al gebruikt, probeer het opnieuw",
             "errorInboxLoad": "Er is een fout opgetreden bij het laden van de inbox!",
             "errorInboxMessageLoad": "Er is een fout opgetreden bij het laden van het bericht!",
-            "errorInboxMessagePay": "er is iets fout gegaan bij het betalen van het bericht!",
-            "errorInboxNoSelected": "Uw heeft geen berichten geselecteerd!",
+            "errorInboxMessagePay": "Er is iets fout gegaan bij het betalen van het bericht!",
+            "errorInboxNoSelected": "U heeft geen berichten geselecteerd!",
             "succesInboxMessagePay": "Het bericht is succesvol betaald",
             "successInboxRemove": "De geselecteerde berichten zijn succesvol verwijderd",
             "errorInboxRemove": "De geselecteerde berichten zijn niet verwijderd!",
             "errorReplyMessage": "Er is een fout opgetreden bij het reageren!",
-            "successReplyMessage": "Uw reactie is succesvol verstuurt!",
+            "successReplyMessage": "Uw reactie is succesvol verstuurd!",
             "successNewMessage": "Het bericht is succesvol verstuurd!",
             "errorNewMessage": "Het bericht is niet succesvol verstuurd!",
             "successGotMessage": "U heeft nieuwe berichten!"
@@ -280,9 +280,9 @@
     },
     "videochat": {
         "leaving": "Huidige sessie verlaten",
-        "flashchecktext": "Om terug te kunnen cammen moet Flash het doen. Klik hieronder voor instructies.",
+        "flashchecktext": "Om terug te kunnen cammen moet Flash werken. Klik hieronder voor instructies.",
         "anonymous": "Anoniem",
-        "switchpeek": "Meekijk sessie wisselen?",
+        "switchpeek": "Meekijksessie wisselen?",
         "typing": "{name} is aan het typen...",
         "videocall-on": "Beeldbellen aan",
         "videocall-off": "Beeldbellen uit",
@@ -290,13 +290,13 @@
             "successChatEnded": "Sessie is afgelopen!",
             "socketErrors": {
                 "PERFORMER_REJECT": "De performer heeft het verzoek afgewezen",
-                "PERFORMER_END": "De performer heeft de sessie beeindigd",
+                "PERFORMER_END": "De performer heeft de sessie beëindigd",
                 "CLIENT_BROKE": "U heeft geen credits meer",
                 "PHONE_DISCONNECT": "De telefoon is opgehangen",
-                "MAIN_ENDED": "De huidige sessie is beeindigd",
+                "MAIN_ENDED": "De huidige sessie is beëindigd",
                 "INITIATE_FAILED": "Er is iets fout gegaan. Probeer het nog eens.",
                 "CANCEL": "Geannuleerd",
-                "PLAYER_END": "U heeft de sessie geëindigd.",
+                "PLAYER_END": "U heeft de sessie beëindigd.",
                 "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd.",
                 "PEEK_SWITCH": "Gewisseld"
             }
@@ -309,22 +309,22 @@
         "favorites": "Favorieten",
         "now1on1": "Nu 1op1",
         "dialog1on1Title": "Verbind met {name}",
-        "dialog1on1Subtitle": "Wil je een privé sessie beginnen met {name}?",
+        "dialog1on1Subtitle": "Wil je een privésessie beginnen met {name}?",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
             "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd"
         }
     },
     "promos": {
-        "intro": "Welkom bij de actiepagina, middels deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen.",
+        "intro": "Welkom op de actiepagina! Vi deze pagina houden we u graag op de hoogte van de nieuwste acties, aanbiedingen en voordelen op Thuis.n;",
         "currentactions": "Lopende acties",
         "data": "Data",
         "alerts": {
-            "errorLoad": "Er is een fout opgetreden bij inladen van de promos!"
+            "errorLoad": "Er is een fout opgetreden bij inladen van de promo's!"
         }
     },
     "thankyou": {
-        "intro": "Hartelijk bedankt voor uw aankoop!!, hieronder kunt u een van uw favorieten bekijken",
+        "intro": "Hartelijk bedankt voor uw aankoop! Hieronder kunt u een van uw favorieten bekijken",
         "favo": "Favorieten"
     },
     "payment": {
@@ -344,7 +344,7 @@
         "newbalance": "Nieuw credits saldo",
         "total": "Totaal",
         "bonusbanner": "Koop nog {credits} credits en krijg {percentage}% extra",
-        "bonusdiscountdesc": "De bovenstaande actie is enkel geldig voor aankopen met iDeal & Mistercash.  En dus niet voor aankopen met creditcard en visa via Click and Buy. * ",
+        "bonusdiscountdesc": "Acties zijn enkel geldig voor aankopen met iDeal & Mister Cash en dus niet voor aankopen met creditcard en Visa via Click and Buy. * ",
         "discountcode": "Kortingscode?",
         "mostlybought": "Meest verkocht!",
         "packages": {
@@ -370,14 +370,14 @@
     },
     "contact": {
         "title": "Contact",
-        "desc": "Als je een vraag of opmerking hebt over dit platform, vul deze dan hieronder in. Indien wenselijk dan nemen wij zo spoedig mogelijk contact met je op. Ook staan wij open voor tips en verbeteringen van onze dienstverlening. <br><br> Probeer daarin zo uitgebreid en zorgvuldig mogelijk te omschrijven wat er precies gebeurt met daarbij vermelding van de datum en het tijdstip. Probeer ook aan te geven met welke dame je contact hebt gehad (naam en advertentienummer). Probeer dan ook aan te geven welke internetprovider (bv KPN, UPC, enz), browser en versie (bv Internet Explorer 8, Chrome 23, enz), besturingssysteem  en versie (bv Windows XP, OS X, enz) en welke versie Flash player je gebruikt (bv Playerversie 11.3.376.12 bij IE 8, 11.5.31.2 bij Chrome, enz).",
+        "desc": "Als je een vraag of opmerking hebt over dit platform, vul deze dan hieronder in. Indien wenselijk dan nemen wij zo spoedig mogelijk contact met je op. Ook staan wij open voor tips en verbeteringen van onze dienstverlening. <br><br>Wil je een storing melden? Probeer dan zo uitgebreid en zorgvuldig mogelijk te omschrijven wat er precies gebeurt met daarbij vermelding van de datum en het tijdstip. Probeer ook aan te geven met welke dame je contact hebt gehad (naam en advertentienummer). Geef ook aan welke internetprovider (bv KPN, Ziggo, enz), browser en versie (bv Internet Explorer 8, Chrome 23, enz), besturingssysteem  en versie (bv Windows 10, OS X, enz) en welke versie Flash player je gebruikt (bv Playerversie 11.3.376.12 bij IE 8, 11.5.31.2 bij Chrome, enz). Alvast bedankt!",
         "send": "Versturen",
         "subject": "Onderwerp:*",
-        "email": "Email:*",
+        "email": "E-mail:*",
         "name": "Name:*",
         "message": "Bericht:*",
         "alerts": {
-            "errorSend": "Er is een Fout opgetreden bij het verzenden",
+            "errorSend": "Er is een fout opgetreden bij het verzenden",
             "successSend": "Bericht is met succes verzonden"
         }
     },
@@ -391,7 +391,7 @@
         "disconnect": "Verbreken",
         "disconnectdesc": "De huidige verbinding verbreken",
         "connect": "Verbinden",
-        "connectdesc": "Als de performer niet op tijd opneemt, neem dan contact op met een andere performer Veel plezier!"
+        "connectdesc": "Als de performer niet op tijd opneemt, neem dan contact op met een andere performer. Veel plezier!"
     },
     "footer": {
         "contact": "Contact",
@@ -407,7 +407,7 @@
         "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",
         "webcamurl": "http://www.club-sense.nl",
         "copyright": "Copyright 2018",
-        "cookies": "<a href='../privacy-policy/'>De website werkt met cookies hiermee kunnen we de website verbeteren en je instellingen onthouden. \nDoor verder gebruik te maken van deze website ga je hiermee akkoord</a>",
+        "cookies": "<a href='../privacy-policy/'>De website werkt met cookies. Hiermee kunnen we de website verbeteren en je instellingen onthouden. Door verder gebruik te maken van deze website ga je hiermee akkoord.</a>",
         "agecheck": "Deze website bevat expliciet materiaal. Door gebruik te maken van deze website ga je hiermee akkoord",
         "olderthen": "Ouder dan 18jaar",
         "leavewebsite": "Verlaat de website",
@@ -428,9 +428,9 @@
         "EMAIL": "E-mail",
         "VOICEMAIL": "Voicemail",
         "IVR": "Bellen",
-        "CREDIT_PURCHASE": "Credit Aankoop",
-        "PROMO_CAMPAIGN_1": "Promotion Aankoop",
-        "IDEAL": "ideal",
+        "CREDIT_PURCHASE": "Credit aankoop",
+        "PROMO_CAMPAIGN_1": "Promotie aankoop",
+        "IDEAL": "iDeal",
         "BCMC": "bcmc",
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
@@ -445,8 +445,8 @@
         "nl": "Nederland"
     },
     "videocall": {
-        "callEnded": "Gesprek beeindigd!",
-        "callFailed": "Gesprek is gefaald!",
+        "callEnded": "Gesprek beëindigd!",
+        "callFailed": "Gesprek gefaald!",
         "callAccepted": "Het gesprek is succesvol begonnen!"
     }
 }
