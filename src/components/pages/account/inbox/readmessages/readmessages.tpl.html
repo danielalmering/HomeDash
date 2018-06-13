@@ -14,6 +14,7 @@
 
         <h3 class="readmessagesheading" v-if="firstThreadMessage">{{ firstThreadMessage.subject }}</h3>
 
+
         <div class="readmessages">
             <div class="readmessages__more" v-on:click="loadMore" v-if="messages.length < total"><i class="fa fa-plus" aria-hidden="true"></i> {{ $t('account.readold') }}</div>
 
