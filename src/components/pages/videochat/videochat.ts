@@ -291,6 +291,10 @@ export default class VideoChat extends Vue {
             this.broadcasting.settings = false;
         }
 
+        if (this.broadcasting.cam){
+            //logKPI("cl_camback_intention");
+        }
+
         tagHotjar(`TOGGLE_CAM`);
     }
 
@@ -322,10 +326,14 @@ export default class VideoChat extends Vue {
 
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
+        if (state == 'active'){
+            //logKPI("cl_camback_active");
+        }
     }
 
     broadcastError(message: string){
         this.stateMessages.push(message);
+        //logKPI("cl_camback_error");
     }
 
     viewerStateChange(state: string){
