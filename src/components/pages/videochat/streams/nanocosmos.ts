@@ -160,7 +160,9 @@ export default class NanoCosmos extends Stream {
             'playback': {
                 'autoplay': this.autoplay,
                 'muted': this.muted,
+                'metadata': true,
                 'flashplayer': '../../../../../static/nano.player.swf',
+                'keepConnection': true,
                 'reconnect': {
                    minDelay: 2,
                    maxDelay: 5,
@@ -168,7 +170,21 @@ export default class NanoCosmos extends Stream {
                    maxRetries: 3
                 }
             },
-            'style': this.getStyle()
+            tweaks: {
+                buffer: {
+                    min: 0.2,
+                    start: 0.5,
+                    max: 8.0,
+                    target: 1.2,
+                    limit: 1.7
+                },
+                bufferDynamic: {
+                    offsetThreshold: 2,
+                    offsetStep: 0.5,
+                    cooldownTime: 10
+                }
+            }
+            ,'style': this.getStyle()
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {

@@ -10,34 +10,37 @@
             <div class="clearfix"></div>
         </div>
     </h1>
-    <div class="account__view readmessages">
+    <div class="account__view">
+
+        <h3 class="readmessagesheading" v-if="firstThreadMessage">{{ firstThreadMessage.subject }}</h3>
+
+        <div class="readmessages" v-scroll="handleScroll">
+
+            <div class="readmessages__item" v-for="message in messages" :class="{ 'even': message.sent_by === 'PERFORMER' }">
+
+                <div class="readmessages__item-remove" v-on:click.prevent="removeMessage(message)" v-if="message.billing_status != 'NOT PAID'"></div>
+
+                <div class="readmessages__item-account" v-if="message.billing_status != 'NOT PAID'">
+                    <div class="readmessages__item-account-img" :style="{ 'background-image': `url('${getAvatar(performer, message.sent_by)}')` }"></div>
+                    <h4>{{ getName(message.sent_by) }}</h4>
+                </div>
+
+                <div class="readmessages__item-content" v-if="message.billing_status != 'NOT PAID'">
+                    <p>{{ message.content }}</p>
+                    <span>{{ message.date | date }}</span>
+                </div>
         
-        <h3 v-if="subject">{{ subject }}</h3>
+                <div class="readmessages__item-pay" v-if="message.billing_status === 'NOT PAID'">
+                    <p class="highlight">{{ $t('account.paymessage', { credits: creditsPerType(message.type) }) }}</p>
+                    <a v-on:click="payMessage(message)" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
+                </div>
 
-        <div class="readmessages__item" v-for="message in messages" :class="{ 'even': message.sent_by === 'PERFORMER' }">
-
-            <div class="readmessages__item-remove" v-on:click.prevent="removeMessage(message)" v-if="message.billing_status != 'NOT PAID'"></div>
-
-            <div class="readmessages__item-account" v-if="message.billing_status != 'NOT PAID'">
-                <div class="readmessages__item-account-img" :style="{ 'background-image': `url('${getAvatar(performer, message.sent_by)}')` }"></div>
-                <h4>{{ getName(message.sent_by) }}</h4>
-            </div>
-
-            <div class="readmessages__item-content" v-if="message.billing_status != 'NOT PAID'">
-                <p>{{ message.content }}</p>
-                <span>{{ message.date | date }}</span>
-            </div>
-    
-            <div class="readmessages__item-pay" v-if="message.billing_status === 'NOT PAID'">
-                <p class="highlight">{{ $t('account.paymessage', { credits: creditsPerType(message.type) }) }}</p>
-                <a v-on:click="payMessage(message)" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
             </div>
 
         </div>
-        <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" :pageCount="false" v-on:pageChange="pageChanged"></pagination>
 
         <div class="form">
-            <form class="row" v-on:submit.prevent="sendMessage">
+            <form class="row" v-on:submit.prevent="sendMessage(firstThreadMessage)" v-if="firstThreadMessage && firstThreadMessage.sent_by === 'PERFORMER'">
                 <div class="col-xs-12">
                     <div class="form__group">
                         <textarea v-model="reply"></textarea>

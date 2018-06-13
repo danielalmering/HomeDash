@@ -9,25 +9,32 @@
 
 // Styling
 
-.readmessages {
+.readmessagesheading {
+    font-size: 1.7rem !important;
+}
 
-    h3 {
-        @include rem(font-size, 18px);
-    }
+.readmessages {
+    @include rem(padding, 10px);
 
     &__item {
         position: relative;
         display: flex;
+        float: right;
         flex-direction: row;
         text-align: left;
         background: $pallete-3;
         @include border-radius(3px);
-        @include rem(margin-bottom, 20px);
+        @include rem(margin, 0px 0px 20px 0px);
         color: $pallete-2;
-        width: 95%;
+        width: 98%;
+        cursor: pointer;
+
+        &:hover {
+            .readmessages__item-remove { display: block; }
+        }
 
         &.even {
-            float: right;
+            float: left;
             background: $pallete-9;
             color: $pallete-2;
 
@@ -47,6 +54,7 @@
             width: 100%;
             color: $pallete-2;
             font-weight: 600;
+            word-break: break-all;
         }
 
         span {
@@ -87,6 +95,7 @@
         }
 
         &-remove {
+            display: none;
             position: absolute;
             right: -10px;
             top: -8px;

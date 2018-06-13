@@ -9,7 +9,7 @@ import config from '../../../../config';
 import WithRender from './inbox.tpl.html';
 import { tagHotjar } from '../../../../util';
 import { NotificationThreadsMessage, Notification } from 'sensejs/core/models/notification';
-import { getNotificationThreads, removeNotifications, payNotification } from 'sensejs/consumer/notification';
+import { getNotificationThreads, payNotification } from 'sensejs/consumer/notification';
 
 @WithRender
 @Component({

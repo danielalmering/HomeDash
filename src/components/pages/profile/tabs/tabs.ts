@@ -2,6 +2,7 @@ import { Component, Watch, Prop } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 import { UserRole, User } from '../../../../models/User';
+import { postNotificationThread } from 'sensejs/consumer/notification';
 
 import config from '../../../../config';
 
@@ -182,48 +183,48 @@ export default class Tabs extends Vue {
 
     async sendMail(){
 
-        const message = {
-            clientid: { id: this.user.id },
+        if(!this.emailForm.content && !this.emailForm.subject){
+            return;
+        }
+
+        let message = {
+            account_id: this.performer.id,
             content: this.emailForm.content,
-            sent_by: 'CLIENT',
-            status: 'INBOX',
+            type: 'email',
+            reply_id: 0,
             subject: this.emailForm.subject
         };
 
-        const mailResult = await fetch(`${config.BaseUrl}/performer/performer_account/${this.performer.id}/email`, {
-            method: 'POST',
-            credentials: 'include',
-            body: JSON.stringify(message)
-        });
+        const { result, error } = await postNotificationThread(message);
 
-        const mailData = await mailResult.json();
-
-        if(!mailResult.ok){
+        if(error){
             this.$store.dispatch('openMessage', {
                 content: 'contact.alerts.errorSend',
                 class: 'error'
             });
-        } else {
-            notificationSocket.sendEvent({
-                event: 'message',
-                receiverType: UserRole.Performer,
-                receiverId: this.performer.id,
-                content: {
-                    clientId : this.user.id,
-                    performerId : this.performer.id,
-                    sentBy : 'CLIENT',
-                    type : 'EMAIL'
-                }
-            });
 
-            this.$store.dispatch('openMessage', {
-                content: 'contact.alerts.successSend',
-                class: 'success'
-            });
-
-            tagHotjar('MESSAGE_SEND_PROFILE');
-
-            this.emailForm = {content: '', subject: ''};
+            return;
         }
+
+        notificationSocket.sendEvent({
+            event: 'message',
+            receiverType: UserRole.Performer,
+            receiverId: this.performer.id,
+            content: {
+                clientId : this.user.id,
+                performerId : this.performer.id,
+                sentBy : 'CLIENT',
+                type : 'EMAIL'
+            }
+        });
+
+        this.$store.dispatch('openMessage', {
+            content: 'contact.alerts.successSend',
+            class: 'success'
+        });
+
+        tagHotjar('MESSAGE_SEND_PROFILE');
+
+        this.emailForm = {content: '', subject: ''};
     }
 }
