@@ -14,7 +14,6 @@ import RavenVue from 'raven-js/plugins/vue';
 //requiring the shim adds it to the build
 require('webrtc-adapter');
 require('./directives/clickOutside');
-require('./directives/scroll');
 
 import './styles/main.scss';
 
