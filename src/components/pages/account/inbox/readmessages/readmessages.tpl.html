@@ -14,7 +14,8 @@
 
         <h3 class="readmessagesheading" v-if="firstThreadMessage">{{ firstThreadMessage.subject }}</h3>
 
-        <div class="readmessages" v-scroll="handleScroll">
+        <div class="readmessages">
+            <div class="readmessages__more" v-on:click="loadMore" v-if="messages.length < total"><i class="fa fa-plus" aria-hidden="true"></i> {{ $t('account.readold') }}</div>
 
             <div class="readmessages__item" v-for="message in messages" :class="{ 'even': message.sent_by === 'PERFORMER' }">
 
@@ -40,7 +41,7 @@
         </div>
 
         <div class="form">
-            <form class="row" v-on:submit.prevent="sendMessage(firstThreadMessage)" v-if="firstThreadMessage && firstThreadMessage.sent_by === 'PERFORMER'">
+            <form class="row" v-on:submit.prevent="sendMessage(firstThreadMessage)" v-if="firstThreadMessage">
                 <div class="col-xs-12">
                     <div class="form__group">
                         <textarea v-model="reply"></textarea>

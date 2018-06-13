@@ -10,7 +10,9 @@
             "cpm-1": "pm",
             "pm": "pm",
             "nr-0": "pm",
-            "nr-1": "pm"
+            "nr-1": "pm",
+            "nrdesc-0": "",
+            "nrdesc-1": ""
 
         },
         "banner": {
@@ -259,6 +261,7 @@
         "pushmessages": "Push berichten ontvangen",
         "datetill": "Datum tot",
         "datefrom": "Datum van",
+        "readold": "Toon meer..",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",

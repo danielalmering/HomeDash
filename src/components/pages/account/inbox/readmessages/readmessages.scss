@@ -16,6 +16,20 @@
 .readmessages {
     @include rem(padding, 10px);
 
+    &__more {
+        display: table;
+        color: $pallete-2;
+        text-align: center;
+        @include rem(padding, 12px 10px);
+        @include rem(margin, 0px 0px 20px 0px);
+        background: $pallete-9;
+        width: 100%;
+        font-weight: 600;
+        @include border-radius(5px);
+        cursor: pointer;
+        i { @include rem(margin-right, 5px); }
+    }
+
     &__item {
         position: relative;
         display: flex;

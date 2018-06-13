@@ -4,12 +4,17 @@
             <img alt="logo" :src="logo" v-on:click="openRoute('Performers')">
         </div>
 
-        <div class="top__numbers hidden-xs col-xs-12 col-sm-5 col-md-6">
+        <div class="top__numbers hidden-xs col-xs-12 col-sm-5 col-md-6" v-bind:class="{ 'desc': info.country === 'de' }">
             <div class="row" v-if="info">
                 <div class="top__numbers-number" v-for="(campaign, index) in activeCampaign" v-bind:class="{ 'large': countNumbers(activeCampaign) === 1 }" >
-                    <span class="flag flag-nl" v-if="branding && index === 0"></span>
-                    <span class="flag flag-be" v-if="branding && index === 1"></span>
-                    {{ campaign.number }} <i v-if="campaign.cpm != '0'">{{ campaign.cpm | euro }} <div v-html="$t('top.numbers.cpm-' + index)"></div></i>
+                    <span class="flag flag-nl" v-if="info.country === 'nl' && index === 0"></span>
+                    <span class="flag flag-be" v-if="info.country === 'nl' && index === 1"></span>
+                    <span class="fa fa-phone" v-if="info.country === 'de' && index === 0"></span>
+                    <span class="fa fa-mobile" v-if="info.country === 'de' && index === 1"></span>
+
+                    <span class="nr">{{ campaign.number }}</span>
+                    <span class="cost" v-if="campaign.cpm != '0'">{{ campaign.cpm | euro }} {{ $t('top.numbers.nr-' + index) }}</span>
+                    <span class="desc" v-if="info.country === 'de'" v-html="$t('top.numbers.nrdesc-' + index)"></span>
                 </div>
             </div>
         </div>
