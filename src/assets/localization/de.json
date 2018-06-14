@@ -384,7 +384,8 @@
     },
     "textpages": {
         "termstitle": "Allgemeine Geschäftsbedingungen",
-        "policytitle": "Datenschutzbestimmungen"
+        "policytitle": "Datenschutzbestimmungen",
+        "cookiestitle": "Cookie-Anweisung"
     },
     "confirmations": {
         "accept": "Akzeptieren",

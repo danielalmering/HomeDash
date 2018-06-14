@@ -385,7 +385,8 @@
     },
     "textpages": {
         "termstitle": "Algemene voorwaarden",
-        "policytitle": "Privacybeleid"
+        "policytitle": "Privacybeleid",
+        "cookiestitle": "Cookieverklaring"
     },
     "confirmations": {
         "accept": "Accepteren",

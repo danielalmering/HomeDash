@@ -385,7 +385,8 @@
     },
     "textpages": {
         "termstitle": "Terms and Conditions",
-        "policytitle": "Privacy policy"
+        "policytitle": "Privacy policy",
+        "cookiestitle": "Cookie statement"
     },
     "confirmations": {
         "accept": "Accept",
