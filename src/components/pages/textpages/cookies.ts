@@ -1,19 +1,20 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import i18n from '../../../localization';
 
 import './textpages.scss';
-import WithRender from './terms.tpl.html';
+import WithRender from './cookies.tpl.html';
 
 @WithRender
 @Component
-export default class Terms extends Vue {
+export default class Cookies extends Vue {
 
-    get terms(){
+    get cookies(){
         let country = this.$store.state.authentication.user.country;
         if(country === 'at') country = 'de';
 
-        const termsdata = require('./terms.data.json');
-        return termsdata[country];
+        const cookiesdata = require('./cookies.data.json');
+        return cookiesdata[country];
     }
 
 }
