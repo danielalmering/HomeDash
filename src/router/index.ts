@@ -20,6 +20,7 @@ import Payment from '../components/pages/payment/payment';
 import Contact from '../components/pages/contact/contact';
 import Terms from '../components/pages/textpages/terms';
 import Policy from '../components/pages/textpages/policy';
+import Cookies from '../components/pages/textpages/cookies';
 import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
@@ -126,6 +127,15 @@ const routes = [{
                 beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitlePrivacy'
+                }
+            },
+            {
+                path: 'cookies/',
+                name: 'Cookies',
+                component: Cookies,
+                beforeEnter: userLoadedInterceptor,
+                meta: {
+                    title: 'footer.metaTitleCookies'
                 }
             },
             {

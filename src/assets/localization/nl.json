@@ -386,7 +386,8 @@
     },
     "textpages": {
         "termstitle": "Algemene voorwaarden",
-        "policytitle": "Privacybeleid"
+        "policytitle": "Privacybeleid",
+        "cookiestitle": "Cookieverklaring"
     },
     "confirmations": {
         "accept": "Accepteren",
@@ -405,6 +406,7 @@
         "metaTitleTerms": "Algemene voorwaarden - thuis.nl",
         "promos": "Acties",
         "metaTitlePromos": "Acties - thuis.nl",
+        "metaTitleCookies": "Cookieverklaring - thuis.nl",
         "webcam": "Webcammodel worden?",
         "sexstories": "Sexverhalen",
         "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",

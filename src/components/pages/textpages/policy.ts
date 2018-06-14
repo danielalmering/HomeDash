@@ -11,7 +11,6 @@ export default class Policy extends Vue {
 
     get policy(){
         let country = this.$store.state.authentication.user.country;
-        if(country === 'gl') country = 'uk';
         if(country === 'at') country = 'de';
 
         const policydata = require('./policy.data.json');
