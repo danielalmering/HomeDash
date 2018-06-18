@@ -87,7 +87,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
     &__broadcast{
         position: absolute;
         top: 10px;
-        right: 0px;
+        right: 10px;
         z-index: 1;
 
         &-object{
@@ -98,12 +98,11 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 width: $streamback-width-small;
                 height: $streamback-height-small;
             }
-            @include rem(margin, 0px 0px 5px 0px);
             background: $semi-transparent-bg;
+            @include rem(margin-bottom,10px);
             border-radius: 5px;
             text-align: center;
             overflow: hidden;
-            @include rem(margin-left, 10px);
 
             p {
                 display: table;
@@ -141,24 +140,32 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         }
 
         &-buttons {
+            position: absolute;
+            top: 5px;
+            right: 0;
             float: left;
             display: table;
             @include border-radius(5px);
-            @include rem(padding,0);
+            @include rem(padding,0 5px );
             @include rem(margin, 0);
+            width: 100%;
 
-            li{
+            a {
                 list-style: none;
                 text-align: center;
-                background: $semi-transparent-bg;
-                @include rem(padding, 12.5px);
-                width: 50px;
-                @include rem(margin, 0px 0px 10px 10px);
-                @include border-left-radius(5px);
+                background: $pallete-13;
+                float: right;
+                width: 38px;
+                color: $pallete-2; 
+                @include rem(font-size, 15px);
+                @include rem(padding,12px 10px);
+                @include rem(margin-left,5px);
+                @include border-radius(3px);
                 cursor: pointer;
+                &.active { color: $pallete-3; }
 
                 .fa{
-                    @include rem(font-size, 25px);
+                    @include rem(font-size, 15px);
                     color: $pallete-2;
                     &.active {
                         color: $pallete-3;
@@ -178,7 +185,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         background: $semi-transparent-bg;
         @include border-left-radius(5px);
         @include rem(padding,10px 10px 0px 10px);
-        width: calc(#{$streamback-width} + 60px);
+        width: $streamback-width;
         @include breakpoint(xs) {
             width: calc(#{$streamback-width-small} + 60px);
         }
@@ -260,22 +267,63 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         }
     }
 
+    &__controls {
+        display: table;
+        width: 100%;
+        @include border-radius(5px);
+        @include gradient($pallete-3, $pallete-5, vertical);
+        @include rem(padding,5px);
+
+        &-name { 
+            float: left;
+            @include rem(padding,10px 5px);
+            font-weight: 700; 
+            color: $pallete-2; 
+            i { @include rem(font-size, 12px); font-style: normal; font-weight: 400; }
+        }
+
+        &-btns {
+            @include rem(padding,0px);
+            @include rem(margin,0px);
+            a {
+                float: right;
+                color: $pallete-2; 
+                @include rem(font-size, 15px);
+                @include rem(padding,12px 10px);
+                @include rem(margin-left,5px);
+                background: $pallete-1;
+                @include border-radius(5px);
+                &.active { color: $pallete-3; }
+            }
+        }
+
+    }
+
     &__chat {
         position: fixed;
         z-index: 2;
-        bottom: 0px;
-        right: 0px;
-        width: 100%;
-        background: $pallete-11;
-        @include border-top-radius(5px);
+        bottom: 5px;
+        right: 5px;
+        width: calc(100% - 10px);
         overflow: hidden;
+        @include breakpoint(md) {
+            right: 5px;
+        }
+        @include breakpoint(lg) {
+            right: 5px;
+        }
+
+        &-content {
+            background: $pallete-11;
+            @include border-top-radius(5px);
+        }
 
         &-top{
             display: block;
             height: 44px;
             @include rem(padding,5px);
             width: 100%;
-            background: $pallete-11;
+            @include rem(margin-top,5px);
 
             .close {
                 float: right;
