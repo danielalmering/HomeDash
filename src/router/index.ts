@@ -18,9 +18,7 @@ import Promos from '../components/pages/promos/promos';
 import Thankyou from '../components/pages/thankyou/thankyou';
 import Payment from '../components/pages/payment/payment';
 import Contact from '../components/pages/contact/contact';
-import Terms from '../components/pages/textpages/terms';
-import Policy from '../components/pages/textpages/policy';
-import Cookies from '../components/pages/textpages/cookies';
+import Textpages from '../components/pages/textpages/textpages';
 import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
@@ -123,7 +121,7 @@ const routes = [{
             {
                 path: 'privacy-policy/',
                 name: 'Policy',
-                component: Policy,
+                component: Textpages,
                 beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitlePrivacy'
@@ -132,7 +130,7 @@ const routes = [{
             {
                 path: 'cookies/',
                 name: 'Cookies',
-                component: Cookies,
+                component: Textpages,
                 beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitleCookies'
@@ -141,7 +139,7 @@ const routes = [{
             {
                 path: 'terms/',
                 name: 'Terms',
-                component: Terms,
+                component: Textpages,
                 beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitleTerms'
