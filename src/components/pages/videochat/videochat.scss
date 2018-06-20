@@ -294,6 +294,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 background: $pallete-1;
                 @include border-radius(5px);
                 &.active { color: $pallete-3; }
+                &:hover { color: $pallete-7; }
             }
         }
 
