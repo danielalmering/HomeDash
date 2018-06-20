@@ -244,7 +244,7 @@ export default class VideoChat extends Vue {
     }
 
     toggleFavourite(){
-        this.performer.isFavourite ?
+        !this.performer.isFavourite ?
             addFavourite(this.$store.state.authentication.user.id, this.performer.id) :
             removeFavourite(this.$store.state.authentication.user.id, this.performer.id);
 
