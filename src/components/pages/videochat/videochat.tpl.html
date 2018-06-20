@@ -26,8 +26,8 @@
             </component>
         </div>
 
-        <div class="videochat__broadcast-buttons">
-            <a v-if="broadcasting.cam" v-on:click="toggleMic" class="fa fa-microphone" :class="{ active:broadcasting.mic }"></a>
+        <div class="videochat__broadcast-buttons" v-if="broadcasting.cam">
+            <a v-on:click="toggleMic" class="fa fa-microphone" :class="{ active:broadcasting.mic }"></a>
             <a v-on:click="toggleSettings" class="fa fa-cogs" :class="{ active:broadcasting.settings }"></a>
         </div>
 
