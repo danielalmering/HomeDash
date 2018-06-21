@@ -312,10 +312,21 @@ export default class Profile extends Vue {
         if(!result.photos.approved) { return; }
         this.perfmedia = result.photos.approved.photos;
 
-        // // Add videos
-        // if(data.medias.approved.medias){
-        //     this.perfmedia.splice(3, 0, result.medias.approved.medias[0]);
-        // }
+        // Add videos
+        if(!result.medias) { return; }
+        if(!result.medias.approved) { return; }
+
+        if(result.medias.approved.total > 0){
+            let s = 0;
+            let i = 0;
+            for (let media of result.medias.approved.medias) {
+                if (s <= result.photos.approved.total) {                    
+                    this.perfmedia.splice(s, 0, result.medias.approved.medias[i]);    
+                    s = s + 4;
+                    i++;                                            
+                }                
+            }
+        }
 
         this.setSeoParameters();
     }
