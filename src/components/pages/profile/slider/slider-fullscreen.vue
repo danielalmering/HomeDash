@@ -3,7 +3,7 @@
         <ul class="slider__large-list">
             <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }" v-if="getSliderImage(performer, photo.name, '')">
                 <img v-if="!photo.wowza_sync" :src="getSliderImages(performer, photo.name, '')" />
-                <nanocosmos v-if="photo.wowza_sync" :videosrc="photo.name"></nanocosmos>
+                <player v-if="photo.wowza_sync" :videosrc="photo.name"></player>
             </li>
         </ul>
         <div class="slider__large-left" v-if="!isFirst" v-on:click="previous">
@@ -25,11 +25,11 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { PerformerAvatar } from 'sensejs/performer/performer.model';
 
 import { getSliderImages } from '../../../../util';
-import NanoCosmos from './slider-player';
+import Player from './slider-player';
 
 @Component({
     components: {
-        nanocosmos: NanoCosmos
+        player: Player
     }
 })
 export default class SliderFullscreen extends Vue {
