@@ -4,7 +4,7 @@ import config from '../../../../config';
 
 
 @Component({
-    template: '<div class="player"><video controls><source :src="url" type="video/mp4"></video></div>'
+    template: '<div class="player" :id="videosrc" v-html="videoElement"></div>'
 })
 export default class Player extends Vue {
 
@@ -13,12 +13,14 @@ export default class Player extends Vue {
         type: String
     })
     videosrc: string;
-    private url: string;
+    videoElement: string;
 
+    created() {
+        this.videoElement = '<video controls><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + this.videosrc + '" type="video/mp4"></video>';
+    }   
 
-    constructor(){
-        super();
-
-        this.url = `${config.FullApiUrl}/${config.VodServer}/${this.videosrc}`;
+    @Watch('videosrc')
+    oneChange(value: string, oldValue: string){
+        this.videoElement = '<video controls><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + value + '" type="video/mp4"></video>';
     }
 }
