@@ -14,7 +14,8 @@
                         <div class="payment__package-item" :class="package.title">
                             <span v-if="key == '1'" class="mostlybought">{{ $t('payment.mostlybought') }}</span>
                             <h2 v-t="'payment.packages.pack' + package.id"></h2>
-                            <span class="time" v-html="package.subtitle"></span>
+                            <span class="time" v-if="package.minutes < 60">{{ $t('payment.minutes', { minutes: Math.floor(package.minutes) }) }}</span>
+                            <span class="time" v-if="package.minutes >= 60">{{ $t('payment.hours', { minutes: Math.floor((package.minutes / 60)) }) }}</span>
                             <span class="credits">{{ package.quantity }}</span>
                             <span v-t="'payment.credits'"></span>
                             <span class="price">{{ package.price | euro }}</span>
