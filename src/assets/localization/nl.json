@@ -350,6 +350,8 @@
         "bonusdiscountdesc": "Acties zijn enkel geldig voor aankopen met iDeal & Mister Cash en dus niet voor aankopen met creditcard en Visa via Click and Buy. * ",
         "discountcode": "Kortingscode?",
         "mostlybought": "Meest verkocht!",
+        "minutes": "{minutes} minuten cammen",
+        "hours": "{minutes} uur cammen",
         "packages": {
             "pack1": "Basis",
             "pack2": "Medium",

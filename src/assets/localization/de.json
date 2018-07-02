@@ -348,6 +348,8 @@
         "bonusdiscountdesc": "",
         "discountcode": "Rabattcode?",
         "mostlybought": "Meistgekauft!",
+        "minutes": "{minutes} minuten camming",
+        "hours": "{minutes} hour camming",
         "packages": {
             "pack1": "Basic",
             "pack2": "Medium",

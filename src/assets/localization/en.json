@@ -349,6 +349,8 @@
         "bonusdiscountdesc": "The above promotion is only valid for purchases with iDeal & Mister Cash. And not for purchases with credit card and visa via Click and Buy. * ",
         "discountcode": "Discountcode?",
         "mostlybought": "Mostly sold!",
+        "minutes": "{minutes} minutes camming",
+        "hours": "{minutes} hour camming",
         "packages": {
             "pack1": "Basic",
             "pack2": "Medium",
