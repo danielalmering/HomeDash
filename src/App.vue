@@ -51,16 +51,14 @@ export default class Cookies extends Vue {
         await this.$store.dispatch('getSession');
 
         if(!utmMedium || utmMedium.toLowerCase() !== 'advertising'){
-            notificationSocket.connect();
 
             this.$store.dispatch('intervalChecksession');
+            await this.$store.dispatch('setLanguage', config.locale.DefaultLanguage);
         }
 
         notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
         });
-
-        await this.$store.dispatch('setLanguage', config.locale.DefaultLanguage);
 
         // Cookies
         const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
