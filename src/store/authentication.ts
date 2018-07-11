@@ -131,6 +131,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             if(utm){
                 store.dispatch('loadInfo');
                 store.commit('setUser', undefined);
+                store.commit('setLanguage', config.locale.DefaultLanguage);
                 return;
             }
 
