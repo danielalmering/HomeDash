@@ -8,10 +8,10 @@ import notificationSocket from '../socket';
 
 export function socketInterceptor(to: Route, from: Route, next?: (to?: string | Location) => void){
 
-    if(store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
-        // console.log('Should make a socket connection now!');
-        notificationSocket.connect(); // activate socket
-
+    if(!store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
+        // Populate Userdata
+        store.dispatch('getSession');
+        // Start Checksession Polling
         store.dispatch('intervalChecksession'); // activate checksession
     }
 
