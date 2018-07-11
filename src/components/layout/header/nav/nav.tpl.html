@@ -23,7 +23,7 @@
             <div class="nav__info col-xs-12 col-sm-7">
                 <div class="nav__info-container">
                     <a class="nav__info-item visible-xs" v-on:click="toggleTagMenu"><i class="fa fa-bars"></i><span v-t="'nav.info.menu'"></span></a>
-                    <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
+                    <router-link class="nav__info-item" :to="{ name: 'Favourites' }" v-if="user"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
 
                     <a class="nav__info-item nav__info-item--last" v-on:click="authenticated ? toggleAccountMenu() : login()">
