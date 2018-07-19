@@ -125,8 +125,17 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             let sessionData: AnonymousUser | undefined = undefined;
             const referer = router.currentRoute.query.utm_source ? `&referer=${router.currentRoute.query.utm_source}` : '';
-            if(checkSessionResult.status === 403){
+            const utm = router.currentRoute.query.utm_source ? true : false;
 
+            // TODO: Daniel
+            if(utm){
+                store.dispatch('loadInfo');
+                store.commit('setUser', undefined);
+                store.commit('setLanguage', config.locale.DefaultLanguage);
+                return;
+            }
+
+            if(checkSessionResult.status === 403){
                 const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}${referer}`, {
                     credentials: 'include'
                 });
@@ -137,13 +146,17 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
 
             //since the displayname is set locally, transfer it when setting a new remote user
-            if (sessionData  && store.state.user){
+            if (sessionData && store.state.user){
                 sessionData.displayName = store.state.user.displayName;
             }
 
             store.commit('setUser', sessionData);
 
             await store.dispatch('setLanguage', sessionData.language);
+
+            if(!notificationSocket.isConnected()){
+                notificationSocket.connect();
+            }
         }
     }
 };
