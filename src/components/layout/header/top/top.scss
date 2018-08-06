@@ -49,7 +49,7 @@
             line-height: 80%;
 
             &.large {
-                @include rem(padding, 13px 10px);
+                @include rem(padding, 16px 10px);
             }
 
             .nr {
@@ -60,9 +60,9 @@
 
             .cost {
                 font-style: normal;
-                font-weight: 300;
+                font-weight: 600;
                 color: $pallete-2;
-                @include rem(font-size, 9px);
+                @include rem(font-size, 12px);
                 letter-spacing: -0.3px;
             }
 

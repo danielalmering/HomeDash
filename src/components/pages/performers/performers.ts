@@ -14,6 +14,7 @@ import { RawLocation } from 'vue-router/types/router';
 import { listPerformers } from 'sensejs/performer';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import { openModal } from '../../../util';
 
 @WithRender
 @Component({
@@ -27,10 +28,12 @@ export default class Performers extends Vue {
 
     total: number = 0;
     services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
+    countryBanners: string [] = ['de'];
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
     getPerformerLabel = getPerformerLabel;
+    openModal = openModal;
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
@@ -47,6 +50,10 @@ export default class Performers extends Vue {
 
     get noPerformers(){
         return this.performers.length === 0;
+    }
+
+    get getBanner(){
+        return (this.countryBanners.indexOf(config.Country) !== -1);
     }
 
     hasService(performerId: number, service: string){
