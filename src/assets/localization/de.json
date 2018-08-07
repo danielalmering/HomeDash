@@ -85,9 +85,9 @@
             "errorSwitchFailed": "Darsteller Wechsel nicht möglich"
         },
         "register": {
-            "usp-1": "100% anonym",
-            "usp-2": "Mehr Angebote & Rabatte",
-            "usp-3": "Sichere Online Zahlung"
+            "usp-1": "Jetzt KOSTENLOS anmelden",
+            "usp-2": "10 Minuten GRATIS Livecams genießen!",
+            "usp-3": "Kein Abo! Keine versteckten Kosten!"
         }
     },
     "profile": {
@@ -360,7 +360,8 @@
             "paymentmethod-1-info": "iDeal",
             "paymentmethod-2-info": "Mister Cash",
             "paymentmethod-4-info": "Kreditkarte",
-            "paymentmethod-5-info": "Sofort Uberweisung"
+            "paymentmethod-5-info": "Sofort Uberweisung",
+            "paymentmethod-6-info": "Sepa Lastschrift"
         },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",
@@ -368,7 +369,8 @@
             "successCorrectPromo": "Promocode eingelöst!",
             "errorNoPackage": "Kein Paket ausgewählt!",
             "errorNoPayment": "Keine Zahlungsweise ausgewählt!",
-            "errorToHighPurchase": "Zu großen Kaufbetrag ausgewählt!"
+            "errorToHighPurchase": "Zu großen Kaufbetrag ausgewählt!",
+            "errorPaymentFailure": "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut"
         }
     },
     "contact": {

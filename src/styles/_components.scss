@@ -125,7 +125,8 @@
     @include rem(padding, 0px);
     list-style: none;
     li {
-        @include rem(font-size, 12px);
+        @include rem(font-size, 10px);
+        font-weight: 600;
         &:before {
             color: $pallete-21;
             content: "\f05d";

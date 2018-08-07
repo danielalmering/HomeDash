@@ -105,6 +105,12 @@ const routes = [{
                 component: Thankyou
             },
             {
+                path: 'payment-failure/',
+                name: 'PaymentFailure',
+                beforeEnter: authenticatedInterceptor,
+                component: Payment
+            },
+            {
                 path: 'payment/',
                 name: 'Payment',
                 beforeEnter: authenticatedInterceptor,

@@ -1,4 +1,5 @@
 import { Component, Prop } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import config from '../../../config';
@@ -57,6 +58,12 @@ export default class Payment extends Vue {
         await this.getInfo();
 
         this.loadCache();
+
+        // Payment Failure message!
+        if(this.$route.name === 'PaymentFailure'){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorPaymentFailure');
+            this.$router.replace({ path: '/payment/' });
+        }
     }
 
     beforeDestroy(){

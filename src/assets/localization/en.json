@@ -361,7 +361,8 @@
             "paymentmethod-1-info": "iDeal",
             "paymentmethod-2-info": "Mister Cash",
             "paymentmethod-4-info": "Creditcard",
-            "paymentmethod-5-info": "Sofort"
+            "paymentmethod-5-info": "Sofort",
+            "paymentmethod-6-info": "Sepa"
         },
         "alerts": {
             "errorIncorrectPromo": "Incorrect promocode!",
@@ -369,7 +370,8 @@
             "successCorrectPromo": "Promo code applied!",
             "errorNoPackage": "No package selected!",
             "errorNoPayment": "No payment method selected!",
-            "errorToHighPurchase": "To big purchase amount selected!"
+            "errorToHighPurchase": "To big purchase amount selected!",
+            "errorPaymentFailure": "The payment has failed, please try again"
         }
     },
     "contact": {

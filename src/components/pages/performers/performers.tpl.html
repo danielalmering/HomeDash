@@ -4,6 +4,15 @@
         <div class="performers-notfound" v-if="noPerformers">{{ $t('performers.noperformersfound') }}</div>
 
         <div class="performers">
+            <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-if="showBanner">
+                <div class="performers__block">
+                    <div class="performers__info">
+                        <div class="performers__image">
+                            <img v-on:click="openModal('register')" :src="getBanner" />
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
                 <div class="performers__block">
                     <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
