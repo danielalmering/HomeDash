@@ -34,6 +34,7 @@ export default class Performers extends Vue {
     getPerformerStatus = getPerformerStatus;
     getPerformerLabel = getPerformerLabel;
     openModal = openModal;
+    country = config.Country;
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
@@ -52,8 +53,12 @@ export default class Performers extends Vue {
         return this.performers.length === 0;
     }
 
+    get showBanner(){
+        return (this.countryBanners.indexOf(this.country) !== -1);
+    }
+
     get getBanner(){
-        return (this.countryBanners.indexOf(config.Country) !== -1);
+        return require(`../../../assets/images/${this.country}/gridbanner.png`);
     }
 
     hasService(performerId: number, service: string){

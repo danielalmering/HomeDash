@@ -85,9 +85,9 @@
             "errorSwitchFailed": "Darsteller Wechsel nicht möglich"
         },
         "register": {
-            "usp-1": "100% anonym",
-            "usp-2": "Mehr Angebote & Rabatte",
-            "usp-3": "Sichere Online Zahlung"
+            "usp-1": "Jetzt KOSTENLOS anmelden",
+            "usp-2": "10 Minuten GRATIS Livecams genießen!",
+            "usp-3": "Kein Abo! Keine versteckten Kosten!"
         }
     },
     "profile": {
@@ -369,7 +369,8 @@
             "successCorrectPromo": "Promocode eingelöst!",
             "errorNoPackage": "Kein Paket ausgewählt!",
             "errorNoPayment": "Keine Zahlungsweise ausgewählt!",
-            "errorToHighPurchase": "Zu großen Kaufbetrag ausgewählt!"
+            "errorToHighPurchase": "Zu großen Kaufbetrag ausgewählt!",
+            "errorPaymentFailure": "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut"
         }
     },
     "contact": {

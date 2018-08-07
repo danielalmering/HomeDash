@@ -370,7 +370,8 @@
             "successCorrectPromo": "Promo code applied!",
             "errorNoPackage": "No package selected!",
             "errorNoPayment": "No payment method selected!",
-            "errorToHighPurchase": "To big purchase amount selected!"
+            "errorToHighPurchase": "To big purchase amount selected!",
+            "errorPaymentFailure": "The payment has failed, please try again"
         }
     },
     "contact": {

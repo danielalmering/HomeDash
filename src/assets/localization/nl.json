@@ -371,7 +371,8 @@
             "successCorrectPromo": "Promocode toegepast!",
             "errorNoPackage": "Geen pakket geselecteerd!",
             "errorNoPayment": "Geen betaalmethode geselecteerd!",
-            "errorToHighPurchase": "Te groot aankoop bedrag geselecteerd!"
+            "errorToHighPurchase": "Te groot aankoop bedrag geselecteerd!",
+            "errorPaymentFailure": "De betaling is mislukt, probeer het opnieuw"
         }
     },
     "contact": {
