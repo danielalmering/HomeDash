@@ -6,5 +6,6 @@
     "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
     "Country": "nl",
-    "H5Server": "accept-stream01.thuis.nl"
+    "H5Server": "stream01.thuis.nl",
+    "VodServer": "vod"
 }
