@@ -54,6 +54,12 @@ export default class Readmessages extends Vue {
         }
     }
 
+    get maxCharacters(){
+        return (type: string) => {
+            return type === 'email' ? 1000 :  160;
+        }
+    }
+
     loadMore(){
         const pages = Math.round(this.total / this.query.limit);
         if((pages * this.query.limit) > this.query.offset) {
