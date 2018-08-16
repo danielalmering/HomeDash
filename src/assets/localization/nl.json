@@ -364,7 +364,9 @@
             "paymentmethod-2-info": "Mister Cash",
             "paymentmethod-4-info": "Creditcard",
             "paymentmethod-5-info": "Sofort",
-            "paymentmethod-6-info": "Sepa"
+            "paymentmethod-6-info": "Sepa",
+            "paymentmethod-7-info": "Pay Per Call",
+            "paymentmethod-8-info": "PayPall"
         },
         "alerts": {
             "errorIncorrectPromo": "Incorrecte promocode!",
