@@ -124,6 +124,7 @@
                 position: relative;
                 display: block;
                 @include rem(padding, 2px 0px);
+                color: $pallete-2;
                 
 
                 &__flag {
