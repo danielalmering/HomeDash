@@ -45,13 +45,13 @@
             <form class="row" v-on:submit.prevent="sendMessage(firstThreadMessage)" v-if="firstThreadMessage">
                 <div class="col-xs-12">
                     <div class="form__group">
-                        <textarea v-model="reply"></textarea>
+                        <textarea :maxlength="maxCharacters(firstThreadMessage.type)" v-model="reply"></textarea>
                     </div>
                 </div>
                 <div class="col-xs-12">
                     <div class="form__group">
                         <button class="btn btn-orange" v-t="'account.sendmessage'"></button>
-                    </div>
+                    </div>  
                 </div>
             </form>
         </div>

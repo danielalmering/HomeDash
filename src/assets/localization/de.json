@@ -9,6 +9,7 @@
             "cpm-0": "/min <b>Festnetz</b>",
             "cpm-1": "/min <b>Mobilfunknetz</b>",
             "pm": "pro Minute",
+            "cpm": "credits pro Minute",
             "nr-0": "pro Minute",
             "nr-1": "pro Minute",
             "nrdesc-0": "aus dem deutschen Festnetz. Preise aus dem Mobilfunknetz abweichend",
