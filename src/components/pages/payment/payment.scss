@@ -326,7 +326,7 @@
             display: block;
             position: relative;
             width: 100%;
-            min-height: 100px;
+            min-height: 145px;
             text-align: center;
             @include rem(padding, 9.5px 0px);
             @include gradient($pallete-0, $pallete-17, vertical);
@@ -365,7 +365,9 @@
         #BCMC span      { background-position: 0px -75px; }
         #VXSBILL span   { background-position: 0px -150px; }
         #SOFORT span    { background-position: 0px -225px; }
-        #COMMPAY span   { background-position: 0px -300px; }
+        #COMMPAY-debit span   { background-position: 0px -300px; }
+        #COMMPAY-paybycall span   { background-position: 0px -375px; }
+        #PAYPALL span   { background-position: 0px -450px; }
 
         &-name {
             display: block;

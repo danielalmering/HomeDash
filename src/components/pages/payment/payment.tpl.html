@@ -97,12 +97,12 @@
                 <ul>
                     <li class="col-xs-12 col-sm-4" v-for="paymentMethod in paymentMethods">
                         <a v-on:click="selectPayment(paymentMethod.abbr)">
-                            <div class="payment__method-item" :class="{ 'special': paymentMethod.abbr === selectedPayment }" :id="paymentMethod.abbr">
+                            <div class="payment__method-item" :class="{ 'special': paymentMethod.abbr === selectedPayment }" :id="paymentMethod.abbr.replace(/\//g, '-')">
                                 <i></i>
                                 <span></span>
                                 <div v-if="user.country === 'de'">
                                     <p></p>
-                                    <img v-if="paymentMethod.abbr === 'SOFORT'" src="../../../assets/images/tuv2.png" />
+                                    <img v-if="paymentMethod.abbr === 'SOFORT'" width="70" src="../../../assets/images/tuv2.png" />
                                 </div>
                             </div>
                             <div class="payment__method-name">
