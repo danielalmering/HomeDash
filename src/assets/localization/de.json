@@ -362,7 +362,9 @@
             "paymentmethod-2-info": "Mister Cash",
             "paymentmethod-4-info": "Kreditkarte",
             "paymentmethod-5-info": "Sofort Uberweisung",
-            "paymentmethod-6-info": "Sepa Lastschrift"
+            "paymentmethod-6-info": "Sepa Lastschrift",
+            "paymentmethod-7-info": "Pay Per Call",
+            "paymentmethod-8-info": "PayPall"
         },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",
