@@ -448,7 +448,9 @@
         "BCMC": "bcmc",
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
-        "SOFORT": "Sofort Banking"
+        "SOFORT": "Sofort Banking",
+        "COMMPAYPAYBYCALL": "Pay By Call",
+        "COMMPAYDEBIT": "Sepa"
     },
     "languages": {
         "nl": "Nederlands",
