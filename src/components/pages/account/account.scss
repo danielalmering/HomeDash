@@ -89,6 +89,15 @@
             }
         }
 
+        h2 {
+            @include rem(font-size, 14px);
+            font-weight: 700;
+            color: $pallete-2;
+            @include rem(padding, 0px 0px 15px 0px);
+            border-bottom: 3px solid $pallete-1;
+            @include rem(margin, 0px 0px 15px 0px);
+        }
+
         h3 {
             @include rem(font-size, 14px);
             color: $pallete-2;

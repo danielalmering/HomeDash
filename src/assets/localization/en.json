@@ -44,7 +44,8 @@
             "history": "Account history",
             "giftvoucher": "Gift voucher",
             "welcome": "Welcome",
-            "thankyou": "Thank you for purchasing!"
+            "thankyou": "Thank you for purchasing!",
+            "notifications": "Notifications"
         }
     },
     "performers": {
@@ -262,6 +263,17 @@
         "datetill": "Date till",
         "datefrom": "Date from",
         "readold": "Read more..",
+        "whenreceivednotify": {
+            "question": "When to send notification?",
+            "checkbox1": "keep me informed of all actions",
+            "checkbox2": "if a model sends me an email"
+        },
+        "howreceivenotify": {
+            "question": "How do you want to receive notifications?",
+            "radio1": "",
+            "radio2": "",
+            "radio3": ""
+        },
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
             "errorEditData": "Your account has not been edited successfully!",
