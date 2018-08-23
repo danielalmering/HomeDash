@@ -183,7 +183,8 @@
             "password": "Passwort",
             "login": "Login",
             "register": "Registrieren",
-            "forgotPassword": "Passwort vergessen?"
+            "forgotPassword": "Passwort vergessen?",
+            "orsignupwith": "oder anmelden mit"
         },
         "register":{
             "title": "Account registrieren",
