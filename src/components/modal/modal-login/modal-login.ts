@@ -17,7 +17,8 @@ export default class ModalLogin extends Vue {
     }
 
     get FB(){
-        return `https://www.facebook.com/v3.1/dialog/oauth?client_id=674396449594035&redirect_uri=${location.protocol}//${location.host}/login/&state=acc${this.user.id}`;
+        const redirect = encodeURIComponent(`${location.protocol}//${location.host}/login/`);
+        return `https://www.facebook.com/v3.1/dialog/oauth?client_id=674396449594035&redirect_uri=${redirect}&state=acc${this.user.id}`;
     }
 
     mounted(){
@@ -45,7 +46,7 @@ export default class ModalLogin extends Vue {
         
         if(!query.has('code')){ return }
 
-        const redirect  = `${location.protocol}//${location.host}/my-account/edit-data/`;
+        const redirect  = `${location.protocol}//${location.host}/login/`;
         const encoded   = encodeURIComponent(redirect);
 
         const checkSessionResult = await fetch(`${config.BaseUrl}/check_session?login=2&ret=${encoded}&token=${token}`, {
@@ -54,6 +55,8 @@ export default class ModalLogin extends Vue {
 
         const data = await checkSessionResult.json();
         this.$store.commit('setUser', data);
+
+        this.$store.dispatch('closeModal');
     }
 
     close(){
