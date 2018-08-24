@@ -57,6 +57,7 @@ export default class ModalLogin extends Vue {
         this.$store.commit('setUser', data);
 
         this.$store.dispatch('closeModal');
+        window.history.pushState({}, document.title, window.location.pathname);
     }
 
     close(){
