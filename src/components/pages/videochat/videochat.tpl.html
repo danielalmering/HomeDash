@@ -68,7 +68,7 @@
             </span>
 
             <div class="videochat__controls-btns">
-                <a v-on:click="toggleCam" v-if="sessionType != 'PEEK'" class="fa fa-video-camera" :class="{ active:broadcasting.cam }" ></a>
+                <a v-on:click="toggleCam" v-if="sessionType != 'PEEK'" class="fa fa-video-camera hidden-xs" :class="{ active:broadcasting.cam }" ></a>
                 <a v-on:click="toggleFavourite" class="fa fa-star" :class="{ active:performer.isFavourite }" ></a>
             </div>
         </div>

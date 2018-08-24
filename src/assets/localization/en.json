@@ -183,7 +183,8 @@
             "password": "Password",
             "login": "Login",
             "register": "Register",
-            "forgotPassword": "Password forgotten?"
+            "forgotPassword": "Password forgotten?",
+            "orsignupwith": "or signup with"
         },
         "register":{
             "title": "Register account",

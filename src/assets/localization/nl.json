@@ -184,7 +184,8 @@
             "password": "Wachtwoord",
             "login": "Login",
             "register": "Registreer",
-            "forgotPassword": "Wachtwoord vergeten?"
+            "forgotPassword": "Wachtwoord vergeten?",
+            "orsignupwith": "of meld je aan met"
         },
         "register":{
             "title": "Registreer account",

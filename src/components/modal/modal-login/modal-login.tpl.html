@@ -15,6 +15,12 @@
 
                 <a v-on:click="openModal('recover')">{{ $t('modals.login.forgotPassword') }}</a>
             </div>
+            <div class="form__group sociallogin" v-if="user">
+                <p class="sociallogin__title"><span>{{ $t('modals.login.orsignupwith') }}</span></p>
+                <a class="sociallogin__button fb" v-bind:href="FB">Facebook</a>
+                <!-- <a class="sociallogin__button tw">Twitter</a>
+                <a class="sociallogin__button go">Google</a> -->
+            </div>
         </form>
     </div>
 </div>
