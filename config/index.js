@@ -36,6 +36,9 @@ module.exports = {
       '/api': {
         target: settings.FullApiUrl,
         changeOrigin: true
+      },
+      '/mocks': {
+        target: 'http://localhost:3000'
       }
     },
     logLevel: 'debug',

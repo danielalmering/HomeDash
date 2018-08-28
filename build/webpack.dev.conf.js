@@ -6,6 +6,8 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const MockWebpackPlugin = require('mock-webpack-plugin');
+const mockConfig = require('../mocks/config.js');
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -31,6 +33,20 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()
-  ]
+    new FriendlyErrorsPlugin(),
+    new MockWebpackPlugin({
+ 
+      // mock config content
+      config: mockConfig,
+
+      // the prot of the mock server
+      port: 3000
+    })
+  ],
+  devServer: {
+    // proxy to the mock server
+    proxy: {
+        '/mocks': 'http://localhost:3000'
+    }
+  }
 })
