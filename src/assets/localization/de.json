@@ -364,7 +364,8 @@
             "paymentmethod-5-info": "Sofort Uberweisung",
             "paymentmethod-6-info": "Sepa Lastschrift",
             "paymentmethod-7-info": "Pay By Call",
-            "paymentmethod-8-info": "PayPall"
+            "paymentmethod-8-info": "PayPal",
+            "paymentmethod-9-info": "PaySafe"
         },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",
@@ -447,6 +448,7 @@
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
         "SOFORT": "Sofort Banking",
+        "PAYSAFE": "PaySafe"
         "COMMPAYPAYBYCALL": "Pay By Call",
         "COMMPAYDEBIT": "Sepa"
     },
