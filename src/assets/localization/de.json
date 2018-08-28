@@ -448,7 +448,7 @@
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
         "SOFORT": "Sofort Banking",
-        "PAYSAFE": "PaySafe"
+        "PAYSAFE": "PaySafe",
         "COMMPAYPAYBYCALL": "Pay By Call",
         "COMMPAYDEBIT": "Sepa"
     },
