@@ -364,7 +364,8 @@
             "paymentmethod-5-info": "Sofort Uberweisung",
             "paymentmethod-6-info": "Sepa Lastschrift",
             "paymentmethod-7-info": "Pay Per Call",
-            "paymentmethod-8-info": "PayPall"
+            "paymentmethod-8-info": "PayPal",
+            "paymentmethod-9-info": "PaySafe"
         },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",
@@ -446,7 +447,8 @@
         "BCMC": "bcmc",
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
-        "SOFORT": "Sofort Banking"
+        "SOFORT": "Sofort Banking",
+        "PAYSAFE": "PaySafe"
     },
     "languages": {
         "nl": "Niederländisch",
