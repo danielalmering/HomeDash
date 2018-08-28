@@ -365,7 +365,7 @@
             "paymentmethod-4-info": "Creditcard",
             "paymentmethod-5-info": "Sofort",
             "paymentmethod-6-info": "Sepa",
-            "paymentmethod-7-info": "Pay Per Call",
+            "paymentmethod-7-info": "Pay By Call",
             "paymentmethod-8-info": "PayPal",
             "paymentmethod-9-info": "PaySafe"
         },
@@ -451,6 +451,8 @@
         "VXSBILL": "Credit Card",
         "SOFORT": "Sofort Banking",
         "PAYSAFE": "PaySafe"
+        "COMMPAYPAYBYCALL": "Pay By Call",
+        "COMMPAYDEBIT": "Sepa"
     },
     "languages": {
         "nl": "Nederlands",
