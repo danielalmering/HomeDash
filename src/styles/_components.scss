@@ -178,11 +178,12 @@
 
     &__button {
         display: table;
-        width: calc(50% - 10px);
+        //width: calc(33.33% - 10px);
+        width: calc(100% - 10px);
         @include rem(margin, 5px);
         @include rem(font-size, 12px);
         font-weight: 600;
-        @include rem(padding, 6px 10px 6px 30px);
+        @include rem(padding, 6px 10px 6px 27px);
         @include border-radius(1px);
         float: left;
         color: $pallete-2;

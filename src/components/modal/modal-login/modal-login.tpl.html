@@ -2,7 +2,7 @@
     <div class="modal__title"><i class="fa fa-lock"></i><span v-t="'modals.login.title'"></span></div>
     <div class="modal__close" v-on:click="close"><i class="fa fa-times"></i></div>
     <div class="modal__content login form">
-        <form v-on:submit.prevent="login">
+        <form v-on:submit.prevent="login" v-if="!socialwait">
             <div class="form__group">
                 <label v-t="'modals.login.email'"></label>
                 <input type="text" required v-model="email" autocorrect="off" autocapitalize="none" />
@@ -15,11 +15,8 @@
 
                 <a v-on:click="openModal('recover')">{{ $t('modals.login.forgotPassword') }}</a>
             </div>
-            <div class="form__group sociallogin" v-if="user">
-                <p class="sociallogin__title"><span>{{ $t('modals.login.orsignupwith') }}</span></p>
-                <a class="sociallogin__button fb" v-bind:href="FB">Facebook</a>
-                <!-- <a class="sociallogin__button tw">Twitter</a>
-                <a class="sociallogin__button go">Google</a> -->
+            <div class="form__group">
+                <sociallogin></sociallogin>
             </div>
         </form>
     </div>
