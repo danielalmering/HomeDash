@@ -15,12 +15,22 @@ export default class Player extends Vue {
     videosrc: string;
     videoElement: string;
 
+    get vidElement(){
+        return (video: string) => {
+            if(window.innerWidth >= 783){
+                return '<video controls><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + video + '" type="video/mp4"></video>';
+            } else {
+                return '<video controls muted><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + video + '" type="video/mp4"></video>';
+            }
+        };
+    }
+
     created() {
-        this.videoElement = '<video controls><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + this.videosrc + '" type="video/mp4"></video>';
+        this.videoElement = this.vidElement(this.videosrc);
     }   
 
     @Watch('videosrc')
     oneChange(value: string, oldValue: string){
-        this.videoElement = '<video controls><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + value + '" type="video/mp4"></video>';
+        this.videoElement = this.vidElement(value);
     }
 }
