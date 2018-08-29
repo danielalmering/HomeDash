@@ -184,8 +184,8 @@
             "login": "Login",
             "register": "Registrieren",
             "forgotPassword": "Passwort vergessen?",
-            "orloginwith": "oder logge dich mit ein",
-            "orregisterwith": "oder registriere dich mit"
+            "orloginwith": "oder anmelden mit",
+            "orregisterwith": "oder registrieren mit"
         },
         "register":{
             "title": "Account registrieren",
