@@ -46,7 +46,7 @@ const actions = {
             });
         }
 
-        commit('addPerformers', result.performerAccounts);store.dispatch
+        commit('addPerformers', result.performerAccounts);
 
         await dispatch('loadMainTile', {
             performerId: payload.performerId
