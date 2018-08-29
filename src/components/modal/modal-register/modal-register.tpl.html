@@ -11,6 +11,9 @@
                 </ul>
             </div>
             <div class="form__group">
+                <sociallogin :title="'modals.login.orregisterwith'"></sociallogin>
+            </div>
+            <div class="form__group">
                 <label v-t="'modals.register.username'"></label>
                 <input type="text" required v-model="userForm.username" />
             </div>
@@ -40,8 +43,5 @@
                 <button class="btn btn-large btn-orange btn-full" v-t="'modals.register.register'"></button>
             </div>
         </form>
-        <div class="form__group">
-            <sociallogin></sociallogin>
-        </div>
     </div>
 </div>
