@@ -374,7 +374,8 @@
             "errorNoPackage": "Kein Paket ausgewählt!",
             "errorNoPayment": "Keine Zahlungsweise ausgewählt!",
             "errorToHighPurchase": "Zu großen Kaufbetrag ausgewählt!",
-            "errorPaymentFailure": "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut"
+            "errorPaymentFailure": "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut",
+            "errorPaymentNotAvailable": "Leider ist diese Zahlungsmethode zu diesem Zeitpunkt nicht möglich"
         }
     },
     "contact": {

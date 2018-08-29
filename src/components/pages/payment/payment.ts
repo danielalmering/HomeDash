@@ -61,7 +61,12 @@ export default class Payment extends Vue {
 
         // Payment Failure message!
         if(this.$route.name === 'PaymentFailure'){
-            this.$store.dispatch('errorMessage', 'payment.alerts.errorPaymentFailure');
+            const query = new URLSearchParams(window.location.search);
+            if(query.has('info') === true){
+                this.$store.dispatch('errorMessage', query.get('topic'));
+            } else {
+                this.$store.dispatch('errorMessage', 'payment.alerts.errorPaymentFailure');
+            }
             this.$router.replace({ path: '/payment/' });
         }
     }
