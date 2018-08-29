@@ -1,7 +1,7 @@
 <template>
     <div class="sociallogin" v-if="this.user">
         <div class="container-fluid">
-            <p class="sociallogin__title"><span>{{ $t('modals.login.orsignupwith') }}</span></p>
+            <p class="sociallogin__title"><span>{{ $t(title) }}</span></p>
             <a class="sociallogin__button fb" v-bind:href="socialhref('fb')">Facebook</a>
             <!-- <a class="sociallogin__button tw" v-bind:href="socialhref('tw')">Twitter</a>
             <a class="sociallogin__button go" v-bind:href="socialhref('go')">Google</a> -->
@@ -14,10 +14,16 @@ import Vue from 'vue';
 import config from '../../config';
 import { Route } from 'vue-router';
 
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class Sociallogin extends Vue {
+
+    @Prop({
+        required: false,
+        type: String
+    })
+    title: string;
 
     get user(){
         return this.$store.state.authentication.user; 
