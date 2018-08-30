@@ -375,7 +375,8 @@
             "errorNoPackage": "No package selected!",
             "errorNoPayment": "No payment method selected!",
             "errorToHighPurchase": "To big purchase amount selected!",
-            "errorPaymentFailure": "The payment has failed, please try again"
+            "errorPaymentFailure": "The payment has failed, please try again",
+            "errorPaymentNotAvailable": "Unfortunately, this payment method is not possible at this time"
         }
     },
     "contact": {
@@ -451,7 +452,8 @@
         "SOFORT": "Sofort Banking",
         "PAYSAFE": "PaySafe",
         "COMMPAYPAYBYCALL": "Pay By Call",
-        "COMMPAYDEBIT": "Sepa"
+        "COMMPAYDEBIT": "Sepa",
+        "PAYPAL": "PayPal"
     },
     "languages": {
         "nl": "Dutch",

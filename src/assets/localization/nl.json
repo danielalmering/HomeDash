@@ -376,7 +376,8 @@
             "errorNoPackage": "Geen pakket geselecteerd!",
             "errorNoPayment": "Geen betaalmethode geselecteerd!",
             "errorToHighPurchase": "Te groot aankoop bedrag geselecteerd!",
-            "errorPaymentFailure": "De betaling is mislukt, probeer het opnieuw"
+            "errorPaymentFailure": "De betaling is mislukt, probeer het opnieuw",
+            "errorPaymentNotAvailable": "Helaas is deze betalings method niet mogelijk op dit moment"
         }
     },
     "contact": {
@@ -452,7 +453,8 @@
         "SOFORT": "Sofort Banking",
         "PAYSAFE": "PaySafe",
         "COMMPAYPAYBYCALL": "Pay By Call",
-        "COMMPAYDEBIT": "Sepa"
+        "COMMPAYDEBIT": "Sepa",
+        "PAYPAL": "PayPal"
     },
     "languages": {
         "nl": "Nederlands",
