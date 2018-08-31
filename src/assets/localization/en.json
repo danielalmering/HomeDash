@@ -366,7 +366,7 @@
             "paymentmethod-6-info": "Sepa",
             "paymentmethod-7-info": "Pay By Call",
             "paymentmethod-8-info": "PayPal",
-            "paymentmethod-9-info": "PaySafe"
+            "paymentmethod-9-info": "paysafecard"
         },
         "alerts": {
             "errorIncorrectPromo": "Incorrect promocode!",
@@ -376,7 +376,8 @@
             "errorNoPayment": "No payment method selected!",
             "errorToHighPurchase": "To big purchase amount selected!",
             "errorPaymentFailure": "The payment has failed, please try again",
-            "errorPaymentNotAvailable": "Unfortunately, this payment method is not possible at this time"
+            "errorPaymentNotAvailable": "Unfortunately, this payment method is not possible at this time",
+            "errorNoConnection": "Transaction could not be initiated due to connection problems. If the problem persists, please contact our support."
         }
     },
     "contact": {
@@ -450,7 +451,7 @@
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
         "SOFORT": "Sofort Banking",
-        "PAYSAFE": "PaySafe",
+        "PAYSAFE": "Paysafecard",
         "COMMPAYPAYBYCALL": "Pay By Call",
         "COMMPAYDEBIT": "Sepa",
         "PAYPAL": "PayPal"
