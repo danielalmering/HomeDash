@@ -185,7 +185,7 @@
             "register": "Registrieren",
             "forgotPassword": "Passwort vergessen?",
             "orloginwith": "oder logge dich mit ein",
-            "orregisterwith": "oder registriere dich mit"
+            "orregisterwith": "registriere dich mit"
         },
         "register":{
             "title": "Account registrieren",
@@ -196,6 +196,7 @@
             "password": "Passwort",
             "passwordconfirm": "Passwort bestätigen",
             "register": "Registrieren",
+            "fillindata": "oder füllen Sie die Details aus",
             "alerts": {
                 "successMessage": "Du hast eine Bestätigungsemail erhalten",
                 "errorMessage": "Etwas ist bei der Registrierung schief gelaufen."

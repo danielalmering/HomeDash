@@ -186,7 +186,7 @@
             "register": "Registreer",
             "forgotPassword": "Wachtwoord vergeten?",
             "orloginwith": "of login met",
-            "orregisterwith": "of registreer met"
+            "orregisterwith": "registreer met"
         },
         "register":{
             "title": "Registreer account",
@@ -197,6 +197,7 @@
             "password": "Wachtwoord",
             "passwordconfirm": "Bevestig wachtwoord",
             "register": "Registreer",
+            "fillindata": "of vul de gegevens in",
             "alerts": {
                 "successMessage": "Je hebt een bevestigingsmail ontvangen",
                 "errorMessage": "Er is iets misgegaan tijdens de registratie"
