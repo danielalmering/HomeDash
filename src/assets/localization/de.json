@@ -365,7 +365,7 @@
             "paymentmethod-6-info": "Sepa Lastschrift",
             "paymentmethod-7-info": "Pay By Call",
             "paymentmethod-8-info": "PayPal",
-            "paymentmethod-9-info": "PaySafe"
+            "paymentmethod-9-info": "paysafecard"
         },
         "alerts": {
             "errorIncorrectPromo": "Ungültiger Promocode!",
@@ -375,7 +375,8 @@
             "errorNoPayment": "Keine Zahlungsweise ausgewählt!",
             "errorToHighPurchase": "Zu großen Kaufbetrag ausgewählt!",
             "errorPaymentFailure": "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut",
-            "errorPaymentNotAvailable": "Leider ist diese Zahlungsmethode zu diesem Zeitpunkt nicht möglich"
+            "errorPaymentNotAvailable": "Leider ist diese Zahlungsmethode zu diesem Zeitpunkt nicht möglich",
+            "errorNoConnection": "Transaction could not be initiated due to connection problems. If the problem persists, please contact our support."
         }
     },
     "contact": {
@@ -449,7 +450,7 @@
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
         "SOFORT": "Sofort Banking",
-        "PAYSAFE": "PaySafe",
+        "PAYSAFE": "Paysafecard",
         "COMMPAYPAYBYCALL": "Pay By Call",
         "COMMPAYDEBIT": "Sepa",
         "PAYPAL": "PayPal"
