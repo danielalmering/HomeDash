@@ -238,6 +238,11 @@ export default class Payment extends Vue {
 
         const { result, error } = await submitPayment(this.selectedPayment, this.credits, this.promoCode);
 
+        if(error){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorNoConnection');
+            return;
+        }
+
         if(result.free !== undefined){
             this.$store.dispatch('openMessage', {
                 content: result.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
