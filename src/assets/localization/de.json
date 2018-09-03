@@ -196,6 +196,7 @@
             "password": "Passwort",
             "passwordconfirm": "Passwort bestätigen",
             "register": "Registrieren",
+            "fillindata": "oder füllen Sie die Details aus",
             "alerts": {
                 "successMessage": "Du hast eine Bestätigungsemail erhalten",
                 "errorMessage": "Etwas ist bei der Registrierung schief gelaufen."
