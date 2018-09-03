@@ -1,7 +1,7 @@
 {
     "BaseUrl": "/api",
-    "FullApiUrl": "http://www.thuis.nl",
-    "ImageUrl": "//img.thuis.nl/files/",
+    "FullApiUrl": "https://accept-www.thuis.nl",
+    "ImageUrl": "//accept-img.thuis.nl/files/",
     "SocketUrl": "wss://socket.thuis.nl/",
     "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
