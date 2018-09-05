@@ -63,8 +63,9 @@ export default class Sociallogin extends Vue {
         let link    = new URL(this.socialdata[login].href);
         let params  = new URLSearchParams(link.search);
         let url     = params.get('redirect_uri');
+        let appid   = params.get('client_id');
 
-        const checkSessionResult = await fetch(`${config.BaseUrl}/check_session?login=${login}&ret=` + encodeURIComponent(`${url}`) + `&token=${token}`, {
+        const checkSessionResult = await fetch(`${config.BaseUrl}/check_session?login=${login}&app=${appid}&ret=` + encodeURIComponent(`${url}`) + `&token=${token}`, {
             credentials: 'include'
         });
 
