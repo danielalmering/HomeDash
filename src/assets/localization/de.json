@@ -258,7 +258,7 @@
         "message": "Nachricht",
         "paymessage": "Das Lesen der Nachricht kostet {credits} credits",
         "viewmessage": "Nachricht lesen!",
-        "pushmessages": "Push Nachrichten erhalten",
+        "pushmessages": "Notifizierungen",
         "datetill": "Datum bis",
         "datefrom": "Datum vom",
         "readold": "Weiterlesen..",

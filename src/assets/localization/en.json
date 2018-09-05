@@ -259,7 +259,7 @@
         "message": "Message",
         "paymessage": "The costs for viewing the message amount to {credits} credits",
         "viewmessage": "View message!",
-        "pushmessages": "Receive push messages",
+        "pushmessages": "Receive notifications",
         "datetill": "Date till",
         "datefrom": "Date from",
         "readold": "Read more..",

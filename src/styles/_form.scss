@@ -51,6 +51,8 @@
     }
     input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
     input[type=checkbox]:checked + label:before { letter-spacing: 5px; } 
+    input[type=checkbox] + label { float: left; width: 25px; }
+    .checkbox-title { float: left; width:calc(100% - 25px); line-height: 38px; padding-right: 10px; }
 
     input[type=radio]:checked,
     input[type=radio]:not(:checked) { position: absolute; left: -9999px; }

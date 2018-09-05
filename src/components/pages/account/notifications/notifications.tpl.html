@@ -5,28 +5,23 @@
     <div class="form">
         <form class="row" v-on:submit.prevent="updateNotifications">
             <div class="col-xs-12">
-                <div class="form__group">
+                <div class="form__group" v-if="formData">
                     <h2 v-t="'account.whenreceivednotify.question'"></h2>
 
-                    <label v-t="'account.whenreceivednotify.checkbox1'"></label>
-                    <input type="checkbox" id="checkbox1">
-                    <label for="checkbox1"></label>
-
-                    <label v-t="'account.whenreceivednotify.checkbox2'"></label>
-                    <input type="checkbox" id="checkbox2">
-                    <label for="checkbox2"></label>
+                    <div class="checkbox" v-for="(event, index) in formData.events">
+                        <input type="checkbox" v-model="user.notification_types[index]" :id="'checkbox-'+index.toLowerCase()">
+                        <label :for="'checkbox-'+index.toLowerCase()"></label>
+                        <label class="checkbox-title">{{ event }}</label>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="form__group">
                     <h2 v-t="'account.howreceivenotify.question'"></h2>
 
-                    <input type="radio" id="radio1" name="radio-group" checked>
-                    <label for="radio1" v-t="'account.howreceivenotify.radio1'"></label>
-
-                    <input type="radio" id="radio2" name="radio-group">
-                    <label for="radio2"v-t="'account.howreceivenotify.radio2'" ></label>
-
-                    <input type="radio" id="radio3" name="radio-group">
-                    <label for="radio3" v-t="'account.howreceivenotify.radio3'"></label>
+                    <div class="radio" v-for="(event, index) in formData.modes">
+                        <input type="radio" :id="'radio'+index" name="radio-group" v-model="user.notification_mode" :value="index">
+                        <label :for="'radio'+index">{{ event }}</label>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12">
