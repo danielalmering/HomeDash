@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <h1>
+        <i class="fa fa-bell hidden-xs"></i><span v-t="'nav.info.notifications'"></span>
+    </h1>
+    <div class="form">
+        <form class="row" v-on:submit.prevent="updateNotifications">
+            <div class="col-xs-12">
+                <div class="form__group" v-if="formData">
+                    <h2 v-t="'account.whenreceivednotify.question'"></h2>
+
+                    <div class="checkbox" v-for="(event, index) in formData.events">
+                        <input type="checkbox" v-model="user.notification_types[index]" :id="'checkbox-'+index.toLowerCase()">
+                        <label :for="'checkbox-'+index.toLowerCase()"></label>
+                        <label class="checkbox-title">{{ event }}</label>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="form__group">
+                    <h2 v-t="'account.howreceivenotify.question'"></h2>
+
+                    <div class="radio" v-for="(event, index) in formData.modes">
+                        <input type="radio" :id="'radio'+index" name="radio-group" v-model="user.notification_mode" :value="index">
+                        <label :for="'radio'+index">{{ event }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form__group">
+                    <button class="btn btn-orange" v-t="'account.editdatabtn'"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

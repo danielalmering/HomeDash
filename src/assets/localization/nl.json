@@ -45,7 +45,8 @@
             "history": "Accounthistorie",
             "giftvoucher": "Cadeaubon",
             "welcome": "Welkom",
-            "thankyou": "Bedankt voor uw aankoop!"
+            "thankyou": "Bedankt voor uw aankoop!",
+            "notifications": "Notificaties"
         }
     },
     "performers": {
@@ -262,10 +263,21 @@
         "message": "Bericht",
         "paymessage": "De kosten voor het bekijken van het bericht bedragen {credits} credits",
         "viewmessage": "Bericht bekijken!",
-        "pushmessages": "Push berichten ontvangen",
+        "pushmessages": "Notificaties ontvangen",
         "datetill": "Datum tot",
         "datefrom": "Datum van",
         "readold": "Toon meer..",
+        "whenreceivednotify": {
+            "question": "Wanneer notificatie versturen?",
+            "checkbox1": "houd me op de hoogte van alle acties",
+            "checkbox2": "als een model me een email stuurt"
+        },
+        "howreceivenotify": {
+            "question": "Hoe wil je notificaties ontvangen?",
+            "radio1": "per email",
+            "radio2": "per sms",
+            "radio3": "browsernotificatie"
+        },
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
