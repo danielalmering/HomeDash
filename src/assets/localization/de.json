@@ -94,6 +94,8 @@
     "profile": {
         "favorite-add": "Favorit hinzufügen",
         "favorite-remove": "Favorit entfernen",
+        "subscribe-add": "Benachrichtigung benachrichtigen",
+        "subscribe-remove": "Benachrichtigung löschen",
         "property": "Eigenschaften",
         "description": "Beschreibung",
         "age": "Alter",
@@ -276,6 +278,7 @@
             "Web": "Mit dem Browser",
             "WhatsApp": "Von WhatsApp"
         },
+        "subscribesperformers": "Abonniert Darsteller",
         "alerts": {
             "successEditData": "Dein Account wurde erfolgreich bearbeitet!",
             "errorEditData": "Dein Account wurde nicht erfolgreich bearbeitet!",

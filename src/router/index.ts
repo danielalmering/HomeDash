@@ -58,7 +58,7 @@ const routes = [{
                         component: History
                     },
                     {
-                        path: 'notifications/',
+                        path: 'inbox/',
                         name: 'Inbox',
                         component: Inbox
                     },

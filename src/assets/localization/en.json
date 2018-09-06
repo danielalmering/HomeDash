@@ -95,6 +95,8 @@
     "profile": {
         "favorite-add": "Add favorite",
         "favorite-remove": "Delete favorite",
+        "subscribe-add": "Notify notification",
+        "subscribe-remove": "Delete notification",
         "property": "Characteristics",
         "description": "Description",
         "age": "Age",
@@ -277,6 +279,7 @@
             "Web": "By browser",
             "WhatsApp": "By WhatsApp"
         },
+        "subscribesperformers": "Subscribes performers",
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
             "errorEditData": "Your account has not been edited successfully!",

@@ -96,6 +96,8 @@
     "profile": {
         "favorite-add": "Maak favoriet",
         "favorite-remove": "Favoriet verwijderen",
+        "subscribe-add": "Notificatie aanmelden",
+        "subscribe-remove": "Verwijder notificatie",
         "property": "Kenmerken",
         "description": "Omschrijving",
         "age": "Leeftijd",
@@ -278,6 +280,7 @@
             "Web": "Per browser",
             "WhatsApp": "Per WhatsApp"
         },
+        "subscribesperformers": "Aangemelde performers!",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
