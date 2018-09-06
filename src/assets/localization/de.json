@@ -267,14 +267,17 @@
         "readold": "Weiterlesen..",
         "whenreceivednotify": {
             "question": "Wann muss ich eine Benachrichtigung senden?",
-            "checkbox1": "halte mich über alle Aktionen auf dem Laufenden",
-            "checkbox2": "wenn ein Model mir eine Email schickt"
+            "SSA": "Einzel Stream Aktivierung",
+            "MSG": "Nachrichten",
+            "PRO": "Promotionen"
         },
         "howreceivenotify": {
             "question": "Wie möchten Sie Benachrichtigungen erhalten?",
-            "radio1": "",
-            "radio2": "",
-            "radio3": ""
+            "Inactive": "Keine Benachrichtigungen",
+            "Email": "Per E-Mail",
+            "SMS": "Per SMS",
+            "Web": "Mit dem Browser",
+            "WhatsApp": "Von WhatsApp"
         },
         "alerts": {
             "successEditData": "Dein Account wurde erfolgreich bearbeitet!",

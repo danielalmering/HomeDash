@@ -268,14 +268,17 @@
         "readold": "Read more..",
         "whenreceivednotify": {
             "question": "When to send notification?",
-            "checkbox1": "keep me informed of all actions",
-            "checkbox2": "if a model sends me an email"
+            "SSA": "Single Stream activation",
+            "MSG": "Messages",
+            "PRO": "Promotions"
         },
         "howreceivenotify": {
             "question": "How do you want to receive notifications?",
-            "radio1": "",
-            "radio2": "",
-            "radio3": ""
+            "Inactive": "No notifications",
+            "Email": "By email",
+            "SMS": "By sms",
+            "Web": "By browser",
+            "WhatsApp": "By WhatsApp"
         },
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
