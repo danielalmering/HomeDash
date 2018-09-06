@@ -3,6 +3,7 @@ import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
 import { User, AnonymousUser, UserForm } from '../models/User';
+import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
 import Raven from 'raven-js';
@@ -79,7 +80,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 return;
             }
 
-            store.commit('setUser', loginData);
+            store.commit('setUser', transformReadConsumer(loginData));
 
             notificationSocket.disconnect();
             notificationSocket.connect();
@@ -150,7 +151,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 sessionData.displayName = store.state.user.displayName;
             }
 
-            store.commit('setUser', sessionData);
+            store.commit('setUser', transformReadConsumer(sessionData));
 
             await store.dispatch('setLanguage', sessionData.language);
 

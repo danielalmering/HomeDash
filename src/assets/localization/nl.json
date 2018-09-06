@@ -266,14 +266,17 @@
         "readold": "Toon meer..",
         "whenreceivednotify": {
             "question": "Wanneer notificatie versturen?",
-            "checkbox1": "houd me op de hoogte van alle acties",
-            "checkbox2": "als een model me een email stuurt"
+            "SSA": "Single Stream activering",
+            "MSG": "Berichten",
+            "PRO": "Acties"
         },
         "howreceivenotify": {
             "question": "Hoe wil je notificaties ontvangen?",
-            "radio1": "per email",
-            "radio2": "per sms",
-            "radio3": "browsernotificatie"
+            "Inactive": "Geen notificaties",
+            "Email": "Per email",
+            "SMS": "Per sms",
+            "Web": "Per browser",
+            "WhatsApp": "Per WhatsApp"
         },
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
