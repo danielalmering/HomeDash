@@ -94,6 +94,8 @@
     "profile": {
         "favorite-add": "Favorit hinzufügen",
         "favorite-remove": "Favorit entfernen",
+        "subscribe-add": "Benachrichtigung benachrichtigen",
+        "subscribe-remove": "Benachrichtigung löschen",
         "property": "Eigenschaften",
         "description": "Beschreibung",
         "age": "Alter",
@@ -279,6 +281,7 @@
             "Web": "Mit dem Browser",
             "WhatsApp": "Von WhatsApp"
         },
+        "subscribesperformers": "Abonniert Darsteller",
         "alerts": {
             "successEditData": "Dein Account wurde erfolgreich bearbeitet!",
             "errorEditData": "Dein Account wurde nicht erfolgreich bearbeitet!",
@@ -295,7 +298,8 @@
             "successReplyMessage": "Deine Antwort wurde erfolgreich versendet!",
             "successNewMessage": "Die Nachricht wurde erfolgreich versendet!",
             "errorNewMessage": "Die Nachricht ist nicht erfolgreich versendet worden!",
-            "successGotMessage": "Du hast neue Nachrichten!"
+            "successGotMessage": "Du hast neue Nachrichten!",
+            "successDeleteSubscription": "Die Künstlerregistrierung wurde entfernt!"
         }
     },
     "videochat": {

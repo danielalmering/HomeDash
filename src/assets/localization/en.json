@@ -95,6 +95,8 @@
     "profile": {
         "favorite-add": "Add favorite",
         "favorite-remove": "Delete favorite",
+        "subscribe-add": "Notify notification",
+        "subscribe-remove": "Delete notification",
         "property": "Characteristics",
         "description": "Description",
         "age": "Age",
@@ -280,6 +282,7 @@
             "Web": "By browser",
             "WhatsApp": "By WhatsApp"
         },
+        "subscribesperformers": "Subscribes performers",
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
             "errorEditData": "Your account has not been edited successfully!",
@@ -296,7 +299,8 @@
             "successReplyMessage": "Your response has been sent successfully!",
             "successNewMessage": "The message has been sent successfully!",
             "errorNewMessage": "The message was not sent successfully!",
-            "successGotMessage": "You have new messages!"
+            "successGotMessage": "You have new messages!",
+            "successDeleteSubscription": "The performer registration has been removed!"
         }
     },
     "videochat": {

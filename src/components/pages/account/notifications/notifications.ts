@@ -1,26 +1,45 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import Pagination from 'sensejs/vue/components/pagination';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
 import WithRender from './notifications.tpl.html';
 
 import { updateConsumer } from 'sensejs/consumer';
-import { getSubscriptionsOptions } from 'sensejs/performer/subscriptions';
+import { Performer } from 'sensejs/performer/performer.model';
+import { getSubscriptionsOptions, listSubscriptions } from 'sensejs/performer/subscriptions';
 import { Consumer } from 'sensejs/core/models/user';
+import { removeSubscriptions } from 'sensejs/performer/subscriptions';
 
 @WithRender
-@Component
+@Component({
+    components: {
+        pagination: Pagination
+    }
+})
 export default class Notifications extends Vue {
 
     user: Consumer;
     formData: any = {}; 
+    total: number = 0;
+    subscriptions: Performer[] = [];
+
+    query = {
+        limit: 10,
+        offset: 0
+    };
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
         this.user.notification_types = this.user.notification_types ? this.user.notification_types : { SSA: false, PRO: false, MSG: false };
         
         this.getFormData();
+        this.loadSubscriptions();
+    }
+
+    pageChanged(){
+        this.loadSubscriptions();
     }
 
     async getFormData(){
@@ -45,6 +64,32 @@ export default class Notifications extends Vue {
         this.$store.dispatch('successMessage', 'account.alerts.successEditData');
 
         this.$store.commit('setUser', result);
-        console.log('user', result);
+    }
+
+    async loadSubscriptions(){
+        const userId = this.$store.state.authentication.user.id;
+
+        const { result, error } = await listSubscriptions(userId, this.query);
+
+        if(error){
+            return;
+        }
+
+        this.subscriptions = result.performerAccounts;
+        this.total = result.total;
+    }
+
+    async removeSubscription(performerId: number){
+        const userId = this.$store.state.authentication.user.id;
+
+        const { result, error } = await removeSubscriptions(userId, performerId);
+
+        if(error){
+            return;
+        }
+
+        this.$store.dispatch('successMessage', 'account.alerts.successDeleteSubscription');
+
+        this.loadSubscriptions();
     }
 }

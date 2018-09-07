@@ -24,6 +24,7 @@ import WithRender from './profile.tpl.html';
 import { Performer, PerformerStatus, PerformerAvatar } from 'sensejs/performer/performer.model';
 import { createReservation } from 'sensejs/session';
 import { removeFavourite, addFavourite } from 'sensejs/performer/favourite';
+import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 const swfobject = require('swfobject');
 
 @WithRender
@@ -103,6 +104,8 @@ export default class Profile extends Vue {
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = true);
+    removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));

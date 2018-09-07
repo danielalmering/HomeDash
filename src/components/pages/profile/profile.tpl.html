@@ -25,6 +25,9 @@
                     <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                         <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
                     </a>
+                    <a class="profile__content-subscribe" v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)">
+                            <i class="fa fa-bell" aria-hidden="true"></i>  {{ performer.isSubscribed ? $t('profile.subscribe-remove') : $t('profile.subscribe-add') }}
+                        </a>
                 </div>
 
                 <div class="profile__tab col-sm-12 col-md-8 col-lg-9">

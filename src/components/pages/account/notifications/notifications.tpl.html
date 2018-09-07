@@ -30,5 +30,26 @@
                 </div>
             </div>
         </form>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="form__group">
+                    <h2 v-t="'account.subscribesperformers'"></h2>
+                    <div class="account__view">
+                        <table class="account__view-table">
+                            <tr v-for="(performer, index) in subscriptions" :key="performer.id" :class="{ 'even': index % 2 === 0 }">
+                                <td width="60%">
+                                    <router-link :to="{ name: 'Profile', params: { id: performer.advertId }}"><p>{{ performer.nickname }}</p><i class="small">( {{ performer.advertId }} )</i></router-link>
+                                </td>
+                                <td width="40%">
+                                    <div v-on:click="removeSubscription(performer.id)" class="btn btn-orange btn-fa fa-times" style="padding: 5px 8px; margin: 0;" aria-hidden="true"></div>
+                                </td>
+                            </tr>
+                        </table>
+                
+                        <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" :pageCount="false" v-on:pageChange="pageChanged"></pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

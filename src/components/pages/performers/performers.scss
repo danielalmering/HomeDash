@@ -114,6 +114,23 @@
                 color: #ffb400;
             }
         }
+
+        &-subscribe {
+            display: inline-block;
+            float: right;
+            background: $pallete-9;
+            @include rem(padding, 8px 10px);
+            @include rem(margin, 4px);
+            @include border-radius(3px);
+            i {
+                color: $pallete-7;
+                @include rem(font-size, 20px);
+            }
+
+            .is-subscribe {
+                color: $pallete-22;
+            }
+        }
     }
 }
 
