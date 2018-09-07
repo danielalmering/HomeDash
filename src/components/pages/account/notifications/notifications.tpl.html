@@ -34,23 +34,22 @@
             <div class="row">
                 <div class="form__group">
                     <h2 v-t="'account.subscribesperformers'"></h2>
+                    <div class="account__view">
+                        <table class="account__view-table">
+                            <tr v-for="(performer, index) in subscriptions" :key="performer.id" :class="{ 'even': index % 2 === 0 }">
+                                <td width="45%">
+                                    <router-link :to="{ name: 'Profile', params: { id: performer.advertId }}"><p>{{ performer.nickname }}</p><i class="small">( {{ performer.advertId }} )</i></router-link>
+                                </td>
+                                <td width="55%">
+                                    <div class="btn btn-orange btn-fa fa-times" aria-hidden="true"></div>
+                                </td>
+                            </tr>
+                        </table>
+                
+                        <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" :pageCount="false" v-on:pageChange="pageChanged"></pagination>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="account__view">
-            <table class="account__view-table">
-                <tr v-for="(performer, index) in subscriptions" :key="performer.id" :class="{ 'even': index % 2 === 0 }">
-                    <td width="5%">
-                        {{ performer.nickname }}
-                    </td>
-                    <td width="50%">
-                    </td>
-                    <td width="50%">
-                    </td>
-                </tr>
-            </table>
-    
-            <!-- <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" :pageCount="false" v-on:pageChange="pageChanged"></pagination> -->
         </div>
     </div>
 </div>

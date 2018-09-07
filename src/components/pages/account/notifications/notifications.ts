@@ -1,5 +1,6 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
+import Pagination from 'sensejs/vue/components/pagination';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
@@ -11,7 +12,11 @@ import { getSubscriptionsOptions, listSubscriptions } from 'sensejs/performer/su
 import { Consumer } from 'sensejs/core/models/user';
 
 @WithRender
-@Component
+@Component({
+    components: {
+        pagination: Pagination
+    }
+})
 export default class Notifications extends Vue {
 
     user: Consumer;
@@ -30,6 +35,10 @@ export default class Notifications extends Vue {
         this.user.notification_types = this.user.notification_types ? this.user.notification_types : { SSA: false, PRO: false, MSG: false };
         
         this.getFormData();
+        this.loadSubscriptions();
+    }
+
+    pageChanged(){
         this.loadSubscriptions();
     }
 
@@ -66,8 +75,7 @@ export default class Notifications extends Vue {
             return;
         }
 
-        this.subscriptions = result;
-        //this.subscriptions = result.performerAccounts;
+        this.subscriptions = result.performerAccounts;
         this.total = result.total;
     }
 }

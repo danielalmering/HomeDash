@@ -156,6 +156,9 @@
                     @include rem(font-size, 18px);
                     color: $pallete-3; 
                     @include rem(padding, 0px 10px 0px 5px);
+                    &.small { 
+                        @include rem(font-size, 12px);
+                    }
                 }
 
                 span {
