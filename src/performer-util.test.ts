@@ -52,6 +52,7 @@ const performer: Performer = {
     'height': '168',
     'performerStatus': PerformerStatus.Busy,
     'isFavourite': false,
+    'isSubscribed': false,
     'isVoyeur': false,
     'advertId': 34324,
 };
