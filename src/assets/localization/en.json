@@ -296,7 +296,8 @@
             "successReplyMessage": "Your response has been sent successfully!",
             "successNewMessage": "The message has been sent successfully!",
             "errorNewMessage": "The message was not sent successfully!",
-            "successGotMessage": "You have new messages!"
+            "successGotMessage": "You have new messages!",
+            "successDeleteSubscription": "The performer registration has been removed!"
         }
     },
     "videochat": {

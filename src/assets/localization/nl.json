@@ -297,7 +297,8 @@
             "successReplyMessage": "Uw reactie is succesvol verstuurd!",
             "successNewMessage": "Het bericht is succesvol verstuurd!",
             "errorNewMessage": "Het bericht is niet succesvol verstuurd!",
-            "successGotMessage": "U heeft nieuwe berichten!"
+            "successGotMessage": "U heeft nieuwe berichten!",
+            "successDeleteSubscription": "De performer aanmelding is verwijderd!"
         }
     },
     "videochat": {

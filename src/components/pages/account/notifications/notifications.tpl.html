@@ -37,11 +37,11 @@
                     <div class="account__view">
                         <table class="account__view-table">
                             <tr v-for="(performer, index) in subscriptions" :key="performer.id" :class="{ 'even': index % 2 === 0 }">
-                                <td width="45%">
+                                <td width="60%">
                                     <router-link :to="{ name: 'Profile', params: { id: performer.advertId }}"><p>{{ performer.nickname }}</p><i class="small">( {{ performer.advertId }} )</i></router-link>
                                 </td>
-                                <td width="55%">
-                                    <div class="btn btn-orange btn-fa fa-times" aria-hidden="true"></div>
+                                <td width="40%">
+                                    <div v-on:click="removeSubscription(performer.id)" class="btn btn-orange btn-fa fa-times" style="padding: 5px 8px; margin: 0;" aria-hidden="true"></div>
                                 </td>
                             </tr>
                         </table>

@@ -14,6 +14,7 @@ import { RawLocation } from 'vue-router/types/router';
 import { listPerformers } from 'sensejs/performer';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 import { openModal } from '../../../util';
 
 @WithRender
@@ -38,6 +39,8 @@ export default class Performers extends Vue {
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = true);
+    removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     query: { limit: number, offset: number, category?: string, search: string } = {
         limit: 40,

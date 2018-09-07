@@ -295,7 +295,8 @@
             "successReplyMessage": "Deine Antwort wurde erfolgreich versendet!",
             "successNewMessage": "Die Nachricht wurde erfolgreich versendet!",
             "errorNewMessage": "Die Nachricht ist nicht erfolgreich versendet worden!",
-            "successGotMessage": "Du hast neue Nachrichten!"
+            "successGotMessage": "Du hast neue Nachrichten!",
+            "successDeleteSubscription": "Die Künstlerregistrierung wurde entfernt!"
         }
     },
     "videochat": {
