@@ -1,7 +1,13 @@
 <main class="promos">
     <div class="container-fluid">
-        <div class="col-xs-9 col-sm-11">
-            <h1><i class="fa fa-bullhorn hidden-xs"></i><span v-t="'nav.info.actions'"></span></h1>
+        <div class="col-xs-12 col-sm-11">
+            <h1>
+                <i class="fa fa-bullhorn hidden-xs"></i>
+                <span v-t="'nav.info.actions'"></span>
+                <a v-on:click="addPromoNotifi" class="btn btn-right btn-fa btn-small fa-bell btn-orange">
+                    <span v-t="notify('PRO') ? 'nav.info.notifymenot' : 'nav.info.notifyme'"></span>
+                </a>
+            </h1>
             <p v-t="'promos.intro'"></p>
 
             <h3 v-t="'promos.currentactions'"></h3>

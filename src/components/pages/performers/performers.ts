@@ -39,7 +39,10 @@ export default class Performers extends Vue {
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
-    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = true);
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
+        performer.isSubscribed = true
+        const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
+    });
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     query: { limit: number, offset: number, category?: string, search: string } = {
@@ -51,6 +54,10 @@ export default class Performers extends Vue {
 
     serviceEventId: number;
     statusEventId: number;
+
+    get authenticated(): boolean {
+        return this.$store.getters.isLoggedIn;
+    }
 
     get noPerformers(){
         return this.performers.length === 0;

@@ -44,7 +44,9 @@
             "history": "Account Verlauf",
             "giftvoucher": "Geschenkgutschein",
             "welcome": "Willkommen",
-            "thankyou": "Danke für deinen Einkauf!"
+            "thankyou": "Danke für deinen Einkauf!",
+            "notifyme": "Benachrichtige mich",
+            "notifymenot": "Benachrichtige mich nicht"
         }
     },
     "performers": {
@@ -268,7 +270,10 @@
             "question": "Wann muss ich eine Benachrichtigung senden?",
             "SSA": "Einzel Stream Aktivierung",
             "MSG": "Nachrichten",
-            "PRO": "Promotionen"
+            "PRO": "Promotionen",
+            "SSA-desc": "Einzel Stream Aktivierung",
+            "MSG-desc": "Nachrichten",
+            "PRO-desc": "Promotionen"
         },
         "howreceivenotify": {
             "question": "Wie möchten Sie Benachrichtigungen erhalten?",

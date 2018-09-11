@@ -114,6 +114,11 @@
                 background: $pallete-1;
                 @include border-radius(3px);
             }
+            &.desc {
+                @include rem(font-size, 12px);
+                @include rem(padding, 0px);
+                @include rem(margin, 0);
+            }
         }
 
         i { 

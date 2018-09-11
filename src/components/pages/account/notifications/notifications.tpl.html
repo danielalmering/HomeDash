@@ -3,53 +3,6 @@
         <i class="fa fa-bell hidden-xs"></i><span v-t="'nav.info.notifications'"></span>
     </h1>
     <div class="form">
-        <form class="row" v-on:submit.prevent="updateNotifications">
-            <div class="col-xs-12">
-                <div class="form__group" v-if="formData">
-                    <h2 v-t="'account.whenreceivednotify.question'"></h2>
-                    
-                    <div class="checkbox" v-for="(event, index) in formData.events">
-                        <input type="checkbox" v-model="user.notification_types[index]" :id="'checkbox-'+index.toLowerCase()">
-                        <label :for="'checkbox-'+index.toLowerCase()"></label>
-                        <label class="checkbox-title" v-t="'account.whenreceivednotify.'+ index"></label>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="form__group">
-                    <h2 v-t="'account.howreceivenotify.question'"></h2>
-
-                    <div class="radio" v-for="(event, index) in formData.modes">
-                        <input type="radio" :id="'radio'+index" name="radio-group" v-model="user.notification_mode" :value="index">
-                        <label :for="'radio'+index" v-t="'account.howreceivenotify.'+ event"></label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form__group">
-                    <button class="btn btn-orange" v-t="'account.editdatabtn'"></button>
-                </div>
-            </div>
-        </form>
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="form__group">
-                    <h2 v-t="'account.subscribesperformers'"></h2>
-                    <div class="account__view">
-                        <table class="account__view-table">
-                            <tr v-for="(performer, index) in subscriptions" :key="performer.id" :class="{ 'even': index % 2 === 0 }">
-                                <td width="60%">
-                                    <router-link :to="{ name: 'Profile', params: { id: performer.advertId }}"><p>{{ performer.nickname }}</p><i class="small">( {{ performer.advertId }} )</i></router-link>
-                                </td>
-                                <td width="40%">
-                                    <div v-on:click="removeSubscription(performer.id)" class="btn btn-orange btn-fa fa-times" style="padding: 5px 8px; margin: 0;" aria-hidden="true"></div>
-                                </td>
-                            </tr>
-                        </table>
-                
-                        <pagination :limit.sync="query.limit" :offset.sync="query.offset" :total="total" :pageButtons="true" :pageCount="false" v-on:pageChange="pageChanged"></pagination>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <notifications title="false"></notifications>
     </div>
 </div>

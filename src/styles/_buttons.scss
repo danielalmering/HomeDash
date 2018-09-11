@@ -17,13 +17,6 @@
     cursor: pointer;
     box-shadow: inset 0px 1px 0px rgba(255,255,255,0.25);
 
-    &-small     { @include rem(padding, 9px 20px); }
-    &-large     { @include rem(padding, 11px 35px); }
-    &-xxl       { @include rem(padding, 18px 85px); @include rem(font-size, 18px); }
-    &-full      {  width: 100%; }
-    &-right     { float: right; }
-    &-left      { float: left; }
-
     &-fa {
         @include rem(padding, 12px 15px 12px 15px);
         &:before { 
@@ -34,6 +27,13 @@
             @include rem(margin-left, 10px);
         }
     }
+
+    &-small     { @include rem(padding, 9px 15px); }
+    &-large     { @include rem(padding, 11px 35px); }
+    &-xxl       { @include rem(padding, 18px 85px); @include rem(font-size, 18px); }
+    &-full      {  width: 100%; }
+    &-right     { float: right; }
+    &-left      { float: left; }
 
     &-orange { background: $pallete-3; }
     &-green  { background: $pallete-21; }

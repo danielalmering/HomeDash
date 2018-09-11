@@ -45,7 +45,9 @@
             "giftvoucher": "Gift voucher",
             "welcome": "Welcome",
             "thankyou": "Thank you for purchasing!",
-            "notifications": "Notifications"
+            "notifications": "Notifications",
+            "notifyme": "Notify me",
+            "notifymenot": "Do not notify me"
         }
     },
     "performers": {
@@ -269,7 +271,10 @@
             "question": "When to send notification?",
             "SSA": "Single Stream activation",
             "MSG": "Messages",
-            "PRO": "Promotions"
+            "PRO": "Promotions",
+            "SSA-desc": "Single Stream activation",
+            "MSG-desc": "Messages",
+            "PRO-desc": "Promotions"
         },
         "howreceivenotify": {
             "question": "How do you want to receive notifications?",
