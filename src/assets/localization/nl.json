@@ -46,7 +46,9 @@
             "giftvoucher": "Cadeaubon",
             "welcome": "Welkom",
             "thankyou": "Bedankt voor uw aankoop!",
-            "notifications": "Notificaties"
+            "notifications": "Notificaties",
+            "notifyme": "Mij verwittigen",
+            "notifymenot": "Mij niet verwittigen"
         }
     },
     "performers": {
@@ -273,7 +275,10 @@
             "question": "Wanneer notificatie versturen?",
             "SSA": "Single Stream activering",
             "MSG": "Berichten",
-            "PRO": "Acties"
+            "PRO": "Acties",
+            "SSA-desc": "Single Stream activering",
+            "MSG-desc": "Berichten",
+            "PRO-desc": "Acties"
         },
         "howreceivenotify": {
             "question": "Hoe wil je notificaties ontvangen?",

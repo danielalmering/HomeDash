@@ -3,6 +3,8 @@ import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
 import { User, AnonymousUser, UserForm } from '../models/User';
+import { updateConsumer } from 'sensejs/consumer';
+import { Consumer } from 'sensejs/core/models/user';
 import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
@@ -158,6 +160,24 @@ const authenticationStore: Module<AuthState, RootState> = {
             if(!notificationSocket.isConnected()){
                 notificationSocket.connect();
             }
+        },
+        async updateUser(store: AuthContext, payload: { user: Consumer | any, notify: string | undefined}){
+
+            if(payload.notify){ 
+                payload.user.notification_types = payload.user.notification_types ? payload.user.notification_types : { SSA: false, PRO: false, MSG: false };
+                payload.user.notification_types[payload.notify] = payload.user.notification_types[payload.notify] ? false : true;
+            }
+
+            const { error, result } = await updateConsumer(payload.user);
+
+            if(error){
+                store.dispatch('errorMessage', 'account.alerts.errorEditData');
+                return;
+            }
+
+            store.dispatch('successMessage', 'account.alerts.successEditData');
+
+            store.commit('setUser', result);
         }
     }
 };

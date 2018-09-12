@@ -38,22 +38,12 @@ export default class Editdata extends Vue {
     }
 
     async updateUser(){
-        this.user.notification_mode = 1;
         if(this.user.password && this.user.password !== this.confirmPassword){
             this.$store.dispatch('errorMessage', 'modals.reset.alerts.errorPasswordMismatch');
             return;
         }
 
-        const { error, result } = await updateConsumer(this.user);
-
-        if(error){
-            this.$store.dispatch('errorMessage', 'account.alerts.errorEditData');
-            return;
-        }
-
-        this.$store.dispatch('successMessage', 'account.alerts.successEditData');
-
-        this.$store.commit('setUser', result);
+        await this.$store.dispatch('updateUser', this.user);
     }
 
     subscribePushMessages(){
