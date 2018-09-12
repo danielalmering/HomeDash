@@ -27,7 +27,7 @@ export default class Sociallogin extends Vue {
 
     socialdata: any = {
         '2': { 
-            app: ['622011177968263', '674396449594035'], 
+            app: ['622011177968263', '674396449594035', '2180056992207608'], 
             href: `https://www.facebook.com/v3.1/dialog/oauth?client_id={appid}&redirect_uri=` + encodeURIComponent(`${location.protocol}//${location.host}/login/`) + `&state=2`,
             },
         '3': {},
@@ -49,6 +49,7 @@ export default class Sociallogin extends Vue {
             if(!this.socialdata[social].app && !this.socialdata[social].href){ return; }
             if(config.FullApiUrl.includes('thuis')){    id = this.socialdata[social]['app']['0'];  }
             if(config.FullApiUrl.includes('zuhause')){  id = this.socialdata[social]['app']['1'];  }
+            if(config.FullApiUrl.includes('gigacams')){  id = this.socialdata[social]['app']['2'];  }
             this.socialdata[social].href = this.socialdata[social].href.replace('{appid}', id); 
         }
     }
