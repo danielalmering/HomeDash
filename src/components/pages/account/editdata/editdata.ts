@@ -3,9 +3,10 @@ import Vue from 'vue';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
+import { openRoute } from '../../../../util';
 import WithRender from './editdata.tpl.html';
 
-import { updateConsumer } from 'sensejs/consumer';
+import { updateConsumer, removeConsumer } from 'sensejs/consumer';
 import { Consumer } from 'sensejs/core/models/user';
 
 @WithRender
@@ -15,7 +16,10 @@ export default class Editdata extends Vue {
     user: Consumer;
 
     confirmPassword: string = '';
+    confirmDelete: boolean = false;
     pushcrewSubscribed: boolean = false;
+
+    openRoute = openRoute;
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
@@ -49,6 +53,27 @@ export default class Editdata extends Vue {
         this.$store.dispatch('successMessage', 'account.alerts.successEditData');
 
         this.$store.commit('setUser', result);
+    }
+
+    async removeUser(approven: boolean){
+
+        if(approven){
+            this.confirmDelete = true;
+            return;
+        }
+
+        const { error, result } = await removeConsumer(this.user);
+
+        if(error){
+            this.$store.dispatch('errorMessage', 'account.alerts.errorRemoveAccount');
+            return;
+        }
+
+        this.confirmDelete = false;
+        this.$store.dispatch('successMessage', 'account.alerts.successRemoveAccount');
+
+        this.$store.dispatch('logout');
+        this.openRoute('Performers');
     }
 
     subscribePushMessages(){

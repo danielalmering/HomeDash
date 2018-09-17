@@ -116,6 +116,12 @@
             height: 51px;
         }
 
+        hr {
+            border-top: none;
+            border-bottom: 1px solid $pallete-18;
+            @include rem(margin, 5px 0);
+        }
+
         &-table {
             width: 100%;
             tr {
@@ -199,6 +205,17 @@
 
         @include breakpoint(xs) {
             padding: 0 5px !important;
+        }
+
+        &-alert {
+            @include rem(padding, 10px 15px);
+            background: $pallete-3;
+            @include border-radius(3px);
+            
+            p {
+                color: $pallete-2;
+                font-weight: 600; 
+            }
         }
     }
     
