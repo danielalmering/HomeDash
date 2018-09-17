@@ -18,8 +18,12 @@ export default class Editdata extends Vue {
     confirmPassword: string = '';
     confirmDelete: boolean = false;
     pushcrewSubscribed: boolean = false;
-
+  
     openRoute = openRoute;
+
+    get socialaccount(){
+        return this.user.email.indexOf(".local") != -1;
+    }
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
