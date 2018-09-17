@@ -35,9 +35,9 @@
                 <input type="password" required v-model="userForm.password" />
             </div>
             <div class="form__group">
-                <label v-t="'modals.register.passwordconfirm'"></label>
-                <input type="password" required v-model="userForm.passwordconfirm" />
                 <button class="btn btn-large btn-orange btn-full" v-t="'modals.register.register'"></button>
+                <hr></hr>
+                <a class="btn btn-green btn-full" v-on:click="openModal('login')" v-t="'modals.login.login'"></a>
             </div>
         </form>
     </div>

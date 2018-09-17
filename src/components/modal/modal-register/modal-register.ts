@@ -2,7 +2,7 @@ import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import { UserForm } from '../../../models/User';
 import WithRender from './modal-register.tpl.html';
-import { tagHotjar } from '../../../util';
+import { openModal, tagHotjar } from '../../../util';
 
 @WithRender
 @Component
@@ -16,6 +16,7 @@ export default class ModalRegister extends Vue {
         password: '',
         passwordconfirm: ''
     };
+    openModal = openModal;
 
     get languages(){
         return this.$store.state.info.languages;
