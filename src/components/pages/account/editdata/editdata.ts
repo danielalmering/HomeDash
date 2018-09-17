@@ -43,7 +43,8 @@ export default class Editdata extends Vue {
             return;
         }
 
-        await this.$store.dispatch('updateUser', this.user);
+        let payload = { user: this.user};
+        await this.$store.dispatch('updateUser', payload);
     }
 
     subscribePushMessages(){

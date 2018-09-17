@@ -10,10 +10,11 @@
                     <div class="radio" v-for="(event, index) in formData.modes">
                         <input type="radio" :id="'radio'+index" name="radio-group" v-model="user.notification_mode" :value="index">
                         <label :for="'radio'+index">{{ $t('account.howreceivenotify.'+ event) }} 
-                            <i v-if="event === 'Email'"><input type="text" v-model="user.email"></i>
-                            <i v-if="event === 'SMS'"><input type="text" v-model="user.mobile_number"></i>
+                            <input style="display: none;" v-if="event === 'Email'" type="text" v-model="user.email">
+                            <input style="display: none;" v-if="event === 'SMS' || event === 'WhatsApp'" type="text" v-model="user.mobile_number">
                         </label>
                     </div>
+
                 </div>
             </div>
             <div class="col-xs-12">

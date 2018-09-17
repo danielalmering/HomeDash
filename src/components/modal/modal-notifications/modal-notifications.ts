@@ -15,16 +15,15 @@ export default class ModalNotifications extends Vue {
 
     @Prop({
         required: true,
-        type: Boolean
+        type: String
     })
-    title: boolean;
+    title: string;
 
     user: Consumer;
-    formData: any = {}; 
+    formData: any = {};
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
-        this.user.notification_types = this.user.notification_types ? this.user.notification_types : { SSA: false, PRO: false, MSG: false };
         
         this.getFormData();
     }
@@ -40,8 +39,9 @@ export default class ModalNotifications extends Vue {
     }
 
     async updateNotifications(){
+        let payload = { user: this.user};
 
-        await this.$store.dispatch('updateUser', this.user);
+        await this.$store.dispatch('updateUser', payload);
         
         this.close();
     }
