@@ -2,29 +2,26 @@ import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import { UserForm } from '../../../models/User';
 import WithRender from './modal-register.tpl.html';
+import Sociallogin from './../../layout/Sociallogin.vue';
 import { openModal, tagHotjar } from '../../../util';
 
 @WithRender
-@Component
+@Component({
+    components: {
+        sociallogin: Sociallogin
+    }
+})
 export default class ModalRegister extends Vue {
 
     userForm: UserForm = {
         username: '',
         email: '',
-        language: '',
-        country: '',
+        language: this.$store.state.localization.language,
+        country: this.$store.state.localization.country,
         password: '',
         passwordconfirm: ''
     };
     openModal = openModal;
-
-    get languages(){
-        return this.$store.state.info.languages;
-    }
-
-    get countries(){
-        return this.$store.state.info.countries;
-    }
 
     async register(){
         try {

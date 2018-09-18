@@ -18,7 +18,7 @@
     box-shadow: inset 0px 1px 0px rgba(255,255,255,0.25);
 
     &-small     { @include rem(padding, 9px 20px); }
-    &-large     { @include rem(padding, 15px 35px); @include rem(font-size, 13px); }
+    &-large     { @include rem(padding, 11px 35px); @include rem(font-size, 13px); }
     &-xxl       { @include rem(padding, 18px 85px); @include rem(font-size, 18px); }
     &-full      {  width: 100%; }
     &-right     { float: right; }
