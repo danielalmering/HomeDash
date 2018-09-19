@@ -17,6 +17,15 @@ export default class Editdata extends Vue {
     confirmPassword: string = '';
     pushcrewSubscribed: boolean = false;
 
+    data(){
+        return {
+            user: {
+                email: '',
+                mobile_number: ''
+            }
+        }
+    }
+
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
 

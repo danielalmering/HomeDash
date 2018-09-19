@@ -15,6 +15,16 @@
             @include rem(font-size, 13px);
             width: 100%;
         }
+
+        &-alert {
+            display: table;
+            width: 100%;
+            @include rem(font-size, 11px);
+            color: $pallete-2;
+            background: $pallete-3;
+            @include rem(padding,5px 10px);
+            @include border-radius(3px);
+        }
     }
     
 
@@ -60,9 +70,8 @@
     input[type=radio]:not(:checked) + label
     {
         position: relative;
-        padding-left: 28px;
+        @include rem(padding,5px 0px 5px 28px);
         cursor: pointer;
-        line-height: 25px;
         display: inline-block;
         color: $pallete-2;
     }
@@ -72,7 +81,7 @@
         content: '';
         position: absolute;
         left: 0;
-        top: 0;
+        top: 5px;
         width: 18px;
         height: 18px;
         border-radius: 100%;
@@ -85,7 +94,7 @@
         height: 12px;
         background: $pallete-3;
         position: absolute;
-        top: 3px;
+        top: 8px;
         left: 3px;
         border-radius: 100%;
         -webkit-transition: all 0.2s ease;
@@ -101,8 +110,10 @@
         -webkit-transform: scale(1);
         transform: scale(1);
     }
+
+    // Notifications
     input[type=radio]:checked + label {
-        input { display: block !important; }
+        div { display: block !important; }
     }
 
     select {

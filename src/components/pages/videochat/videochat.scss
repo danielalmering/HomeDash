@@ -269,6 +269,8 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
 
     &__controls {
         display: table;
+        position: relative;
+        z-index: 999;
         width: 100%;
         @include border-radius(5px);
         @include gradient($pallete-3, $pallete-5, vertical);
@@ -285,8 +287,10 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         &-btns {
             @include rem(padding,0px);
             @include rem(margin,0px);
+        
             a {
                 float: right;
+                position: relative;
                 color: $pallete-2; 
                 @include rem(font-size, 15px);
                 @include rem(padding,12px 10px);
@@ -294,7 +298,25 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                 background: $pallete-1;
                 @include border-radius(5px);
                 &.active { color: $pallete-3; }
-                &:hover { color: $pallete-7; }
+                &:hover { 
+                    color: $pallete-7; 
+                    i { display: block; color: $pallete-2; }
+                }
+
+                i {
+                    position: absolute;
+                    display: none;
+                    z-index: 999;
+                    top: 50px;
+                    right: 0px;
+                    font-style: normal;
+                    @include rem(font-size, 11px);
+                    text-align: center;
+                    font-family: "Open Sans", Arial, Verdana, sans-serif;
+                    background: $pallete-1;
+                    @include rem(padding, 5px 10px);
+                    @include border-radius(5px);
+                }
             }
         }
 

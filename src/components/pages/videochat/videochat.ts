@@ -23,11 +23,12 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { tagHotjar, isApple, isIOS } from '../../../util';
+import { openModal, tagHotjar, isApple, isIOS } from '../../../util';
 import { Performer } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import { clientSeen } from 'sensejs/session/index';
 import { webrtcPossible, noFlash } from 'sensejs/util/platform';
+import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
@@ -74,9 +75,18 @@ export default class VideoChat extends Vue {
     microphones: {id:string, name: string, selected: boolean}[];
 
     askToLeave:boolean = false;
+    openModal = openModal;
 
     navigation: {
         to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void
+    }
+
+    get authenticated(): boolean {
+        return this.$store.getters.isLoggedIn;
+    }
+
+    get user(){
+        return this.$store.state.authentication.user;
     }
 
     get sessionType(): SessionType{
@@ -206,6 +216,14 @@ export default class VideoChat extends Vue {
             &&
                 (this.performer.performer_services.videocall);
     }
+
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
+        performer.isSubscribed = true
+        if(!this.user.notification_mode){
+            const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
+        }
+    });
+    removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     mounted(){
         const self = this;

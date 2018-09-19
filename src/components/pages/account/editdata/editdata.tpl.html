@@ -21,12 +21,14 @@
             <div class="col-xs-12 col-sm-6">
                 <div class="form__group">
                     <label v-t="'account.email'"></label>
-                    <input type="text" required v-model="user.email" class="col-xs-12">
-                </div>
+                    <input type="email" v-model="user.email" v-validate="'email'" name="email" class="col-xs-12">
+                    <span v-show="errors.has('email')" class="form__group-alert" v-t="'account.alerts.errorinvalidEmail'"></span>
+                </div>  
                 <div class="form__group">
                     <label v-t="'account.mobilenumber'"></label>
-                    <input type="text" v-model="user.mobile_number" class="col-xs-12">
-                </div>=
+                    <input type="text" v-model="user.mobile_number" v-validate="{ regex: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g }" name="phone" class="col-xs-12">
+                    <span v-show="errors.has('phone')" class="form__group-alert" v-t="'account.alerts.errorinvalidPhone'"></span>
+                </div>
             </div>
             <div class="col-xs-12">
                 <div class="form__group">
