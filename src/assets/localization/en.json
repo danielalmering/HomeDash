@@ -305,7 +305,9 @@
             "successNewMessage": "The message has been sent successfully!",
             "errorNewMessage": "The message was not sent successfully!",
             "successGotMessage": "You have new messages!",
-            "successDeleteSubscription": "The performer registration has been removed!"
+            "successDeleteSubscription": "The performer registration has been removed!",
+            "errorinvalidEmail": "You did not enter a valid email address!",
+            "errorinvalidPhone": "You have not entered a valid phone number!"
         }
     },
     "videochat": {
@@ -316,6 +318,7 @@
         "typing": "{name} is typing...",
         "videocall-on": "Videocall on",
         "videocall-off": "Videocall off",
+        "webcam-on": "Webcam on/off",
         "alerts": {
             "successChatEnded": "Session ended!",
             "socketErrors": {

@@ -17,6 +17,15 @@ export default class Editdata extends Vue {
     confirmPassword: string = '';
     pushcrewSubscribed: boolean = false;
 
+    data(){
+        return {
+            user: {
+                email: '',
+                mobile_number: ''
+            }
+        }
+    }
+
     get socialaccount(){
         return this.user.email.indexOf(".local") != -1;
     }

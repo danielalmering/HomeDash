@@ -19,8 +19,18 @@ export default class ModalNotifications extends Vue {
     })
     title: string;
 
-    user: Consumer;
+    user: any;
+    form: any;
     formData: any = {};
+
+    data(){
+        return {
+            form: {
+                email: this.$store.state.authentication.user.email,
+                mobile_number: this.$store.state.authentication.user.mobile_number
+            }
+        }
+    }
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
@@ -36,13 +46,34 @@ export default class ModalNotifications extends Vue {
         }
 
         this.formData = result;
-    }
+    } 
 
-    async updateNotifications(){
+    async updateNotifications(id: string){
+
+        // Email confirmation check
+        if(id === '1'){
+            if(this.form.email && await this.$validator.validate('email')){
+                this.user.email = this.form.email;
+            } else {
+                this.$store.dispatch('errorMessage', 'account.alerts.errorinvalidEmail');
+                return;
+            }
+        }
+
+        // Phone confirmation check
+        if(id === '2' || id === '8'){
+            if(this.form.mobile_number && await this.$validator.validate('phone')){
+                this.user.mobile_number = this.form.mobile_number;
+            } else {
+                this.$store.dispatch('errorMessage', 'account.alerts.errorinvalidPhone');
+                return;
+            }
+        }
+
         let payload = { user: this.user};
 
-        await this.$store.dispatch('updateUser', payload);
-        
+        this.$store.dispatch('updateUser', payload);
+
         this.close();
     }
 

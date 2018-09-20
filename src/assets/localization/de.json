@@ -304,7 +304,9 @@
             "successNewMessage": "Die Nachricht wurde erfolgreich versendet!",
             "errorNewMessage": "Die Nachricht ist nicht erfolgreich versendet worden!",
             "successGotMessage": "Du hast neue Nachrichten!",
-            "successDeleteSubscription": "Die Künstlerregistrierung wurde entfernt!"
+            "successDeleteSubscription": "Die Künstlerregistrierung wurde entfernt!",
+            "errorinvalidEmail": "Sie haben keine gültige E-Mail-Adresse eingegeben!",
+            "errorinvalidPhone": "Sie haben keine gültige Telefonnummer eingegeben!"
         }
     },
     "videochat": {
@@ -315,6 +317,7 @@
         "typing": "{name} is typing...",
         "videocall-on": "Videocall on",
         "videocall-off": "Videocall off",
+        "webcam-on": "Webcam on/off",
         "alerts": {
             "successChatEnded": "Session beendet!",
             "socketErrors": {
