@@ -14,7 +14,7 @@ import { RawLocation } from 'vue-router/types/router';
 import { listPerformers } from 'sensejs/performer';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import { openModal } from '../../../util';
+import { openModal, goBanner } from '../../../util';
 
 @WithRender
 @Component({
@@ -35,10 +35,11 @@ export default class Performers extends Vue {
     getPerformerLabel = getPerformerLabel;
     openModal = openModal;
     country = config.Country;
+    goBanner = goBanner;
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
-
+    
     query: { limit: number, offset: number, category?: string, search: string } = {
         limit: 40,
         offset: 0,
@@ -48,6 +49,10 @@ export default class Performers extends Vue {
 
     serviceEventId: number;
     statusEventId: number;
+
+    get authenticated(): boolean {
+        return this.$store.getters.isLoggedIn;
+    }
 
     get noPerformers(){
         return this.performers.length === 0;
