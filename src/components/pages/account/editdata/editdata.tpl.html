@@ -9,17 +9,17 @@
                     <label v-t="'account.username'"></label>
                     <input type="text" required v-model="user.username" class="col-xs-12" maxlength="30">
                 </div>
-                <div class="form__group">
+                <div class="form__group" v-if="!socialaccount">
                     <label v-t="'account.password'"></label>
                     <input type="password" v-model="user.password" class="col-xs-12">
                 </div>
-                <div class="form__group">
+                <div class="form__group" v-if="!socialaccount">
                     <label v-t="'account.confirmpassword'"></label>
                     <input type="password" v-model="confirmPassword" class="col-xs-12">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
-                <div class="form__group">
+                <div class="form__group" v-if="!socialaccount">
                     <label v-t="'account.email'"></label>
                     <input type="email" v-model="user.email" v-validate="'email'" name="email" class="col-xs-12">
                     <span v-show="errors.has('email')" class="form__group-alert" v-t="'account.alerts.errorinvalidEmail'"></span>

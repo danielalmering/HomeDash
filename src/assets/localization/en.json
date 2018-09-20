@@ -188,7 +188,9 @@
             "password": "Password",
             "login": "Login",
             "register": "Register",
-            "forgotPassword": "Password forgotten?"
+            "forgotPassword": "Password forgotten?",
+            "orloginwith": "or log in with",
+            "orregisterwith": "register with"
         },
         "register":{
             "title": "Register account",
@@ -199,6 +201,7 @@
             "password": "Password",
             "passwordconfirm": "Confirm password",
             "register": "Register",
+            "fillindata": "or fill in the details",
             "alerts": {
                 "successMessage": "You have received a confirmation email",
                 "errorMessage": "Something went wrong during registration"
@@ -391,8 +394,9 @@
             "paymentmethod-4-info": "Creditcard",
             "paymentmethod-5-info": "Sofort",
             "paymentmethod-6-info": "Sepa",
-            "paymentmethod-7-info": "Pay Per Call",
-            "paymentmethod-8-info": "PayPall"
+            "paymentmethod-7-info": "Pay By Call",
+            "paymentmethod-8-info": "PayPal",
+            "paymentmethod-9-info": "paysafecard"
         },
         "alerts": {
             "errorIncorrectPromo": "Incorrect promocode!",
@@ -401,7 +405,9 @@
             "errorNoPackage": "No package selected!",
             "errorNoPayment": "No payment method selected!",
             "errorToHighPurchase": "To big purchase amount selected!",
-            "errorPaymentFailure": "The payment has failed, please try again"
+            "errorPaymentFailure": "The payment has failed, please try again",
+            "errorPaymentNotAvailable": "Unfortunately, this payment method is not possible at this time",
+            "errorNoConnection": "Transaction could not be initiated due to connection problems. If the problem persists, please contact our support."
         }
     },
     "contact": {
@@ -474,7 +480,11 @@
         "BCMC": "bcmc",
         "CLICK_BUY": "Click and Buy",
         "VXSBILL": "Credit Card",
-        "SOFORT": "Sofort Banking"
+        "SOFORT": "Sofort Banking",
+        "PAYSAFE": "Paysafecard",
+        "COMMPAYPAYBYCALL": "Pay By Call",
+        "COMMPAYDEBIT": "Sepa",
+        "PAYPAL": "PayPal"
     },
     "languages": {
         "nl": "Dutch",

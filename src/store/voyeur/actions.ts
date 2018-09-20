@@ -21,7 +21,10 @@ const actions = {
         });
 
         if(error){
-            throw 'Voyeur declined';
+            store.dispatch('openMessage', {
+                content: error.message,
+                class: 'error'
+            });
         }
 
         if(payload.ivrCode){
@@ -37,7 +40,10 @@ const actions = {
         });
 
         if(performerError || result.total === 0 || result.performerAccounts.length === 0){
-            throw 'No performers';
+            store.dispatch('openMessage', {
+                content: 'sidebar.noperformers',
+                class: 'error'
+            });
         }
 
         commit('addPerformers', result.performerAccounts);

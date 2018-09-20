@@ -81,11 +81,13 @@ const routes = [{
             },
             {
                 path: 'login/',
-                beforeEnter: modalInterceptor('login')
+                beforeEnter: modalInterceptor('login'),
+                component: Performers
             },
             {
                 path: 'register/',
-                beforeEnter: modalInterceptor('register')
+                beforeEnter: modalInterceptor('register'),
+                component: Performers
             },
             {
                 path: 'reset-password/:userId/:token/',

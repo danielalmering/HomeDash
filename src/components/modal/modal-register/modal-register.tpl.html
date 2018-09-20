@@ -10,6 +10,12 @@
                     <li v-t="'sidebar.register.usp-3'"></li>
                 </ul>
             </div>
+            <sociallogin :title="'modals.login.orregisterwith'"></sociallogin>
+            <div class="sociallogin">
+                <div class="container-fluid">
+                    <p class="sociallogin__title"><span>{{ $t('modals.register.fillindata') }}</span></p>
+                </div>
+            </div>
             <div class="form__group">
                 <label v-t="'modals.register.username'"></label>
                 <input type="text" required v-model="userForm.username" />
