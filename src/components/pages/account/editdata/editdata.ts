@@ -21,6 +21,10 @@ export default class Editdata extends Vue {
 
     openRoute = openRoute;
 
+    get credits(){
+        return this.$store.state.authentication.user.credits;
+    }
+
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
 

@@ -6,9 +6,13 @@
         <form class="row" v-on:submit.prevent="updateUser">
             <div class="col-xs-12" v-if="confirmDelete">
                 <div class="account__view-alert">
-                    <p v-t="'account.removeuser-approval'"></p>
-                    <a class="btn btn-right" v-on:click.prevent="confirmDelete = false" v-t="'account.no'"></a>
-                    <a class="btn btn-white btn-right" v-on:click.prevent="removeUser(false)" v-t="'account.yes'"></a>
+                    <div class="col-1">
+                        <p>{{ $t('account.removeuser-approval-1') }} <span v-if="credits > 0">{{ $t('account.removeuser-approval-2', { credits: credits }) }}</span></p>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-right" v-on:click.prevent="confirmDelete = false" v-t="'account.no'"></a>
+                        <a class="btn btn-white btn-right" v-on:click.prevent="removeUser(false)" v-t="'account.yes'"></a>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
