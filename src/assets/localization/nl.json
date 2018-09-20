@@ -267,6 +267,12 @@
         "datetill": "Datum tot",
         "datefrom": "Datum van",
         "readold": "Toon meer..",
+        "removeuser": "Uw account verwijderen?, klik dan",
+        "removeuser-approval-1": "Weet je zeker dat je uw account wilt verwijderen?",
+        "removeuser-approval-2": ", je hebt nog {credits} credit(s)!",
+        "here": "hier",
+        "yes": "Ja",
+        "no": "Nee",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
@@ -283,7 +289,9 @@
             "successReplyMessage": "Uw reactie is succesvol verstuurd!",
             "successNewMessage": "Het bericht is succesvol verstuurd!",
             "errorNewMessage": "Het bericht is niet succesvol verstuurd!",
-            "successGotMessage": "U heeft nieuwe berichten!"
+            "successGotMessage": "U heeft nieuwe berichten!",
+            "errorRemoveAccount": "Er is fout opgetreden bij het verwijderen!",
+            "successRemoveAccount": "U account is succesvol verwijderd!"
         }
     },
     "videochat": {
