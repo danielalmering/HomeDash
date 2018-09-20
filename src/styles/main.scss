@@ -102,6 +102,11 @@ h3 {
     @include rem(font-size, 22px);
 }
 
+hr {
+    border-top: 1px solid $pallete-14;
+    border-bottom: none;
+}
+
 .table {
     display: table;
     width: 100%;

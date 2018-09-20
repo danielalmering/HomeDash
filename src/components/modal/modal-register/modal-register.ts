@@ -3,7 +3,7 @@ import Vue from 'vue';
 import { UserForm } from '../../../models/User';
 import WithRender from './modal-register.tpl.html';
 import Sociallogin from './../../layout/Sociallogin.vue';
-import { tagHotjar } from '../../../util';
+import { openModal, tagHotjar } from '../../../util';
 
 @WithRender
 @Component({
@@ -16,19 +16,12 @@ export default class ModalRegister extends Vue {
     userForm: UserForm = {
         username: '',
         email: '',
-        language: '',
-        country: '',
+        language: this.$store.state.localization.language,
+        country: this.$store.state.localization.country,
         password: '',
         passwordconfirm: ''
     };
-
-    get languages(){
-        return this.$store.state.info.languages;
-    }
-
-    get countries(){
-        return this.$store.state.info.countries;
-    }
+    openModal = openModal;
 
     async register(){
         try {
