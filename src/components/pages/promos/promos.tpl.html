@@ -25,6 +25,12 @@
                     </tr>
                 </tbody>
             </table>
+            <br /><br />
+            <span v-if="!authenticated">
+                <a v-on:click="openModal('login')" class="btn btn-orange btn-large mr" v-t="'nav.info.login'"></a>
+                <a v-on:click="openModal('register')" class="btn btn-orange btn-large" v-t="'nav.info.register'"></a>
+            </span>
+            <a v-on:click="goBanner(authenticated)" v-if="authenticated" class="btn btn-orange btn-large btn-full" v-t="'nav.info.upgradebalance'"></a>
         </div>
     </div>
 </main>

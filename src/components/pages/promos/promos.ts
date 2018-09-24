@@ -5,12 +5,19 @@ import config from '../../../config';
 import WithRender from './promos.tpl.html';
 import { getPromos } from 'sensejs/consumer/category';
 import { Promo as PromoData } from 'sensejs/core/models/category';
+import { goBanner, openModal } from '../../../util';
 
 @WithRender
 @Component
 export default class Promo extends Vue {
 
     promos: PromoData[] = [];
+    goBanner = goBanner;
+    openModal = openModal;
+
+    get authenticated(){
+        return this.$store.getters.isLoggedIn;
+    }
 
     mounted(){
         this.loadPromos();

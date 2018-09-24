@@ -36,6 +36,7 @@
             "voyeur": "Teaser",
             "actions": "Promos",
             "editdata": "Edit account",
+            "register": "Register",
             "favourites": "Favo",
             "inbox": "Inbox",
             "upgradebalance": "Upgrade balance",
@@ -265,6 +266,12 @@
         "datetill": "Date till",
         "datefrom": "Date from",
         "readold": "Read more..",
+        "removeuser": "Want to delete your account?, then click",
+        "removeuser-approval-1": "Are you sure you want to delete your account?",
+        "removeuser-approval-2": ", you still have {credits} credit(s)!",
+        "here": "here",
+        "yes": "Yes",
+        "no": "No",
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
             "errorEditData": "Your account has not been edited successfully!",
@@ -281,7 +288,9 @@
             "successReplyMessage": "Your response has been sent successfully!",
             "successNewMessage": "The message has been sent successfully!",
             "errorNewMessage": "The message was not sent successfully!",
-            "successGotMessage": "You have new messages!"
+            "successGotMessage": "You have new messages!",
+            "errorRemoveAccount": "An error occurred while removing!",
+            "successRemoveAccount": "Your account has been successfully removed!"
         }
     },
     "videochat": {

@@ -11,9 +11,9 @@
                 <label v-t="'modals.login.password'"></label>
                 <input type="password" required v-model="password" />
                 <button class="btn btn-large btn-orange btn-full" v-t="'modals.login.login'"></button>
-                <a class="btn btn-large btn-full" v-on:click="openModal('register')" v-t="'modals.login.register'"></a>
-
                 <a v-on:click="openModal('recover')">{{ $t('modals.login.forgotPassword') }}</a>
+                <hr></hr>
+                <a class="btn btn-green btn-full" v-on:click="openModal('register')" v-t="'modals.login.register'"></a>
             </div>
             <div class="form__group">
                 <sociallogin :title="'modals.login.orloginwith'"></sociallogin>
