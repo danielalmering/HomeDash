@@ -45,7 +45,8 @@
             "history": "Account Verlauf",
             "giftvoucher": "Geschenkgutschein",
             "welcome": "Willkommen",
-            "thankyou": "Danke für deinen Einkauf!"
+            "thankyou": "Danke für deinen Einkauf!",
+            "avg": "Recht auf Einsichtnahme"
         }
     },
     "performers": {
@@ -266,6 +267,8 @@
         "datetill": "Datum bis",
         "datefrom": "Datum vom",
         "readold": "Weiterlesen..",
+        "phones": "Telefonnummern", 
+        "ip": "IP-Adresse",
         "removeuser": "Um deinen Account zu löschen, klicke auf",
         "removeuser-approval-1": "Möchtest du dein Konto wirklich löschen?",
         "removeuser-approval-2": ", Sie haben immer noch {credits} Credits!",

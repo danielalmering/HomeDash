@@ -45,7 +45,8 @@
             "history": "Account history",
             "giftvoucher": "Gift voucher",
             "welcome": "Welcome",
-            "thankyou": "Thank you for purchasing!"
+            "thankyou": "Thank you for purchasing!",
+            "avg": "Right of inspection"
         }
     },
     "performers": {
@@ -266,6 +267,8 @@
         "datetill": "Date till",
         "datefrom": "Date from",
         "readold": "Read more..",
+        "phones": "Phonenumbers", 
+        "ip": "IP address",
         "removeuser": "Want to delete your account?, then click",
         "removeuser-approval-1": "Are you sure you want to delete your account?",
         "removeuser-approval-2": ", you still have {credits} credit(s)!",

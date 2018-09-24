@@ -46,7 +46,8 @@
             "history": "Accounthistorie",
             "giftvoucher": "Cadeaubon",
             "welcome": "Welkom",
-            "thankyou": "Bedankt voor uw aankoop!"
+            "thankyou": "Bedankt voor uw aankoop!",
+            "avg": "Recht op inzage"
         }
     },
     "performers": {
@@ -267,6 +268,8 @@
         "datetill": "Datum tot",
         "datefrom": "Datum van",
         "readold": "Toon meer..",
+        "phones": "Telefoonnummers", 
+        "ip": "IP-adres",
         "removeuser": "Uw account verwijderen?, klik dan",
         "removeuser-approval-1": "Weet je zeker dat je uw account wilt verwijderen?",
         "removeuser-approval-2": ", je hebt nog {credits} credit(s)!",
