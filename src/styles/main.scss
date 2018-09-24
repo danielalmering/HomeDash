@@ -124,6 +124,10 @@ hr {
 
 }
 
+.text {
+    &-right { float: right; }
+}
+
 img.resize { width: 100%; }
 
 html, body, h1, h2, h3, h4, input, textarea, select, button {

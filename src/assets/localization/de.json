@@ -269,6 +269,12 @@
         "readold": "Weiterlesen..",
         "phones": "Telefonnummern", 
         "ip": "IP-Adresse",
+        "removeuser": "Um deinen Account zu löschen, klicke auf",
+        "removeuser-approval-1": "Möchtest du dein Konto wirklich löschen?",
+        "removeuser-approval-2": ", Sie haben immer noch {credits} Credits!",
+        "here": "hier",
+        "yes": "Ja",
+        "no": "keine",
         "alerts": {
             "successEditData": "Dein Account wurde erfolgreich bearbeitet!",
             "errorEditData": "Dein Account wurde nicht erfolgreich bearbeitet!",
@@ -285,7 +291,9 @@
             "successReplyMessage": "Deine Antwort wurde erfolgreich versendet!",
             "successNewMessage": "Die Nachricht wurde erfolgreich versendet!",
             "errorNewMessage": "Die Nachricht ist nicht erfolgreich versendet worden!",
-            "successGotMessage": "Du hast neue Nachrichten!"
+            "successGotMessage": "Du hast neue Nachrichten!",
+            "errorRemoveAccount": "Beim Entfernen ist ein Fehler aufgetreten!",
+            "successRemoveAccount": "Ihr Konto wurde erfolgreich entfernt!"
         }
     },
     "videochat": {
