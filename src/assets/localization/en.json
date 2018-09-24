@@ -45,7 +45,8 @@
             "history": "Account history",
             "giftvoucher": "Gift voucher",
             "welcome": "Welcome",
-            "thankyou": "Thank you for purchasing!"
+            "thankyou": "Thank you for purchasing!",
+            "avg": "Right of inspection"
         }
     },
     "performers": {
@@ -266,6 +267,8 @@
         "datetill": "Date till",
         "datefrom": "Date from",
         "readold": "Read more..",
+        "phones": "Phonenumbers", 
+        "ip": "IP address",
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
             "errorEditData": "Your account has not been edited successfully!",

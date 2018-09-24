@@ -184,7 +184,7 @@
                 overflow: hidden;
                 width: 100%;
                 color: $pallete-18; 
-                line-height: 180%;
+                line-height: 220%;
                 @include rem(padding, 10px 10px 10px 10px);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 &:last-child { border-bottom: none; }
@@ -194,6 +194,10 @@
                 }
 
                 img { display: table; height: 50px; width: auto; margin: 0 auto; }
+            }
+
+            &.nohover {
+                li:hover { color: $pallete-18; }
             }
         }
 

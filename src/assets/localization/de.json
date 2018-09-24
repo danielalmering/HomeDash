@@ -45,7 +45,8 @@
             "history": "Account Verlauf",
             "giftvoucher": "Geschenkgutschein",
             "welcome": "Willkommen",
-            "thankyou": "Danke für deinen Einkauf!"
+            "thankyou": "Danke für deinen Einkauf!",
+            "avg": "Recht auf Einsichtnahme"
         }
     },
     "performers": {
@@ -266,6 +267,8 @@
         "datetill": "Datum bis",
         "datefrom": "Datum vom",
         "readold": "Weiterlesen..",
+        "phones": "Telefonnummern", 
+        "ip": "IP-Adresse",
         "alerts": {
             "successEditData": "Dein Account wurde erfolgreich bearbeitet!",
             "errorEditData": "Dein Account wurde nicht erfolgreich bearbeitet!",
