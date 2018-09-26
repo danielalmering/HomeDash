@@ -29,7 +29,7 @@ export default class Avg extends Vue {
         if(error){
             return;
         }
-        console.log(result);
+        
         this.personal = result;
     }
 
