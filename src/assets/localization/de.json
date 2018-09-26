@@ -36,6 +36,7 @@
             "voyeur": "Teaser",
             "actions": "Angebote",
             "editdata": "Account bearbeiten",
+            "register": "Registrieren",
             "favourites": "Favoriten",
             "inbox": "Posteingang",
             "upgradebalance": "Guthaben aufladen",
@@ -46,7 +47,11 @@
             "welcome": "Willkommen",
             "thankyou": "Danke für deinen Einkauf!",
             "notifyme": "Benachrichtige mich",
-            "notifymenot": "Benachrichtige mich nicht"
+            "notifymenot": "Benachrichtige mich nicht",
+            "avg": {
+                "title": "Recht auf Einsichtnahme",
+                "text": "Unten siehst du alle deine persönliche Daten, die uns bekannt sind"
+            }
         }
     },
     "performers": {
@@ -287,6 +292,14 @@
             "WhatsApp": "Von WhatsApp"
         },
         "subscribesperformers": "Abonniert Darsteller",
+        "phones": "Telefonnummern", 
+        "ip": "IP-Adresse",
+        "removeuser": "Um deinen Account zu löschen, klicke auf",
+        "removeuser-approval-1": "Möchtest du dein Konto wirklich löschen?",
+        "removeuser-approval-2": ", Sie haben immer noch {credits} Credits!",
+        "here": "hier",
+        "yes": "Ja",
+        "no": "keine",
         "alerts": {
             "successEditData": "Dein Account wurde erfolgreich bearbeitet!",
             "errorEditData": "Dein Account wurde nicht erfolgreich bearbeitet!",
@@ -306,7 +319,9 @@
             "successGotMessage": "Du hast neue Nachrichten!",
             "successDeleteSubscription": "Die Künstlerregistrierung wurde entfernt!",
             "errorinvalidEmail": "Sie haben keine gültige E-Mail-Adresse eingegeben!",
-            "errorinvalidPhone": "Sie haben keine gültige Telefonnummer eingegeben!"
+            "errorinvalidPhone": "Sie haben keine gültige Telefonnummer eingegeben!",
+            "errorRemoveAccount": "Beim Entfernen ist ein Fehler aufgetreten!",
+            "successRemoveAccount": "Ihr Konto wurde erfolgreich entfernt!"
         }
     },
     "videochat": {

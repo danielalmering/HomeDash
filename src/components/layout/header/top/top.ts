@@ -4,7 +4,7 @@ import Vue from 'vue';
 import config, { logo } from '../../../../config';
 import { getPaymentInfo } from 'sensejs/consumer/payment';
 
-import { openRoute } from '../../../../util';
+import { openRoute, goBanner } from '../../../../util';
 
 import './top.scss';
 
@@ -23,6 +23,7 @@ export default class Top extends Vue {
 
     openRoute = openRoute;
     logo = logo;
+    goBanner = goBanner;
 
     get info(){
         return this.$store.state.info;

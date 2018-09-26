@@ -36,6 +36,7 @@
             "voyeur": "Teaser",
             "actions": "Promos",
             "editdata": "Edit account",
+            "register": "Register",
             "favourites": "Favo",
             "inbox": "Inbox",
             "upgradebalance": "Upgrade balance",
@@ -47,7 +48,11 @@
             "thankyou": "Thank you for purchasing!",
             "notifications": "Notifications",
             "notifyme": "Notify me",
-            "notifymenot": "Do not notify me"
+            "notifymenot": "Do not notify me",
+            "avg": {
+                "title": "Right to inspection",
+                "text": "Below you see your personal data known to us"
+            }
         }
     },
     "performers": {
@@ -288,6 +293,14 @@
             "WhatsApp": "By WhatsApp"
         },
         "subscribesperformers": "Subscribes performers",
+        "phones": "Phonenumbers", 
+        "ip": "IP address",
+        "removeuser": "Want to delete your account?, then click",
+        "removeuser-approval-1": "Are you sure you want to delete your account?",
+        "removeuser-approval-2": ", you still have {credits} credit(s)!",
+        "here": "here",
+        "yes": "Yes",
+        "no": "No",
         "alerts": {
             "successEditData": "Your account has been successfully edited!",
             "errorEditData": "Your account has not been edited successfully!",
@@ -307,7 +320,9 @@
             "successGotMessage": "You have new messages!",
             "successDeleteSubscription": "The performer registration has been removed!",
             "errorinvalidEmail": "You did not enter a valid email address!",
-            "errorinvalidPhone": "You have not entered a valid phone number!"
+            "errorinvalidPhone": "You have not entered a valid phone number!",
+            "errorRemoveAccount": "An error occurred while removing!",
+            "successRemoveAccount": "Your account has been successfully removed!"
         }
     },
     "videochat": {

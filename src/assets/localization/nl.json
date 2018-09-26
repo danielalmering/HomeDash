@@ -37,6 +37,7 @@
             "voyeur": "Teaser",
             "actions": "Acties",
             "editdata": "Bewerk account",
+            "register": "Registreer",
             "favourites": "Favo",
             "inbox": "Inbox",
             "upgradebalance": "Saldo opwaarderen",
@@ -48,7 +49,11 @@
             "thankyou": "Bedankt voor uw aankoop!",
             "notifications": "Notificaties",
             "notifyme": "Mij verwittigen",
-            "notifymenot": "Mij niet verwittigen"
+            "notifymenot": "Mij niet verwittigen",
+            "avg": {
+                "title": "Recht op inzage",
+                "text": "Hieronder zie je al jouw persoonsgegevens die bij ons bekend zijn."
+            }
         }
     },
     "performers": {
@@ -272,10 +277,10 @@
         "datefrom": "Datum van",
         "readold": "Toon meer..",
         "whenreceivednotify": {
-            "question": "Wanneer notificatie versturen?",
-            "SSA": "Single Stream activering",
-            "MSG": "Berichten",
-            "PRO": "Acties",
+            "question": "Wanneer zullen we je een melding sturen?",
+            "SSA": "Als een model online komt",
+            "MSG": "Als je een persoonlijk bericht van een model krijgt",
+            "PRO": "Als er speciale acties op thuis.nl zijn",
             "SSA-desc": "Single Stream activering",
             "MSG-desc": "Berichten",
             "PRO-desc": "Acties"
@@ -289,6 +294,14 @@
             "WhatsApp": "Per WhatsApp"
         },
         "subscribesperformers": "Aangemelde performers!",
+        "phones": "Telefoonnummers", 
+        "ip": "IP-adres",
+        "removeuser": "Uw account verwijderen?, klik dan",
+        "removeuser-approval-1": "Weet je zeker dat je uw account wilt verwijderen?",
+        "removeuser-approval-2": ", je hebt nog {credits} credit(s)!",
+        "here": "hier",
+        "yes": "Ja",
+        "no": "Nee",
         "alerts": {
             "successEditData": "Uw account is succesvol bewerkt!",
             "errorEditData": "Uw account is niet succesvol bewerkt!",
@@ -308,7 +321,9 @@
             "successGotMessage": "U heeft nieuwe berichten!",
             "successDeleteSubscription": "De performer aanmelding is verwijderd!",
             "errorinvalidEmail": "U heeft geen geldig e-mailadres ingevuld!",
-            "errorinvalidPhone": "U heeft geen geldig telefoonnummer ingevuld!"
+            "errorinvalidPhone": "U heeft geen geldig telefoonnummer ingevuld!",
+            "errorRemoveAccount": "Er is fout opgetreden bij het verwijderen!",
+            "successRemoveAccount": "U account is succesvol verwijderd!"
         }
     },
     "videochat": {

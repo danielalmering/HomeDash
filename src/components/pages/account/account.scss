@@ -130,6 +130,12 @@
             height: 51px;
         }
 
+        hr {
+            border-top: none;
+            border-bottom: 1px solid $pallete-18;
+            @include rem(margin, 5px 0);
+        }
+
         &-table {
             width: 100%;
             tr {
@@ -201,7 +207,7 @@
                 overflow: hidden;
                 width: 100%;
                 color: $pallete-18; 
-                line-height: 180%;
+                line-height: 220%;
                 @include rem(padding, 10px 10px 10px 10px);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 &:last-child { border-bottom: none; }
@@ -212,10 +218,29 @@
 
                 img { display: table; height: 50px; width: auto; margin: 0 auto; }
             }
+
+            &.nohover {
+                li:hover { color: $pallete-18; }
+            }
         }
 
         @include breakpoint(xs) {
             padding: 0 5px !important;
+        }
+
+        &-alert {
+            display: table;
+            width: 100%;
+            @include rem(padding, 10px 15px);
+            background: $pallete-3;
+            @include border-radius(3px);
+            .col-1 { float: left; width: calc(100% - 160px); }
+            .col-2 { float: left; width: 160px; }
+            
+            p {
+                color: $pallete-2;
+                font-weight: 600; 
+            }
         }
     }
     
