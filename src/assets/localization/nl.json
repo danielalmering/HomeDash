@@ -47,7 +47,10 @@
             "giftvoucher": "Cadeaubon",
             "welcome": "Welkom",
             "thankyou": "Bedankt voor uw aankoop!",
-            "avg": "Recht op inzage"
+            "avg": {
+                "title": "Recht op inzage",
+                "text": "Hieronder zie je al jouw persoonsgegevens die bij ons bekend zijn."
+            }
         }
     },
     "performers": {
