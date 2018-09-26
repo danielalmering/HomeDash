@@ -46,7 +46,10 @@
             "giftvoucher": "Gift voucher",
             "welcome": "Welcome",
             "thankyou": "Thank you for purchasing!",
-            "avg": "Right of inspection"
+            "avg": {
+                "title": "Right to inspection",
+                "text": "Below you see your personal data known to us"
+            }
         }
     },
     "performers": {

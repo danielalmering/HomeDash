@@ -7,15 +7,17 @@ import { getPersonal } from 'sensejs/consumer';
 
 interface PersonalData {
     email: string;
-    ip: number;
-    phoneNumbers: Array<any>;
+    ip: string;
+    phoneNumbers: string[];
 }
 
 @WithRender
 @Component
 export default class Avg extends Vue {
 
-    personal: PersonalData;
+    personal: PersonalData = {
+        email: "", ip: "", phoneNumbers:[]
+    }
 
     mounted(){
         this.loadPersonal();
@@ -27,7 +29,7 @@ export default class Avg extends Vue {
         if(error){
             return;
         }
-
+        console.log(result);
         this.personal = result;
     }
 

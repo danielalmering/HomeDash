@@ -46,7 +46,10 @@
             "giftvoucher": "Geschenkgutschein",
             "welcome": "Willkommen",
             "thankyou": "Danke für deinen Einkauf!",
-            "avg": "Recht auf Einsichtnahme"
+            "avg": {
+                "title": "Recht auf Einsichtnahme",
+                "text": "Unten siehst du alle deine persönliche Daten, die uns bekannt sind"
+            }
         }
     },
     "performers": {
