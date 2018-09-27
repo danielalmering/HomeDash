@@ -166,6 +166,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             if(payload.notify){ 
                 payload.user.notification_types = payload.user.notification_types ? payload.user.notification_types : { SSA: false, PRO: false, MSG: false };
                 payload.user.notification_types[payload.notify] = payload.user.notification_types[payload.notify] ? false : true;
+                const notificationmode = (payload.user.notification_mode === 0 && payload.user.notification_types[payload.notify] === true) ? store.dispatch('displayModal', 'notifications') : '';
             }
 
             const { error, result } = await updateConsumer(payload.user);
