@@ -102,8 +102,10 @@
     "profile": {
         "favorite-add": "Add favorite",
         "favorite-remove": "Delete favorite",
-        "subscribe-add": "Notify notification",
-        "subscribe-remove": "Delete notification",
+        "subscribe-add": "Notify me",
+        "subscribe-add-hover": "Notify me when {{nickname}} is online",
+        "subscribe-remove": "Don't notify me",
+        "subscribe-remove-hover": "Don't notify me when {{nickname}} is online",
         "property": "Characteristics",
         "description": "Description",
         "age": "Age",
@@ -252,6 +254,8 @@
         "confirmpassword": "Confirm password:",
         "editdatabtn": "Save changes",
         "newmessage": "New message",
+        "msg-notify-add-hover": "Notify me when a girl sends me an E-Mail",
+        "msg-notify-remove-hover": "Don't notify me when a girl sends me an E-Mail",
         "removemessage": "Delete message",
         "sendmessage": "Send message",
         "historydesc": "Here you will find a comprehensive overview of your executed actions within the platform",
@@ -369,7 +373,9 @@
         "data": "Data",
         "alerts": {
             "errorLoad": "An error occurred while loading the promos!"
-        }
+        },
+        "notify-add-hover": "Notify me when there's a promo",
+        "notify-remove-hover": "Don't notify me when there's a promo"
     },
     "thankyou": {
         "intro": "Thank you for your purchase !!, below you can view one of your favorites",

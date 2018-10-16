@@ -102,8 +102,10 @@
     "profile": {
         "favorite-add": "Favorit hinzufügen",
         "favorite-remove": "Favorit entfernen",
-        "subscribe-add": "Benachrichtigung benachrichtigen",
-        "subscribe-remove": "Benachrichtigung löschen",
+        "subscribe-add": "Benachrichtige mich",
+        "subscribe-add-hover": "Benachrichtige mich wenn {nickname} online ist",
+        "subscribe-remove": "Benachrichtige mich nicht",
+        "subscribe-remove-hover": "Benachrichtige mich nicht mehr wenn {nickname} online ist",
         "property": "Eigenschaften",
         "description": "Beschreibung",
         "age": "Alter",
@@ -252,6 +254,8 @@
         "confirmpassword": "Passwort bestätigen:",
         "editdatabtn": "Änderungen speichern",
         "newmessage": "Neue Nachricht",
+        "msg-notify-add-hover": "Werde benachrichtigt wenn eine Frau dir eine Email schreibt",
+        "msg-notify-remove-hover": "Werde nicht benachrichtigt wenn eine Frau dir eine Email schreibt",
         "removemessage": "Nachricht löschen",
         "sendmessage": "Nachricht senden",
         "historydesc": "Hier findest du eine Übersicht deiner Aktivitäten auf der Webseite",
@@ -345,7 +349,8 @@
                 "INITIATE_FAILED": "Etwas ist schief gelaufen. Bitte versuche es erneut.",
                 "CANCEL": "Abgebrochen",
                 "PLAYER_END": "Sie haben die Sitzung beendet",
-                "PERFORMER_TIMEOUT": "Der Darsteller antwortete nicht."
+                "PERFORMER_TIMEOUT": "Der Darsteller antwortete nicht.",
+                "PEEK_SWITCH": "Gewechselt"
             }
         }
     },
@@ -364,11 +369,13 @@
     },
     "promos": {
         "intro": "Willkommen auf der Aktions-Seite! Auf dieser Seite informieren wir dich über laufende oder kommende Spezial Aktionen, sowie tolle Angebote, Rabatte und Schnäppchen.",
-        "currentactions": "Laufende Aktionen",
+        "currentactions": "Laufende Angebote",
         "data": "Details",
         "alerts": {
             "errorLoad": "Ein Fehler ist beim Laden der Aktionen aufgetreten!"
-        }
+        },
+        "notify-add-hover": "Werde benachrichtigt wenn es ein Angebot gibt",
+        "notify-remove-hover": "Werde nicht mehr benachrichtigt wenn es ein Angebot gibt"
     },
     "thankyou": {
         "intro": "Vielen Dank für deinen Einkauf !! Hier unten siehst du einen deiner Favoriten",

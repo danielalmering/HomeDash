@@ -47,9 +47,9 @@
             "giftvoucher": "Cadeaubon",
             "welcome": "Welkom",
             "thankyou": "Bedankt voor uw aankoop!",
-            "notifications": "Notificaties",
-            "notifyme": "Mij verwittigen",
-            "notifymenot": "Mij niet verwittigen",
+            "notifications": "Meldingen",
+            "notifyme": "Meldingen aan",
+            "notifymenot": "Meldingen uit",
             "avg": {
                 "title": "Recht op inzage",
                 "text": "Hieronder zie je al jouw persoonsgegevens die bij ons bekend zijn."
@@ -103,8 +103,10 @@
     "profile": {
         "favorite-add": "Maak favoriet",
         "favorite-remove": "Favoriet verwijderen",
-        "subscribe-add": "Notificatie aanmelden",
-        "subscribe-remove": "Verwijder notificatie",
+        "subscribe-add": "Zet melding aan",
+        "subscribe-add-hover" : "ontvang een bericht als {nickname} online is",
+        "subscribe-remove": "Zet melding uit",
+        "subscribe-remove-hover" : "ontvang geen bericht meer als {nickname} online is",
         "property": "Kenmerken",
         "description": "Omschrijving",
         "age": "Leeftijd",
@@ -253,6 +255,8 @@
         "confirmpassword": "Bevestig wachtwoord:",
         "editdatabtn": "Wijzigingen opslaan",
         "newmessage": "Nieuw bericht",
+        "msg-notify-add-hover": "Ontvang een bericht als een dame je een email stuurt",
+        "msg-notify-remove-hover": "Ontvang geen bericht als een dame je een email stuurt",
         "removemessage": "Verwijder bericht",
         "sendmessage": "Verstuur bericht",
         "historydesc": "Hier vindt u een uitgebreid overzicht van uw uitgevoerde acties op Thuis.nl",
@@ -286,8 +290,8 @@
             "PRO-desc": "Acties"
         },
         "howreceivenotify": {
-            "question": "Hoe wil je notificaties ontvangen?",
-            "Inactive": "Geen notificaties",
+            "question": "Hoe wil je meldingen ontvangen?",
+            "Inactive": "Geen meldingen",
             "Email": "Per email",
             "SMS": "Per sms",
             "Web": "Per browser",
@@ -370,7 +374,9 @@
         "data": "Data",
         "alerts": {
             "errorLoad": "Er is een fout opgetreden bij inladen van de promo's!"
-        }
+        },
+        "notify-add-hover": "Ontvang een bericht als er een actie is",
+        "notify-remove-hover": "Geen bericht meer ontvangen als er een actie is"
     },
     "thankyou": {
         "intro": "Hartelijk bedankt voor uw aankoop! Hieronder kunt u een van uw favorieten bekijken",
