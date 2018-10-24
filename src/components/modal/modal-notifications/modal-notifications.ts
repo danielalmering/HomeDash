@@ -7,7 +7,7 @@ import { tagHotjar } from '../../../util';
 
 import { updateConsumer } from 'sensejs/consumer';
 import { getSubscriptionsOptions } from 'sensejs/performer/subscriptions';
-import { Consumer } from 'sensejs/core/models/user';
+import { Consumer, NotificationMode } from 'sensejs/core/models/user';
 
 @WithRender
 @Component
@@ -19,7 +19,7 @@ export default class ModalNotifications extends Vue {
     })
     title: string;
 
-    user: any;
+    user: Consumer;
     form: any;
     formData: any = {};
 
@@ -34,7 +34,10 @@ export default class ModalNotifications extends Vue {
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
-        
+
+        if (this.user.notification_mode == NotificationMode.inactive){
+            this.user.notification_mode = NotificationMode.email;
+        }
         this.getFormData();
     }
 

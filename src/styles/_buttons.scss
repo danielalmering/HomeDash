@@ -6,16 +6,23 @@
 .btn {
     display: inline-block;
     color: $pallete-2;
-    @include rem(font-size, 13px);
+    @include rem(font-size, 11px);
     background: $pallete-13;
     font-weight: 600;
     @include border-radius(3px);
-    @include rem(padding, 12px 25px);
+    @include rem(padding, 12px 20px);
     @include rem(margin, 5px 0px);
     border: none;
     text-align: center;
     cursor: pointer;
     box-shadow: inset 0px 1px 0px rgba(255,255,255,0.25);
+
+    &-small     { @include rem(padding, 9px 20px); }
+    &-large     { @include rem(padding, 11px 35px); @include rem(font-size, 13px); }
+    &-xxl       { @include rem(padding, 18px 85px); @include rem(font-size, 18px); }
+    &-full      {  width: 100%; }
+    &-right     { float: right; @include rem(margin-left, 10px); }
+    &-left      { float: left;@include rem( margin-right, 5px); }
 
     &-fa {
         @include rem(padding, 12px 15px 12px 15px);
@@ -38,6 +45,9 @@
     &-orange { background: $pallete-3; }
     &-green  { background: $pallete-21; }
     &-black  { background: $pallete-1; }
+    &-white  { background: $pallete-2; color: $pallete-1; 
+        &:hover { color: $pallete-4 !important; }
+    }
 
     &:focus {
         outline: none;

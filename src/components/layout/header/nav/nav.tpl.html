@@ -25,7 +25,7 @@
                     <a class="nav__info-item visible-xs" v-on:click="toggleTagMenu"><i class="fa fa-bars"></i><span v-t="'nav.info.menu'"></span></a>
                     <router-link class="nav__info-item" :to="{ name: 'Favourites' }" v-if="user"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
-
+                    
                     <a class="nav__info-item nav__info-item--last" v-on:click="authenticated ? toggleAccountMenu() : login()">
                         <span>
                             <i class="fa fa-user"><span v-if="authenticated && user.totalNotifications && user.totalNotifications !== 0" class="notify">{{ user.totalNotifications }}</span></i>
@@ -41,6 +41,8 @@
                             <a class="subitem" href="#" v-t="'nav.info.logout'" v-on:click="logout"></a>
                         </div>
                     </a>
+
+                    <a class="nav__info-item nav__info-item--high hidden-xs" v-if="!authenticated" v-on:click="openModal('register')"><i class="fa fa-pencil"></i><span v-t="'nav.info.register'"></span></a>
 
                     <a class="nav__info-item nav__info-item--last" v-on:click="showLang = !showLang">
                         <span>

@@ -15,6 +15,7 @@ import Inbox from '../components/pages/account/inbox/inbox';
 import Readmessages from '../components/pages/account/inbox/readmessages/readmessages';
 import Newmessage from '../components/pages/account/inbox/newmessage/newmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
+import Avg from '../components/pages/account/avg/avg';
 import Promos from '../components/pages/promos/promos';
 import Thankyou from '../components/pages/thankyou/thankyou';
 import Payment from '../components/pages/payment/payment';
@@ -76,6 +77,11 @@ const routes = [{
                         path: 'gift-voucher/',
                         name: 'Giftvoucher',
                         component: Giftvoucher
+                    },
+                    {
+                        path: 'avg/',
+                        name: 'Avg',
+                        component: Avg
                     }
                 ]
             },
