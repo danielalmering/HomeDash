@@ -25,6 +25,15 @@ export default class Editdata extends Vue {
         return this.$store.state.authentication.user.credits;
     }
 
+    data(){
+        return {
+            user: {
+                email: '',
+                mobile_number: ''
+            }
+        }
+    }
+
     get socialaccount(){
         return this.user.email.indexOf(".local") != -1;
     }
@@ -51,16 +60,8 @@ export default class Editdata extends Vue {
             return;
         }
 
-        const { error, result } = await updateConsumer(this.user);
-
-        if(error){
-            this.$store.dispatch('errorMessage', 'account.alerts.errorEditData');
-            return;
-        }
-
-        this.$store.dispatch('successMessage', 'account.alerts.successEditData');
-
-        this.$store.commit('setUser', result);
+        let payload = { user: this.user};
+        await this.$store.dispatch('updateUser', payload);
     }
 
     async removeUser(approven: boolean){

@@ -46,6 +46,9 @@
             "giftvoucher": "Gift voucher",
             "welcome": "Welcome",
             "thankyou": "Thank you for purchasing!",
+            "notifications": "Notifications",
+            "notifyme": "Notify me",
+            "notifymenot": "Do not notify me",
             "avg": {
                 "title": "Right to inspection",
                 "text": "Below you see your personal data known to us"
@@ -99,6 +102,10 @@
     "profile": {
         "favorite-add": "Add favorite",
         "favorite-remove": "Delete favorite",
+        "subscribe-add": "Notify me",
+        "subscribe-add-hover": "Notify me when {{nickname}} is online",
+        "subscribe-remove": "Don't notify me",
+        "subscribe-remove-hover": "Don't notify me when {{nickname}} is online",
         "property": "Characteristics",
         "description": "Description",
         "age": "Age",
@@ -247,6 +254,8 @@
         "confirmpassword": "Confirm password:",
         "editdatabtn": "Save changes",
         "newmessage": "New message",
+        "msg-notify-add-hover": "Notify me when a girl sends me an E-Mail",
+        "msg-notify-remove-hover": "Don't notify me when a girl sends me an E-Mail",
         "removemessage": "Delete message",
         "sendmessage": "Send message",
         "historydesc": "Here you will find a comprehensive overview of your executed actions within the platform",
@@ -266,10 +275,28 @@
         "message": "Message",
         "paymessage": "The costs for viewing the message amount to {credits} credits",
         "viewmessage": "View message!",
-        "pushmessages": "Receive push messages",
+        "pushmessages": "Receive notifications",
         "datetill": "Date till",
         "datefrom": "Date from",
         "readold": "Read more..",
+        "whenreceivednotify": {
+            "question": "When to send notification?",
+            "SSA": "Single Stream activation",
+            "MSG": "Messages",
+            "PRO": "Promotions",
+            "SSA-desc": "Single Stream activation",
+            "MSG-desc": "Messages",
+            "PRO-desc": "Promotions"
+        },
+        "howreceivenotify": {
+            "question": "How do you want to receive notifications?",
+            "Inactive": "No notifications",
+            "Email": "By email",
+            "SMS": "By sms",
+            "Web": "By browser",
+            "WhatsApp": "By WhatsApp"
+        },
+        "subscribesperformers": "Subscribes performers",
         "phones": "Phonenumbers", 
         "ip": "IP address",
         "removeuser": "Want to delete your account?, then click",
@@ -295,6 +322,9 @@
             "successNewMessage": "The message has been sent successfully!",
             "errorNewMessage": "The message was not sent successfully!",
             "successGotMessage": "You have new messages!",
+            "successDeleteSubscription": "The performer registration has been removed!",
+            "errorinvalidEmail": "You did not enter a valid email address!",
+            "errorinvalidPhone": "You have not entered a valid phone number!",
             "errorRemoveAccount": "An error occurred while removing!",
             "successRemoveAccount": "Your account has been successfully removed!"
         }
@@ -307,6 +337,7 @@
         "typing": "{name} is typing...",
         "videocall-on": "Videocall on",
         "videocall-off": "Videocall off",
+        "webcam-on": "Webcam on/off",
         "alerts": {
             "successChatEnded": "Session ended!",
             "socketErrors": {
@@ -342,7 +373,9 @@
         "data": "Data",
         "alerts": {
             "errorLoad": "An error occurred while loading the promos!"
-        }
+        },
+        "notify-add-hover": "Notify me when there's a promo",
+        "notify-remove-hover": "Don't notify me when there's a promo"
     },
     "thankyou": {
         "intro": "Thank you for your purchase !!, below you can view one of your favorites",

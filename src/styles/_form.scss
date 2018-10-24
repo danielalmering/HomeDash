@@ -15,6 +15,16 @@
             @include rem(font-size, 13px);
             width: 100%;
         }
+
+        &-alert {
+            display: table;
+            width: 100%;
+            @include rem(font-size, 11px);
+            color: $pallete-2;
+            background: $pallete-3;
+            @include rem(padding,5px 10px);
+            @include border-radius(3px);
+        }
     }
     
 
@@ -51,6 +61,60 @@
     }
     input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
     input[type=checkbox]:checked + label:before { letter-spacing: 5px; } 
+    input[type=checkbox] + label { float: left; width: 25px; }
+    .checkbox-title { float: left; width:calc(100% - 25px); line-height: 38px; padding-right: 10px; }
+
+    input[type=radio]:checked,
+    input[type=radio]:not(:checked) { position: absolute; left: -9999px; }
+    input[type=radio]:checked + label,
+    input[type=radio]:not(:checked) + label
+    {
+        position: relative;
+        @include rem(padding,5px 0px 5px 28px);
+        cursor: pointer;
+        display: inline-block;
+        color: $pallete-2;
+    }
+
+    input[type=radio]:checked + label:before,
+    input[type=radio]:not(:checked) + label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 18px;
+        height: 18px;
+        border-radius: 100%;
+        background: $pallete-13;
+    }
+    input[type=radio]:checked + label:after,
+    input[type=radio]:not(:checked) + label:after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background: $pallete-3;
+        position: absolute;
+        top: 8px;
+        left: 3px;
+        border-radius: 100%;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+    }
+    input[type=radio]:not(:checked) + label:after {
+        opacity: 0;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    input[type=radio]:checked + label:after {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    // Notifications
+    input[type=radio]:checked + label {
+        div { display: block !important; }
+    }
 
     select {
         color: $pallete-1;

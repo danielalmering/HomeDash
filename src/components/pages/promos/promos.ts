@@ -5,6 +5,7 @@ import config from '../../../config';
 import WithRender from './promos.tpl.html';
 import { getPromos } from 'sensejs/consumer/category';
 import { Promo as PromoData } from 'sensejs/core/models/category';
+import { User } from '../../../models/User';
 import { goBanner, openModal } from '../../../util';
 
 @WithRender
@@ -12,6 +13,14 @@ import { goBanner, openModal } from '../../../util';
 export default class Promo extends Vue {
 
     promos: PromoData[] = [];
+    addPromoNotifi = (user: User) => this.$store.dispatch('updateUser', {user: this.$store.state.authentication.user, notify: 'PRO'});
+
+    get notify(){
+        return (type: string) => {
+            return this.$store.state.authentication.user.notification_types[type];
+        }
+    }
+    
     goBanner = goBanner;
     openModal = openModal;
 

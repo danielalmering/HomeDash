@@ -5,6 +5,7 @@ import modalLogin from './modal-login/modal-login';
 import modalRegister from './modal-register/modal-register';
 import modalRecover from './modal-recover/modal-recover';
 import modalReset from './modal-reset/modal-reset';
+import modalNotifications from './modal-notifications/modal-notifications';
 
 import './modal-wrapper.scss';
 import WithRender from './modal-wrapper.tpl.html';
@@ -15,7 +16,8 @@ import WithRender from './modal-wrapper.tpl.html';
         login: modalLogin,
         register: modalRegister,
         recover: modalRecover,
-        reset: modalReset
+        reset: modalReset,
+        notifications: modalNotifications
     }
 })
 export default class ModalWrapper extends Vue {

@@ -47,6 +47,9 @@
             "giftvoucher": "Cadeaubon",
             "welcome": "Welkom",
             "thankyou": "Bedankt voor uw aankoop!",
+            "notifications": "Meldingen",
+            "notifyme": "Meldingen aanzetten",
+            "notifymenot": "Meldingen uitzetten",
             "avg": {
                 "title": "Recht op inzage",
                 "text": "Hieronder zie je al jouw persoonsgegevens die bij ons bekend zijn."
@@ -100,6 +103,10 @@
     "profile": {
         "favorite-add": "Maak favoriet",
         "favorite-remove": "Favoriet verwijderen",
+        "subscribe-add": "Zet melding aan",
+        "subscribe-add-hover" : "ontvang een bericht als {nickname} online is",
+        "subscribe-remove": "Zet melding uit",
+        "subscribe-remove-hover" : "ontvang geen bericht meer als {nickname} online is",
         "property": "Kenmerken",
         "description": "Omschrijving",
         "age": "Leeftijd",
@@ -248,6 +255,8 @@
         "confirmpassword": "Bevestig wachtwoord:",
         "editdatabtn": "Wijzigingen opslaan",
         "newmessage": "Nieuw bericht",
+        "msg-notify-add-hover": "Ontvang een bericht als een dame je een email stuurt",
+        "msg-notify-remove-hover": "Ontvang geen bericht als een dame je een email stuurt",
         "removemessage": "Verwijder bericht",
         "sendmessage": "Verstuur bericht",
         "historydesc": "Hier vindt u een uitgebreid overzicht van uw uitgevoerde acties op Thuis.nl",
@@ -267,10 +276,28 @@
         "message": "Bericht",
         "paymessage": "De kosten voor het bekijken van het bericht bedragen {credits} credits",
         "viewmessage": "Bericht bekijken!",
-        "pushmessages": "Push berichten ontvangen",
+        "pushmessages": "Notificaties ontvangen",
         "datetill": "Datum tot",
         "datefrom": "Datum van",
         "readold": "Toon meer..",
+        "whenreceivednotify": {
+            "question": "Wanneer zullen we je een melding sturen?",
+            "SSA": "Als een model online komt",
+            "MSG": "Als je een persoonlijk bericht van een model krijgt",
+            "PRO": "Als er speciale acties op thuis.nl zijn",
+            "SSA-desc": "Single Stream activering",
+            "MSG-desc": "Berichten",
+            "PRO-desc": "Acties"
+        },
+        "howreceivenotify": {
+            "question": "Hoe wil je meldingen ontvangen?",
+            "Inactive": "Geen meldingen",
+            "Email": "Per email",
+            "SMS": "Per sms",
+            "Web": "Per browser",
+            "WhatsApp": "Per WhatsApp"
+        },
+        "subscribesperformers": "Aangemelde performers!",
         "phones": "Telefoonnummers", 
         "ip": "IP-adres",
         "removeuser": "Uw account verwijderen?, klik dan",
@@ -296,6 +323,9 @@
             "successNewMessage": "Het bericht is succesvol verstuurd!",
             "errorNewMessage": "Het bericht is niet succesvol verstuurd!",
             "successGotMessage": "U heeft nieuwe berichten!",
+            "successDeleteSubscription": "De performer aanmelding is verwijderd!",
+            "errorinvalidEmail": "U heeft geen geldig e-mailadres ingevuld!",
+            "errorinvalidPhone": "U heeft geen geldig telefoonnummer ingevuld!",
             "errorRemoveAccount": "Er is fout opgetreden bij het verwijderen!",
             "successRemoveAccount": "U account is succesvol verwijderd!"
         }
@@ -308,6 +338,7 @@
         "typing": "{name} is aan het typen...",
         "videocall-on": "Beeldbellen aan",
         "videocall-off": "Beeldbellen uit",
+        "webcam-on": "Webcam aan/uit",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
             "socketErrors": {
@@ -343,7 +374,9 @@
         "data": "Data",
         "alerts": {
             "errorLoad": "Er is een fout opgetreden bij inladen van de promo's!"
-        }
+        },
+        "notify-add-hover": "Ontvang een bericht als er een actie is",
+        "notify-remove-hover": "Geen bericht meer ontvangen als er een actie is"
     },
     "thankyou": {
         "intro": "Hartelijk bedankt voor uw aankoop! Hieronder kunt u een van uw favorieten bekijken",

@@ -89,6 +89,15 @@
             }
         }
 
+        h2 {
+            @include rem(font-size, 14px);
+            font-weight: 700;
+            color: $pallete-2;
+            @include rem(padding, 0px 0px 15px 0px);
+            border-bottom: 3px solid $pallete-1;
+            @include rem(margin, 0px 0px 15px 0px);
+        }
+
         h3 {
             @include rem(font-size, 14px);
             color: $pallete-2;
@@ -104,6 +113,11 @@
                 @include rem(padding, 12px 15px);
                 background: $pallete-1;
                 @include border-radius(3px);
+            }
+            &.desc {
+                @include rem(font-size, 12px);
+                @include rem(padding, 0px);
+                @include rem(margin, 0);
             }
         }
 
@@ -153,6 +167,9 @@
                     @include rem(font-size, 18px);
                     color: $pallete-3; 
                     @include rem(padding, 0px 10px 0px 5px);
+                    &.small { 
+                        @include rem(font-size, 12px);
+                    }
                 }
 
                 span {

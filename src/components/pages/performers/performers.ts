@@ -14,6 +14,7 @@ import { RawLocation } from 'vue-router/types/router';
 import { listPerformers } from 'sensejs/performer';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 import { openModal, goBanner } from '../../../util';
 
 @WithRender
@@ -39,6 +40,14 @@ export default class Performers extends Vue {
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
+        performer.isSubscribed = true
+        if(!this.user.notification_mode){
+            const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
+        }
+    });
+    removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
+
     
     query: { limit: number, offset: number, category?: string, search: string } = {
         limit: 40,
@@ -52,6 +61,10 @@ export default class Performers extends Vue {
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
+    }
+
+    get user(){
+        return this.$store.state.authentication.user;
     }
 
     get noPerformers(){

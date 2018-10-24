@@ -3,6 +3,9 @@ import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
 import { User, AnonymousUser, UserForm } from '../models/User';
+import { updateConsumer } from 'sensejs/consumer';
+import { Consumer } from 'sensejs/core/models/user';
+import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
 import Raven from 'raven-js';
@@ -79,7 +82,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 return;
             }
 
-            store.commit('setUser', loginData);
+            store.commit('setUser', transformReadConsumer(loginData));
 
             notificationSocket.disconnect();
             notificationSocket.connect();
@@ -150,13 +153,32 @@ const authenticationStore: Module<AuthState, RootState> = {
                 sessionData.displayName = store.state.user.displayName;
             }
 
-            store.commit('setUser', sessionData);
+            store.commit('setUser', transformReadConsumer(sessionData));
 
             await store.dispatch('setLanguage', sessionData.language);
 
             if(!notificationSocket.isConnected()){
                 notificationSocket.connect();
             }
+        },
+        async updateUser(store: AuthContext, payload: { user: Consumer | any, notify: string | undefined}){
+
+            if(payload.notify){ 
+                payload.user.notification_types = payload.user.notification_types ? payload.user.notification_types : { SSA: false, PRO: false, MSG: false };
+                payload.user.notification_types[payload.notify] = payload.user.notification_types[payload.notify] ? false : true;
+                const notificationmode = (payload.user.notification_mode === 0 && payload.user.notification_types[payload.notify] === true) ? store.dispatch('displayModal', 'notifications') : '';
+            }
+
+            const { error, result } = await updateConsumer(payload.user);
+
+            if(error){
+                store.dispatch('errorMessage', 'account.alerts.errorEditData');
+                return;
+            }
+
+            store.dispatch('successMessage', 'account.alerts.successEditData');
+
+            store.commit('setUser', result);
         }
     }
 };
