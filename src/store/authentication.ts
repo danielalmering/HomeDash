@@ -6,7 +6,7 @@ import { User, AnonymousUser, UserForm } from '../models/User';
 import config from '../config';
 import notificationSocket from '../socket';
 import Raven from 'raven-js';
-import { tagHotjar } from '../util';
+import { tagHotjar, getParameterByName } from '../util';
 import router from '../router';
 
 export interface AuthState {
@@ -124,8 +124,10 @@ const authenticationStore: Module<AuthState, RootState> = {
             });
 
             let sessionData: AnonymousUser | undefined = undefined;
-            const referer = router.currentRoute.query.utm_source ? `&referer=${router.currentRoute.query.utm_source}` : '';
-            const utm = router.currentRoute.query.utm_source ? true : false;
+
+            const utmMedium = getParameterByName('utm_medium');
+            const utm = (utmMedium && utmMedium.toLowerCase() === 'advertising') ? true : false;
+            const referer = utm ? `&referer=${router.currentRoute.query.utm_source}` : '';
 
             // TODO: Daniel
             if(utm){
