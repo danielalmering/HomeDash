@@ -127,7 +127,7 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             const utmMedium = getParameterByName('utm_medium');
             const utm = (utmMedium && utmMedium.toLowerCase() === 'advertising') ? true : false;
-            const referer = utm ? `&referer=${router.currentRoute.query.utm_source}` : '';
+            const referer = utm ? `&referer=${router.currentRoute.query.utm_source}` : ''; // old code, removal?
 
             // TODO: Daniel
             if(utm){
@@ -137,6 +137,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 return;
             }
 
+            // Old code, removal?
             if(checkSessionResult.status === 403){
                 const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}${referer}`, {
                     credentials: 'include'
