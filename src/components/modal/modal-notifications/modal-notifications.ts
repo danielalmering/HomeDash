@@ -34,10 +34,6 @@ export default class ModalNotifications extends Vue {
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
-
-        if (this.user.notification_mode == NotificationMode.inactive){
-            this.user.notification_mode = NotificationMode.email;
-        }
         this.getFormData();
     }
 
