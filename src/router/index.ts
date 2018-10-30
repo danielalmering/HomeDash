@@ -9,11 +9,13 @@ import Performers from '../components/pages/performers/performers';
 import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 import Editdata from '../components/pages/account/editdata/editdata';
+import Notifications from '../components/pages/account/notifications/notifications';
 import History from '../components/pages/account/history/history';
 import Inbox from '../components/pages/account/inbox/inbox';
 import Readmessages from '../components/pages/account/inbox/readmessages/readmessages';
 import Newmessage from '../components/pages/account/inbox/newmessage/newmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
+import Avg from '../components/pages/account/avg/avg';
 import Promos from '../components/pages/promos/promos';
 import Thankyou from '../components/pages/thankyou/thankyou';
 import Payment from '../components/pages/payment/payment';
@@ -47,12 +49,17 @@ const routes = [{
                         component: Editdata
                     },
                     {
+                        path: 'notifications/',
+                        name: 'Notifications',
+                        component: Notifications
+                    },
+                    {
                         path: 'account-history/',
                         name: 'History',
                         component: History
                     },
                     {
-                        path: 'notifications/',
+                        path: 'inbox/',
                         name: 'Inbox',
                         component: Inbox
                     },
@@ -70,6 +77,11 @@ const routes = [{
                         path: 'gift-voucher/',
                         name: 'Giftvoucher',
                         component: Giftvoucher
+                    },
+                    {
+                        path: 'avg/',
+                        name: 'Avg',
+                        component: Avg
                     }
                 ]
             },

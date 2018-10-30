@@ -45,7 +45,14 @@
             "history": "Account Verlauf",
             "giftvoucher": "Geschenkgutschein",
             "welcome": "Willkommen",
-            "thankyou": "Danke für deinen Einkauf!"
+            "thankyou": "Danke für deinen Einkauf!",
+            "notifications": "Benachrichtigungen",
+            "notifyme": "Benachrichtige mich",
+            "notifymenot": "Benachrichtige mich nicht",
+            "avg": {
+                "title": "Recht auf Einsichtnahme",
+                "text": "Unten siehst du alle deine persönliche Daten, die uns bekannt sind"
+            }
         }
     },
     "performers": {
@@ -95,6 +102,10 @@
     "profile": {
         "favorite-add": "Favorit hinzufügen",
         "favorite-remove": "Favorit entfernen",
+        "subscribe-add": "Benachrichtige mich",
+        "subscribe-add-hover": "Benachrichtige mich wenn {nickname} online ist",
+        "subscribe-remove": "Benachrichtige mich nicht",
+        "subscribe-remove-hover": "Benachrichtige mich nicht mehr wenn {nickname} online ist",
         "property": "Eigenschaften",
         "description": "Beschreibung",
         "age": "Alter",
@@ -243,6 +254,8 @@
         "confirmpassword": "Passwort bestätigen:",
         "editdatabtn": "Änderungen speichern",
         "newmessage": "Neue Nachricht",
+        "msg-notify-add-hover": "Werde benachrichtigt wenn eine Frau dir eine Email schreibt",
+        "msg-notify-remove-hover": "Werde nicht benachrichtigt wenn eine Frau dir eine Email schreibt",
         "removemessage": "Nachricht löschen",
         "sendmessage": "Nachricht senden",
         "historydesc": "Hier findest du eine Übersicht deiner Aktivitäten auf der Webseite",
@@ -262,10 +275,30 @@
         "message": "Nachricht",
         "paymessage": "Das Lesen der Nachricht kostet {credits} credits",
         "viewmessage": "Nachricht lesen!",
-        "pushmessages": "Push Nachrichten erhalten",
+        "pushmessages": "Notifizierungen",
         "datetill": "Datum bis",
         "datefrom": "Datum vom",
         "readold": "Weiterlesen..",
+        "whenreceivednotify": {
+            "question": "Wann muss ich eine Benachrichtigung senden?",
+            "SSA": "Einzel Stream Aktivierung",
+            "MSG": "Nachrichten",
+            "PRO": "Promotionen",
+            "SSA-desc": "Einzel Stream Aktivierung",
+            "MSG-desc": "Nachrichten",
+            "PRO-desc": "Promotionen"
+        },
+        "howreceivenotify": {
+            "question": "Wie möchten Sie Benachrichtigungen erhalten?",
+            "Inactive": "Keine Benachrichtigungen",
+            "Email": "Per E-Mail",
+            "SMS": "Per SMS",
+            "Web": "Mit dem Browser",
+            "WhatsApp": "Von WhatsApp"
+        },
+        "subscribesperformers": "Abonniert Darsteller",
+        "phones": "Telefonnummern", 
+        "ip": "IP-Adresse",
         "removeuser": "Um deinen Account zu löschen, klicke auf",
         "removeuser-approval-1": "Möchtest du dein Konto wirklich löschen?",
         "removeuser-approval-2": ", Sie haben immer noch {credits} Credits!",
@@ -289,6 +322,9 @@
             "successNewMessage": "Die Nachricht wurde erfolgreich versendet!",
             "errorNewMessage": "Die Nachricht ist nicht erfolgreich versendet worden!",
             "successGotMessage": "Du hast neue Nachrichten!",
+            "successDeleteSubscription": "Die Künstlerregistrierung wurde entfernt!",
+            "errorinvalidEmail": "Sie haben keine gültige E-Mail-Adresse eingegeben!",
+            "errorinvalidPhone": "Sie haben keine gültige Telefonnummer eingegeben!",
             "errorRemoveAccount": "Beim Entfernen ist ein Fehler aufgetreten!",
             "successRemoveAccount": "Ihr Konto wurde erfolgreich entfernt!"
         }
@@ -301,6 +337,7 @@
         "typing": "{name} is typing...",
         "videocall-on": "Videocall on",
         "videocall-off": "Videocall off",
+        "webcam-on": "Webcam on/off",
         "alerts": {
             "successChatEnded": "Session beendet!",
             "socketErrors": {
@@ -312,7 +349,8 @@
                 "INITIATE_FAILED": "Etwas ist schief gelaufen. Bitte versuche es erneut.",
                 "CANCEL": "Abgebrochen",
                 "PLAYER_END": "Sie haben die Sitzung beendet",
-                "PERFORMER_TIMEOUT": "Der Darsteller antwortete nicht."
+                "PERFORMER_TIMEOUT": "Der Darsteller antwortete nicht.",
+                "PEEK_SWITCH": "Gewechselt"
             }
         }
     },
@@ -331,11 +369,13 @@
     },
     "promos": {
         "intro": "Willkommen auf der Aktions-Seite! Auf dieser Seite informieren wir dich über laufende oder kommende Spezial Aktionen, sowie tolle Angebote, Rabatte und Schnäppchen.",
-        "currentactions": "Laufende Aktionen",
+        "currentactions": "Laufende Angebote",
         "data": "Details",
         "alerts": {
             "errorLoad": "Ein Fehler ist beim Laden der Aktionen aufgetreten!"
-        }
+        },
+        "notify-add-hover": "Werde benachrichtigt wenn es ein Angebot gibt",
+        "notify-remove-hover": "Werde nicht mehr benachrichtigt wenn es ein Angebot gibt"
     },
     "thankyou": {
         "intro": "Vielen Dank für deinen Einkauf !! Hier unten siehst du einen deiner Favoriten",

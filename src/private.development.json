@@ -1,8 +1,8 @@
 {
     "BaseUrl": "/api",
-    "FullApiUrl": "https://accept-www.gigacams.com",
-    "ImageUrl": "//accept-img.thuis.nl/files/",
-    "SocketUrl": "wss://socket.thuis.nl/",
+    "FullApiUrl": "https://www-dev01.thuis.nl",
+    "ImageUrl": "//img-dev01.thuis.nl/files/",
+    "SocketUrl": "wss://socket-dev01.thuis.nl/",
     "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
     "Country": "nl",

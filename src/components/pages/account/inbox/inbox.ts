@@ -29,6 +29,14 @@ export default class Inbox extends Vue {
         offset: 0
     };
 
+    addPromoNotifi = (user: User) => this.$store.dispatch('updateUser', {user: this.$store.state.authentication.user, notify: 'MSG'});
+
+    get notify(){
+        return (type: string) => {
+            return this.$store.state.authentication.user.notification_types[type];
+        }
+    }
+
     get newNotifications(){
         return (status: string) => {
             return status.search("NEW")  ? false : true;
