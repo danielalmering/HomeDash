@@ -15,6 +15,7 @@ import { Component } from 'vue-property-decorator';
 import modalWrapper from './components/modal/modal-wrapper';
 import notificationSocket from './socket';
 import { SocketMessageEventArgs } from './models/Socket';
+import { getParameterByName } from './util';
 
 import alerts from './components/layout/Alerts.vue';
 import cookies from './components/layout/Cookies.vue';
@@ -22,16 +23,6 @@ import agecheck from './components/layout/Agecheck.vue';
 
 import config from './config';
 import Raven from 'raven-js';
-
-function getParameterByName(name: string, url?: string) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
 
 @Component({
     components: {
@@ -44,9 +35,10 @@ function getParameterByName(name: string, url?: string) {
 export default class Cookies extends Vue {
     displayCookies: boolean = false;
     displayAgecheck: boolean = false;
+    getParameterByName = getParameterByName;
 
     async created(){
-        const utmMedium = getParameterByName('utm_medium');
+        const utmMedium = this.getParameterByName('utm_medium');
 
         await this.$store.dispatch('getSession');
 
