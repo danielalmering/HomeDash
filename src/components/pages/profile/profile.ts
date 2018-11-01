@@ -107,7 +107,7 @@ export default class Profile extends Vue {
     addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
         performer.isSubscribed = true
         if(!this.user.notification_mode){
-            const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
+            const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications', 'SSA');
         }
     });
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
