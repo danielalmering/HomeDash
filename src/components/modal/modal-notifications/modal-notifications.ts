@@ -12,6 +12,7 @@ import { Consumer, NotificationMode } from 'sensejs/core/models/user';
 @WithRender
 @Component
 export default class ModalNotifications extends Vue {
+    
 
     @Prop({
         required: true,
@@ -22,6 +23,10 @@ export default class ModalNotifications extends Vue {
     user: Consumer;
     form: any;
     formData: any = {};
+
+    get modalRef(){
+        return this.$store.state.modals.modalRef;
+    }
 
     data(){
         return {

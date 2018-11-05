@@ -284,9 +284,9 @@
             "SSA": "Single Stream activation",
             "MSG": "Messages",
             "PRO": "Promotions",
-            "SSA-desc": "Single Stream activation",
-            "MSG-desc": "Messages",
-            "PRO-desc": "Promotions"
+            "SSA-desc": "Do not let this performer wait anymore! You will receive a notification when it comes online. Per performer you receive a maximum of 1 notification per 4 hours.",
+            "MSG-desc": "You will receive a notification when you receive a message from a lady so that you can respond immediately.",
+            "PRO-desc": "You will receive a notification when the HappyHours start so that you can cam and call at an extra cost."
         },
         "howreceivenotify": {
             "question": "How do you want to receive notifications?",

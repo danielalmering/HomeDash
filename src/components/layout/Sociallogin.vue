@@ -15,6 +15,7 @@ import config from '../../config';
 import { Route } from 'vue-router';
 
 import { Component, Prop } from 'vue-property-decorator';
+import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 
 @Component
 export default class Sociallogin extends Vue {
@@ -71,7 +72,7 @@ export default class Sociallogin extends Vue {
         });
 
         const data = await checkSessionResult.json();
-        this.$store.commit('setUser', data);
+        this.$store.commit('setUser', transformReadConsumer(data));
 
         this.$store.dispatch('openMessage', {
             content: 'auth.alerts.successlogin',

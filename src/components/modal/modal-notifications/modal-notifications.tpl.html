@@ -5,6 +5,11 @@
         <form class="row" v-on:submit.prevent="updateNotifications(user.notification_mode.toString())">
             <div class="col-xs-12">
                 <div class="form__group">
+                    
+                    <p v-if="modalRef === 'PRO'" v-t="'account.whenreceivednotify.PRO-desc'"></p>
+                    <p v-if="modalRef === 'MSG'" v-t="'account.whenreceivednotify.MSG-desc'"></p>
+                    <p v-if="modalRef === 'SSA'" v-t="'account.whenreceivednotify.SSA-desc'"></p>
+
                     <h2 v-t="'account.howreceivenotify.question'"></h2>
 
                     <div class="radio" v-for="(event, index) in formData.modes">

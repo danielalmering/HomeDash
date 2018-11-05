@@ -284,9 +284,9 @@
             "SSA": "Einzel Stream Aktivierung",
             "MSG": "Nachrichten",
             "PRO": "Promotionen",
-            "SSA-desc": "Einzel Stream Aktivierung",
-            "MSG-desc": "Nachrichten",
-            "PRO-desc": "Promotionen"
+            "SSA-desc": "Lass diese Performerin nicht mehr warten! Du bekommst eine Meldung sobald sie online ist. Pro Performer erhälst du maximal eine Email alle 4 Stunden.",
+            "MSG-desc": "Du bekommst eine Meldung wenn du eine Nachricht von einer Performerin empfangen hast, so kannst du direkt reagieren.",
+            "PRO-desc": "Du bekommst eine Meldung wenn die Happy Hour startet. So kannst du immer extra günstig Cammen und telefonieren."
         },
         "howreceivenotify": {
             "question": "Wie möchten Sie Benachrichtigungen erhalten?",
