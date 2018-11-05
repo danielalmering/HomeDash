@@ -45,7 +45,7 @@ export default class ModalReset extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', '');
+        this.$store.dispatch('displayModal', null);
 
         this.$router.push({
             name: 'Performers'

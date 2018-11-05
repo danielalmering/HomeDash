@@ -39,6 +39,6 @@ export default class ModalRegister extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', '');
+        this.$store.dispatch('displayModal', null);
     }
 }
