@@ -23,8 +23,13 @@ const localizationStore: Module<ModalsState, RootState> = {
     },
     mutations: {
         setActiveModal(state: ModalsState, payload: any){
-            state.activeModal = payload.name;
-            state.modalRef = payload.ref;
+            if (!payload){
+                state.activeModal = false;
+                state.modalRef = '';
+            } else {
+                state.activeModal = payload.name;
+                state.modalRef = payload.ref;
+            }
         }
     },
     actions: {
