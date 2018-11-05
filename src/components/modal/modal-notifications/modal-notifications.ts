@@ -82,6 +82,6 @@ export default class ModalNotifications extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', '');
+        this.$store.dispatch('displayModal', null);
     }
 }

@@ -73,7 +73,7 @@ export function getPerformerLabel(performer: Performer){
 }
 
 export function goBanner(loggedin: boolean){
-    const logged = !loggedin ? this.$store.dispatch('displayModal', 'login') : this.$router.push({ name: 'Payment' });
+    const logged = !loggedin ? this.$store.dispatch('displayModal', { name: 'login' }) : this.$router.push({ name: 'Payment' });
 }
 
 export function openModal(name: string, ref?: string){

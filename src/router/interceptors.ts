@@ -73,7 +73,7 @@ export function safeInterceptor(to: Route, from: Route, next: (to?: string | Loc
 
 export function modalInterceptor(modalName: string, delayed: boolean = false) {
     return async (to: Route, previous: Route, next: any) => {
-        await store.dispatch('displayModal', modalName);
+        await store.dispatch('displayModal', {name: modalName});
 
         next();
     };
