@@ -1,0 +1,17 @@
+//
+// Contact
+// --------------------------------------------------
+
+// Imports
+
+@import "../../../styles/_mixins.scss";
+@import "../../../styles/_settings.scss";
+
+// Styling
+
+.landingpages {
+
+    @include rem(margin, 12px auto );
+
+    img { width: 100%; }
+}
