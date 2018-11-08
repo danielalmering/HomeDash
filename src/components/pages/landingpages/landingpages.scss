@@ -11,7 +11,81 @@
 
 .landingpages {
 
+    font-family: 'Roboto Condensed', sans-serif;
     @include rem(margin, 12px auto );
+    .col-xs-4, .col-xs-2, .col-xs-12 { @include rem(padding,0px 8px); }
 
     img { width: 100%; }
+
+    &__slogan {
+        @include rem(margin,14px 0px);
+        @include rem(padding,35px 45px);
+        text-align: center;
+        font-weight: 700; 
+        color: $pallete-2; 
+        text-transform: uppercase;
+        @include rem(font-size, 32px);
+        text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
+        @include gradient($pallete-3, $pallete-5, vertical);
+        i { font-style: normal; color: $pallete-0}
+    }
+
+    &__performer {
+        max-height: 300px;
+        overflow: hidden;
+        &:before{
+            content: '';
+            background:url('../../../assets/images/schadow-image.png');
+            width: calc(100% - 15px);
+            height: 100%;
+            z-index: 1;
+            position: absolute;
+            z-index: 1;
+        }
+
+        img {
+            margin-top: -40px;
+            -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+            filter: grayscale(100%);
+        }
+
+        &-nickname {
+            position: absolute;
+            bottom: 40px;
+            left: 7px;
+            z-index: 2;
+            color: $pallete-3;
+            @include rem(font-size, 28px);
+            font-weight: 700;
+            @include gradient(#1e1e1e, #1d1d1d, vertical);
+            @include rem(padding,3px 10px 3px 3px);
+            box-shadow: 0px 2px 2px rgba(0,0,0,0.95);
+            span{
+                position: absolute;
+                top: 45px;
+                right: 0px;
+                color: $pallete-2;
+                font-weight: 400;
+                @include rem(font-size, 14px);
+                @include rem(padding,0px 10px);
+                box-shadow: 0px 2px 2px rgba(0,0,0,0.95);
+                @include border-bottom-left-radius(8px);
+                @include gradient(#1e1e1e, #1d1d1d, vertical);
+                overflow: hidden;
+            }
+        }
+    }
+
+    .col-xs-4 {
+        @include breakpoint(xs) {
+            width: 100% !important;
+            &:nth-child(3n+1) {
+                display: none;
+            }
+
+            &:nth-child(2n+1) {
+                display: none;
+            }
+        }
+    }
 }

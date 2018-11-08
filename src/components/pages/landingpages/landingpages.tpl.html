@@ -1,8 +1,28 @@
 <main class="landingpages">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <div class="container-fluid">
-        <router-link :to="{ name: 'Performers'}">
-            <img class="hidden-xs" :src="image('md')" />
-            <img class="visible-xs" :src="image('xs')" />
+        <router-link :to="{ name: 'Performers' }">
+            <div v-if="performers" v-for="(performer, key) in performers.slice(0,3)" class="col-xs-4">
+                <div class="landingpages__performer" v-if="key!=3">
+                    <div class="landingpages__performer-nickname">
+                    {{ performer.nickname }}
+                    <span>{{ performer.advert_numbers[0].advertNumber }}</span>
+                    </div>
+                    <img :src="getAvatarImage(performer, 'large')" />
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="landingpages__slogan" v-html="slogan"></div>
+            </div>
+            <div v-if="performers" v-for="(performer, key) in performers.slice(3,6)" class="col-xs-4">
+                <div class="landingpages__performer" v-if="key!=3">
+                    <div class="landingpages__performer-nickname">
+                        {{ performer.nickname }}
+                        <span>{{ performer.advert_numbers[0].advertNumber }}</span>
+                    </div>
+                    <img :src="getAvatarImage(performer, 'large')" />
+                </div>
+            </div>
         </router-link>
     </div>
 </main>
