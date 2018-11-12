@@ -20,6 +20,7 @@ import Promos from '../components/pages/promos/promos';
 import Thankyou from '../components/pages/thankyou/thankyou';
 import Payment from '../components/pages/payment/payment';
 import Contact from '../components/pages/contact/contact';
+import Landingpages from '../components/pages/landingpages/landingpages';
 import Textpages from '../components/pages/textpages/textpages';
 import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
@@ -181,6 +182,11 @@ const routes = [{
                         params: { category: to.params.category }
                     });
                 }
+            },
+            {
+                path: 'lp/:landingpage?/',
+                name: 'Landingpages',
+                component: Landingpages
             },
             {
                 path: ':category?/',
