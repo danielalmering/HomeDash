@@ -285,7 +285,7 @@
             "MSG": "Nachrichten",
             "PRO": "Promotionen",
             "SSA-desc": "Lass diese Performerin nicht mehr warten! Du bekommst eine Meldung sobald sie online ist. Pro Performer erhälst du maximal eine Email alle 4 Stunden.",
-            "MSG-desc": "Du bekommst eine Meldung wenn du eine Nachricht von einer Performerin empfangen hast, so kannst du direkt reagieren. Pro Performer bekommst du maximal eine Mail alle 4 Stunde",
+            "MSG-desc": "Du bekommst eine Meldung wenn du eine Nachricht von einer Performerin empfangen hast, so kannst du direkt reagieren.",
             "PRO-desc": "Du bekommst eine Meldung wenn die Happy Hour startet. So kannst du immer extra günstig Cammen und telefonieren."
         },
         "howreceivenotify": {

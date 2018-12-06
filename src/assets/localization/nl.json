@@ -286,7 +286,7 @@
             "MSG": "Als je een persoonlijk bericht van een model krijgt",
             "PRO": "Als er speciale acties op thuis.nl zijn",
             "SSA-desc": "Laat deze performer nooit meer wachten! Je ontvangt een melding zodra ze online komt. Per performer ontvang je maximaal 1 melding per 4 uur.",
-            "MSG-desc": "Je ontvangt een melding als je een bericht ontvangt van een dame zodat je meteen kan reageren. Per dame ontvang je maximaal 1 melding per 4 uur.",
+            "MSG-desc": "Je ontvangt een melding als je een bericht ontvangt van een dame zodat je meteen kan reageren.",
             "PRO-desc": "Je ontvangt een melding als de HappyHours starten zodat je meteen extra voordelig kan cammen en bellen."
         },
         "howreceivenotify": {
