@@ -432,8 +432,8 @@
         }
     },
     "contact": {
-        "title": "Kontakt",
-        "desc": "Wenn du Fragen oder Kommentare zu unserer Plattform hast, kannst du uns gerne hier unten über das Kontaktformular schreiben. Wenn erforderlich, werden wir dich so bald wie möglich kontaktieren. Wir freuen uns auch über deine Vorschläge und Verbesserungsmöglichkeiten für unsere Services. <br><br> Versuche bitte dein Anliegen so genau wie möglich zu beschreiben: was genau ist passiert? Bitte gib auch das Datum und die genaue Uhrzeit dazu an. Wenn möglich mache bitte auch Angaben zum Performer mit dem du zum Zeitpunkt in Kontakt warst (Name und Privatnummer). Bitte gib auch mit an, welchen Internetprovider du hast (DTAG, 1und1, UnityMedia etc..), Browser und Versionsnummer (z.B. Internet Explorer 8, Chrome 23 etc.), Betriebssystem und Version (z.B. Windows 7, OS X, etc.) und welchen Flash Player du nutzt (z.B. Player Version 11.3.376.12 mit IE 8, Chrome 11.5.31.2, etc.). <br> Danke für dein Feedback!",
+        "title": "Impressum",
+        "desc": "<b>Impressum</b><br />Sensemakers B.V.<br />Achterwerf 305<br />1823 WD Almere<br />Netherlands<br />Tel.: 0221/56797557<br /><br /><b>Managing Director</b><br />Roy Overbeek<br /><br /><b>Handelsregisternummer</b><br />33128110<br /><br /><b>Handelskammer</b><br />Industrie und Handelskammer Gooi-, Eem- und Flevoland<br /><br />Wenn du Fragen oder Kommentare zu unserer Plattform hast, kannst du uns gerne hier unten über das Kontaktformular schreiben. Wenn erforderlich, werden wir dich so bald wie möglich kontaktieren. Wir freuen uns auch über deine Vorschläge und Verbesserungsmöglichkeiten für unsere Services. <br><br> Versuche bitte dein Anliegen so genau wie möglich zu beschreiben: was genau ist passiert? Bitte gib auch das Datum und die genaue Uhrzeit dazu an. Wenn möglich mache bitte auch Angaben zum Performer mit dem du zum Zeitpunkt in Kontakt warst (Name und Privatnummer). Bitte gib auch mit an, welchen Internetprovider du hast (DTAG, 1und1, UnityMedia etc..), Browser und Versionsnummer (z.B. Internet Explorer 8, Chrome 23 etc.), Betriebssystem und Version (z.B. Windows 7, OS X, etc.) und welchen Flash Player du nutzt (z.B. Player Version 11.3.376.12 mit IE 8, Chrome 11.5.31.2, etc.). <br> Danke für dein Feedback!",
         "send": "Senden",
         "subject": "Betreff:*",
         "email": "E-mail:*",
@@ -458,8 +458,8 @@
         "connectdesc": "Wenn der Darsteller nicht rechtzeitig annimmt, wähle einfach jemand anderes, ok? Viel Spaß!"
     },
     "footer": {
-        "contact": "Kontakt",
-        "metaTitleContact": "Kontakt - Zuhause.com",
+        "contact": "Impressum",
+        "metaTitleContact": "Impressum - Zuhause.com",
         "privacypolicy": "Datenschutzbestimmungen",
         "metaTitlePrivacy": "Datenschutzbestimmungen - Zuhause.com",
         "terms": "Allgemeine Geschäftsbedingungen",
