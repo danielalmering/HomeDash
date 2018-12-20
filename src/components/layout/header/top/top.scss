@@ -17,7 +17,7 @@
     background: $pallete-1;
 
     &__logo {
-        @include rem(padding, 22px 0px);
+        //@include rem(padding, 22px 0px); hollidays
         cursor: pointer;
 
         img {
