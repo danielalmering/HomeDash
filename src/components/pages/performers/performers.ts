@@ -29,7 +29,7 @@ export default class Performers extends Vue {
 
     total: number = 0;
     services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
-    countryBanners: string [] = ['de'];
+    countryBanners: string [] = [];
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
