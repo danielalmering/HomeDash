@@ -1,11 +1,11 @@
 {
     "BaseUrl": "/api",
-    "FullApiUrl": "https://www-dev01.thuis.nl",
-    "ImageUrl": "//img-dev01.thuis.nl/files/",
-    "SocketUrl": "wss://socket-dev01.thuis.nl/",
+    "FullApiUrl": "https://www.zuhause.com",
+    "ImageUrl": "//img.thuis.nl/files/",
+    "SocketUrl": "wss://socket.thuis.nl/",
     "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
-    "Country": "nl",
+    "Country": "de",
     "H5Server": "stream01.thuis.nl",
     "VodServer": "vod"
 }
