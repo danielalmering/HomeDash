@@ -51,6 +51,7 @@ export default class Payment extends Vue {
     promoData?: PromoData = undefined;
     promoCode: string = '';
     promoCredits: number = 0;
+    paymentDisabled: boolean = true;
 
     fees: Fee[] = [];
 
@@ -236,10 +237,13 @@ export default class Payment extends Vue {
             return;
         }
 
+        this.paymentDisabled = false;
+
         const { result, error } = await submitPayment(this.selectedPayment, this.credits, this.promoCode);
 
         if(error){
             this.$store.dispatch('errorMessage', 'payment.alerts.errorNoConnection');
+            this.paymentDisabled = true;
             return;
         }
 
@@ -249,6 +253,7 @@ export default class Payment extends Vue {
                 class: result.free ? 'success' : 'error'
             });
 
+            this.paymentDisabled = true;
             return;
         }
 
@@ -270,6 +275,7 @@ export default class Payment extends Vue {
             document.getElementsByTagName('body')[0].appendChild(redirForm);
             redirForm.submit();
 
+            this.paymentDisabled = true;
             return;
         }
 
