@@ -10,7 +10,7 @@ export function socketInterceptor(to: Route, from: Route, next?: (to?: string | 
 
     if(!store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
         // Populate Userdata
-        store.dispatch('getSession');
+        store.dispatch('getSession', false);
         // Start Checksession Polling
         store.dispatch('intervalChecksession'); // activate checksession
     }
