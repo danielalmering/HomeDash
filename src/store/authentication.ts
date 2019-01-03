@@ -5,6 +5,7 @@ import { RootState } from './index';
 import { User, AnonymousUser, UserForm } from '../models/User';
 import { updateConsumer } from 'sensejs/consumer';
 import { Consumer } from 'sensejs/core/models/user';
+import { checkSession } from 'sensejs/auth';
 import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
@@ -92,7 +93,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 credentials: 'include'
             });
 
-            await store.dispatch('getSession');
+            await store.dispatch('getSession', false);
 
             notificationSocket.disconnect();
             notificationSocket.connect();
@@ -121,9 +122,9 @@ const authenticationStore: Module<AuthState, RootState> = {
                 throw new Error(data.error);
             }
         },
-        async getSession(store: AuthContext){
-            const checkSessionResult = await fetch(`${config.BaseUrl}/check_session`, {
-                credentials: 'include'
+        async getSession(store: AuthContext, polling: boolean){
+            const { result, error } = await checkSession<any>({
+                login: polling ? 0 : undefined
             });
 
             let sessionData: AnonymousUser | undefined = undefined;
@@ -140,15 +141,14 @@ const authenticationStore: Module<AuthState, RootState> = {
                 return;
             }
 
-            // Old code, removal?
-            if(checkSessionResult.status === 403){
+            if(error && (error.statusCode === 403)){
                 const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}${referer}`, {
                     credentials: 'include'
                 });
 
                 sessionData = await annonConnectResult.json() as AnonymousUser;
             } else {
-                sessionData = await checkSessionResult.json() as AnonymousUser;
+                sessionData = result as AnonymousUser;
             }
 
             //since the displayname is set locally, transfer it when setting a new remote user

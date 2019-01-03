@@ -100,7 +100,7 @@ const rootStore = new Vuex.Store<RootState>({
             store.commit('setInfo', infoData);
         },
         intervalChecksession: function(store: RootContext){
-            setInterval(() => store.dispatch('getSession'), 60 * 1000); //Update user data every minute
+            setInterval(() => store.dispatch('getSession', true), 60 * 1000); //Update user data every minute
         }
     },
     modules: {
