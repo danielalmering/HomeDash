@@ -40,6 +40,11 @@ export function tabEnabled(service: string, forPerformer: Performer, user: User)
         return false;
     }
 
+    // If performer is in request
+    if(forPerformer.performerStatus === PerformerStatus.Request && (service === 'cam' || service === 'videocall')){
+        return false;
+    }
+
     // If performer is busy and cam or peek are enabled!
     if(forPerformer.performerStatus === PerformerStatus.Busy){
         return service === 'cam' && forPerformer.performer_services['peek'];
