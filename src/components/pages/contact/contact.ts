@@ -18,12 +18,18 @@ interface Message {
 @Component
 export default class Contact extends Vue {
 
-    contact: PostContactPayload = {
-        email: '',
-        message: '',
-        name: '',
-        subject: ''
-    };
+    contact: PostContactPayload;
+
+    data(){
+        return {
+            contact: {
+                email: '',
+                message: '',
+                name: '',
+                subject: ''
+            }
+        }
+    }
 
     async send(){
         const { error } = await postContactMessage(this.contact);
