@@ -81,7 +81,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        if ([PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus) > -1){
+        if ([PerformerStatus.Busy, PerformerStatus.OnCall, PerformerStatus.Request].indexOf(this.performer.performerStatus) > -1){
             return false;
         }
 
