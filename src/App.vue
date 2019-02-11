@@ -40,7 +40,7 @@ export default class Cookies extends Vue {
     async created(){
         const utmMedium = this.getParameterByName('utm_medium');
 
-        await this.$store.dispatch('getSession');
+        await this.$store.dispatch('getSession', false);
 
         if(!utmMedium || utmMedium.toLowerCase() !== 'advertising'){
 

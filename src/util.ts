@@ -26,7 +26,7 @@ export function getPerformerStatus(performer: Performer){
         return 'teaser';
     }
 
-    if(performer.performerStatus === PerformerStatus.OnCall){
+    if(performer.performerStatus === PerformerStatus.OnCall || performer.performerStatus === PerformerStatus.Request){
         return 'busy';
     }
 

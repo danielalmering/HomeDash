@@ -41,6 +41,7 @@
     &-full      {  width: 100%; }
     &-right     { float: right; }
     &-left      { float: left; }
+    &-disabled { opacity: 0.5; cursor: not-allowed !important; }
 
     &-orange { background: $pallete-3; }
     &-green  { background: $pallete-21; }

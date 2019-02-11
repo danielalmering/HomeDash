@@ -32,7 +32,7 @@ export default class Readmessages extends Vue {
 
     async mounted(){
         await this.loadMessages(true);
-        await this.$store.dispatch('getSession');
+        await this.$store.dispatch('getSession', true);
     }
 
     get creditsPerType(){
@@ -154,7 +154,7 @@ export default class Readmessages extends Vue {
 
         tagHotjar('MESSAGE_PAID');
 
-        this.$store.dispatch('getSession');
+        this.$store.dispatch('getSession', true);
 
         this.$store.dispatch('openMessage', {
             content: 'account.alerts.succesInboxMessagePay',
