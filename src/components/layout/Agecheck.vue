@@ -1,10 +1,13 @@
 <template>
-    <div class="agecheck">
-        <div class="container-fluid">
-            <div class="agecheck__text">
-                <p v-t="'footer.agecheck'"></p>
-                <a v-on:click="acceptAge" class="btn btn-small btn-orange" v-t="'footer.olderthen'"></a>
-                <p> {{ $t('footer.or') }} <a v-on:click="declineAge" v-t="'footer.leavewebsite'"></a></p>
+    <div>
+        <div class="overlay" v-if="country === 'de'"></div>
+        <div class="agecheck">
+            <div class="container-fluid">
+                <div class="agecheck__text">
+                    <p v-t="'footer.agecheck'"></p>
+                    <a v-on:click="acceptAge" class="btn btn-small btn-orange" v-t="'footer.olderthen'"></a>
+                    <p> {{ $t('footer.or') }} <a v-on:click="declineAge" v-t="'footer.leavewebsite'"></a></p>
+                </div>
             </div>
         </div>
     </div>
@@ -18,6 +21,8 @@ import { Component } from 'vue-property-decorator';
 
 @Component
 export default class Alerts extends Vue {
+
+    country = config.Country;
 
     acceptAge(){
         window.localStorage.setItem(`${config.StorageKey}.agecheck`, 'true');
@@ -38,9 +43,19 @@ export default class Alerts extends Vue {
 @import "../../styles/_mixins.scss";
 @import "../../styles/_settings.scss";
 
-.agecheck {
+.overlay {
     position: fixed;
     z-index: 1;
+    background-color: rgba(0, 0, 0, 0.75);
+    height: 100vh;
+    left: 0;
+    top: 0;
+    width: 100vw;
+}
+
+.agecheck {
+    position: fixed;
+    z-index: 2;
     bottom: 0px;
     right: 0px;
     width: 300px;
