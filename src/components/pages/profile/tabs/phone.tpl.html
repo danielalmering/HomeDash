@@ -10,7 +10,7 @@
             <i class="numbers__icon fa fa-mobile" v-if="$parent.info.country === 'de' && index === 1"></i>
 
             <span class="numbers__nr">{{ campaign.number }}</span>
-            <span class="numbers__happyhour" v-if="campaign.marketing === 1" v-t="'top.banner.happyhour'"></span>
+            <span class="numbers__happyhour" v-if="campaign.marketing === 1" v-t="'top.banner.action'"></span>
             <span class="numbers__cost">{{ campaign.cpm | euro }} {{ $t('top.numbers.nr-' + index) }}</span>
 
             <span class="numbers__desc" v-if="$parent.info.country === 'de'" v-html="$t('top.numbers.nrdesc-' + index)"></span>
