@@ -44,6 +44,7 @@ const swfobject = require('swfobject');
 export default class Profile extends Vue {
     performer: Performer | null =  null;
     perfmedia: PerformerAvatar[];
+    country = config.Country;
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
