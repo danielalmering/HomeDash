@@ -22,10 +22,10 @@
                 <div class="profile__content col-sm-12 col-md-8 col-lg-9">
                     <h1 class="profile__content-nick"><span>{{ performer.nickname }}</span></h1>
                     <div class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</div>
-                    <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
+                    <a v-if="performer.isFavourite" class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                         <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
                     </a>
-                    <a class="profile__content-subscribe" v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)" :title="performer.isSubscribed ? $t('profile.subscribe-remove-hover', {nickname: performer.nickname}) : $t('profile.subscribe-add-hover',{nickname: performer.nickname})">
+                    <a v-if="performer.isSubscribed" class="profile__content-subscribe" v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)" :title="performer.isSubscribed ? $t('profile.subscribe-remove-hover', {nickname: performer.nickname}) : $t('profile.subscribe-add-hover',{nickname: performer.nickname})">
                             <i class="fa fa-bell" aria-hidden="true"></i>  {{ performer.isSubscribed ? $t('profile.subscribe-remove') : $t('profile.subscribe-add') }}
                         </a>
                 </div>
