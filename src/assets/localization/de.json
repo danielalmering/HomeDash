@@ -403,7 +403,9 @@
         "mostlybought": "Meistgekauft!",
         "minutes": "{minutes} minuten camming",
         "hours": "{minutes} hour camming",
+        "bonusdesc": "Um deine Gratis Credits zu bekommen, musst du einen einmaligen Einkauf von mindestens 0.01€ tätigen",
         "packages": {
+            "pack0": "Gratis",
             "pack1": "Basic",
             "pack2": "Medium",
             "pack3": "High",

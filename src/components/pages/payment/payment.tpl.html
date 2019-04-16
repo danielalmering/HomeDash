@@ -10,16 +10,20 @@
 
             <div class="payment__package">
                 <ul>
-                    <li class="col-xs-12 col-sm-4" v-for="(package, key) in packages" v-on:click="addPackage(package)">
-                        <div class="payment__package-item" :class="package.title">
+                    <li v-for="(package, key) in packages" v-on:click="addPackage(package)" :class="colums">
+                        <div class="payment__package-item" :class="package.title.replace(/\s+/g, '_')">
                             <span v-if="key == '1'" class="mostlybought">{{ $t('payment.mostlybought') }}</span>
-                            <h2 v-t="'payment.packages.pack' + package.id"></h2>
+                            <h2>
+                                <span v-t="'payment.packages.pack' + package.id"></span>
+                                <i v-if="package.id === 0">*</i>
+                            </h2>
                             <span class="time" v-if="package.minutes < 60">{{ $t('payment.minutes', { minutes: Math.floor(package.minutes) }) }}</span>
                             <span class="time" v-if="package.minutes >= 60">{{ $t('payment.hours', { minutes: Math.floor((package.minutes / 60)) }) }}</span>
                             <span class="credits">{{ package.quantity }}</span>
                             <span v-t="'payment.credits'"></span>
                             <span class="price">{{ package.price | euro }}</span>
                             <span class="plus"></span>
+                            <span class="desc" v-if="package.id === 0" v-t="'payment.bonusdesc'"></span>
                         </div>
                     </li>
                 </ul>

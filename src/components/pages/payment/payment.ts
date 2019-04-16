@@ -70,6 +70,7 @@ export default class Payment extends Vue {
             }
             this.$router.replace({ path: '/payment/' });
         }
+
     }
 
     beforeDestroy(){
@@ -83,9 +84,9 @@ export default class Payment extends Vue {
             return;
         }
 
-        const data = result;
-
-        this.packages = data.packages.slice().reverse();
+        const data = result;    
+        const promo = data.packages.some(item => item.id === 0);
+        this.packages = promo ? data.packages.slice() : data.packages.slice().reverse();
         this.paymentMethods = data.payment_methods;
 
         //Initialize initial state of the selectedpackages like this because adding properties to an object
@@ -105,7 +106,7 @@ export default class Payment extends Vue {
     }
 
     private loadCache(){
-        const paymentCacheString = window.localStorage.getItem(`${config.StorageKey}.payment-cache`);
+        const paymentCacheString = window.localStorage.getItem(`${config.StorageKey}.payment-cache-${this.user.id}`);
 
         if(!paymentCacheString){
             return;
@@ -121,7 +122,7 @@ export default class Payment extends Vue {
     }
 
     private storeCache(){
-        window.localStorage.setItem(`${config.StorageKey}.payment-cache`, JSON.stringify({
+        window.localStorage.setItem(`${config.StorageKey}.payment-cache-${this.user.id}`, JSON.stringify({
             packages: this.selectedPackages,
             promoCode: this.promoCode
         }));
@@ -185,7 +186,25 @@ export default class Payment extends Vue {
         }, 0);
     }
 
+    get pricetotal(){
+        return Object.keys(this.selectedPackages).reduce((total: number, key: string) =>  {
+            const pack = this.packages.find(p => p.id === parseInt(key));
+            const amount = this.selectedPackages[parseInt(key)];
+
+            return total + (pack ? pack.price * amount : 0);
+        }, 0);
+    }
+
+    get colums(){
+        const promo = this.packages.some(item => item.id === 0);
+        return promo ? 'four' : 'three';
+    }
+
     addPackage(pack: Package){
+        if(this.selectedPackages[pack.id] >= 1){
+            return;
+        }
+
         this.selectedPackages[pack.id] += 1;
 
         this.storeCache();
@@ -239,46 +258,48 @@ export default class Payment extends Vue {
 
         this.paymentDisabled = false;
 
-        const { result, error } = await submitPayment(this.selectedPayment, this.credits, this.promoCode);
+        console.log('test', this.pricetotal);
 
-        if(error){
-            this.$store.dispatch('errorMessage', 'payment.alerts.errorNoConnection');
-            this.paymentDisabled = true;
-            return;
-        }
+        // const { result, error } = await submitPayment(this.selectedPayment, this.pricetotal, this.promoCode);
 
-        if(result.free !== undefined){
-            this.$store.dispatch('openMessage', {
-                content: result.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
-                class: result.free ? 'success' : 'error'
-            });
+        // if(error){
+        //     this.$store.dispatch('errorMessage', 'payment.alerts.errorNoConnection');
+        //     this.paymentDisabled = true;
+        //     return;
+        // }
 
-            this.paymentDisabled = true;
-            return;
-        }
+        // if(result.free !== undefined){
+        //     this.$store.dispatch('openMessage', {
+        //         content: result.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
+        //         class: result.free ? 'success' : 'error'
+        //     });
 
-        if(result.form){
-            const redirForm = document.createElement('form');
-            redirForm.setAttribute('method', 'post');
-            redirForm.setAttribute('name', 'redirform');
-            redirForm.setAttribute('action', result.redirectURL);
+        //     this.paymentDisabled = true;
+        //     return;
+        // }
 
-            var i, input;
-            for(i in result.form){
-                input = document.createElement('input');
-                input.setAttribute('type', 'hidden');
-                input.setAttribute('name', i);
-                input.setAttribute('value', (<any>result.form)[i]);
-                redirForm.appendChild(input);
-            }
+        // if(result.form){
+        //     const redirForm = document.createElement('form');
+        //     redirForm.setAttribute('method', 'post');
+        //     redirForm.setAttribute('name', 'redirform');
+        //     redirForm.setAttribute('action', result.redirectURL);
 
-            document.getElementsByTagName('body')[0].appendChild(redirForm);
-            redirForm.submit();
+        //     var i, input;
+        //     for(i in result.form){
+        //         input = document.createElement('input');
+        //         input.setAttribute('type', 'hidden');
+        //         input.setAttribute('name', i);
+        //         input.setAttribute('value', (<any>result.form)[i]);
+        //         redirForm.appendChild(input);
+        //     }
 
-            this.paymentDisabled = true;
-            return;
-        }
+        //     document.getElementsByTagName('body')[0].appendChild(redirForm);
+        //     redirForm.submit();
 
-        window.location.href = result.redirectURL;
+        //     this.paymentDisabled = true;
+        //     return;
+        // }
+
+        // window.location.href = result.redirectURL;
     }
 }
