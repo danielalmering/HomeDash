@@ -94,6 +94,7 @@
             "errorSwitchFailed": "It has not been possible to change the performer"
         },
         "register": {
+            "usp-0": "Sign up now and get 10 minutes for free",
             "usp-1": "Completely anonymous",
             "usp-2": "Take advantage of promotions",
             "usp-3": "Secure online payment"
@@ -403,7 +404,9 @@
         "mostlybought": "Mostly sold!",
         "minutes": "{minutes} minutes camming",
         "hours": "{minutes} hour camming",
+        "bonusdesc": "To get your free credits, a one-time purchase of at least € 0.01 must be made.",
         "packages": {
+            "pack0": "Free",
             "pack1": "Basic",
             "pack2": "Medium",
             "pack3": "High",
