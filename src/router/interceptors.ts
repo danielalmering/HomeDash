@@ -95,9 +95,15 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
         store.dispatch('errorMessage', errors[ex.message] || 'confirm.errorMessage');
     }
 
-    next({
-        name: 'Performers'
-    });
+    if(config.FreeRegister && store.state.authentication.user){
+        next({
+            name: 'Payment'
+        });
+    } else {
+        next({
+            name: 'Performers'
+        });
+    }
 }
 
 export function seoInterceptor(to: Route, previous: Route){

@@ -11,6 +11,7 @@ export interface ProjectConfig {
     H5Server: string;
     VodServer: string;
     H5FlashSwf: string;
+    FreeRegister: boolean;
 
     locale: LocaleConfig;
 }

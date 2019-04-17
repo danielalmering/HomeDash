@@ -94,6 +94,7 @@
             "errorSwitchFailed": "It has not been possible to change the performer"
         },
         "register": {
+            "usp-0": "Sign up now and get 10 minutes for free",
             "usp-1": "Completely anonymous",
             "usp-2": "Take advantage of promotions",
             "usp-3": "Secure online payment"
