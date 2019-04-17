@@ -257,49 +257,46 @@ export default class Payment extends Vue {
         }
 
         this.paymentDisabled = false;
+        const { result, error } = await submitPayment(this.selectedPayment, this.pricetotal, this.promoCode);
 
-        console.log('test', this.pricetotal);
+        if(error){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorNoConnection');
+            this.paymentDisabled = true;
+            return;
+        }
 
-        // const { result, error } = await submitPayment(this.selectedPayment, this.pricetotal, this.promoCode);
+        if(result.free !== undefined){
+            this.$store.dispatch('openMessage', {
+                content: result.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
+                class: result.free ? 'success' : 'error'
+            });
 
-        // if(error){
-        //     this.$store.dispatch('errorMessage', 'payment.alerts.errorNoConnection');
-        //     this.paymentDisabled = true;
-        //     return;
-        // }
+            this.paymentDisabled = true;
+            return;
+        }
 
-        // if(result.free !== undefined){
-        //     this.$store.dispatch('openMessage', {
-        //         content: result.free ? 'payment.alerts.successFreePromo' : 'payment.alerts.errorFreePromo',
-        //         class: result.free ? 'success' : 'error'
-        //     });
+        if(result.form){
+            const redirForm = document.createElement('form');
+            redirForm.setAttribute('method', 'post');
+            redirForm.setAttribute('name', 'redirform');
+            redirForm.setAttribute('action', result.redirectURL);
 
-        //     this.paymentDisabled = true;
-        //     return;
-        // }
+            var i, input;
+            for(i in result.form){
+                input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', i);
+                input.setAttribute('value', (<any>result.form)[i]);
+                redirForm.appendChild(input);
+            }
 
-        // if(result.form){
-        //     const redirForm = document.createElement('form');
-        //     redirForm.setAttribute('method', 'post');
-        //     redirForm.setAttribute('name', 'redirform');
-        //     redirForm.setAttribute('action', result.redirectURL);
+            document.getElementsByTagName('body')[0].appendChild(redirForm);
+            redirForm.submit();
 
-        //     var i, input;
-        //     for(i in result.form){
-        //         input = document.createElement('input');
-        //         input.setAttribute('type', 'hidden');
-        //         input.setAttribute('name', i);
-        //         input.setAttribute('value', (<any>result.form)[i]);
-        //         redirForm.appendChild(input);
-        //     }
+            this.paymentDisabled = true;
+            return;
+        }
 
-        //     document.getElementsByTagName('body')[0].appendChild(redirForm);
-        //     redirForm.submit();
-
-        //     this.paymentDisabled = true;
-        //     return;
-        // }
-
-        // window.location.href = result.redirectURL;
+        window.location.href = result.redirectURL;
     }
 }
