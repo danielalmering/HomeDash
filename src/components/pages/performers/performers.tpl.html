@@ -24,7 +24,7 @@
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
                             <span class="status" :class="getPerformerStatus(performer)"></span>
-                            <span class="performers__info-personal-countries" v-if="!showBanner">
+                            <span class="performers__info-personal-countries" v-if="country != 'de'">
                                 <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
                             </span>
                         </div>

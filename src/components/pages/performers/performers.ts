@@ -74,7 +74,7 @@ export default class Performers extends Vue {
         const banner = {active: config.FreeRegister, url: require(`../../../assets/images/${this.country}/gridbanner.png`)};
         return banner;
     }
-
+    
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 

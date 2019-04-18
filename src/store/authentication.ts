@@ -113,14 +113,19 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
         },
         async confirmAccount(store: AuthContext, payload: { userId: number, token: string }){
-            const confirmResult = await fetch(`${config.BaseUrl}/client/client_accounts/${payload.userId}/confirm/${payload.token}`, {
+            const confirmResult = await fetch(`${config.BaseUrl}/auth/${payload.userId}/confirm/${payload.token}`, {
                 credentials: 'include'
             });
 
             if(!confirmResult.ok){
-                const data = await confirmResult.json();
-                throw new Error(data.error);
+                return;
             }
+
+            const confirmData: any = await confirmResult.json();
+            store.commit('setUser', transformReadConsumer(confirmData));
+
+            notificationSocket.disconnect();
+            notificationSocket.connect();
         },
         async getSession(store: AuthContext, polling: boolean){
             const { result, error } = await checkSession<any>({

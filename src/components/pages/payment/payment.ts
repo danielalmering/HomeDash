@@ -201,7 +201,7 @@ export default class Payment extends Vue {
     }
 
     addPackage(pack: Package){
-        if(this.selectedPackages[pack.id] >= 1){
+        if(pack.id === 0 && this.selectedPackages[pack.id] >= 1){
             return;
         }
 
