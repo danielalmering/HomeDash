@@ -207,6 +207,11 @@ export default class Payment extends Vue {
 
         this.selectedPackages[pack.id] += 1;
 
+        // Add auto bonus package
+        if(this.selectedPackages[0] === 0){
+            this.selectedPackages[0] += 1;
+        }
+
         this.storeCache();
     }
 
