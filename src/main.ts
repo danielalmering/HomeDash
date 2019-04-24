@@ -33,10 +33,10 @@ const app = new Vue({
     components: { App }
 });
 
-import { euroFilter } from './filters/euro';
+import { currencyFilter } from './filters/euro';
 import { basicDateTime } from './filters/date';
 
-Vue.filter('euro', euroFilter);
+Vue.filter('currency', currencyFilter);
 Vue.filter('date', basicDateTime);
 
 // Raven
