@@ -297,4 +297,16 @@
             }
         }
     }
+
+    &__banner {
+        background: $pallete-11;
+        background-position: center center;
+        background-repeat: no-repeat;
+        height: 200px;
+        a {
+            display: table;
+            height: 200px;
+            width: 100%;
+        }
+    }
 }
