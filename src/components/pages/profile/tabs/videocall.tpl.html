@@ -1,5 +1,5 @@
 <div class="tabs__servicescontent col-xs-12">
-    <div class="tabs__servicescontent-method">
+    <div class="tabs__servicescontent-method" v-if="$parent.info.phone_enabled === 1">
         <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
 
         <div class="numbers" v-for="(campaign, index) in $parent.activeCampaign">
@@ -10,7 +10,7 @@
 
             <span class="numbers__nr">{{ campaign.number }}</span>
             <span class="numbers__happyhour" v-if="campaign.marketing === 1" v-t="'top.banner.action'"></span>
-            <span class="numbers__cost">{{ campaign.cpm | euro }} {{ $t('top.numbers.nr-' + index) }}</span>
+            <span class="numbers__cost">{{ campaign.cpm | currency }} {{ $t('top.numbers.nr-' + index) }}</span>
 
             <span class="numbers__desc" v-if="$parent.info.country === 'de'" v-html="$t('top.numbers.nrdesc-' + index)"></span>
         </div>

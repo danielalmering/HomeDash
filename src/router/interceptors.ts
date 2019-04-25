@@ -87,6 +87,15 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
         });
 
         store.dispatch('successMessage', 'confirm.successMessage');
+
+        if(config.FreeRegister){
+            window.location.href = '/payment';
+        } else {
+            next({
+                name: 'Performers'
+            });
+        }
+
     } catch(ex) {
         const errors: { [key: string]: string } = {
             'Account is already validated.': 'confirm.errorAlreadyActivated'
@@ -94,10 +103,6 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
 
         store.dispatch('errorMessage', errors[ex.message] || 'confirm.errorMessage');
     }
-
-    next({
-        name: 'Performers'
-    });
 }
 
 export function seoInterceptor(to: Route, previous: Route){

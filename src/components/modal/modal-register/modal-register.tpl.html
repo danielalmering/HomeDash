@@ -6,7 +6,8 @@
             <div class="form__group">
                 <ul class="usp usp-large">
                     <li v-t="'sidebar.register.usp-1'"></li>
-                    <li v-t="'sidebar.register.usp-2'"></li>
+                    <li v-if="!freeRegister" v-t="'sidebar.register.usp-2'"></li>
+                    <li v-if="freeRegister" v-t="'sidebar.register.usp-0'"></li>
                     <li v-t="'sidebar.register.usp-3'"></li>
                 </ul>
             </div>

@@ -4,12 +4,12 @@
         <div class="performers-notfound" v-if="noPerformers">{{ $t('performers.noperformersfound') }}</div>
 
         <div class="performers">
-            <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-if="showBanner && !authenticated">
+            <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-if="getBanner.active && !authenticated">
                 <div class="performers__block">
                     <div class="performers__info">
                         <div class="performers__image">
                             <a v-on:click="openModal('register')">
-                                <img :src="getBanner" />
+                                <img :src="getBanner.url" />
                             </a>
                         </div>
                     </div>
@@ -24,11 +24,11 @@
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
                             <span class="status" :class="getPerformerStatus(performer)"></span>
-                            <span class="performers__info-personal-countries" v-if="!showBanner">
+                            <span class="performers__info-personal-countries" v-if="country === 'nl'">
                                 <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
                             </span>
                         </div>
-                        <div class="performers__info-services" v-if="performer">
+                        <div class="performers__info-services enabled" v-if="performer">
                             <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
                     </div>

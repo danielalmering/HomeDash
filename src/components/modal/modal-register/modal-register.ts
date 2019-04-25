@@ -4,6 +4,7 @@ import { UserForm } from '../../../models/User';
 import WithRender from './modal-register.tpl.html';
 import Sociallogin from './../../layout/Sociallogin.vue';
 import { openModal, tagHotjar } from '../../../util';
+import config from '../../../config';
 
 @WithRender
 @Component({
@@ -22,6 +23,7 @@ export default class ModalRegister extends Vue {
         passwordconfirm: ''
     };
     openModal = openModal;
+    freeRegister = config.FreeRegister;
 
     async register(){
         try {

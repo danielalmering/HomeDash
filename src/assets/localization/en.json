@@ -21,7 +21,7 @@
             "seeactionpage": "See action page",
             "extra": "extra",
             "credits": "credits",
-            "purchase": "von"
+            "purchase": "from"
         }
     },
     "nav": {
@@ -94,6 +94,7 @@
             "errorSwitchFailed": "It has not been possible to change the performer"
         },
         "register": {
+            "usp-0": "Sign up now and get 10 minutes for free",
             "usp-1": "Completely anonymous",
             "usp-2": "Take advantage of promotions",
             "usp-3": "Secure online payment"
@@ -400,10 +401,12 @@
         "bonusbanner": "Buy {credits} credits and get {percentage}% extra",
         "bonusdiscountdesc": "The above promotion is only valid for purchases with iDeal & Mister Cash. And not for purchases with credit card and visa via Click and Buy. * ",
         "discountcode": "Discountcode?",
-        "mostlybought": "Mostly sold!",
-        "minutes": "{minutes} minutes camming",
-        "hours": "{minutes} hour camming",
+        "mostlybought": "Sold most!",
+        "minutes": "{minutes} minutes of camming",
+        "hours": "{minutes} hour of camming",
+        "bonusdesc": "To get your free credits, a one-time purchase of at least € 0.01 must be made.",
         "packages": {
+            "pack0": "Free",
             "pack1": "Basic",
             "pack2": "Medium",
             "pack3": "High",

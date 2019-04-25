@@ -96,6 +96,7 @@
             "errorSwitchFailed": "Het is niet gelukt om van performer te wisselen"
         },
         "register": {
+            "usp-0": "Meld u nu aan en ontvang 10 minuten gratis",
             "usp-1": "Volledig anoniem",
             "usp-2": "Profiteer van speciale acties",
             "usp-3": "Veilig online betalen"
@@ -405,7 +406,9 @@
         "mostlybought": "Meest verkocht!",
         "minutes": "{minutes} minuten cammen",
         "hours": "{minutes} uur cammen",
+        "bonusdesc": "Om je gratis credits te krijgen moet een eenmalige aanschaf gedaan worden van tenminste €0,01.",
         "packages": {
+            "pack0": "Gratis",
             "pack1": "Basis",
             "pack2": "Medium",
             "pack3": "High",

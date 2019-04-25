@@ -13,7 +13,7 @@
                     <span class="fa fa-mobile" v-if="info.country === 'de' && index === 1"></span>
 
                     <span class="nr">{{ campaign.number }}</span>
-                    <span class="cost" v-if="campaign.cpm != '0'">{{ campaign.cpm | euro }} {{ $t('top.numbers.nr-' + index) }}</span>
+                    <span class="cost" v-if="campaign.cpm != '0'">{{ campaign.cpm | currency }} {{ $t('top.numbers.nr-' + index) }}</span>
                     <span class="desc" v-if="info.country === 'de'" v-html="$t('top.numbers.nrdesc-' + index)"></span>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <div class="discount" v-for="fee in fees">
                     <span class="discount__percent">{{ fee.percentage }}</span><i>%</i></span>
                     <span class="discount__text"><span> {{ $t('top.banner.extra') }} <i v-t="'top.banner.credits'"></i></span></span>
-                    <span class="discount__buy">{{ $t('top.banner.purchase') }} €{{ fee.amount/100 }} </span>
+                    <span class="discount__buy">{{ $t('top.banner.purchase') }} {{ fee.amount | euro }} </span>
                 </div>
             </div>
 

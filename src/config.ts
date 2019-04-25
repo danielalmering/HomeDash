@@ -11,6 +11,8 @@ export interface ProjectConfig {
     H5Server: string;
     VodServer: string;
     H5FlashSwf: string;
+    FreeRegister: boolean;
+    Banner: boolean;
 
     locale: LocaleConfig;
 }
@@ -20,6 +22,7 @@ interface LocaleConfig {
     GoogleTagCode: string;
     AgeCheck: boolean;
     Hotjar: boolean;
+    Services: any;
 
     Logo?: any;
     LogoDark?: any;

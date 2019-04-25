@@ -28,8 +28,7 @@ export default class Performers extends Vue {
     performers: Performer[] = new Array(40).fill(undefined, 0, 40);
 
     total: number = 0;
-    services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
-    countryBanners: string [] = [];
+    services: string[] = config.locale.Services;
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
@@ -71,14 +70,11 @@ export default class Performers extends Vue {
         return this.performers.length === 0;
     }
 
-    get showBanner(){
-        return (this.countryBanners.indexOf(this.country) !== -1);
-    }
-
     get getBanner(){
-        return require(`../../../assets/images/${this.country}/gridbanner.png`);
+        const banner = {active: config.FreeRegister, url: require(`../../../assets/images/${this.country}/gridbanner.png`)};
+        return banner;
     }
-
+    
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 
