@@ -2,5 +2,6 @@
     "DefaultLanguage": "de",
     "GoogleTagCode": "GTM-MPS978H",
     "AgeCheck": true,
-    "Hotjar": true
+    "Hotjar": true,
+    "Services": ["cam", "videocall", "voyeur", "phone", "email", "sms"]
 }

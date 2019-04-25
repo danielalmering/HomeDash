@@ -24,11 +24,11 @@
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
                             <span class="status" :class="getPerformerStatus(performer)"></span>
-                            <span class="performers__info-personal-countries" v-if="country != 'de'">
+                            <span class="performers__info-personal-countries" v-if="country === 'nl'">
                                 <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
                             </span>
                         </div>
-                        <div class="performers__info-services" v-if="performer">
+                        <div class="performers__info-services enabled" v-if="performer">
                             <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
                     </div>

@@ -65,4 +65,9 @@
             <router-link v-for="category in categories" :key="category.slug" :to="{ name: 'Performers', params: { category: category.slug } }">{{ category.title }}</router-link>
         </div>
     </div>
+
+    <div class="nav__banner" v-if="showBanner" :style="{ 'background-image': `url('${banner}')` }">
+        <a v-if="!authenticated" v-on:click="openModal('login')"></a>
+        <router-link  v-if="authenticated" :to="{ name: 'Payment'}"></router-link>
+    </div>
 </div>

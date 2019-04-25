@@ -6,6 +6,7 @@
 // Services ( Fontawesome )
 .fa {
     &.fa-cam:before         { content: "\f03d"; }
+    &.fa-voyeur:before      { content: "\f06e"; }
     &.fa-phone:before       { content: "\f095"; }
     &.fa-sms:before         { content: "\f10b"; }
     &.fa-email:before       { content: "\f003"; }
@@ -15,11 +16,14 @@
         display: block; 
         height: 13px;
         width: 22px;
-        background: url('../assets/images/videocall-icon.png') no-repeat; 
+        background: url('../assets/images/videocall-icon-black.png') no-repeat; 
     }
     &.fa-voicemail:before   { content: "\f001"; }
     &.fa-peek:before        { content: "\f06e"; }
 }
+
+.enabled { i.fa { &.fa-videocall:before { background: url('../assets/images/videocall-icon-white.png') no-repeat; } } }
+.active { i.fa { &.fa-videocall:before { background: url('../assets/images/videocall-icon-orange.png') no-repeat; } } }
 
 // Emoticons Categories
 

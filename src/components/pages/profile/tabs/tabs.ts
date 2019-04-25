@@ -38,14 +38,7 @@ export default class Tabs extends Vue {
     openModal = openModal;
     tabEnabled = tabEnabled;
 
-    tabs = {
-        'cam': 'video-camera',
-        'videocall': 'video-camera',
-        'voyeur': 'eye',
-        'phone': 'phone',
-        'email': 'envelope',
-        'sms': 'mobile'
-    };
+    tabs = config.locale.Services;
 
     @Prop() performer: Performer | any;
 
