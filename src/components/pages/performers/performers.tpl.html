@@ -34,7 +34,7 @@
                     </div>
                     <div class="performers__misc" v-if="performer">
                         <span class="performers__misc-advert hidden-xs">{{ performer.advertId }}</span>
-                        <span v-if="performer.isFavourite" class="performers__misc-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
+                        <span class="performers__misc-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                             <i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i>
                         </span>
                         <span class="performers__misc-subscribe" v-if="$route.name === 'Favourites' && performer.isSubscribed" v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)">
