@@ -19,7 +19,7 @@
     </div>
 
     <div class="videochat__close" v-on:click="close"><i class="fa fa-times"></i></div>
-    <div class="videochat__favourite" v-if="mainTile && performerData.isFavourite" v-on:click="toggleFavourite(performerData.id)"><i class="fa fa-star" :class="{ 'is-favourite': performerData.isFavourite }"></i></div>
+    <div class="videochat__favourite" v-if="mainTile" v-on:click="toggleFavourite(performerData.id)"><i class="fa fa-star" :class="{ 'is-favourite': performerData.isFavourite }"></i></div>
 
     <div class="voyeur__block">
 

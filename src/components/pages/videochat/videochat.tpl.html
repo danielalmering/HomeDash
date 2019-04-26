@@ -71,10 +71,10 @@
                 <a v-on:click="toggleCam" v-if="sessionType != 'PEEK'" class="fa fa-video-camera hidden-xs" :class="{ active:broadcasting.cam }" >
                     <i class="tooltip" v-t="'videochat.webcam-on'"></i>
                 </a>
-                <a v-if="performer.isSubscribed" v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)" class="fa fa fa-bell" :class="{ active:performer.isSubscribed }" >
+                <a v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)" class="fa fa fa-bell" :class="{ active:performer.isSubscribed }" >
                     <i class="tooltip">{{ performer.isSubscribed ? $t('profile.subscribe-remove') : $t('profile.subscribe-add') }}</i>
                 </a>
-                <a v-if="performer.isFavourite" v-on:click="toggleFavourite" class="fa fa-star" :class="{ active:performer.isFavourite }" >
+                <a v-on:click="toggleFavourite" class="fa fa-star" :class="{ active:performer.isFavourite }" >
                     <i class="tooltip">{{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}</i>
                 </a>
             </div>
