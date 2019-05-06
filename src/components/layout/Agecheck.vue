@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="overlay" v-if="country === 'de'"></div>
-        <div class="agecheck" :class="{ 'large': country === 'de' }">
+        <div class="overlay" v-if="country === 'dee'"></div>
+        <div class="agecheck" :class="{ 'large': country === 'dee' }">
             <div class="container-fluid">
                 <div class="agecheck__text">
                     <p v-t="'footer.agecheck'"></p>
