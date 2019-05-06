@@ -96,13 +96,13 @@
         "register": {
             "usp-0": "Sign up now and get 10 minutes for free",
             "usp-1": "Completely anonymous",
-            "usp-2": "Take advantage of promotions",
+            "usp-2": "Enjoy the promotions",
             "usp-3": "Secure online payment"
         }
     },
     "profile": {
         "favorite-add": "Add favorite",
-        "favorite-remove": "Delete favorite",
+        "favorite-remove": "Remove favourite",
         "subscribe-add": "Notify me",
         "subscribe-add-hover": "Notify me when {{nickname}} is online",
         "subscribe-remove": "Don't notify me",
@@ -113,7 +113,7 @@
         "height": "Height",
         "weight": "Weight",
         "cupsize": "Cup size",
-        "eyecolor": "Color eyes",
+        "eyecolor": "Eye colour",
         "expand": "More",
         "hide": "Less",
         "collapsphotos": "View pictures",
@@ -157,7 +157,7 @@
         "username": "Username",
         "webcambtn": "Chat and cam",
         "webcamwithphonedesc": "Press # in the main menu for the access code page",
-        "webcamwithcreditsdesc": "Below you can chat and cam and pay this session with credits, the costs are",
+        "webcamwithcreditsdesc": "Take this model private for your pleasure only, the costs are",
         "peekbtn": "Peek",
         "voyeurbtn": "Teaser",
         "videochatbtn": "Video call",
@@ -180,14 +180,14 @@
         "smsdesc1": "followed by a space<br />and then your message to",
         "smsterms": "This service is available to all devices with SMS. No subscription service. 1: 1 Chat Service, sending one message is receiving one at the most (€ 1.50 / message). Minimum user age is 18 years. By participating in this service user automatically accepts the Terms and Conditions: View the Terms and Conditions. No withdrawal right or notice period. User data are not shared with third parties. The SMS service advertising code and code of conduct are observed. This service is offered by Sensemakers BV, Postbus 89, 1300 AB Almere, Chamber of Commerce: 33.128110 million, VAT NL803697041.B.01. Help desk: info@gigacams.com and +31 (0)36 - 5458595",
         "smscost": "per received message*",
-        "registeraccount": "Register an account, and take advantage of promotions!",
+        "registeraccount": "Register an account, and enjoy the promotions!",
         "noServices": "No service (s) available!",
         "errorNoIvrCode": "Enter your access code",
         "nosmsservice": "Kein SMS-Dienst verfügbar!"
     },
     "pagination": {
-        "pageOf": "Page {page} till {total}",
-        "amountPerPage": "Number per page"
+        "pageOf": "Page {page} of {total}",
+        "amountPerPage": "Models per page"
     },
     "modals": {
         "login":{
@@ -196,7 +196,7 @@
             "password": "Password",
             "login": "Login",
             "register": "Register",
-            "forgotPassword": "Password forgotten?",
+            "forgotPassword": "Forgot Password?",
             "orloginwith": "or log in with",
             "orregisterwith": "register with"
         },
@@ -259,7 +259,7 @@
         "msg-notify-remove-hover": "Don't notify me when a girl sends me an E-Mail",
         "removemessage": "Delete message",
         "sendmessage": "Send message",
-        "historydesc": "Here you will find a comprehensive overview of your executed actions within the platform",
+        "historydesc": "Here you find an overview of your performed actions with us",
         "date": "Date",
         "paymentmethod": "Payment method",
         "amount": "Amount",
@@ -300,8 +300,8 @@
         "subscribesperformers": "Subscribes performers",
         "phones": "Phonenumbers", 
         "ip": "IP address",
-        "removeuser": "Want to delete your account?, then click",
-        "removeuser-approval-1": "Are you sure you want to delete your account?",
+        "removeuser": "Do you want to permanently remove your account?, Click",
+        "removeuser-approval-1": "Are you sure you want to remove your account?",
         "removeuser-approval-2": ", you still have {credits} credit(s)!",
         "here": "here",
         "yes": "Yes",
@@ -360,7 +360,7 @@
         "cancelReservation": "Cancel reservation",
         "reserving": "Reservations",
         "favorites": "Favorites",
-        "now1on1": "Now 1on1",
+        "now1on1": "Go private",
         "dialog1on1Title": "Connect with {name}",
         "dialog1on1Subtitle": "Do you want to start a private session with {name}?",
         "alerts": {
@@ -379,7 +379,7 @@
         "notify-remove-hover": "Don't notify me when there's a promo"
     },
     "thankyou": {
-        "intro": "Thank you for your purchase !!, below you can view one of your favorites",
+        "intro": "Thank you for your purchase!!",
         "favo": "Favorites"
     },
     "payment": {
@@ -399,7 +399,7 @@
         "newbalance": "New credits balance",
         "total": "Total",
         "bonusbanner": "Buy {credits} credits and get {percentage}% extra",
-        "bonusdiscountdesc": "The above promotion is only valid for purchases with iDeal & Mister Cash. And not for purchases with credit card and visa via Click and Buy. * ",
+        "bonusdiscountdesc": "The promotions are only valid for purchases with Paysafecard and PayPal and not for purchases with creditcard and Visa via Click and Buy. * ",
         "discountcode": "Discountcode?",
         "mostlybought": "Mostly sold!",
         "minutes": "{minutes} minutes camming",

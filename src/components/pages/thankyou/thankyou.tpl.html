@@ -8,7 +8,7 @@
 
             <h3 v-t="'thankyou.favo'"></h3>
 
-            <div class="thankyou__favo">
+            <div class="thankyou__favo" v-if="favorites.length > 0">
                 <div class="col-xs-12 col-sm-3 thankyou__favo-performer" v-for="performer in favorites">
                     <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
                         <div class="image" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }"></div>
