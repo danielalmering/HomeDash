@@ -30,5 +30,7 @@ export default class Giftvoucher extends Vue {
             content: 'account.alerts.successVoucher',
             class: 'success'
         });
+
+        this.$store.dispatch('getSession', true);
     }
 }
