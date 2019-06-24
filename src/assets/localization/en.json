@@ -401,9 +401,9 @@
         "bonusbanner": "Buy {credits} credits and get {percentage}% extra",
         "bonusdiscountdesc": "The promotions are only valid for purchases with Paysafecard and PayPal and not for purchases with creditcard and Visa via Click and Buy. * ",
         "discountcode": "Discountcode?",
-        "mostlybought": "Mostly sold!",
-        "minutes": "{minutes} minutes camming",
-        "hours": "{minutes} hour camming",
+        "mostlybought": "Sold most!",
+        "minutes": "{minutes} minutes of camming",
+        "hours": "{minutes} hour of camming",
         "bonusdesc": "To get your free credits, a one-time purchase of at least € 0.01 must be made.",
         "packages": {
             "pack0": "Free",
