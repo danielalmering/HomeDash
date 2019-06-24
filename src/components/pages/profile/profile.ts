@@ -315,6 +315,10 @@ export default class Profile extends Vue {
     async loadPerformer(id: number){
         const { result, error } = await getByAdvert(id);
 
+        if(error){
+            this.$router.push({ name: 'Performers' });
+        }
+
         this.performer = result;
 
         if(!result.photos) { return; }
