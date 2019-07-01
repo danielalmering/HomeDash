@@ -21,7 +21,7 @@ export class H5Style {
 }
 
 @Component({
-    template: '<div class="nanocosmos" :id="id"></div>',
+    template: '<div class="nanocosmos" :style="{ backgroundImage: \'url(\' + loadScreen + \')\' }" :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 
@@ -31,6 +31,8 @@ export default class NanoCosmos extends Stream {
     }
 
     private id: string;
+
+    public loadScreen:string = "https://accept-push.thuis.nl/snapshots/150/snapshot_clear.jpg?23535";
 
     @Prop({ default: true, type: Boolean})
     public autoplay: Boolean;
@@ -75,7 +77,7 @@ export default class NanoCosmos extends Stream {
     @Prop({required: true, type: String})
     public token: string;*/
 
-    @Prop({default: false, type: Boolean})
+    @Prop({default: true, type: Boolean})
     public debug: Boolean;
 
     //TODO typescript declaration of NanoPlayer
@@ -158,8 +160,10 @@ export default class NanoCosmos extends Stream {
                 onWarning: (s: any) => { this.log(s); }
             },
             'playback': {
-                'autoplay': this.autoplay,
-                'muted': this.muted,
+                'autoplay': true,//this.autoplay,
+                'muted':  false,//this.muted,
+                'allowSafariHlsFallback': true,
+                'automute': true,
                 'metadata': true,
                 'flashplayer': '../../../../../static/nano.player.swf',
                 'keepConnection': true,
@@ -196,6 +200,7 @@ export default class NanoCosmos extends Stream {
 
     private onPlay(s: any) {
         this.log(s);
+        this.loadScreen = "";
         if(this.$store.state.session.activeState !== State.Active){
             this.onStateChange('active');
         }

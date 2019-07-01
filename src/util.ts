@@ -92,8 +92,22 @@ export function webrtcPossible(platform:Platform):boolean{
         {
             name: 'Safari',
             version: '11.0'
+        },
+        {
+            name: 'Firefox'
         }
     ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isWebrtcMuted(platform:Platform): boolean{
+    const supported = [
+        {
+            name: 'Safari'
+        }
+    ];
+
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }

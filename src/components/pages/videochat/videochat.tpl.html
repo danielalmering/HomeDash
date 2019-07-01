@@ -1,7 +1,8 @@
 <div class="videochat">
     <div class="videochat__screen">
         <div class="videochat__screen-object">
-            <component :is="streamTransportType"
+            <component :is="
+            streamTransportType"
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
                 :wowza="wowza"
