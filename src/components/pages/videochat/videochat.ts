@@ -1,40 +1,36 @@
 import Vue from 'vue';
 import jsmpeg from 'jsmpeg';
 
-import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
-import { State, SessionType, PaymentType } from '../../../models/Sessions';
-import { SessionData, RequestPayload } from '../../../store/Session/';
-
-import notificationSocket from '../../../socket';
+import {Component, Watch} from 'vue-property-decorator';
+import {Route} from 'vue-router';
+import {PaymentType, SessionType, State} from '../../../models/Sessions';
 import Chat from './chat/chat';
-import Broadcast from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
-import { Rtmp as RTMPPlay } from './streams/rtmp';
-import { Rtmp as RTMPBroadcast } from './broadcast/rtmp';
+import {Rtmp as RTMPPlay} from './streams/rtmp';
+import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
-import { WebRTC as WRTCPlay } from './streams/webrtc';
-import { WebRTC as WRTCBroadcast } from './broadcast/webrtc'
-import config from '../../../config';
+import {WebRTC as WRTCPlay} from './streams/webrtc';
+import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
 import Confirmations from '../../layout/Confirmations.vue';
-import { Devices } from 'typertc';
+import {Devices, VideoCodec} from 'typertc';
 
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
-import Page from '../page';
-import { RawLocation } from 'vue-router/types/router';
-import { openModal, tagHotjar, isApple, isIOS, webrtcPossible, noFlash, isWebrtcMuted } from '../../../util';
-import { Performer } from 'sensejs/performer/performer.model';
-import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import { clientSeen } from 'sensejs/session/index';
+import {RawLocation} from 'vue-router/types/router';
+import {isApple, isIOS, noFlash, openModal, tagHotjar, webrtcPossible, webrtcPublishPossible} from '../../../util';
+import {Performer} from 'sensejs/performer/performer.model';
+import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
+import {clientSeen} from 'sensejs/session/index';
 //import { webrtcPossible, noFlash } from 'sensejs/util/platform';
-import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
+import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
+
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
     cam: boolean | string;
     mic: boolean | string;
     settings: boolean;
+    videoCodec: VideoCodec;
 }
 
 Component.registerHooks([
@@ -66,7 +62,8 @@ export default class VideoChat extends Vue {
     broadcasting: BroadcastConfiguration = {
         cam: false,
         mic: false,
-        settings: false
+        settings: false,
+        videoCodec: VideoCodec.H264
     };
 
     stateMessages: string[] = [];
@@ -140,9 +137,13 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
+        if (webrtcPublishPossible(platform)){
+            return 'webrtcBroadcast';
+        }
 
-
-        if (webrtcPossible(platform)){
+        //test for now to use webrtc publisher on iphone with vp8 
+        if(isIOS(platform)){
+            this.broadcasting.videoCodec = VideoCodec.VP8;
             return 'webrtcBroadcast';
         }
 
@@ -342,10 +343,6 @@ export default class VideoChat extends Vue {
         }
 
         tagHotjar(`TOGGLE_MIC`);
-    }
-
-    toggleMute(){
-        console.log("Set muted off");
     }
 
     setCamera(event: Event){
