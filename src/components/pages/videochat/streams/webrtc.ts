@@ -18,7 +18,7 @@ export class WebRTC extends Stream {
     player:Player;
     loadScreen:string = "https://push.thuis.nl/snapshots/" + this.$store.state.session.activePerformer.id +"/snapshot_clear.jpg?" + Math.random();
     mutedClass: string = "";
-    
+
     toggleMute(){
         const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
 

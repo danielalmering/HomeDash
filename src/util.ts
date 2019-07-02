@@ -101,6 +101,19 @@ export function webrtcPossible(platform:Platform):boolean{
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+export function webrtcPublishPossible(platform:Platform):boolean{
+    const supported = [
+        {
+            name: 'Chrome'
+        },
+        {
+            name: 'Firefox'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
 export function isWebrtcMuted(platform:Platform): boolean{
     const supported = [
         {
