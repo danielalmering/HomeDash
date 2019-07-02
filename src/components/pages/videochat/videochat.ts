@@ -97,12 +97,19 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
     }
 
-    //TODO update performer model in sensejs
     get isWebRTCPerformer(): boolean {
-        //disable webrtc by returning false here!
-        const model:any  = this.performer;
-        return model.mediaId > 1;
+        //disable webrtc play by returning false here!
+        if(this.performer === undefined){
+            return false;
+        }
+
+        if(this.performer.mediaId === undefined){
+            return false;
+        }
+
+        return this.performer.mediaId > 1;
     }
+
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;

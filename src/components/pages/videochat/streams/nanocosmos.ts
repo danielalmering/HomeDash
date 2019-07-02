@@ -21,7 +21,7 @@ export class H5Style {
 }
 
 @Component({
-    template: '<div class="nanocosmos" :style="{ backgroundImage: \'url(\' + loadScreen + \')\' }" :id="id"></div>',
+    template: '<div class="nanocosmos"  :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 
@@ -31,8 +31,6 @@ export default class NanoCosmos extends Stream {
     }
 
     private id: string;
-
-    public loadScreen:string = "https://accept-push.thuis.nl/snapshots/150/snapshot_clear.jpg?23535";
 
     @Prop({ default: true, type: Boolean})
     public autoplay: Boolean;
@@ -160,8 +158,8 @@ export default class NanoCosmos extends Stream {
                 onWarning: (s: any) => { this.log(s); }
             },
             'playback': {
-                'autoplay': true,//this.autoplay,
-                'muted':  false,//this.muted,
+                'autoplay': this.autoplay,//this.autoplay,
+                'muted':  this.muted,
                 'allowSafariHlsFallback': true,
                 'automute': true,
                 'metadata': true,
@@ -200,7 +198,6 @@ export default class NanoCosmos extends Stream {
 
     private onPlay(s: any) {
         this.log(s);
-        this.loadScreen = "";
         if(this.$store.state.session.activeState !== State.Active){
             this.onStateChange('active');
         }

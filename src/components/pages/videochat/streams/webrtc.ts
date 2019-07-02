@@ -15,15 +15,13 @@ const Platform = require('platform');
 })
 export class WebRTC extends Stream {
 
-    private player:Player;
-    public loadScreen:string = "https://push.thuis.nl/snapshots/" + this.$store.state.session.activePerformer.id +"/snapshot_clear.jpg?" + Math.random();
+    player:Player;
+    loadScreen:string = "https://push.thuis.nl/snapshots/" + this.$store.state.session.activePerformer.id +"/snapshot_clear.jpg?" + Math.random();
 
     mounted(){
 
         const platform = Platform.parse(navigator.userAgent);
         const muted:boolean = isWebrtcMuted(platform);
-
-        console.log("muted play ??",  muted);
 
         const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
         video.autoplay = true;
@@ -32,14 +30,14 @@ export class WebRTC extends Stream {
         utils.validate(wowzaParts);
 
         const options = {
-            wowza: wowzaParts.host + '/webrtc-session.json',
-            applicationName: wowzaParts.application,
-            token: this.playToken ? this.playToken : wowzaParts.parameters.token,
-            streamName: this.playStream,
-            element: video,
-            useWebSockets: true,
-            debug: false,
-            muted: muted // muted //mac os bug  (freeze frame if autoplay)
+            wowza : wowzaParts.host + '/webrtc-session.json',
+            applicationName : wowzaParts.application,
+            token : this.playToken ? this.playToken : wowzaParts.parameters.token,
+            streamName : this.playStream,
+            element : video,
+            useWebSockets : true,
+            debug : true, //for now on acceptance
+            muted : muted // muted //mac os bug  (freeze frame if autoplay)
         };
 
         this.player = new Player(options);
@@ -61,6 +59,7 @@ export class WebRTC extends Stream {
 
     public onError(message: string){
         this.loadScreen = '';
+        console.log("message", message);
         this.$emit('error', message);
     }
 
