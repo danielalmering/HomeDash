@@ -23,7 +23,7 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { openModal, tagHotjar, isApple, isIOS, webrtcPossible, noFlash } from '../../../util';
+import { openModal, tagHotjar, isApple, isIOS, webrtcPossible, noFlash, isWebrtcMuted } from '../../../util';
 import { Performer } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import { clientSeen } from 'sensejs/session/index';
@@ -109,6 +109,7 @@ export default class VideoChat extends Vue {
 
         return this.performer.mediaId > 1;
     }
+
 
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
@@ -341,6 +342,10 @@ export default class VideoChat extends Vue {
         }
 
         tagHotjar(`TOGGLE_MIC`);
+    }
+
+    toggleMute(){
+        console.log("Set muted off");
     }
 
     setCamera(event: Event){
