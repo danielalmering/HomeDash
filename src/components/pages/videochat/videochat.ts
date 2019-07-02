@@ -23,11 +23,11 @@ import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import Page from '../page';
 import { RawLocation } from 'vue-router/types/router';
-import { openModal, tagHotjar, isApple, isIOS } from '../../../util';
+import { openModal, tagHotjar, isApple, isIOS, webrtcPossible, noFlash } from '../../../util';
 import { Performer } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import { clientSeen } from 'sensejs/session/index';
-import { webrtcPossible, noFlash } from 'sensejs/util/platform';
+//import { webrtcPossible, noFlash } from 'sensejs/util/platform';
 import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 const Platform = require('platform');
 
@@ -97,19 +97,30 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
     }
 
+    get isWebRTCPerformer(): boolean {
+        //disable webrtc play by returning false here!
+        if(this.performer === undefined){
+            return false;
+        }
+
+        if(this.performer.mediaId === undefined){
+            return false;
+        }
+
+        return this.performer.mediaId > 1;
+    }
+
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
 
-        //Uncomment if you need the user to be able to watch using flash
-        //playback using flash for devices that do not support webAudio (so devices that can't play sound in jsmpeg)
-        //Peeking is mute, so no need for flash in that scenario.
-        // if ( this.sessionType !== SessionType.Peek && !hasWebAudio() ){
-        //     return 'rtmp';
-        // }
-        
         const platform = Platform.parse(navigator.userAgent);
+
+        if(webrtcPossible(platform) && this.isWebRTCPerformer){
+            return 'webrtc';
+        }
+
         if(isIOS(platform)){
             return 'nanocosmos';
         }
@@ -128,14 +139,16 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
+
+
+        if (webrtcPossible(platform)){
+            return 'webrtcBroadcast';
+        }
+
         //disabled camback on mobile for now
         //move to below webrtcPossible, and those platforms that support webrtc will cam back.
         if (noFlash(platform)){
             return 'none';
-        }
-
-        if (webrtcPossible(platform)){
-            return 'webrtcBroadcast';
         }
 
         return 'rtmpBroadcast';
