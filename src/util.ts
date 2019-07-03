@@ -95,6 +95,15 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox'
+        }, //new added shit
+        {
+            name: 'Edge'
+        },
+        {
+            name: 'Opera'
+        },
+        {
+            name: 'CrIOS' //chrome ios
         }
     ];
 
@@ -108,6 +117,9 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox'
+        },
+        {
+            name: 'CrIOS' //chrome ios
         }
     ];
 
