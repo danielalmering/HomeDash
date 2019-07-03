@@ -95,16 +95,19 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox'
-        }, //new added shit
+        },
         {
-            name: 'Edge'
+            name: 'Microsoft Edge'
         },
         {
             name: 'Opera'
         },
         {
-            name: 'CrIOS' //chrome ios
-        }
+            name: 'Chrome Mobile'
+        },
+        {
+            name: 'Firefox Mobile'
+        },
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
@@ -119,7 +122,13 @@ export function webrtcPublishPossible(platform:Platform):boolean{
             name: 'Firefox'
         },
         {
-            name: 'CrIOS' //chrome ios
+            name: 'Microsoft Edge'
+        },
+        {
+            name: 'Chrome Mobile'
+        },
+        {
+            name: 'Firefox Mobile'
         }
     ];
 

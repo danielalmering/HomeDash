@@ -119,7 +119,7 @@ export default class VideoChat extends Vue {
         if(webrtcPossible(platform) && this.isWebRTCPerformer){
             return 'webrtc';
         }
-
+        //else use nanocosmos if you are a ios device
         if(isIOS(platform)){
             return 'nanocosmos';
         }
