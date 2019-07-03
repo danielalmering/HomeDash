@@ -84,6 +84,7 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
+//play back possible
 export function webrtcPossible(platform:Platform):boolean{
     const supported = [
         {
@@ -95,12 +96,23 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {
+            name: 'Samsung Internet'
+        },
+        {
+            name: 'Chrome Mobile'
         }
+
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+//publish possible
 export function webrtcPublishPossible(platform:Platform):boolean{
     const supported = [
         {
@@ -108,43 +120,36 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox'
+        },
+        {
+            name: 'Samsung Internet'
+        },
+        {
+            name: 'Firefox for Android' //works
+        },
+        {
+            name: 'Safari',
+            version: '11.0' //via vp 8 but testing it with h264
+        },
+        {
+            name: 'Chrome Mobile',
+            os: {
+                family: 'Android'
+            }
         }
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+//IE back to RTMP view
 export function isIE(platform:Platform){
     const supported = [
         {
             name: 'IE'
-        }
-    ];
-
-    return supported.find( pattern => match(platform, pattern) ) != null;
-}
-
-
-export function webrtcTestBrowsers(platform:Platform):boolean{
-
-    const supported = [
+        },
         {
             name: 'Microsoft Edge'
-        },
-        {
-            name: 'Chrome Mobile'
-        },
-        {
-            name: 'Firefox Mobile'
-        },
-        {
-            name: 'Firefox for IOS'
-        },
-        {
-            name: 'Firefox for Android'
-        },
-        {
-            name: 'Samsung Internet'
         }
     ];
 
@@ -155,33 +160,11 @@ export function isWebrtcMuted(platform:Platform): boolean{
     const supported = [
         {
             name: 'Safari'
-        }, //test browsers
-        {
-            name: 'Microsoft Edge'
-        },
-        {
-            name: 'Chrome Mobile'
-        },
-        {
-            name: 'Firefox Mobile'
-        },
-        {
-            name: 'Firefox for IOS'
-        },
-        {
-            name: 'Firefox for Android'
-        },
-        {
-            name: 'Samsung Internet'
         }
-        //should be removed
     ];
-
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
-
-
 
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
