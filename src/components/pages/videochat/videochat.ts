@@ -17,7 +17,17 @@ import {Devices, VideoCodec} from 'typertc';
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
-import {isApple, isIOS, noFlash, openModal, tagHotjar, webrtcPossible, webrtcPublishPossible} from '../../../util';
+import {
+    isApple,
+    isIE,
+    isIOS,
+    noFlash,
+    openModal,
+    tagHotjar,
+    webrtcPossible,
+    webrtcPublishPossible,
+    webrtcTestBrowsers
+} from '../../../util';
 import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
@@ -116,9 +126,16 @@ export default class VideoChat extends Vue {
         const platform = Platform.parse(navigator.userAgent);
         alert(platform.name + " " + platform.os + " " + platform.version);
 
-        if(webrtcPossible(platform) && this.isWebRTCPerformer){
+        if((webrtcPossible(platform) || webrtcTestBrowsers(platform)) && this.isWebRTCPerformer){
             return 'webrtc';
         }
+
+        //if IE gold old flash
+        if(isIE(platform)){
+            return 'rtmp';
+        }
+
+
         //else use nanocosmos if you are a ios device
         if(isIOS(platform)){
             return 'nanocosmos';
@@ -138,13 +155,12 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
-        if (webrtcPublishPossible(platform)){
-            return 'webrtcBroadcast';
-        }
+        if (webrtcPublishPossible(platform) || webrtcTestBrowsers(platform)){
+            if(isIOS(platform)){
+                //vp8 aan
+                this.broadcasting.videoCodec = VideoCodec.VP8;
+            }
 
-        //ios or andriod
-        if(isIOS(platform)){
-            //maybe do VP8
             return 'webrtcBroadcast';
         }
 
