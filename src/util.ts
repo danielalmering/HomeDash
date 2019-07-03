@@ -95,19 +95,7 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox'
-        },
-        {
-            name: 'Microsoft Edge'
-        },
-        {
-            name: 'Opera'
-        },
-        {
-            name: 'Chrome Mobile'
-        },
-        {
-            name: 'Firefox Mobile'
-        },
+        }
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
@@ -120,7 +108,26 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox'
-        },
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isIE(platform:Platform){
+    const supported = [
+        {
+            name: 'IE'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+
+export function webrtcTestBrowsers(platform:Platform):boolean{
+
+    const supported = [
         {
             name: 'Microsoft Edge'
         },
@@ -129,6 +136,15 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         },
         {
             name: 'Firefox Mobile'
+        },
+        {
+            name: 'Firefox for IOS'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {
+            name: 'Samsung Internet'
         }
     ];
 
@@ -139,16 +155,33 @@ export function isWebrtcMuted(platform:Platform): boolean{
     const supported = [
         {
             name: 'Safari'
+        }, //test browsers
+        {
+            name: 'Microsoft Edge'
+        },
+        {
+            name: 'Chrome Mobile'
+        },
+        {
+            name: 'Firefox Mobile'
+        },
+        {
+            name: 'Firefox for IOS'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {
+            name: 'Samsung Internet'
         }
+        //should be removed
     ];
 
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
-export function hasWebAudio():boolean{
-    return ('AudioContext' in window) || ('webkitAudioContext' in window);
-}
+
 
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
@@ -193,6 +226,10 @@ export function isIOS(platform:Platform):boolean{
     ];
 
     return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function hasWebAudio():boolean{
+    return ('AudioContext' in window) || ('webkitAudioContext' in window);
 }
 
 // checks if 'pattern' is a subset of 'message'
