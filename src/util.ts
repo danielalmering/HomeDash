@@ -84,13 +84,13 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
-//play back possible
+//Webrtc play back possible
 export function webrtcPossible(platform:Platform):boolean{
     const supported = [
         {
             name: 'Chrome'
         },
-        {
+        { //play stream H264 possible for Safari 11+
             name: 'Safari',
             version: '11.0'
         },
@@ -101,10 +101,16 @@ export function webrtcPossible(platform:Platform):boolean{
             name: 'Firefox for Android'
         },
         {
+            name: 'Firefox for iOS'
+        },
+        {
             name: 'Samsung Internet'
         },
         {
-            name: 'Chrome Mobile'
+            name: 'Chrome Mobile' //both andriod and iOS can play streams
+        },
+        {
+            name: 'Opera'
         }
 
     ];
@@ -112,7 +118,7 @@ export function webrtcPossible(platform:Platform):boolean{
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
-//publish possible
+//Webrtc publish possible
 export function webrtcPublishPossible(platform:Platform):boolean{
     const supported = [
         {
@@ -125,24 +131,28 @@ export function webrtcPublishPossible(platform:Platform):boolean{
             name: 'Samsung Internet'
         },
         {
-            name: 'Firefox for Android' //works
+            name: 'Firefox for Android'
         },
-        {
+        {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
+            //This needs te be fixed by Wowza!
             name: 'Safari',
-            version: '11.0' //via vp 8 but testing it with h264
+            version: '12.1'
         },
         {
-            name: 'Chrome Mobile',
+            name: 'Chrome Mobile', //does not work for iOS
             os: {
                 family: 'Android'
             }
+        },
+        {
+            name: 'Opera'
         }
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
-//IE back to RTMP view
+//IE not killing flash for now, let it use the superior flash plugin
 export function isIE(platform:Platform){
     const supported = [
         {
@@ -156,6 +166,7 @@ export function isIE(platform:Platform){
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+//Autoplay fix for safari
 export function isWebrtcMuted(platform:Platform): boolean{
     const supported = [
         {
@@ -166,6 +177,7 @@ export function isWebrtcMuted(platform:Platform): boolean{
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+//No flash for mobile
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
         {
