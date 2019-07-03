@@ -25,8 +25,7 @@ import {
     openModal,
     tagHotjar,
     webrtcPossible,
-    webrtcPublishPossible,
-    webrtcTestBrowsers
+    webrtcPublishPossible
 } from '../../../util';
 import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
@@ -126,7 +125,8 @@ export default class VideoChat extends Vue {
         const platform = Platform.parse(navigator.userAgent);
         alert(platform.name + " " + platform.os + " " + platform.version);
 
-        if((webrtcPossible(platform) || webrtcTestBrowsers(platform)) && this.isWebRTCPerformer){
+        //if webrtc is possible use webrtc viewer
+        if(webrtcPossible(platform) && this.isWebRTCPerformer){
             return 'webrtc';
         }
 
@@ -134,7 +134,6 @@ export default class VideoChat extends Vue {
         if(isIE(platform)){
             return 'rtmp';
         }
-
 
         //else use nanocosmos if you are a ios device
         if(isIOS(platform)){
@@ -155,12 +154,12 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
-        if (webrtcPublishPossible(platform) || webrtcTestBrowsers(platform)){
-            if(isIOS(platform)){
+        if (webrtcPublishPossible(platform)){
+            /*if(isIOS(platform)){
                 //vp8 aan
                 alert('VP8 used!!!');
                 this.broadcasting.videoCodec = VideoCodec.VP8;
-            }
+            }*/
 
             return 'webrtcBroadcast';
         }
