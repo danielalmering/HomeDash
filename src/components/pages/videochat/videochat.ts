@@ -158,6 +158,7 @@ export default class VideoChat extends Vue {
         if (webrtcPublishPossible(platform) || webrtcTestBrowsers(platform)){
             if(isIOS(platform)){
                 //vp8 aan
+                alert('VP8 used!!!');
                 this.broadcasting.videoCodec = VideoCodec.VP8;
             }
 
