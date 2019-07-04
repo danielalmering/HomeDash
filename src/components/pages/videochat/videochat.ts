@@ -155,7 +155,7 @@ export default class VideoChat extends Vue {
         const platform = Platform.parse(navigator.userAgent);
 
         if (webrtcPublishPossible(platform)){
-
+            //use vp8 if the browser is safari and above > 12.1
             if(isIOS(platform) && this.isWebRTCPerformer){
                 this.broadcasting.videoCodec = VideoCodec.VP8;
             }

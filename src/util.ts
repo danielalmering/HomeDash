@@ -157,9 +157,6 @@ export function isIE(platform:Platform){
     const supported = [
         {
             name: 'IE'
-        },
-        {
-            name: 'Microsoft Edge'
         }
     ];
 
