@@ -69,6 +69,9 @@
             </span>
 
             <div class="videochat__controls-btns">
+                <!--<a v-on:click="toggleMute" v-if="sessionType != 'PEEK' && streamTransportType == 'webrtc'" v-bind:class="['fa', mutedClass]"  >
+                    <i class="tooltip">{{ isVideoMuted ? "Geluid aan" : "Geluid uit"}}</i>
+                </a>-->
                 <a v-on:click="toggleCam" v-if="sessionType != 'PEEK' && broadcastType == 'webrtcBroadcast'" class="fa fa-video-camera" :class="{ active:broadcasting.cam }" >
                     <i class="tooltip" v-t="'videochat.webcam-on'"></i>
                 </a>

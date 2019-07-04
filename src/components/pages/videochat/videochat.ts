@@ -67,6 +67,7 @@ export default class VideoChat extends Vue {
     isEnding: boolean = false;
 
     intervalTimer: number;
+    mutedClass:string = "";
 
     broadcasting: BroadcastConfiguration = {
         cam: false,
@@ -333,6 +334,8 @@ export default class VideoChat extends Vue {
         this.broadcasting.cam = true;
     }
 
+
+
     toggleCam(){
         this.broadcasting.cam = !this.broadcasting.cam;
         //also hide the settings screen when the cam is turned off
@@ -360,6 +363,7 @@ export default class VideoChat extends Vue {
 
         tagHotjar(`TOGGLE_MIC`);
     }
+
 
     setCamera(event: Event){
         const camId = (<HTMLSelectElement>event.srcElement).value;
