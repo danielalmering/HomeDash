@@ -11,13 +11,13 @@ import {  isWebrtcMuted } from '../../../../util';
 const Platform = require('platform');
 
 @Component({
-    template: '<div><video class="webrtc" playsinline webkit-playsinline autoplay :style="{ backgroundImage: \'url(\' + loadScreen + \')\' }"></video><span class="videochat__mute hidden-sm hidden-xs" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span><span class="videochat__mute-right hidden-md hidden-lg" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span></div>',
+    template: '<div><video class="webrtc" playsinline webkit-playsinline autoplay></video><span v-if="!isPeek" class="videochat__mute hidden-sm hidden-xs" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span><span v-if="!isPeek" class="videochat__mute-right hidden-md hidden-lg" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span></div>',
 })
 export class WebRTC extends Stream {
 
     player:Player;
-    loadScreen:string = "https://push.thuis.nl/snapshots/" + this.$store.state.session.activePerformer.id +"/snapshot_clear.jpg?" + Math.random();
     mutedClass: string = "";
+    isPeek:boolean = false;
 
     toggleMute(){
         const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
@@ -34,6 +34,8 @@ export class WebRTC extends Stream {
     mounted(){
 
         const platform = Platform.parse(navigator.userAgent);
+
+        this.isPeek = this.muted;
         //if there is sound check if its no safari
         const muted:boolean = !this.muted ? isWebrtcMuted(platform) : this.muted;
 
@@ -62,24 +64,7 @@ export class WebRTC extends Stream {
         this.player.onStateChange = this.onStateChange.bind(this);
         this.player.onError = this.onError.bind(this);
 
-
-
         //this.player.play();
-    }
-
-    public onStateChange(value: string){
-        if(value == "active"){
-            this.loadScreen = '';
-        }
-
-        this.$emit('stateChange', value);
-
-    }
-
-    public onError(message: string){
-        this.loadScreen = '';
-        console.log("message", message);
-        this.$emit('error', message);
     }
 
     beforeDestroy(){

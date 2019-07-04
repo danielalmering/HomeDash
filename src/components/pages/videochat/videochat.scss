@@ -270,12 +270,12 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
         z-index: 2;
         float: right;
         color: $pallete-2;
-        @include rem(font-size, 16px);
+        @include rem(font-size, 26px);
         //background: $semi-transparent-bg;
-        @include rem(padding, 3px 8px);
-        @include border-left-radius(3px);
+        @include rem(padding, 6px 15px);
+        @include border-left-radius(5px);
         cursor: pointer;
-        margin-top: -32px;
+        margin-top: -50px;
     }
 
     &__favourite {
