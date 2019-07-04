@@ -11,7 +11,7 @@ import {  isWebrtcMuted } from '../../../../util';
 const Platform = require('platform');
 
 @Component({
-    template: '<div><span class="videochat__mute" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span><video class="webrtc" playsinline webkit-playsinline autoplay :style="{ backgroundImage: \'url(\' + loadScreen + \')\' }"></video></div>',
+    template: '<div><video class="webrtc" playsinline webkit-playsinline autoplay :style="{ backgroundImage: \'url(\' + loadScreen + \')\' }"></video><span class="videochat__mute hidden-sm hidden-xs" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span><span class="videochat__mute-right hidden-md hidden-lg" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span></div>',
 })
 export class WebRTC extends Stream {
 

@@ -115,8 +115,10 @@ export default class Chat extends Vue {
 
         if(selected){
             this.chatSmall = true;
-            screen[0].style.top = 'auto';
-            screen[0].style.bottom = '125px';
+            //check if we using a webrtc viewer
+            const isWebrtcViewer: boolean = <HTMLVideoElement>this.$el.querySelector('.webrtc') != null;
+            screen[0].style.top = isWebrtcViewer ? '0px' : 'auto';
+            screen[0].style.bottom = isWebrtcViewer ? 'auto' : '125px'; //but no if it is webrtc publ
         } else {
             this.chatSmall = false;
             screen[0].style.top = '0px';
