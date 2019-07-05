@@ -111,6 +111,9 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Opera'
+        },
+        {
+            name: 'Microsoft Edge'
         }
 
     ];
@@ -146,6 +149,9 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         },
         {
             name: 'Opera'
+        },
+        {
+            name: 'Microsoft Edge'
         }
     ];
 
