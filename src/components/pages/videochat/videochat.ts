@@ -131,11 +131,6 @@ export default class VideoChat extends Vue {
             return 'webrtc';
         }
 
-        //if IE gold old flash
-        if(isIE(platform)){
-            return 'rtmp';
-        }
-
         //else use nanocosmos if you are a ios device
         if(isIOS(platform)){
             return 'nanocosmos';

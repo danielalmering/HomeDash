@@ -113,7 +113,8 @@ export function webrtcPossible(platform:Platform):boolean{
             name: 'Opera'
         },
         {
-            name: 'Microsoft Edge'
+            name: 'Microsoft Edge', //chrome engine is working
+            version: '77.0'
         }
 
     ];
@@ -139,7 +140,7 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
             //This needs te be fixed by Wowza!
             name: 'Safari',
-            version: '12.1'
+            version: '12.1' //temp voor testing because of chrom
         },
         {
             name: 'Chrome Mobile', //does not work for iOS
@@ -151,7 +152,8 @@ export function webrtcPublishPossible(platform:Platform):boolean{
             name: 'Opera'
         },
         {
-            name: 'Microsoft Edge'
+            name: 'Microsoft Edge', //chrome engine is working
+            version: '77'
         }
     ];
 
