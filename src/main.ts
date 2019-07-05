@@ -13,7 +13,8 @@ import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 
 //requiring the shim adds it to the build
-require('webrtc-adapter');
+//require('webrtc-adapter');
+require('../static/adapter.js');
 require('./directives/clickOutside');
 require('./directives/scroll');
 

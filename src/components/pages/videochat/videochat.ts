@@ -124,7 +124,7 @@ export default class VideoChat extends Vue {
         }
 
         const platform = Platform.parse(navigator.userAgent);
-        alert(platform.name + " " + platform.os + " " + platform.version);
+        //alert(platform.name + " " + platform.os + " " + platform.version);
 
         //if webrtc is possible use webrtc viewer
         if(webrtcPossible(platform) && this.isWebRTCPerformer){
