@@ -72,7 +72,7 @@
                 <!--<a v-on:click="toggleMute" v-if="sessionType != 'PEEK' && streamTransportType == 'webrtc'" v-bind:class="['fa', mutedClass]"  >
                     <i class="tooltip">{{ isVideoMuted ? "Geluid aan" : "Geluid uit"}}</i>
                 </a>-->
-                <a v-on:click="toggleCam" v-if="sessionType != 'PEEK' && broadcastType == 'webrtcBroadcast'" class="fa fa-video-camera" :class="{ active:broadcasting.cam }" >
+                <a v-on:click="toggleCam" v-if="sessionType != 'PEEK' && broadcastType != 'none'" class="fa fa-video-camera" :class="{ active:broadcasting.cam }" >
                     <i class="tooltip" v-t="'videochat.webcam-on'"></i>
                 </a>
                 <a v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)" class="fa fa fa-bell" :class="{ active:performer.isSubscribed }" >
