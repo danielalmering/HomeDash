@@ -88,14 +88,16 @@ export function openRoute(name: string){
 export function webrtcPossible(platform:Platform):boolean{
     const supported = [
         {
-            name: 'Chrome'
+            name: 'Chrome',
+            version: '23'
         },
         { //play stream H264 possible for Safari 11+
             name: 'Safari',
             version: '11.0'
         },
         {
-            name: 'Firefox'
+            name: 'Firefox',
+            version: '22'
         },
         {
             name: 'Firefox for Android'
@@ -104,13 +106,19 @@ export function webrtcPossible(platform:Platform):boolean{
             name: 'Firefox for iOS'
         },
         {
-            name: 'Samsung Internet'
+            name: 'Samsung Internet',
+            version: '4'
         },
         {
             name: 'Chrome Mobile' //both andriod and iOS can play streams
         },
         {
-            name: 'Opera'
+            name: 'Opera',
+            version: '18'
+        },
+        {
+            name: 'Opera Mobile',
+            version: '46'
         },
         {
             name: 'Microsoft Edge', //chrome engine is working
@@ -126,13 +134,16 @@ export function webrtcPossible(platform:Platform):boolean{
 export function webrtcPublishPossible(platform:Platform):boolean{
     const supported = [
         {
-            name: 'Chrome'
+            name: 'Chrome',
+            version: '23'
         },
         {
-            name: 'Firefox'
+            name: 'Firefox',
+            version: '22'
         },
         {
-            name: 'Samsung Internet'
+            name: 'Samsung Internet',
+            version: '4'
         },
         {
             name: 'Firefox for Android'
@@ -287,10 +298,8 @@ export function match(message:any, pattern:any):boolean{
         if (! (prop in message) ){
             return false;
         }
-        console.log('prop value', prop);
 
         if ( (typeof pattern[prop] === 'object') && (typeof message[prop] === 'object')){
-            console.log("prop", pattern[prop]);
             //recursive matching. No guards!
             if (!match(message[prop], pattern[prop])){
                 return false;
