@@ -140,7 +140,7 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
             //This needs te be fixed by Wowza!
             name: 'Safari',
-            version: '12.1' //temp voor testing because of chrom
+            version: '12.1'
         },
         {
             name: 'Chrome Mobile', //does not work for iOS
@@ -154,6 +154,16 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         {
             name: 'Microsoft Edge', //chrome engine is working
             version: '77'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isIPhone(platform:Platform){
+    const supported = [
+        {
+            product: 'iPhone'
         }
     ];
 
@@ -204,7 +214,7 @@ export function isApple(platform:Platform):boolean{
     const apples = [
         {
             os:{
-                family: 'iOS'
+                family: 'iOS',
             }
         },
         {
@@ -222,10 +232,48 @@ export function isIOS(platform:Platform):boolean{
             os:{
                 family: 'iOS'
             }
-        } 
+        }
+
     ];
 
     return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function NanoCosmosPossible(platform: Platform){
+    const supported = [
+        {
+            name: 'Microsoft Edge'
+        },
+        {
+            name: 'Safari',
+            version: '10'
+        },
+        {
+            name: 'Chrome',
+            version: '54'
+        },
+        {
+            name: 'Chrome Mobile',
+            version: '54'
+        },
+        {
+            name: 'Firefox',
+            version: '48'
+        },
+        {
+            name: 'IE',
+            version: '11.0',
+            os: {
+                family: 'Windows',
+                version: '8'
+            }
+        },
+        {
+            name: 'Opera'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
 export function hasWebAudio():boolean{
@@ -239,8 +287,10 @@ export function match(message:any, pattern:any):boolean{
         if (! (prop in message) ){
             return false;
         }
+        console.log('prop value', prop);
 
         if ( (typeof pattern[prop] === 'object') && (typeof message[prop] === 'object')){
+            console.log("prop", pattern[prop]);
             //recursive matching. No guards!
             if (!match(message[prop], pattern[prop])){
                 return false;

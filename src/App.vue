@@ -23,6 +23,7 @@ import agecheck from './components/layout/Agecheck.vue';
 
 import config from './config';
 import Raven from 'raven-js';
+import 'whatwg-fetch';
 
 @Component({
     components: {
