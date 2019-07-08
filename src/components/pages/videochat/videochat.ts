@@ -20,7 +20,7 @@ import {RawLocation} from 'vue-router/types/router';
 import {
     isApple,
     isIE,
-    isIOS,
+    isIOS, isIPhone, NanoCosmosPossible,
     noFlash,
     openModal,
     tagHotjar,
@@ -124,18 +124,20 @@ export default class VideoChat extends Vue {
         }
 
         const platform = Platform.parse(navigator.userAgent);
-        //alert(platform.name + " " + platform.os + " " + platform.version);
+
+        console.log("platform", platform);
 
         //if webrtc is possible use webrtc viewer
         if(webrtcPossible(platform) && this.isWebRTCPerformer){
             return 'webrtc';
         }
 
-        //else use nanocosmos if you are a ios device
-        if(isIOS(platform)){
+        //else use nanocosmos if you are an ios 10 or higher device
+        if(isIOS(platform) && NanoCosmosPossible(platform)){
             return 'nanocosmos';
         }
 
+        //fallback on nanocosmos
         return 'jsmpeg';
     }
 
@@ -150,10 +152,16 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
+        //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
+            //Disable iphone for now,  why ???
+            if(isIPhone(platform)){
+                return 'none';
+            }
+
             //use vp8 if the browser is safari and above > 12.1
             if(isIOS(platform) && this.isWebRTCPerformer){
-               // this.broadcasting.videoCodec = VideoCodec.VP8;
+                this.broadcasting.videoCodec = VideoCodec.VP8;
             }
 
             return 'webrtcBroadcast';
