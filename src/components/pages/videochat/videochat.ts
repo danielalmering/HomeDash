@@ -19,7 +19,6 @@ import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
 import {
     isApple,
-    isIE,
     isIOS, isIPhone, NanoCosmosPossible,
     noFlash,
     openModal,
@@ -341,13 +340,14 @@ export default class VideoChat extends Vue {
 
     toggleCam(){
         this.broadcasting.cam = !this.broadcasting.cam;
+
         //also hide the settings screen when the cam is turned off
         if (!this.broadcasting.cam){
             this.broadcasting.settings = false;
         }
 
         if (this.broadcasting.cam){
-            //logKPI("cl_camback_intention");
+            //logKPI("cl_cambackintention");
         }
 
         tagHotjar(`TOGGLE_CAM`);

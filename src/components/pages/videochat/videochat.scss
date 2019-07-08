@@ -268,14 +268,16 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
     &__mute-right {
         position: absolute;
         z-index: 2;
-        right: 0px;
-        top: 10px;
+        left: 0px;
+        top: 189px;
         color: $pallete-2;
         @include rem(font-size, 26px);
         background: $semi-transparent-bg;
         @include rem(padding, 6px 15px);
-        @include border-left-radius(5px);
+        @include border-right-radius(5px);
         cursor: pointer;
+        height: 50px;
+        width: 50px;
     }
 
     &__favourite {
