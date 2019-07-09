@@ -19,7 +19,10 @@ import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
 import {
     isApple,
-    isIOS, isIPhone, NanoCosmosPossible,
+    isIOS,
+    isIPhone, isSafari,
+    isWebrtcMuted,
+    NanoCosmosPossible,
     noFlash,
     openModal,
     tagHotjar,
@@ -151,15 +154,25 @@ export default class VideoChat extends Vue {
 
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
-            //Disable iphone for now,  why ???
+            //Begin apple fixes
+            //Disable iphone for now
             if(isIPhone(platform)){
                 return 'none';
             }
 
             //use vp8 if the browser is safari and above > 12.1
-            if(isIOS(platform) && this.isWebRTCPerformer){
-                this.broadcasting.videoCodec = VideoCodec.VP8;
+            if(isSafari(platform)){
+                if(this.isWebRTCPerformer){ //performer needs to use the webrtc transport
+                    this.broadcasting.videoCodec = VideoCodec.VP8;
+                } else { //else old skool
+                    if(!isIOS(platform)) { //if not a ios device then flash
+                       return 'rtmpBroadcast';
+                    } else { //else no broadcast possible
+                       return 'none'; //for i.e. ipads
+                    }
+                }
             }
+            //end apple fixes
 
             return 'webrtcBroadcast';
         }
