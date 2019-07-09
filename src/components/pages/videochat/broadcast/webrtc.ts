@@ -51,13 +51,7 @@ export class WebRTC extends Broadcast{
         this.wrtc = new Publisher( options );
         this.wrtc.onStateChange = this.onStateChange.bind(this);
 
-        console.log("VideoCodec used", this.videoCodec);
         this.wrtc.videoChoice =  this.videoCodec;
-
-        if(this.videoCodec == VideoCodec.VP8){
-            //set attributes
-
-        }
         this.wrtc.onError = this.onError.bind(this); 
     }
 
