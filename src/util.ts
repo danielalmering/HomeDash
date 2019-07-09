@@ -203,6 +203,16 @@ export function isWebrtcMuted(platform:Platform): boolean{
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+export function isSafari(platform:Platform): boolean{
+    const supported = [
+        {
+            name: 'Safari'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
 //No flash for mobile
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
