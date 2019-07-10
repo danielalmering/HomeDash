@@ -6,7 +6,7 @@ import Stream from './stream';
 
 import {Player, WRTCUtils as utils } from 'typertc';
 
-import {  isWebrtcMuted } from '../../../../util';
+import {isWebrtcMuted, sleep} from '../../../../util';
 
 const Platform = require('platform');
 
@@ -15,21 +15,29 @@ const Platform = require('platform');
 })
 export class WebRTC extends Stream {
 
-    player:Player;
+    player:Player|null;
     mutedClass: string = "";
     isPeek:boolean = false;
 
 
     @Watch('playStream')
     onPlaystreamSwitch(){
+
+        console.log("playstream switch");
         this.end();
-        this.load();
+        sleep(500).then(() =>{
+            this.load();
+        });
+
     }
 
     @Watch('wowza')
     onWowzaSwitch(){
+        /*console.log("wowza switch");
         this.end();
-        this.load();
+        sleep(1000).then(() =>{
+            this.load();
+        });*/
     }
 
     toggleMute(){
@@ -87,6 +95,7 @@ export class WebRTC extends Stream {
     private end(){
         if(this.player){
             this.player.stop();
+            this.player = null;
         }
     }
 
