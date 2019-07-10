@@ -192,7 +192,7 @@ export default class Sidebar extends Vue {
             if(didPerformerJoinSession && this.category === 'peek'){
                 const newPerformer = await this.loadPerformer(data.performerId);
 
-                if(!newPerformer.performer_services['peek']){
+                if(!newPerformer || !newPerformer.performer_services || ('peek' in newPerformer.performer_services) || !newPerformer.performer_services['peek']){
                     return;
                 }
 
