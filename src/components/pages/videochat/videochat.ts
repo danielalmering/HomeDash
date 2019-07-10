@@ -124,25 +124,41 @@ export default class VideoChat extends Vue {
         return this.performer.mediaId > 1;
     }
 
+    lastViewType: string|undefined = this.streamTransportType;
 
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
 
+        //console.log("lastViewType: " + this.lastViewType);
+
         const platform = Platform.parse(navigator.userAgent);
 
         //if webrtc is possible use webrtc viewer
         if(webrtcPossible(platform) && this.isWebRTCPerformer){
+
+            if(this.lastViewType != 'webrtc' && this.lastViewType == undefined){
+                console.log('changing view type from ' + this.lastViewType  + ' to  webrtc' );
+            }
+            this.lastViewType = 'webrtc';
             return 'webrtc';
         }
 
         //else use nanocosmos if you are an ios 10 or higher device
         if(isIOS(platform) && NanoCosmosPossible(platform)){
+            if(this.lastViewType != 'nanocosmos' && this.lastViewType == undefined){
+                console.log('changing view type from ' + this.lastViewType  + ' to  nanocosmos' );
+            }
+            this.lastViewType = 'nanocosmos';
             return 'nanocosmos';
         }
 
         //fallback on nanocosmos
+        if(this.lastViewType != 'jsmpeg' && this.lastViewType == undefined){
+            console.log('changing view type from ' + this.lastViewType  + ' to  jsmpeg' );
+        }
+        this.lastViewType = 'jsmpeg';
         return 'jsmpeg';
     }
 
@@ -420,9 +436,6 @@ export default class VideoChat extends Vue {
 
     viewerError(message: string){
         console.log(message);
-        if(message == 'Session rejected'){
-
-        }
     }
 
     toggleSettings(){
@@ -497,9 +510,15 @@ export default class VideoChat extends Vue {
                 this.navigation.next(true);
             }
         }
+
+        if(value == State.Ending){
+            //kill video
+
+        }
     }
 
     async switchPeek(){
+
         try {
             await this.$store.dispatch('switchPeek', this.$store.state.session.switchingPerformer);
         } catch(e){

@@ -26,12 +26,11 @@ export class WebRTC extends Stream {
         this.load();
     }
 
-  /*  @Watch('wowza')
+    @Watch('wowza')
     onWowzaSwitch(){
         this.end();
         this.load();
-    }*/
-
+    }
 
     toggleMute(){
         const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
