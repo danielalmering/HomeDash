@@ -108,6 +108,11 @@ export default class VideoChat extends Vue {
 
     get isWebRTCPerformer(): boolean {
         //disable webrtc play by returning false here!
+
+        if(this.performer == null){
+            return false;
+        }
+
         if(!this.performer && this.performer === undefined){
             return false;
         }
@@ -119,11 +124,12 @@ export default class VideoChat extends Vue {
         return this.performer.mediaId > 1;
     }
 
-
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
+
+        //console.log("lastViewType: " + this.lastViewType);
 
         const platform = Platform.parse(navigator.userAgent);
 
@@ -415,9 +421,6 @@ export default class VideoChat extends Vue {
 
     viewerError(message: string){
         console.log(message);
-        if(message == 'Session rejected'){
-
-        }
     }
 
     toggleSettings(){
@@ -495,6 +498,7 @@ export default class VideoChat extends Vue {
     }
 
     async switchPeek(){
+
         try {
             await this.$store.dispatch('switchPeek', this.$store.state.session.switchingPerformer);
         } catch(e){
