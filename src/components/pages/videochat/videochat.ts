@@ -108,6 +108,11 @@ export default class VideoChat extends Vue {
 
     get isWebRTCPerformer(): boolean {
         //disable webrtc play by returning false here!
+
+        if(this.performer == null){
+            return false;
+        }
+
         if(!this.performer && this.performer === undefined){
             return false;
         }

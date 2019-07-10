@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
 import config from '../../../../config';
 import Stream from './stream';
@@ -19,6 +19,20 @@ export class WebRTC extends Stream {
     mutedClass: string = "";
     isPeek:boolean = false;
 
+
+    @Watch('playStream')
+    onPlaystreamSwitch(){
+        this.end();
+        this.load();
+    }
+
+  /*  @Watch('wowza')
+    onWowzaSwitch(){
+        this.end();
+        this.load();
+    }*/
+
+
     toggleMute(){
         const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
 
@@ -33,6 +47,12 @@ export class WebRTC extends Stream {
 
     mounted(){
 
+        this.load();
+
+        //this.player.play();
+    }
+
+    private load(){
         const platform = Platform.parse(navigator.userAgent);
 
         this.isPeek = this.muted;
@@ -63,13 +83,15 @@ export class WebRTC extends Stream {
         this.player = new Player(options);
         this.player.onStateChange = this.onStateChange.bind(this);
         this.player.onError = this.onError.bind(this);
-
-        //this.player.play();
     }
 
-    beforeDestroy(){
+    private end(){
         if(this.player){
             this.player.stop();
         }
+    }
+
+    beforeDestroy(){
+        this.end();
     }
 }
