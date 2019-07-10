@@ -124,8 +124,6 @@ export default class VideoChat extends Vue {
         return this.performer.mediaId > 1;
     }
 
-    lastViewType: string|undefined = this.streamTransportType;
-
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
@@ -137,28 +135,15 @@ export default class VideoChat extends Vue {
 
         //if webrtc is possible use webrtc viewer
         if(webrtcPossible(platform) && this.isWebRTCPerformer){
-
-            if(this.lastViewType != 'webrtc' && this.lastViewType == undefined){
-                console.log('changing view type from ' + this.lastViewType  + ' to  webrtc' );
-            }
-            this.lastViewType = 'webrtc';
             return 'webrtc';
         }
 
         //else use nanocosmos if you are an ios 10 or higher device
         if(isIOS(platform) && NanoCosmosPossible(platform)){
-            if(this.lastViewType != 'nanocosmos' && this.lastViewType == undefined){
-                console.log('changing view type from ' + this.lastViewType  + ' to  nanocosmos' );
-            }
-            this.lastViewType = 'nanocosmos';
             return 'nanocosmos';
         }
 
         //fallback on nanocosmos
-        if(this.lastViewType != 'jsmpeg' && this.lastViewType == undefined){
-            console.log('changing view type from ' + this.lastViewType  + ' to  jsmpeg' );
-        }
-        this.lastViewType = 'jsmpeg';
         return 'jsmpeg';
     }
 
