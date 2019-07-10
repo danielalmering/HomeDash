@@ -25,7 +25,7 @@ export class WebRTC extends Stream {
 
         console.log("playstream switch");
         this.end();
-        sleep(500).then(() =>{
+        sleep(100).then(() =>{
             this.load();
         });
 

@@ -154,15 +154,6 @@ const actions = {
         try {
             const previousPerformer = { ...store.state.activePerformer };
 
-            if(previousPerformer && ((<Performer>previousPerformer).mediaId != performer.mediaId) ){
-
-                console.log("Failing because of stream switch", performer.advertId);
-
-                router.push({ name: 'Profile', params: { id: performer.advertId.toString() } });
-
-                return;
-            }
-
             store.state.isSwitching = true;
 
             await store.dispatch('end');
