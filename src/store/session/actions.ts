@@ -1,6 +1,7 @@
 import { ActionContext } from 'vuex';
 import { SessionState, RequestPayload, translate, VideoEventSocketMessage } from './index';
 import { RootState } from '../index';
+import router from '../../router';
 import { State, SessionType } from '../../models/Sessions';
 import config from '../../config';
 import { Performer } from 'sensejs/performer/performer.model';
@@ -153,12 +154,21 @@ const actions = {
         try {
             const previousPerformer = { ...store.state.activePerformer };
 
+            if(previousPerformer && ((<Performer>previousPerformer).mediaId != performer.mediaId) ){
+
+                console.log("Failing because of stream switch", performer.advertId);
+
+                router.push({ name: 'Profile', params: { id: performer.advertId.toString() } });
+
+                return;
+            }
+
             store.state.isSwitching = true;
 
             await store.dispatch('end');
 
             await sleep(1000);
-            
+
             await store.dispatch('startRequest', <RequestPayload>{
                 performer: performer,
                 sessionType: store.state.activeSessionType,
