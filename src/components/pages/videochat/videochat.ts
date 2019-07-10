@@ -108,11 +108,11 @@ export default class VideoChat extends Vue {
 
     get isWebRTCPerformer(): boolean {
         //disable webrtc play by returning false here!
-        if(this.performer === undefined){
+        if(!this.performer && this.performer === undefined){
             return false;
         }
 
-        if(this.performer.mediaId === undefined){
+        if(!this.performer.mediaId  && this.performer.mediaId === undefined){
             return false;
         }
 
@@ -415,6 +415,9 @@ export default class VideoChat extends Vue {
 
     viewerError(message: string){
         console.log(message);
+        if(message == 'Session rejected'){
+
+        }
     }
 
     toggleSettings(){
