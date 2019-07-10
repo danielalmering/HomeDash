@@ -15,6 +15,9 @@ import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import {NanoCosmosPossible} from "../../../util";
+
+const Platform = require('platform');
 
 @WithRender
 @Component({
@@ -73,6 +76,18 @@ export default class Voyeur extends Vue {
         return (id: number) => {
             return this.$store.getters['voyeur/isReservation'](id);
         };
+    }
+
+    get streamTransportType(): string | undefined{
+
+        const platform = Platform.parse(navigator.userAgent);
+
+        if(NanoCosmosPossible(platform)){
+            return 'nanocosmos';
+        }
+
+        //fallback on nanocosmos
+        return 'jsmpeg';
     }
 
     mounted(){

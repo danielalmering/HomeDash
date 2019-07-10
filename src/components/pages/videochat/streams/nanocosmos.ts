@@ -21,7 +21,7 @@ export class H5Style {
 }
 
 @Component({
-    template: '<div class="nanocosmos" :id="id"></div>',
+    template: '<div class="nanocosmos"  :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 
@@ -158,8 +158,10 @@ export default class NanoCosmos extends Stream {
                 onWarning: (s: any) => { this.log(s); }
             },
             'playback': {
-                'autoplay': this.autoplay,
-                'muted': this.muted,
+                'autoplay': this.autoplay,//this.autoplay,
+                'muted':  this.muted,
+                'allowSafariHlsFallback': true,
+                'automute': true,
                 'metadata': true,
                 'flashplayer': '../../../../../static/nano.player.swf',
                 'keepConnection': true,

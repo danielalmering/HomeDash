@@ -1,40 +1,47 @@
 import Vue from 'vue';
 import jsmpeg from 'jsmpeg';
 
-import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
-import { State, SessionType, PaymentType } from '../../../models/Sessions';
-import { SessionData, RequestPayload } from '../../../store/Session/';
-
-import notificationSocket from '../../../socket';
+import {Component, Watch} from 'vue-property-decorator';
+import {Route} from 'vue-router';
+import {PaymentType, SessionType, State} from '../../../models/Sessions';
 import Chat from './chat/chat';
-import Broadcast from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
-import { Rtmp as RTMPPlay } from './streams/rtmp';
-import { Rtmp as RTMPBroadcast } from './broadcast/rtmp';
+import {Rtmp as RTMPPlay} from './streams/rtmp';
+import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
-import { WebRTC as WRTCPlay } from './streams/webrtc';
-import { WebRTC as WRTCBroadcast } from './broadcast/webrtc'
-import config from '../../../config';
+import {WebRTC as WRTCPlay} from './streams/webrtc';
+import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
 import Confirmations from '../../layout/Confirmations.vue';
-import { Devices } from 'typertc';
+import {Devices, VideoCodec} from 'typertc';
 
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
-import Page from '../page';
-import { RawLocation } from 'vue-router/types/router';
-import { openModal, tagHotjar, isApple, isIOS } from '../../../util';
-import { Performer } from 'sensejs/performer/performer.model';
-import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import { clientSeen } from 'sensejs/session/index';
-import { webrtcPossible, noFlash } from 'sensejs/util/platform';
-import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
+import {RawLocation} from 'vue-router/types/router';
+import {
+    isApple,
+    isIOS,
+    isIPhone, isSafari,
+    isWebrtcMuted,
+    NanoCosmosPossible,
+    noFlash,
+    openModal,
+    tagHotjar,
+    webrtcPossible,
+    webrtcPublishPossible
+} from '../../../util';
+import {Performer} from 'sensejs/performer/performer.model';
+import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
+import {clientSeen} from 'sensejs/session/index';
+//import { webrtcPossible, noFlash } from 'sensejs/util/platform';
+import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
+
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
     cam: boolean | string;
     mic: boolean | string;
     settings: boolean;
+    videoCodec: VideoCodec;
 }
 
 Component.registerHooks([
@@ -62,11 +69,13 @@ export default class VideoChat extends Vue {
     isEnding: boolean = false;
 
     intervalTimer: number;
+    mutedClass:string = "";
 
     broadcasting: BroadcastConfiguration = {
         cam: false,
         mic: false,
-        settings: false
+        settings: false,
+        videoCodec: VideoCodec.H264
     };
 
     stateMessages: string[] = [];
@@ -97,23 +106,38 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
     }
 
+    get isWebRTCPerformer(): boolean {
+        //disable webrtc play by returning false here!
+        if(this.performer === undefined){
+            return false;
+        }
+
+        if(this.performer.mediaId === undefined){
+            return false;
+        }
+
+        return this.performer.mediaId > 1;
+    }
+
+
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
 
-        //Uncomment if you need the user to be able to watch using flash
-        //playback using flash for devices that do not support webAudio (so devices that can't play sound in jsmpeg)
-        //Peeking is mute, so no need for flash in that scenario.
-        // if ( this.sessionType !== SessionType.Peek && !hasWebAudio() ){
-        //     return 'rtmp';
-        // }
-        
         const platform = Platform.parse(navigator.userAgent);
-        if(isIOS(platform)){
+
+        //if webrtc is possible use webrtc viewer
+        if(webrtcPossible(platform) && this.isWebRTCPerformer){
+            return 'webrtc';
+        }
+
+        //else use nanocosmos if you are an ios 10 or higher device
+        if(isIOS(platform) && NanoCosmosPossible(platform)){
             return 'nanocosmos';
         }
 
+        //fallback on nanocosmos
         return 'jsmpeg';
     }
 
@@ -128,14 +152,35 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
+        //check if it is possible to publish with webrtc
+        if (webrtcPublishPossible(platform)){
+            //Begin apple fixes
+            //Disable iphone for now
+            if(isIPhone(platform)){
+                return 'none';
+            }
+
+            //use vp8 if the browser is safari and above > 12.1
+            if(isSafari(platform)){
+                if(this.isWebRTCPerformer){ //performer needs to use the webrtc transport
+                    this.broadcasting.videoCodec = VideoCodec.VP8;
+                } else { //else old skool
+                    if(!isIOS(platform)) { //if not a ios device then flash
+                       return 'rtmpBroadcast';
+                    } else { //else no broadcast possible
+                       return 'none'; //for i.e. ipads
+                    }
+                }
+            }
+            //end apple fixes
+
+            return 'webrtcBroadcast';
+        }
+
         //disabled camback on mobile for now
         //move to below webrtcPossible, and those platforms that support webrtc will cam back.
         if (noFlash(platform)){
             return 'none';
-        }
-
-        if (webrtcPossible(platform)){
-            return 'webrtcBroadcast';
         }
 
         return 'rtmpBroadcast';
@@ -302,15 +347,18 @@ export default class VideoChat extends Vue {
         this.broadcasting.cam = true;
     }
 
+
+
     toggleCam(){
         this.broadcasting.cam = !this.broadcasting.cam;
+
         //also hide the settings screen when the cam is turned off
         if (!this.broadcasting.cam){
             this.broadcasting.settings = false;
         }
 
         if (this.broadcasting.cam){
-            //logKPI("cl_camback_intention");
+            //logKPI("cl_cambackintention");
         }
 
         tagHotjar(`TOGGLE_CAM`);
@@ -329,6 +377,7 @@ export default class VideoChat extends Vue {
 
         tagHotjar(`TOGGLE_MIC`);
     }
+
 
     setCamera(event: Event){
         const camId = (<HTMLSelectElement>event.srcElement).value;

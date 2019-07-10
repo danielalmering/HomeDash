@@ -84,24 +84,136 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
+//Webrtc play back possible
 export function webrtcPossible(platform:Platform):boolean{
     const supported = [
         {
-            name: 'Chrome'
+            name: 'Chrome',
+            version: '23'
         },
-        {
+        { //play stream H264 possible for Safari 11+
             name: 'Safari',
             version: '11.0'
+        },
+        {
+            name: 'Firefox',
+            version: '22'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {
+            name: 'Firefox for iOS'
+        },
+        {
+            name: 'Samsung Internet',
+            version: '4'
+        },
+        {
+            name: 'Chrome Mobile' //both andriod and iOS can play streams
+        },
+        {
+            name: 'Opera',
+            version: '18'
+        },
+        {
+            name: 'Opera Mobile',
+            version: '46'
+        },
+        {
+            name: 'Microsoft Edge', //chrome engine is working
+            version: '77.0'
+        }
+
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+//Webrtc publish possible
+export function webrtcPublishPossible(platform:Platform):boolean{
+    const supported = [
+        {
+            name: 'Chrome',
+            version: '23'
+        },
+        {
+            name: 'Firefox',
+            version: '22'
+        },
+        {
+            name: 'Samsung Internet',
+            version: '4'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
+            //This needs te be fixed by Wowza!
+            name: 'Safari',
+            version: '12.1'
+        },
+        {
+            name: 'Chrome Mobile', //does not work for iOS
+            os: {
+                family: 'Android'
+            }
+        },
+        {
+            name: 'Opera'
+        },
+        {
+            name: 'Microsoft Edge', //chrome engine is working
+            version: '77'
         }
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
-export function hasWebAudio():boolean{
-    return ('AudioContext' in window) || ('webkitAudioContext' in window);
+export function isIPhone(platform:Platform){
+    const supported = [
+        {
+            product: 'iPhone'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+//IE not killing flash for now, let it use the superior flash plugin
+export function isIE(platform:Platform){
+    const supported = [
+        {
+            name: 'IE'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+//Autoplay fix for safari
+export function isWebrtcMuted(platform:Platform): boolean{
+    const supported = [
+        {
+            name: 'Safari'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isSafari(platform:Platform): boolean{
+    const supported = [
+        {
+            name: 'Safari'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+//No flash for mobile
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
         {
@@ -123,7 +235,7 @@ export function isApple(platform:Platform):boolean{
     const apples = [
         {
             os:{
-                family: 'iOS'
+                family: 'iOS',
             }
         },
         {
@@ -141,10 +253,52 @@ export function isIOS(platform:Platform):boolean{
             os:{
                 family: 'iOS'
             }
-        } 
+        }
+
     ];
 
     return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function NanoCosmosPossible(platform: Platform){
+    const supported = [
+        {
+            name: 'Microsoft Edge'
+        },
+        {
+            name: 'Safari',
+            version: '10'
+        },
+        {
+            name: 'Chrome',
+            version: '54'
+        },
+        {
+            name: 'Chrome Mobile',
+            version: '54'
+        },
+        {
+            name: 'Firefox',
+            version: '48'
+        },
+        {
+            name: 'IE',
+            version: '11.0',
+            os: {
+                family: 'Windows',
+                version: '8'
+            }
+        },
+        {
+            name: 'Opera'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function hasWebAudio():boolean{
+    return ('AudioContext' in window) || ('webkitAudioContext' in window);
 }
 
 // checks if 'pattern' is a subset of 'message'

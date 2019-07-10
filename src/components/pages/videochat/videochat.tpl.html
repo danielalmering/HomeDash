@@ -1,7 +1,8 @@
 <div class="videochat">
     <div class="videochat__screen">
         <div class="videochat__screen-object">
-            <component :is="streamTransportType"
+            <component :is="
+            streamTransportType"
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
                 :wowza="wowza"
@@ -12,7 +13,6 @@
         </div>
     </div>
     <div class="videochat__broadcast" v-if="broadcastType != 'none'">
-
         <div class="videochat__broadcast-object" v-if="broadcasting.cam">
             <component :is="broadcastType"
                 v-on:stateChange="broadcastStateChange"
@@ -22,6 +22,7 @@
                 :publishToken="publishToken"
                 :mic="broadcasting.mic"
                 :cam="broadcasting.cam"
+                :videoCodec="broadcasting.videoCodec"
                 :quality="1" >
             </component>
         </div>
@@ -68,7 +69,7 @@
             </span>
 
             <div class="videochat__controls-btns">
-                <a v-on:click="toggleCam" v-if="sessionType != 'PEEK'" class="fa fa-video-camera hidden-xs" :class="{ active:broadcasting.cam }" >
+                <a v-on:click="toggleCam" v-if="sessionType != 'PEEK' && broadcastType != 'none'" class="fa fa-video-camera" :class="{ active:broadcasting.cam }" >
                     <i class="tooltip" v-t="'videochat.webcam-on'"></i>
                 </a>
                 <a v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)" class="fa fa fa-bell" :class="{ active:performer.isSubscribed }" >
