@@ -495,11 +495,6 @@ export default class VideoChat extends Vue {
                 this.navigation.next(true);
             }
         }
-
-        if(value == State.Ending){
-            //kill video
-
-        }
     }
 
     async switchPeek(){
