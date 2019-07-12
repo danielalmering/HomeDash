@@ -18,7 +18,6 @@ export class WebRTC extends Stream {
     player:Player|null;
     mutedClass: string = "";
     isPeek:boolean = false;
-    block: string = "";
 
 
     @Watch('playStream')
