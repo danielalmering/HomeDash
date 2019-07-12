@@ -2,7 +2,14 @@ import { Component, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { openModal, openRoute, getAvatarImage, getPerformerStatus } from '../../../../util';
+import {
+    openModal,
+    openRoute,
+    getAvatarImage,
+    getPerformerStatus,
+    webrtcPossible,
+    NanoCosmosPossible
+} from '../../../../util';
 import config, { logo } from '../../../../config';
 
 import './sidebar.scss';
@@ -18,14 +25,20 @@ import { listFavourites } from 'sensejs/performer/favourite';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { isInSession, isOutOfSession } from 'sensejs/util/performer';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import {WebRTC} from "../../videochat/streams/webrtc";
+
+const Platform = require('platform');
+
 
 type SidebarCategory = 'recommended' | 'teasers' | 'peek' | 'favourites' | 'voyeur';
+
 
 @WithRender
 @Component({
     components: {
         jsmpeg: JSMpeg,
-        nanocosmos: NanoCosmos
+        nanocosmos: NanoCosmos,
+        webrtc: WebRTC
     }
 })
 export default class Sidebar extends Vue {
@@ -98,6 +111,50 @@ export default class Sidebar extends Vue {
     onVoyeurStateChange(newValue: boolean){
         //When voyeur gets activated switch the voyeur tab, when the session ends, switch back
         this.setCategory(newValue ? 'voyeur' : this.defaultCategory);
+    }
+
+
+    isWebRTCPerformer(performerId:number): boolean {
+        //disable webrtc play by returning false here!
+        //nst performerId = this.$store.state.voyeur.mainTile.performer;
+
+        const performer = this.performer(performerId);
+
+        if(performer == null){
+            return false;
+        }
+
+        if(!performer && performer === undefined){
+            return false;
+        }
+
+        if(!performer.mediaId  && performer.mediaId === undefined){
+            return false;
+        }
+
+        return performer.mediaId > 1;
+    }
+
+
+    streamTransportType(performer:number): string | undefined{
+
+        const platform = Platform.parse(navigator.userAgent);
+
+        if(this.isWebRTCPerformer(performer)){
+            if(webrtcPossible(platform)){
+                return 'webrtc';
+            } else {
+                return 'jsmpeg';
+            }
+
+        }
+
+        if(NanoCosmosPossible(platform)){
+            return 'nanocosmos';
+        }
+
+        //fallback on nanocosmos
+        return 'jsmpeg';
     }
 
     mounted(){
