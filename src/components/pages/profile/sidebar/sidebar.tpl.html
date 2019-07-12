@@ -70,12 +70,20 @@
                             :playStream="tile.streamData.playStream"
                             :muted="true">
                         </jsmpeg> -->
-                        <nanocosmos
+                        <!-- <nanocosmos
                         :wowza="tile.streamData.wowza"
                         :interactive="false"
                         :playStream="tile.streamData.playStream"
                         :muted="true">
-                        </nanocosmos>
+                        </nanocosmos> -->
+
+
+                        <component :is="streamTransportType(tile.performer)"
+                                   :wowza="tile.streamData.wowza"
+                                   :interactive="false"
+                                   :playStream="tile.streamData.playStream"
+                                   :muted="true">
+                        </component>
                     </div>
                     <div class="sidebar__voyeur-misc">
                         <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advertId }}</span>

@@ -28,12 +28,14 @@ export default class JSMpeg extends Stream {
 
     @Watch('wowza')
     onWowzaSwitch(){
-        this.end();
-        this.load();
+        /*this.end();
+        this.load();*/
     }
 
     mounted(){
-        this.load();
+        if(!this.isSwitching) {
+            this.load();
+        }
         this.onResize();
         window.addEventListener('resize', this.onResize);
     }

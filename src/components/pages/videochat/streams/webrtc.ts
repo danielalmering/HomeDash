@@ -22,13 +22,8 @@ export class WebRTC extends Stream {
 
     @Watch('playStream')
     onPlaystreamSwitch(){
-
-        console.log("playstream switch");
         this.end();
-        sleep(100).then(() =>{
-            this.load();
-        });
-
+        this.load();
     }
 
     @Watch('wowza')
@@ -54,12 +49,16 @@ export class WebRTC extends Stream {
 
     mounted(){
 
-        this.load();
+        if(!this.isSwitching){
+            console.log("Loading on mount");
+            this.load();
+        } else {  //wait on playstream change
+            console.log("not loading on mount");
+        }
 
-        //this.player.play();
     }
 
-    private load(){
+    public load(){
         const platform = Platform.parse(navigator.userAgent);
 
         this.isPeek = this.muted;

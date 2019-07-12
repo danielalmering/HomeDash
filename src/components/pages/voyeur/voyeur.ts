@@ -15,7 +15,9 @@ import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import {NanoCosmosPossible} from "../../../util";
+import {NanoCosmosPossible, webrtcPossible} from "../../../util";
+import {WebRTC} from "../videochat/streams/webrtc";
+
 
 const Platform = require('platform');
 
@@ -24,6 +26,7 @@ const Platform = require('platform');
     components: {
         jsmpeg: JSMpeg,
         nanocosmos: NanoCosmos,
+        webrtc: WebRTC,
         confirmation: Confirmation
     }
 })
@@ -78,9 +81,40 @@ export default class Voyeur extends Vue {
         };
     }
 
+
+    get isWebRTCPerformer(): boolean {
+        //disable webrtc play by returning false here!
+        const performerId = this.$store.state.voyeur.mainTile.performer;
+        const activePerformer = this.performer(performerId);
+
+        if(activePerformer == null){
+            return false;
+        }
+
+        if(!activePerformer && activePerformer === undefined){
+            return false;
+        }
+
+        if(!activePerformer.mediaId  && activePerformer.mediaId === undefined){
+            return false;
+        }
+
+        return activePerformer.mediaId > 1;
+    }
+
+
     get streamTransportType(): string | undefined{
 
         const platform = Platform.parse(navigator.userAgent);
+
+        //for webrtc user use webrtc viewer or jsmpeg
+        if(this.isWebRTCPerformer){
+            if(webrtcPossible(platform)){
+                return 'webrtc';
+            } else {
+                return 'jsmpeg';
+            }
+        }
 
         if(NanoCosmosPossible(platform)){
             return 'nanocosmos';
@@ -207,7 +241,7 @@ export default class Voyeur extends Vue {
     }
 
     viewerStateChange(state: string){
-        console.log(`yoyo dit is de state: ${state}`);
+       // console.log(`yoyo dit is de state: ${state}`);
     }
 
     viewerError(message: string){
