@@ -30,6 +30,12 @@ export default class Stream extends Vue {
 
     @Prop() videoCodec: VideoCodec;
 
+    @Prop({
+        type: Boolean,
+        required: false
+    })
+    isSwitching: boolean;
+
     public onStateChange(value: string){
         this.$emit('stateChange', value);
     }

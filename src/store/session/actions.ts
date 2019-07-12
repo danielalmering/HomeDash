@@ -32,6 +32,7 @@ const actions = {
             payment: payload.payment
         });
 
+
         if(!error){
             store.state.activePerformer = payload.performer;
             store.state.activeDisplayName = displayName;
@@ -39,6 +40,7 @@ const actions = {
             store.state.activeIvrCode = payload.ivrCode;
             store.state.activePaymentType = payload.payment;
             store.state.fromVoyeur = payload.fromVoyeur !== undefined ? payload.fromVoyeur : false;
+
 
             if(payload.sessionType == SessionType.Peek){
                 store.commit('setState', State.Accepted);
@@ -154,15 +156,16 @@ const actions = {
         try {
             const previousPerformer = { ...store.state.activePerformer };
 
-            //dirty hack for changing webrtc to jsmpeg
-            if(previousPerformer && ((<Performer>previousPerformer).mediaId != performer.mediaId) ){
+            //dirty hack for changing webrtc to jsmpeg not needed anymore leaving it here
+            //because of possible rollback
+            /*if(previousPerformer && ((<Performer>previousPerformer).mediaId != performer.mediaId) ){
 
                 console.log("Failing because of stream switch", performer.advertId);
 
                 router.push({ name: 'Profile', params: { id: performer.advertId.toString() } });
 
                 return;
-            }
+            }*/
 
             store.state.isSwitching = true;
 
@@ -177,6 +180,9 @@ const actions = {
                 displayName: store.state.activeDisplayName,
                 payment: store.state.activePaymentType
             });
+
+
+
 
             /* Switching failed man, the new performer is not available, lets go back to the previous
              * If the previous is gone, well fuck me, session is just gonna have to stop..

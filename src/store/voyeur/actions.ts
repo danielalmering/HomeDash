@@ -118,6 +118,7 @@ const actions = {
         commit('setTile',  { tile, position: payload.position });
     },
     async loadMainTile({ commit, getters, rootState }: VoyeurContext, payload: { performerId: number }){
+
         const advertId = getters.performer(payload.performerId).advertId;
 
         const { result, error } = await initiate(SessionType.Video, advertId, {

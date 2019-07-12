@@ -87,6 +87,15 @@ export default class NanoCosmos extends Stream {
         this.load();
     }
 
+    @Watch('wowza')
+    onWowzaSwitch(){
+        /*console.log("wowza switch");
+        this.end();
+        sleep(1000).then(() =>{
+            this.load();
+        });*/
+    }
+
     private getStyle(): H5Style {
         return <H5Style>{
             height: this.width,
@@ -103,7 +112,9 @@ export default class NanoCosmos extends Stream {
     }
 
     mounted(){
-       this.load();
+       if(!this.isSwitching){
+           this.load();
+       }
     }
 
     beforeDestroy(){

@@ -19,7 +19,7 @@ import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
 import {
     isApple,
-    isIOS,
+    isIOS, isIOSNanoCosmos,
     isIPhone, isSafari,
     isWebrtcMuted,
     NanoCosmosPossible,
@@ -106,6 +106,7 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
     }
 
+
     get isWebRTCPerformer(): boolean {
         //disable webrtc play by returning false here!
 
@@ -129,17 +130,21 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        //console.log("lastViewType: " + this.lastViewType);
+        const playStream =  this.playStream;
 
         const platform = Platform.parse(navigator.userAgent);
-
-        //if webrtc is possible use webrtc viewer
-        if(webrtcPossible(platform) && this.isWebRTCPerformer){
-            return 'webrtc';
+        //return 'jsmpeg';
+        //if webrtc is possible use webrtc viewer or jsmpeg
+        if(this.isWebRTCPerformer){
+            if(webrtcPossible(platform)){
+                return 'webrtc';
+            } else {
+                return 'jsmpeg';
+            }
         }
 
         //else use nanocosmos if you are an ios 10 or higher device
-        if(isIOS(platform) && NanoCosmosPossible(platform)){
+        if(isIOSNanoCosmos(platform) && NanoCosmosPossible(platform)){
             return 'nanocosmos';
         }
 
@@ -170,12 +175,12 @@ export default class VideoChat extends Vue {
             if(isSafari(platform)){
                 if(this.isWebRTCPerformer){ //performer needs to use the webrtc transport
                     this.broadcasting.videoCodec = VideoCodec.VP8;
-                } else { //else old skool
-                    if(!isIOS(platform)) { //if not a ios device then flash
-                       return 'rtmpBroadcast';
-                    } else { //else no broadcast possible
-                       return 'none'; //for i.e. ipads
+                } else { //else old skool flash if available
+                    if(noFlash(platform)) {
+                       return 'none';
                     }
+
+                    return 'rtmpBroadcast';
                 }
             }
             //end apple fixes
@@ -421,6 +426,7 @@ export default class VideoChat extends Vue {
 
     viewerError(message: string){
         console.log(message);
+
     }
 
     toggleSettings(){
@@ -489,7 +495,9 @@ export default class VideoChat extends Vue {
 
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
         if (value === State.Accepted){
+            //console.log("Get new data :)");
             await this.$store.dispatch('initiate');
+            //console.log("for reeels");
 
             if(this.navigation && this.navigation.next){
                 this.navigation.next(true);

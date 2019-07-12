@@ -114,7 +114,7 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Opera',
-            version: '18'
+            version: '60'
         },
         {
             name: 'Opera Mobile',
@@ -160,7 +160,8 @@ export function webrtcPublishPossible(platform:Platform):boolean{
             }
         },
         {
-            name: 'Opera'
+            name: 'Opera',
+            version: '60'
         },
         {
             name: 'Microsoft Edge', //chrome engine is working
@@ -260,6 +261,31 @@ export function isIOS(platform:Platform):boolean{
     return apples.find( pattern => match(platform, pattern) ) != null;
 }
 
+export function isIOSNanoCosmos(platform:Platform):boolean{
+    const apples = [
+        {
+            os:{
+                family: 'iOS',
+                version: '10'
+            }
+        }
+
+    ];
+
+    return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+
+
+/*
+The low-latency nanoStream h5Live Player runs on all full-featured HTML5 browsers including
+
+Safari 10,11,12 on iOS and macOS
+Chrome 54 and higher on desktop and mobile
+Firefox 48 and higher
+Edge
+Internet Explorer 11 (starting Windows 8.1)
+ */
 export function NanoCosmosPossible(platform: Platform){
     const supported = [
         {
