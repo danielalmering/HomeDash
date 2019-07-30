@@ -30,4 +30,8 @@ export default class ProfilePhotoSlider extends PhotoSlider {
         };
     }
 
+    get safeMode(){
+        return this.$store.state.safeMode;
+    }
+
 }

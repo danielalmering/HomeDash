@@ -16,8 +16,16 @@ export function getAvatarImage(performer: Performer, size: string){
     return require('./assets/images/placeholder.png');
 }
 
-export function getSliderImages(performer: Performer, photoname: string, size: string){
-    return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
+export function getSliderImages(performer: Performer, photo: any, size: string){
+    if(store.state.safeMode && photo.safe_version){
+        return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
+    }
+
+    if(!store.state.safeMode){
+        return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
+    }
+
+    return require('./assets/images/placeholder.png');
 }
 
 export function getPerformerStatus(performer: Performer){
