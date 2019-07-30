@@ -1,6 +1,7 @@
 <slider :items="photos">
     <template slot-scope="props" ref="slider">
-        <img v-if="!getMedia(props.item)" v-on:click="onClick(props.item.id)" :src="getSliderImages(performer, props.item.name, 'medium')" />
-        <player :id="props.item.id" v-if="getMedia(props.item)" :videosrc="props.item.name"></player>
+        {{ safeMode }}
+        <img v-if="!getMedia(props.item)" v-on:click="onClick(props.item.id)" :src="getSliderImages(performer, props.item, 'medium')" />
+        <player :id="props.item.id" v-if="!safeMode && getMedia(props.item)" :videosrc="props.item.name"></player>
     </template>
 </slider>
