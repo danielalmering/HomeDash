@@ -62,8 +62,10 @@ export function userLoadedInterceptor(to: Route, from: Route, next: (to?: string
 }
 
 export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    if(to.query.safe !== undefined){
+    const safeMode = window.localStorage.getItem(`${config.StorageKey}.safeMode`);
+    if(to.query.safe !== undefined || safeMode !== null){
         store.commit('activateSafeMode');
+        window.localStorage.setItem(`${config.StorageKey}.safeMode`, 'true');
     } else {
         store.commit('deactivateSafeMode');
     }
