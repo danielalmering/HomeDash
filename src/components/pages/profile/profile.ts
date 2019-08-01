@@ -328,8 +328,9 @@ export default class Profile extends Vue {
         if(!result.photos) { return; }
         if(!result.photos.approved) { return; }
         if(this.safeMode){
+            this.perfmedia = [];
             for (let photo of result.photos.approved.photos) {
-                const pushfoto = photo.safe_version ? (this.perfmedia = [])&& this.perfmedia.push(photo) : '';
+                const pushfoto = photo.safe_version ? this.perfmedia.push(photo) : '';
             }
         } else {
             this.perfmedia = result.photos.approved.photos;
