@@ -71,7 +71,10 @@ const rootStore = new Vuex.Store<RootState>({
         },
         getBranding: state => {
             return state.info && state.info.country === 'nl';
-        }
+        },
+        getSafeMode: state => {
+            return state.safeMode;
+        },
     },
     mutations: {
         toggleSidebar: function(state: RootState){

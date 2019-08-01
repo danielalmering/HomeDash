@@ -27,7 +27,6 @@ export default class ModalLogin extends Vue {
         if(this.$store.getters.isLoggedIn){
             this.close();
             tagHotjar('LOGIN_SUCCESS');
-            window.localStorage.removeItem(`${config.StorageKey}.safeMode`);
         } else {
             tagHotjar('LOGIN_FAIL');
         }

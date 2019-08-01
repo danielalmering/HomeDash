@@ -84,6 +84,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
 
             store.commit('setUser', transformReadConsumer(loginData));
+            store.commit('deactivateSafeMode');
 
             notificationSocket.disconnect();
             notificationSocket.connect();
@@ -162,6 +163,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
 
             store.commit('setUser', transformReadConsumer(sessionData));
+            const loggedin = store.getters.isLoggedIn ? store.commit('deactivateSafeMode') : '';
 
             await store.dispatch('setLanguage', sessionData.language);
 

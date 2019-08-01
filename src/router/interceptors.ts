@@ -61,18 +61,6 @@ export function userLoadedInterceptor(to: Route, from: Route, next: (to?: string
     return waitAuthenticated(false, next);
 }
 
-export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    const safeMode = window.localStorage.getItem(`${config.StorageKey}.safeMode`);
-    if(to.query.safe !== undefined || safeMode !== null){
-        store.commit('activateSafeMode');
-        window.localStorage.setItem(`${config.StorageKey}.safeMode`, 'true');
-    } else {
-        store.commit('deactivateSafeMode');
-    }
-
-    next();
-}
-
 export function modalInterceptor(modalName: string, delayed: boolean = false) {
     return async (to: Route, previous: Route, next: any) => {
         await store.dispatch('displayModal', {name: modalName});
