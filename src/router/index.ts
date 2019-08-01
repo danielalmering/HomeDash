@@ -26,7 +26,7 @@ import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor, userLoadedInterceptor } from './interceptors';
+import { authenticatedInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor, userLoadedInterceptor } from './interceptors';
 import { scrollToTop } from 'sensejs/util/dom';
 
 Vue.use(Router);
@@ -229,7 +229,6 @@ const router = new Router({
     routes: makeRoutesStrict(routes)
 });
 
-router.beforeEach(safeInterceptor);
 router.beforeEach(hotjarInterceptor);
 router.beforeEach(socketInterceptor);
 router.afterEach(scrollInterceptor); //Scroll to top or position Y after page changes

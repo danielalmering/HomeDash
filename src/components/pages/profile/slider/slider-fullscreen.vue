@@ -1,9 +1,9 @@
 <template>
     <div class="slider__large" v-on:keyup.esc="close" v-on:keyup.left="previous" v-on:keyup.right="next" tabindex="-1">
         <ul class="slider__large-list">
-            <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }" v-if="getSliderImage(performer, photo.name, '')">
+            <li v-for="(photo, index) in photos" :key="photo.id" v-on:touchstart="onTouchStart" v-on:touchend="onTouchEnd" :class="{ 'current': index === currentSelected, 'next': index === currentSelected + 1, 'previous': index === currentSelected - 1 }">
                 <img v-if="!photo.wowza_sync" :src="getSliderImages(performer, photo, '')" />
-                <player v-if="!safeMode && photo.wowza_sync" :videosrc="photo.name"></player>
+                <player v-if="photo.wowza_sync" :videosrc="photo.name"></player>
             </li>
         </ul>
         <div class="slider__large-left" v-if="!isFirst" v-on:click="previous">
@@ -71,10 +71,6 @@ export default class SliderFullscreen extends Vue {
     getSliderImage = getSliderImages;
 
     currentSelected:number = 1;
-
-    get safeMode(){
-        return this.$store.state.safeMode;
-    }
 
     get isLast(){
         return this.currentSelected === this.$props.photos.length - 1

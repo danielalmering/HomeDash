@@ -57,6 +57,10 @@ export default class Profile extends Vue {
 
     private tabEnabled = tabEnabled;
 
+    get safeMode(){
+        return this.$store.getters.getSafeMode;
+    }
+
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
     }
@@ -323,13 +327,20 @@ export default class Profile extends Vue {
 
         if(!result.photos) { return; }
         if(!result.photos.approved) { return; }
-        this.perfmedia = result.photos.approved.photos;
+        if(this.safeMode){
+            this.perfmedia = [];
+            for (let photo of result.photos.approved.photos) {
+                const pushfoto = photo.safe_version ? this.perfmedia.push(photo) : '';
+            }
+        } else {
+            this.perfmedia = result.photos.approved.photos;
+        }
 
         // Add videos
         if(!result.medias) { return; }
         if(!result.medias.approved) { return; }
 
-        if(result.medias.approved.total > 0){
+        if(result.medias.approved.total > 0 && !this.safeMode){
             let s = 0;
             let i = 0;
             for (let media of result.medias.approved.medias) {

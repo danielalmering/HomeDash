@@ -69,8 +69,8 @@
 
         <div class="profile__slider">
             <div class="slider">
-                <slider class="hidden-xs" v-if="perfmedia && displaySlider" :photos="perfmedia" :performer="performer.id"  v-on:photoSelected="openFullSlider"></slider>
-                <slider-full v-if="perfmedia && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfmedia" :performer="performer.id"></slider-full>
+                <slider class="hidden-xs" v-if="perfmedia.length && displaySlider" :photos="perfmedia" :performer="performer.id"  v-on:photoSelected="openFullSlider"></slider>
+                <slider-full v-if="perfmedia.length && fullSliderVisible" v-on:close="fullSliderVisible = false" :displayPic="displayPic" :photos="perfmedia" :performer="performer.id"></slider-full>
             </div>
         </div>
 
