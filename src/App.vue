@@ -38,6 +38,12 @@ export default class Cookies extends Vue {
     displayAgecheck: boolean = false;
     getParameterByName = getParameterByName;
 
+    mounted(){
+        // SafeMode
+        const safeMode = this.getParameterByName('safe');
+        const gotsafe = safeMode ? this.$store.commit('activateSafeMode') : this.$store.commit('deactivateSafeMode');
+    }
+
     async created(){
         const utmMedium = this.getParameterByName('utm_medium');
 
