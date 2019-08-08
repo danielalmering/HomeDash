@@ -59,6 +59,15 @@ export default class Cookies extends Vue {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
         });
 
+        // Geo Safe check
+        const geoResult = await fetch(`${config.BaseUrl}/loc`, { credentials: 'include'});
+        const geoLocations = ['DE', 'BE', 'NL', 'LU'];
+        const result = await geoResult.json();
+
+        if(geoResult.ok && geoLocations.indexOf(result.country_code) !== -1){
+            this.$store.commit('deactivateSafeMode');
+        }
+
         // Cookies
         const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
         this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
