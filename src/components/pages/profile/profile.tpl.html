@@ -21,7 +21,7 @@
 
                 <div class="profile__content col-sm-12 col-md-8 col-lg-9">
                     <h1 class="profile__content-nick"><span>{{ performer.nickname }}</span></h1>
-                    <div v-if="country != 'de'" class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</div>
+                    <!-- <div v-if="country != 'de'" class="profile__content-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ performer.location }}</div> -->
                     <a class="profile__content-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                         <i class="fa fa-star" aria-hidden="true"></i>  {{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}
                     </a>
