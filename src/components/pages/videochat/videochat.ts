@@ -149,7 +149,7 @@ export default class VideoChat extends Vue {
         //else use nanocosmos if you are an ios 10 or higher device
         // if(isIOSNanoCosmos(platform) && NanoCosmosPossible(platform)){
         //     return 'nanocosmos';
-        // }
+        // }git 
 
         //fallback on nanocosmos
         // return 'jsmpeg';
