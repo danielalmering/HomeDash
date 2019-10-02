@@ -156,6 +156,7 @@ export default class VideoChat extends Vue {
 
         let mediaid = this.performer.mediaId;
         if(mediaid && mediaid === 2 && !webrtcPossible(platform)){ mediaid = 1 }
+        if(mediaid && mediaid === 3 && !NanoCosmosPossible(platform)){ mediaid = 1 }
 
         switch (mediaid) {
             case 0:
