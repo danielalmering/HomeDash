@@ -22,7 +22,7 @@ import cookies from './components/layout/Cookies.vue';
 import agecheck from './components/layout/Agecheck.vue';
 
 import config from './config';
-import Raven from 'raven-js';
+import * as Sentry from '@sentry/browser'
 import 'whatwg-fetch';
 
 @Component({
@@ -85,17 +85,17 @@ export default class Cookies extends Vue {
             const hj = window.hj as any;
             registrationAttempts += 1;
 
-            if(Raven.isSetup() && hj && hj.pageVisit && hj.pageVisit.property && hj.pageVisit.property.key){
+            if( hj.pageVisit && hj.pageVisit.property && hj.pageVisit.property.key){
                 const hotjarUserId = hj.pageVisit.property.key;
 
-                Raven.captureBreadcrumb({
+                Sentry.addBreadcrumb({
                     message: `Sentry session started with hotjar user ${hotjarUserId}`,
                     category: 'data'
                 });
             } else if(registrationAttempts <= 5) {
                 setTimeout(registerHotjarToSentry, 2000);
             } else {
-                Raven.captureBreadcrumb({
+                Sentry.addBreadcrumb({
                     message: `Could not register hotjar`,
                     category: 'data'
                 });

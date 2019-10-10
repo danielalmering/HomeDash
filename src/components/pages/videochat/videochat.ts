@@ -131,50 +131,47 @@ export default class VideoChat extends Vue {
         }
 
         const playStream =  this.playStream;
-
         const platform = Platform.parse(navigator.userAgent);
 
         // OLD CODE
-        //return 'jsmpeg';
-        //if webrtc is possible use webrtc viewer or jsmpeg
-
-        // if(this.isWebRTCPerformer){
-        //     if(webrtcPossible(platform)){
-        //         return 'webrtc';
-        //     } else {
-        //         return 'jsmpeg';
-        //     }
-        // }
-
-        //else use nanocosmos if you are an ios 10 or higher device
-        // if(isIOSNanoCosmos(platform) && NanoCosmosPossible(platform)){
-        //     return 'nanocosmos';
-        // }git 
-
-        //fallback on nanocosmos
-        // return 'jsmpeg';
-
-        let mediaid = this.performer.mediaId;
-        if(mediaid && mediaid === 2 && !webrtcPossible(platform)){ mediaid = 1 }
-        if(mediaid && mediaid === 3 && !NanoCosmosPossible(platform)){ mediaid = 1 }
-
-        switch (mediaid) {
-            case 0:
-                return 'jsmpeg';
-                break;
-            case 1:
-                return 'jsmpeg';
-                break;
-            case 2:
+        // if webrtc is possible use webrtc viewer or jsmpeg
+        if(this.isWebRTCPerformer){
+            if(webrtcPossible(platform)){
                 return 'webrtc';
-                break;
-            case 3:
-                return 'nanocosmos';
-                break;
-            default:
+            } else {
                 return 'jsmpeg';
-                break;
+            }
         }
+
+        // else use nanocosmos if you are an ios 10 or higher device
+        if(isIOSNanoCosmos(platform) && NanoCosmosPossible(platform)){
+            return 'nanocosmos';
+        }
+
+        // fallback on nanocosmos
+        return 'jsmpeg';
+
+        // let mediaid = this.performer.mediaId;
+        // if(mediaid && mediaid === 2 && !webrtcPossible(platform)){ mediaid = 1 }
+        // if(mediaid && mediaid === 3 && !NanoCosmosPossible(platform)){ mediaid = 1 }
+
+        // switch (mediaid) {
+        //     case 0:
+        //         return 'jsmpeg';
+        //         break;
+        //     case 1:
+        //         return 'jsmpeg';
+        //         break;
+        //     case 2:
+        //         return 'webrtc';
+        //         break;
+        //     case 3:
+        //         return 'nanocosmos';
+        //         break;
+        //     default:
+        //         return 'jsmpeg';
+        //         break;
+        // }
     }
 
     get broadcastType():string{

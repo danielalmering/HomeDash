@@ -8,9 +8,8 @@ import router from './router';
 import i18n from './localization';
 
 import App from './App.vue';
-
-import Raven from 'raven-js';
-import RavenVue from 'raven-js/plugins/vue';
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
 
 //requiring the shim adds it to the build
 //require('webrtc-adapter');
@@ -40,7 +39,7 @@ import { basicDateTime } from './filters/date';
 Vue.filter('currency', currencyFilter);
 Vue.filter('date', basicDateTime);
 
-// Raven
-//     .config('https://41ba31c21ec141c0b5bbcb50e6083f00@sentry.io/268247')
-//     .addPlugin(RavenVue, Vue)
-//     .install();
+Sentry.init({
+    dsn: 'https://060e792bc5b24219a84ddafe55364605@sentry.io/1774566',
+    integrations: [new Integrations.Vue({Vue, attachProps: true})],
+})
