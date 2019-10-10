@@ -1,12 +1,11 @@
 import { Store } from 'vuex';
 import { RootState } from '../index';
-
-import Raven from 'raven-js';
+import * as Sentry from '@sentry/browser'
 
 const sentryPlugin = (store: Store<RootState>) => {
 
     store.subscribe((mutation, state) => {
-        if(!Raven.isSetup()){
+        if(!Sentry){
             return;
         }
 
@@ -18,7 +17,7 @@ const sentryPlugin = (store: Store<RootState>) => {
             };
         }
 
-        Raven.captureBreadcrumb({
+        Sentry.addBreadcrumb({
             message: `Mutation of type ${mutation.type}`,
             category: 'mutation',
             data: data

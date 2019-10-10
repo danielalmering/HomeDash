@@ -9,9 +9,10 @@ import { checkSession } from 'sensejs/auth';
 import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
-import Raven from 'raven-js';
 import { tagHotjar, getParameterByName } from '../util';
 import router from '../router';
+
+import * as Sentry from '@sentry/browser'
 
 export interface AuthState {
     user: User | undefined;
@@ -40,11 +41,9 @@ const authenticationStore: Module<AuthState, RootState> = {
         setUser(state: AuthState, user: User | undefined){
             state.user = user;
 
-            if(state.user !== undefined && Raven.isSetup()){
-                Raven.setUserContext({
-                    id: state.user.id.toString()
-                });
-            }
+            Sentry.configureScope( (scope)=>{
+                if(state.user !== undefined ) scope.setUser( {id: state.user.id.toString()} )
+            });
 
             tagHotjar(`USER_${user ? user.id : 'NONE'}`);
         }

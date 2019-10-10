@@ -131,10 +131,10 @@ export default class VideoChat extends Vue {
         }
 
         const playStream =  this.playStream;
-
         const platform = Platform.parse(navigator.userAgent);
-        //return 'jsmpeg';
-        //if webrtc is possible use webrtc viewer or jsmpeg
+
+        // OLD CODE
+        // if webrtc is possible use webrtc viewer or jsmpeg
         if(this.isWebRTCPerformer){
             if(webrtcPossible(platform)){
                 return 'webrtc';
@@ -143,13 +143,35 @@ export default class VideoChat extends Vue {
             }
         }
 
-        //else use nanocosmos if you are an ios 10 or higher device
+        // else use nanocosmos if you are an ios 10 or higher device
         if(isIOSNanoCosmos(platform) && NanoCosmosPossible(platform)){
             return 'nanocosmos';
         }
 
-        //fallback on nanocosmos
+        // fallback on nanocosmos
         return 'jsmpeg';
+
+        // let mediaid = this.performer.mediaId;
+        // if(mediaid && mediaid === 2 && !webrtcPossible(platform)){ mediaid = 1 }
+        // if(mediaid && mediaid === 3 && !NanoCosmosPossible(platform)){ mediaid = 1 }
+
+        // switch (mediaid) {
+        //     case 0:
+        //         return 'jsmpeg';
+        //         break;
+        //     case 1:
+        //         return 'jsmpeg';
+        //         break;
+        //     case 2:
+        //         return 'webrtc';
+        //         break;
+        //     case 3:
+        //         return 'nanocosmos';
+        //         break;
+        //     default:
+        //         return 'jsmpeg';
+        //         break;
+        // }
     }
 
     get broadcastType():string{
