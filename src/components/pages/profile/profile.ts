@@ -37,7 +37,8 @@ const swfobject = require('swfobject');
     },
     filters: {
         truncate: function(text: string, displayFull: boolean){
-            return displayFull ? text : text.substr(0, 400);
+            const textshort = (text.length != 0) ? text.substr(0, 400) : ''; 
+            return displayFull ? text : textshort;
         }
     }
 })
@@ -360,6 +361,7 @@ export default class Profile extends Vue {
         const target = event.target as HTMLElement;
         if(!target.parentElement){ return }
         const parent = target.parentElement.lastChild as HTMLElement;
+        if(!parent){ return }
 
         if(target.classList.contains('active')){
             target.classList.remove('active')

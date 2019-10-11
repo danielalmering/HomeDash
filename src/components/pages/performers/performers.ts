@@ -175,6 +175,10 @@ export default class Performers extends Vue {
             this.$router.push({ name: 'Performers' });
         }
 
+        if(!result){
+            return;
+        }
+
         this.performers = result.performerAccounts;
         this.total = result.total;
     }
