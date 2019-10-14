@@ -81,7 +81,7 @@ const transitions: { [key: string]: State[] } = { //TODO: Added by Lorenzo: Ask 
     [State.Accepted]:       [State.Initializing, State.Canceling],
     [State.Initializing]:   [State.Active, State.Canceling, State.Ending],
     [State.Active]:         [State.Ending],
-    [State.Canceling]:      [State.Idle, State.InRequest, State.Active],
+    [State.Canceling]:      [State.Idle],
     [State.Ending]:         [State.Idle]
 };
 

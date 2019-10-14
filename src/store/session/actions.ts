@@ -101,16 +101,14 @@ const actions = {
             hasError = error !== undefined;
         }
 
-        if(!hasError){
-            store.commit('setState', State.Idle);
-            store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
+        store.commit('setState', State.Idle);
 
+        if(!hasError){
+            store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             tagHotjar(`CANCEL_${reason}`);
         } else {
             throw new Error('Oh noooooo, ending failed');
         }
-
-        store.commit('setState', State.Idle);
     },
     async disconnected(store: ActionContext<SessionState, RootState>){
         if (store.state.activeState != State.Active){
