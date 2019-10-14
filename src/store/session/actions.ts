@@ -106,13 +106,11 @@ const actions = {
 
         store.commit('setState', State.Idle);
 
-        if(!hasError && !whatError){
+        if(!hasError){
             store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             tagHotjar(`CANCEL_${reason}`);
         } else {
-            if(whatError){
-                throw new Error(`Api error: ${whatError.message}`);
-            }
+            throw new Error(`Api error: ${whatError}`);
         }
     },
     async disconnected(store: ActionContext<SessionState, RootState>){
