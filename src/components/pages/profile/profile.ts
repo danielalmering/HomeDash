@@ -322,6 +322,8 @@ export default class Profile extends Vue {
 
         if(error){
             this.$router.push({ name: 'Performers' });
+
+            throw new Error(`Api error: ${error}`);
         }
 
         this.performer = result;
@@ -393,7 +395,7 @@ export default class Profile extends Vue {
     }
 
     setSeoParameters(){
-        if(!this.performer){
+        if(!this.performer || !this.performer.nickname){
             return;
         }
 
