@@ -29,6 +29,7 @@ export function getSliderImages(performer: Performer, photo: any, size: string){
 }
 
 export function getPerformerStatus(performer: Performer){
+    if(!performer){ return 'offline'; }
 
     if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
         return 'teaser';

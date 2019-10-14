@@ -49,7 +49,7 @@
                             <i :class="`flag flag-${language}`"></i>
                             <span class="visible-xs" v-t="'nav.info.lang'"></span>
                         </span>
-                        <ul class="nav__info-subitems" v-if="showLang" v-click-outside="{ cb: closeLangMenu }">
+                        <ul class="nav__info-subitems" v-if="showLang && acceptedLanguages" v-click-outside="{ cb: closeLangMenu }">
                             <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
                                 <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
                             </li>

@@ -69,11 +69,11 @@ export default class Cookies extends Vue {
         }
 
         // Cookies
-        const cookiesAccepted = localStorage.getItem(`${config.StorageKey}.cookiesAccepted`);
+        const cookiesAccepted = (localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
         this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
 
         // Agecheck
-        const AgeCheckAccepted = localStorage.getItem(`${config.StorageKey}.agecheck`);
+        const AgeCheckAccepted = (localStorage.getItem(`${config.StorageKey}.agecheck`) !== null ) ? localStorage.getItem(`${config.StorageKey}.agecheck`) : false;
         this.displayAgecheck = !config.locale.AgeCheck ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
 
         let registrationAttempts = 0;
@@ -85,7 +85,7 @@ export default class Cookies extends Vue {
             const hj = window.hj as any;
             registrationAttempts += 1;
 
-            if( hj.pageVisit && hj.pageVisit.property && hj.pageVisit.property.key){
+            if(hj && hj.pageVisit && hj.pageVisit.property && hj.pageVisit.property.key){
                 const hotjarUserId = hj.pageVisit.property.key;
 
                 Sentry.addBreadcrumb({

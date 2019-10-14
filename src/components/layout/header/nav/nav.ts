@@ -42,11 +42,11 @@ export default class Nav extends Vue {
     }
 
     get categories(){
-        return this.$store.state.info ? this.$store.state.info.categories : [];
+        return this.$store.state.info && this.$store.state.info.categories ? this.$store.state.info.categories : [];
     }
 
     get acceptedLanguages(){
-        return this.$store.state.info.languages ? this.$store.state.info.languages : [];
+        return this.$store.state.info && this.$store.state.info.languages ? this.$store.state.info.languages : [];
     }
 
     get banner(){

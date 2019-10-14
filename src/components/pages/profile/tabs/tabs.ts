@@ -112,6 +112,8 @@ export default class Tabs extends Vue {
     }
 
     get displayName(): string {
+        if(!this.user){ return ''; }
+
         if (this.authenticated){
             return this.user.displayName || this.user.username;
         } else {
