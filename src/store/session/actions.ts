@@ -110,7 +110,7 @@ const actions = {
             store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             tagHotjar(`CANCEL_${reason}`);
         } else {
-            throw new Error(`Api error: ${whatError}`);
+            throw new Error(`Api${whatError}`);
         }
     },
     async disconnected(store: ActionContext<SessionState, RootState>){
