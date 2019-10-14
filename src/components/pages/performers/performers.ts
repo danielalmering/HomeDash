@@ -173,6 +173,8 @@ export default class Performers extends Vue {
 
         if(error){
             this.$router.push({ name: 'Performers' });
+            
+            throw new Error(`Api error: ${error}`);
         }
 
         if(!result){
