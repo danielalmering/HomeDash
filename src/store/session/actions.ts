@@ -89,16 +89,19 @@ const actions = {
 
         const performerId = store.state.activePerformer ? store.state.activePerformer.id : 0;
         let hasError;
+        let whatError;
 
         if(reason === 'PERFORMER_REJECT'){
             const { error } = await deleteVideorequest(performerId);
             hasError = error !== undefined;
+            whatError = error;
         } else {
             const { error } = await cancel({
                 clientId: store.rootState.authentication.user.id,
                 performerId: performerId
             });
             hasError = error !== undefined;
+            whatError = error;
         }
 
         store.commit('setState', State.Idle);
@@ -107,7 +110,7 @@ const actions = {
             store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             tagHotjar(`CANCEL_${reason}`);
         } else {
-            throw new Error('Oh noooooo, ending failed');
+            throw new Error(`Api error: ${whatError}`);
         }
     },
     async disconnected(store: ActionContext<SessionState, RootState>){
