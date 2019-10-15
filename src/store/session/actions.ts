@@ -110,7 +110,7 @@ const actions = {
             store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             tagHotjar(`CANCEL_${reason}`);
         } else {
-            throw new Error(`Api error: ${whatError}`);
+            throw new Error(`Api${whatError}`);
         }
     },
     async disconnected(store: ActionContext<SessionState, RootState>){
@@ -138,7 +138,7 @@ const actions = {
                 store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             }
         } else {
-            throw new Error('Oh noooooo, ending failed');
+            throw new Error(`Api${error.message}`);
         }
     },
     async switchPeek(store: ActionContext<SessionState, RootState>, performer: Performer){
