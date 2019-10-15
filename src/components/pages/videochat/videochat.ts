@@ -106,6 +106,10 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
     }
 
+    get currentState(){
+        return this.$store.state.session.activeState;
+    }
+
 
     get isWebRTCPerformer(): boolean {
         //disable webrtc play by returning false here!
@@ -569,9 +573,9 @@ export default class VideoChat extends Vue {
 
         //Stop clientSeen event
         clearInterval(this.intervalTimer);
-        //Send end API call and update state to ending
-        if(this.$store.state.session.activeState !== State.Idle){
-            console.log("ok, waarom destroyen??");
+        //Send end API call and update state to ending if having the correct state
+        const notallowedstates = ['State.Idle', 'State.Ending'];
+        if(notallowedstates.indexOf(this.currentState) !== -1){
             this.$store.dispatch('end', 'PLAYER_END');
         }
     }
