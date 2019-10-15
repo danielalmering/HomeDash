@@ -34,6 +34,7 @@ import 'whatwg-fetch';
     }
 })
 export default class Cookies extends Vue {
+    localStorage: boolean = false;
     displayCookies: boolean = false;
     displayAgecheck: boolean = false;
     getParameterByName = getParameterByName;
@@ -72,18 +73,26 @@ export default class Cookies extends Vue {
             // Localstorage check
             window.localStorage.setItem(`${config.StorageKey}.localStorage`, 'true');
             window.localStorage.removeItem(`${config.StorageKey}.localStorage`);
-            
+
             // Cookies check
-            const cookiesAccepted = (localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
+            const cookiesAccepted = (window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
             this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
 
             // Agecheck check
-            const AgeCheckAccepted = (localStorage.getItem(`${config.StorageKey}.agecheck`) !== null ) ? localStorage.getItem(`${config.StorageKey}.agecheck`) : false;
+            const AgeCheckAccepted = (window.localStorage.getItem(`${config.StorageKey}.agecheck`) !== null ) ? window.localStorage.getItem(`${config.StorageKey}.agecheck`) : false;
             this.displayAgecheck = !config.locale.AgeCheck ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
-        } catch(e) {
-            this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
-            localStorage.clear();
-            location.reload();
+            
+        } catch(error){
+            if(error.name === 'QuotaExceededError'){
+                // Switch to sessionStore when IOS for now
+                window.localStorage = window.sessionStorage;
+                this.displayCookies = true;
+                this.displayAgecheck = config.locale.AgeCheck;
+            } else {
+                this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
+                localStorage.clear();
+                location.reload();
+            }
         }
 
         let registrationAttempts = 0;
