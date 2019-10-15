@@ -570,13 +570,9 @@ export default class VideoChat extends Vue {
 
     beforeDestroy(){
         this.isEnding = true;
-
-        //Stop clientSeen event
+        // Stop clientSeen event
         clearInterval(this.intervalTimer);
-        //Send end API call and update state to ending if having the correct state
-        const notallowedstates = ['State.Idle', 'State.Ending'];
-        if(notallowedstates.indexOf(this.currentState) === -1){
-            this.$store.dispatch('end', 'PLAYER_END');
-        }
+        // Trigger end
+        this.$store.dispatch('end', 'PLAYER_END');
     }
 }

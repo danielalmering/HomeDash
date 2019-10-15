@@ -122,7 +122,12 @@ const actions = {
         store.commit('setState', State.Idle);
     },
     async end(store: ActionContext<SessionState, RootState>, reason?: string){
+        if(store.state.activeState === (State.Idle || State.Ending)){
+            return;
+        }
+
         store.commit('setState', State.Ending);
+
         if (reason === 'PHONE_DISCONNECT'){
             store.commit('setIvrCode', undefined);
         }
