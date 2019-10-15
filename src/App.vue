@@ -68,25 +68,23 @@ export default class Cookies extends Vue {
             this.$store.commit('deactivateSafeMode');
         }
 
-        // Localstorage Health Check
-        const lstorage = ['NS_ERROR_FILE_CORRUPTED', ]
         try {
+            // Localstorage check
             window.localStorage.setItem(`${config.StorageKey}.localStorage`, 'true');
             window.localStorage.removeItem(`${config.StorageKey}.localStorage`);
+            
+            // Cookies check
+            const cookiesAccepted = (localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
+            this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
+
+            // Agecheck check
+            const AgeCheckAccepted = (localStorage.getItem(`${config.StorageKey}.agecheck`) !== null ) ? localStorage.getItem(`${config.StorageKey}.agecheck`) : false;
+            this.displayAgecheck = !config.locale.AgeCheck ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
         } catch(e) {
-            if(e.name.indexOf(lstorage) !== -1) {
-                this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
-                localStorage.clear();
-            }
+            this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
+            localStorage.clear();
+            location.reload();
         }
-
-        // Cookies
-        const cookiesAccepted = (localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
-        this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
-
-        // Agecheck
-        const AgeCheckAccepted = (localStorage.getItem(`${config.StorageKey}.agecheck`) !== null ) ? localStorage.getItem(`${config.StorageKey}.agecheck`) : false;
-        this.displayAgecheck = !config.locale.AgeCheck ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
 
         let registrationAttempts = 0;
 
