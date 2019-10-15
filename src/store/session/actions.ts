@@ -122,7 +122,7 @@ const actions = {
         store.commit('setState', State.Idle);
     },
     async end(store: ActionContext<SessionState, RootState>, reason?: string){
-        if(store.state.activeState === (State.Idle || State.Ending)){
+        if([State.Idle, State.Ending].indexOf(store.state.activeState) >= 0){
             return;
         }
 
