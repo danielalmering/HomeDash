@@ -575,7 +575,7 @@ export default class VideoChat extends Vue {
         clearInterval(this.intervalTimer);
         //Send end API call and update state to ending if having the correct state
         const notallowedstates = ['State.Idle', 'State.Ending'];
-        if(notallowedstates.indexOf(this.currentState) !== -1){
+        if(notallowedstates.indexOf(this.currentState) === -1){
             this.$store.dispatch('end', 'PLAYER_END');
         }
     }
