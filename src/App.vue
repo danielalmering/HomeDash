@@ -68,6 +68,18 @@ export default class Cookies extends Vue {
             this.$store.commit('deactivateSafeMode');
         }
 
+        // Localstorage Health Check
+        const lstorage = ['NS_ERROR_FILE_CORRUPTED', ]
+        try {
+            window.localStorage.setItem(`${config.StorageKey}.localStorage`, 'true');
+            window.localStorage.removeItem(`${config.StorageKey}.localStorage`);
+        } catch(e) {
+            if(e.name.indexOf(lstorage) !== -1) {
+                this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
+                localStorage.clear();
+            }
+        }
+
         // Cookies
         const cookiesAccepted = (localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
         this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');

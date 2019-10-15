@@ -1,6 +1,7 @@
 {
     "general": {
-        "successNewMessage": "Je hebt een nieuw bericht!"
+        "successNewMessage": "Je hebt een nieuw bericht!",
+        "errorLocalstorage": "Sorry, het lijkt erop dat uw browseropslag niet beschikbaar is!"
     },
     "top": {
         "numbers": {

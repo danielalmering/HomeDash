@@ -1,6 +1,7 @@
 {
     "general": {
-        "successNewMessage": "You got a new message!"
+        "successNewMessage": "You got a new message!",
+        "errorLocalstorage": "Sorry, it looks like your browser storage is not available!"
     },
     "top": {
         "numbers": {
