@@ -85,7 +85,7 @@ export default class Cookies extends Vue {
         } catch(error){
             if(error.name === 'QuotaExceededError' || error.name === 'SecurityError'){
                 // Switch to sessionStore when IOS for now
-                window.localStorage = window.sessionStorage;
+                Object.assign(window.localStorage, window.sessionStorage);                
                 this.displayCookies = true;
                 this.displayAgecheck = config.locale.AgeCheck;
             } else {
