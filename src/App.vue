@@ -81,9 +81,9 @@ export default class Cookies extends Vue {
             // Agecheck check
             const AgeCheckAccepted = (window.localStorage.getItem(`${config.StorageKey}.agecheck`) !== null ) ? window.localStorage.getItem(`${config.StorageKey}.agecheck`) : false;
             this.displayAgecheck = !config.locale.AgeCheck ? false : !(AgeCheckAccepted && AgeCheckAccepted === 'true');
-            
+
         } catch(error){
-            if(error.name === 'QuotaExceededError'){
+            if(error.name === 'QuotaExceededError' || error.name === 'SecurityError'){
                 // Switch to sessionStore when IOS for now
                 window.localStorage = window.sessionStorage;
                 this.displayCookies = true;
