@@ -110,7 +110,7 @@ const actions = {
             store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             tagHotjar(`CANCEL_${reason}`);
         } else {
-            throw new Error(`Api error: ${whatError}`);
+            throw new Error(`Api${whatError}`);
         }
     },
     async disconnected(store: ActionContext<SessionState, RootState>){
@@ -122,7 +122,12 @@ const actions = {
         store.commit('setState', State.Idle);
     },
     async end(store: ActionContext<SessionState, RootState>, reason?: string){
+        if([State.Idle, State.Ending].indexOf(store.state.activeState) >= 0){
+            return;
+        }
+
         store.commit('setState', State.Ending);
+
         if (reason === 'PHONE_DISCONNECT'){
             store.commit('setIvrCode', undefined);
         }
@@ -138,7 +143,7 @@ const actions = {
                 store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             }
         } else {
-            throw new Error('Oh noooooo, ending failed');
+            throw new Error(`Api${error.message}`);
         }
     },
     async switchPeek(store: ActionContext<SessionState, RootState>, performer: Performer){

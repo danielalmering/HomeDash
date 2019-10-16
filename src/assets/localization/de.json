@@ -1,6 +1,7 @@
 {
     "general": {
-        "successNewMessage": "Du hast eine neue Nachricht!"
+        "successNewMessage": "Du hast eine neue Nachricht!",
+        "errorLocalstorage": "Entschuldigung, es sieht so aus, als ob Ihr Browser-Speicher nicht verfügbar ist!"
     },
     "top": {
         "numbers": {
