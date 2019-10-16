@@ -5,7 +5,7 @@
     <div class="profile__info" v-if="performer">
 
         <div class="profile__info-image col-sm-12 col-md-3">
-            <div class="image" v-if="perfmedia" v-on:click="openFullSlider(perfmedia[0].id)" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }">
+            <div class="image" v-if="perfmedia && perfmedia.length >= 1" v-on:click="openFullSlider(perfmedia[0].id)" :style="{ 'background-image': `url('${getAvatarImage(performer, 'medium')}')` }">
                 <div class="image__fullslider">
                     <i class="fa fa-search-plus" aria-hidden="true"></i>
                 </div>
