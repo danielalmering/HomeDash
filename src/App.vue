@@ -90,10 +90,10 @@ export default class Cookies extends Vue {
                 this.displayAgecheck = config.locale.AgeCheck;
             } else {
                 this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
-                if(window.localStorage){
-                    window.localStorage.clear();
-                    window.location.reload();
-                }
+
+                //use default values which is really enoying for user
+                this.displayCookies = true;
+                this.displayAgecheck = config.locale.AgeCheck;            
             }
         }
 
