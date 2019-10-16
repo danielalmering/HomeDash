@@ -90,8 +90,8 @@ export default class Cookies extends Vue {
                 this.displayAgecheck = config.locale.AgeCheck;
             } else {
                 this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
-                localStorage.clear();
-                location.reload();
+                window.localStorage.clear();
+                window.location.reload();
             }
         }
 
