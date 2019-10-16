@@ -16,6 +16,10 @@ export function tabEnabled(service: string, forPerformer: Performer, user: User)
     if (service === 'voyeur'){
         return forPerformer.performerStatus !== PerformerStatus.Offline && forPerformer.isVoyeur;
     }
+    
+    if(!forPerformer.performer_services){
+        return false;
+    }
 
     if (!(service in forPerformer.performer_services) ){
         throw new Error(`${service} ain't no service I ever heard of!`);
