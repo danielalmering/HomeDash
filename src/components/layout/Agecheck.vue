@@ -25,7 +25,9 @@ export default class Alerts extends Vue {
     country = config.Country;
 
     acceptAge(){
-        window.localStorage.setItem(`${config.StorageKey}.agecheck`, 'true');
+        if(window.localStorage){
+            window.localStorage.setItem(`${config.StorageKey}.agecheck`, 'true');
+        }
 
         this.$emit('close');
     }

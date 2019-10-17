@@ -73,7 +73,7 @@ export default class Cookies extends Vue {
             // Localstorage check
             window.localStorage.setItem(`${config.StorageKey}.localStorage`, 'true');
             window.localStorage.removeItem(`${config.StorageKey}.localStorage`);
-
+            
             // Cookies check
             const cookiesAccepted = (window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
             this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
@@ -90,8 +90,10 @@ export default class Cookies extends Vue {
                 this.displayAgecheck = config.locale.AgeCheck;
             } else {
                 this.$store.dispatch('errorMessage', 'general.errorLocalstorage');
-                window.localStorage.clear();
-                window.location.reload();
+
+                //use default values which is really enoying for user
+                this.displayCookies = true;
+                this.displayAgecheck = config.locale.AgeCheck;            
             }
         }
 

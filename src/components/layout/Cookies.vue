@@ -19,7 +19,9 @@ import { Component } from 'vue-property-decorator';
 export default class Cookies extends Vue {
 
     acceptCookies(){
-        localStorage.setItem(`${config.StorageKey}.cookiesAccepted`, 'true');
+        if(localStorage) {
+            localStorage.setItem(`${config.StorageKey}.cookiesAccepted`, 'true');
+        }
 
         this.$emit('close');
     }

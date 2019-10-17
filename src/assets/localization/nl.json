@@ -1,7 +1,7 @@
 {
     "general": {
         "successNewMessage": "Je hebt een nieuw bericht!",
-        "errorLocalstorage": "Sorry, het lijkt erop dat uw browseropslag niet beschikbaar is!"
+        "errorLocalstorage": "Sorry, het lijkt erop dat uw browseropslag niet beschikbaar is!, deblokkeer cookies om gebruik te maken van deze website"
     },
     "top": {
         "numbers": {
