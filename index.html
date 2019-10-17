@@ -34,10 +34,12 @@
                 'Array.prototype.fill',
                 'Array.prototype.findIndex',
                 'Object.assign',
-                'String.prototype.startsWith'
-            ].join(',');
+                'String.prototype.startsWith',
+                'String.prototype.includes',
+                'Number.isNaN'
+            ].join(','); 
 
-            var scriptUrl = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=' + features;
+            var scriptUrl = 'https://cdn.polyfill.io/v3/polyfill.min.js?features=' + features;
 
             if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
                 document.write('<script src="' + scriptUrl + '"><\/script>');
