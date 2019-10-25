@@ -39,7 +39,7 @@ import { basicDateTime } from './filters/date';
 Vue.filter('currency', currencyFilter);
 Vue.filter('date', basicDateTime);
 
-Sentry.init({
-    dsn: 'https://060e792bc5b24219a84ddafe55364605@sentry.io/1774566',
-    integrations: [new Integrations.Vue({Vue, attachProps: true})],
-})
+// Sentry.init({
+//     dsn: 'https://060e792bc5b24219a84ddafe55364605@sentry.io/1774566',
+//     integrations: [new Integrations.Vue({Vue, attachProps: true})],
+// })
