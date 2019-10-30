@@ -113,9 +113,9 @@ export default class Voyeur extends Vue {
         if(this.isWebRTCPerformer){
             if(webrtcPossible(platform)){
                 return 'webrtc';
-            } else if (isIE(platform)) {
+            } /*else if (isIE(platform)) {
                 return 'nanocosmosRtmp';
-            } else {
+            }*/ else {
                 return 'jsmpeg';
             }
         }
