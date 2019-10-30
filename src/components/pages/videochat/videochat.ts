@@ -9,6 +9,7 @@ import Jsmpeg from './streams/jsmpeg';
 import {Rtmp as RTMPPlay} from './streams/rtmp';
 import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
+import NanoCosmosRtmp from './streams/nanocosmosRtmp';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
 import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
 import Confirmations from '../../layout/Confirmations.vue';
@@ -27,7 +28,8 @@ import {
     openModal,
     tagHotjar,
     webrtcPossible,
-    webrtcPublishPossible
+    webrtcPublishPossible,
+    isIE
 } from '../../../util';
 import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
@@ -60,7 +62,8 @@ Component.registerHooks([
         nanocosmos: NanoCosmos,
         confirmation: Confirmations,
         rtmpBroadcast: RTMPBroadcast,
-        webrtcBroadcast: WRTCBroadcast
+        webrtcBroadcast: WRTCBroadcast,
+        nanocosmosRtmp: NanoCosmosRtmp,
     }
 })
 export default class VideoChat extends Vue {
@@ -137,11 +140,15 @@ export default class VideoChat extends Vue {
         const playStream =  this.playStream;
         const platform = Platform.parse(navigator.userAgent);
 
+       // return 'nanocosmos';
+  
         // OLD CODE
         // if webrtc is possible use webrtc viewer or jsmpeg
         if(this.isWebRTCPerformer){
             if(webrtcPossible(platform)){
                 return 'webrtc';
+            } else if(isIE(platform)) {
+                return 'nanocosmosRtmp';
             } else {
                 return 'jsmpeg';
             }
