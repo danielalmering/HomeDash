@@ -23,9 +23,9 @@
             <div class="nav__info col-xs-12 col-sm-7">
                 <div class="nav__info-container">
                     <a class="nav__info-item visible-xs" v-on:click="toggleTagMenu"><i class="fa fa-bars"></i><span v-t="'nav.info.menu'"></span></a>
-                    <router-link class="nav__info-item" :to="{ name: 'Favourites' }"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
+                    <router-link class="nav__info-item" :to="{ name: 'Favourites' }" v-if="user"><i class="fa fa-star"></i><span v-t="'nav.info.favourites'"></span></router-link>
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
-
+                    
                     <a class="nav__info-item nav__info-item--last" v-on:click="authenticated ? toggleAccountMenu() : login()">
                         <span>
                             <i class="fa fa-user"><span v-if="authenticated && user.totalNotifications && user.totalNotifications !== 0" class="notify">{{ user.totalNotifications }}</span></i>
@@ -33,6 +33,7 @@
                         </span>
                         <div class="nav__info-subitems" v-if="authenticated && showAccount" v-click-outside="{ cb: closeAccountMenu }">
                             <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>
+                            <router-link class="subitem" :to="{ name: 'Notifications'}" v-t="'nav.info.notifications'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'" :class="{ 'active': authenticated && user.totalNotifications && user.totalNotifications !== 0 }"></router-link>
                             <router-link class="subitem" :to="{ name: 'History'}" v-t="'nav.info.history'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Giftvoucher'}" v-t="'nav.info.giftvoucher'"></router-link>
@@ -41,12 +42,14 @@
                         </div>
                     </a>
 
+                    <a class="nav__info-item nav__info-item--high hidden-xs" v-if="!authenticated" v-on:click="openModal('register')"><i class="fa fa-pencil"></i><span v-t="'nav.info.register'"></span></a>
+
                     <a class="nav__info-item nav__info-item--last" v-on:click="showLang = !showLang">
                         <span>
                             <i :class="`flag flag-${language}`"></i>
                             <span class="visible-xs" v-t="'nav.info.lang'"></span>
                         </span>
-                        <ul class="nav__info-subitems" v-if="showLang" v-click-outside="{ cb: closeLangMenu }">
+                        <ul class="nav__info-subitems" v-if="showLang && acceptedLanguages" v-click-outside="{ cb: closeLangMenu }">
                             <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
                                 <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
                             </li>
@@ -61,5 +64,10 @@
         <div class="container-fluid">
             <router-link v-for="category in categories" :key="category.slug" :to="{ name: 'Performers', params: { category: category.slug } }">{{ category.title }}</router-link>
         </div>
+    </div>
+
+    <div class="nav__banner" v-if="showBanner" :style="{ 'background-image': `url('${banner}')` }">
+        <a v-if="!authenticated" v-on:click="openModal('login')"></a>
+        <router-link  v-if="authenticated" :to="{ name: 'Payment'}"></router-link>
     </div>
 </div>

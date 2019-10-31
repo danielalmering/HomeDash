@@ -1,6 +1,7 @@
 {
     "DefaultLanguage": "nl",
     "GoogleTagCode": "GTM-WQN9TVH",
-    "AgeCheck": false,
-    "Hotjar": true
+    "AgeCheck": true,
+    "Hotjar": true,
+    "Services": ["cam", "videocall", "voyeur", "phone", "email", "sms"]
 }

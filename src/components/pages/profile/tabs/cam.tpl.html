@@ -1,13 +1,18 @@
 <div class="tabs__servicescontent col-xs-12">
-    <div class="tabs__servicescontent-method" v-if="$parent.activeCampaign[0].number">
+    <div class="tabs__servicescontent-method" v-if="$parent.info.phone_enabled === 1">
         <h2 v-html="$t('tabs.paymentwithtelephone')"></h2>
 
         <div class="numbers" v-for="(campaign, index) in $parent.activeCampaign">
-            <i class="flag flag-nl" v-if="$parent.branding && index === 0"></i>
-            <i class="flag flag-be" v-if="$parent.branding && index === 1"></i>
-            {{ campaign.number }}
-            <strong v-if="campaign.marketing === 1" v-t="'top.banner.happyhour'"></strong>
-            <span>{{ campaign.cpm | euro }} <div v-html="$t('top.numbers.nr-' + index)"></div></span>
+            <i class="numbers__flag flag flag-nl" v-if="$parent.info.country === 'nl' && index === 0"></i>
+            <i class="numbers__flag flag flag-be" v-if="$parent.info.country === 'nl' && index === 1"></i>
+            <i class="numbers__icon fa fa-phone" v-if="$parent.info.country === 'de' && index === 0"></i>
+            <i class="numbers__icon fa fa-mobile" v-if="$parent.info.country === 'de' && index === 1"></i>
+
+            <span class="numbers__nr">{{ campaign.number }}</span>
+            <span class="numbers__happyhour" v-if="campaign.marketing === 1" v-t="'top.banner.action'"></span>
+            <span class="numbers__cost">{{ campaign.cpm | currency }} {{ $t('top.numbers.nr-' + index) }}</span>
+
+            <span class="numbers__desc" v-if="$parent.info.country === 'de'" v-html="$t('top.numbers.nrdesc-' + index)"></span>
         </div>
 
         <form class="form" v-on:submit.prevent="$parent.startSession({ivrCode:$parent.ivrCode, displayName:$parent.displayName, sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO'})">
@@ -28,7 +33,7 @@
 
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
-        <p><span v-t="$parent.authenticated ? 'tabs.webcamwithcreditsdesc' : 'tabs.registeraccount'"></span> <span v-if="$parent.authenticated && $parent.info">({{ $parent.info.credits_per_minute | euro }} {{ $t('top.numbers.pm') }})</span></p>
+        <p><span v-t="$parent.authenticated ? 'tabs.webcamwithcreditsdesc' : 'tabs.registeraccount'"></span> <span v-if="$parent.authenticated && $parent.info">({{ $parent.info.credits_per_minute.split('.')[0] }} {{ $t('top.numbers.cpm') }})</span></p>
         <a v-if="$parent.authenticated" class="btn btn-full btn-large btn-green" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'" v-on:click="$parent.startSession({sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'})"></a>
         <a v-if="!$parent.authenticated" class="btn btn-full btn-large btn-orange" v-t="'modals.login.login'" v-on:click="$parent.openModal('login')"></a>
     </div>

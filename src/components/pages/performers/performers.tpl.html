@@ -4,20 +4,41 @@
         <div class="performers-notfound" v-if="noPerformers">{{ $t('performers.noperformersfound') }}</div>
 
         <div class="performers">
+            <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-if="getBanner.active && !authenticated">
+                <div class="performers__block">
+                    <div class="performers__info">
+                        <div class="performers__image">
+                            <a v-on:click="openModal('register')">
+                                <img :src="getBanner.url" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
                 <div class="performers__block">
                     <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
                         <div class="label" v-if="performer" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
                     </router-link>
+
                     <div class="performers__info" v-if="performer">
                         <div class="performers__info-personal">
                             {{ performer.nickname }}
                             <span class="status" :class="getPerformerStatus(performer)"></span>
-                            <span class="performers__info-personal-countries">
+                            <!--<span class="hd" v-if="performer.mediaId == 2">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 512 512">
+                                <g>
+                                </g>
+                                    <path d="M443.955 118.405h-375.941c-29.788 0-54.067 24.279-54.067 54.057v167.024c0 29.819 24.279 54.118 54.067 54.118h375.941c29.819 0 54.098-24.3 54.098-54.118v-167.024c0.010-29.778-24.269-54.057-54.098-54.057zM478.218 172.462v167.024c0 18.903-15.38 34.243-34.263 34.243h-375.941c-18.883 0-34.233-15.339-34.233-34.243v-167.024c0-18.862 15.35-34.243 34.233-34.243h375.941c18.882 0 34.263 15.381 34.263 34.243z" fill="#FFFFFF" />
+                                    <path d="M343.337 174.203h-71.783v163.584h70.421c52.5 0 86.805-23.644 86.805-85.197 0-53.873-32.717-78.387-85.442-78.387zM336.558 299.602h-11.356v-87.245h10.178c28.662 0 39.783 9.083 39.783 43.202 0 30.884-13.639 44.042-38.605 44.042z" fill="#FFFFFF" />
+                                    <path d="M187.505 229.376h-50.667v-55.173h-53.627v163.574h53.627v-63.396h50.667v63.396h53.617v-163.574h-53.617z" fill="#FFFFFF" />
+                                </svg>
+                            </span> -->
+                            <span class="performers__info-personal-countries" v-if="country === 'nl'">
                                 <i v-for="country in countriesList(performer.performerLanguages)" class="flag" :class="'flag-' + country"></i>
                             </span>
                         </div>
-                        <div class="performers__info-services" v-if="performer">
+                        <div class="performers__info-services enabled" v-if="performer">
                             <i v-for="service in services" v-if="hasService(performer.id, service)" :class="'fa fa-' + service"></i>
                         </div>
                     </div>
@@ -25,6 +46,9 @@
                         <span class="performers__misc-advert hidden-xs">{{ performer.advertId }}</span>
                         <span class="performers__misc-favorite" v-on:click="performer.isFavourite ? removeFavourite(performer) : addFavourite(performer)">
                             <i class="fa fa-star" :class="{ 'is-favourite': performer.isFavourite }"></i>
+                        </span>
+                        <span class="performers__misc-subscribe" v-if="$route.name === 'Favourites' && performer.isSubscribed" v-on:click="performer.isSubscribed ? removeSubscriptions(performer) : addSubscriptions(performer)">
+                            <i :title="performer.isSubscribed ? $t('profile.subscribe-remove-hover', {nickname: performer.nickname} ) : $t('profile.subscribe-add-hover', {nickname: performer.nickname})" class="fa fa-bell" :class="{ 'is-subscribe': performer.isSubscribed }"></i>
                         </span>
                     </div>
                     <div class="performers__image">

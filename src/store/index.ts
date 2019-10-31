@@ -13,6 +13,7 @@ import voyeur, { VoyeurState } from './voyeur';
 import sentryPlugin from './plugins/sentry';
 
 import { Info } from '../models/Info';
+import { openModal } from '../util';
 
 
 Vue.use(Vuex);
@@ -70,7 +71,10 @@ const rootStore = new Vuex.Store<RootState>({
         },
         getBranding: state => {
             return state.info && state.info.country === 'nl';
-        }
+        },
+        getSafeMode: state => {
+            return state.safeMode;
+        },
     },
     mutations: {
         toggleSidebar: function(state: RootState){
@@ -99,7 +103,7 @@ const rootStore = new Vuex.Store<RootState>({
             store.commit('setInfo', infoData);
         },
         intervalChecksession: function(store: RootContext){
-            setInterval(() => store.dispatch('getSession'), 60 * 1000); //Update user data every minute
+            setInterval(() => store.dispatch('getSession', true), 60 * 1000); //Update user data every minute
         }
     },
     modules: {

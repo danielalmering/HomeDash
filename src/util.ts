@@ -16,17 +16,26 @@ export function getAvatarImage(performer: Performer, size: string){
     return require('./assets/images/placeholder.png');
 }
 
-export function getSliderImages(performer: Performer, photoname: string, size: string){
-    return `${config.ImageUrl}pimg/${performer}/${size}/${photoname}`;
+export function getSliderImages(performer: Performer, photo: any, size: string){
+    if(store.state.safeMode && photo.safe_version){
+        return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
+    }
+
+    if(!store.state.safeMode){
+        return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
+    }
+
+    return require('./assets/images/placeholder.png');
 }
 
 export function getPerformerStatus(performer: Performer){
+    if(!performer){ return 'offline'; }
 
     if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
         return 'teaser';
     }
 
-    if(performer.performerStatus === PerformerStatus.OnCall){
+    if(performer.performerStatus === PerformerStatus.OnCall || performer.performerStatus === PerformerStatus.Request){
         return 'busy';
     }
 
@@ -72,32 +81,149 @@ export function getPerformerLabel(performer: Performer){
     return 'none';
 }
 
-export function openModal(name: string){
-    this.$store.dispatch('displayModal', name);
+export function goBanner(loggedin: boolean){
+    const logged = !loggedin ? this.$store.dispatch('displayModal', { name: 'login' }) : this.$router.push({ name: 'Payment' });
+}
+
+export function openModal(name: string, ref?: string){
+    this.$store.dispatch('displayModal', { name: name, ref: ref});
 }
 
 export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
+//Webrtc play back possible
 export function webrtcPossible(platform:Platform):boolean{
     const supported = [
         {
-            name: 'Chrome'
+            name: 'Chrome',
+            version: '23'
         },
-        {
+        { //play stream H264 possible for Safari 11+
             name: 'Safari',
             version: '11.0'
+        },
+        {
+            name: 'Firefox',
+            version: '22'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {
+            name: 'Firefox for iOS'
+        },
+        {
+            name: 'Samsung Internet',
+            version: '4'
+        },
+        {
+            name: 'Chrome Mobile' //both andriod and iOS can play streams
+        },
+        {
+            name: 'Opera',
+            version: '60'
+        },
+        {
+            name: 'Opera Mobile',
+            version: '46'
+        },
+        {
+            name: 'Microsoft Edge', //chrome engine is working
+            version: '77.0'
+        }
+
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+//Webrtc publish possible
+export function webrtcPublishPossible(platform:Platform):boolean{
+    const supported = [
+        {
+            name: 'Chrome',
+            version: '23'
+        },
+        {
+            name: 'Firefox',
+            version: '22'
+        },
+        {
+            name: 'Samsung Internet',
+            version: '4'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
+            //This needs te be fixed by Wowza!
+            name: 'Safari',
+            version: '12.1'
+        },
+        {
+            name: 'Chrome Mobile', //does not work for iOS
+            os: {
+                family: 'Android'
+            }
+        },
+        {
+            name: 'Opera',
+            version: '60'
+        },
+        {
+            name: 'Microsoft Edge', //chrome engine is working
+            version: '77'
         }
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
-export function hasWebAudio():boolean{
-    return ('AudioContext' in window) || ('webkitAudioContext' in window);
+export function isIPhone(platform:Platform){
+    const supported = [
+        {
+            product: 'iPhone'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
+//IE not killing flash for now, let it use the superior flash plugin
+export function isIE(platform:Platform){
+    const supported = [
+        {
+            name: 'IE'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+//Autoplay fix for safari
+export function isWebrtcMuted(platform:Platform): boolean{
+    const supported = [
+        {
+            name: 'Safari'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isSafari(platform:Platform): boolean{
+    const supported = [
+        {
+            name: 'Safari'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+//No flash for mobile
 export function noFlash(platform:Platform):boolean{
     const noFlashers = [
         {
@@ -116,11 +242,10 @@ export function noFlash(platform:Platform):boolean{
 }
 
 export function isApple(platform:Platform):boolean{
-    console.log(platform);
     const apples = [
         {
             os:{
-                famlily: 'iOS'
+                family: 'iOS',
             }
         },
         {
@@ -129,8 +254,86 @@ export function isApple(platform:Platform):boolean{
             }
         }
     ];
+    return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isIOS(platform:Platform):boolean{
+    const apples = [
+        {
+            os:{
+                family: 'iOS'
+            }
+        }
+
+    ];
 
     return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function isIOSNanoCosmos(platform:Platform):boolean{
+    const apples = [
+        {
+            os:{
+                family: 'iOS',
+                version: '10'
+            }
+        }
+
+    ];
+
+    return apples.find( pattern => match(platform, pattern) ) != null;
+}
+
+
+
+/*
+The low-latency nanoStream h5Live Player runs on all full-featured HTML5 browsers including
+
+Safari 10,11,12 on iOS and macOS
+Chrome 54 and higher on desktop and mobile
+Firefox 48 and higher
+Edge
+Internet Explorer 11 (starting Windows 8.1)
+ */
+export function NanoCosmosPossible(platform: Platform){
+    const supported = [
+        {
+            name: 'Microsoft Edge'
+        },
+        {
+            name: 'Safari',
+            version: '10'
+        },
+        {
+            name: 'Chrome',
+            version: '54'
+        },
+        {
+            name: 'Chrome Mobile',
+            version: '54'
+        },
+        {
+            name: 'Firefox',
+            version: '48'
+        },
+        {
+            name: 'IE',
+            version: '11.0',
+            os: {
+                family: 'Windows',
+                version: '8'
+            }
+        },
+        {
+            name: 'Opera'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != null;
+}
+
+export function hasWebAudio():boolean{
+    return ('AudioContext' in window) || ('webkitAudioContext' in window);
 }
 
 // checks if 'pattern' is a subset of 'message'
@@ -210,3 +413,14 @@ export function tagHotjar(tag: string){
         window.hj('tagRecording', [tag]);
     }
 }
+
+export function getParameterByName(name: string, url?: string) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+

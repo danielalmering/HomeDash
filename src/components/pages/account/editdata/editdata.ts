@@ -3,9 +3,10 @@ import Vue from 'vue';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
+import { openRoute } from '../../../../util';
 import WithRender from './editdata.tpl.html';
 
-import { updateConsumer } from 'sensejs/consumer';
+import { updateConsumer, removeConsumer } from 'sensejs/consumer';
 import { Consumer } from 'sensejs/core/models/user';
 
 @WithRender
@@ -15,7 +16,23 @@ export default class Editdata extends Vue {
     user: Consumer;
 
     confirmPassword: string = '';
+    confirmDelete: boolean = false;
     pushcrewSubscribed: boolean = false;
+  
+    openRoute = openRoute;
+
+    get credits(){
+        return this.$store.state.authentication.user.credits;
+    }
+
+    data(){
+        return {
+            user: {
+                email: '',
+                mobile_number: ''
+            }
+        }
+    }
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
@@ -39,16 +56,29 @@ export default class Editdata extends Vue {
             return;
         }
 
-        const { error, result } = await updateConsumer(this.user);
+        let payload = { user: this.user};
+        await this.$store.dispatch('updateUser', payload);
+    }
 
-        if(error){
-            this.$store.dispatch('errorMessage', 'account.alerts.errorEditData');
+    async removeUser(approven: boolean){
+
+        if(approven){
+            this.confirmDelete = true;
             return;
         }
 
-        this.$store.dispatch('successMessage', 'account.alerts.successEditData');
+        const { error, result } = await removeConsumer(this.user);
 
-        this.$store.commit('setUser', result);
+        if(error){
+            this.$store.dispatch('errorMessage', 'account.alerts.errorRemoveAccount');
+            return;
+        }
+
+        this.confirmDelete = false;
+        this.$store.dispatch('successMessage', 'account.alerts.successRemoveAccount');
+
+        this.$store.dispatch('logout');
+        this.openRoute('Performers');
     }
 
     subscribePushMessages(){

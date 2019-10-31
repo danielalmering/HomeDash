@@ -222,7 +222,7 @@ export class NotificationSocket {
             if(!this.intervalHandle){
                 this.intervalHandle = setInterval(this.checkSocketAlive.bind(this), this.checkAliveInterval);
             }
-        }, 3000);
+        }, 1000);
     }
 
     private socketDisconnect(reason: string) {

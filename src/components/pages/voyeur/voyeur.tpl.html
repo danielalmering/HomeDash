@@ -8,13 +8,21 @@
                 :playStream="mainTile.streamData.playStream"
                 :muted="true">
             </jsmpeg>-->
-            <nanocosmos
+            <!--<nanocosmos
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
                 :wowza="mainTile.streamData.wowza"
                 :playStream="mainTile.streamData.playStream"
                 :muted="true">
-            </nanocosmos>
+            </nanocosmos>-->
+
+            <component :is="streamTransportType"
+                       v-on:stateChange="viewerStateChange"
+                       v-on:error="viewerError"
+                       :wowza="mainTile.streamData.wowza"
+                       :playStream="mainTile.streamData.playStream"
+                       :muted="true">
+            </component>
         </div>
     </div>
 

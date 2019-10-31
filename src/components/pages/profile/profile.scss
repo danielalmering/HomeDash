@@ -86,6 +86,12 @@
             font-weight: 700;
             i { color: $pallete-19; @include rem(margin, 0px 8px); }
         }
+        &-subscribe {
+            display: inline-block;
+            color: $pallete-18;
+            font-weight: 700;
+            i { color: $pallete-19; @include rem(margin, 0px 8px); }
+        }
 
         a {
             &:hover {

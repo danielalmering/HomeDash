@@ -14,6 +14,8 @@ import { RawLocation } from 'vue-router/types/router';
 import { listPerformers } from 'sensejs/performer';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
+import { openModal, goBanner } from '../../../util';
 
 @WithRender
 @Component({
@@ -26,15 +28,26 @@ export default class Performers extends Vue {
     performers: Performer[] = new Array(40).fill(undefined, 0, 40);
 
     total: number = 0;
-    services: string[] = ['cam', 'phone', 'sms', 'email', 'videocall'];
+    services: string[] = config.locale.Services;
 
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
     getPerformerLabel = getPerformerLabel;
+    openModal = openModal;
+    country = config.Country;
+    goBanner = goBanner;
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
+        performer.isSubscribed = true
+        if(!this.user.notification_mode){
+            const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
+        }
+    });
+    removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
+    
     query: { limit: number, offset: number, category?: string, search: string } = {
         limit: 40,
         offset: 0,
@@ -45,10 +58,23 @@ export default class Performers extends Vue {
     serviceEventId: number;
     statusEventId: number;
 
+    get authenticated(): boolean {
+        return this.$store.getters.isLoggedIn;
+    }
+
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
     get noPerformers(){
         return this.performers.length === 0;
     }
 
+    get getBanner(){
+        const banner = {active: config.FreeRegister, url: require(`../../../assets/images/${this.country}/gridbanner.png`)};
+        return banner;
+    }
+    
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 
@@ -147,6 +173,11 @@ export default class Performers extends Vue {
 
         if(error){
             this.$router.push({ name: 'Performers' });
+            throw new Error(`Api${error.message}`);
+        }
+
+        if(!result){
+            return;
         }
 
         this.performers = result.performerAccounts;

@@ -5,8 +5,10 @@
                 <i class="fa fa-envelope-o hidden-xs"></i><span v-t="'nav.info.inbox'"></span>
             </div>
             <div class="col-xs-8 col-sm-9">
-                <a class="btn btn-right btn-fa fa-trash-o" v-on:click="removeMessages()"><span class="hidden-xs" v-t="'account.removemessage'"></span></a>
+                <!-- <a class="btn btn-right btn-fa fa-trash-o" v-on:click="removeMessages()"><span class="hidden-xs" v-t="'account.removemessage'"></span></a> -->
                 <router-link :to="{ name: 'Newmessage' }" class="btn btn-orange btn-right btn-fa fa-envelope-o rowmar"><span class="hidden-xs" v-t="'account.newmessage'"></span></router-link>
+                <a :title="notify('MSG') ? $t('account.msg-notify-remove-hover') : $t('account.msg-notify-add-hover')""
+                v-on:click="addPromoNotifi" class="btn btn-right btn-fa fa-bell btn-orange"><span v-t="notify('MSG') ? 'nav.info.notifymenot' : 'nav.info.notifyme'"></span></a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -14,20 +16,16 @@
     <div class="account__view">
         <table class="account__view-table">
             <tr v-for="(notification, index) in notifications" :key="notification.id" :class="{ 'even': index % 2 === 0 }">
-                <td width="5%" v-on:click="notification.checked = !notification.checked">
-                    <i class="fa" :class="{ 'fa-square-o': !notification.checked, 'fa-check-square-o': notification.checked }"></i>
+                <td width="5%">
+                    <i class="fa" :class="{ 'fa-phone': notification.type === 'sms', 'fa-envelope': notification.type === 'email' }"></i>
                 </td>
                 <td width="50%">
-                    <a v-on:click.prevent="openMessage(notification)" v-if="!hasPaymentDialog(notification.id)">
-                        <span>{{ notification.type }}</span>
-                        <p :class="{ 'active': notification.status === 'NEW' }">{{ notification.subject }}</p>
+                    <a v-on:click.prevent="openMessage(notification)">
+                        <span>{{ notification.username }}</span>
+                        <p :class="{ 'active': newNotifications(notification.read_status) }">{{ notification.subject }}</p>
                     </a>
-                    <div class="popout" v-if="hasPaymentDialog(notification.id)">
-                        <p class="highlight">{{ $t('account.paymessage', { credits: creditsPerType(notification.type) }) }}</p>
-                        <a v-on:click="payMessage(notification)" class="btn btn-orange btn-right">{{ $t('account.viewmessage') }}</a>
-                    </div>
                 </td>
-                <td width="45%">
+                <td width="50%">
                     <p class="text-right">{{ notification.date | date }}</p>
                 </td>
             </tr>

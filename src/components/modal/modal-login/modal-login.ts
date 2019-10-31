@@ -2,9 +2,16 @@ import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import WithRender from './modal-login.tpl.html';
 import { openModal, tagHotjar } from '../../../util';
+import Sociallogin from './../../layout/Sociallogin.vue';
+import config from '../../../config';
+import router from '../../../router';
 
 @WithRender
-@Component
+@Component({
+    components: {
+        sociallogin: Sociallogin
+    }
+})
 export default class ModalLogin extends Vue {
     email: string = '';
     password: string = '';

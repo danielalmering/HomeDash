@@ -50,7 +50,7 @@ export class Rtmp extends Stream {
 
         const file = this.muted ? 'Peek' : 'Chat';
 
-        swfobject.embedSWF('/static/View.swf', 'viewSWF', '100%', '100%', '10.2.0', true, flashvars, params, attrs);
+        swfobject.embedSWF('/static/Peek.swf', 'viewSWF', '100%', '100%', '10.2.0', true, flashvars, params, attrs);
     }
 
     beforeDestroy(){

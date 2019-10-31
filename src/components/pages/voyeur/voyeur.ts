@@ -4,9 +4,10 @@ import Vue from 'vue';
 import config from '../../../config';
 import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
+import NanoCosmosRtmp from '../videochat/streams/nanocosmosRtmp';
 import Confirmation from '../../layout/Confirmations.vue';
 
-require('../../../../static/nanoplayer.3.min.js');
+require('../../../../static/nanoplayer.4.0.2.min.js');
 
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
@@ -15,13 +16,20 @@ import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
+import {NanoCosmosPossible, webrtcPossible, isIE} from "../../../util";
+import {WebRTC} from "../videochat/streams/webrtc";
+
+
+const Platform = require('platform');
 
 @WithRender
 @Component({
     components: {
         jsmpeg: JSMpeg,
         nanocosmos: NanoCosmos,
-        confirmation: Confirmation
+        webrtc: WebRTC,
+        confirmation: Confirmation,
+        nanocosmosRtmp: NanoCosmosRtmp,
     }
 })
 export default class Voyeur extends Vue {
@@ -73,6 +81,51 @@ export default class Voyeur extends Vue {
         return (id: number) => {
             return this.$store.getters['voyeur/isReservation'](id);
         };
+    }
+
+
+    get isWebRTCPerformer(): boolean {
+        //disable webrtc play by returning false here!
+        const performerId = this.$store.state.voyeur.mainTile.performer;
+        const activePerformer = this.performer(performerId);
+
+        if(activePerformer == null){
+            return false;
+        }
+
+        if(!activePerformer && activePerformer === undefined){
+            return false;
+        }
+
+        if(!activePerformer.mediaId  && activePerformer.mediaId === undefined){
+            return false;
+        }
+
+        return activePerformer.mediaId > 1;
+    }
+
+
+    get streamTransportType(): string | undefined{
+
+        const platform = Platform.parse(navigator.userAgent);
+
+        //for webrtc user use webrtc viewer or jsmpeg
+        if(this.isWebRTCPerformer){
+            if(webrtcPossible(platform)){
+                return 'webrtc';
+            } /*else if (isIE(platform)) {
+                return 'nanocosmosRtmp';
+            }*/ else {
+                return 'jsmpeg';
+            }
+        }
+
+        if(NanoCosmosPossible(platform)){
+            return 'nanocosmos';
+        }
+
+        //fallback on nanocosmos
+        return 'jsmpeg';
     }
 
     mounted(){
@@ -192,7 +245,7 @@ export default class Voyeur extends Vue {
     }
 
     viewerStateChange(state: string){
-        console.log(`yoyo dit is de state: ${state}`);
+       // console.log(`yoyo dit is de state: ${state}`);
     }
 
     viewerError(message: string){

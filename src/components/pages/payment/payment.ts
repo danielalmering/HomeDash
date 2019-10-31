@@ -1,4 +1,5 @@
 import { Component, Prop } from 'vue-property-decorator';
+import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import config from '../../../config';
@@ -50,6 +51,7 @@ export default class Payment extends Vue {
     promoData?: PromoData = undefined;
     promoCode: string = '';
     promoCredits: number = 0;
+    paymentDisabled: boolean = true;
 
     fees: Fee[] = [];
 
@@ -57,6 +59,18 @@ export default class Payment extends Vue {
         await this.getInfo();
 
         this.loadCache();
+
+        // Payment Failure message!
+        if(this.$route.name === 'PaymentFailure'){
+            const query = new URLSearchParams(window.location.search);
+            if(query.has('info') === true){
+                this.$store.dispatch('errorMessage', query.get('info'));
+            } else {
+                this.$store.dispatch('errorMessage', 'payment.alerts.errorPaymentFailure');
+            }
+            this.$router.replace({ path: '/payment/' });
+        }
+
     }
 
     beforeDestroy(){
@@ -70,9 +84,9 @@ export default class Payment extends Vue {
             return;
         }
 
-        const data = result;
-
-        this.packages = data.packages.slice().reverse();
+        const data = result;    
+        const promo = data.packages.some(item => item.id === 0);
+        this.packages = promo ? data.packages.slice() : data.packages.slice().reverse();
         this.paymentMethods = data.payment_methods;
 
         //Initialize initial state of the selectedpackages like this because adding properties to an object
@@ -92,7 +106,7 @@ export default class Payment extends Vue {
     }
 
     private loadCache(){
-        const paymentCacheString = window.localStorage.getItem(`${config.StorageKey}.payment-cache`);
+        const paymentCacheString = window.localStorage.getItem(`${config.StorageKey}.payment-cache-${this.user.id}`);
 
         if(!paymentCacheString){
             return;
@@ -108,7 +122,7 @@ export default class Payment extends Vue {
     }
 
     private storeCache(){
-        window.localStorage.setItem(`${config.StorageKey}.payment-cache`, JSON.stringify({
+        window.localStorage.setItem(`${config.StorageKey}.payment-cache-${this.user.id}`, JSON.stringify({
             packages: this.selectedPackages,
             promoCode: this.promoCode
         }));
@@ -172,8 +186,31 @@ export default class Payment extends Vue {
         }, 0);
     }
 
+    get pricetotal(){
+        return Object.keys(this.selectedPackages).reduce((total: number, key: string) =>  {
+            const pack = this.packages.find(p => p.id === parseInt(key));
+            const amount = this.selectedPackages[parseInt(key)];
+
+            return total + (pack ? pack.price * amount : 0);
+        }, 0);
+    }
+
+    get colums(){
+        const promo = this.packages.some(item => item.id === 0);
+        return promo ? 'four' : 'three';
+    }
+
     addPackage(pack: Package){
+        if(pack.id === 0 && this.selectedPackages[pack.id] >= 1){
+            return;
+        }
+
         this.selectedPackages[pack.id] += 1;
+
+        // Add auto bonus package
+        if(this.selectedPackages[0] === 0){
+            this.selectedPackages[0] += 1;
+        }
 
         this.storeCache();
     }
@@ -224,7 +261,14 @@ export default class Payment extends Vue {
             return;
         }
 
-        const { result, error } = await submitPayment(this.selectedPayment, this.credits, this.promoCode);
+        this.paymentDisabled = false;
+        const { result, error } = await submitPayment(this.selectedPayment, this.pricetotal, this.promoCode);
+
+        if(error){
+            this.$store.dispatch('errorMessage', 'payment.alerts.errorNoConnection');
+            this.paymentDisabled = true;
+            return;
+        }
 
         if(result.free !== undefined){
             this.$store.dispatch('openMessage', {
@@ -232,6 +276,7 @@ export default class Payment extends Vue {
                 class: result.free ? 'success' : 'error'
             });
 
+            this.paymentDisabled = true;
             return;
         }
 
@@ -253,6 +298,7 @@ export default class Payment extends Vue {
             document.getElementsByTagName('body')[0].appendChild(redirForm);
             redirForm.submit();
 
+            this.paymentDisabled = true;
             return;
         }
 

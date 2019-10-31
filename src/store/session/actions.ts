@@ -1,6 +1,7 @@
 import { ActionContext } from 'vuex';
 import { SessionState, RequestPayload, translate, VideoEventSocketMessage } from './index';
 import { RootState } from '../index';
+import router from '../../router';
 import { State, SessionType } from '../../models/Sessions';
 import config from '../../config';
 import { Performer } from 'sensejs/performer/performer.model';
@@ -31,6 +32,7 @@ const actions = {
             payment: payload.payment
         });
 
+
         if(!error){
             store.state.activePerformer = payload.performer;
             store.state.activeDisplayName = displayName;
@@ -38,6 +40,7 @@ const actions = {
             store.state.activeIvrCode = payload.ivrCode;
             store.state.activePaymentType = payload.payment;
             store.state.fromVoyeur = payload.fromVoyeur !== undefined ? payload.fromVoyeur : false;
+
 
             if(payload.sessionType == SessionType.Peek){
                 store.commit('setState', State.Accepted);
@@ -86,28 +89,29 @@ const actions = {
 
         const performerId = store.state.activePerformer ? store.state.activePerformer.id : 0;
         let hasError;
+        let whatError;
 
         if(reason === 'PERFORMER_REJECT'){
             const { error } = await deleteVideorequest(performerId);
             hasError = error !== undefined;
+            whatError = error;
         } else {
             const { error } = await cancel({
                 clientId: store.rootState.authentication.user.id,
                 performerId: performerId
             });
             hasError = error !== undefined;
-        }
-
-        if(!hasError){
-            store.commit('setState', State.Idle);
-            store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
-
-            tagHotjar(`CANCEL_${reason}`);
-        } else {
-            throw new Error('Oh noooooo, ending failed');
+            whatError = error;
         }
 
         store.commit('setState', State.Idle);
+
+        if(!hasError){
+            store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
+            tagHotjar(`CANCEL_${reason}`);
+        } else {
+            throw new Error(`Api${whatError}`);
+        }
     },
     async disconnected(store: ActionContext<SessionState, RootState>){
         if (store.state.activeState != State.Active){
@@ -118,7 +122,12 @@ const actions = {
         store.commit('setState', State.Idle);
     },
     async end(store: ActionContext<SessionState, RootState>, reason?: string){
+        if([State.Idle, State.Ending].indexOf(store.state.activeState) >= 0){
+            return;
+        }
+
         store.commit('setState', State.Ending);
+
         if (reason === 'PHONE_DISCONNECT'){
             store.commit('setIvrCode', undefined);
         }
@@ -134,7 +143,7 @@ const actions = {
                 store.dispatch('errorMessage', `videochat.alerts.socketErrors.${reason}`);
             }
         } else {
-            throw new Error('Oh noooooo, ending failed');
+            throw new Error(`Api${error.message}`);
         }
     },
     async switchPeek(store: ActionContext<SessionState, RootState>, performer: Performer){
@@ -153,12 +162,23 @@ const actions = {
         try {
             const previousPerformer = { ...store.state.activePerformer };
 
+            //dirty hack for changing webrtc to jsmpeg not needed anymore leaving it here
+            //because of possible rollback
+            /*if(previousPerformer && ((<Performer>previousPerformer).mediaId != performer.mediaId) ){
+
+                console.log("Failing because of stream switch", performer.advertId);
+
+                router.push({ name: 'Profile', params: { id: performer.advertId.toString() } });
+
+                return;
+            }*/
+
             store.state.isSwitching = true;
 
             await store.dispatch('end');
 
             await sleep(1000);
-            
+
             await store.dispatch('startRequest', <RequestPayload>{
                 performer: performer,
                 sessionType: store.state.activeSessionType,
@@ -166,6 +186,9 @@ const actions = {
                 displayName: store.state.activeDisplayName,
                 payment: store.state.activePaymentType
             });
+
+
+
 
             /* Switching failed man, the new performer is not available, lets go back to the previous
              * If the previous is gone, well fuck me, session is just gonna have to stop..

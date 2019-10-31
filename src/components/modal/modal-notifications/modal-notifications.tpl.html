@@ -1,0 +1,38 @@
+<div class="modal">
+    <div class="modal__title" v-if="!title"><i class="fa fa-user"></i><span v-t="'nav.info.notifications'"></span></div>
+    <div class="modal__close" v-if="!title" v-on:click="close"><i class="fa fa-times"></i></div>
+    <div class="modal__content register form">
+        <form class="row" v-on:submit.prevent="updateNotifications(user.notification_mode.toString())">
+            <div class="col-xs-12">
+                <div class="form__group">
+                    
+                    <p v-if="modalRef === 'PRO'" v-t="'account.whenreceivednotify.PRO-desc'"></p>
+                    <p v-if="modalRef === 'MSG'" v-t="'account.whenreceivednotify.MSG-desc'"></p>
+                    <p v-if="modalRef === 'SSA'" v-t="'account.whenreceivednotify.SSA-desc'"></p>
+
+                    <h2 v-t="'account.howreceivenotify.question'"></h2>
+
+                    <div class="radio" v-for="(event, index) in formData.modes">
+                        <input type="radio" :id="'radio'+index" name="radio-group" v-model="user.notification_mode" :value="index">
+                        <label :for="'radio'+index">{{ $t('account.howreceivenotify.'+ event) }} 
+                            <div style="display: none" v-if="event === 'Email'">
+                                <input type="email" v-model="form.email" data-vv-delay="1000" v-validate="'required|email'" name="email" class="col-xs-12">
+                                <span v-show="errors.has('email')" class="form__group-alert" v-t="'account.alerts.errorinvalidEmail'"></span>
+                            </div>
+                            <div style="display: none" v-if="event === 'SMS' || event === 'WhatsApp'">
+                                <input type="text" v-model="form.mobile_number" data-vv-delay="1000" v-validate="{ required: true, regex: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g }" name="phone" class="col-xs-12">
+                                <span v-show="errors.has('phone')" class="form__group-alert" v-t="'account.alerts.errorinvalidPhone'"></span>
+                            </div>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form__group">
+                    <button class="btn btn-orange" v-t="'account.editdatabtn'"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

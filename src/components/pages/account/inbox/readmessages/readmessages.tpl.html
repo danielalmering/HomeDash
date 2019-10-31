@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <h1>
+        <div class="row">
+            <div class="col-xs-4 col-sm-3">
+                <i class="fa fa-envelope hidden-xs"></i><span v-t="'nav.info.inbox'"></span>
+            </div>
+            <div class="col-xs-8 col-sm-9">
+                <router-link :to="{ name: 'Inbox'}" class="btn btn-right btn-fa fa-arrow-left"><span class="hidden-xs" v-t="'account.backinbox'"></span></router-link>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </h1>
+    <div class="account__view">
+
+        <h3 class="readmessagesheading" v-if="firstThreadMessage">{{ firstThreadMessage.subject }}</h3>
+
+
+        <div class="readmessages">
+            <div class="readmessages__more" v-on:click="loadMore" v-if="messages.length < total"><i class="fa fa-plus" aria-hidden="true"></i> {{ $t('account.readold') }}</div>
+
+            <div class="readmessages__item" v-for="message in messages" :class="{ 'even': message.sent_by === 'PERFORMER' }">
+
+                <div class="readmessages__item-remove" v-on:click.prevent="removeMessage(message)" v-if="message.billing_status != 'NOT PAID'"></div>
+
+                <div class="readmessages__item-account" v-if="message.billing_status != 'NOT PAID'">
+                    <div class="readmessages__item-account-img" :style="{ 'background-image': `url('${getAvatar(performer, message.sent_by)}')` }"></div>
+                    <h4>{{ getName(message.sent_by) }}</h4>
+                </div>
+
+                <div class="readmessages__item-content" v-if="message.billing_status != 'NOT PAID'">
+                    <p>{{ message.content }}</p>
+                    <span>{{ message.date | date }}</span>
+                </div>
+        
+                <div class="readmessages__item-pay" v-if="message.billing_status === 'NOT PAID'">
+                    <p class="highlight">{{ $t('account.paymessage', { credits: creditsPerType(message.type) }) }}</p>
+                    <a v-on:click="payMessage(message)" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form">
+            <form class="row" v-on:submit.prevent="sendMessage(firstThreadMessage)" v-if="firstThreadMessage">
+                <div class="col-xs-12">
+                    <div class="form__group">
+                        <textarea :maxlength="maxCharacters(firstThreadMessage.type)" v-model="reply"></textarea>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form__group">
+                        <button class="btn btn-orange" v-t="'account.sendmessage'"></button>
+                    </div>  
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+

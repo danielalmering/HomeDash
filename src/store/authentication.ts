@@ -3,11 +3,16 @@ import { Module, ActionContext } from 'vuex';
 
 import { RootState } from './index';
 import { User, AnonymousUser, UserForm } from '../models/User';
+import { updateConsumer } from 'sensejs/consumer';
+import { Consumer } from 'sensejs/core/models/user';
+import { checkSession } from 'sensejs/auth';
+import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
-import Raven from 'raven-js';
-import { tagHotjar } from '../util';
+import { tagHotjar, getParameterByName } from '../util';
 import router from '../router';
+
+import * as Sentry from '@sentry/browser'
 
 export interface AuthState {
     user: User | undefined;
@@ -36,11 +41,9 @@ const authenticationStore: Module<AuthState, RootState> = {
         setUser(state: AuthState, user: User | undefined){
             state.user = user;
 
-            if(state.user !== undefined && Raven.isSetup()){
-                Raven.setUserContext({
-                    id: state.user.id.toString()
-                });
-            }
+            Sentry.configureScope( (scope)=>{
+                if(state.user !== undefined ) scope.setUser( {id: state.user.id.toString()} )
+            });
 
             tagHotjar(`USER_${user ? user.id : 'NONE'}`);
         }
@@ -79,7 +82,8 @@ const authenticationStore: Module<AuthState, RootState> = {
                 return;
             }
 
-            store.commit('setUser', loginData);
+            store.commit('setUser', transformReadConsumer(loginData));
+            store.commit('deactivateSafeMode');
 
             notificationSocket.disconnect();
             notificationSocket.connect();
@@ -89,7 +93,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 credentials: 'include'
             });
 
-            await store.dispatch('getSession');
+            await store.dispatch('getSession', false);
 
             notificationSocket.disconnect();
             notificationSocket.connect();
@@ -109,41 +113,81 @@ const authenticationStore: Module<AuthState, RootState> = {
             }
         },
         async confirmAccount(store: AuthContext, payload: { userId: number, token: string }){
-            const confirmResult = await fetch(`${config.BaseUrl}/client/client_accounts/${payload.userId}/confirm/${payload.token}`, {
+            const confirmResult = await fetch(`${config.BaseUrl}/auth/${payload.userId}/confirm/${payload.token}`, {
                 credentials: 'include'
             });
 
             if(!confirmResult.ok){
-                const data = await confirmResult.json();
-                throw new Error(data.error);
+                return;
             }
+
+            const confirmData: any = await confirmResult.json();
+            store.commit('setUser', transformReadConsumer(confirmData));
+
+            notificationSocket.disconnect();
+            notificationSocket.connect();
         },
-        async getSession(store: AuthContext){
-            const checkSessionResult = await fetch(`${config.BaseUrl}/check_session`, {
-                credentials: 'include'
+        async getSession(store: AuthContext, polling: boolean){
+            const { result, error } = await checkSession<any>({
+                login: polling ? 0 : undefined
             });
 
             let sessionData: AnonymousUser | undefined = undefined;
-            const referer = router.currentRoute.query.utm_source ? `&referer=${router.currentRoute.query.utm_source}` : '';
-            if(checkSessionResult.status === 403){
 
+            const utmMedium = getParameterByName('utm_medium');
+            const utm = (utmMedium && utmMedium.toLowerCase() === 'advertising') ? true : false;
+            const referer = utm ? `&referer=${router.currentRoute.query.utm_source}` : ''; // old code, removal?
+
+            // TODO: Daniel
+            if(utm){
+                store.dispatch('loadInfo');
+                store.commit('setUser', undefined);
+                store.commit('setLanguage', config.locale.DefaultLanguage);
+                return;
+            }
+
+            if(error && (error.statusCode === 403)){
                 const annonConnectResult = await fetch(`${config.BaseUrl}/client/client_accounts/annon_connect?country=${store.rootState.localization.country}${referer}`, {
                     credentials: 'include'
                 });
 
                 sessionData = await annonConnectResult.json() as AnonymousUser;
             } else {
-                sessionData = await checkSessionResult.json() as AnonymousUser;
+                sessionData = result as AnonymousUser;
             }
 
             //since the displayname is set locally, transfer it when setting a new remote user
-            if (sessionData  && store.state.user){
+            if (sessionData && store.state.user){
                 sessionData.displayName = store.state.user.displayName;
             }
 
-            store.commit('setUser', sessionData);
+            store.commit('setUser', transformReadConsumer(sessionData));
+            const loggedin = store.getters.isLoggedIn ? store.commit('deactivateSafeMode') : '';
 
             await store.dispatch('setLanguage', sessionData.language);
+
+            if(!notificationSocket.isConnected()){
+                notificationSocket.connect();
+            }
+        },
+        async updateUser(store: AuthContext, payload: { user: Consumer | any, notify: string | undefined}){
+
+            if(payload.notify){ 
+                payload.user.notification_types = payload.user.notification_types ? payload.user.notification_types : { SSA: false, PRO: false, MSG: false };
+                payload.user.notification_types[payload.notify] = payload.user.notification_types[payload.notify] ? false : true;
+                const notificationmode = (payload.user.notification_mode === 0 && payload.user.notification_types[payload.notify] === true) ? store.dispatch('displayModal', { name: 'notifications', ref: payload.notify}) : '';
+            }
+
+            const { error, result } = await updateConsumer(payload.user);
+
+            if(error){
+                store.dispatch('errorMessage', 'account.alerts.errorEditData');
+                return;
+            }
+
+            store.dispatch('successMessage', 'account.alerts.successEditData');
+
+            store.commit('setUser', result);
         }
     }
 };

@@ -1,13 +1,13 @@
 <main class="textpages">
     <div class="container-fluid">
 
-        <div class="textpages__title">
+        <div class="textpages__title" v-if="pagetitle">
             <i class="fa fa-user-secret"></i> 
-            <span v-t="'textpages.termstitle'"></span>
+            <span v-t="'textpages.' + pagetitle + 'title'"></span>
         </div>
 
         <div class="textpages__content">
-            <p v-html="terms" v-if="terms"></p>
+            <p v-html="pages" v-if="pages"></p>
         </div>
     </div>
 </main>

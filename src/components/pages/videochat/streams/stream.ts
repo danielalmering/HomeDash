@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
+import { VideoCodec } from "typertc";
 
 export default class Stream extends Vue {
 
@@ -26,6 +27,14 @@ export default class Stream extends Vue {
         required: false
     })
     muted: boolean;
+
+    @Prop() videoCodec: VideoCodec;
+
+    @Prop({
+        type: Boolean,
+        required: false
+    })
+    isSwitching: boolean;
 
     public onStateChange(value: string){
         this.$emit('stateChange', value);

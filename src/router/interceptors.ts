@@ -8,10 +8,10 @@ import notificationSocket from '../socket';
 
 export function socketInterceptor(to: Route, from: Route, next?: (to?: string | Location) => void){
 
-    if(store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
-        // console.log('Should make a socket connection now!');
-        notificationSocket.connect(); // activate socket
-
+    if(!store.state.authentication.user && !notificationSocket.isConnected() && from.name !== null){
+        // Populate Userdata
+        store.dispatch('getSession', false);
+        // Start Checksession Polling
         store.dispatch('intervalChecksession'); // activate checksession
     }
 
@@ -61,19 +61,9 @@ export function userLoadedInterceptor(to: Route, from: Route, next: (to?: string
     return waitAuthenticated(false, next);
 }
 
-export function safeInterceptor(to: Route, from: Route, next: (to?: string | Location) => void){
-    if(to.query.safe !== undefined){
-        store.commit('activateSafeMode');
-    } else {
-        store.commit('deactivateSafeMode');
-    }
-
-    next();
-}
-
 export function modalInterceptor(modalName: string, delayed: boolean = false) {
     return async (to: Route, previous: Route, next: any) => {
-        await store.dispatch('displayModal', modalName);
+        await store.dispatch('displayModal', {name: modalName});
 
         next();
     };
@@ -87,6 +77,15 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
         });
 
         store.dispatch('successMessage', 'confirm.successMessage');
+
+        if(config.FreeRegister){
+            window.location.href = '/payment';
+        } else {
+            next({
+                name: 'Performers'
+            });
+        }
+
     } catch(ex) {
         const errors: { [key: string]: string } = {
             'Account is already validated.': 'confirm.errorAlreadyActivated'
@@ -94,10 +93,6 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
 
         store.dispatch('errorMessage', errors[ex.message] || 'confirm.errorMessage');
     }
-
-    next({
-        name: 'Performers'
-    });
 }
 
 export function seoInterceptor(to: Route, previous: Route){

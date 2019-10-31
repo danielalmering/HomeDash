@@ -18,10 +18,11 @@ export class H5Style {
     keepFrame: boolean;
     displayAudioOnly: boolean;
     audioPlayer: boolean;
+    displayMutedAutoplay: boolean;
 }
 
 @Component({
-    template: '<div class="nanocosmos" :id="id"></div>',
+    template: '<div class="nanocosmos"  :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
 
@@ -36,10 +37,10 @@ export default class NanoCosmos extends Stream {
     public autoplay: Boolean;
 
     //style properties
-    @Prop({ default: '100%', type: String})
+    @Prop({ default: 'auto', type: String})
     public width: string;
 
-    @Prop({ default: '100%', type: String})
+    @Prop({ default: 'auto', type: String})
     public height: string;
 
     @Prop({ default: '4/3', type: String})
@@ -83,8 +84,21 @@ export default class NanoCosmos extends Stream {
 
     @Watch('playStream')
     onPlaystreamSwitch(){
+        try{
+            this.end();
+            this.load();
+        } catch(e) {
+             console.log('switching error!');
+        }
+    }
+
+    @Watch('wowza')
+    onWowzaSwitch(){
+        /*console.log("wowza switch");
         this.end();
-        this.load();
+        sleep(1000).then(() =>{
+            this.load();
+        });*/
     }
 
     private getStyle(): H5Style {
@@ -98,12 +112,15 @@ export default class NanoCosmos extends Stream {
             scaling: this.scaling,
             keepFrame: this.keepFrame,
             displayAudioOnly: this.displayAudioOnly,
-            audioPlayer: this.audioPlayer
+            audioPlayer: this.audioPlayer,
+            displayMutedAutoplay: false,
         };
     }
 
     mounted(){
-       this.load();
+       if(!this.isSwitching){
+           this.load();
+       }
     }
 
     beforeDestroy(){
@@ -121,6 +138,7 @@ export default class NanoCosmos extends Stream {
     }
 
     private load(){
+
         this.player = new NanoPlayer(this.id);
 
         let wowza = this.wowza;
@@ -158,24 +176,43 @@ export default class NanoCosmos extends Stream {
                 onWarning: (s: any) => { this.log(s); }
             },
             'playback': {
-                'autoplay': this.autoplay,
-                'muted': this.muted,
+                'autoplay': this.autoplay,//this.autoplay,
+                'muted':  this.muted,
+                'allowSafariHlsFallback': true,
+                'automute': true,
+                'metadata': true,
                 'flashplayer': '../../../../../static/nano.player.swf',
+                'keepConnection': true,
                 'reconnect': {
-                   minDelay: 2,
-                   maxDelay: 5,
-                   delaySteps: 1,
-                   maxRetries: 3
+                minDelay: 2,
+                maxDelay: 5,
+                delaySteps: 1,
+                maxRetries: 3
                 }
             },
-            'style': this.getStyle()
+            tweaks: {
+                buffer: {
+                    min: 0.2,
+                    start: 0.5,
+                    max: 8.0,
+                    target: 1.2,
+                    limit: 1.7
+                },
+                bufferDynamic: {
+                    offsetThreshold: 2,
+                    offsetStep: 0.5,
+                    cooldownTime: 10
+                }
+            }
+            ,'style': this.getStyle()
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {
             //na da?
         }, function (error: any) {
-            console.log(error.message);
+            console.log('nano error', error.message);
         });
+
     }
 
     private onPlay(s: any) {

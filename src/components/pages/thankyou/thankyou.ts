@@ -16,11 +16,15 @@ export default class Thankyou extends Vue {
 
     getAvatarImage = getAvatarImage;
 
+    get user(){
+        return this.$store.state.authentication.user;
+    }
+
     mounted(){
         this.loadFavorites();
 
         //Clear stored payment page data since the customers has now succesfully completed the transaction
-        window.localStorage.removeItem(`${config.StorageKey}.payment-cache`);
+        window.localStorage.removeItem(`${config.StorageKey}.payment-cache-${this.user.id}`);
     }
 
     async loadFavorites(){

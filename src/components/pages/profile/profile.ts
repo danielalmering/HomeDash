@@ -24,6 +24,7 @@ import WithRender from './profile.tpl.html';
 import { Performer, PerformerStatus, PerformerAvatar } from 'sensejs/performer/performer.model';
 import { createReservation } from 'sensejs/session';
 import { removeFavourite, addFavourite } from 'sensejs/performer/favourite';
+import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 const swfobject = require('swfobject');
 
 @WithRender
@@ -36,13 +37,15 @@ const swfobject = require('swfobject');
     },
     filters: {
         truncate: function(text: string, displayFull: boolean){
-            return displayFull ? text : text.substr(0, 400);
+            const textshort = (text.length != 0) ? text.substr(0, 400) : ''; 
+            return displayFull ? text : textshort;
         }
     }
 })
 export default class Profile extends Vue {
     performer: Performer | null =  null;
     perfmedia: PerformerAvatar[];
+    country = config.Country;
 
     fullSliderVisible: boolean = false;
     displayPic: number = 0;
@@ -54,6 +57,10 @@ export default class Profile extends Vue {
     private voyeurSocketId: number;
 
     private tabEnabled = tabEnabled;
+
+    get safeMode(){
+        return this.$store.getters.getSafeMode;
+    }
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
@@ -80,7 +87,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        if ([PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus) > -1){
+        if ([PerformerStatus.Busy, PerformerStatus.OnCall, PerformerStatus.Request].indexOf(this.performer.performerStatus) > -1){
             return false;
         }
 
@@ -103,6 +110,13 @@ export default class Profile extends Vue {
 
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
+        performer.isSubscribed = true
+        if(!this.user.notification_mode){
+            const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications', 'SSA');
+        }
+    });
+    removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     mounted(){
         this.loadPerformer(parseInt(this.$route.params.id));
@@ -306,16 +320,40 @@ export default class Profile extends Vue {
     async loadPerformer(id: number){
         const { result, error } = await getByAdvert(id);
 
+        if(error){
+            this.$router.push({ name: 'Performers' });
+
+            throw new Error(`Api error: ${error}`);
+        }
+
         this.performer = result;
 
         if(!result.photos) { return; }
         if(!result.photos.approved) { return; }
-        this.perfmedia = result.photos.approved.photos;
+        if(this.safeMode){
+            this.perfmedia = [];
+            for (let photo of result.photos.approved.photos) {
+                const pushfoto = photo.safe_version ? this.perfmedia.push(photo) : '';
+            }
+        } else {
+            this.perfmedia = result.photos.approved.photos;
+        }
 
-        // // Add videos
-        // if(data.medias.approved.medias){
-        //     this.perfmedia.splice(3, 0, result.medias.approved.medias[0]);
-        // }
+        // Add videos
+        if(!result.medias) { return; }
+        if(!result.medias.approved) { return; }
+
+        if(result.medias.approved.total > 0 && !this.safeMode){
+            let s = 0;
+            let i = 0;
+            for (let media of result.medias.approved.medias) {
+                if (s <= result.photos.approved.total) {                    
+                    this.perfmedia.splice(s, 0, result.medias.approved.medias[i]);    
+                    s = s + 4;
+                    i++;                                            
+                }                
+            }
+        }
 
         this.setSeoParameters();
     }
@@ -325,6 +363,7 @@ export default class Profile extends Vue {
         const target = event.target as HTMLElement;
         if(!target.parentElement){ return }
         const parent = target.parentElement.lastChild as HTMLElement;
+        if(!parent){ return }
 
         if(target.classList.contains('active')){
             target.classList.remove('active')
@@ -356,7 +395,7 @@ export default class Profile extends Vue {
     }
 
     setSeoParameters(){
-        if(!this.performer){
+        if(!this.performer || !this.performer.nickname){
             return;
         }
 

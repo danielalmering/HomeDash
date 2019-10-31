@@ -21,7 +21,10 @@ const actions = {
         });
 
         if(error){
-            throw 'Voyeur declined';
+            store.dispatch('openMessage', {
+                content: error.message,
+                class: 'error'
+            });
         }
 
         if(payload.ivrCode){
@@ -37,7 +40,10 @@ const actions = {
         });
 
         if(performerError || result.total === 0 || result.performerAccounts.length === 0){
-            throw 'No performers';
+            store.dispatch('openMessage', {
+                content: 'sidebar.noperformers',
+                class: 'error'
+            });
         }
 
         commit('addPerformers', result.performerAccounts);
@@ -112,6 +118,7 @@ const actions = {
         commit('setTile',  { tile, position: payload.position });
     },
     async loadMainTile({ commit, getters, rootState }: VoyeurContext, payload: { performerId: number }){
+
         const advertId = getters.performer(payload.performerId).advertId;
 
         const { result, error } = await initiate(SessionType.Video, advertId, {

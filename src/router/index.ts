@@ -9,22 +9,24 @@ import Performers from '../components/pages/performers/performers';
 import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 import Editdata from '../components/pages/account/editdata/editdata';
+import Notifications from '../components/pages/account/notifications/notifications';
 import History from '../components/pages/account/history/history';
 import Inbox from '../components/pages/account/inbox/inbox';
-import Readmessage from '../components/pages/account/inbox/readmessage/readmessage';
+import Readmessages from '../components/pages/account/inbox/readmessages/readmessages';
 import Newmessage from '../components/pages/account/inbox/newmessage/newmessage';
 import Giftvoucher from '../components/pages/account/giftvoucher/giftvoucher';
+import Avg from '../components/pages/account/avg/avg';
 import Promos from '../components/pages/promos/promos';
 import Thankyou from '../components/pages/thankyou/thankyou';
 import Payment from '../components/pages/payment/payment';
 import Contact from '../components/pages/contact/contact';
-import Terms from '../components/pages/textpages/terms';
-import Policy from '../components/pages/textpages/policy';
+import Landingpages from '../components/pages/landingpages/landingpages';
+import Textpages from '../components/pages/textpages/textpages';
 import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
 import rootStore from '../store';
-import { authenticatedInterceptor, safeInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor, userLoadedInterceptor } from './interceptors';
+import { authenticatedInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor, userLoadedInterceptor } from './interceptors';
 import { scrollToTop } from 'sensejs/util/dom';
 
 Vue.use(Router);
@@ -48,19 +50,24 @@ const routes = [{
                         component: Editdata
                     },
                     {
+                        path: 'notifications/',
+                        name: 'Notifications',
+                        component: Notifications
+                    },
+                    {
                         path: 'account-history/',
                         name: 'History',
                         component: History
                     },
                     {
-                        path: 'notifications/',
+                        path: 'inbox/',
                         name: 'Inbox',
                         component: Inbox
                     },
                     {
-                        path: 'notifications/:performerid/:messageid/',
-                        name: 'Readmessage',
-                        component: Readmessage
+                        path: 'notifications/:messageId/:messageType',
+                        name: 'Readmessages',
+                        component: Readmessages
                     },
                     {
                         path: 'new-message/:advertId?/',
@@ -71,16 +78,23 @@ const routes = [{
                         path: 'gift-voucher/',
                         name: 'Giftvoucher',
                         component: Giftvoucher
+                    },
+                    {
+                        path: 'avg/',
+                        name: 'Avg',
+                        component: Avg
                     }
                 ]
             },
             {
                 path: 'login/',
-                beforeEnter: modalInterceptor('login')
+                beforeEnter: modalInterceptor('login'),
+                component: Performers
             },
             {
                 path: 'register/',
-                beforeEnter: modalInterceptor('register')
+                beforeEnter: modalInterceptor('register'),
+                component: Performers
             },
             {
                 path: 'reset-password/:userId/:token/',
@@ -106,6 +120,12 @@ const routes = [{
                 component: Thankyou
             },
             {
+                path: 'payment-failure/',
+                name: 'PaymentFailure',
+                beforeEnter: authenticatedInterceptor,
+                component: Payment
+            },
+            {
                 path: 'payment/',
                 name: 'Payment',
                 beforeEnter: authenticatedInterceptor,
@@ -122,16 +142,25 @@ const routes = [{
             {
                 path: 'privacy-policy/',
                 name: 'Policy',
-                component: Policy,
+                component: Textpages,
                 beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitlePrivacy'
                 }
             },
             {
+                path: 'cookies/',
+                name: 'Cookies',
+                component: Textpages,
+                beforeEnter: userLoadedInterceptor,
+                meta: {
+                    title: 'footer.metaTitleCookies'
+                }
+            },
+            {
                 path: 'terms/',
                 name: 'Terms',
-                component: Terms,
+                component: Textpages,
                 beforeEnter: userLoadedInterceptor,
                 meta: {
                     title: 'footer.metaTitleTerms'
@@ -153,6 +182,11 @@ const routes = [{
                         params: { category: to.params.category }
                     });
                 }
+            },
+            {
+                path: 'lp/:landingpage?/',
+                name: 'Landingpages',
+                component: Landingpages
             },
             {
                 path: ':category?/',
@@ -195,7 +229,6 @@ const router = new Router({
     routes: makeRoutesStrict(routes)
 });
 
-router.beforeEach(safeInterceptor);
 router.beforeEach(hotjarInterceptor);
 router.beforeEach(socketInterceptor);
 router.afterEach(scrollInterceptor); //Scroll to top or position Y after page changes

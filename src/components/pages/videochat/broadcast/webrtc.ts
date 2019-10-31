@@ -1,6 +1,6 @@
 import Broadcast, {Quality} from './broadcast';
-import { Watch, Component } from 'vue-property-decorator';
-import { WRTCUtils, Publisher } from 'typertc';
+import {Component, Watch} from 'vue-property-decorator';
+import {Publisher, VideoCodec, WRTCUtils} from 'typertc';
 
 @Component({
     template: '<video playsinline muted webkit-playsinline autoplay :cam="true" :mic="false"></video>'
@@ -50,6 +50,8 @@ export class WebRTC extends Broadcast{
 
         this.wrtc = new Publisher( options );
         this.wrtc.onStateChange = this.onStateChange.bind(this);
+
+        this.wrtc.videoChoice =  this.videoCodec;
         this.wrtc.onError = this.onError.bind(this); 
     }
 
@@ -57,7 +59,7 @@ export class WebRTC extends Broadcast{
 
     destroyed(){
         if( this.wrtc ){
-            this.wrtc.stop()
+            this.wrtc.stop();
         };
     }
 

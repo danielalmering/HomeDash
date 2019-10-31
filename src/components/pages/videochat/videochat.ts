@@ -1,39 +1,49 @@
 import Vue from 'vue';
 import jsmpeg from 'jsmpeg';
 
-import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
-import { State, SessionType, PaymentType } from '../../../models/Sessions';
-import { SessionData, RequestPayload } from '../../../store/Session/';
-
-import notificationSocket from '../../../socket';
+import {Component, Watch} from 'vue-property-decorator';
+import {Route} from 'vue-router';
+import {PaymentType, SessionType, State} from '../../../models/Sessions';
 import Chat from './chat/chat';
-import Broadcast from './broadcast/broadcast';
 import Jsmpeg from './streams/jsmpeg';
-import { Rtmp as RTMPPlay } from './streams/rtmp';
-import { Rtmp as RTMPBroadcast } from './broadcast/rtmp';
+import {Rtmp as RTMPPlay} from './streams/rtmp';
+import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
-import { WebRTC as WRTCPlay } from './streams/webrtc';
-import { WebRTC as WRTCBroadcast } from './broadcast/webrtc'
-import config from '../../../config';
+import NanoCosmosRtmp from './streams/nanocosmosRtmp';
+import {WebRTC as WRTCPlay} from './streams/webrtc';
+import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
 import Confirmations from '../../layout/Confirmations.vue';
-import { Devices } from 'typertc';
+import {Devices, VideoCodec} from 'typertc';
 
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
-import Page from '../page';
-import { RawLocation } from 'vue-router/types/router';
-import { tagHotjar, isApple } from '../../../util';
-import { Performer } from 'sensejs/performer/performer.model';
-import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import { clientSeen } from 'sensejs/session/index';
-import { webrtcPossible, noFlash } from 'sensejs/util/platform';
+import {RawLocation} from 'vue-router/types/router';
+import {
+    isApple,
+    isIOS, isIOSNanoCosmos,
+    isIPhone, isSafari,
+    isWebrtcMuted,
+    NanoCosmosPossible,
+    noFlash,
+    openModal,
+    tagHotjar,
+    webrtcPossible,
+    webrtcPublishPossible,
+    isIE
+} from '../../../util';
+import {Performer} from 'sensejs/performer/performer.model';
+import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
+import {clientSeen} from 'sensejs/session/index';
+//import { webrtcPossible, noFlash } from 'sensejs/util/platform';
+import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
+
 const Platform = require('platform');
 
 interface BroadcastConfiguration {
     cam: boolean | string;
     mic: boolean | string;
     settings: boolean;
+    videoCodec: VideoCodec;
 }
 
 Component.registerHooks([
@@ -52,7 +62,8 @@ Component.registerHooks([
         nanocosmos: NanoCosmos,
         confirmation: Confirmations,
         rtmpBroadcast: RTMPBroadcast,
-        webrtcBroadcast: WRTCBroadcast
+        webrtcBroadcast: WRTCBroadcast,
+        nanocosmosRtmp: NanoCosmosRtmp,
     }
 })
 export default class VideoChat extends Vue {
@@ -61,11 +72,13 @@ export default class VideoChat extends Vue {
     isEnding: boolean = false;
 
     intervalTimer: number;
+    mutedClass:string = "";
 
     broadcasting: BroadcastConfiguration = {
         cam: false,
         mic: false,
-        settings: false
+        settings: false,
+        videoCodec: VideoCodec.H264
     };
 
     stateMessages: string[] = [];
@@ -74,9 +87,18 @@ export default class VideoChat extends Vue {
     microphones: {id:string, name: string, selected: boolean}[];
 
     askToLeave:boolean = false;
+    openModal = openModal;
 
     navigation: {
         to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void
+    }
+
+    get authenticated(): boolean {
+        return this.$store.getters.isLoggedIn;
+    }
+
+    get user(){
+        return this.$store.state.authentication.user;
     }
 
     get sessionType(): SessionType{
@@ -87,18 +109,80 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeIvrCode ? 'IVR' : 'CREDITS';
     }
 
+    get currentState(){
+        return this.$store.state.session.activeState;
+    }
+
+
+    get isWebRTCPerformer(): boolean {
+        //disable webrtc play by returning false here!
+
+        if(this.performer == null){
+            return false;
+        }
+
+        if(!this.performer && this.performer === undefined){
+            return false;
+        }
+
+        if(!this.performer.mediaId  && this.performer.mediaId === undefined){
+            return false;
+        }
+
+        return this.performer.mediaId > 1;
+    }
+
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
 
-        //Uncomment if you need the user to be able to watch using flash
-        //playback using flash for devices that do not support webAudio (so devices that can't play sound in jsmpeg)
-        //Peeking is mute, so no need for flash in that scenario.
-        // if ( this.sessionType !== SessionType.Peek && !hasWebAudio() ){
-        //     return 'rtmp';
-        // }
+        const playStream =  this.playStream;
+        const platform = Platform.parse(navigator.userAgent);
+
+       // return 'nanocosmos';
+  
+        // OLD CODE
+        // if webrtc is possible use webrtc viewer or jsmpeg
+        if(this.isWebRTCPerformer){
+            if(webrtcPossible(platform)){
+                return 'webrtc';
+            } /*else if(isIE(platform)) {
+                return 'nanocosmosRtmp';
+            }*/ else {
+                return 'jsmpeg';
+            }
+        }
+
+        // else use nanocosmos if you are an ios 10 or higher device
+        if(isIOSNanoCosmos(platform) && NanoCosmosPossible(platform)){
+            return 'nanocosmos';
+        }
+
+        // fallback on nanocosmos
         return 'jsmpeg';
+
+        // let mediaid = this.performer.mediaId;
+        // if(mediaid && mediaid === 2 && !webrtcPossible(platform)){ mediaid = 1 }
+        // if(mediaid && mediaid === 3 && !NanoCosmosPossible(platform)){ mediaid = 1 }
+
+        // switch (mediaid) {
+        //     case 0:
+        //         return 'jsmpeg';
+        //         break;
+        //     case 1:
+        //         return 'jsmpeg';
+        //         break;
+        //     case 2:
+        //         return 'webrtc';
+        //         break;
+        //     case 3:
+        //         return 'nanocosmos';
+        //         break;
+        //     default:
+        //         return 'jsmpeg';
+        //         break;
+        // }
     }
 
     get broadcastType():string{
@@ -112,14 +196,35 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
+        //check if it is possible to publish with webrtc
+        if (webrtcPublishPossible(platform)){
+            //Begin apple fixes
+            //Disable iphone for now
+            if(isIPhone(platform)){
+                return 'none';
+            }
+
+            //use vp8 if the browser is safari and above > 12.1
+            if(isSafari(platform)){
+                if(this.isWebRTCPerformer){ //performer needs to use the webrtc transport
+                    this.broadcasting.videoCodec = VideoCodec.VP8;
+                } else { //else old skool flash if available
+                    if(noFlash(platform)) {
+                       return 'none';
+                    }
+
+                    return 'rtmpBroadcast';
+                }
+            }
+            //end apple fixes
+
+            return 'webrtcBroadcast';
+        }
+
         //disabled camback on mobile for now
         //move to below webrtcPossible, and those platforms that support webrtc will cam back.
         if (noFlash(platform)){
             return 'none';
-        }
-
-        if (webrtcPossible(platform)){
-            return 'webrtcBroadcast';
         }
 
         return 'rtmpBroadcast';
@@ -201,6 +306,14 @@ export default class VideoChat extends Vue {
                 (this.performer.performer_services.videocall);
     }
 
+    addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
+        performer.isSubscribed = true
+        if(!this.user.notification_mode){
+            const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
+        }
+    });
+    removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
+
     mounted(){
         const self = this;
 
@@ -238,7 +351,7 @@ export default class VideoChat extends Vue {
     }
 
     toggleFavourite(){
-        this.performer.isFavourite ?
+        !this.performer.isFavourite ?
             addFavourite(this.$store.state.authentication.user.id, this.performer.id) :
             removeFavourite(this.$store.state.authentication.user.id, this.performer.id);
 
@@ -278,11 +391,18 @@ export default class VideoChat extends Vue {
         this.broadcasting.cam = true;
     }
 
+
+
     toggleCam(){
         this.broadcasting.cam = !this.broadcasting.cam;
+
         //also hide the settings screen when the cam is turned off
         if (!this.broadcasting.cam){
             this.broadcasting.settings = false;
+        }
+
+        if (this.broadcasting.cam){
+            //logKPI("cl_cambackintention");
         }
 
         tagHotjar(`TOGGLE_CAM`);
@@ -302,6 +422,7 @@ export default class VideoChat extends Vue {
         tagHotjar(`TOGGLE_MIC`);
     }
 
+
     setCamera(event: Event){
         const camId = (<HTMLSelectElement>event.srcElement).value;
         this.cameras.forEach(cam => cam.selected = (cam.id === camId));
@@ -316,10 +437,14 @@ export default class VideoChat extends Vue {
 
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
+        if (state == 'active'){
+            //logKPI("cl_camback_active");
+        }
     }
 
     broadcastError(message: string){
         this.stateMessages.push(message);
+        //logKPI("cl_camback_error");
     }
 
     viewerStateChange(state: string){
@@ -334,6 +459,7 @@ export default class VideoChat extends Vue {
 
     viewerError(message: string){
         console.log(message);
+
     }
 
     toggleSettings(){
@@ -402,7 +528,9 @@ export default class VideoChat extends Vue {
 
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
         if (value === State.Accepted){
+            //console.log("Get new data :)");
             await this.$store.dispatch('initiate');
+            //console.log("for reeels");
 
             if(this.navigation && this.navigation.next){
                 this.navigation.next(true);
@@ -411,12 +539,13 @@ export default class VideoChat extends Vue {
     }
 
     async switchPeek(){
+
         try {
             await this.$store.dispatch('switchPeek', this.$store.state.session.switchingPerformer);
         } catch(e){
             this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
         }
-        
+
         this.$store.commit('toggleSwitchModal', { state: false });
 
         this.$router.push({
@@ -448,13 +577,9 @@ export default class VideoChat extends Vue {
 
     beforeDestroy(){
         this.isEnding = true;
-
-        //Stop clientSeen event
+        // Stop clientSeen event
         clearInterval(this.intervalTimer);
-        //Send end API call and update state to ending
-        if(this.$store.state.session.activeState !== State.Idle){
-            console.log("ok, waarom destroyen??");
-            this.$store.dispatch('end', 'PLAYER_END');
-        }
+        // Trigger end
+        this.$store.dispatch('end', 'PLAYER_END');
     }
 }

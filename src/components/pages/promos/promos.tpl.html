@@ -1,7 +1,10 @@
 <main class="promos">
     <div class="container-fluid">
-        <div class="col-xs-9 col-sm-11">
-            <h1><i class="fa fa-bullhorn hidden-xs"></i><span v-t="'nav.info.actions'"></span></h1>
+        <div class="col-xs-12 col-sm-11">
+            <h1>
+                <i class="fa fa-bullhorn hidden-xs"></i>
+                <span v-t="'nav.info.actions'"></span>
+            </h1>
             <p v-t="'promos.intro'"></p>
 
             <h3 v-t="'promos.currentactions'"></h3>
@@ -25,6 +28,17 @@
                     </tr>
                 </tbody>
             </table>
+            <br /><br />
+            <span v-if="!authenticated">
+                <a v-on:click="openModal('login')" class="btn btn-orange btn-large mr" v-t="'nav.info.login'"></a>
+                <a v-on:click="openModal('register')" class="btn btn-orange btn-large" v-t="'nav.info.register'"></a>
+            </span>
+            <span v-if="authenticated">
+                <a v-on:click="goBanner(authenticated)" class="btn btn-orange btn-large mr" v-t="'nav.info.upgradebalance'"></a>
+                <a :title="notify('PRO') ? $t('promos.notify-remove-hover') : $t('promos.notify-add-hover')" v-on:click="addPromoNotifi" class="btn btn-fa btn-large fa-bell btn-orange">
+                    <span v-t="notify('PRO') ? 'nav.info.notifymenot' : 'nav.info.notifyme'"></span>
+                </a>
+            </span>
         </div>
     </div>
 </main>

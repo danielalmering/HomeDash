@@ -135,7 +135,7 @@
                 width: 58px;
                 text-align: center;
                 @include rem(padding, 10px 5px);
-                @include rem(font-size, 11px);
+                @include rem(font-size, 10px);
 
                 i {
                     text-align: center;
@@ -147,6 +147,14 @@
                 &.visible-xs {
                     display: inline-block !important;
                 }
+            }
+
+            &--high {
+                border: 1px solid $pallete-4;
+                font-weight: 600;
+                border-bottom: none;
+                @include rem(padding, 5px 8px);
+                box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
             }
 
             &--last {
@@ -287,6 +295,18 @@
                 -moz-transition: all 0.5s ease-in-out;
                 transition: all 0.5s ease-in-out;
             }
+        }
+    }
+
+    &__banner {
+        background: $pallete-11;
+        background-position: center center;
+        background-repeat: no-repeat;
+        height: 200px;
+        a {
+            display: table;
+            height: 200px;
+            width: 100%;
         }
     }
 }

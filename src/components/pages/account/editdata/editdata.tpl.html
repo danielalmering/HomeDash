@@ -4,16 +4,27 @@
     </h1>
     <div class="form">
         <form class="row" v-on:submit.prevent="updateUser">
+            <div class="col-xs-12" v-if="confirmDelete">
+                <div class="account__view-alert">
+                    <div class="col-1">
+                        <p>{{ $t('account.removeuser-approval-1') }} <span v-if="credits > 0">{{ $t('account.removeuser-approval-2', { credits: credits }) }}</span></p>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-right" v-on:click.prevent="confirmDelete = false" v-t="'account.no'"></a>
+                        <a class="btn btn-white btn-right" v-on:click.prevent="removeUser(false)" v-t="'account.yes'"></a>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-12 col-sm-6">
                 <div class="form__group">
                     <label v-t="'account.username'"></label>
                     <input type="text" required v-model="user.username" class="col-xs-12" maxlength="30">
                 </div>
-                <div class="form__group">
+                <div class="form__group" v-if="!user.social_id">
                     <label v-t="'account.password'"></label>
                     <input type="password" v-model="user.password" class="col-xs-12">
                 </div>
-                <div class="form__group">
+                <div class="form__group" v-if="!user.social_id">
                     <label v-t="'account.confirmpassword'"></label>
                     <input type="password" v-model="confirmPassword" class="col-xs-12">
                 </div>
@@ -21,16 +32,13 @@
             <div class="col-xs-12 col-sm-6">
                 <div class="form__group">
                     <label v-t="'account.email'"></label>
-                    <input type="text" required v-model="user.email" class="col-xs-12">
-                </div>
+                    <input type="email" v-model="user.email" v-validate="'email'" name="email" class="col-xs-12">
+                    <span v-show="errors.has('email')" class="form__group-alert" v-t="'account.alerts.errorinvalidEmail'"></span>
+                </div>  
                 <div class="form__group">
                     <label v-t="'account.mobilenumber'"></label>
-                    <input type="text" v-model="user.mobile_number" class="col-xs-12">
-                </div>
-                <div class="form__group">
-                    <label v-t="'account.pushmessages'"></label>
-                    <input id="checkbox1" type="checkbox" :checked="pushcrewSubscribed" v-on:click.prevent="subscribePushMessages">
-                    <label for="checkbox1"></label>
+                    <input type="text" v-model="user.mobile_number" v-validate="{ regex: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g }" name="phone" class="col-xs-12">
+                    <span v-show="errors.has('phone')" class="form__group-alert" v-t="'account.alerts.errorinvalidPhone'"></span>
                 </div>
             </div>
             <div class="col-xs-12">
@@ -39,5 +47,10 @@
                 </div>
             </div>
         </form>
+        <hr></hr>
+        <div class="text-right">
+            <p v-html="$t('account.removeuser')"></p>
+            <a v-on:click.prevent="removeUser(true)" v-html="$t('account.here')"></a>
+        </div>
     </div>
 </div>

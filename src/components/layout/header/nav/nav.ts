@@ -21,6 +21,8 @@ export default class Nav extends Vue {
     openRoute = openRoute;
     openModal = openModal;
     logo = logoDark;
+    country = config.Country;
+    showBanner = config.Banner;
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
@@ -40,11 +42,18 @@ export default class Nav extends Vue {
     }
 
     get categories(){
-        return this.$store.state.info ? this.$store.state.info.categories : [];
+        return this.$store.state.info && this.$store.state.info.categories ? this.$store.state.info.categories : [];
     }
 
     get acceptedLanguages(){
-        return this.$store.state.info.languages ? this.$store.state.info.languages : [];
+        return this.$store.state.info && this.$store.state.info.languages ? this.$store.state.info.languages : [];
+    }
+
+    get banner(){
+        let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        let size = width < 720 ? 'xs' : 'lg';
+
+        return require('../../../../assets/images/' + this.country + '/navbanner-' + size +'.png');
     }
 
     closeAll(){
