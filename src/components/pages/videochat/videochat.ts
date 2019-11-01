@@ -35,7 +35,6 @@ import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
 //import { webrtcPossible, noFlash } from 'sensejs/util/platform';
 import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
-import { S_IFREG } from 'constants';
 
 const Platform = require('platform');
 //import Platform from 'platform';
