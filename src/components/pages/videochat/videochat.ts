@@ -140,8 +140,6 @@ export default class VideoChat extends Vue {
         const playStream =  this.playStream;
         const platform = Platform.parse(navigator.userAgent);
 
-        //return 'rtmp';
-
         // OLD CODE
         // if webrtc is possible use webrtc viewer, nanocosmos, rtmp or jsmpeg
         /*if (this.isWebRTCPerformer && webrtcPossible(platform)){            
