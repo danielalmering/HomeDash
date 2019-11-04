@@ -19,7 +19,7 @@ const mutations = {
     updateService(state:SessionState, payload:{service:string, enabled:boolean}){
         if (!state.activePerformer){
             return;
-        }
+        }        
         state.activePerformer.performer_services[payload.service] = payload.enabled;
     },
     toggleSwitchModal(state: SessionState, payload: { state: boolean, performer: Performer }){

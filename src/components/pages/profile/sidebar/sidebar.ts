@@ -8,7 +8,8 @@ import {
     getAvatarImage,
     getPerformerStatus,
     webrtcPossible,
-    NanoCosmosPossible
+    NanoCosmosPossible,
+    hasService
 } from '../../../../util';
 import config, { logo } from '../../../../config';
 
@@ -295,7 +296,7 @@ export default class Sidebar extends Vue {
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 
-        return !performer ? false : performer.performer_services[service];
+        return !performer ? false : hasService(performer, service);
     }
 
     toggleFavourite(performerId: number){

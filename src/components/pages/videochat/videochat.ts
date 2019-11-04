@@ -28,7 +28,8 @@ import {
     tagHotjar,
     webrtcPossible,
     webrtcPublishPossible,
-    isIE
+    isIE,
+    hasService
 } from '../../../util';
 import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
@@ -133,6 +134,15 @@ export default class VideoChat extends Vue {
 
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
+            return undefined;            
+        }
+
+        //check integerty
+        if (!this.performer) {
+            return undefined;
+        }
+
+        if (!this.performer.mediaId) {
             return undefined;
         }
 
@@ -468,7 +478,7 @@ export default class VideoChat extends Vue {
              &&
                 (this.paymentMethod == PaymentType.Ivr)
             &&
-                (this.performer.performer_services.videocall);
+                (hasService(this.performer, 'videocall'));
     }
 
     addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {

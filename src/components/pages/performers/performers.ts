@@ -4,7 +4,7 @@ import Vue from 'vue';
 
 import Pagination from 'sensejs/vue/components/pagination';
 import notificationSocket from '../../../socket';
-import { getAvatarImage, getPerformerStatus, getPerformerLabel } from '../../../util';
+import { getAvatarImage, getPerformerStatus, getPerformerLabel, hasService } from '../../../util';
 import config from '../../../config';
 
 import './performers.scss';
@@ -78,7 +78,7 @@ export default class Performers extends Vue {
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 
-        return !performer ? false : performer.performer_services[service];
+        return !performer ? false : hasService(performer, service);
     }
 
     @Watch('$route')
