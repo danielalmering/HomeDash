@@ -62,8 +62,8 @@ export default class Tabs extends Vue {
             return 'cam';
         }
 
-        if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 ) && this.performer.isVoyeur){
-            return 'voyeur';
+        if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 )){
+            return 'cam';
         }
 
         for (const service in this.performer.performer_services){

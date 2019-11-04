@@ -293,7 +293,7 @@ Safari 10,11,12 on iOS and macOS
 Chrome 54 and higher on desktop and mobile
 Firefox 48 and higher
 Edge
-Internet Explorer 11 (starting Windows 8.1)
+Internet Explorer 11 (starting Windows 8.1) but with rtmp fallback for windows 7
  */
 export function NanoCosmosPossible(platform: Platform){
     const supported = [
@@ -318,11 +318,7 @@ export function NanoCosmosPossible(platform: Platform){
         },
         {
             name: 'IE',
-            version: '11.0',
-            os: {
-                family: 'Windows',
-                version: '8'
-            }
+            version: '11.0'
         },
         {
             name: 'Opera'
