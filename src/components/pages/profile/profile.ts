@@ -355,7 +355,7 @@ export default class Profile extends Vue {
             }
         }
 
-        this.setSeoParameters();
+        this.setSeoParameters(this.performer);
     }
 
     openTab(event: Event){
@@ -394,18 +394,18 @@ export default class Profile extends Vue {
         return this.$t(`profile.eyecolors.${color}`).toString();
     }
 
-    setSeoParameters(){
-        if(!this.performer || !this.performer.nickname){
+    setSeoParameters(performer: Performer){
+        if(!performer){
             return;
         }
 
-        setTitle(this.$t('profile.metaTitle', { nickname: this.performer.nickname }).toString());
-        setDescription(this.$t('profile.metaDescription', { nickname: this.performer.nickname }).toString());
-        setKeywords(`${this.performer.nickname}, ${this.performer.eyeColor}, ${this.performer.cupSize}`);
+        setTitle(this.$t('profile.metaTitle', { nickname: performer.nickname }).toString());
+        setDescription(this.$t('profile.metaDescription', { nickname: performer.nickname }).toString());
+        setKeywords(`${performer.nickname}, ${performer.eyeColor}, ${performer.cupSize}`);
 
         setGraphData('og:type', 'profile');
-        setGraphData('og:image', getAvatarImage(this.performer, 'medium'));
-        setGraphData('profile:username', this.performer.nickname);
+        setGraphData('og:image', getAvatarImage(performer, 'medium'));
+        setGraphData('profile:username', performer.nickname);
         setGraphData('profile:gender', 'female');
     }
 }
