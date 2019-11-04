@@ -184,10 +184,10 @@ export default class NanoCosmos extends Stream {
                 'flashplayer': '../../../../../static/nano.player.swf',
                 'keepConnection': true,
                 'reconnect': {
-                minDelay: 2,
-                maxDelay: 5,
-                delaySteps: 1,
-                maxRetries: 3
+                    minDelay: 2,
+                    maxDelay: 5,
+                    delaySteps: 1,
+                    maxRetries: 3
                 }
             },
             tweaks: {
