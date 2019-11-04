@@ -28,6 +28,27 @@ export function getSliderImages(performer: Performer, photo: any, size: string){
     return require('./assets/images/placeholder.png');
 }
 
+export function hasService(performer: Performer, serviceKey: string) :boolean {
+    if(!performer){
+        return false;
+    }
+
+    if (!performer.performer_services) {
+        return false;
+    }
+
+    if(!serviceKey) {
+        return false;
+    }
+
+    if(!(serviceKey in performer.performer_services)){
+        return false;
+    }
+
+    return performer.performer_services[serviceKey];
+}
+
+
 export function getPerformerStatus(performer: Performer){
     if(!performer){ return 'offline'; }
 
@@ -40,19 +61,18 @@ export function getPerformerStatus(performer: Performer){
     }
 
     if(performer.performerStatus === PerformerStatus.Busy){
-        return performer.performer_services['peek'] ? 'peek' : 'busy';
+        return  hasService(performer, 'peek') ? 'peek' : 'busy';
     }
 
     if(performer.performerStatus === PerformerStatus.Available &&
-        performer.performer_services['cam'] ||
-        performer.performer_services['phone'] ||
-        performer.performer_services['videocall']){
-
+        hasService(performer,'cam') ||
+        hasService(performer,'phone') ||
+        hasService(performer,'videocall')){
         return 'available';
     }
 
     // Performer status Offline
-    if(performer.performer_services['phone']){
+    if (hasService(performer,'phone')){
         return 'available';
     }
 
