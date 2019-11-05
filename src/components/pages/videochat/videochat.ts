@@ -719,6 +719,9 @@ export default class VideoChat extends Vue {
             await this.$store.dispatch('switchPeek', this.$store.state.session.switchingPerformer);
         } catch(e){
             this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
+            //switch failed so disable switch modal
+            this.$store.commit('toggleSwitchModal', { state: false }); 
+            return;
         }
 
         this.$store.commit('toggleSwitchModal', { state: false });
