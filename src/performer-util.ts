@@ -1,5 +1,6 @@
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { User } from './models/User';
+import { hasService } from './util';
 
 export function tabEnabled(service: string, forPerformer: Performer, user: User):boolean {
     if (!forPerformer){
@@ -32,7 +33,7 @@ export function tabEnabled(service: string, forPerformer: Performer, user: User)
 
     // Email & sms enabled independently of status from performer!
     if(service === 'email' || service === 'sms'){
-        return forPerformer.performer_services[service];
+        return hasService(forPerformer, service);
     }
 
     if(forPerformer.performerStatus === PerformerStatus.Offline && service !== 'phone'){
@@ -51,10 +52,10 @@ export function tabEnabled(service: string, forPerformer: Performer, user: User)
 
     // If performer is busy and cam or peek are enabled!
     if(forPerformer.performerStatus === PerformerStatus.Busy){
-        return service === 'cam' && forPerformer.performer_services['peek'];
+        return service === 'cam' && hasService(forPerformer, 'peek');
     }
 
     // The default scenario of status from services
-    return forPerformer.performer_services[service];
+    return  hasService(forPerformer, service); 
 
 }
