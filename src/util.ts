@@ -28,6 +28,27 @@ export function getSliderImages(performer: Performer, photo: any, size: string){
     return require('./assets/images/placeholder.png');
 }
 
+export function hasService(performer: Performer, serviceKey: string) :boolean {
+    if(!performer){
+        return false;
+    }
+
+    if (!performer.performer_services) {
+        return false;
+    }
+
+    if(!serviceKey) {
+        return false;
+    }
+
+    if(!(serviceKey in performer.performer_services)){
+        return false;
+    }
+
+    return performer.performer_services[serviceKey];
+}
+
+
 export function getPerformerStatus(performer: Performer){
     if(!performer){ return 'offline'; }
 
@@ -40,19 +61,18 @@ export function getPerformerStatus(performer: Performer){
     }
 
     if(performer.performerStatus === PerformerStatus.Busy){
-        return performer.performer_services['peek'] ? 'peek' : 'busy';
+        return  hasService(performer, 'peek') ? 'peek' : 'busy';
     }
 
     if(performer.performerStatus === PerformerStatus.Available &&
-        performer.performer_services['cam'] ||
-        performer.performer_services['phone'] ||
-        performer.performer_services['videocall']){
-
+        hasService(performer,'cam') ||
+        hasService(performer,'phone') ||
+        hasService(performer,'videocall')){
         return 'available';
     }
 
     // Performer status Offline
-    if(performer.performer_services['phone']){
+    if (hasService(performer,'phone')){
         return 'available';
     }
 
@@ -293,7 +313,7 @@ Safari 10,11,12 on iOS and macOS
 Chrome 54 and higher on desktop and mobile
 Firefox 48 and higher
 Edge
-Internet Explorer 11 (starting Windows 8.1)
+Internet Explorer 11 (starting Windows 8.1) but with rtmp fallback for windows 7
  */
 export function NanoCosmosPossible(platform: Platform){
     const supported = [
@@ -318,11 +338,7 @@ export function NanoCosmosPossible(platform: Platform){
         },
         {
             name: 'IE',
-            version: '11.0',
-            os: {
-                family: 'Windows',
-                version: '8'
-            }
+            version: '11.0'
         },
         {
             name: 'Opera'

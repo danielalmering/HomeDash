@@ -15,7 +15,7 @@ import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import {NanoCosmosPossible, webrtcPossible} from "../../../util";
+import {NanoCosmosPossible, webrtcPossible, isIE} from "../../../util";
 import {WebRTC} from "../videochat/streams/webrtc";
 
 
@@ -27,7 +27,7 @@ const Platform = require('platform');
         jsmpeg: JSMpeg,
         nanocosmos: NanoCosmos,
         webrtc: WebRTC,
-        confirmation: Confirmation
+        confirmation: Confirmation,
     }
 })
 export default class Voyeur extends Vue {
@@ -108,16 +108,16 @@ export default class Voyeur extends Vue {
         const platform = Platform.parse(navigator.userAgent);
 
         //for webrtc user use webrtc viewer or jsmpeg
-        if(this.isWebRTCPerformer){
-            if(webrtcPossible(platform)){
-                return 'webrtc';
-            } else {
-                return 'jsmpeg';
-            }
+        if(this.isWebRTCPerformer && webrtcPossible(platform)){
+            return 'webrtc';            
         }
 
         if(NanoCosmosPossible(platform)){
             return 'nanocosmos';
+        }
+
+        if(isIE(platform)){
+            return 'rtmp';
         }
 
         //fallback on nanocosmos

@@ -18,6 +18,7 @@ export class H5Style {
     keepFrame: boolean;
     displayAudioOnly: boolean;
     audioPlayer: boolean;
+    displayMutedAutoplay: boolean;
 }
 
 @Component({
@@ -83,8 +84,12 @@ export default class NanoCosmos extends Stream {
 
     @Watch('playStream')
     onPlaystreamSwitch(){
-        this.end();
-        this.load();
+        try{
+            this.end();
+            this.load();
+        } catch(e) {
+             console.log('switching error!');
+        }
     }
 
     @Watch('wowza')
@@ -107,7 +112,8 @@ export default class NanoCosmos extends Stream {
             scaling: this.scaling,
             keepFrame: this.keepFrame,
             displayAudioOnly: this.displayAudioOnly,
-            audioPlayer: this.audioPlayer
+            audioPlayer: this.audioPlayer,
+            displayMutedAutoplay: false,
         };
     }
 
@@ -132,6 +138,7 @@ export default class NanoCosmos extends Stream {
     }
 
     private load(){
+
         this.player = new NanoPlayer(this.id);
 
         let wowza = this.wowza;
@@ -177,10 +184,10 @@ export default class NanoCosmos extends Stream {
                 'flashplayer': '../../../../../static/nano.player.swf',
                 'keepConnection': true,
                 'reconnect': {
-                   minDelay: 2,
-                   maxDelay: 5,
-                   delaySteps: 1,
-                   maxRetries: 3
+                    minDelay: 2,
+                    maxDelay: 5,
+                    delaySteps: 1,
+                    maxRetries: 3
                 }
             },
             tweaks: {
@@ -203,8 +210,9 @@ export default class NanoCosmos extends Stream {
         this.player.setup(configH5LIVE).then((s: any) => {
             //na da?
         }, function (error: any) {
-            console.log(error.message);
+            console.log('nano error', error.message);
         });
+
     }
 
     private onPlay(s: any) {

@@ -2,7 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel, hasService  } from '../../../util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -79,7 +79,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
+        return hasService(this.performer, 'peek') && this.performer.performerStatus === 'BUSY';
     }
 
     get canCall(): boolean{
@@ -91,7 +91,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        return this.performer.performer_services['phone'];
+        return hasService(this.performer, 'phone');
     }
 
     get performerPhotos(){
