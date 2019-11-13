@@ -249,7 +249,7 @@ export default class VideoChat extends Vue {
             }
 
             if(NanoCosmosPossible(platform)){
-                return this.sessionType == SessionType.Peek ? 'nanocosmos' : 'jsmpeg';
+                return this.sessionType == SessionType.Peek || isIOSNanoCosmos(platform) ? 'nanocosmos' : 'jsmpeg';
             }
 
             if(isIE(platform)) {
@@ -299,18 +299,14 @@ export default class VideoChat extends Vue {
      * @param platform parsed platform from browser useragent string
      */
     private clubsenseStreamerPublisher(platform: any) {
-        if(platform) {
-            if (webrtcPossible(platform) && this.sessionType == SessionType.Peek) {
-                return 'webrtc';
-            }
-            
+        if(platform) {                        
             if(NanoCosmosPossible(platform)){
                 return 'nanocosmos';
             }
 
             if(isIE(platform)){
                 return 'rtmp';
-            }
+            }            
         }
 
         return 'jsmpeg';
@@ -347,9 +343,10 @@ export default class VideoChat extends Vue {
      * @param platform parsed platform from browser useragent string
      */
     private flashPublisher(platform: any){
-        if(platform) {            
+        if(platform) {             
+            //always use nanocosmos when using a iOS device              
             if(NanoCosmosPossible(platform)) {
-                return this.sessionType == SessionType.Peek ? 'nanocosmos' : 'jsmpeg';
+                return this.sessionType == SessionType.Peek || isIOSNanoCosmos(platform) ? 'nanocosmos' : 'jsmpeg';
             }
 
             if(isIE(platform)){
