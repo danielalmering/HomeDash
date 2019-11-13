@@ -306,13 +306,7 @@ export default class VideoChat extends Vue {
 
             if(isIE(platform)){
                 return 'rtmp';
-            }
-
-            if (webrtcPossible(platform) && this.sessionType == SessionType.Peek) {
-                return 'webrtc';
-            }
-
-            
+            }            
         }
 
         return 'jsmpeg';
