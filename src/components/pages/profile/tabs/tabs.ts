@@ -62,8 +62,20 @@ export default class Tabs extends Vue {
             return 'cam';
         }
 
-        if( ( [PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 )){            
+        if (([PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 )){            
             return 'none';
+        }
+
+        if (([PerformerStatus.Busy].indexOf(this.performer.performerStatus) > -1)) {
+            if(hasService(this.performer, 'peek')) {
+                return 'cam';
+            } else if (hasService(this.performer, 'voyeur')) {
+                return 'voyeur';
+            }
+            else {
+                return 'none';
+            }
+            
         }
 
         for (const service in this.performer.performer_services){
