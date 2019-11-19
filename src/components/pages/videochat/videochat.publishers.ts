@@ -1,4 +1,4 @@
-import {NanoCosmosPossible, webrtcPossible, webrtcPublishPossible, isIE} from '../../../util';
+import {NanoCosmosPossible, webrtcPossible, webrtcPublishPossible, isIE, isIOSNanoCosmos} from '../../../util';
 import {SessionType} from '../../../models/Sessions';
 
 /**
@@ -96,11 +96,7 @@ export function webrtcPublisher(platform: any, sessionType: string){
  */
 
 export function clubsenseStreamerPublisher(platform: any, sessionType: string) {
-    if(platform) {
-        if (webrtcPossible(platform) && sessionType == SessionType.Peek) {
-            return 'webrtc';
-        }
-        
+    if(platform) {                
         if(NanoCosmosPossible(platform)){
             return 'nanocosmos';
         }
@@ -150,6 +146,11 @@ export function flashPublisher(platform: any, sessionType: string){
         // if(NanoCosmosPossible(platform)) {
         //     return sessionType == SessionType.Peek ? 'nanocosmos' : 'jsmpeg';
         // }
+
+        //if iOS device use nanocosmos else use jsmpeg
+        if(NanoCosmosPossible(platform) && isIOSNanoCosmos(platform)) {
+            return 'nanocosmos';
+        }
 
         if(isIE(platform)){
             return 'rtmp';
