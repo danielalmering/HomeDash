@@ -133,7 +133,7 @@ export default class Sidebar extends Vue {
             return false;
         }
 
-        return performer.mediaId > 1;
+        return performer.mediaId == 2;
     }
 
 
