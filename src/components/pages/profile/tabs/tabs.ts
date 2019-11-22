@@ -13,7 +13,7 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus, PerformerAvatar } from 'sensejs/performer/performer.model';
-import { openModal, tagHotjar, hasService } from '../../../../util';
+import { openModal, tagHotjar, hasService } from '../../../../utils/main.util';
 import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';

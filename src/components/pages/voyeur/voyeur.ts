@@ -15,7 +15,7 @@ import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import {NanoCosmosPossible, webrtcPossible, isIE} from "../../../util";
+import {NanoCosmosPossible, webrtcPossible, isIE} from "../../../utils/video.util";
 import {WebRTC} from "../videochat/streams/webrtc";
 
 

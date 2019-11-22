@@ -3,7 +3,7 @@ import Vue from 'vue';
 import { User } from '../../../../models/User';
 
 import config from '../../../../config';
-import { openRoute } from '../../../../util';
+import { openRoute } from '../../../../utils/main.util';
 import WithRender from './editdata.tpl.html';
 
 import { updateConsumer, removeConsumer } from 'sensejs/consumer';

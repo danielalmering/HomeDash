@@ -2,7 +2,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { openModal, getAvatarImage, getPerformerLabel, hasService  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel, hasService  } from '../../../utils/main.util';
+import { getBroadcastType } from '../../../utils/video.util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -26,6 +27,7 @@ import { createReservation } from 'sensejs/session';
 import { removeFavourite, addFavourite } from 'sensejs/performer/favourite';
 import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 const swfobject = require('swfobject');
+const Platform = require('platform');
 
 @WithRender
 @Component({
@@ -245,11 +247,14 @@ export default class Profile extends Vue {
         //     }
         // }
 
+        const platform = Platform.parse(navigator.userAgent);
+
         const defaults: RequestPayload = {
             type: 'startRequest',
             performer: <any>this.performer,
             sessionType: SessionType.Video,
-            payment: PaymentType.Ivr
+            payment: PaymentType.Ivr,
+            streamInfo: getBroadcastType(platform)
         };
 
         const toSend = {...defaults, ...payload};

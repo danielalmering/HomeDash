@@ -7,10 +7,9 @@ import {
     openRoute,
     getAvatarImage,
     getPerformerStatus,
-    webrtcPossible,
-    NanoCosmosPossible,
     hasService
-} from '../../../../util';
+} from '../../../../utils/main.util';
+import { webrtcPossible, NanoCosmosPossible } from '../../../../utils/video.util';
 import config, { logo } from '../../../../config';
 
 import './sidebar.scss';

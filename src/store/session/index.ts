@@ -30,6 +30,7 @@ export interface RequestPayload extends Payload {
     displayName?: string;
     payment?: PaymentType;
     fromVoyeur?: boolean;
+    streamInfo?: any;
 }
 
 export interface SessionState {

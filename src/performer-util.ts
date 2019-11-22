@@ -1,6 +1,6 @@
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { User } from './models/User';
-import { hasService } from './util';
+import { hasService } from './utils/main.util';
 
 export function tabEnabled(service: string, forPerformer: Performer, user: User):boolean {
     if (!forPerformer){

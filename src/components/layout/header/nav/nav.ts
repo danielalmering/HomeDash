@@ -2,7 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 import { Route } from 'vue-router';
 import { User } from '../../../../models/User';
-import { openRoute, openModal } from '../../../../util';
+import { openRoute, openModal } from '../../../../utils/main.util';
 import config, { logoDark } from '../../../../config';
 
 import './nav.scss';

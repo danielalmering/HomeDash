@@ -4,7 +4,7 @@ import Vue from 'vue';
 import config, { logo } from '../../../../config';
 import { getPaymentInfo } from 'sensejs/consumer/payment';
 
-import { openRoute, goBanner } from '../../../../util';
+import { openRoute, goBanner } from '../../../../utils/main.util';
 
 import './top.scss';
 

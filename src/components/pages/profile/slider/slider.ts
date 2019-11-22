@@ -3,7 +3,7 @@ import PhotoSlider from 'sensejs/vue/components/photo-slider';
 import './slider.scss';
 import WithRender from './slider.tpl.html';
 import { Prop, Component } from 'vue-property-decorator';
-import { getSliderImages } from '../../../../util';
+import { getSliderImages } from '../../../../utils/main.util';
 import Player from './slider-player';
 
 @WithRender
