@@ -1,4 +1,4 @@
-import {NanoCosmosPossible, webrtcPossible, webrtcPublishPossible, isIE, isIOSNanoCosmos} from '../../../util';
+import {NanoCosmosPossible, webrtcPossible, webrtcPublishPossible, isIE, isIOSNanoCosmos} from '../../../utils/video.util';
 import {SessionType} from '../../../models/Sessions';
 
 /**

@@ -6,7 +6,7 @@ import store from '../../../../../store';
 import config from '../../../../../config';
 import WithRender from './newmessage.tpl.html';
 import notificationSocket from '../../../../../socket';
-import { tagHotjar } from '../../../../../util';
+import { tagHotjar } from '../../../../../utils/main.util';
 import { listUsernames, SimplePerformer } from 'sensejs/performer';
 import { postNotificationThread, PostNotificationParams } from 'sensejs/consumer/notification';
 

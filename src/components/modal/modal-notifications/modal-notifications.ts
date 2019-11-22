@@ -3,7 +3,7 @@ import Vue from 'vue';
 import { User } from '../../../models/User';
 
 import WithRender from './modal-notifications.tpl.html';
-import { tagHotjar } from '../../../util';
+import { tagHotjar } from '../../../utils/main.util';
 
 import { updateConsumer } from 'sensejs/consumer';
 import { getSubscriptionsOptions } from 'sensejs/performer/subscriptions';
