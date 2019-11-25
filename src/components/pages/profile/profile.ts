@@ -3,7 +3,7 @@ import { Route } from 'vue-router';
 import Vue from 'vue';
 
 import { openModal, getAvatarImage, getPerformerLabel, hasService  } from '../../../utils/main.util';
-import { getBroadcastType } from '../../../utils/video.util';
+import { getViewerType } from '../../../utils/video.util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -254,7 +254,7 @@ export default class Profile extends Vue {
             performer: <any>this.performer,
             sessionType: SessionType.Video,
             payment: PaymentType.Ivr,
-            streamInfo: getBroadcastType(platform)
+            streamInfo: getViewerType(platform)
         };
 
         const toSend = {...defaults, ...payload};

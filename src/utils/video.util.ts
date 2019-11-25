@@ -16,7 +16,7 @@ export function isWebRTCPerformer(performer: Performer){
     return performer.mediaId > 1;
 }
 
-export function getBroadcastType(platform:Platform){
+export function getViewerType(platform:Platform){
     if(webrtcPublishPossible(platform)){
         if(isIPhone(platform)){
             return '';
@@ -27,17 +27,17 @@ export function getBroadcastType(platform:Platform){
                 return '';
             }
 
-            return 'rtmpBroadcast';
+            return 'rtmpViewer';
         }
 
-        return 'webrtcBroadcast';
+        return 'webrtcViewer';
     }
 
     if (noFlash(platform)){
         return '';
     }
 
-    return 'rtmpBroadcast';
+    return 'rtmpViewer';
 }
 
 export function webrtcPublishPossible(platform:Platform):boolean{
