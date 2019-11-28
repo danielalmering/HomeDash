@@ -22,7 +22,7 @@ export function getViewerType(platform:Platform, performer: Performer){
             return '';
         }
 
-        if(isSafari(platform) && !isWebRTCPerformer(this.performer)){
+        if(isSafari(platform) && !isWebRTCPerformer(performer)){
             if(noFlash(platform)) {
                 return '';
             }
