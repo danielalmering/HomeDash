@@ -254,7 +254,7 @@ export default class Profile extends Vue {
             performer: <any>this.performer,
             sessionType: SessionType.Video,
             payment: PaymentType.Ivr,
-            streamInfo: getViewerType(platform)
+            streamInfo: getViewerType(platform, this.performer)
         };
 
         const toSend = {...defaults, ...payload};
