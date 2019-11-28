@@ -13,7 +13,7 @@ import voyeur, { VoyeurState } from './voyeur';
 import sentryPlugin from './plugins/sentry';
 
 import { Info } from '../models/Info';
-import { openModal } from '../util';
+import { openModal } from '../utils/main.util';
 
 
 Vue.use(Vuex);

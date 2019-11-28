@@ -1,6 +1,6 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
-import { getAvatarImage } from '../../../util';
+import { getAvatarImage } from '../../../utils/main.util';
 
 import config from '../../../config';
 

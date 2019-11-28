@@ -6,7 +6,7 @@ import './landingpages.scss';
 
 import config from '../../../config';
 import WithRender from './landingpages.tpl.html';
-import { getAvatarImage } from '../../../util';
+import { getAvatarImage } from '../../../utils/main.util';
 import { listPerformers } from 'sensejs/performer';
 import { Performer } from 'sensejs/performer/performer.model';
 

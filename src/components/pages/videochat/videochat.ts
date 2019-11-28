@@ -17,20 +17,19 @@ import {Devices, VideoCodec} from 'typertc';
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
+import { openModal, tagHotjar, hasService } from '../../../utils/main.util';
 import {
+    isWebRTCPerformer,
     isApple,
     isIOS, isIOSNanoCosmos,
     isIPhone, isSafari,
     isWebrtcMuted,
     NanoCosmosPossible,
     noFlash,
-    openModal,
-    tagHotjar,
     webrtcPossible,
     webrtcPublishPossible,
-    isIE,
-    hasService
-} from '../../../util';
+    isIE
+} from '../../../utils/video.util';
 import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
@@ -114,25 +113,6 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeState;
     }
 
-
-    get isWebRTCPerformer(): boolean {
-        //disable webrtc play by returning false here!
-
-        if(this.performer == null){
-            return false;
-        }
-
-        if(!this.performer && this.performer === undefined){
-            return false;
-        }
-
-        if(!this.performer.mediaId  && this.performer.mediaId === undefined){
-            return false;
-        }
-
-        return this.performer.mediaId > 1;
-    }
-
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;            
@@ -186,7 +166,7 @@ export default class VideoChat extends Vue {
 
             //use vp8 if the browser is safari and above > 12.1
             if(isSafari(platform)){
-                if(this.isWebRTCPerformer){ //performer needs to use the webrtc transport
+                if(isWebRTCPerformer(this.performer)){ //performer needs to use the webrtc transport
                     this.broadcasting.videoCodec = VideoCodec.VP8;
                 } else { //else old skool flash if available
                     if(noFlash(platform)) {

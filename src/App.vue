@@ -15,7 +15,7 @@ import { Component } from 'vue-property-decorator';
 import modalWrapper from './components/modal/modal-wrapper';
 import notificationSocket from './socket';
 import { SocketMessageEventArgs } from './models/Socket';
-import { getParameterByName } from './util';
+import { getParameterByName } from './utils/main.util';
 
 import alerts from './components/layout/Alerts.vue';
 import cookies from './components/layout/Cookies.vue';

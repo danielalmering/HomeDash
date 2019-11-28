@@ -6,7 +6,7 @@ import WithRender from './promos.tpl.html';
 import { getPromos } from 'sensejs/consumer/category';
 import { Promo as PromoData } from 'sensejs/core/models/category';
 import { User } from '../../../models/User';
-import { goBanner, openModal } from '../../../util';
+import { goBanner, openModal } from '../../../utils/main.util';
 
 @WithRender
 @Component
