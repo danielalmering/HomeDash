@@ -16,13 +16,13 @@ export function isWebRTCPerformer(performer: Performer){
     return performer.mediaId > 1;
 }
 
-export function getViewerType(platform:Platform){
+export function getViewerType(platform:Platform, performer: Performer){
     if(webrtcPublishPossible(platform)){
         if(isIPhone(platform)){
             return '';
         }
 
-        if(isSafari(platform)){
+        if(isSafari(platform) && !isWebRTCPerformer(performer)){
             if(noFlash(platform)) {
                 return '';
             }
