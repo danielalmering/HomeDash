@@ -301,10 +301,10 @@
         "subscribesperformers": "Abonniert Darsteller",
         "phones": "Telefonnummern", 
         "ip": "IP-Adresse",
-        "removeuser": "Um deinen Account zu löschen, klicke auf",
+        "removeuser": "Konto löschen? ",
         "removeuser-approval-1": "Möchtest du dein Konto wirklich löschen?",
         "removeuser-approval-2": ", Sie haben immer noch {credits} Credits!",
-        "here": "hier",
+        "here": "Löschen",
         "yes": "Ja",
         "no": "keine",
         "alerts": {

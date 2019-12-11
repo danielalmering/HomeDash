@@ -303,10 +303,10 @@
         "subscribesperformers": "Aangemelde performers!",
         "phones": "Telefoonnummers", 
         "ip": "IP-adres",
-        "removeuser": "Uw account verwijderen?, klik dan",
+        "removeuser": "Uw account verwijderen? ",
         "removeuser-approval-1": "Weet je zeker dat je uw account wilt verwijderen?",
         "removeuser-approval-2": ", je hebt nog {credits} credit(s)!",
-        "here": "hier",
+        "here": "Verwijderen",
         "yes": "Ja",
         "no": "Nee",
         "alerts": {
