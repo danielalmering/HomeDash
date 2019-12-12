@@ -49,8 +49,8 @@
         </form>
         <hr></hr>
         <div class="text-right">
-            <p v-html="$t('account.removeuser')"></p>
-            <a v-on:click.prevent="removeUser(true)" v-html="$t('account.here')"></a>
+            <p v-on:click.prevent="removeUser(true)" v-html="$t('account.removeuser')"></p> &nbsp;
+            <a class="btn btn-orange btn-small" v-on:click.prevent="removeUser(true)" v-html="$t('account.here')"></a>
         </div>
     </div>
 </div>
