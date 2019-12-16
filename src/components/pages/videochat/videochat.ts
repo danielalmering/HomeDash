@@ -293,23 +293,26 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        this.$store.watch((state) => state.session.activeState, (newValue: State) => {
-            if(newValue === State.Active){
-                clearInterval(this.intervalTimer);
-                this.toggleClientSeen();
-            }
-            if(newValue === State.Ending){
-                clearInterval(this.intervalTimer);
-            }
-            if(newValue === State.Ending && !this.isEnding){
-                this.close();
-            }
-        });
+        // this.$store.watch((state) => state.session.activeState, (newValue: State) => {
+        //     if(newValue === State.Active){
+        //         console.log('open interval! on active', this.intervalTimer)
+        //         clearInterval(this.intervalTimer);
+        //         this.toggleClientSeen();
+        //     }
+        //     if(newValue === State.Ending){
+        //         console.log('close interval! on ending')
+        //         clearInterval(this.intervalTimer);
+        //     }
+        //     if(newValue === State.Ending && !this.isEnding){
+        //         this.close();
+        //     }
+        // });
 
         this.detectCam();
     }
 
-    close(){
+    async close(){
+        await this.$store.dispatch('end');
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
     }
 
@@ -490,6 +493,20 @@ export default class VideoChat extends Vue {
 
         this.navigation = {to, from, next};
         this.askToLeave = true;
+    }
+
+    @Watch('currentState') async onStateChange(newValue:State, oldValue:State){
+        // Ending/Starting State Changing
+        if(newValue === State.Active){
+            clearInterval(this.intervalTimer);
+            this.toggleClientSeen();
+        }
+        if(newValue === State.Ending){
+            clearInterval(this.intervalTimer);
+        }
+        if(newValue === State.Ending && !this.isEnding){
+            this.close();
+        }
     }
 
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
