@@ -1,21 +1,6 @@
-<div class="voyeur">
+<div class="voyeur" v-if="performerData">
     <div class="voyeur__screen" v-if="mainTile">
         <div class="voyeur__screen-object">
-            <!--<jsmpeg
-                v-on:stateChange="viewerStateChange"
-                v-on:error="viewerError"
-                :wowza="mainTile.streamData.wowza"
-                :playStream="mainTile.streamData.playStream"
-                :muted="true">
-            </jsmpeg>-->
-            <!--<nanocosmos
-                v-on:stateChange="viewerStateChange"
-                v-on:error="viewerError"
-                :wowza="mainTile.streamData.wowza"
-                :playStream="mainTile.streamData.playStream"
-                :muted="true">
-            </nanocosmos>-->
-
             <component :is="streamTransportType"
                        v-on:stateChange="viewerStateChange"
                        v-on:error="viewerError"
