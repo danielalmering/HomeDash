@@ -293,21 +293,6 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        // this.$store.watch((state) => state.session.activeState, (newValue: State) => {
-        //     if(newValue === State.Active){
-        //         console.log('open interval! on active', this.intervalTimer)
-        //         clearInterval(this.intervalTimer);
-        //         this.toggleClientSeen();
-        //     }
-        //     if(newValue === State.Ending){
-        //         console.log('close interval! on ending')
-        //         clearInterval(this.intervalTimer);
-        //     }
-        //     if(newValue === State.Ending && !this.isEnding){
-        //         this.close();
-        //     }
-        // });
-
         this.detectCam();
     }
 
