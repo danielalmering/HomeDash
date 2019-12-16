@@ -253,6 +253,10 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.isSwitching;
     }
 
+    get activeState(): State {
+        return this.$store.state.session.activeState;
+    }
+
     get canSwitchToVideoCall():boolean{
         //TODO: Look into this
         //There is an off chance in between changing peekers that there is no performer but this property gets triggered from a rerender or something
@@ -290,18 +294,14 @@ export default class VideoChat extends Vue {
         }
 
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
+            if(newValue === State.Active){
+                this.toggleClientSeen();
+            }
             if(newValue === State.Ending && !this.isEnding){
+                clearInterval(this.intervalTimer);
                 this.close();
             }
         });
-
-        this.intervalTimer = window.setInterval(async () => {
-            const { error } = await clientSeen();
-
-            if(error && !this.isSwitching){
-                this.close();
-            }
-        }, 5000);
 
         this.detectCam();
     }
@@ -316,6 +316,16 @@ export default class VideoChat extends Vue {
             removeFavourite(this.$store.state.authentication.user.id, this.performer.id);
 
         this.performer.isFavourite = !this.performer.isFavourite;
+    }
+
+    toggleClientSeen(){
+        this.intervalTimer = window.setInterval(async () => {
+            const { error } = await clientSeen();
+
+            if(error && !this.isSwitching){
+                this.close();
+            }
+        }, 5000);
     }
 
     async gotoVoyeur(next:(yes?:boolean | RawLocation)=>void){
@@ -350,8 +360,6 @@ export default class VideoChat extends Vue {
     startCam(){
         this.broadcasting.cam = true;
     }
-
-
 
     toggleCam(){
         this.broadcasting.cam = !this.broadcasting.cam;
@@ -419,7 +427,6 @@ export default class VideoChat extends Vue {
 
     viewerError(message: string){
         console.log(message);
-
     }
 
     toggleSettings(){
@@ -463,10 +470,6 @@ export default class VideoChat extends Vue {
         }
     }
 
-    get activeState(): State {
-        return this.$store.state.session.activeState;
-    }
-
     public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void){
         const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
 
@@ -490,7 +493,7 @@ export default class VideoChat extends Vue {
         if (value === State.Accepted){
             //console.log("Get new data :)");
             await this.$store.dispatch('initiate');
-            //console.log("for reeels");
+            //console.log("active state changed");
 
             if(this.navigation && this.navigation.next){
                 this.navigation.next(true);
