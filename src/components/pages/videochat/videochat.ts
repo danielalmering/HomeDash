@@ -295,10 +295,13 @@ export default class VideoChat extends Vue {
 
         this.$store.watch((state) => state.session.activeState, (newValue: State) => {
             if(newValue === State.Active){
+                clearInterval(this.intervalTimer);
                 this.toggleClientSeen();
             }
-            if(newValue === State.Ending && !this.isEnding){
+            if(newValue === State.Ending){
                 clearInterval(this.intervalTimer);
+            }
+            if(newValue === State.Ending && !this.isEnding){
                 this.close();
             }
         });
