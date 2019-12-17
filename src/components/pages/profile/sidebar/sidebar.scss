@@ -63,7 +63,8 @@ $sidebar-top-height: 315px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             a {
                 display: block;
-                @include rem(padding, 15px 40px);
+                //@include rem(padding, 15px 40px);
+                @include rem(padding, 0px 40px);
                 cursor: pointer;
                 img { display: table; @include rem(margin, auto auto); }
             }

@@ -1,7 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import config, { logo } from '../../../../config';
+import config, { logo, topbg } from '../../../../config';
 import { getPaymentInfo } from 'sensejs/consumer/payment';
 
 import { openRoute, goBanner } from '../../../../utils/main.util';
@@ -23,6 +23,7 @@ export default class Top extends Vue {
 
     openRoute = openRoute;
     logo = logo;
+    topbg = topbg;
     goBanner = goBanner;
 
     get info(){
