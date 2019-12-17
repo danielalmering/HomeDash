@@ -2,7 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 import { Route } from 'vue-router';
 import { User } from '../../../../models/User';
-import { openRoute, openModal } from '../../../../util';
+import { openRoute, openModal } from '../../../../utils/main.util';
 import config, { logoDark } from '../../../../config';
 
 import './nav.scss';
@@ -22,7 +22,6 @@ export default class Nav extends Vue {
     openModal = openModal;
     logo = logoDark;
     country = config.Country;
-    showBanner = config.Banner;
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
@@ -52,8 +51,20 @@ export default class Nav extends Vue {
     get banner(){
         let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         let size = width < 720 ? 'xs' : 'lg';
+        let img = require('../../../../assets/images/' + this.country + '/navbanner-' + size +'.png');
 
-        return require('../../../../assets/images/' + this.country + '/navbanner-' + size +'.png');
+        switch(this.country) {
+            case 'nl':
+                return {active: (this.$store.state.info && this.$store.state.info.marketing.current === 'action_55' ? true : false), img: img};
+            case 'uk':
+                return {active: true, img: img};
+            case 'de':
+                return {active: false, img: img};
+            case 'at':
+                return {active: false, img: img};
+            default:
+                return {active: false, img: img};
+        }
     }
 
     closeAll(){

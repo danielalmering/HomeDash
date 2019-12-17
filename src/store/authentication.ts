@@ -9,7 +9,7 @@ import { checkSession } from 'sensejs/auth';
 import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
-import { tagHotjar, getParameterByName } from '../util';
+import { tagHotjar, getParameterByName } from '../utils/main.util';
 import router from '../router';
 
 import * as Sentry from '@sentry/browser'

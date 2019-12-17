@@ -7,7 +7,7 @@ import Pagination from 'sensejs/vue/components/pagination';
 import { User } from '../../../../models/User';
 import config from '../../../../config';
 import WithRender from './inbox.tpl.html';
-import { tagHotjar } from '../../../../util';
+import { tagHotjar } from '../../../../utils/main.util';
 import { NotificationThreadsMessage, Notification } from 'sensejs/core/models/notification';
 import { getNotificationThreads, payNotification } from 'sensejs/consumer/notification';
 

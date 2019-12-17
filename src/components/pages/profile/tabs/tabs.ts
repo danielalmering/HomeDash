@@ -13,7 +13,7 @@ interface EmailForm {
 
 import './tabs.scss';
 import { Performer, PerformerStatus, PerformerAvatar } from 'sensejs/performer/performer.model';
-import { openModal, tagHotjar } from '../../../../util';
+import { openModal, tagHotjar, hasService } from '../../../../utils/main.util';
 import notificationSocket from '../../../../socket';
 
 import WithRender from './tabs.tpl.html';
@@ -58,12 +58,24 @@ export default class Tabs extends Vue {
             return 'voyeur';
         }
 
-        if(this.$route.params.category === 'peek' && this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
+        if (this.$route.params.category === 'peek' && hasService(this.performer,'peek') && this.performer.performerStatus === 'BUSY'){
             return 'cam';
         }
 
-        if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 )){
-            return 'cam';
+        if (([PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 )){            
+            return 'none';
+        }
+
+        if (([PerformerStatus.Busy].indexOf(this.performer.performerStatus) > -1)) {
+            if(hasService(this.performer, 'peek')) {
+                return 'cam';
+            } else if (hasService(this.performer, 'voyeur')) {
+                return 'voyeur';
+            }
+            else {
+                return 'none';
+            }
+            
         }
 
         for (const service in this.performer.performer_services){
@@ -76,7 +88,7 @@ export default class Tabs extends Vue {
     }
 
     get camLabel(): string {
-        if (this.performer && this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY'){
+        if (this.performer && hasService(this.performer, 'peek') && this.performer.performerStatus === 'BUSY'){
             return 'peek';
         }
 
@@ -88,7 +100,7 @@ export default class Tabs extends Vue {
             return false;
         }
 
-        return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
+        return hasService(this.performer, 'peek') && this.performer.performerStatus === 'BUSY';
     }
 
     get authenticated(){
@@ -152,7 +164,7 @@ export default class Tabs extends Vue {
 
     @Watch('performer', { deep: true })
     onPerformerUpdate(newPerformer: Performer, oldPerformer: Performer){
-        if(!newPerformer.performer_services[this.selectedTab] || !this.tabEnabled(this.selectedTab, this.performer, this.user)){
+        if (!hasService(newPerformer, this.selectedTab) || !this.tabEnabled(this.selectedTab, this.performer, this.user)){
             this.selectedTab = this.firstAvailable;
         }
     }

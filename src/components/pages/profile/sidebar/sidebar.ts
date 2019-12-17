@@ -7,9 +7,9 @@ import {
     openRoute,
     getAvatarImage,
     getPerformerStatus,
-    webrtcPossible,
-    NanoCosmosPossible
-} from '../../../../util';
+    hasService
+} from '../../../../utils/main.util';
+import { webrtcPossible, NanoCosmosPossible } from '../../../../utils/video.util';
 import config, { logo } from '../../../../config';
 
 import './sidebar.scss';
@@ -132,7 +132,7 @@ export default class Sidebar extends Vue {
             return false;
         }
 
-        return performer.mediaId > 1;
+        return performer.mediaId == 2;
     }
 
 
@@ -295,7 +295,7 @@ export default class Sidebar extends Vue {
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 
-        return !performer ? false : performer.performer_services[service];
+        return !performer ? false : hasService(performer, service);
     }
 
     toggleFavourite(performerId: number){

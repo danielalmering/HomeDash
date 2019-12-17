@@ -6,7 +6,7 @@ import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
 import Confirmation from '../../layout/Confirmations.vue';
 
-require('../../../../static/nanoplayer.4.0.2.min.js');
+require('../../../../static/nanoplayer.4.0.7.min.js');
 
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
@@ -15,9 +15,9 @@ import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import {NanoCosmosPossible, webrtcPossible, isIE} from "../../../util";
+import {NanoCosmosPossible, webrtcPossible, isIE} from "../../../utils/video.util";
 import {WebRTC} from "../videochat/streams/webrtc";
-
+import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
 
 const Platform = require('platform');
 
@@ -57,7 +57,6 @@ export default class Voyeur extends Vue {
 
     get performerData(){
         const performerId = this.$store.state.voyeur.mainTile.performer;
-
         return this.$store.getters['voyeur/performer'](performerId);
     }
 
@@ -81,47 +80,37 @@ export default class Voyeur extends Vue {
         };
     }
 
-
-    get isWebRTCPerformer(): boolean {
-        //disable webrtc play by returning false here!
-        const performerId = this.$store.state.voyeur.mainTile.performer;
-        const activePerformer = this.performer(performerId);
-
-        if(activePerformer == null){
-            return false;
-        }
-
-        if(!activePerformer && activePerformer === undefined){
-            return false;
-        }
-
-        if(!activePerformer.mediaId  && activePerformer.mediaId === undefined){
-            return false;
-        }
-
-        return activePerformer.mediaId > 1;
-    }
-
-
     get streamTransportType(): string | undefined{
+        const mainPerformer = this.performerData;
 
+        if(mainPerformer == null){
+            return undefined;            
+        }
+
+        if(!mainPerformer && mainPerformer === undefined){
+            return undefined; 
+        }
+
+        if (!mainPerformer.mediaId) {
+            return undefined;
+        }
+
+        const playStream = mainPerformer.playStream ? mainPerformer.playStream: undefined;
         const platform = Platform.parse(navigator.userAgent);
 
-        //for webrtc user use webrtc viewer or jsmpeg
-        if(this.isWebRTCPerformer && webrtcPossible(platform)){
-            return 'webrtc';            
-        }
+        let mediaId = mainPerformer.mediaId;
 
-        if(NanoCosmosPossible(platform)){
-            return 'nanocosmos';
+        switch(mediaId) {
+            case 0:
+            case 1: // flash publisher
+                return ((NanoCosmosPossible(platform) && !isIE(platform)) ? 'nanocosmos' : 'rtmp');
+            case 2: //webrtc publisher
+                return webrtcPublisher(platform, 'PEEK');
+            case 3: // OBS publisher (clubsense streamer)
+                return clubsenseStreamerPublisher(platform, 'PEEK');
+            default: //fallback encoder
+                return 'jsmpeg';
         }
-
-        if(isIE(platform)){
-            return 'rtmp';
-        }
-
-        //fallback on nanocosmos
-        return 'jsmpeg';
     }
 
     mounted(){
@@ -246,6 +235,11 @@ export default class Voyeur extends Vue {
 
     viewerError(message: string){
         console.log(message);
+    }
+
+    @Watch('mainTile')
+    async switcheroo(newState: boolean){
+        console.log('main tile changed');
     }
 
     @Watch('isActive')

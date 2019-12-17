@@ -8,7 +8,7 @@ import { Performer } from 'sensejs/performer/performer.model';
 import { UserRole } from '../../models/User';
 import { SocketServiceEventArgs } from '../../models/Socket';
 import notificationSocket from '../../socket';
-import { tagHotjar, sleep } from '../../util';
+import { tagHotjar, sleep } from '../../utils/main.util';
 import i18n from '../../localization';
 import { startRequest, deleteVideorequest, cancel, end, performerTimeout, startCall, endCall, initiate, InitiatePayload } from 'sensejs/session/index';
 
@@ -29,7 +29,8 @@ const actions = {
             type: payload.sessionType,
             name: displayName,
             ivrCode: payload.ivrCode || undefined,
-            payment: payload.payment
+            payment: payload.payment,
+            streamInfo: payload.streamInfo || undefined
         });
 
 

@@ -1,7 +1,7 @@
 import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import WithRender from './modal-login.tpl.html';
-import { openModal, tagHotjar } from '../../../util';
+import { openModal, tagHotjar } from '../../../utils/main.util';
 import Sociallogin from './../../layout/Sociallogin.vue';
 import config from '../../../config';
 import router from '../../../router';

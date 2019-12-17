@@ -2,7 +2,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Vue from 'vue';
 
-import { openModal, getAvatarImage, getPerformerLabel  } from '../../../util';
+import { openModal, getAvatarImage, getPerformerLabel, hasService  } from '../../../utils/main.util';
+import { getViewerType } from '../../../utils/video.util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
@@ -26,6 +27,7 @@ import { createReservation } from 'sensejs/session';
 import { removeFavourite, addFavourite } from 'sensejs/performer/favourite';
 import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 const swfobject = require('swfobject');
+const Platform = require('platform');
 
 @WithRender
 @Component({
@@ -79,7 +81,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        return this.performer.performer_services['peek'] && this.performer.performerStatus === 'BUSY';
+        return hasService(this.performer, 'peek') && this.performer.performerStatus === 'BUSY';
     }
 
     get canCall(): boolean{
@@ -91,7 +93,7 @@ export default class Profile extends Vue {
             return false;
         }
 
-        return this.performer.performer_services['phone'];
+        return hasService(this.performer, 'phone');
     }
 
     get performerPhotos(){
@@ -245,11 +247,14 @@ export default class Profile extends Vue {
         //     }
         // }
 
+        const platform = Platform.parse(navigator.userAgent);
+
         const defaults: RequestPayload = {
             type: 'startRequest',
             performer: <any>this.performer,
             sessionType: SessionType.Video,
-            payment: PaymentType.Ivr
+            payment: PaymentType.Ivr,
+            streamInfo: getViewerType(platform, this.performer)
         };
 
         const toSend = {...defaults, ...payload};
@@ -355,7 +360,7 @@ export default class Profile extends Vue {
             }
         }
 
-        this.setSeoParameters();
+        this.setSeoParameters(this.performer);
     }
 
     openTab(event: Event){
@@ -394,18 +399,18 @@ export default class Profile extends Vue {
         return this.$t(`profile.eyecolors.${color}`).toString();
     }
 
-    setSeoParameters(){
-        if(!this.performer || !this.performer.nickname){
+    setSeoParameters(performer: Performer){
+        if(!performer){
             return;
         }
 
-        setTitle(this.$t('profile.metaTitle', { nickname: this.performer.nickname }).toString());
-        setDescription(this.$t('profile.metaDescription', { nickname: this.performer.nickname }).toString());
-        setKeywords(`${this.performer.nickname}, ${this.performer.eyeColor}, ${this.performer.cupSize}`);
+        setTitle(this.$t('profile.metaTitle', { nickname: performer.nickname }).toString());
+        setDescription(this.$t('profile.metaDescription', { nickname: performer.nickname }).toString());
+        setKeywords(`${performer.nickname}, ${performer.eyeColor}, ${performer.cupSize}`);
 
         setGraphData('og:type', 'profile');
-        setGraphData('og:image', getAvatarImage(this.performer, 'medium'));
-        setGraphData('profile:username', this.performer.nickname);
+        setGraphData('og:image', getAvatarImage(performer, 'medium'));
+        setGraphData('profile:username', performer.nickname);
         setGraphData('profile:gender', 'female');
     }
 }

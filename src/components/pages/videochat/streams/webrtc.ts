@@ -6,7 +6,8 @@ import Stream from './stream';
 
 import {Player, WRTCUtils as utils } from 'typertc';
 
-import {isWebrtcMuted, sleep} from '../../../../util';
+import {isWebrtcMuted} from '../../../../utils/video.util';
+import {sleep} from '../../../../utils/main.util';
 
 const Platform = require('platform');
 

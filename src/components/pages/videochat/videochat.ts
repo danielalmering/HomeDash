@@ -17,24 +17,25 @@ import {Devices, VideoCodec} from 'typertc';
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
+import { openModal, tagHotjar, hasService } from '../../../utils/main.util';
 import {
+    isWebRTCPerformer,
     isApple,
     isIOS, isIOSNanoCosmos,
     isIPhone, isSafari,
     isWebrtcMuted,
     NanoCosmosPossible,
     noFlash,
-    openModal,
-    tagHotjar,
     webrtcPossible,
     webrtcPublishPossible,
     isIE
-} from '../../../util';
+} from '../../../utils/video.util';
 import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
 //import { webrtcPossible, noFlash } from 'sensejs/util/platform';
 import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
+import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
 
 const Platform = require('platform');
 //import Platform from 'platform';
@@ -112,242 +113,36 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeState;
     }
 
-
-    get isWebRTCPerformer(): boolean {
-        //disable webrtc play by returning false here!
-
-        if(this.performer == null){
-            return false;
-        }
-
-        if(!this.performer && this.performer === undefined){
-            return false;
-        }
-
-        if(!this.performer.mediaId  && this.performer.mediaId === undefined){
-            return false;
-        }
-
-        return this.performer.mediaId > 1;
-    }
-
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
+            return undefined;            
+        }
+
+        //check integerty
+        if (!this.performer) {
+            return undefined;
+        }
+
+        if (!this.performer.mediaId) {
             return undefined;
         }
 
         const playStream =  this.playStream;
         const platform = Platform.parse(navigator.userAgent);
 
-        // OLD CODE
-        // if webrtc is possible use webrtc viewer, nanocosmos, rtmp or jsmpeg
-        /*if (this.isWebRTCPerformer && webrtcPossible(platform)){            
-            return 'webrtc';            
-        }
-
-        // else use nanocosmos if you are an ios 10 or higher device (no sound problem here)
-        if(NanoCosmosPossible(platform)) {
-            return this.sessionType == SessionType.Peek ? 'nanocosmos' : 'jsmpeg';            
-        }
-
-        //old IE browsers
-        if(isIE(platform)) {
-            return 'rtmp';
-        }
-
-        // fallback on nanocosmos
-        return 'jsmpeg';*/
-
-        // let mediaid = this.performer.mediaId;
-        // if(mediaid && mediaid === 2 && !webrtcPossible(platform)){ mediaid = 1 }
-        // if(mediaid && mediaid === 3 && !NanoCosmosPossible(platform)){ mediaid = 1 }
-
-        // switch (mediaid) {
-        //     case 0:
-        //         return 'jsmpeg';
-        //         break;
-        //     case 1:
-        //         return 'jsmpeg';
-        //         break;
-        //     case 2:
-        //         return 'webrtc';
-        //         break;
-        //     case 3:
-        //         return 'nanocosmos';
-        //         break;
-        //     default:
-        //         return 'jsmpeg';
-        //         break;
-        // }
-
         let mediaId = this.performer.mediaId;
         switch(mediaId) {
             //flash publisher
             case 0:
             case 1:
-                return this.flashPublisher(platform);
+                return flashPublisher(platform, this.sessionType);
             case 2: //webrtc publisher
-                return this.webrtcPublisher(platform);
+                return webrtcPublisher(platform, this.sessionType);
             case 3: // OBS publisher (clubsense streamer)
-                return this.clubsenseStreamerPublisher(platform);
+                return clubsenseStreamerPublisher(platform, this.sessionType);
             default: //fallback encoder
                 return 'jsmpeg';
         }
-    }
-
-
-    /**
-     * Get the best player (encoder) for webrtc publishers
-     * 
-     * Publisher codec used:
-     * 
-     * video: h264
-     * audio: PCMU 8kbit mono
-     * 
-     * Available codecs players:
-     * 
-     * - webrtc: (best match)
-     *      video: h264, vp8 (limited), vp9 (limited)
-     *      audio: opus,vorbis, pcmu, pcma
-     *      quality: very high
-     *      latency: 10ms - 500ms
-     * 
-     * - nanocosmos: (best match if no sound is used and webrtc is not a option)
-     *      video: h264
-     *      audio: aac
-     *      quality: high
-     *      latency: 700ms - 2000ms
-     * 
-     * - flash: (best match for IE browser who are still supporting Flash)
-     *      video: h264
-     *      audio: pcmu, pcma, aac 
-     *      quality: very high
-     *      latency: 10ms - 500ms    
-     * 
-     * - jsmpeg: (if all else fails , 'VHS' to the rescue)
-     *      video: MPEG-1 (transcoded from h264 by server)
-     *      audio: pcmu, pcma, aac
-     *      quality: okish
-     *      latency: 100ms - 800ms
-     * 
-     * @param platform parsed platform from browser useragent string     
-     */
-    private webrtcPublisher(platform: any){
-        if(platform) {
-            if(webrtcPossible(platform)){
-                return 'webrtc';
-            }
-
-            if(NanoCosmosPossible(platform)){
-                return this.sessionType == SessionType.Peek ? 'nanocosmos' : 'jsmpeg';
-            }
-
-            if(isIE(platform)) {
-                return 'rtmp';
-            }
-        }
-
-        //always default to jsmpeg
-        return 'jsmpeg';
-    }
-
-    /**
-     * Get the best player (encoder) for OBS (clubsense streamer) publishers
-     *
-     * Publisher codec used:
-     *
-     * video: h264
-     * audio: AAC
-     *
-     * Available codecs players:
-     *
-     * 
-     * - nanocosmos: (best match)
-     *      video: h264
-     *      audio: aac
-     *      quality: high
-     *      latency: 700ms - 2000ms
-     * 
-     * - webrtc: (best match, if no sound is needed)
-     *      video: h264, vp8 (limited), vp9 (limited)
-     *      audio: opus, vorbis, pcmu, pcma
-     *      quality: very high
-     *      latency: 10ms - 500ms
-     *
-     * - flash: (best match for IE browser who are still supporting Flash)
-     *      video: h264
-     *      audio: pcmu, pcma, aac
-     *      quality: very high
-     *      latency: 10ms - 500ms
-     *
-     * - jsmpeg: (if all else fails , 'VHS' to the rescue)
-     *      video: MPEG-1 (transcoded from h264 by server)
-     *      audio: pcmu, pcma, aac
-     *      quality: okish
-     *      latency: 100ms - 800ms
-     *
-     * @param platform parsed platform from browser useragent string
-     */
-    private clubsenseStreamerPublisher(platform: any) {
-        if(platform) {
-            if (webrtcPossible(platform) && this.sessionType == SessionType.Peek) {
-                return 'webrtc';
-            }
-            
-            if(NanoCosmosPossible(platform)){
-                return 'nanocosmos';
-            }
-
-            if(isIE(platform)){
-                return 'rtmp';
-            }
-        }
-
-        return 'jsmpeg';
-    }
-
-    /**
-     * Get the best player (encoder) for Flash publishers (RTMP)
-     *
-     * Publisher codec used:
-     *
-     * video: h264
-     * audio: pcmu
-     *
-     * Available codecs players:
-     *
-     * - nanocosmos: (best match if the is no sound needed)
-     *      video: h264
-     *      audio: aac
-     *      quality: high
-     *      latency: 700ms - 2000ms
-     *
-     * - flash: (best match for IE browser who are still supporting Flash)
-     *      video: h264
-     *      audio: pcmu, pcma, aac
-     *      quality: very high
-     *      latency: 10ms - 500ms
-     *
-     * - jsmpeg: (if all else fails , 'VHS' to the rescue)
-     *      video: MPEG-1 (transcoded from h264 by server)
-     *      audio: pcmu, pcma, aac
-     *      quality: okish
-     *      latency: 100ms - 800ms
-     *
-     * @param platform parsed platform from browser useragent string
-     */
-    private flashPublisher(platform: any){
-        if(platform) {            
-            if(NanoCosmosPossible(platform)) {
-                return this.sessionType == SessionType.Peek ? 'nanocosmos' : 'jsmpeg';
-            }
-
-            if(isIE(platform)){
-                return 'rtmp';
-            }             
-        }
-
-        return 'jsmpeg';
     }
 
     get broadcastType():string{
@@ -371,7 +166,7 @@ export default class VideoChat extends Vue {
 
             //use vp8 if the browser is safari and above > 12.1
             if(isSafari(platform)){
-                if(this.isWebRTCPerformer){ //performer needs to use the webrtc transport
+                if(isWebRTCPerformer(this.performer)){ //performer needs to use the webrtc transport
                     this.broadcasting.videoCodec = VideoCodec.VP8;
                 } else { //else old skool flash if available
                     if(noFlash(platform)) {
@@ -458,6 +253,10 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.isSwitching;
     }
 
+    get activeState(): State {
+        return this.$store.state.session.activeState;
+    }
+
     get canSwitchToVideoCall():boolean{
         //TODO: Look into this
         //There is an off chance in between changing peekers that there is no performer but this property gets triggered from a rerender or something
@@ -468,7 +267,7 @@ export default class VideoChat extends Vue {
              &&
                 (this.paymentMethod == PaymentType.Ivr)
             &&
-                (this.performer.performer_services.videocall);
+                (hasService(this.performer, 'videocall'));
     }
 
     addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
@@ -494,24 +293,11 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        this.$store.watch((state) => state.session.activeState, (newValue: State) => {
-            if(newValue === State.Ending && !this.isEnding){
-                this.close();
-            }
-        });
-
-        this.intervalTimer = window.setInterval(async () => {
-            const { error } = await clientSeen();
-
-            if(error && !this.isSwitching){
-                this.close();
-            }
-        }, 5000);
-
         this.detectCam();
     }
 
-    close(){
+    async close(){
+        await this.$store.dispatch('end');
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
     }
 
@@ -521,6 +307,16 @@ export default class VideoChat extends Vue {
             removeFavourite(this.$store.state.authentication.user.id, this.performer.id);
 
         this.performer.isFavourite = !this.performer.isFavourite;
+    }
+
+    toggleClientSeen(){
+        this.intervalTimer = window.setInterval(async () => {
+            const { error } = await clientSeen();
+
+            if(error && !this.isSwitching){
+                this.close();
+            }
+        }, 5000);
     }
 
     async gotoVoyeur(next:(yes?:boolean | RawLocation)=>void){
@@ -555,8 +351,6 @@ export default class VideoChat extends Vue {
     startCam(){
         this.broadcasting.cam = true;
     }
-
-
 
     toggleCam(){
         this.broadcasting.cam = !this.broadcasting.cam;
@@ -624,7 +418,6 @@ export default class VideoChat extends Vue {
 
     viewerError(message: string){
         console.log(message);
-
     }
 
     toggleSettings(){
@@ -668,10 +461,6 @@ export default class VideoChat extends Vue {
         }
     }
 
-    get activeState(): State {
-        return this.$store.state.session.activeState;
-    }
-
     public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void){
         const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
 
@@ -691,11 +480,25 @@ export default class VideoChat extends Vue {
         this.askToLeave = true;
     }
 
+    @Watch('currentState') async onStateChange(newValue:State, oldValue:State){
+        // Ending/Starting State Changing
+        if(newValue === State.Active){
+            clearInterval(this.intervalTimer);
+            this.toggleClientSeen();
+        }
+        if(newValue === State.Ending){
+            clearInterval(this.intervalTimer);
+        }
+        if(newValue === State.Ending && !this.isEnding){
+            this.close();
+        }
+    }
+
     @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
         if (value === State.Accepted){
             //console.log("Get new data :)");
             await this.$store.dispatch('initiate');
-            //console.log("for reeels");
+            //console.log("active state changed");
 
             if(this.navigation && this.navigation.next){
                 this.navigation.next(true);
@@ -709,6 +512,9 @@ export default class VideoChat extends Vue {
             await this.$store.dispatch('switchPeek', this.$store.state.session.switchingPerformer);
         } catch(e){
             this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
+            //switch failed so disable switch modal
+            this.$store.commit('toggleSwitchModal', { state: false }); 
+            return;
         }
 
         this.$store.commit('toggleSwitchModal', { state: false });

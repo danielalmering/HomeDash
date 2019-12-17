@@ -1,12 +1,12 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
-import { getAvatarImage, getPerformerStatus } from '../../../../../util';
+import { getAvatarImage, getPerformerStatus } from '../../../../../utils/main.util';
 import { Route } from 'vue-router';
 import { User } from '../../../../../models/User';
 
 import config from '../../../../../config';
 import WithRender from './readmessages.tpl.html';
-import { tagHotjar } from '../../../../../util';
+import { tagHotjar } from '../../../../../utils/main.util';
 import { NotificationThreadsMessage } from 'sensejs/core/models/notification';
 import { getNotificationThread, PostNotificationParams, postNotificationThread, payNotification, removeNotificationThread } from 'sensejs/consumer/notification';
 

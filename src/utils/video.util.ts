@@ -1,96 +1,84 @@
-import store from './store';
-import config from './config';
-import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
-import { isPeekable, isBusy } from 'sensejs/util/performer';
+import { Performer } from 'sensejs/performer/performer.model';
 
-export function getAvatarImage(performer: Performer, size: string){
-
-    if(store.state.safeMode && performer.safe_avatar){
-        return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.safe_avatar.name}`;
+export function isWebRTCPerformer(performer: Performer){
+    if(performer == null){
+        return false;
     }
 
-    if(!store.state.safeMode && performer.avatar){
-        return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.avatar.name}`;
+    if(!performer && performer === undefined){
+        return false;
     }
 
-    return require('./assets/images/placeholder.png');
+    if(!performer.mediaId  && performer.mediaId === undefined){
+        return false;
+    }
+
+    return performer.mediaId > 1;
 }
 
-export function getSliderImages(performer: Performer, photo: any, size: string){
-    if(store.state.safeMode && photo.safe_version){
-        return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
+export function getViewerType(platform:Platform, performer: Performer){
+    if(webrtcPublishPossible(platform)){
+        if(isIPhone(platform)){
+            return '';
+        }
+
+        if(isSafari(platform) && !isWebRTCPerformer(performer)){
+            if(noFlash(platform)) {
+                return '';
+            }
+
+            return 'rtmpViewer';
+        }
+
+        return 'webrtcViewer';
     }
 
-    if(!store.state.safeMode){
-        return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
+    if (noFlash(platform)){
+        return '';
     }
 
-    return require('./assets/images/placeholder.png');
+    return 'rtmpViewer';
 }
 
-export function getPerformerStatus(performer: Performer){
-    if(!performer){ return 'offline'; }
+export function webrtcPublishPossible(platform:Platform):boolean{
+    const supported = [
+        {
+            name: 'Chrome',
+            version: '23'
+        },
+        {
+            name: 'Firefox',
+            version: '22'
+        },
+        {
+            name: 'Samsung Internet',
+            version: '4'
+        },
+        {
+            name: 'Firefox for Android'
+        },
+        {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
+            //This needs te be fixed by Wowza!
+            name: 'Safari',
+            version: '12.1'
+        },
+        {
+            name: 'Chrome Mobile', //does not work for iOS
+            os: {
+                family: 'Android'
+            }
+        },
+        {
+            name: 'Opera',
+            version: '60'
+        },
+        {
+            name: 'Microsoft Edge', //chrome engine is working
+            version: '77'
+        }
+    ];
 
-    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
-        return 'teaser';
-    }
-
-    if(performer.performerStatus === PerformerStatus.OnCall || performer.performerStatus === PerformerStatus.Request){
-        return 'busy';
-    }
-
-    if(performer.performerStatus === PerformerStatus.Busy){
-        return performer.performer_services['peek'] ? 'peek' : 'busy';
-    }
-
-    if(performer.performerStatus === PerformerStatus.Available &&
-        performer.performer_services['cam'] ||
-        performer.performer_services['phone'] ||
-        performer.performer_services['videocall']){
-
-        return 'available';
-    }
-
-    // Performer status Offline
-    if(performer.performer_services['phone']){
-        return 'available';
-    }
-
-    return 'offline';
-}
-
-export function sleep(delay: number):Promise<null>{
-    return new Promise( (resolve, reject)=>{
-        setTimeout(resolve, delay);
-    })
-}
-
-export function getPerformerLabel(performer: Performer){
-    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
-        return 'teaser-label';
-    }
-
-    if(isPeekable(performer)){
-        return 'peek-label';
-    }
-
-    if(isBusy(performer)){
-        return 'busy-label';
-    }
-
-    return 'none';
-}
-
-export function goBanner(loggedin: boolean){
-    const logged = !loggedin ? this.$store.dispatch('displayModal', { name: 'login' }) : this.$router.push({ name: 'Payment' });
-}
-
-export function openModal(name: string, ref?: string){
-    this.$store.dispatch('displayModal', { name: name, ref: ref});
-}
-
-export function openRoute(name: string){
-    this.$router.push({ name: name });
+    return supported.find( pattern => match(platform, pattern) ) != null;
 }
 
 //Webrtc play back possible
@@ -134,48 +122,6 @@ export function webrtcPossible(platform:Platform):boolean{
             version: '77.0'
         }
 
-    ];
-
-    return supported.find( pattern => match(platform, pattern) ) != null;
-}
-
-//Webrtc publish possible
-export function webrtcPublishPossible(platform:Platform):boolean{
-    const supported = [
-        {
-            name: 'Chrome',
-            version: '23'
-        },
-        {
-            name: 'Firefox',
-            version: '22'
-        },
-        {
-            name: 'Samsung Internet',
-            version: '4'
-        },
-        {
-            name: 'Firefox for Android'
-        },
-        {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
-            //This needs te be fixed by Wowza!
-            name: 'Safari',
-            version: '12.1'
-        },
-        {
-            name: 'Chrome Mobile', //does not work for iOS
-            os: {
-                family: 'Android'
-            }
-        },
-        {
-            name: 'Opera',
-            version: '60'
-        },
-        {
-            name: 'Microsoft Edge', //chrome engine is working
-            version: '77'
-        }
     ];
 
     return supported.find( pattern => match(platform, pattern) ) != null;
@@ -284,17 +230,6 @@ export function isIOSNanoCosmos(platform:Platform):boolean{
     return apples.find( pattern => match(platform, pattern) ) != null;
 }
 
-
-
-/*
-The low-latency nanoStream h5Live Player runs on all full-featured HTML5 browsers including
-
-Safari 10,11,12 on iOS and macOS
-Chrome 54 and higher on desktop and mobile
-Firefox 48 and higher
-Edge
-Internet Explorer 11 (starting Windows 8.1) but with rtmp fallback for windows 7
- */
 export function NanoCosmosPossible(platform: Platform){
     const supported = [
         {
@@ -358,8 +293,6 @@ export function match(message:any, pattern:any):boolean{
     return true;
 }
 
-//checks if version, formatted as <major>.<minor>.<evenmoreminor>... is smaller than 'than' formatted the same way.
-//eg smaller("47.0.2526.111", "47.0.2530.9") => true
 function smaller(version:string, than:string):boolean{
     const versionList: number[] = toInts(version);
     const thanList: number[] =  than.split('.').map(num => parseInt(num));
@@ -395,28 +328,3 @@ function toInts(version:string):number[]{
     }
     return result;
 }
-
-export function isInSession(status: PerformerStatus){
-    return status === PerformerStatus.Busy || status === PerformerStatus.Offline;
-}
-
-export function isOutOfSession(status: PerformerStatus){
-    return status === PerformerStatus.Offline || status === PerformerStatus.Available;
-}
-
-export function tagHotjar(tag: string){
-    if(window.hj && config.locale.Hotjar){
-        window.hj('tagRecording', [tag]);
-    }
-}
-
-export function getParameterByName(name: string, url?: string) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
