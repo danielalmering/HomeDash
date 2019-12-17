@@ -15,19 +15,19 @@
     display: table;
     width: 100%;
     background: $pallete-1;
+    background-position: center center;
+    background-repeat: no-repeat;
 
     &__logo {
-        @include rem(padding, 22px 0px);
+        //@include rem(padding, 22px 0px);
+        padding: 0px 0px !important;
         cursor: pointer;
 
         img {
             display: table;
             width: 100%;
-            max-width: 146px;
+            max-width: 163px;
             @include rem(margin, 0 auto);
-            @include breakpoint(xs) {
-                max-width: 180px;
-            }
         }
     }
 
