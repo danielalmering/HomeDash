@@ -188,7 +188,7 @@ export default class Profile extends Vue {
     onRouteChange(to: Route, from: Route){
         if (this.activeState === State.Pending || this.activeState === State.InRequest) {
             //cancel
-            console.log('canceling request!');
+            //console.log('canceling request!');
             this.cancel();
         }
 
@@ -196,12 +196,12 @@ export default class Profile extends Vue {
     }
 
     public beforeRouteLeave(to: Route, from: Route, next: (yes?: boolean | RawLocation) => void) {
-        console.log('before route leave..', this.activeState);
+        //console.log('before route leave..', this.activeState);
 
         //if in request cancel request
         if (this.activeState === State.Pending || this.activeState === State.InRequest) {
             //cancel
-            console.log('canceling request!');
+            //console.log('canceling request!');
             this.cancel();
         }
         next();
