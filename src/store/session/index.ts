@@ -77,7 +77,7 @@ notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
 
 const transitions: { [key: string]: State[] } = { //TODO: Added by Lorenzo: Ask Hotze what the edgecase is, removing state transition for now
     [State.Idle]:           [State.Idle, State.InRequest], //TODO: State.Ending Added by Hotze: because of edge case: refresh in chat should fix in videochat.ts beforeDestroy
-    [State.InRequest]:      [State.InRequest, State.Pending, State.Accepted, State.Canceling, State.Idle],
+    [State.InRequest]:      [State.Pending, State.Accepted, State.Canceling, State.Idle],
     [State.Pending]:        [State.Accepted, State.Canceling],
     [State.Accepted]:       [State.Initializing, State.Canceling],
     [State.Initializing]:   [State.Active, State.Canceling, State.Ending],

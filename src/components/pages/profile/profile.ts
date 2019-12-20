@@ -1,5 +1,5 @@
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
+import { Route, RawLocation } from 'vue-router';
 import Vue from 'vue';
 
 import { openModal, getAvatarImage, getPerformerLabel, hasService  } from '../../../utils/main.util';
@@ -28,6 +28,10 @@ import { removeFavourite, addFavourite } from 'sensejs/performer/favourite';
 import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
 const swfobject = require('swfobject');
 const Platform = require('platform');
+
+Component.registerHooks([
+    'beforeRouteLeave'
+]);
 
 @WithRender
 @Component({
@@ -182,7 +186,25 @@ export default class Profile extends Vue {
 
     @Watch('$route')
     onRouteChange(to: Route, from: Route){
+        if (this.activeState === State.Pending || this.activeState === State.InRequest) {
+            //cancel
+            //console.log('canceling request!');
+            this.cancel();
+        }
+
         this.loadPerformer(parseInt(to.params.id));
+    }
+
+    public beforeRouteLeave(to: Route, from: Route, next: (yes?: boolean | RawLocation) => void) {
+        //console.log('before route leave..', this.activeState);
+
+        //if in request cancel request
+        if (this.activeState === State.Pending || this.activeState === State.InRequest) {
+            //cancel
+            //console.log('canceling request!');
+            this.cancel();
+        }
+        next();
     }
 
     @Watch('activeState') async onSessionStateChange(value: State, oldValue: State){
