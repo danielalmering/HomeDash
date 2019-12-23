@@ -297,7 +297,6 @@ export default class VideoChat extends Vue {
     }
 
     async close(){
-        await this.$store.dispatch('end');
         this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
     }
 
@@ -518,6 +517,7 @@ export default class VideoChat extends Vue {
         }
 
         this.$store.commit('toggleSwitchModal', { state: false });
+        clearInterval(this.intervalTimer);
 
         this.$router.push({
             name: 'Peek',
@@ -532,6 +532,7 @@ export default class VideoChat extends Vue {
     }
 
     async leave(){
+        await this.$store.dispatch('end');
         this.askToLeave = false;
 
         if(this.$store.state.session.fromVoyeur){
