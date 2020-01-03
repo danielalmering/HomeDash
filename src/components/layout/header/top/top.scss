@@ -19,8 +19,8 @@
     background-repeat: no-repeat;
 
     &__logo {
-        //@include rem(padding, 22px 0px);
-        padding: 0px 0px !important;
+        @include rem(padding, 22px 0px);
+        //holidayspadding: 0px 0px !important;
         cursor: pointer;
 
         img {
