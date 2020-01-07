@@ -64,6 +64,7 @@ $sidebar-top-height: 315px;
             a {
                 display: block;
                 @include rem(padding, 15px 40px);
+                //holiday@include rem(padding, 0px 40px);
                 cursor: pointer;
                 img { display: table; @include rem(margin, auto auto); }
             }
