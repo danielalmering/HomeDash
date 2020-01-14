@@ -51,9 +51,7 @@ export default class Cookies extends Vue {
         await this.$store.dispatch('getSession', false);
 
         if(!utmMedium || utmMedium.toLowerCase() !== 'advertising'){
-
             this.$store.dispatch('intervalChecksession');
-            await this.$store.dispatch('setLanguage', config.locale.DefaultLanguage);
         }
 
         notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
