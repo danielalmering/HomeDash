@@ -21,6 +21,7 @@
         li {
             float: left;
             color: $pallete-14;
+            position: relative;
             @include rem(font-size,13px);
             display: inline-block;
             @include rem(padding, 9px 18px 11px 18px);
@@ -47,6 +48,39 @@
                 i { color: $pallete-3; }
                 color: $pallete-3;
                 background: $pallete-16;
+            }
+
+            b {
+                position: absolute;
+                right: 0px;
+                top: 0px;
+                background: rgba(0,0,0,0.4);
+                height: 18px;
+                border-left: 1px solid rgba(255,255,255,0.1);
+                width: 18px;
+                font-weight: 400;
+                @include border-bottom-left-radius(25px);
+                font-size: 10px;
+                @include rem(padding, 2px 0px 1px 9px);
+                color: $pallete-2;
+                div {
+                    position: absolute;
+                    display: none;
+                    bottom: 18px;
+                    left: -1px;
+                    background: $pallete-5;
+                    @include rem(padding, 10px);
+                    @include border-top-radius(5px);
+                    @include border-bottom-right-radius(5px);
+                    width: 500px;
+                    @include rem(font-size,12px);
+                    font-family: $default-font--regular;
+                }
+                &:hover {
+                    color: $pallete-2;
+                    background: $pallete-5;
+                    div { display: block; }
+                }
             }
 
             @include breakpoint(xs) {
