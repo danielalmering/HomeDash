@@ -85,6 +85,7 @@ const actions = {
     },
     async loadTile({ commit, getters, rootState, state, dispatch }: VoyeurContext, payload: { performerId: number, position: number }){
         const advertId = getters.performer(payload.performerId).advertId;
+        if(!advertId){ return; }
 
         const { result, error } = await initiate(SessionType.Video, advertId, {
             clientId: rootState.authentication.user.id,
@@ -118,8 +119,8 @@ const actions = {
         commit('setTile',  { tile, position: payload.position });
     },
     async loadMainTile({ commit, getters, rootState }: VoyeurContext, payload: { performerId: number }){
-
         const advertId = getters.performer(payload.performerId).advertId;
+        if(!advertId){ return; }
 
         const { result, error } = await initiate(SessionType.Video, advertId, {
             clientId: rootState.authentication.user.id,

@@ -20,7 +20,7 @@
 
             <div class="readmessages__item" v-for="message in messages" :class="{ 'even': message.sent_by === 'PERFORMER' }">
 
-                <div class="readmessages__item-remove" v-on:click.prevent="removeMessage(message)" v-if="message.billing_status != 'NOT PAID'"></div>
+                <div class="readmessages__item-remove" v-on:click.prevent="removeMessage(message)"></div>
 
                 <div class="readmessages__item-account" v-if="message.billing_status != 'NOT PAID'">
                     <div class="readmessages__item-account-img" :style="{ 'background-image': `url('${getAvatar(performer, message.sent_by)}')` }"></div>
