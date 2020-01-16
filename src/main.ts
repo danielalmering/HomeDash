@@ -34,10 +34,11 @@ const app = new Vue({
 });
 
 import { currencyFilter } from './filters/euro';
-import { basicDateTime } from './filters/date';
+import { basicDateTime, shortDate } from './filters/date';
 
 Vue.filter('currency', currencyFilter);
 Vue.filter('date', basicDateTime);
+Vue.filter('shortdate', shortDate);
 
 // Sentry.init({
 //     dsn: 'https://060e792bc5b24219a84ddafe55364605@sentry.io/1774566',
