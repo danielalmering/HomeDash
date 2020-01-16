@@ -18,5 +18,5 @@ function formatDate(date: Date): string {
 }
 
 function formatShortDate(date: Date): string {
-    return `${leadingZero(date.getDate())}-${leadingZero(date.getMonth()) + 1}-${date.getFullYear()}`;
+    return `${leadingZero(date.getDate())}-${leadingZero(date.getMonth() + 1)}-${date.getFullYear()}`;
 }
