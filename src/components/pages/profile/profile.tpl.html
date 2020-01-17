@@ -56,7 +56,7 @@
                             <li v-if="performer.weight>0"><span v-t="'profile.weight'"></span>{{ performer.weight }}</li>
                             <li><span v-t="'profile.cupsize'"></span>{{ breastSize(performer.cupSize) }}</li>
                             <li><span v-t="'profile.eyecolor'"></span>{{ eyeColor(performer.eyeColor) }}</li>
-                            <li v-if="performer.hasOwnProperty('performerStatusUpdated')"><span v-t="'profile.lastonline'"></span>{{ performer.performerStatusUpdated | date }}</li>
+                            <li v-if="performer.hasOwnProperty('performerStatusUpdated')"><span v-t="'profile.lastonline'"></span>{{ performer.performerStatusUpdated | shortdate }}</li>
                         </ul>
                     </div>
                 </div>

@@ -26,6 +26,10 @@ export default class Top extends Vue {
     topbg = topbg;
     goBanner = goBanner;
 
+    get topMessage(){
+        return (navigator.userAgent.indexOf('MSIE')!==-1 || navigator.appVersion.indexOf('Trident/') > -1) ? true : false;
+    }
+
     get info(){
         return this.$store.state.info;
     }
