@@ -1,6 +1,6 @@
 <div class="videochat">
     <div class="videochat__screen">
-        <div class="videochat__screen-object">
+        <div class="videochat__screen-object" v-if="streamTransportType != 'none'">
             <component :is="
             streamTransportType"
                 v-on:stateChange="viewerStateChange"

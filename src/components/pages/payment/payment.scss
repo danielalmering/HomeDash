@@ -342,6 +342,13 @@
                 font-weight: 700;
             }
         }
+
+        &-message {
+            @include rem(margin, 10px 0px);
+            @include rem(padding, 10px 10px);
+            color: $pallete-2;
+            background: rgba(255,255,255,0.05);
+        }
     }
 
     &__method {

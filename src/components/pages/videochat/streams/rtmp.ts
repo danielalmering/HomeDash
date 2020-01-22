@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 
 import config from '../../../../config';
 
@@ -23,6 +23,12 @@ export class Rtmp extends Stream {
     }
 
     mounted(){
+        if(!this.isSwitching) {
+            this.load();
+        }
+    }
+
+    private load(){
         window.flashCallbacks = {
             onStateChange: this.onStateChange.bind(this),
             onError: this.onError.bind(this)
@@ -53,7 +59,21 @@ export class Rtmp extends Stream {
         swfobject.embedSWF('/static/Peek.swf', 'viewSWF', '100%', '100%', '10.2.0', true, flashvars, params, attrs);
     }
 
-    beforeDestroy(){
+    private end(){
         delete window.flashCallbacks;
+    }
+
+    @Watch('playStream')
+    onPlaystreamSwitch(){
+        this.end();
+        this.load();
+    }
+
+    @Watch('wowza')
+    onWowzaSwitch(){
+    }
+
+    beforeDestroy(){
+        this.end();
     }
 }
