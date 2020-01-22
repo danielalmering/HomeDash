@@ -412,6 +412,7 @@
         "minutes": "{minutes} minutes of camming",
         "hours": "{minutes} hour of camming",
         "bonusdesc": "To get your free credits, a one-time purchase of at least € 0.01 must be made.",
+        "alert": "Note: You cannot upgrade your balance when you are in a session. Your payment may be lost.",
         "packages": {
             "pack0": "Free",
             "pack1": "Basic",

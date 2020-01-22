@@ -414,6 +414,7 @@
         "minutes": "{minutes} minuten cammen",
         "hours": "{minutes} uur cammen",
         "bonusdesc": "Om je gratis credits te krijgen moet een eenmalige aanschaf gedaan worden van tenminste €0,01.",
+        "alert": "Let op: je kan je saldo niet opwaarderen als je in een sessie bent. Je betaling kan verloren gaan.",
         "packages": {
             "pack0": "Gratis",
             "pack1": "Basis",
