@@ -6,6 +6,7 @@ import Seo from './seo/seo';
 
 import './footer.scss';
 import WithRender from './footer.tpl.html';
+import notificationSocket from '../../../socket';
 
 @WithRender
 @Component({
@@ -15,10 +16,13 @@ import WithRender from './footer.tpl.html';
 })
 export default class Footer extends Vue {
 
+    isSocketConnected: boolean = false;
+
     get branding(){
         return this.$store.getters.getBranding;
     }
 
-    mounted(){
+    created(){
+        window.setInterval(() => { this.isSocketConnected = notificationSocket.isConnected(); }, 3000);
     }
 }

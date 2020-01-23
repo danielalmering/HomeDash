@@ -107,14 +107,27 @@
             }
         }
 
-        span {
-            display: block;
-            width: 100%;
-            text-align: center;
-            color: $pallete-14;
-            @include rem(font-size, 13px);
-            text-transform: uppercase;
-            @include rem(padding, 0px 0px 10px 0px);
+        &-info {
+            display: table;
+            @include rem(margin, 0 auto);
+            @include rem(padding, 0px 0px 20px 0px);
+            span {
+                display: inline-block;
+                text-align: center;
+                color: $pallete-14;
+                @include rem(font-size, 13px);
+                text-transform: uppercase;
+                @include rem(padding, 0px 5px);
+
+                &.socket {
+                    width: 10px;
+                    height: 10px;
+                    @include border-radius(10px);
+                    @include rem(margin, 0 5px);
+                    background: $pallete-15;
+                    &.green { background: $pallete-12; }
+                }
+            }
         }
     }
 }
