@@ -12,13 +12,14 @@ import {sleep} from '../../../../utils/main.util';
 const Platform = require('platform');
 
 @Component({
-    template: '<div><video class="webrtc" playsinline webkit-playsinline autoplay></video><span v-if="!isPeek" class="videochat__mute hidden-sm hidden-xs" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span><span v-if="!isPeek" class="videochat__mute-right hidden-md hidden-lg" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span></div>',
+    template: '<div><video class="webrtc" :poster="poster" playsinline webkit-playsinline autoplay></video><span v-if="!isPeek" class="videochat__mute hidden-sm hidden-xs" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span><span v-if="!isPeek" class="videochat__mute-right hidden-md hidden-lg" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span></div>',
 })
 export class WebRTC extends Stream {
 
     player:Player|null;
     mutedClass: string = "";
     isPeek:boolean = false;
+    poster: string = require('../../../../assets/images/videoloader-large.gif');
 
 
     @Watch('playStream')
