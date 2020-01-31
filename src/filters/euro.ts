@@ -6,8 +6,8 @@ import config from '../config';
 
 export function currencyFilter(credits: number) {
     switch(config.Country){
-        case "uk":
-            return `£${ ( credits / 115 ).toFixed(2) }`
+        // case "uk":
+        //     return `£${ ( credits / 115 ).toFixed(2) }`
         default:
             return `€${ (credits / 100).toFixed(2)}`
     }
