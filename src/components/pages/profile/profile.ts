@@ -57,6 +57,7 @@ export default class Profile extends Vue {
     displayPic: number = 0;
     displayFullDescription: boolean = false;
     displaySlider: boolean = true;
+    services = config.locale.Services;
 
     private serviceSocketId: number;
     private statusSocketId: number;
