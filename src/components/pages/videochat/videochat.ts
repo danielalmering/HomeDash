@@ -535,9 +535,10 @@ export default class VideoChat extends Vue {
         await this.$store.dispatch('end');
         this.askToLeave = false;
 
-        if(this.$store.state.session.fromVoyeur){
-            return this.gotoVoyeur(this.navigation.next);
-        }
+        // TODO: MAKE PERFORMER DATA IN STORE
+        // if(this.$store.state.session.fromVoyeur){
+        //     return this.gotoVoyeur(this.navigation.next);
+        // }
 
         this.navigation.next();
     }
