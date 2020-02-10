@@ -150,11 +150,23 @@
             }
 
             &--high {
-                border: 1px solid $pallete-4;
+                border: 1.5px solid $pallete-21;
                 font-weight: 600;
                 border-bottom: none;
-                @include rem(padding, 5px 8px);
+                @include rem(padding, 4px 8px);
                 box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+                @include border-radius(5px);
+                color: $pallete-2;
+                text-shadow: 0px -1px 0px rgba(0,0,0,0.35);
+                @include gradient($pallete-12, $pallete-21, vertical);
+                i { 
+                    color: $pallete-2;
+                    text-shadow: 0px -1px 0px rgba(0,0,0,0.35);
+                }
+                &:hover {
+                    @include gradient($pallete-12, $pallete-21, vertical);
+                    color: $pallete-2;
+                }
             }
 
             &--last {
