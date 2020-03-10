@@ -17,7 +17,7 @@ import {Devices, VideoCodec} from 'typertc';
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
-import { openModal, tagHotjar, hasService } from '../../../utils/main.util';
+import { openModal, tagHotjar, hasService, setKPI } from '../../../utils/main.util';
 import {
     isWebRTCPerformer,
     isApple,
@@ -360,7 +360,7 @@ export default class VideoChat extends Vue {
         }
 
         if (this.broadcasting.cam){
-            //logKPI("cl_cambackintention");
+            setKPI("cl_camback_intention");
         }
 
         tagHotjar(`TOGGLE_CAM`);
@@ -396,13 +396,21 @@ export default class VideoChat extends Vue {
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
         if (state == 'active'){
-            //logKPI("cl_camback_active");
+            setKPI("cl_camback_active");
         }
     }
 
-    broadcastError(message: string){
-        this.stateMessages.push(message);
-        //logKPI("cl_camback_error");
+    broadcastError(error: any){
+        this.stateMessages.push(error);
+        if( typeof error == 'string'){            
+            setKPI('cl_camback_error', {message: error});
+        } else if ('name' in error){
+            setKPI('cl_camback_error', {message:error.name})
+        } else if ('message' in error) {
+            setKPI('cl_camback_error', {message:error.message})
+        } else {
+            setKPI('cl_camback_error');
+        }
     }
 
     viewerStateChange(state: string){
