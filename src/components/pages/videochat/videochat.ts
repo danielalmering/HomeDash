@@ -146,6 +146,7 @@ export default class VideoChat extends Vue {
     }
 
     get broadcastType():string{
+       
         if (!this.userHasCam){
             return 'none';
         }
@@ -360,7 +361,7 @@ export default class VideoChat extends Vue {
         }
 
         if (this.broadcasting.cam){
-            setKPI("cl_camback_intention");
+            setKPI("cl_camback_intention", {transport: this.broadcastType});
         }
 
         tagHotjar(`TOGGLE_CAM`);
@@ -372,7 +373,6 @@ export default class VideoChat extends Vue {
         if (this.broadcasting.settings && this.broadcasting.mic){
             const selected = this.microphones.find(mic => mic.selected);
             if (selected){
-                console.log("nu is alles anders!");
                 this.broadcasting.mic = selected.id;
             }
         }
