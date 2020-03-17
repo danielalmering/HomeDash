@@ -127,6 +127,18 @@ export function tagHotjar(tag: string){
     }
 }
 
+export function setKPI(url: string, parameters?: any){
+    const options:RequestInit = {
+        credentials: 'include'
+    };
+    if (parameters){
+        options.method = 'POST';
+        options.body = JSON.stringify(parameters);
+    }
+    const call = fetch(`${config.BaseUrl}/session/kpi/${url}`, options);
+    return call;
+}
+
 export function getParameterByName(name: string, url?: string) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
