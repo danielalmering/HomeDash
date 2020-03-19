@@ -361,6 +361,8 @@ export default class VideoChat extends Vue {
         }
 
         if (this.broadcasting.cam){
+            //reset the stateMessages so the second intention will be counted correctly.
+            this.stateMessages = [];
             setKPI("cl_camback_intention", {transport: this.broadcastType});
         }
 
@@ -395,8 +397,12 @@ export default class VideoChat extends Vue {
 
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
-        if (state == 'active'){
-            setKPI("cl_camback_active");
+        if (state == "active"){
+            //make sure only the first time the state turns 'active', the active state is counted.
+            const actives = this.stateMessages.filter( msg => msg == 'active');
+            if (actives.length==1){
+                setKPI('cl_camback_active');
+            }
         }
     }
 
@@ -404,10 +410,10 @@ export default class VideoChat extends Vue {
         this.stateMessages.push(error);
         if( typeof error == 'string'){            
             setKPI('cl_camback_error', {message: error});
-        } else if ('name' in error){
-            setKPI('cl_camback_error', {message:error.name})
         } else if ('message' in error) {
             setKPI('cl_camback_error', {message:error.message})
+        } else if ('name' in error){
+            setKPI('cl_camback_error', {message:error.name})
         } else {
             setKPI('cl_camback_error');
         }
