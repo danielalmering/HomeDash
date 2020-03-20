@@ -58,8 +58,8 @@ export class Rtmp extends Broadcast{
 
         const bla: any = window;
         bla[this.listener] = {
-            onStateChange: this.onStateChange,
-            onError: this.onError
+            onStateChange: this.onStateChange.bind(this),
+            onError: this.onError.bind(this)
         };
 
         let wowza = this.wowza;
