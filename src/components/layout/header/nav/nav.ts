@@ -115,8 +115,6 @@ export default class Nav extends Vue {
 
     logout(){
         this.$store.dispatch('logout');
-        this.openRoute('Performers');
-
         this.$store.dispatch('successMessage', 'auth.alerts.successlogout');
     }
 }
