@@ -89,11 +89,13 @@ const authenticationStore: Module<AuthState, RootState> = {
             notificationSocket.connect();
         },
         async logout(store: AuthContext){
+            store.commit('setUser', undefined);
             const logoutResult = await fetch(`${config.BaseUrl}/auth/logout`, {
                 credentials: 'include'
             });
 
             await store.dispatch('getSession', false);
+            router.push({ name: 'Performers' });
 
             notificationSocket.disconnect();
             notificationSocket.connect();

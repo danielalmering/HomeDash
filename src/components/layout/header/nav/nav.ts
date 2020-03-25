@@ -57,7 +57,7 @@ export default class Nav extends Vue {
             case 'nl':
                 return {active: (this.$store.state.info && this.$store.state.info.marketing.current === 'action_55' ? true : false), img: img};
             case 'uk':
-                return {active: true, img: img};
+                return {active: false, img: img};
             case 'de':
                 return {active: false, img: img};
             case 'at':
@@ -115,8 +115,6 @@ export default class Nav extends Vue {
 
     logout(){
         this.$store.dispatch('logout');
-        this.openRoute('Performers');
-
         this.$store.dispatch('successMessage', 'auth.alerts.successlogout');
     }
 }
