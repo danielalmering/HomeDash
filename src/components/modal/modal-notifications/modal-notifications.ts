@@ -56,7 +56,7 @@ export default class ModalNotifications extends Vue {
 
         // Email confirmation check
         if(id === '1'){
-            if(this.form.email && await this.$validator.validate('email')){
+            if(this.form.email){
                 this.user.email = this.form.email;
             } else {
                 this.$store.dispatch('errorMessage', 'account.alerts.errorinvalidEmail');
@@ -66,7 +66,7 @@ export default class ModalNotifications extends Vue {
 
         // Phone confirmation check
         if(id === '2' || id === '8'){
-            if(this.form.mobile_number && await this.$validator.validate('phone')){
+            if(this.form.mobile_number){
                 this.user.mobile_number = this.form.mobile_number;
             } else {
                 this.$store.dispatch('errorMessage', 'account.alerts.errorinvalidPhone');

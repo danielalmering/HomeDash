@@ -8,13 +8,13 @@ import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
 import Slider from './slider/slider';
-import FullSlider from './slider/slider-fullscreen.vue';
+import FullSlider from './slider/slider-fullscreen/slider-fullscreen';
 import Tabs from './tabs/tabs';
 import config from '../../../config';
 
 import notificationSocket from '../../../socket';
 import { SocketServiceEventArgs, SocketStatusEventArgs, SocketVoyeurEventArgs } from '../../../models/Socket';
-import Confirmation from '../../layout/Confirmations.vue';
+import Confirmation from '../../layout/confirmations/confirmations';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 import { tabEnabled } from '../../../performer-util';
 
@@ -50,7 +50,7 @@ Component.registerHooks([
 })
 export default class Profile extends Vue {
     performer: Performer | null =  null;
-    perfmedia: PerformerAvatar[];
+    perfmedia: PerformerAvatar[] | boolean = false;
     country = config.Country;
 
     fullSliderVisible: boolean = false;

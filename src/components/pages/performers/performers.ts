@@ -15,6 +15,7 @@ import { listPerformers } from 'sensejs/performer';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import { removeSubscriptions, addSubscriptions } from 'sensejs/performer/subscriptions';
+import loader from '../../../assets/images/loader.gif';
 
 @WithRender
 @Component({
@@ -26,6 +27,7 @@ export default class Performers extends Vue {
 
     performers: Performer[] = new Array(40).fill(undefined, 0, 40);
 
+    loader = loader;
     total: number = 0;
     services: string[] = config.locale.Services;
 
@@ -47,7 +49,7 @@ export default class Performers extends Vue {
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     
-    query: { limit: number, offset: number, category?: string, search: string } = {
+    query: { limit: number, offset: number, category?: string, search: string | string[] } = {
         limit: 40,
         offset: 0,
         category: '',
@@ -85,7 +87,7 @@ export default class Performers extends Vue {
         this.query.category = to.params.category ? to.params.category : '';
         this.query.search = to.query.search ? to.query.search : '';
 
-        this.query.offset = to.query.page ? (parseInt(to.query.page) - 1) * this.query.limit : 0;
+        this.query.offset = to.query.page ? (parseInt((to.query.page as string)) - 1) * this.query.limit : 0;
 
         this.loadPerformers();
     }
@@ -94,7 +96,7 @@ export default class Performers extends Vue {
         this.query.category = this.$route.params.category ? this.$route.params.category : '';
         this.query.search = this.$route.query.search ? this.$route.query.search : '';
 
-        this.query.offset = this.$route.query.page ? (parseInt(this.$route.query.page) - 1) * this.query.limit : 0;
+        this.query.offset = this.$route.query.page ? (parseInt((this.$route.query.page as string)) - 1) * this.query.limit : 0;
 
         this.loadPerformers();
 
@@ -168,7 +170,7 @@ export default class Performers extends Vue {
         //Makes the tiles load when switching pages
         this.performers = new Array(this.query.limit).fill(undefined, 0, this.query.limit);
 
-        const { result, error } = await listPerformers(this.query);
+        const { result, error } = await listPerformers((this.query as any));
 
         if(error){
             this.$router.push({ name: 'Performers' });

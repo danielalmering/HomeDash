@@ -149,7 +149,7 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
         //all other scenario's while pending should result in undefined
         {
             when: { inState: State.Pending },
-            result: undefined
+            result: (undefined as any)
         },
         {
             when: { message: 'CLICK', value: false },

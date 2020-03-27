@@ -15,7 +15,7 @@ import './readmessages.scss';
 @Component
 export default class Readmessages extends Vue {
 
-    firstThreadMessage: NotificationThreadsMessage;
+    firstThreadMessage: NotificationThreadsMessage | boolean = false;
     messages: any = [];
     message: any;
     performer: any;
@@ -37,7 +37,8 @@ export default class Readmessages extends Vue {
 
     get creditsPerType(){
         return (type: string) => {
-            return this.$store.state.info[`credits_per_${type.toLocaleLowerCase()}`];
+            const credits = this.$store.state.info ? this.$store.state.info[`credits_per_${type.toLocaleLowerCase()}`] : 0;
+            return credits;
         }
     }
 

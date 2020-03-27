@@ -4,7 +4,7 @@ import Vue from 'vue';
 import config from '../../../config';
 import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
-import Confirmation from '../../layout/Confirmations.vue';
+import Confirmation from '../../layout/confirmations/confirmations';
 
 require('../../../../static/nanoplayer.4.0.7.min.js');
 

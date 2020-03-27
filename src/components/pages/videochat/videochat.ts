@@ -11,7 +11,7 @@ import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
 import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
-import Confirmations from '../../layout/Confirmations.vue';
+import Confirmations from '../../layout/confirmations/confirmations';
 import {Devices, VideoCodec} from 'typertc';
 
 import './videochat.scss';

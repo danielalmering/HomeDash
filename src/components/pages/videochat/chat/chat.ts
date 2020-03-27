@@ -2,7 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import notificationSocket from '../../../../socket';
-import Emoticons from '../../../layout/Emoticons.vue';
+import Emoticons from '../../../layout/emoticons/emoticons';
 
 import './chat.scss';
 

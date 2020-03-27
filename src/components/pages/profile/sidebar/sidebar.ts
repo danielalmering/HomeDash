@@ -352,7 +352,7 @@ export default class Sidebar extends Vue {
             return;
         }
 
-        const element = event.srcElement;
+        const element = event.srcElement as HTMLInputElement;
 
         const isAtBottom = (element.scrollTop + element.clientHeight) === element.scrollHeight;
 

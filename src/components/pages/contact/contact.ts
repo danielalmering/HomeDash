@@ -1,11 +1,13 @@
-import { Component, Prop } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import './contact.scss';
 
-import config from '../../../config';
 import WithRender from './contact.tpl.html';
 import { PostContactPayload, postContactMessage } from 'sensejs/admin';
+
+import { Validations } from 'vuelidate-property-decorators';
+import { required, email } from 'vuelidate/lib/validators'
 
 interface Message {
     email: string;
@@ -28,6 +30,16 @@ export default class Contact extends Vue {
                 name: '',
                 subject: ''
             }
+        }
+    }
+
+    @Validations()
+    validations = {
+        contact: {
+            email: {email},
+            message: {required},
+            name: {required},
+            subject: {required}
         }
     }
 

@@ -9,6 +9,9 @@ import WithRender from './editdata.tpl.html';
 import { updateConsumer, removeConsumer } from 'sensejs/consumer';
 import { Consumer } from 'sensejs/core/models/user';
 
+import {Validations} from 'vuelidate-property-decorators';
+import {required, maxLength, email} from 'vuelidate/lib/validators'
+
 @WithRender
 @Component
 export default class Editdata extends Vue {
@@ -28,8 +31,23 @@ export default class Editdata extends Vue {
     data(){
         return {
             user: {
+                username: '',
                 email: '',
                 mobile_number: ''
+            }
+        }
+    }
+
+    @Validations()
+    validations = {
+        user: {
+            username: {required},
+            email: {email},
+            mobile_number: {
+                isCorrectPhone(phonenumber: string) {
+                    const regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+                    return regex.test(phonenumber);
+                }
             }
         }
     }

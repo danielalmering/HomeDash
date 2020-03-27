@@ -1,14 +1,3 @@
-<template>
-    <div id="app">
-        <modal-wrapper></modal-wrapper>
-        <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
-        <router-view/>
-        <agecheck v-if="displayAgecheck" v-on:close="displayAgecheck = false"></agecheck>
-        <alerts></alerts>
-    </div>
-</template>
-
-<script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
@@ -17,14 +6,17 @@ import notificationSocket from './socket';
 import { SocketMessageEventArgs } from './models/Socket';
 import { getParameterByName } from './utils/main.util';
 
-import alerts from './components/layout/Alerts.vue';
-import cookies from './components/layout/Cookies.vue';
-import agecheck from './components/layout/Agecheck.vue';
+import alerts from './components/layout/alerts/alerts';
+import cookies from './components/layout/cookies/cookies';
+import agecheck from './components/layout/agecheck/agecheck';
 
 import config from './config';
 import * as Sentry from '@sentry/browser'
 import 'whatwg-fetch';
 
+import WithRender from './app.tpl.html';
+
+@WithRender
 @Component({
     components: {
         modalWrapper: modalWrapper,
@@ -122,4 +114,3 @@ export default class Cookies extends Vue {
         }
     }
 }
-</script>

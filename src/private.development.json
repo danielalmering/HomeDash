@@ -5,7 +5,7 @@
     "SocketUrl": "wss://socket.thuis.nl/",
     "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
-    "Country": "de",
+    "Country": "nl",
     "VodServer": "vod",
     "WowzaUrl" : "wow02.thuis.nl:1935",
     "H5Server": "stream01.thuis.nl"

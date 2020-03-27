@@ -7,11 +7,13 @@ import { getPromos } from 'sensejs/consumer/category';
 import { Promo as PromoData } from 'sensejs/core/models/category';
 import { User } from '../../../models/User';
 import { goBanner, openModal } from '../../../utils/main.util';
+import ladyimg from '../../../assets/images/woman-silhouette-large.png';
 
 @WithRender
 @Component
 export default class Promo extends Vue {
 
+    ladyimg = ladyimg;
     promos: PromoData[] = [];
     addPromoNotifi = (user: User) => this.$store.dispatch('updateUser', {user: this.$store.state.authentication.user, notify: 'PRO'});
 

@@ -105,7 +105,7 @@
                                 <span></span>
                                 <div v-if="user.country === 'de'">
                                     <p></p>
-                                    <img v-if="paymentMethod.abbr === 'SOFORT'" width="70" src="../../../assets/images/tuv2.png" />
+                                    <img v-if="paymentMethod.abbr === 'SOFORT'" width="70" :src="tuvimg" />
                                 </div>
                             </div>
                             <div class="payment__method-name">
@@ -121,7 +121,7 @@
 
                 <button type="submit" :disabled="!paymentDisabled" :class="{ 'btn-disabled': !paymentDisabled }" class="btn btn-xxl btn-orange" v-t="'payment.paying'"></button>
 
-                <img src="../../../assets/images/comodo.png" />
+                <img :src="comodoimg" />
 
             </div>
         </form>

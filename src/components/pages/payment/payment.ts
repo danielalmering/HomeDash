@@ -4,6 +4,9 @@ import Vue from 'vue';
 
 import config from '../../../config';
 import { getPaymentInfo, submitPayment } from 'sensejs/consumer/payment';
+import tuvimg from '../../../assets/images/tuv2.png';
+import comodoimg from '../../../assets/images/comodo.png';
+
 
 import './payment.scss';
 import WithRender from './payment.tpl.html';
@@ -42,13 +45,15 @@ interface Fee {
 @Component
 export default class Payment extends Vue {
 
+    comodoimg = comodoimg;
+    tuvimg = tuvimg;
     packages: Package[] = [];
     selectedPackages: { [id: number]: number } = {};
 
     paymentMethods: PaymentMethod[] = [];
     selectedPayment: string = '';
 
-    promoData?: PromoData = undefined;
+    promoData?: PromoData = { active: false, code: '', credits: 0, used: false };
     promoCode: string = '';
     promoCredits: number = 0;
     paymentDisabled: boolean = true;
