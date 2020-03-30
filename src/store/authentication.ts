@@ -9,7 +9,7 @@ import { checkSession } from 'sensejs/auth';
 import { transformReadConsumer } from 'sensejs/consumer/consumer.transformer';
 import config from '../config';
 import notificationSocket from '../socket';
-import { tagHotjar, getParameterByName, urlUndefined } from '../utils/main.util';
+import { tagHotjar, getParameterByName, urlValid } from '../utils/main.util';
 import router from '../router';
 
 import * as Sentry from '@sentry/browser'
@@ -169,7 +169,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             await store.dispatch('setLanguage', sessionData.language);
 
             
-            if(!notificationSocket.isConnected() && !urlUndefined()){
+            if(!notificationSocket.isConnected() && urlValid()){
                 notificationSocket.connect();
             }
         },
