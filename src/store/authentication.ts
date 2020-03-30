@@ -169,7 +169,7 @@ const authenticationStore: Module<AuthState, RootState> = {
             await store.dispatch('setLanguage', sessionData.language);
 
             
-            if(!notificationSocket.isConnected() && urlUndefined()){
+            if(!notificationSocket.isConnected() && !urlUndefined()){
                 notificationSocket.connect();
             }
         },
