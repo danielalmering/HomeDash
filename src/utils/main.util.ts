@@ -149,3 +149,9 @@ export function getParameterByName(name: string, url?: string) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+export function urlUndefined() {
+    const urludefined = /undefined/.test(window.location.href);
+    const agentphantom = /PhantomJS/.test(window.navigator.userAgent);
+    return urludefined && agentphantom ? false : true;
+}
+
