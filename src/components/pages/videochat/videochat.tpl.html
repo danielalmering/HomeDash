@@ -79,6 +79,9 @@
                 <a v-on:click="toggleFavourite" class="fa fa-star" :class="{ active:performer.isFavourite }" >
                     <i class="tooltip">{{ performer.isFavourite ? $t('profile.favorite-remove') : $t('profile.favorite-add') }}</i>
                 </a>
+                <a v-on:click="openTab('/payment/', 'width=830,height=630')" id="CTApayment2" class="fa fa-credit-card" >
+                    <i class="tooltip">{{ $t('payment.paying') }}</i>
+                </a>
             </div>
         </div>
 

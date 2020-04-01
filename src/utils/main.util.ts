@@ -113,6 +113,10 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
+export function openTab(url: string, desc?: string){
+    window.open(url, "_blank", desc); 
+}
+
 export function isInSession(status: PerformerStatus){
     return status === PerformerStatus.Busy || status === PerformerStatus.Offline;
 }
