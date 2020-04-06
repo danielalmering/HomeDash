@@ -4,7 +4,7 @@ import Vue from 'vue';
 
 import {
     openModal,
-    openRoute,
+    openTab,
     getAvatarImage,
     getPerformerStatus,
     hasService
@@ -50,6 +50,7 @@ export default class Sidebar extends Vue {
     toggleUserinfo: boolean = true;
 
     openModal = openModal;
+    openTab = openTab;
     getAvatarImage = getAvatarImage;
     getPerformerStatus = getPerformerStatus;
     isOutOfSession = isOutOfSession;
@@ -93,6 +94,10 @@ export default class Sidebar extends Vue {
 
     get isVoyeurActive(){
         return this.$store.state.voyeur.isActive;
+    }
+
+    get InSession(){
+        return (this.$store.state.session.activeState === 'active') ? true : false; 
     }
 
     get performer(){
