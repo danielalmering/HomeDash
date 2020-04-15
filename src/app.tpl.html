@@ -1,0 +1,7 @@
+<div id="app">
+    <modal-wrapper></modal-wrapper>
+    <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
+    <router-view/>
+    <agecheck v-if="displayAgecheck" v-on:close="displayAgecheck = false"></agecheck>
+    <alerts></alerts>
+</div>

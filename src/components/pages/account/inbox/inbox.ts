@@ -34,13 +34,13 @@ export default class Inbox extends Vue {
     get notify(){
         return (type: string) => {
             return this.$store.state.authentication.user.notification_types[type];
-        }
+        };
     }
 
     get newNotifications(){
         return (status: string) => {
-            return status.search("NEW")  ? false : true;
-        }
+            return status.search('NEW')  ? false : true;
+        };
     }
 
     async mounted(){
@@ -74,7 +74,7 @@ export default class Inbox extends Vue {
         }
 
         this.notifications = result.messages;
-        this.total = + result.total
+        this.total = + result.total;
     }
 
     openMessage(notification: NotificationThreadsMessage){

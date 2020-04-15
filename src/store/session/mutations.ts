@@ -10,27 +10,22 @@ const mutations = {
 
         state.activeState = toState;
         if (toState != State.Pending){
-            state.performerTimeout && clearTimeout(state.performerTimeout);
+            clearTimeout(state.performerTimeout);
         }
     },
-    setIvrCode(state:SessionState, toCode:string){
+    setIvrCode(state: SessionState, toCode: string){
         state.activeIvrCode = toCode;
     },
-    updateService(state:SessionState, payload:{service:string, enabled:boolean}){
+    updateService(state: SessionState, payload: {service: string, enabled: boolean}){
         if (!state.activePerformer){
             return;
-        }        
+        }
         state.activePerformer.performer_services[payload.service] = payload.enabled;
     },
     toggleSwitchModal(state: SessionState, payload: { state: boolean, performer: Performer }){
         state.isSwitchModal = payload.state;
-
-        if(state.isSwitchModal){
-            state.switchingPerformer = payload.performer;
-        } else {
-            state.switchingPerformer = undefined;
-        }
+        state.switchingPerformer = state.isSwitchModal ? payload.performer : undefined;
     }
-}
+};
 
 export default mutations;

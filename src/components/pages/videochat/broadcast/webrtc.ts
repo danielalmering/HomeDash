@@ -8,7 +8,6 @@ import {Publisher, VideoCodec, WRTCUtils} from 'typertc';
 export class WebRTC extends Broadcast{
 
     @Watch('mic') onMicChanged(value: boolean | string, oldValue: boolean | string) {
-        console.log(`mic was ${oldValue} en is ${value}`)
         if (typeof value === 'boolean'){
             //a boolean turns the mic on or off..
             this.wrtc.toggleAudio(value);
@@ -22,7 +21,6 @@ export class WebRTC extends Broadcast{
     }
 
     @Watch('cam') onCamChanged(value: string, oldValue: string) {
-        console.log(`cam was ${oldValue} en is ${value}`)
         if (typeof value !== 'string'){
             return;
         }
@@ -30,7 +28,7 @@ export class WebRTC extends Broadcast{
     }
 
     @Watch('quality') onQualityChanged(value: Quality, oldValue: Quality){
-        this.wrtc.quality = ["ld", "md", "hd"][value];
+        this.wrtc.quality = ['ld', 'md', 'hd'][value];
     }
 
     mounted(){
@@ -38,7 +36,7 @@ export class WebRTC extends Broadcast{
         WRTCUtils.validate(wowzaParts);
 
         const options = {
-            wowza: wowzaParts.host + "/webrtc-session.json",
+            wowza: `${wowzaParts.host}/webrtc-session.json`,
             applicationName: wowzaParts.application,
             token: this.publishToken ? this.publishToken : wowzaParts.parameters.token,
             streamName : this.publishStream,
@@ -52,15 +50,14 @@ export class WebRTC extends Broadcast{
         this.wrtc.onStateChange = this.onStateChange.bind(this);
 
         this.wrtc.videoChoice =  this.videoCodec;
-        this.wrtc.onError = this.onError.bind(this); 
+        this.wrtc.onError = this.onError.bind(this);
     }
 
-    wrtc:Publisher;
+    wrtc: Publisher;
 
     destroyed(){
         if( this.wrtc ){
             this.wrtc.stop();
-        };
+        }
     }
-
 }
