@@ -18,7 +18,7 @@ export default class ModalRegister extends Vue {
         passwordconfirm: ''
     };
     openModal = openModal;
-    freeRegister = config.FreeRegister;
+    freeRegister = config.FreeRegister ? config.FreeRegister : false;
 
     async register(){
         try {
@@ -36,6 +36,6 @@ export default class ModalRegister extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', null);
+        this.$store.dispatch('displayModal', undefined);
     }
 }

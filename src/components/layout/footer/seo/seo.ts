@@ -32,7 +32,7 @@ export default class Seo extends Vue {
         return `${config.ImageUrl}categories/${location}`;
     }
 
-    get hasTabs():boolean{
+    get hasTabs(): boolean{
         if (!this.seoTabs){
             return false;
         }

@@ -1,6 +1,7 @@
 import { Prop, Vue, Component } from 'vue-property-decorator';
 
 import WithRender from './confirmations.tpl.html';
+import spinner from '../../../assets/images/spinner.gif';
 import './confirmations.scss';
 
 @WithRender
@@ -24,6 +25,8 @@ export default class Confirmations extends Vue {
         type: String
     })
     subTitle: string;
+
+    spinner = spinner;
 
     get displaySidebar(){
         return this.$store.state.displaySidebar;

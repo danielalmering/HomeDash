@@ -7,7 +7,7 @@ import WithRender from './contact.tpl.html';
 import { PostContactPayload, postContactMessage } from 'sensejs/admin';
 
 import { Validations } from 'vuelidate-property-decorators';
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email } from 'vuelidate/lib/validators';
 
 interface Message {
     email: string;
@@ -30,7 +30,7 @@ export default class Contact extends Vue {
                 name: '',
                 subject: ''
             }
-        }
+        };
     }
 
     @Validations()
@@ -41,7 +41,7 @@ export default class Contact extends Vue {
             name: {required},
             subject: {required}
         }
-    }
+    };
 
     async send(){
         const { error } = await postContactMessage(this.contact);

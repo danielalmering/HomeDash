@@ -16,12 +16,12 @@
                         <input type="radio" :id="'radio'+index" name="radio-group" v-model="user.notification_mode" :value="index">
                         <label :for="'radio'+index">{{ $t('account.howreceivenotify.'+ event) }} 
                             <div style="display: none" v-if="event === 'Email'">
-                                <input type="email" v-model="form.email" data-vv-delay="1000" v-validate="'required|email'" name="email" class="col-xs-12">
-                                <!-- <span v-show="errors.has('email')" class="form__group-alert" v-t="'account.alerts.errorinvalidEmail'"></span> -->
+                                <input type="email" v-model="$v.form.email.$model" name="email" class="col-xs-12">
+                                <div class="form__group-alert" v-if="!$v.form.email.email" v-t="'account.alerts.errorinvalidEmail'"></div>
                             </div>
                             <div style="display: none" v-if="event === 'SMS' || event === 'WhatsApp'">
-                                <input type="text" v-model="form.mobile_number" data-vv-delay="1000" v-validate="{ required: true, regex: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g }" name="phone" class="col-xs-12">
-                                <!-- <span v-show="errors.has('phone')" class="form__group-alert" v-t="'account.alerts.errorinvalidPhone'"></span> -->
+                                <input type="text" v-model="$v.form.mobile_number.$model" name="phone" class="col-xs-12">
+                                <div class="form__group-alert" v-if="!$v.form.mobile_number.isCorrectPhone" v-t="'account.alerts.errorinvalidPhone'"></div>
                             </div>
                         </label>
                     </div>

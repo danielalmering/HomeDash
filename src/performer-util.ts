@@ -2,7 +2,7 @@ import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { User } from './models/User';
 import { hasService } from './utils/main.util';
 
-export function tabEnabled(service: string, forPerformer: Performer, user: User):boolean {
+export function tabEnabled(service: string, forPerformer: Performer, user: User): boolean{
     if (!forPerformer){
         return false;
     }
@@ -17,7 +17,7 @@ export function tabEnabled(service: string, forPerformer: Performer, user: User)
     if (service === 'voyeur'){
         return forPerformer.performerStatus !== PerformerStatus.Offline && forPerformer.isVoyeur;
     }
-    
+
     if(!forPerformer.performer_services){
         return false;
     }
@@ -56,6 +56,5 @@ export function tabEnabled(service: string, forPerformer: Performer, user: User)
     }
 
     // The default scenario of status from services
-    return  hasService(forPerformer, service); 
-
+    return  hasService(forPerformer, service);
 }

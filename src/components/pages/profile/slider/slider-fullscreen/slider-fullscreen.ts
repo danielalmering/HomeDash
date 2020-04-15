@@ -20,7 +20,7 @@ export default class SliderFullscreen extends Vue {
     mounted(){
         this.currentSelected = this.photos.findIndex(p => p.id === this.displayPic);
         //without the timeout, photos will flash through the screen
-        setTimeout( ()=> (this.$el as HTMLElement).focus(), 1 );
+        setTimeout( () => (this.$el as HTMLElement).focus(), 1 );
     }
 
     @Prop({
@@ -50,11 +50,10 @@ export default class SliderFullscreen extends Vue {
     touchStart: number = 0;
 
     getSliderImage = getSliderImages;
-
-    currentSelected:number = 1;
+    currentSelected: number = 1;
 
     get isLast(){
-        return this.currentSelected === this.$props.photos.length - 1
+        return this.currentSelected === this.$props.photos.length - 1;
     }
 
     get isFirst(){

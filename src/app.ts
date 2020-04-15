@@ -11,7 +11,7 @@ import cookies from './components/layout/cookies/cookies';
 import agecheck from './components/layout/agecheck/agecheck';
 
 import config from './config';
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/browser';
 import 'whatwg-fetch';
 
 import WithRender from './app.tpl.html';
@@ -63,7 +63,7 @@ export default class Cookies extends Vue {
             // Localstorage check
             window.localStorage.setItem(`${config.StorageKey}.localStorage`, 'true');
             window.localStorage.removeItem(`${config.StorageKey}.localStorage`);
-            
+
             // Cookies check
             const cookiesAccepted = (window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
             this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
@@ -75,7 +75,7 @@ export default class Cookies extends Vue {
         } catch(error){
             if(error.name === 'QuotaExceededError' || error.name === 'SecurityError'){
                 // Switch to sessionStore when IOS for now
-                Object.assign(window.localStorage, window.sessionStorage);                
+                Object.assign(window.localStorage, window.sessionStorage);
                 this.displayCookies = true;
                 this.displayAgecheck = config.locale.AgeCheck;
             } else {
@@ -83,7 +83,7 @@ export default class Cookies extends Vue {
 
                 //use default values which is really enoying for user
                 this.displayCookies = true;
-                this.displayAgecheck = config.locale.AgeCheck;            
+                this.displayAgecheck = config.locale.AgeCheck;
             }
         }
 

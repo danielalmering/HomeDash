@@ -1,16 +1,14 @@
 import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
-import { User } from '../../../../models/User';
 
-import config from '../../../../config';
 import { openRoute } from '../../../../utils/main.util';
 import WithRender from './editdata.tpl.html';
 
-import { updateConsumer, removeConsumer } from 'sensejs/consumer';
+import { removeConsumer } from 'sensejs/consumer';
 import { Consumer } from 'sensejs/core/models/user';
 
-import {Validations} from 'vuelidate-property-decorators';
-import {required, maxLength, email} from 'vuelidate/lib/validators'
+import { Validations } from 'vuelidate-property-decorators';
+import { required, email } from 'vuelidate/lib/validators';
 
 @WithRender
 @Component
@@ -21,7 +19,7 @@ export default class Editdata extends Vue {
     confirmPassword: string = '';
     confirmDelete: boolean = false;
     pushcrewSubscribed: boolean = false;
-  
+
     openRoute = openRoute;
 
     get credits(){
@@ -35,7 +33,7 @@ export default class Editdata extends Vue {
                 email: '',
                 mobile_number: ''
             }
-        }
+        };
     }
 
     @Validations()
@@ -50,7 +48,7 @@ export default class Editdata extends Vue {
                 }
             }
         }
-    }
+    };
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
@@ -74,7 +72,7 @@ export default class Editdata extends Vue {
             return;
         }
 
-        let payload = { user: this.user};
+        const payload = { user: this.user};
         await this.$store.dispatch('updateUser', payload);
     }
 

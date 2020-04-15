@@ -16,7 +16,7 @@ const getters = {
     isReservation(state: VoyeurState){
         return (id: number) => {
             const reservations = state.performers.filter(p => state.reservations.indexOf(p.id) > -1);
-            return reservations.find(p => p.id === id) != null;
+            return reservations.find(p => p.id === id) != undefined;
         };
     },
     performer(state: VoyeurState){

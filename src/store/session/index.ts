@@ -172,9 +172,9 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
 const sessionStore: Module<SessionState, RootState> = {
     state: {
         activeState: State.Idle,
-        activeSessionType: null,
-        activePerformer: null,
-        activeSessionData: null,
+        activeSessionType: undefined,
+        activePerformer: undefined,
+        activeSessionData: undefined,
         activeDisplayName: '',
         activeIvrCode: undefined,
         activePaymentType: undefined,

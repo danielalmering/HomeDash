@@ -20,9 +20,9 @@ export default class Promo extends Vue {
     get notify(){
         return (type: string) => {
             return this.$store.state.authentication.user.notification_types[type];
-        }
+        };
     }
-    
+
     goBanner = goBanner;
     openModal = openModal;
 

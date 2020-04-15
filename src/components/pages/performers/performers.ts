@@ -41,14 +41,13 @@ export default class Performers extends Vue {
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
     addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
-        performer.isSubscribed = true
+        performer.isSubscribed = true;
         if(!this.user.notification_mode){
             const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
         }
-    });
+    })
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
-    
     query: { limit: number, offset: number, category?: string, search: string | string[] } = {
         limit: 40,
         offset: 0,
@@ -75,7 +74,7 @@ export default class Performers extends Vue {
         const banner = {active: config.FreeRegister, url: require(`../../../assets/images/${this.country}/gridbanner.png`)};
         return banner;
     }
-    
+
     hasService(performerId: number, service: string){
         const performer = this.performers.find(p => p.id === performerId);
 

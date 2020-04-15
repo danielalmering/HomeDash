@@ -2,7 +2,7 @@
 
     <div class="confirmations__content" v-if="type === 'loader'">
         <h2>{{ $t('confirmations.connect') }}</h2>
-        <img class="spinner" src="../../assets/images/spinner.gif" >
+        <img class="spinner" :src="spinner" >
         <p>{{ $t('confirmations.connectdesc') }}</p>
         <a class="btn btn-large btn-full btn-black" v-on:click="cancel">{{ $t('confirmations.cancel') }}</a>
     </div>

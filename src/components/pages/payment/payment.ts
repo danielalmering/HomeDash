@@ -89,7 +89,7 @@ export default class Payment extends Vue {
             return;
         }
 
-        const data = result;    
+        const data = result;
         const promo = data.packages.some(item => item.id === 0);
         this.packages = promo ? data.packages.slice() : data.packages.slice().reverse();
         this.paymentMethods = data.payment_methods;
@@ -256,7 +256,7 @@ export default class Payment extends Vue {
             return;
         }
 
-        if((this.totalAmount/100) > 1099){
+        if((this.totalAmount / 100) > 1099){
             this.$store.dispatch('errorMessage', 'payment.alerts.errorToHighPurchase');
             return;
         }

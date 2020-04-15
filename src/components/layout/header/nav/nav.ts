@@ -49,9 +49,9 @@ export default class Nav extends Vue {
     }
 
     get banner(){
-        let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        let size = width < 720 ? 'xs' : 'lg';
-        let img = require('../../../../assets/images/' + this.country + '/navbanner-' + size +'.png');
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        const size = width < 720 ? 'xs' : 'lg';
+        const img = require(`../../../../assets/images/${this.country}/navbanner-${size}.png`);
 
         switch(this.country) {
             case 'nl':
