@@ -1,6 +1,6 @@
 {
     "BaseUrl": "/api",
-    "FullApiUrl": "https://www.thuis.nl",
+    "FullApiUrl": "http://www.thuis.nl",
     "ImageUrl": "//img.thuis.nl/files/",
     "SocketUrl": "wss://socket.thuis.nl/",
     "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",

@@ -113,6 +113,10 @@ export function openRoute(name: string){
     this.$router.push({ name: name });
 }
 
+export function openTab(url: string, desc?: string){
+    window.open(url, "_blank", desc); 
+}
+
 export function isInSession(status: PerformerStatus){
     return status === PerformerStatus.Busy || status === PerformerStatus.Offline;
 }
@@ -147,5 +151,11 @@ export function getParameterByName(name: string, url?: string) {
     if (!results) return '';
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+export function urlValid() {
+    const urludefined = /undefined/.test(window.location.href);
+    const agentphantom = /PhantomJS/.test(window.navigator.userAgent);
+    return !(urludefined || agentphantom);
 }
 

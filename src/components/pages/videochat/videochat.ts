@@ -17,7 +17,7 @@ import {Devices, VideoCodec} from 'typertc';
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
 import {RawLocation} from 'vue-router/types/router';
-import { openModal, tagHotjar, hasService, setKPI } from '../../../utils/main.util';
+import { openModal, openTab, tagHotjar, hasService, setKPI } from '../../../utils/main.util';
 import {
     isWebRTCPerformer,
     isApple,
@@ -88,6 +88,7 @@ export default class VideoChat extends Vue {
 
     askToLeave: boolean = false;
     openModal = openModal;
+    openTab = openTab;
 
     navigation: {
         to: Route, from: Route, next: (yes?: boolean | RawLocation) => void
