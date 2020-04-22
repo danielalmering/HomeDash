@@ -55,6 +55,13 @@ export class JanusCast extends Broadcast{
         this.toTheCast();
     }
 
+    beforeDestroy(){
+        this.roomPlugin.send({
+            message: { request: "unpublish" }
+        });
+        
+    }
+
     private _state = "constructing"
     
     private opaqueId = "videoroom-"+Janus.randomString(12);
@@ -81,11 +88,9 @@ export class JanusCast extends Broadcast{
             
             let jsep = await this.createOffer();
             jsep = await this.configure(jsep);
-
-            this.roomPlugin.handleRemoteJsep( {jsep} );
-            //te voorbarig
+            await this.handleResponse( jsep );
+            
             this.state = "active";
-
         } catch( error ){
             console.log("ERROR " + error);
             this.onError( error );
@@ -137,11 +142,12 @@ export class JanusCast extends Broadcast{
                 consentDialog: (on:boolean)=>{
                     console.log("side effect om toestemming te vragen..");
                 },
-                mediaState: ( state )=>{
-                    console.log(`media state: ${state}`);
-                },
+                mediaState: this.handleMediaState.bind(this),
                 webrtcState: ( state )=>{
                     console.log(`wrct state: ${state}`);
+                    if (!state){
+                        setTimeout( ()=>this.janus.destroy( {unload: true} ))
+                    }
                 },
                 iceState: ( state )=>{
                     console.log(`ice state: ${state}`);
@@ -156,7 +162,16 @@ export class JanusCast extends Broadcast{
                 },
                 ondataopen: ()=>console.log("Room: data open?"),
                 ondata: (msg:any)=>console.log(`Room: Data ${msg} coming in??`),
-                oncleanup: ()=>console.log("Room: stuff is cleaning up hmmkay"),
+                oncleanup: ()=>{
+                    if (!this.video) return;
+                    const tracks = (this.video.srcObject as MediaStream).getTracks();
+                    if (!tracks) return;
+
+                    tracks.forEach( (track)=>{
+                        console.log( track );
+                        track.stop();   
+                    });
+                },
                 detached: ()=>console.log("Room: I feel detached")
             });
         });
@@ -241,12 +256,41 @@ export class JanusCast extends Broadcast{
         })
     }
 
+    async handleResponse(jsep:string){
+        this.state = "setting_remote_description";
+        return new Promise( (resolve, reject)=>{
+            this.roomPlugin.handleRemoteJsep( {jsep} );
+            this._resolver = { resolve, reject };
+        })
+    }
+
     video:HTMLVideoElement;
 
     initializeElement( e:any ){
         this.video = e as HTMLVideoElement;
+        this.video.onended = ()=>{
+            console.log("Video is ended! That's nice..");
+            this.janus.destroy( {} )
+        }
     }
 
+    handleMediaState( type: 'video' | 'audio', on:boolean ){
+        console.log(`media state ${type} ${on}`)
+        if ( 
+            (this._state == "setting_remote_description")
+            &&
+            type == 'video'
+            &&
+            this._resolver 
+        ){
+            const {resolve, reject} = this._resolver;
+            if( on ){
+                resolve()
+            } else {
+                reject()
+            }
+        }
+    }
     attachCamera( stream:MediaStream ){
         if (!this.video){
             return;
@@ -297,16 +341,14 @@ export class JanusCast extends Broadcast{
             case "accept":
                 console.log("Room: accepted something??");
                 break;
-            case "hangup":
-                //well well well, what will we do then?
-                console.log("Room: Unhandled hangup");
-                break;
             case "event": 
                 console.log("Room: an event just entered the building");
                 console.log( message );
                 if (message["configured"] == "ok"){
                     resolve && resolve(jsep);
                     this._resolver = null;
+                } else if( message['unpublished'] == 'ok'){
+                    //ok het unpublishen is gebeurd, en nu..
                 } else {
                     console.log("Room: an event just entered the building");
                     console.log( message );
@@ -332,7 +374,7 @@ export class JanusCast extends Broadcast{
         "constructing", "initalizing", "connecting"
     ]
 
-    private _resolver:{resolve:Function, reject?:Function} | null = null;
+    private _resolver:{resolve:Function, reject:Function} | null = null;
 
 
 }
