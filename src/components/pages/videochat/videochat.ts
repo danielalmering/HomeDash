@@ -10,9 +10,11 @@ import {Rtmp as RTMPPlay} from './streams/rtmp';
 import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
-import {WebRTC as WRTCBroadcast} from './broadcast/webrtc';
-import Confirmations from '../../layout/confirmations/confirmations';
+import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
+import { JanusCast } from './broadcast/janus';
+import Confirmations from '../../layout/Confirmations.vue';
 import {Devices, VideoCodec} from 'typertc';
+import config from '../../../config';
 
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
@@ -35,6 +37,8 @@ import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
 import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
 import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
+import notificationSocket from '../../../socket';
+import { UserRole } from '../../../models/User';
 
 const Platform = require('platform');
 //import Platform from 'platform';
@@ -63,6 +67,7 @@ Component.registerHooks([
         confirmation: Confirmations,
         rtmpBroadcast: RTMPBroadcast,
         webrtcBroadcast: WRTCBroadcast,
+        janusBroadcast: JanusCast
     }
 })
 export default class VideoChat extends Vue {
@@ -146,8 +151,19 @@ export default class VideoChat extends Vue {
         }
     }
 
-    get broadcastType(): string{
+    private _broadcastType:string  = 'none';
 
+    get broadcastType():string{
+        if (this._broadcastType && this._broadcastType != 'none'){
+            return this._broadcastType;
+        }
+
+        this._broadcastType = this.chooseBroadcastType();
+
+        return this._broadcastType;
+    }
+
+    chooseBroadcastType():string{
         if (!this.userHasCam){
             return 'none';
         }
@@ -158,29 +174,42 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
+        //make this configurable 0-100
+        const janusPercentage = 100;
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
-            //Begin apple fixes
-            //Disable iphone for now
+            //always enable janus on iphones
+            //would be weird to only sometimes have cam enabled
             if(isIPhone(platform)){
-                return 'none';
+                return 'janusBroadcast';
             }
-
-            //use vp8 if the browser is safari and above > 12.1
-            if(isSafari(platform)){
-                if(isWebRTCPerformer(this.performer)){ //performer needs to use the webrtc transport
-                    this.broadcasting.videoCodec = VideoCodec.VP8;
-                } else { //else old skool flash if available
-                    if(noFlash(platform)) {
-                       return 'none';
-                    }
-
-                    return 'rtmpBroadcast';
+            //throw the dice to see if janus will be chosen as publisher
+            if(Math.random() < (janusPercentage/100)){
+                return 'janusBroadcast';
+            } else {
+                //Begin apple fixes
+                //Disable iphone for now
+                if(isIPhone(platform)){
+                    return 'none';
                 }
-            }
-            //end apple fixes
 
-            return 'webrtcBroadcast';
+                //use vp8 if the browser is safari and above > 12.1
+                if(isSafari(platform)){
+                    if(isWebRTCPerformer(this.performer)){ //performer needs to use the webrtc transport
+                        this.broadcasting.videoCodec = VideoCodec.VP8;
+                    } else { //else old skool flash if available
+                        if(noFlash(platform)) {
+                            return 'none';
+                        }
+
+                        return 'rtmpBroadcast';
+                    }
+                }
+                //end apple fixes
+
+                return 'webrtcBroadcast';
+            }
+
         }
 
         //disabled camback on mobile for now
@@ -192,11 +221,23 @@ export default class VideoChat extends Vue {
         return 'rtmpBroadcast';
     }
 
-    get wowza(): string | undefined{
+    get playServer():string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
+
         return this.$store.state.session.activeSessionData.wowza;
+    }
+
+    get castServer():string | undefined{
+        console.log(`get that castserver yo! while ${this._broadcastType}`);        
+        if (this._broadcastType == 'janusBroadcast'){
+            return config.Janus;
+        } else if (!this.$store.state.session.activeSessionData){
+                return undefined;
+        } else { 
+            return this.$store.state.session.activeSessionData.wowza;
+        }
     }
 
     get publishStream(): string | undefined{
@@ -281,7 +322,6 @@ export default class VideoChat extends Vue {
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     mounted(){
-        const self = this;
 
         if(this.$store.state.session.activeState !== State.Initializing){
             this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
@@ -398,13 +438,42 @@ export default class VideoChat extends Vue {
 
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
-        if (state == 'active'){
+        let actives: string[] = [];
+        if (state == "active"){
             //make sure only the first time the state turns 'active', the active state is counted.
-            const actives = this.stateMessages.filter( msg => msg == 'active');
-            if (actives.length == 1){
+            actives = this.stateMessages.filter( msg => msg == 'active');
+            if (actives.length==1){
                 setKPI('cl_camback_active');
+                
             }
         }
+
+        //some exceptions for Janus down here..
+        if (this._broadcastType == 'janusBroadcast'){
+            if (state == "active" && actives.length==1){
+                //notify the performer this room is ready for camming back..
+                // type: "ACTIVATED",
+                // value: ""
+                // data.clientType
+                notificationSocket.sendEvent(
+                    {
+                        receiverType: UserRole.Performer,
+                        receiverId: this.$store.state.session.activePerformer.id,
+                        event: 'clientstream',
+                        content: {
+                            type: 'ACTIVATED',
+                            value: null,
+                            clientType: "janus"
+                        }
+                    }
+                )
+            } else if (state == "connected" ){
+                //since there's no signaling of the media server to the client, notify a successfull connect here.. for compatibility's sake.
+                setKPI('cl_camback_connected');
+            }
+
+        }
+
     }
 
     broadcastError(error: any){
