@@ -12,14 +12,14 @@ const swfobject = require('swfobject');
 })
 export class Rtmp extends Stream {
 
-    state:string = '';
+    state: string = '';
 
-    public onStateChange(value:string){
+    public onStateChange(value: string){
         if (this.state == value)
             return;
 
         this.state = value;
-        this.$emit('stateChange', value); 
+        this.$emit('stateChange', value);
     }
 
     mounted(){
@@ -45,7 +45,7 @@ export class Rtmp extends Stream {
 
         let wowza = this.wowza;
         if (this.playToken){
-            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`)
+            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`);
         }
 
         const flashvars = {
@@ -71,6 +71,7 @@ export class Rtmp extends Stream {
 
     @Watch('wowza')
     onWowzaSwitch(){
+        // empty
     }
 
     beforeDestroy(){

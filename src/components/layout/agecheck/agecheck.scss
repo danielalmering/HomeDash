@@ -1,49 +1,8 @@
-<template>
-    <div>
-        <div class="overlay" v-if="country === 'dee'"></div>
-        <div class="agecheck" :class="{ 'large': country === 'dee' }">
-            <div class="container-fluid">
-                <div class="agecheck__text">
-                    <p v-t="'footer.agecheck'"></p>
-                    <a v-on:click="acceptAge" class="btn btn-small btn-orange" v-t="'footer.olderthen'"></a>
-                    <p> {{ $t('footer.or') }} <a v-on:click="declineAge" v-t="'footer.leavewebsite'"></a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
-<script lang="ts">
-import Vue from 'vue';
-import config from '../../config';
-
-import { Component } from 'vue-property-decorator';
-
-@Component
-export default class Alerts extends Vue {
-
-    country = config.Country;
-
-    acceptAge(){
-        if(window.localStorage){
-            window.localStorage.setItem(`${config.StorageKey}.agecheck`, 'true');
-        }
-
-        this.$emit('close');
-    }
-
-    declineAge(){
-        location.href = 'http://www.google.com';
-    }
-}
-</script>
-
-<style scoped lang="scss">
 
 // Imports
 
-@import "../../styles/_mixins.scss";
-@import "../../styles/_settings.scss";
+@import "../../../styles/_mixins.scss";
+@import "../../../styles/_settings.scss";
 
 .overlay {
     position: fixed;
@@ -86,7 +45,7 @@ export default class Alerts extends Vue {
             bottom: 0;
             width: 91px;
             height: 84px;
-            background: url('../../assets/images/agecheck.png') no-repeat bottom left transparent;
+            background: url('../../../assets/images/agecheck.png') no-repeat bottom left transparent;
         }
     }
 
@@ -112,6 +71,3 @@ export default class Alerts extends Vue {
         }
     }
 }
-
-
-</style>

@@ -2,7 +2,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Vue from 'vue';
 
 import notificationSocket from '../../../../socket';
-import Emoticons from '../../../layout/Emoticons.vue';
+import Emoticons from '../../../layout/emoticons/emoticons';
 
 import './chat.scss';
 
@@ -116,9 +116,9 @@ export default class Chat extends Vue {
         if(selected){
             this.chatSmall = true;
             //check if we using a webrtc viewer
-            const isWebrtcViewer: boolean = <HTMLVideoElement>this.$el.querySelector('.webrtc') != null;
+            const isWebrtcViewer: boolean = <HTMLVideoElement>this.$el.querySelector('.webrtc') != undefined;
             screen[0].style.top = isWebrtcViewer ? '0px' : 'auto';
-            screen[0].style.bottom = isWebrtcViewer ? 'auto' : '125px'; //but no if it is webrtc publ
+            screen[0].style.bottom = isWebrtcViewer ? 'auto' : '125px';
         } else {
             this.chatSmall = false;
             screen[0].style.top = '0px';
@@ -144,7 +144,7 @@ export default class Chat extends Vue {
             event: 'typing_received',
             receiverId: this.$store.state.session.activePerformer.id,
             receiverType: 'ROLE_PERFORMER',
-            content: encodeURIComponent('{"recentTyping":true,"inBuffer":'+(inBuffer?'true':'false')+'}')
+            content: encodeURIComponent(`{"recentTyping":true, "inBuffer":${(inBuffer ? 'true' : 'false')}}`)
         });
     }
 

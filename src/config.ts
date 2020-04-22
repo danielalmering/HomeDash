@@ -1,5 +1,3 @@
-import { setConfig } from "sensejs/core/config";
-
 export interface ProjectConfig {
     BaseUrl: string;
     FullApiUrl: string;
@@ -14,7 +12,6 @@ export interface ProjectConfig {
     Janus: string;
     FreeRegister: boolean;
     Banner: boolean;
-
     locale: LocaleConfig;
 }
 
@@ -24,7 +21,6 @@ interface LocaleConfig {
     AgeCheck: boolean;
     Hotjar: boolean;
     Services: any;
-
     Logo?: any;
     LogoDark?: any;
 }

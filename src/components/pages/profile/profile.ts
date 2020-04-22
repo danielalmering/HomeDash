@@ -8,13 +8,13 @@ import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
 
 import Slider from './slider/slider';
-import FullSlider from './slider/slider-fullscreen.vue';
+import FullSlider from './slider/slider-fullscreen/slider-fullscreen';
 import Tabs from './tabs/tabs';
 import config from '../../../config';
 
 import notificationSocket from '../../../socket';
 import { SocketServiceEventArgs, SocketStatusEventArgs, SocketVoyeurEventArgs } from '../../../models/Socket';
-import Confirmation from '../../layout/Confirmations.vue';
+import Confirmation from '../../layout/confirmations/confirmations';
 import { setTitle, setDescription, setKeywords, setGraphData } from '../../../seo';
 import { tabEnabled } from '../../../performer-util';
 
@@ -43,14 +43,15 @@ Component.registerHooks([
     },
     filters: {
         truncate: function(text: string, displayFull: boolean){
-            const textshort = (text.length != 0) ? text.substr(0, 400) : ''; 
+            const textshort = (text.length != 0) ? text.substr(0, 400) : '';
             return displayFull ? text : textshort;
         }
     }
 })
 export default class Profile extends Vue {
-    performer: Performer | null =  null;
-    perfmedia: PerformerAvatar[];
+    performer: Performer = undefined;
+    performerReady: boolean = false;
+    perfmedia: PerformerAvatar[] | boolean = false;
     country = config.Country;
 
     fullSliderVisible: boolean = false;
@@ -118,11 +119,11 @@ export default class Profile extends Vue {
     addFavourite = (performer: Performer) => addFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = true);
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
     addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
-        performer.isSubscribed = true
+        performer.isSubscribed = true;
         if(!this.user.notification_mode){
             const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications', 'SSA');
         }
-    });
+    })
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     mounted(){
@@ -230,11 +231,7 @@ export default class Profile extends Vue {
     }
 
     minHeight(){
-        if(window.outerHeight > 1070){
-            this.displaySlider = true;
-        } else {
-            this.displaySlider = false;
-        }
+        this.displaySlider = (window.outerHeight > 1070) ? true : false;
     }
 
     async startVoyeur(payload: { ivrCode?: string }){
@@ -256,7 +253,7 @@ export default class Profile extends Vue {
         }
     }
 
-    async startSession(payload:any = {}){
+    async startSession(payload: any = {}){
         if(!this.performer){
             return;
         }
@@ -283,7 +280,7 @@ export default class Profile extends Vue {
         const toSend = {...defaults, ...payload};
 
         if(!notificationSocket.isConnected()){
-          
+
             notificationSocket.connect();
 
             const event = notificationSocket.subscribe('authenticated', () => {
@@ -297,20 +294,20 @@ export default class Profile extends Vue {
     }
 
 
-    enableFlash:boolean = false;
+    enableFlash: boolean = false;
 
     unNagFlash(){
         this.enableFlash = false;
     }
 
-    async checkFlash():Promise<boolean>{
-        return new Promise<boolean>( (resolve, reject)=> {
-            let timeout = window.setTimeout( ()=> {
+    async checkFlash(): Promise<boolean>{
+        return new Promise<boolean>( (resolve, reject) => {
+            let timeout = window.setTimeout( () => {
                 timeout = Number.NaN;
                 resolve(false);
             }, 1000);
 
-            window.flashCheckCallback = ()=> {
+            window.flashCheckCallback = () => {
                 if (isNaN(timeout)){
                     return;
                 }
@@ -319,7 +316,7 @@ export default class Profile extends Vue {
             };
 
             swfobject.embedSWF(
-                '/static/checkflash.swf', 'profile__flash-check', '100%', '100%', '10.2.0', true, {}, {wmode:'transparent'}
+                '/static/checkflash.swf', 'profile__flash-check', '100%', '100%', '10.2.0', true, {}, {wmode: 'transparent'}
             );
         });
     }
@@ -360,7 +357,7 @@ export default class Profile extends Vue {
         if(!result.photos.approved) { return; }
         if(this.safeMode){
             this.perfmedia = [];
-            for (let photo of result.photos.approved.photos) {
+            for (const photo of result.photos.approved.photos) {
                 const pushfoto = photo.safe_version ? this.perfmedia.push(photo) : '';
             }
         } else {
@@ -374,35 +371,36 @@ export default class Profile extends Vue {
         if(result.medias.approved.total > 0 && !this.safeMode){
             let s = 0;
             let i = 0;
-            for (let media of result.medias.approved.medias) {
-                if (s <= result.photos.approved.total) {                    
-                    this.perfmedia.splice(s, 0, result.medias.approved.medias[i]);    
+            for (const media of result.medias.approved.medias) {
+                if (s <= result.photos.approved.total) {
+                    this.perfmedia.splice(s, 0, result.medias.approved.medias[i]);
                     s = s + 4;
-                    i++;                                            
-                }                
+                    i++;
+                }
             }
         }
 
+        this.performerReady = true;
         this.setSeoParameters(this.performer);
     }
 
     openTab(event: Event){
-        if(!event){ return }
+        if(!event){ return; }
         const target = event.target as HTMLElement;
-        if(!target.parentElement){ return }
+        if(!target.parentElement){ return; }
         const parent = target.parentElement.lastChild as HTMLElement;
-        if(!parent){ return }
+        if(!parent){ return; }
 
         if(target.classList.contains('active')){
-            target.classList.remove('active')
-            parent.style.display = "none";
+            target.classList.remove('active');
+            parent.style.display = 'none';
         } else {
-            target.classList.add('active')
-            parent.style.display = "block";
+            target.classList.add('active');
+            parent.style.display = 'block';
         }
     }
 
-    breastSize(cupSize:string):string{
+    breastSize(cupSize: string): string{
         const knownSizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
         if (knownSizes.indexOf(cupSize) == -1){
             return cupSize;
@@ -412,9 +410,9 @@ export default class Profile extends Vue {
         return this.$t(`profile.breastsizes.${cupSize}`).toString();
     }
 
-    eyeColor(color:string):string{
+    eyeColor(color: string): string{
         if (color === 'red&violet'){ color = 'redviolet'; }
-        const knownColors = ['brown','hazel','blue','green','silver','amber','grey','redviolet'];
+        const knownColors = ['brown', 'hazel', 'blue', 'green', 'silver', 'amber', 'grey', 'redviolet'];
         if (knownColors.indexOf(color) == -1){
             return color;
         }
