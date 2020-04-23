@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import jsmpeg from 'jsmpeg';
 
 import {Component, Watch} from 'vue-property-decorator';
 import {Route} from 'vue-router';
@@ -12,7 +11,7 @@ import NanoCosmos from './streams/nanocosmos';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
 import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
 import { JanusCast } from './broadcast/janus';
-import Confirmations from '../../layout/Confirmations.vue';
+import Confirmations from '../../layout/confirmations/confirmations';
 import {Devices, VideoCodec} from 'typertc';
 import config from '../../../config';
 
