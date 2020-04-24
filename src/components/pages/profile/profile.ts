@@ -229,8 +229,9 @@ export default class Profile extends Vue {
         this.displayPic = id;
     }
 
+    // Originally was 1070, fix for 1920x1080 screens (1055)
     minHeight(){
-        if(window.outerHeight > 1070){
+        if(window.outerHeight > 1055){
             this.displaySlider = true;
         } else {
             this.displaySlider = false;
