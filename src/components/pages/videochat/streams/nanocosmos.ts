@@ -176,7 +176,7 @@ export default class NanoCosmos extends Stream {
                 onWarning: (s: any) => { this.log(s); }
             },
             'playback': {
-                'autoplay': this.autoplay,//this.autoplay,
+                'autoplay': this.autoplay,
                 'muted':  this.muted,
                 'allowSafariHlsFallback': true,
                 'automute': true,
@@ -203,8 +203,8 @@ export default class NanoCosmos extends Stream {
                     offsetStep: 0.5,
                     cooldownTime: 10
                 }
-            }
-            ,'style': this.getStyle()
+            },
+            'style': this.getStyle()
         };
 
         this.player.setup(configH5LIVE).then((s: any) => {

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
-import { VideoCodec } from "typertc";
+import { VideoCodec } from 'typertc';
 
 export default class Stream extends Vue {
 
@@ -11,10 +11,9 @@ export default class Stream extends Vue {
     playStream: string;
 
     @Prop({
-        type: String,
         required: false
     })
-    playToken: string;
+    playToken: string | boolean;
 
     @Prop({
         type: String,

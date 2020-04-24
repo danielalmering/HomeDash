@@ -52,6 +52,7 @@ module.exports = {
         // include: [resolve('src')],
         options: {
           // transpileOnly: true,
+          allowTsInNodeModules: true,
           appendTsSuffixTo: [/\.vue$/],
           ignoreDiagnostics: [
             2307
@@ -73,6 +74,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'url-loader',
         options: {
+          esModule: false,
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }

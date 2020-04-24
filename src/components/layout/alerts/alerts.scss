@@ -1,34 +1,10 @@
-<template>
-    <div class="alerts">
-        <transition v-for="alert in alerts" :key="alert.id" name="slide-fade">
-            <div class="alerts__alert" :class="`alerts__alert-${alert.class}`">
-                {{alert.content}}
-            </div>
-        </transition>
-    </div>
-</template>
-
-<script lang="ts">
-import Vue from 'vue';
-
-import { Component } from 'vue-property-decorator';
-
-@Component
-export default class Alerts extends Vue {
-
-    get alerts(){
-        return this.$store.state.alerts.messages;
-    }
-}
-
-</script>
-
-<style scoped lang="scss">
 
 // Imports
 
-@import "../../styles/_mixins.scss";
-@import "../../styles/_settings.scss";
+@import "../../../styles/mixins.scss";
+@import "../../../styles/_settings.scss";
+
+//Styles
 
 //Styles
 
@@ -99,4 +75,3 @@ export default class Alerts extends Vue {
     }
 
 }
-</style>

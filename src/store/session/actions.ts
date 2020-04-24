@@ -47,14 +47,14 @@ const actions = {
                 store.commit('setState', State.Accepted);
             } else {
                 store.commit('setState', State.Pending);
-                store.state.performerTimeout = setTimeout( ()=>store.dispatch('performerTimeout'), 60 * 1000 );
+                store.state.performerTimeout = setTimeout( () => store.dispatch('performerTimeout'), 60 * 1000 );
             }
 
             tagHotjar(`SESSION_${payload.sessionType.toUpperCase()}_${payload.payment ? payload.payment : 'NONE'}`);
         }
 
         if (error){
-            store.state.activePerformer = store.state.activeSessionType = null;
+            store.state.activePerformer = store.state.activeSessionType = undefined;
             store.state.fromVoyeur = payload.fromVoyeur || false;
             store.commit('setState', State.Idle);
 
@@ -66,8 +66,6 @@ const actions = {
             tagHotjar(`ERROR_${payload.sessionType.toUpperCase()}REQUEST`);
         }
     },
-
-    //performer did not respond in time
     async performerTimeout(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Canceling);
 
@@ -78,10 +76,8 @@ const actions = {
 
         store.commit('setState', State.Idle);
         store.dispatch('errorMessage', `videochat.alerts.socketErrors.PERFORMER_TIMEOUT`);
-
         tagHotjar(`ERROR_PERFORMERTIMEOUT`);
     },
-
     async accepted(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Accepted);
     },
@@ -188,9 +184,6 @@ const actions = {
                 payment: store.state.activePaymentType
             });
 
-
-
-
             /* Switching failed man, the new performer is not available, lets go back to the previous
              * If the previous is gone, well fuck me, session is just gonna have to stop..
              * Why am I casting a State to State? Well this ain't this a state... this is State.Active specifically right now
@@ -232,7 +225,7 @@ const actions = {
         if(store.state.activeIvrCode){
             payload.ivrCode = store.state.activeIvrCode;
         } else {
-            payload.clientId = store.rootState.authentication.user.id
+            payload.clientId = store.rootState.authentication.user.id;
         }
 
         const { result, error } = await initiate(store.state.activeSessionType, advertNumber, payload);
@@ -260,7 +253,7 @@ const actions = {
                 type: 'START_TIMER_DEVICE',
                 clientId: store.rootState.authentication.user.id,
                 performerId: store.state.activePerformer.id,
-                value: null
+                value: undefined
             }
         });
     },
@@ -322,12 +315,12 @@ const actions = {
             store.dispatch(translation.action, translation.label);
         } else {
             console.log('UNHANDLED!!');
-            console.log(content)
+            console.log(content);
         }
 
     },
 
-    handleServiceEventSocket(store:ActionContext<SessionState, RootState>, content: SocketServiceEventArgs){
+    handleServiceEventSocket(store: ActionContext<SessionState, RootState>, content: SocketServiceEventArgs){
         if (! (store.state.activePerformer && store.state.activePerformer.id == content.performerId) ){
             return;
         }
@@ -337,7 +330,7 @@ const actions = {
                 store.commit('updateService', { service: service, enabled: content.services[service] });
             }
         } else {
-            store.commit('updateService', {service:content.serviceName,enabled:content.serviceStatus});
+            store.commit('updateService', {service: content.serviceName, enabled: content.serviceStatus});
         }
     }
 };

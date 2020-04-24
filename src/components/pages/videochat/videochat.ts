@@ -10,8 +10,8 @@ import {Rtmp as RTMPPlay} from './streams/rtmp';
 import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
-import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
-import Confirmations from '../../layout/Confirmations.vue';
+import {WebRTC as WRTCBroadcast} from './broadcast/webrtc';
+import Confirmations from '../../layout/confirmations/confirmations';
 import {Devices, VideoCodec} from 'typertc';
 
 import './videochat.scss';
@@ -33,7 +33,6 @@ import {
 import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
-//import { webrtcPossible, noFlash } from 'sensejs/util/platform';
 import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
 import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
 
@@ -72,7 +71,8 @@ export default class VideoChat extends Vue {
     isEnding: boolean = false;
 
     intervalTimer: number;
-    mutedClass:string = "";
+    mutedClass: string = '';
+    playToken: string | boolean = false;
 
     broadcasting: BroadcastConfiguration = {
         cam: false,
@@ -83,16 +83,16 @@ export default class VideoChat extends Vue {
 
     stateMessages: string[] = [];
 
-    cameras: {id:string, name: string, selected: boolean}[];
-    microphones: {id:string, name: string, selected: boolean}[];
+    cameras: {id: string, name: string, selected: boolean}[];
+    microphones: {id: string, name: string, selected: boolean}[];
 
-    askToLeave:boolean = false;
+    askToLeave: boolean = false;
     openModal = openModal;
     openTab = openTab;
 
     navigation: {
-        to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void
-    }
+        to: Route, from: Route, next: (yes?: boolean | RawLocation) => void
+    };
 
     get authenticated(): boolean {
         return this.$store.getters.isLoggedIn;
@@ -116,7 +116,7 @@ export default class VideoChat extends Vue {
 
     get streamTransportType(): string | undefined{
         if (!this.$store.state.session.activeSessionData){
-            return undefined;            
+            return undefined;
         }
 
         //check integerty
@@ -128,10 +128,10 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        const playStream =  this.playStream;
+        const playStream = this.playStream;
         const platform = Platform.parse(navigator.userAgent);
+        const mediaId = this.performer.mediaId;
 
-        let mediaId = this.performer.mediaId;
         switch(mediaId) {
             //flash publisher
             case 0:
@@ -146,8 +146,8 @@ export default class VideoChat extends Vue {
         }
     }
 
-    get broadcastType():string{
-       
+    get broadcastType(): string{
+
         if (!this.userHasCam){
             return 'none';
         }
@@ -224,7 +224,7 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.isSwitchModal;
     }
 
-    public userHasCam:boolean = false;
+    public userHasCam: boolean = false;
 
     private detectCam(){
         const platform = Platform.parse(navigator.userAgent);
@@ -259,7 +259,7 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeState;
     }
 
-    get canSwitchToVideoCall():boolean{
+    get canSwitchToVideoCall(): boolean{
         //TODO: Look into this
         //There is an off chance in between changing peekers that there is no performer but this property gets triggered from a rerender or something
         //Only happens in peek so it shouldn't error here if we comment out this console.log
@@ -273,11 +273,11 @@ export default class VideoChat extends Vue {
     }
 
     addSubscriptions = (performer: Performer) => addSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => {
-        performer.isSubscribed = true
+        performer.isSubscribed = true;
         if(!this.user.notification_mode){
             const loggedin = !this.authenticated ? this.openModal('login') : this.openModal('notifications');
         }
-    });
+    })
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     mounted(){
@@ -320,7 +320,7 @@ export default class VideoChat extends Vue {
         }, 5000);
     }
 
-    async gotoVoyeur(next:(yes?:boolean | RawLocation)=>void){
+    async gotoVoyeur(next: (yes?: boolean | RawLocation) => void){
         try {
             await this.$store.dispatch('end', 'PLAYER_END');
 
@@ -364,7 +364,7 @@ export default class VideoChat extends Vue {
         if (this.broadcasting.cam){
             //reset the stateMessages so the second intention will be counted correctly.
             this.stateMessages = [];
-            setKPI("cl_camback_intention", {transport: this.broadcastType});
+            setKPI('cl_camback_intention', {transport: this.broadcastType});
         }
 
         tagHotjar(`TOGGLE_CAM`);
@@ -398,10 +398,10 @@ export default class VideoChat extends Vue {
 
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
-        if (state == "active"){
+        if (state == 'active'){
             //make sure only the first time the state turns 'active', the active state is counted.
             const actives = this.stateMessages.filter( msg => msg == 'active');
-            if (actives.length==1){
+            if (actives.length == 1){
                 setKPI('cl_camback_active');
             }
         }
@@ -409,12 +409,12 @@ export default class VideoChat extends Vue {
 
     broadcastError(error: any){
         this.stateMessages.push(error);
-        if( typeof error == 'string'){            
+        if( typeof error == 'string'){
             setKPI('cl_camback_error', {message: error});
         } else if ('message' in error) {
-            setKPI('cl_camback_error', {message:error.message})
+            setKPI('cl_camback_error', {message: error.message});
         } else if ('name' in error){
-            setKPI('cl_camback_error', {message:error.name})
+            setKPI('cl_camback_error', {message: error.name});
         } else {
             setKPI('cl_camback_error');
         }
@@ -442,7 +442,7 @@ export default class VideoChat extends Vue {
 
             if (flash){
                 this.cameras = flash.getCameras();
-                this.cameras.forEach(cam=>cam.id = cam.name);
+                this.cameras.forEach(cam => cam.id = cam.name);
 
                 let selected = this.cameras.find(cam => cam.selected);
                 if (selected && this.broadcasting.cam !== selected.id){
@@ -450,7 +450,7 @@ export default class VideoChat extends Vue {
                 }
 
                 this.microphones = flash.getMicrophones();
-                this.cameras.forEach(mic=>mic.id = mic.name);
+                this.cameras.forEach(mic => mic.id = mic.name);
                 selected = this.microphones.find(mic => mic.selected);
                 if (selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
                     this.broadcasting.mic = selected.id;
@@ -458,15 +458,15 @@ export default class VideoChat extends Vue {
             } else {
                 const devices = new Devices();
                 devices.getCameras().then( cams => {
-                    this.cameras=cams;
-                    let selected = this.cameras.find(cam=>cam.selected);
+                    this.cameras = cams;
+                    const selected = this.cameras.find(cam => cam.selected);
                     if (selected && this.broadcasting.cam !== selected.id){
                         this.broadcasting.cam = selected.id;
                     }
                 });
                 devices.getMicrophones().then( mics => {
-                    this.microphones=mics;
-                    let selected = this.microphones.find(mic=>mic.selected);
+                    this.microphones = mics;
+                    const selected = this.microphones.find(mic => mic.selected);
                     if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
                         this.broadcasting.mic = selected.id;
                     }
@@ -475,7 +475,7 @@ export default class VideoChat extends Vue {
         }
     }
 
-    public beforeRouteLeave(to:Route, from:Route, next:(yes?:boolean | RawLocation)=>void){
+    public beforeRouteLeave(to: Route, from: Route, next: (yes?: boolean | RawLocation) => void){
         const autoLeaves = [ State.Canceling, State.Ending, State.Idle ];
 
         if(this.isSwitching){
@@ -494,7 +494,7 @@ export default class VideoChat extends Vue {
         this.askToLeave = true;
     }
 
-    @Watch('currentState') async onStateChange(newValue:State, oldValue:State){
+    @Watch('currentState') async onStateChange(newValue: State, oldValue: State){
         // Ending/Starting State Changing
         if(newValue === State.Active){
             clearInterval(this.intervalTimer);
@@ -508,7 +508,7 @@ export default class VideoChat extends Vue {
         }
     }
 
-    @Watch('activeState') async onSessionStateChange(value:State, oldValue:State){
+    @Watch('activeState') async onSessionStateChange(value: State, oldValue: State){
         if (value === State.Accepted){
             //console.log("Get new data :)");
             await this.$store.dispatch('initiate');
@@ -527,7 +527,7 @@ export default class VideoChat extends Vue {
         } catch(e){
             this.$store.dispatch('errorMessage', 'sidebar.alerts.errorSwitchFailed');
             //switch failed so disable switch modal
-            this.$store.commit('toggleSwitchModal', { state: false }); 
+            this.$store.commit('toggleSwitchModal', { state: false });
             return;
         }
 

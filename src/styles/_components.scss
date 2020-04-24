@@ -145,56 +145,6 @@
     }
 }
 
-// SOCIAL LOGIN
-
-.sociallogin {
-    display: table;
-    width: 100%;
-    @include rem(padding, 5px 0px);
-
-    &__title {
-        position: relative;
-        @include rem(font-size, 12px);
-        font-weight: 600;
-        text-align: center;
-        width: 100%;
-        &:after {
-            position: absolute;
-            z-index: 1;
-            content: "";
-            bottom: 5px;
-            background: $pallete-7;
-            height: 1px;
-            width: 100%;
-            left: 0px;
-        }
-        span {
-            position: relative;
-            z-index: 2;
-            background: $pallete-1;
-            @include rem(padding, 0px 10px);
-        }
-    }
-
-    &__button {
-        display: table;
-        //width: calc(33.33% - 10px);
-        width: calc(100% - 10px);
-        @include rem(margin, 5px);
-        @include rem(font-size, 12px);
-        font-weight: 600;
-        @include rem(padding, 6px 10px 6px 27px);
-        @include border-radius(1px);
-        float: left;
-        color: $pallete-2;
-        border: 1px solid $pallete-2;
-        background: url('../assets/images/sociallogin.png') no-repeat 0px 0px transparent;
-        &.fb { background-position: 0px 0px; }
-        &.tw { background-position: 0px -30px; }
-        &.go { background-position: 0px -60px; }
-    }
-}
-
 // 5 Col grid
 
 .col-xs-15,

@@ -18,16 +18,16 @@ export default class Player extends Vue {
     get vidElement(){
         return (video: string) => {
             if(window.innerWidth >= 783){
-                return '<video controls><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + video + '" type="video/mp4"></video>';
+                return `<video controls><source src="${config.FullApiUrl}/${config.VodServer}/${video}" type="video/mp4"></video>`;
             } else {
-                return '<video controls muted><source src="' + config.FullApiUrl + '/' + config.VodServer + '/' + video + '" type="video/mp4"></video>';
+                return `<video controls muted><source src="${config.FullApiUrl}/${config.VodServer}/${video}" type="video/mp4"></video>`;
             }
         };
     }
 
     created() {
         this.videoElement = this.vidElement(this.videosrc);
-    }   
+    }
 
     @Watch('videosrc')
     oneChange(value: string, oldValue: string){

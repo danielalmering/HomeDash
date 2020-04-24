@@ -335,6 +335,7 @@
             "errorinvalidEmail": "Sie haben keine gültige E-Mail-Adresse eingegeben!",
             "errorinvalidPhone": "Sie haben keine gültige Telefonnummer eingegeben!",
             "errorRemoveAccount": "Beim Entfernen ist ein Fehler aufgetreten!",
+            "errorinvalidUsername": "Es wurde kein gültiger Benutzername eingegeben!",
             "successRemoveAccount": "Ihr Konto wurde erfolgreich entfernt!"
         }
     },
@@ -453,7 +454,11 @@
         "message": "Nachricht:*",
         "alerts": {
             "errorSend": "Ein Fehler ist während des Versands aufgetreten",
-            "successSend": "Nachricht wurde erfolgreich gesendet"
+            "successSend": "Nachricht wurde erfolgreich gesendet",
+            "errorinvalidName": "Sie haben keinen gültigen Namen eingegeben!",
+            "errorinvalidEmail": "Sie haben keine gültige E-Mail-Adresse eingegeben!",
+            "errorinvalidSubject": "Sie haben keinen gültigen Betreff eingegeben!",
+            "errorinvalidMessage": "Sie haben keine gültige Nachricht eingegeben!"
         }
     },
     "textpages": {
