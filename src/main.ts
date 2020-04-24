@@ -1,13 +1,13 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
 
 import store from './store';
 import router from './router';
 import i18n from './localization';
+import Vuelidate from 'vuelidate';
 
-import App from './App.vue';
+import App from './app';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 
@@ -19,9 +19,8 @@ require('./directives/scroll');
 
 import './styles/main.scss';
 
-Vue.use(VeeValidate);
-
 Vue.config.productionTip = false;
+Vue.use(Vuelidate);
 
 /* eslint-disable no-new */
 const app = new Vue({

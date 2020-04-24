@@ -79,7 +79,9 @@ const actions = {
                 try {
                     await dispatch('loadTile', { performerId: state.queue[0], position: tileToReplace });
                     break;
-                }catch{ }
+                }catch{
+                    console.log('failed loading tile');
+                }
             } while(true);
         }, tileSwitchDelay);
     },

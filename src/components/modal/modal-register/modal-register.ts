@@ -2,16 +2,11 @@ import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
 import { UserForm } from '../../../models/User';
 import WithRender from './modal-register.tpl.html';
-import Sociallogin from './../../layout/Sociallogin.vue';
 import { openModal, tagHotjar } from '../../../utils/main.util';
 import config from '../../../config';
 
 @WithRender
-@Component({
-    components: {
-        sociallogin: Sociallogin
-    }
-})
+@Component
 export default class ModalRegister extends Vue {
 
     userForm: UserForm = {
@@ -23,7 +18,7 @@ export default class ModalRegister extends Vue {
         passwordconfirm: ''
     };
     openModal = openModal;
-    freeRegister = config.FreeRegister;
+    freeRegister = config.FreeRegister ? config.FreeRegister : false;
 
     async register(){
         try {
@@ -41,6 +36,6 @@ export default class ModalRegister extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', null);
+        this.$store.dispatch('displayModal', undefined);
     }
 }

@@ -22,7 +22,7 @@ export default class ProfilePhotoSlider extends PhotoSlider {
 
     get getMedia(){
         return (item: any) => {
-            if(item.hasOwnProperty("wowza_sync")){
+            if(item.hasOwnProperty('wowza_sync')){
                 return item.wowza_sync ? true : false;
             } else {
                 return false;

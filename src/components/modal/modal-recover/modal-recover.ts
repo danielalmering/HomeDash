@@ -26,6 +26,6 @@ export default class ModalRecover extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', null);
+        this.$store.dispatch('displayModal', undefined);
     }
 }

@@ -2,8 +2,6 @@ import Vue from 'vue';
 import { VoyeurState, PerformerTile } from './index';
 import { PerformerStatus, Performer } from 'sensejs/performer/performer.model';
 
-
-
 const mutations = {
     addPerformers(state: VoyeurState, payload: Performer[]){
         state.performers = state.performers.concat(payload);

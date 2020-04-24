@@ -1,18 +1,16 @@
 import { Component, Prop, Provide } from 'vue-property-decorator';
 import Vue from 'vue';
-import { User } from '../../../models/User';
 
 import WithRender from './modal-notifications.tpl.html';
-import { tagHotjar } from '../../../utils/main.util';
-
-import { updateConsumer } from 'sensejs/consumer';
 import { getSubscriptionsOptions } from 'sensejs/performer/subscriptions';
-import { Consumer, NotificationMode } from 'sensejs/core/models/user';
+import { Consumer } from 'sensejs/core/models/user';
+
+import { Validations } from 'vuelidate-property-decorators';
+import { email } from 'vuelidate/lib/validators';
 
 @WithRender
 @Component
 export default class ModalNotifications extends Vue {
-    
 
     @Prop({
         required: true,
@@ -34,8 +32,21 @@ export default class ModalNotifications extends Vue {
                 email: this.$store.state.authentication.user.email,
                 mobile_number: this.$store.state.authentication.user.mobile_number
             }
-        }
+        };
     }
+
+    @Validations()
+    validations = {
+        form: {
+            email: {email},
+            mobile_number: {
+                isCorrectPhone(phonenumber: string) {
+                    const regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+                    return regex.test(phonenumber);
+                }
+            }
+        }
+    };
 
     created(){
         this.user = Object.assign({}, this.$store.state.authentication.user);
@@ -50,13 +61,13 @@ export default class ModalNotifications extends Vue {
         }
 
         this.formData = result;
-    } 
+    }
 
     async updateNotifications(id: string){
 
         // Email confirmation check
         if(id === '1'){
-            if(this.form.email && await this.$validator.validate('email')){
+            if(this.form.email){
                 this.user.email = this.form.email;
             } else {
                 this.$store.dispatch('errorMessage', 'account.alerts.errorinvalidEmail');
@@ -66,7 +77,7 @@ export default class ModalNotifications extends Vue {
 
         // Phone confirmation check
         if(id === '2' || id === '8'){
-            if(this.form.mobile_number && await this.$validator.validate('phone')){
+            if(this.form.mobile_number){
                 this.user.mobile_number = this.form.mobile_number;
             } else {
                 this.$store.dispatch('errorMessage', 'account.alerts.errorinvalidPhone');
@@ -74,7 +85,7 @@ export default class ModalNotifications extends Vue {
             }
         }
 
-        let payload = { user: this.user};
+        const payload = { user: this.user};
 
         this.$store.dispatch('updateUser', payload);
 
@@ -82,6 +93,6 @@ export default class ModalNotifications extends Vue {
     }
 
     close(){
-        this.$store.dispatch('displayModal', null);
+        this.$store.dispatch('displayModal', undefined);
     }
 }

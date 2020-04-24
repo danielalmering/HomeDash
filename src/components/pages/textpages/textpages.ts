@@ -16,11 +16,11 @@ export default class Textpages extends Vue {
 
     get pages(){
         let country = this.$store.state.authentication.user.country;
-        let page = this.$route.name ? this.$route.name.toLowerCase() : false;
+        const page = this.$route.name ? this.$route.name.toLowerCase() : false;
 
         if(country === 'at') country = 'de';
 
-        const pagedata = require('./' + page + '.data.json');
+        const pagedata = require(`./${page}.data.json`);
         return pagedata[country];
     }
 

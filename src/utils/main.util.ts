@@ -28,7 +28,7 @@ export function getSliderImages(performer: Performer, photo: any, size: string){
     return require('./../assets/images/placeholder.png');
 }
 
-export function hasService(performer: Performer, serviceKey: string) :boolean {
+export function hasService(performer: Performer, serviceKey: string): boolean {
     if(!performer){
         return false;
     }
@@ -52,7 +52,7 @@ export function hasService(performer: Performer, serviceKey: string) :boolean {
 export function getPerformerStatus(performer: Performer){
     if(!performer){ return 'offline'; }
 
-    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
+    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus) > -1 ) && performer.isVoyeur){
         return 'teaser';
     }
 
@@ -65,28 +65,28 @@ export function getPerformerStatus(performer: Performer){
     }
 
     if(performer.performerStatus === PerformerStatus.Available &&
-        hasService(performer,'cam') ||
-        hasService(performer,'phone') ||
-        hasService(performer,'videocall')){
+        hasService(performer, 'cam') ||
+        hasService(performer, 'phone') ||
+        hasService(performer, 'videocall')){
         return 'available';
     }
 
     // Performer status Offline
-    if (hasService(performer,'phone')){
+    if (hasService(performer, 'phone')){
         return 'available';
     }
 
     return 'offline';
 }
 
-export function sleep(delay: number):Promise<null>{
-    return new Promise( (resolve, reject)=>{
+export function sleep(delay: number): Promise<null>{
+    return new Promise( (resolve, reject) => {
         setTimeout(resolve, delay);
-    })
+    });
 }
 
 export function getPerformerLabel(performer: Performer){
-    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus)>-1 ) && performer.isVoyeur){
+    if( ( [PerformerStatus.Busy, PerformerStatus.OnCall].indexOf(performer.performerStatus) > -1 ) && performer.isVoyeur){
         return 'teaser-label';
     }
 
@@ -132,7 +132,7 @@ export function tagHotjar(tag: string){
 }
 
 export function setKPI(url: string, parameters?: any){
-    const options:RequestInit = {
+    const options: RequestInit = {
         credentials: 'include'
     };
     if (parameters){
@@ -145,12 +145,12 @@ export function setKPI(url: string, parameters?: any){
 
 export function getParameterByName(name: string, url?: string) {
     if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
         results = regex.exec(url);
-    if (!results) return null;
+    if (!results) return '';
     if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
 export function urlValid() {
