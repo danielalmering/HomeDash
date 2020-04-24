@@ -229,8 +229,8 @@ export default class Profile extends Vue {
         this.displayPic = id;
     }
 
-    minHeight(){
-        if(window.outerHeight > 1070){
+    minHeight(){        
+        if(window.outerHeight > 1055){  // why 1070!? you'll be fine at 1055, at 1070 you'll never this due to the Chrome / Firefox / Edge header...
             this.displaySlider = true;
         } else {
             this.displaySlider = false;
