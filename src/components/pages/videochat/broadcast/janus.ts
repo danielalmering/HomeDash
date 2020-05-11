@@ -53,9 +53,13 @@ export class JanusCast extends Broadcast{
     }
 
     beforeDestroy(){
-        this.roomPlugin.send({
-            message: { request: 'unpublish' }
-        });
+        if (this.roomPlugin){
+            this.roomPlugin.send({
+                message: { request: 'unpublish' }
+            });
+        } else if (this.janus) {
+            this.janus.destroy( {unload: true} )
+        }
 
         //flushing the logs..
         //first add the first 5 characters of the room to each log line, add a 'scope' of 'camback' to each line.
@@ -78,7 +82,21 @@ export class JanusCast extends Broadcast{
     logs:{event:string,[rest: string]: any}[] = [];
 
     addLog( item:{event:string,[rest: string]: any} ){
+        //let's first replace all spaces in the properties..
+        for(let prop in item){
+            if (typeof item[prop] != 'string'){
+                continue;
+            }
+            
+            if (item[prop].indexOf(" ") == -1){
+                continue;
+            }
+
+            item[prop] = item[prop].replace(/ /g, '-');
+        }
+
         item.t = Date.now();
+
         this.logs.push( item );
     }
 
