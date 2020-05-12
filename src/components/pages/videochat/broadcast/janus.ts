@@ -53,6 +53,12 @@ export class JanusCast extends Broadcast{
     }
 
     beforeDestroy(){
+        this.destroy();
+    }
+
+    destroy(){
+        this.state = 'destroying';
+
         if (this.roomPlugin){
             this.roomPlugin.send({
                 message: { request: 'unpublish' }
@@ -69,7 +75,7 @@ export class JanusCast extends Broadcast{
             event: "udplog",
             receiverType: null
         })
-   
+        this.logs = [];
     }
 
     private _state = 'constructing'
@@ -124,7 +130,7 @@ export class JanusCast extends Broadcast{
             this.state = 'active';
         } catch( error ){
             this.onError( error );
-            this.state = 'disconnected';
+            this.destroy();
         }
     }
 
@@ -368,13 +374,33 @@ export class JanusCast extends Broadcast{
     }
     set state(value:string){
         this.addLog({event:"statechange", value});
+        //destroying is always alowed
+        //otherwise, the order of states should be obeyed
+        if (value != "destroying"){
+            const current = JanusCast.states.indexOf(this._state);
+            const next = JanusCast.states.indexOf(value);
+            if (next - current != 1){
+                throw new Error(`invalid state change from ${this._state} to ${value}`);
+            }
+        }
+
         this._state = value;
         this.onStateChange( value );
     }
 
-    static states = [
-        'constructing', 'initalizing', 'connecting'
-    ]
+    static states = [ 
+        'initializing',
+        'connecting',
+        'connected',
+        'attaching',
+        'creating',
+        'joining',
+        'offering',
+        'configuring',
+        'setting_remote_description',
+        'active',
+        'destroying'
+    ];
 
     private _resolver:{resolve:Function, reject:Function} | null = null;
 

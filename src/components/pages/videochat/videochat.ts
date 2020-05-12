@@ -228,8 +228,7 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionData.wowza;
     }
 
-    get castServer():string | undefined{
-        console.log(`get that castserver yo! while ${this._broadcastType}`);        
+    get castServer():string | undefined{      
         if (this._broadcastType == 'janusBroadcast'){
             return config.Janus;
         } else if (!this.$store.state.session.activeSessionData){
