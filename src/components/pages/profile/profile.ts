@@ -49,7 +49,7 @@ Component.registerHooks([
     }
 })
 export default class Profile extends Vue {
-    performer: Performer = undefined;
+    performer: Performer | null = null;
     performerReady: boolean = false;
     perfmedia: PerformerAvatar[] | boolean = false;
     country = config.Country;
@@ -133,12 +133,6 @@ export default class Profile extends Vue {
         this.serviceSocketId = notificationSocket.subscribe('service', (data: SocketServiceEventArgs) => {
             if(!this.performer || data.performerId !== this.performer.id){
                 return;
-            }
-
-            if(data.services && data.services['voyeur']){
-                this.performer.isVoyeur = data.services['voyeur'];
-            } else if(data.serviceName === 'voyeur'){
-                this.performer.isVoyeur = data.serviceStatus;
             }
 
             if(data.services){
