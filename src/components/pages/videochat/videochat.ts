@@ -173,8 +173,13 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
-        //make this configurable 0-100
-        const janusPercentage = 100;
+        let janusPercentage = parseInt(this.$store.state.session.activeSessionData.streamJanusBackProc);
+        if (janusPercentage < 0){
+            janusPercentage = 0;
+        } else if ( janusPercentage > 100){
+            janusPercentage = 100;
+        }
+
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
             //always enable janus on iphones
@@ -437,7 +442,7 @@ export default class VideoChat extends Vue {
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
         let actives: string[] = [];
-        if (state == "active"){
+        if (state == 'active'){
             //make sure only the first time the state turns 'active', the active state is counted.
             actives = this.stateMessages.filter( msg => msg == 'active');
             if (actives.length==1){
@@ -448,7 +453,7 @@ export default class VideoChat extends Vue {
 
         //some exceptions for Janus down here..
         if (this._broadcastType == 'janusBroadcast'){
-            if (state == "active" && actives.length==1){
+            if (state == 'active' && actives.length==1){
                 //notify the performer this room is ready for camming back..
                 // type: "ACTIVATED",
                 // value: ""

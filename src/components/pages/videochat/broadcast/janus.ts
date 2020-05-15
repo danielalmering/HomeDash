@@ -156,7 +156,8 @@ export class JanusCast extends Broadcast{
                 },
                 destroyed: ()=>{
                     this.addLog({ event:"JanusDestroyed"});
-                }
+                },
+                iceServers: []
             })
         } );
     }
@@ -183,6 +184,10 @@ export class JanusCast extends Broadcast{
                 },
                 iceState: ( state )=>{
                     this.addLog({event:"icestate", state});
+                    if (state == "disconnected"){
+                        const { reject } = this._resolver || {};
+                        if (reject) reject("ice connection disconnected");
+                    }
                 },
                 slowLink: ( state )=>{
                     this.addLog({event:"slowlink", state});
@@ -318,6 +323,8 @@ export class JanusCast extends Broadcast{
             } else {
                 reject()
             }
+        } else {
+            this.addLog({event:"unhandledMediaState", type, on} );
         }
     }
     attachCamera( stream:MediaStream ){
