@@ -446,8 +446,7 @@ export default class VideoChat extends Vue {
             //make sure only the first time the state turns 'active', the active state is counted.
             actives = this.stateMessages.filter( msg => msg == 'active');
             if (actives.length==1){
-                setKPI('cl_camback_active');
-                
+                setKPI('cl_camback_active');   
             }
         }
 
@@ -481,15 +480,30 @@ export default class VideoChat extends Vue {
 
     broadcastError(error: any){
         this.stateMessages.push(error);
+        let msg = ""
         if( typeof error == 'string'){
+            msg = error;
             setKPI('cl_camback_error', {message: error});
         } else if ('message' in error) {
+            msg = error.message;
             setKPI('cl_camback_error', {message: error.message});
         } else if ('name' in error){
+            msg = error.message;
             setKPI('cl_camback_error', {message: error.name});
         } else {
+            msg = "c2c-failed"
             setKPI('cl_camback_error');
         }
+        //remove the smallscreen
+        this.broadcasting.cam = false;
+
+        if (error.name == 'NotAllowedError' ){
+            this.$store.dispatch('errorMessage', 'videochat.alerts.permission-denied');
+        } else {
+            this.$store.dispatch('errorMessage', msg);
+        }
+        
+        
     }
 
     viewerStateChange(state: string){

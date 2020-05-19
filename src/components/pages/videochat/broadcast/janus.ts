@@ -111,6 +111,9 @@ export class JanusCast extends Broadcast{
             //initialize Janus..
             await this.init();
 
+            //try accessing the cam / mic.. if the user refuses abort
+            await this.probeDevices();
+
             //connect to the websocket..
             this.janus = await this.connect();
 
@@ -141,6 +144,28 @@ export class JanusCast extends Broadcast{
                 debug: this.debug,
                 callback: resolve
             } )
+        } );
+    }
+
+    async probeDevices(){
+        this.state = "probing";
+        return new Promise( async (resolve, reject)=>{
+            //accessing mediaDevices while not over https is not supported
+            if (!navigator.mediaDevices){
+                reject("no https conenction buster");
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia( { video: true, audio: true })
+            .then( (stream:MediaStream)=>{
+                if (stream.stop){
+                    stream.stop();
+                } else {
+                    stream.getTracks().forEach( track => track.stop() );
+                }
+                resolve() 
+            })
+            .catch( reason => reject(reason ))
         } );
     }
 
@@ -397,6 +422,7 @@ export class JanusCast extends Broadcast{
 
     static states = [ 
         'initializing',
+        'probing',
         'connecting',
         'connected',
         'attaching',
