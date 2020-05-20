@@ -363,7 +363,9 @@
                 "PLAYER_END": "U heeft de sessie beëindigd.",
                 "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd.",
                 "PEEK_SWITCH": "Gewisseld"
-            }
+            },
+            "c2c-failed": "Fout bij het terugcammen. Probeer het opnieuw.",
+            "permission-denied": "U heeft uw camera geblokkeerd."
         }
     },
     "voyeur": {
