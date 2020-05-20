@@ -87,8 +87,8 @@ export default class VideoChat extends Vue {
 
     stateMessages: string[] = [];
 
-    cameras: {id: string, name: string, selected: boolean}[];
-    microphones: {id: string, name: string, selected: boolean}[];
+    cameras: {id: string, name: string, selected: boolean}[] = [];
+    microphones: {id: string, name: string, selected: boolean}[] = [];
 
     askToLeave: boolean = false;
     openModal = openModal;
@@ -465,11 +465,11 @@ export default class VideoChat extends Vue {
                         content: {
                             type: 'ACTIVATED',
                             value: null,
-                            clientType: "janus"
+                            clientType: 'janus'
                         }
                     }
                 )
-            } else if (state == "connected" ){
+            } else if (state == 'connected' ){
                 //since there's no signaling of the media server to the client, notify a successfull connect here.. for compatibility's sake.
                 setKPI('cl_camback_connected');
             }
@@ -480,7 +480,7 @@ export default class VideoChat extends Vue {
 
     broadcastError(error: any){
         this.stateMessages.push(error);
-        let msg = ""
+        let msg = '';
         if( typeof error == 'string'){
             msg = error;
             setKPI('cl_camback_error', {message: error});
@@ -491,7 +491,7 @@ export default class VideoChat extends Vue {
             msg = error.message;
             setKPI('cl_camback_error', {message: error.name});
         } else {
-            msg = "c2c-failed"
+            msg = 'c2c-failed'
             setKPI('cl_camback_error');
         }
         //remove the smallscreen
@@ -543,20 +543,25 @@ export default class VideoChat extends Vue {
                 }
             } else {
                 const devices = new Devices();
-                devices.getCameras().then( cams => {
-                    this.cameras = cams;
-                    const selected = this.cameras.find(cam => cam.selected);
-                    if (selected && this.broadcasting.cam !== selected.id){
-                        this.broadcasting.cam = selected.id;
-                    }
-                });
-                devices.getMicrophones().then( mics => {
-                    this.microphones = mics;
-                    const selected = this.microphones.find(mic => mic.selected);
-                    if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
-                        this.broadcasting.mic = selected.id;
-                    }
-                });
+                if (this.cameras.length == 0){
+                    devices.getCameras().then( cams => {
+                        this.cameras = cams;
+                        const selected = this.cameras.find(cam => cam.selected);
+                        if (selected && this.broadcasting.cam !== selected.id){
+                            this.broadcasting.cam = selected.id;
+                        }
+                    });
+                }
+
+                if (this.microphones.length == 0){
+                    devices.getMicrophones().then( mics => {
+                        this.microphones = mics;
+                        const selected = this.microphones.find(mic => mic.selected);
+                        if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
+                            this.broadcasting.mic = selected.id;
+                        }
+                    });
+                }
             }
         }
     }

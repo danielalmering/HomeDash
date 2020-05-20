@@ -21,21 +21,50 @@ interface Room{
 })
 export class JanusCast extends Broadcast{
 
-    @Watch('mic') onMicChanged(value: boolean | string, oldValue: boolean | string) {
-        if (oldValue == value){
+    @Watch('mic') async onMicChanged(value: boolean | string, oldValue: boolean | string) {
+        if (oldValue === value){
             return;
         }
 
         this.addLog( {event:"micchange", old:oldValue, current: value} );
 
-        //let's not forget to switch the mic on wrtc level
-        this.roomPlugin.send( {
-            message: { request: 'configure', audio: !!value }
-        } );
+        //only select a specific device if the device id is given
+        if (typeof value == "string"){
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: { deviceId: { exact: value } }
+            })
+
+            if (!stream){
+                this.addLog({event:"micchange", name:"mic not found"});
+                return;
+            }
+
+            const track = stream.getAudioTracks()[0];
+            const pc:RTCPeerConnection = this.roomPlugin["webrtcStuff"].pc;
+            const sender = pc.getSenders().find( s => s.track.kind == track.kind);
+
+            if (!sender){
+                this.addLog({ event:"micchange", name:"sender not found" });
+                return;
+            }
+
+            await sender.replaceTrack( track );
+            this.detachMic();
+        }
+
+
+        //only configure if the mic is turned on or off
+        if (!!oldValue != !!value){
+            this.roomPlugin.send( {
+                message: { request: 'configure', audio: !!value }
+            } );
+        }
+
+
     }
 
-    @Watch('cam') onCamChanged(value: string, oldValue: string) {
-        if (oldValue ==  value){
+    @Watch('cam') async onCamChanged(value: string, oldValue: string) {
+        if (oldValue === value){
             return;
         }
 
@@ -44,7 +73,30 @@ export class JanusCast extends Broadcast{
         if (typeof value !== 'string'){
             return;
         }
-        //tell wrtc level to switch cam
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { deviceId: { exact: value } }
+        });
+
+        if (!stream){
+            this.addLog({ event:"camchange", name:"cam not found" });
+            return;
+        }
+
+        const track = stream.getVideoTracks()[0];
+        const pc:RTCPeerConnection = this.roomPlugin["webrtcStuff"].pc;
+        console.log( track.kind );
+        const sender = pc.getSenders().find( s => s.track.kind == track.kind);
+
+        if (!sender){
+            this.addLog({ event:"camchange", name:"sender not found" });
+            return;
+        }
+
+        await sender.replaceTrack( track );
+
+        this.detachCamera();
+        this.attachCamera( stream );
     }
 
     mounted(){
@@ -352,6 +404,29 @@ export class JanusCast extends Broadcast{
             this.addLog({event:"unhandledMediaState", type, on} );
         }
     }
+
+    detachCamera(){
+        if (!this.video){
+            return;
+        }
+        const old = this.video.srcObject;
+        if (old && ("getTracks" in old)){
+            old.getTracks().forEach( track => track.kind=="video" && track.stop() );
+        } 
+    }
+
+    //the mic is attached to the video element the first time userMedia is gotten
+    detachMic(){
+        if (!this.video){
+            return;
+        }
+
+        const old = this.video.srcObject;
+        if (old && ("getTracks" in old)){
+            old.getTracks().forEach( track => track.kind == "audio"  && track.stop() );
+        }
+    }
+
     attachCamera( stream:MediaStream ){
         if (!this.video){
             return;
