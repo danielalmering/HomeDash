@@ -49,17 +49,19 @@ export class JanusCast extends Broadcast{
             }
 
             await sender.replaceTrack( track );
-            this.detachMic();
+
+            if (this.audioTrack){
+                this.audioTrack.stop();
+            }
+            this.audioTrack = track;
         }
-
-
-        //only configure if the mic is turned on or off
+       
+        //only re-configure if the mic is turned on or off
         if (!!oldValue != !!value){
             this.roomPlugin.send( {
                 message: { request: 'configure', audio: !!value }
             } );
         }
-
 
     }
 
@@ -95,9 +97,15 @@ export class JanusCast extends Broadcast{
 
         await sender.replaceTrack( track );
 
-        this.detachCamera();
+        if (this.videoTrack){
+            this.videoTrack.stop();
+        }
+        this.videoTrack = track;
         this.attachCamera( stream );
     }
+
+    private audioTrack: MediaStreamTrack;
+    private videoTrack: MediaStreamTrack;
 
     mounted(){
         this.initializeElement( this.$el );
@@ -118,6 +126,9 @@ export class JanusCast extends Broadcast{
         } else if (this.janus) {
             this.janus.destroy( {unload: true} )
         }
+
+        this.audioTrack && this.audioTrack.stop();
+        this.videoTrack && this.videoTrack.stop();
 
         //flushing the logs..
         //first add the first 5 characters of the room to each log line, add a 'scope' of 'camback' to each line.
@@ -270,7 +281,10 @@ export class JanusCast extends Broadcast{
                     this.addLog({event:"slowlink", state});
                 },
                 onmessage: this.onRoomMessage.bind(this),
-                onlocalstream: this.attachCamera.bind(this),
+                onlocalstream: (stream:MediaStream)=>{
+                    this.initializeTracks(stream);
+                    this.attachCamera(stream);
+                },
                 onremotestream: (stream: MediaStream)=>{
                     this.addLog( {event:"remotestream"});
                 },
@@ -349,6 +363,7 @@ export class JanusCast extends Broadcast{
 
     async configure(jsep:string):Promise<string>{
         this.state = 'configuring';
+        
         return new Promise<string>( (resolve, reject)=>{
             this.roomPlugin.send({
                 message: {
@@ -405,25 +420,25 @@ export class JanusCast extends Broadcast{
         }
     }
 
-    detachCamera(){
-        if (!this.video){
-            return;
-        }
-        const old = this.video.srcObject;
-        if (old && ("getTracks" in old)){
-            old.getTracks().forEach( track => track.kind=="video" && track.stop() );
-        } 
-    }
-
-    //the mic is attached to the video element the first time userMedia is gotten
-    detachMic(){
-        if (!this.video){
-            return;
+    initializeTracks( stream:MediaStream ){
+        const vt = stream.getVideoTracks();
+        if (vt.length == 0){
+            this.addLog( {event:"onLocalStream", name:"noVideoTrack"})
+        } else {
+            if (vt.length > 1){
+                this.addLog( {event:"onLocalStream", name:"tooManyVideoTracks", count: vt.length})
+            }
+            this.videoTrack = stream.getVideoTracks()[0];
         }
 
-        const old = this.video.srcObject;
-        if (old && ("getTracks" in old)){
-            old.getTracks().forEach( track => track.kind == "audio"  && track.stop() );
+        const at = stream.getAudioTracks();
+        if (at.length == 0){
+            this.addLog( {event:"onLocalStream", name:"noAudioTrack"})
+        } else {
+            if (at.length > 1){
+                this.addLog( {event:"onLocalStream", name:"tooManyAudioTracks", count: at.length})
+            }
+            this.audioTrack = stream.getAudioTracks()[0];
         }
     }
 

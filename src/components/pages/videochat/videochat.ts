@@ -543,17 +543,18 @@ export default class VideoChat extends Vue {
                 }
             } else {
                 const devices = new Devices();
-                if (this.cameras.length == 0){
-                    devices.getCameras().then( cams => {
-                        this.cameras = cams;
-                        const selected = this.cameras.find(cam => cam.selected);
-                        if (selected && this.broadcasting.cam !== selected.id){
-                            this.broadcasting.cam = selected.id;
-                        }
-                    });
-                }
+                
+                devices.getCameras().then( cams => {
+                    this.cameras = cams;
+                    const selected = this.cameras.find(cam => cam.selected);
+                    this.cameras.forEach( cam => console.log(cam.name, cam.id) );
+                    if (selected && this.broadcasting.cam !== selected.id){
+                        this.broadcasting.cam = selected.id;
+                    }
+                });
+                
 
-                if (this.microphones.length == 0){
+                //if (this.microphones.length == 0){
                     devices.getMicrophones().then( mics => {
                         this.microphones = mics;
                         const selected = this.microphones.find(mic => mic.selected);
@@ -561,7 +562,7 @@ export default class VideoChat extends Vue {
                             this.broadcasting.mic = selected.id;
                         }
                     });
-                }
+                //}
             }
         }
     }
