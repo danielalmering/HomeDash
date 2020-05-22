@@ -520,7 +520,7 @@
         "PAYSAFE": "Paysafecard",
         "COMMPAYPAYBYCALL": "Pay By Call",
         "COMMPAYDEBIT": "Sepa",
-        "PAYPAL": "PayPal",
+        "PAYPAL": "PayPal"
     },
     "languages": {
         "nl": "Nederlands",
