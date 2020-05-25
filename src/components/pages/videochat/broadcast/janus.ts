@@ -2,6 +2,7 @@ import Broadcast from './broadcast';
 import {Component, Watch} from 'vue-property-decorator';
 import { JanusJS, default as Janus }  from 'janus-gateway';
 import { default as socket } from '../../../../socket';
+import { Devices } from 'typertc';
 
 interface Room{
     room:number;
@@ -22,9 +23,20 @@ interface Room{
 export class JanusCast extends Broadcast{
 
     @Watch('mic') async onMicChanged(value: boolean | string, oldValue: boolean | string) {
-        if (oldValue === value){
+        if (value === oldValue){
             return;
         }
+
+        //somehow the micChange can be triggered three times in a row.
+        if (value === this.nextMic){
+            return;
+        }
+
+        if (value === new Devices().selectedMicrophone){
+            return;
+        }
+
+        this.nextMic = value;
 
         this.addLog( {event:"micchange", old:oldValue, current: value} );
 
@@ -36,6 +48,7 @@ export class JanusCast extends Broadcast{
 
             if (!stream){
                 this.addLog({event:"micchange", name:"mic not found"});
+                this.nextMic = undefined
                 return;
             }
 
@@ -45,7 +58,8 @@ export class JanusCast extends Broadcast{
 
             if (!sender){
                 this.addLog({ event:"micchange", name:"sender not found" });
-                return;
+                this.nextMic = undefined;
+                return; 
             }
 
             await sender.replaceTrack( track );
@@ -54,6 +68,8 @@ export class JanusCast extends Broadcast{
                 this.audioTrack.stop();
             }
             this.audioTrack = track;
+
+            new Devices().selectedMicrophone = value;
         }
        
         //only re-configure if the mic is turned on or off
@@ -63,12 +79,27 @@ export class JanusCast extends Broadcast{
             } );
         }
 
+        this.nextMic = undefined;
     }
 
     @Watch('cam') async onCamChanged(value: string, oldValue: string) {
-        if (oldValue === value){
+        if (value === oldValue){
             return;
         }
+
+        //somehow, this watch is triggered three times. Saving what the cam will (hopefully) be
+        //, prevents the cam actually changing three times.
+        if (value === this.nextCam){
+            return;
+        }
+
+        //prevents a flicker if the value changes from 'true' to an actual deviceId, 
+        //which actually is the currently selected device
+        if (value == new Devices().selectedCamera){
+            return;
+        }
+
+        this.nextCam = value;
 
         this.addLog( {event:"camchange", old:oldValue, current: value} );
 
@@ -82,17 +113,19 @@ export class JanusCast extends Broadcast{
 
         if (!stream){
             this.addLog({ event:"camchange", name:"cam not found" });
+            this.nextCam = undefined;
             return;
         }
 
         const track = stream.getVideoTracks()[0];
         const pc:RTCPeerConnection = this.roomPlugin["webrtcStuff"].pc;
-        console.log( track.kind );
+        
         const sender = pc.getSenders().find( s => s.track.kind == track.kind);
 
         if (!sender){
             this.addLog({ event:"camchange", name:"sender not found" });
-            return;
+            this.nextCam = undefined;
+            return ;
         }
 
         await sender.replaceTrack( track );
@@ -102,9 +135,15 @@ export class JanusCast extends Broadcast{
         }
         this.videoTrack = track;
         this.attachCamera( stream );
+
+        new Devices().selectedCamera = value;
+
+        this.nextCam = undefined;
     }
 
+    private nextMic:string | boolean;
     private audioTrack: MediaStreamTrack;
+    private nextCam:string | boolean;
     private videoTrack: MediaStreamTrack;
 
     mounted(){
@@ -127,6 +166,7 @@ export class JanusCast extends Broadcast{
             this.janus.destroy( {unload: true} )
         }
 
+        //make sure the mic & cam are stopped..
         this.audioTrack && this.audioTrack.stop();
         this.videoTrack && this.videoTrack.stop();
 
@@ -181,7 +221,7 @@ export class JanusCast extends Broadcast{
             this.janus = await this.connect();
 
             // now we need to emit this event now to comply with the flow of the other
-            // transport types so to speak...
+            // transport types...
             this.state = 'connected';
             //attach the plugin...
             this.roomPlugin = await this.attachRoomPlugin();
@@ -261,7 +301,6 @@ export class JanusCast extends Broadcast{
                 opaqueId: this.opaqueId,
                 error: ( error )=>reject( error ),
                 consentDialog: (on:boolean)=>{
-                    console.log('side effect om toestemming te vragen..');
                 },
                 mediaState: this.handleMediaState.bind(this),
                 webrtcState: ( state )=>{
@@ -353,8 +392,17 @@ export class JanusCast extends Broadcast{
     async createOffer():Promise<string>{
         this.state = 'offering';
         return new Promise<string>( (resolve, reject)=>{
+            const d = new Devices();
+
             this.roomPlugin.createOffer({
-                media: { audioRecv: false, videoRecv: false, audioSend: true, videoSend: true }, 
+                media: { 
+                    audioRecv: false, 
+                    videoRecv: false, 
+                    audioSend: true, 
+                    videoSend: true,
+                    audio: d.selectedMicrophone ? { deviceId: d.selectedMicrophone } : true,
+                    video: d.selectedCamera ? { deviceId: d.selectedCamera } : true
+                }, 
                 success: (jsep:string)=> resolve( jsep ),
                 error: (error:any)=>reject(error)
             })
@@ -363,7 +411,7 @@ export class JanusCast extends Broadcast{
 
     async configure(jsep:string):Promise<string>{
         this.state = 'configuring';
-        
+
         return new Promise<string>( (resolve, reject)=>{
             this.roomPlugin.send({
                 message: {
@@ -446,11 +494,27 @@ export class JanusCast extends Broadcast{
         if (!this.video){
             return;
         }
+
         try{
             this.video.srcObject = stream;
         }catch( e ){
             this.video.src = URL.createObjectURL(stream);
         }
+     
+        //now set the cameraname to the one that's actually... the one.
+        const d = new Devices();
+        stream.getTracks().forEach( track =>{
+            switch( track.kind ){
+                case "video":
+                    d.setCameraName( track.label );
+                    break;
+                case "audio":
+                    d.setMicrophoneName( track.label );
+                    break;
+                default:
+                    this.addLog({event:"unknownDeviceKind", kind:track.kind, label: track.label })
+            } 
+        });
     }
 
     onRoomMessage( message:JanusJS.Message, jsep?:JanusJS.JSEP ){        
