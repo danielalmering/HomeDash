@@ -32,7 +32,10 @@ export class JanusCast extends Broadcast{
             return;
         }
 
-        if (value === new Devices().selectedMicrophone){
+        const d = new Devices();
+
+        //if oldValue was false, we should continue anyway to at least reconfigure
+        if (oldValue && value === d.selectedMicrophone){
             return;
         }
 
@@ -40,8 +43,8 @@ export class JanusCast extends Broadcast{
 
         this.addLog( {event:"micchange", old:oldValue, current: value} );
 
-        //only select a specific device if the device id is given
-        if (typeof value == "string"){
+        //only select a specific device if the device id is given, and it's different from the current mic
+        if (typeof value == "string" && value != d.selectedMicrophone){
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: { deviceId: { exact: value } }
             })
