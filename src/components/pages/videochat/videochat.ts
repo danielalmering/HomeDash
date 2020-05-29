@@ -174,6 +174,7 @@ export default class VideoChat extends Vue {
         const platform = Platform.parse(navigator.userAgent);
 
         let janusPercentage = parseInt(this.$store.state.session.activeSessionData.streamJanusBackProc);
+        //let janusPercentage = 100;
         if (janusPercentage < 0){
             janusPercentage = 0;
         } else if ( janusPercentage > 100){
@@ -191,11 +192,6 @@ export default class VideoChat extends Vue {
             if(Math.random() < (janusPercentage/100)){
                 return 'janusBroadcast';
             } else {
-                //Begin apple fixes
-                //Disable iphone for now
-                if(isIPhone(platform)){
-                    return 'none';
-                }
 
                 //use vp8 if the browser is safari and above > 12.1
                 if(isSafari(platform)){
