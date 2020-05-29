@@ -32,7 +32,10 @@ export class JanusCast extends Broadcast{
             return;
         }
 
-        if (value === new Devices().selectedMicrophone){
+        const d = new Devices();
+
+        //if oldValue was false, we should continue anyway to at least reconfigure
+        if (oldValue && value === d.selectedMicrophone){
             return;
         }
 
@@ -40,8 +43,8 @@ export class JanusCast extends Broadcast{
 
         this.addLog( {event:"micchange", old:oldValue, current: value} );
 
-        //only select a specific device if the device id is given
-        if (typeof value == "string"){
+        //only select a specific device if the device id is given, and it's different from the current mic
+        if (typeof value == "string" && value != d.selectedMicrophone){
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: { deviceId: { exact: value } }
             })
@@ -232,7 +235,7 @@ export class JanusCast extends Broadcast{
             let jsep = await this.createOffer();
             jsep = await this.configure(jsep);
             await this.handleResponse( jsep );
-
+            await this.setBandwidth();
             this.state = 'active';
         } catch( error ){
             this.onError( error );
@@ -439,6 +442,24 @@ export class JanusCast extends Broadcast{
         })
     }
 
+    async setBandwidth():Promise<string>{
+        this.state = 'bandwidthing';
+
+        return new Promise<string>( (resolve, reject)=>{
+            this.roomPlugin.send({
+                message: {
+                    request: 'configure', 
+                    bitrate: 512 * 1000//kbits
+                },
+                error: (message)=>{
+                    reject(message);
+                    this._resolver = null;
+                }
+            })
+            this._resolver = { resolve, reject };
+        })
+    }
+
     video:HTMLVideoElement;
 
     initializeElement( e:any ){
@@ -585,6 +606,7 @@ export class JanusCast extends Broadcast{
         'offering',
         'configuring',
         'setting_remote_description',
+        'bandwidthing',
         'active',
         'destroying'
     ];
