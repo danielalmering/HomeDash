@@ -224,8 +224,9 @@ export default class Profile extends Vue {
         this.displayPic = id;
     }
 
+    // Originally was 1070, fix for 1920x1080 screens (1055 Works in Firefox/Edge | 1035 works in Chrome)
     minHeight(){
-        this.displaySlider = (window.outerHeight > 1070) ? true : false;
+        this.displaySlider = (window.outerHeight > 1035) ? true : false;
     }
 
     async startVoyeur(payload: { ivrCode?: string }){
