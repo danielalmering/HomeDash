@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import jsmpeg from 'jsmpeg';
 
 import {Component, Watch} from 'vue-property-decorator';
 import {Route} from 'vue-router';
@@ -10,9 +9,11 @@ import {Rtmp as RTMPPlay} from './streams/rtmp';
 import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
-import {WebRTC as WRTCBroadcast} from './broadcast/webrtc';
+import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
+import { JanusCast } from './broadcast/janus';
 import Confirmations from '../../layout/confirmations/confirmations';
 import {Devices, VideoCodec} from 'typertc';
+import config from '../../../config';
 
 import './videochat.scss';
 import WithRender from './videochat.tpl.html';
@@ -35,6 +36,8 @@ import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
 import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
 import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
+import notificationSocket from '../../../socket';
+import { UserRole } from '../../../models/User';
 
 const Platform = require('platform');
 //import Platform from 'platform';
@@ -63,6 +66,7 @@ Component.registerHooks([
         confirmation: Confirmations,
         rtmpBroadcast: RTMPBroadcast,
         webrtcBroadcast: WRTCBroadcast,
+        janusBroadcast: JanusCast
     }
 })
 export default class VideoChat extends Vue {
@@ -83,8 +87,8 @@ export default class VideoChat extends Vue {
 
     stateMessages: string[] = [];
 
-    cameras: {id: string, name: string, selected: boolean}[];
-    microphones: {id: string, name: string, selected: boolean}[];
+    cameras: {id: string, name: string, selected: boolean}[] = [];
+    microphones: {id: string, name: string, selected: boolean}[] = [];
 
     askToLeave: boolean = false;
     openModal = openModal;
@@ -146,8 +150,19 @@ export default class VideoChat extends Vue {
         }
     }
 
-    get broadcastType(): string{
+    private _broadcastType:string  = 'none';
 
+    get broadcastType():string{
+        if (this._broadcastType && this._broadcastType != 'none'){
+            return this._broadcastType;
+        }
+
+        this._broadcastType = this.chooseBroadcastType();
+
+        return this._broadcastType;
+    }
+
+    chooseBroadcastType():string{
         if (!this.userHasCam){
             return 'none';
         }
@@ -158,29 +173,43 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
+        let janusPercentage = parseInt(this.$store.state.session.activeSessionData.streamJanusBackProc);
+        //let janusPercentage = 100;
+        if (janusPercentage < 0){
+            janusPercentage = 0;
+        } else if ( janusPercentage > 100){
+            janusPercentage = 100;
+        }
+
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
-            //Begin apple fixes
-            //Disable iphone for now
+            //always enable janus on iphones
+            //would be weird to only sometimes have cam enabled
             if(isIPhone(platform)){
-                return 'none';
+                return 'janusBroadcast';
             }
+            //throw the dice to see if janus will be chosen as publisher
+            if(Math.random() < (janusPercentage/100)){
+                return 'janusBroadcast';
+            } else {
 
-            //use vp8 if the browser is safari and above > 12.1
-            if(isSafari(platform)){
-                if(isWebRTCPerformer(this.performer)){ //performer needs to use the webrtc transport
-                    this.broadcasting.videoCodec = VideoCodec.VP8;
-                } else { //else old skool flash if available
-                    if(noFlash(platform)) {
-                       return 'none';
+                //use vp8 if the browser is safari and above > 12.1
+                if(isSafari(platform)){
+                    if(isWebRTCPerformer(this.performer)){ //performer needs to use the webrtc transport
+                        this.broadcasting.videoCodec = VideoCodec.VP8;
+                    } else { //else old skool flash if available
+                        if(noFlash(platform)) {
+                            return 'none';
+                        }
+
+                        return 'rtmpBroadcast';
                     }
-
-                    return 'rtmpBroadcast';
                 }
-            }
-            //end apple fixes
+                //end apple fixes
 
-            return 'webrtcBroadcast';
+                return 'webrtcBroadcast';
+            }
+
         }
 
         //disabled camback on mobile for now
@@ -192,11 +221,22 @@ export default class VideoChat extends Vue {
         return 'rtmpBroadcast';
     }
 
-    get wowza(): string | undefined{
+    get playServer():string | undefined{
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
+
         return this.$store.state.session.activeSessionData.wowza;
+    }
+
+    get castServer():string | undefined{      
+        if (this._broadcastType == 'janusBroadcast'){
+            return config.Janus;
+        } else if (!this.$store.state.session.activeSessionData){
+                return undefined;
+        } else { 
+            return this.$store.state.session.activeSessionData.wowza;
+        }
     }
 
     get publishStream(): string | undefined{
@@ -281,7 +321,6 @@ export default class VideoChat extends Vue {
     removeSubscriptions = (performer: Performer) => removeSubscriptions(this.$store.state.authentication.user.id, performer.id).then(() => performer.isSubscribed = false);
 
     mounted(){
-        const self = this;
 
         if(this.$store.state.session.activeState !== State.Initializing){
             this.$router.push({ name: 'Profile', params: { id: this.$route.params.id } });
@@ -398,26 +437,69 @@ export default class VideoChat extends Vue {
 
     broadcastStateChange(state: string){
         this.stateMessages.push(state);
+        let actives: string[] = [];
         if (state == 'active'){
             //make sure only the first time the state turns 'active', the active state is counted.
-            const actives = this.stateMessages.filter( msg => msg == 'active');
-            if (actives.length == 1){
-                setKPI('cl_camback_active');
+            actives = this.stateMessages.filter( msg => msg == 'active');
+            if (actives.length==1){
+                setKPI('cl_camback_active');   
             }
         }
+
+        //some exceptions for Janus down here..
+        if (this._broadcastType == 'janusBroadcast'){
+            if (state == 'active' && actives.length==1){
+                //notify the performer this room is ready for camming back..
+                // type: "ACTIVATED",
+                // value: ""
+                // data.clientType
+                notificationSocket.sendEvent(
+                    {
+                        receiverType: UserRole.Performer,
+                        receiverId: this.$store.state.session.activePerformer.id,
+                        event: 'clientstream',
+                        content: {
+                            type: 'ACTIVATED',
+                            value: null,
+                            clientType: 'janus'
+                        }
+                    }
+                )
+            } else if (state == 'connected' ){
+                //since there's no signaling of the media server to the client, notify a successfull connect here.. for compatibility's sake.
+                setKPI('cl_camback_connected');
+            }
+
+        }
+
     }
 
     broadcastError(error: any){
         this.stateMessages.push(error);
+        let msg = '';
         if( typeof error == 'string'){
+            msg = error;
             setKPI('cl_camback_error', {message: error});
         } else if ('message' in error) {
+            msg = error.message;
             setKPI('cl_camback_error', {message: error.message});
         } else if ('name' in error){
+            msg = error.message;
             setKPI('cl_camback_error', {message: error.name});
         } else {
+            msg = 'c2c-failed'
             setKPI('cl_camback_error');
         }
+        //remove the smallscreen
+        this.broadcasting.cam = false;
+
+        if (error.name == 'NotAllowedError' ){
+            this.$store.dispatch('errorMessage', 'videochat.alerts.permission-denied');
+        } else {
+            this.$store.dispatch('errorMessage', msg);
+        }
+        
+        
     }
 
     viewerStateChange(state: string){
@@ -457,20 +539,26 @@ export default class VideoChat extends Vue {
                 }
             } else {
                 const devices = new Devices();
+                
                 devices.getCameras().then( cams => {
                     this.cameras = cams;
                     const selected = this.cameras.find(cam => cam.selected);
+                    this.cameras.forEach( cam => console.log(cam.name, cam.id) );
                     if (selected && this.broadcasting.cam !== selected.id){
                         this.broadcasting.cam = selected.id;
                     }
                 });
-                devices.getMicrophones().then( mics => {
-                    this.microphones = mics;
-                    const selected = this.microphones.find(mic => mic.selected);
-                    if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
-                        this.broadcasting.mic = selected.id;
-                    }
-                });
+                
+
+                //if (this.microphones.length == 0){
+                    devices.getMicrophones().then( mics => {
+                        this.microphones = mics;
+                        const selected = this.microphones.find(mic => mic.selected);
+                        if(selected && this.broadcasting.mic && this.broadcasting.mic !== selected.id){
+                            this.broadcasting.mic = selected.id;
+                        }
+                    });
+                //}
             }
         }
     }

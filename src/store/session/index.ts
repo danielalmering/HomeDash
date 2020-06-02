@@ -67,7 +67,6 @@ export interface VideoEventSocketMessage extends VideoEventSocketMessageContent 
 }
 
 notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
-    console.log('VIDEO EVENT MOTHERFUCKER ', data);
     rootState.dispatch('handleVideoEventSocket', data);
 });
 
