@@ -44,7 +44,8 @@ export default class Editdata extends Vue {
             mobile_number: {
                 isCorrectPhone(phonenumber: string) {
                     const regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
-                    return regex.test(phonenumber);
+                    const hasphone = phonenumber.length ? regex.test(phonenumber) : true;
+                    return hasphone;
                 }
             }
         }

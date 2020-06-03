@@ -9,7 +9,7 @@ import {Rtmp as RTMPPlay} from './streams/rtmp';
 import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
-import {WebRTC as WRTCBroadcast} from './broadcast/webrtc'
+import {WebRTC as WRTCBroadcast} from './broadcast/webrtc';
 import { JanusCast } from './broadcast/janus';
 import Confirmations from '../../layout/confirmations/confirmations';
 import {Devices, VideoCodec} from 'typertc';
@@ -150,9 +150,9 @@ export default class VideoChat extends Vue {
         }
     }
 
-    private _broadcastType:string  = 'none';
+    private _broadcastType: string  = 'none';
 
-    get broadcastType():string{
+    get broadcastType(): string{
         if (this._broadcastType && this._broadcastType != 'none'){
             return this._broadcastType;
         }
@@ -162,7 +162,7 @@ export default class VideoChat extends Vue {
         return this._broadcastType;
     }
 
-    chooseBroadcastType():string{
+    chooseBroadcastType(): string{
         if (!this.userHasCam){
             return 'none';
         }
@@ -189,7 +189,7 @@ export default class VideoChat extends Vue {
                 return 'janusBroadcast';
             }
             //throw the dice to see if janus will be chosen as publisher
-            if(Math.random() < (janusPercentage/100)){
+            if(Math.random() < (janusPercentage / 100)){
                 return 'janusBroadcast';
             } else {
 
@@ -221,7 +221,7 @@ export default class VideoChat extends Vue {
         return 'rtmpBroadcast';
     }
 
-    get playServer():string | undefined{
+    get playServer(): string | undefined {
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
@@ -229,12 +229,12 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionData.wowza;
     }
 
-    get castServer():string | undefined{      
+    get castServer(): string | undefined {
         if (this._broadcastType == 'janusBroadcast'){
             return config.Janus;
         } else if (!this.$store.state.session.activeSessionData){
-                return undefined;
-        } else { 
+            return undefined;
+        } else {
             return this.$store.state.session.activeSessionData.wowza;
         }
     }
@@ -441,14 +441,14 @@ export default class VideoChat extends Vue {
         if (state == 'active'){
             //make sure only the first time the state turns 'active', the active state is counted.
             actives = this.stateMessages.filter( msg => msg == 'active');
-            if (actives.length==1){
-                setKPI('cl_camback_active');   
+            if (actives.length == 1){
+                setKPI('cl_camback_active');
             }
         }
 
         //some exceptions for Janus down here..
         if (this._broadcastType == 'janusBroadcast'){
-            if (state == 'active' && actives.length==1){
+            if (state == 'active' && actives.length == 1){
                 //notify the performer this room is ready for camming back..
                 // type: "ACTIVATED",
                 // value: ""
@@ -464,7 +464,7 @@ export default class VideoChat extends Vue {
                             clientType: 'janus'
                         }
                     }
-                )
+                );
             } else if (state == 'connected' ){
                 //since there's no signaling of the media server to the client, notify a successfull connect here.. for compatibility's sake.
                 setKPI('cl_camback_connected');
@@ -487,7 +487,7 @@ export default class VideoChat extends Vue {
             msg = error.message;
             setKPI('cl_camback_error', {message: error.name});
         } else {
-            msg = 'c2c-failed'
+            msg = 'c2c-failed';
             setKPI('cl_camback_error');
         }
         //remove the smallscreen
@@ -498,8 +498,6 @@ export default class VideoChat extends Vue {
         } else {
             this.$store.dispatch('errorMessage', msg);
         }
-        
-        
     }
 
     viewerStateChange(state: string){
@@ -539,7 +537,7 @@ export default class VideoChat extends Vue {
                 }
             } else {
                 const devices = new Devices();
-                
+
                 devices.getCameras().then( cams => {
                     this.cameras = cams;
                     const selected = this.cameras.find(cam => cam.selected);
@@ -548,7 +546,6 @@ export default class VideoChat extends Vue {
                         this.broadcasting.cam = selected.id;
                     }
                 });
-                
 
                 //if (this.microphones.length == 0){
                     devices.getMicrophones().then( mics => {
