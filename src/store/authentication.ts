@@ -89,13 +89,13 @@ const authenticationStore: Module<AuthState, RootState> = {
             notificationSocket.connect();
         },
         async logout(store: AuthContext){
-            store.commit('setUser', undefined);
             const logoutResult = await fetch(`${config.BaseUrl}/auth/logout`, {
                 credentials: 'include'
             });
 
+            await router.push({ name: 'Performers' });
+            store.commit('setUser', undefined);
             await store.dispatch('getSession', false);
-            router.push({ name: 'Performers' });
 
             notificationSocket.disconnect();
             notificationSocket.connect();
@@ -168,7 +168,6 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             await store.dispatch('setLanguage', sessionData.language);
 
-            
             if(!notificationSocket.isConnected() && urlValid()){
                 notificationSocket.connect();
             }

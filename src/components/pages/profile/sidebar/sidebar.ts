@@ -96,7 +96,7 @@ export default class Sidebar extends Vue {
     }
 
     get InSession(){
-        return (this.$store.state.session.activeState === 'active') ? true : false; 
+        return (this.$store.state.session.activeState === 'active') ? true : false;
     }
 
     get performer(){

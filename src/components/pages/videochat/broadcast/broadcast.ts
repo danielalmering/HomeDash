@@ -20,7 +20,7 @@ export default class Broadcast extends Stream{
 
     @Prop() quality: Quality = Quality.MEDIUM;
 
-    @Prop({default:false, required:false}) debug: boolean;
+    @Prop({default: false, required: false}) debug: boolean;
 
     public onStateChange(value: string){
         this.$emit('stateChange', value);
