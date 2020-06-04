@@ -612,7 +612,7 @@ export class JanusCast extends Broadcast{
     private _resolver: {resolve: Function, reject: Function} | null = null;
 
     public onError(message: string){
-        this.addLog({event: 'error', message});
-        this.$emit('error', message);
+        this.addLog({event:"error", message});
+        this.$emit('error', message.replace(/ /g, '-'));
     }
 }
