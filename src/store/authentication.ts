@@ -93,9 +93,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                 credentials: 'include'
             });
 
-            if(router.currentRoute.name != 'Performers'){
-                await router.push({ name: 'Performers' });
-            }
+            await router.push({ name: 'Performers' });
             store.commit('setUser', undefined);
             await store.dispatch('getSession', false);
 
