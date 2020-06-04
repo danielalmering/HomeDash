@@ -615,6 +615,6 @@ export class JanusCast extends Broadcast{
 
     public onError(message: string){
         this.addLog({event:"error", message});
-        this.$emit('error', message);
+        this.$emit('error', message.replace(/ /g, '-'));
     }
 }
