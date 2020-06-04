@@ -1,24 +1,30 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
       "target": "es5",
       "sourceMap": true,
       "experimentalDecorators": true,
       "allowSyntheticDefaultImports": true,
-      "preserveSymlinks": true,
       "noImplicitAny": true,
       "noImplicitReturns": true,
+      "preserveSymlinks": true,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
       // "noImplicitThis": true,
       "lib": [
-        "dom",
-        "es5",
-        "es2015",
-        "es2015.promise"
+      "dom",
+      "es5",
+      "es2015",
+      "es2015.promise"
       ],
-      "strictNullChecks": true,
+      "strictNullChecks": false,
+      "suppressImplicitAnyIndexErrors": true,
       "moduleResolution": "node",
       "module": "es2015"
-    },
-    "exclude": [
+  },
+  "include": [
+      "./src/**/*.ts"
+  ],
+  "exclude": [
       "node_modules"
-    ]
-  }
+  ]
+}

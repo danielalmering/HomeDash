@@ -1,7 +1,6 @@
-import { Component, Prop } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import Vue from 'vue';
 
-import config from '../../../../config';
 import WithRender from './avg.tpl.html';
 import { getPersonal } from 'sensejs/consumer';
 
@@ -16,8 +15,8 @@ interface PersonalData {
 export default class Avg extends Vue {
 
     personal: PersonalData = {
-        email: "", ip: "", phoneNumbers:[]
-    }
+        email: '', ip: '', phoneNumbers: []
+    };
 
     mounted(){
         this.loadPersonal();
@@ -29,7 +28,7 @@ export default class Avg extends Vue {
         if(error){
             return;
         }
-        
+
         this.personal = result;
     }
 

@@ -1,6 +1,6 @@
 import { Store } from 'vuex';
 import { RootState } from '../index';
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/browser';
 
 const sentryPlugin = (store: Store<RootState>) => {
 

@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
-import { Route } from 'vue-router';
-import Component from 'vue-class-component';
 import Page from '../components/pages/page';
 import Performer from '../components/pages/performer';
 import Profile from '../components/pages/profile/profile';
@@ -25,9 +23,7 @@ import Textpages from '../components/pages/textpages/textpages';
 import VideoChat from '../components/pages/videochat/videochat';
 import Voyeur from '../components/pages/voyeur/voyeur';
 
-import rootStore from '../store';
 import { authenticatedInterceptor, modalInterceptor, confirmInterceptor, seoInterceptor, hotjarInterceptor, scrollInterceptor, socketInterceptor, userLoadedInterceptor } from './interceptors';
-import { scrollToTop } from 'sensejs/util/dom';
 
 Vue.use(Router);
 
@@ -234,9 +230,9 @@ router.beforeEach(socketInterceptor);
 router.afterEach(scrollInterceptor); //Scroll to top or position Y after page changes
 router.afterEach(seoInterceptor);
 
-function makeRoutesStrict(routes: RouteConfig[]){
+function makeRoutesStrict(routess: RouteConfig[]){
 
-    return routes.map(route => {
+    return routess.map(route => {
         route.pathToRegexpOptions = {
             strict: true
         };

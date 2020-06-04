@@ -1,14 +1,3 @@
-<template>
-    <div id="app">
-        <modal-wrapper></modal-wrapper>
-        <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
-        <router-view/>
-        <agecheck v-if="displayAgecheck" v-on:close="displayAgecheck = false"></agecheck>
-        <alerts></alerts>
-    </div>
-</template>
-
-<script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
@@ -17,14 +6,18 @@ import notificationSocket from './socket';
 import { SocketMessageEventArgs } from './models/Socket';
 import { getParameterByName } from './utils/main.util';
 
-import alerts from './components/layout/Alerts.vue';
-import cookies from './components/layout/Cookies.vue';
-import agecheck from './components/layout/Agecheck.vue';
+import alerts from './components/layout/alerts/alerts';
+import cookies from './components/layout/cookies/cookies';
+import agecheck from './components/layout/agecheck/agecheck';
+import VueRouter from 'vue-router';
 
 import config from './config';
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/browser';
 import 'whatwg-fetch';
 
+import WithRender from './app.tpl.html';
+
+@WithRender
 @Component({
     components: {
         modalWrapper: modalWrapper,
@@ -58,6 +51,12 @@ export default class Cookies extends Vue {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
         });
 
+        // Removes Navigation Duplicated error (caused by update routing)
+        const originalPush = VueRouter.prototype.push;
+        VueRouter.prototype.push = function push(location: any) {
+            return originalPush.call(this, location).catch((err: any) => err);
+        }
+
         // Geo Safe check
         const geoResult = await fetch(`${config.BaseUrl}/loc`, { credentials: 'include'});
         const geoLocations = ['DE', 'BE', 'NL', 'LU'];
@@ -71,7 +70,7 @@ export default class Cookies extends Vue {
             // Localstorage check
             window.localStorage.setItem(`${config.StorageKey}.localStorage`, 'true');
             window.localStorage.removeItem(`${config.StorageKey}.localStorage`);
-            
+
             // Cookies check
             const cookiesAccepted = (window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) !== null ) ? window.localStorage.getItem(`${config.StorageKey}.cookiesAccepted`) : false;
             this.displayCookies = !(cookiesAccepted && cookiesAccepted === 'true');
@@ -83,7 +82,7 @@ export default class Cookies extends Vue {
         } catch(error){
             if(error.name === 'QuotaExceededError' || error.name === 'SecurityError'){
                 // Switch to sessionStore when IOS for now
-                Object.assign(window.localStorage, window.sessionStorage);                
+                Object.assign(window.localStorage, window.sessionStorage);
                 this.displayCookies = true;
                 this.displayAgecheck = config.locale.AgeCheck;
             } else {
@@ -91,7 +90,7 @@ export default class Cookies extends Vue {
 
                 //use default values which is really enoying for user
                 this.displayCookies = true;
-                this.displayAgecheck = config.locale.AgeCheck;            
+                this.displayAgecheck = config.locale.AgeCheck;
             }
         }
 
@@ -122,4 +121,3 @@ export default class Cookies extends Vue {
         }
     }
 }
-</script>

@@ -1,10 +1,8 @@
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
-
-import config from '../../../config';
 import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
-import Confirmation from '../../layout/Confirmations.vue';
+import Confirmation from '../../layout/confirmations/confirmations';
 
 require('../../../../static/nanoplayer.4.0.7.min.js');
 
@@ -15,9 +13,9 @@ import { Performer } from 'sensejs/performer/performer.model';
 import WithRender from './voyeur.tpl.html';
 import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import {NanoCosmosPossible, webrtcPossible, isIE} from "../../../utils/video.util";
-import {WebRTC} from "../videochat/streams/webrtc";
-import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
+import {NanoCosmosPossible, isIE} from '../../../utils/video.util';
+import {WebRTC} from '../videochat/streams/webrtc';
+import { webrtcPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
 
 const Platform = require('platform');
 
@@ -80,25 +78,20 @@ export default class Voyeur extends Vue {
         };
     }
 
-    get streamTransportType(): string | undefined{
+    get streamTransportType(): string | undefined {
         const mainPerformer = this.performerData;
 
-        if(mainPerformer == null){
-            return undefined;            
-        }
-
-        if(!mainPerformer && mainPerformer === undefined){
-            return undefined; 
+        if(mainPerformer === undefined || !mainPerformer){
+            return undefined;
         }
 
         if (!mainPerformer.mediaId) {
             return undefined;
         }
 
-        const playStream = mainPerformer.playStream ? mainPerformer.playStream: undefined;
+        const playStream = mainPerformer.playStream ? mainPerformer.playStream : undefined;
         const platform = Platform.parse(navigator.userAgent);
-
-        let mediaId = mainPerformer.mediaId;
+        const mediaId = mainPerformer.mediaId;
 
         switch(mediaId) {
             case 0:
@@ -132,7 +125,6 @@ export default class Voyeur extends Vue {
                 }
             });
         }
-        
     }
 
     async close(){

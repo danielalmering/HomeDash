@@ -67,7 +67,6 @@ export interface VideoEventSocketMessage extends VideoEventSocketMessageContent 
 }
 
 notificationSocket.subscribe('videoChat', (data: VideoEventSocketMessage) => {
-    console.log('VIDEO EVENT MOTHERFUCKER ', data);
     rootState.dispatch('handleVideoEventSocket', data);
 });
 
@@ -149,7 +148,7 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
         //all other scenario's while pending should result in undefined
         {
             when: { inState: State.Pending },
-            result: undefined
+            result: (undefined as any)
         },
         {
             when: { message: 'CLICK', value: false },
@@ -172,9 +171,9 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
 const sessionStore: Module<SessionState, RootState> = {
     state: {
         activeState: State.Idle,
-        activeSessionType: null,
-        activePerformer: null,
-        activeSessionData: null,
+        activeSessionType: undefined,
+        activePerformer: undefined,
+        activeSessionData: undefined,
         activeDisplayName: '',
         activeIvrCode: undefined,
         activePaymentType: undefined,

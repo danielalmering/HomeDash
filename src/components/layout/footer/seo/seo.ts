@@ -12,7 +12,7 @@ import { getCategory } from 'sensejs/consumer/category';
 @Component
 export default class Seo extends Vue {
 
-    seoMain: any;
+    seoMain: any | boolean = false;
     seoTabs : SeoText[] = [];
     selectedTab: number = 0;
 
@@ -32,7 +32,7 @@ export default class Seo extends Vue {
         return `${config.ImageUrl}categories/${location}`;
     }
 
-    get hasTabs():boolean{
+    get hasTabs(): boolean{
         if (!this.seoTabs){
             return false;
         }

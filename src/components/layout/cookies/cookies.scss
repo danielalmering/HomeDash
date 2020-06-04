@@ -1,39 +1,7 @@
-<template>
-    <div class="cookies">
-        <div class="container-fluid">
-            <div class="cookies__text">
-                <p class="cookies__text-link" v-html="$t('footer.cookies')"></p>
-                <a v-on:click="acceptCookies" class="cookies__text-btn"></a>
-            </div>
-        </div>
-    </div>
-</template>
-
-<script lang="ts">
-import Vue from 'vue';
-import config from '../../config';
-
-import { Component } from 'vue-property-decorator';
-
-@Component
-export default class Cookies extends Vue {
-
-    acceptCookies(){
-        if(localStorage) {
-            localStorage.setItem(`${config.StorageKey}.cookiesAccepted`, 'true');
-        }
-
-        this.$emit('close');
-    }
-}
-</script>
-
-<style lang="scss">
-
 // Imports
 
-@import "../../styles/_mixins.scss";
-@import "../../styles/_settings.scss";
+@import "../../../styles/_mixins.scss";
+@import "../../../styles/_settings.scss";
 
 .cookies {
     display: table;
@@ -71,5 +39,3 @@ export default class Cookies extends Vue {
         }
     }
 }
-
-</style>

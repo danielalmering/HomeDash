@@ -13,22 +13,25 @@
         <div class="form">
             <form v-on:submit.prevent="send">
                 <div class="col-xs-12">
-                    <div class="form__group">
+                    <div class="form__group" :class="{ 'form-group--error': $v.contact.name.$error }">
                         <label v-t="'contact.name'"></label>
-                        <input v-model="contact.name" type="text" class="col-xs-12" required>
+                        <input v-model="$v.contact.name.$model" type="text" class="col-xs-12" required>
+                        <span class="form__group-alert" v-if="$v.contact.name.$dirty && !$v.contact.name.required" v-t="'contact.alerts.errorinvalidName'"></span>
                     </div>
-                    <div class="form__group">
+                    <div class="form__group" :class="{ 'form-group--error': $v.contact.email.$error }">
                         <label v-t="'contact.email'"></label>
-                        <input type="email" v-validate="'email'" v-model="contact.email" name="email" class="col-xs-12" required>
-                        <span v-show="errors.has('email') && contact.email != ''" class="form__group-alert" v-t="'account.alerts.errorinvalidEmail'"></span>
+                        <input type="email" v-model="$v.contact.email.$model" name="email" class="col-xs-12" required>
+                        <span class="form__group-alert" v-if="$v.contact.email.$dirty && !$v.contact.email.email" v-t="'contact.alerts.errorinvalidEmail'"></span>
                     </div>
-                    <div class="form__group">
+                    <div class="form__group" :class="{ 'form-group--error': $v.contact.subject.$error }">
                         <label v-t="'contact.subject'"></label>
-                        <input v-model="contact.subject" type="text" class="col-xs-12" required>
+                        <input v-model="$v.contact.subject.$model" type="text" class="col-xs-12" required>
+                        <span class="form__group-alert" v-if="$v.contact.subject.$dirty && !$v.contact.subject.required" v-t="'contact.alerts.errorinvalidSubject'"></span>
                     </div>
-                    <div class="form__group">
+                    <div class="form__group" :class="{ 'form-group--error': $v.contact.message.$error }">
                         <label v-t="'contact.message'"></label>
-                        <textarea rows="10" v-model="contact.message"></textarea>
+                        <textarea rows="10" v-model="$v.contact.message.$model" required></textarea>
+                        <span class="form__group-alert" v-if="$v.contact.message.$dirty && !$v.contact.message.required" v-t="'contact.alerts.errorinvalidMessage'"></span>
                     </div>
                 </div>
                 <div class="col-xs-12">

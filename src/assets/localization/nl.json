@@ -337,6 +337,7 @@
             "errorinvalidEmail": "U heeft geen geldig e-mailadres ingevuld!",
             "errorinvalidPhone": "U heeft geen geldig telefoonnummer ingevuld!",
             "errorRemoveAccount": "Er is fout opgetreden bij het verwijderen!",
+            "errorinvalidUsername": "Er is geen geldige gebruikersnaam ingevuld!",
             "successRemoveAccount": "U account is succesvol verwijderd!"
         }
     },
@@ -362,7 +363,9 @@
                 "PLAYER_END": "U heeft de sessie beëindigd.",
                 "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd.",
                 "PEEK_SWITCH": "Gewisseld"
-            }
+            },
+            "c2c-failed": "Fout bij het terugcammen. Probeer het opnieuw.",
+            "permission-denied": "U heeft uw camera geblokkeerd."
         }
     },
     "voyeur": {
@@ -455,7 +458,11 @@
         "message": "Bericht:*",
         "alerts": {
             "errorSend": "Er is een fout opgetreden bij het verzenden",
-            "successSend": "Bericht is met succes verzonden"
+            "successSend": "Bericht is met succes verzonden",
+            "errorinvalidName": "U heeft geen geldige naam ingevuld!",
+            "errorinvalidEmail": "U heeft geen geldig emailadres ingevuld!",
+            "errorinvalidSubject": "U heeft geen geldig onderwerp ingevuld!",
+            "errorinvalidMessage": "U heeft geen geldig bericht ingevuld!"
         }
     },
     "textpages": {
