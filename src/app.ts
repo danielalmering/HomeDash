@@ -9,6 +9,7 @@ import { getParameterByName } from './utils/main.util';
 import alerts from './components/layout/alerts/alerts';
 import cookies from './components/layout/cookies/cookies';
 import agecheck from './components/layout/agecheck/agecheck';
+import VueRouter from 'vue-router';
 
 import config from './config';
 import * as Sentry from '@sentry/browser';
@@ -49,6 +50,12 @@ export default class Cookies extends Vue {
         notificationSocket.subscribe('message', (data: SocketMessageEventArgs) => {
             this.$store.dispatch('successMessage', 'general.successNewMessage');
         });
+
+        // Removes Navigation Duplicated error (caused by update routing)
+        const originalPush = VueRouter.prototype.push;
+        VueRouter.prototype.push = function push(location: any) {
+            return originalPush.call(this, location).catch((err: any) => err);
+        }
 
         // Geo Safe check
         const geoResult = await fetch(`${config.BaseUrl}/loc`, { credentials: 'include'});

@@ -5,7 +5,7 @@ import { default as socket } from '../../../../socket';
 import { Devices } from 'typertc';
 
 interface Room{
-    room:number;
+    room: number;
     id: number;
     private_id: number;
     publishers?: {
@@ -41,28 +41,28 @@ export class JanusCast extends Broadcast{
 
         this.nextMic = value;
 
-        this.addLog( {event:"micchange", old:oldValue, current: value} );
+        this.addLog( {event: 'micchange', old: oldValue, current: value} );
 
         //only select a specific device if the device id is given, and it's different from the current mic
-        if (typeof value == "string" && value != d.selectedMicrophone){
+        if (typeof value == 'string' && value != d.selectedMicrophone){
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: { deviceId: { exact: value } }
-            })
+            });
 
             if (!stream){
-                this.addLog({event:"micchange", name:"mic not found"});
-                this.nextMic = undefined
+                this.addLog({event: 'micchange', name: 'mic not found'});
+                this.nextMic = undefined;
                 return;
             }
 
             const track = stream.getAudioTracks()[0];
-            const pc:RTCPeerConnection = this.roomPlugin["webrtcStuff"].pc;
+            const pc: RTCPeerConnection = this.roomPlugin['webrtcStuff'].pc;
             const sender = pc.getSenders().find( s => s.track.kind == track.kind);
 
             if (!sender){
-                this.addLog({ event:"micchange", name:"sender not found" });
+                this.addLog({ event: 'micchange', name: 'sender not found' });
                 this.nextMic = undefined;
-                return; 
+                return;
             }
 
             await sender.replaceTrack( track );
@@ -74,7 +74,7 @@ export class JanusCast extends Broadcast{
 
             new Devices().selectedMicrophone = value;
         }
-       
+
         //only re-configure if the mic is turned on or off
         if (!!oldValue != !!value){
             this.roomPlugin.send( {
@@ -96,7 +96,7 @@ export class JanusCast extends Broadcast{
             return;
         }
 
-        //prevents a flicker if the value changes from 'true' to an actual deviceId, 
+        //prevents a flicker if the value changes from 'true' to an actual deviceId,
         //which actually is the currently selected device
         if (value == new Devices().selectedCamera){
             return;
@@ -104,7 +104,7 @@ export class JanusCast extends Broadcast{
 
         this.nextCam = value;
 
-        this.addLog( {event:"camchange", old:oldValue, current: value} );
+        this.addLog( {event: 'camchange', old: oldValue, current: value} );
 
         if (typeof value !== 'string'){
             return;
@@ -115,18 +115,18 @@ export class JanusCast extends Broadcast{
         });
 
         if (!stream){
-            this.addLog({ event:"camchange", name:"cam not found" });
+            this.addLog({ event: 'camchange', name: 'cam not found' });
             this.nextCam = undefined;
             return;
         }
 
         const track = stream.getVideoTracks()[0];
-        const pc:RTCPeerConnection = this.roomPlugin["webrtcStuff"].pc;
-        
+        const pc: RTCPeerConnection = this.roomPlugin['webrtcStuff'].pc;
+
         const sender = pc.getSenders().find( s => s.track.kind == track.kind);
 
         if (!sender){
-            this.addLog({ event:"camchange", name:"sender not found" });
+            this.addLog({ event: 'camchange', name: 'sender not found' });
             this.nextCam = undefined;
             return ;
         }
@@ -144,9 +144,9 @@ export class JanusCast extends Broadcast{
         this.nextCam = undefined;
     }
 
-    private nextMic:string | boolean;
+    private nextMic: string | boolean;
     private audioTrack: MediaStreamTrack;
-    private nextCam:string | boolean;
+    private nextCam: string | boolean;
     private videoTrack: MediaStreamTrack;
 
     mounted(){
@@ -166,7 +166,7 @@ export class JanusCast extends Broadcast{
                 message: { request: 'unpublish' }
             });
         } else if (this.janus) {
-            this.janus.destroy( {unload: true} )
+            this.janus.destroy( {unload: true} );
         }
 
         //make sure the mic & cam are stopped..
@@ -175,32 +175,31 @@ export class JanusCast extends Broadcast{
 
         //flushing the logs..
         //first add the first 5 characters of the room to each log line, add a 'scope' of 'camback' to each line.
-        this.logs.forEach( (log) => { log.r = this.publishStream.substr(0,5); log.s='cb' } )
+        this.logs.forEach( (log) => { log.r = this.publishStream.substr(0, 5); log.s = 'cb'; } );
         socket.sendEvent({
             content: this.logs,
-            event: "udplog",
+            event: 'udplog',
             receiverType: null
-        })
+        });
         this.logs = [];
     }
 
-    private _state = 'constructing'
-
+    private _state = 'constructing';
     private opaqueId = `vr_${Janus.randomString(12)}`;
 
-    janus:Janus;
-    roomPlugin:JanusJS.PluginHandle;
+    janus: Janus;
+    roomPlugin: JanusJS.PluginHandle;
 
-    logs:{event:string,[rest: string]: any}[] = [];
+    logs: {event: string, [rest: string]: any}[] = [];
 
-    addLog( item:{event:string,[rest: string]: any} ){
+    addLog( item: {event: string, [rest: string]: any} ){
         //let's first replace all spaces in the properties..
-        for(let prop in item){
+        for(const prop in item){
             if (typeof item[prop] != 'string'){
                 continue;
             }
-            
-            if (item[prop].indexOf(" ") == -1){
+
+            if (item[prop].indexOf(' ') == -1){
                 continue;
             }
 
@@ -245,110 +244,110 @@ export class JanusCast extends Broadcast{
 
     async init(){
         this.state = 'initializing';
-        return new Promise( resolve=>{
+        return new Promise( resolve => {
             Janus.init( {
                 debug: this.debug,
                 callback: resolve
-            } )
+            } );
         } );
     }
 
     async probeDevices(){
-        this.state = "probing";
-        return new Promise( async (resolve, reject)=>{
+        this.state = 'probing';
+        return new Promise( async (resolve, reject) => {
             //accessing mediaDevices while not over https is not supported
             if (!navigator.mediaDevices){
-                reject("no https conenction buster");
+                reject('no https conenction buster');
                 return;
             }
 
             navigator.mediaDevices.getUserMedia( { video: true, audio: true })
-            .then( (stream:MediaStream)=>{
+            .then( (stream: MediaStream) => {
                 if (stream.stop){
                     stream.stop();
                 } else {
                     stream.getTracks().forEach( track => track.stop() );
                 }
-                resolve() 
+                resolve();
             })
-            .catch( reason => reject(reason ))
-        } );
+            .catch( reason => reject(reason ));
+        });
     }
 
     //create the Janus session, connecting to the signaling websocket
-    async connect():Promise<Janus>{
+    async connect(): Promise<Janus>{
         this.state = 'connecting';
-        return new Promise<Janus>( (resolve, reject)=>{
+        return new Promise<Janus>( (resolve, reject) => {
             const janus = new Janus({
                 server: `wss://${this.wowza}/socket`,
-                success: ()=>resolve(janus),
-                error: (error)=>{
+                success: () => resolve(janus),
+                error: (error) => {
                     reject( error );
                 },
-                destroyed: ()=>{
-                    this.addLog({ event:"JanusDestroyed"});
+                destroyed: () => {
+                    this.addLog({ event: 'JanusDestroyed'});
                 },
                 iceServers: []
-            })
+            });
         } );
     }
 
-    async attachRoomPlugin():Promise<JanusJS.PluginHandle>{
+    async attachRoomPlugin(): Promise<JanusJS.PluginHandle>{
         this.state = 'attaching';
-        return new Promise<JanusJS.PluginHandle>( (resolve, reject)=>{
+        return new Promise<JanusJS.PluginHandle>( (resolve, reject) => {
             this.janus.attach({
-                success: (plugin)=>{
-                    resolve(plugin)
+                success: (plugin) => {
+                    resolve(plugin);
                 },
                 plugin: 'janus.plugin.videoroom',
                 opaqueId: this.opaqueId,
-                error: ( error )=>reject( error ),
-                consentDialog: (on:boolean)=>{
+                error: ( error ) => reject( error ),
+                consentDialog: (on: boolean) => {
                 },
                 mediaState: this.handleMediaState.bind(this),
-                webrtcState: ( state )=>{
-                    this.addLog({event:'wrctstate', state});
+                webrtcState: ( state ) => {
+                    this.addLog({event: 'wrctstate', state});
                     if (!state){
-                        setTimeout( ()=>this.janus.destroy( {unload: true} ))
+                        setTimeout( () => this.janus.destroy( {unload: true} ));
                     }
                 },
-                iceState: ( state )=>{
-                    this.addLog({event:"icestate", state});
-                    if (state == "disconnected"){
+                iceState: ( state ) => {
+                    this.addLog({event: 'icestate', state});
+                    if (state == 'disconnected'){
                         const { reject } = this._resolver || {};
-                        if (reject) reject("ice connection disconnected");
+                        if (reject) reject('ice connection disconnected');
                     }
                 },
-                slowLink: ( state )=>{
-                    this.addLog({event:"slowlink", state});
+                slowLink: ( state ) => {
+                    this.addLog({event: 'slowlink', state});
                 },
                 onmessage: this.onRoomMessage.bind(this),
-                onlocalstream: (stream:MediaStream)=>{
+                onlocalstream: (stream: MediaStream) => {
                     this.initializeTracks(stream);
                     this.attachCamera(stream);
                 },
-                onremotestream: (stream: MediaStream)=>{
-                    this.addLog( {event:"remotestream"});
+                onremotestream: (stream: MediaStream) => {
+                    this.addLog( {event: 'remotestream'});
                 },
-                ondataopen: ()=>this.addLog( {event:"dataopen"}),
-                ondata: (msg:any)=>this.addLog( {event:"datain"}),
-                oncleanup: ()=>{
+                ondataopen: () => this.addLog( {event: 'dataopen'}),
+                ondata: (msg: any) => this.addLog( {event: 'datain'}),
+                oncleanup: () => {
                     if (!this.video) return;
                     const tracks = (this.video.srcObject as MediaStream).getTracks();
                     if (!tracks) return;
 
-                    tracks.forEach( (track)=>{
+                    tracks.forEach( (track) => {
                         track.stop();
                     });
                 },
-                detached: ()=>this.addLog( {event:"detached"})
+                detached: () => this.addLog( {event: 'detached'})
             });
         });
     }
 
-    async createRoom():Promise<Room>{
+    async createRoom(): Promise<Room>{
         this.state = 'creating';
-        return new Promise<Room>( (resolve, reject)=>{
+        return new Promise<Room>( (resolve, reject) => {
             this.roomPlugin.send({
                 message: {
                     request: 'create',
@@ -358,7 +357,7 @@ export class JanusCast extends Broadcast{
                     videocodec: 'h264',
                     record: false
                 },
-                success: (result)=>{
+                success: (result) => {
                     if (result.videoroom == 'created') {
                         resolve();
                     } else if (result.error && result.error_code == 427) {
@@ -368,20 +367,19 @@ export class JanusCast extends Broadcast{
                         reject(result.error);
                     }
                 },
-                error: (message)=>{
+                error: (message) => {
                     reject(message);
                 }
-            })
-            
-        })
+            });
+        });
     }
 
-    async joinRoom():Promise<Room>{
+    async joinRoom(): Promise<Room>{
         this.state = 'joining';
-        return new Promise<Room>( (resolve, reject)=>{
+        return new Promise<Room>( (resolve, reject) => {
             this.roomPlugin.send({
                 message: {
-                    request: 'join', 
+                    request: 'join',
                     room: this.publishStream,
                     ptype: 'publisher',
                     display: this.publishToken
@@ -389,129 +387,129 @@ export class JanusCast extends Broadcast{
             });
             this._resolver = { resolve, reject };
             //todo: fix that timeout!
-        })
-    }
-
-    async createOffer():Promise<string>{
-        this.state = 'offering';
-        return new Promise<string>( (resolve, reject)=>{
-            const d = new Devices();
-
-            this.roomPlugin.createOffer({
-                media: { 
-                    audioRecv: false, 
-                    videoRecv: false, 
-                    audioSend: true, 
-                    videoSend: true,
-                    audio: d.selectedMicrophone ? { deviceId: d.selectedMicrophone } : true,
-                    video: d.selectedCamera ? { deviceId: d.selectedCamera } : true
-                }, 
-                success: (jsep:string)=> resolve( jsep ),
-                error: (error:any)=>reject(error)
-            })
         });
     }
 
-    async configure(jsep:string):Promise<string>{
+    async createOffer(): Promise<string>{
+        this.state = 'offering';
+        return new Promise<string>( (resolve, reject) => {
+            const d = new Devices();
+
+            this.roomPlugin.createOffer({
+                media: {
+                    audioRecv: false,
+                    videoRecv: false,
+                    audioSend: true,
+                    videoSend: true,
+                    audio: d.selectedMicrophone ? { deviceId: d.selectedMicrophone } : true,
+                    video: d.selectedCamera ? { deviceId: d.selectedCamera } : true
+                },
+                success: (jsep: string) => resolve( jsep ),
+                error: (error: any) => reject(error)
+            });
+        });
+    }
+
+    async configure(jsep: string): Promise<string>{
         this.state = 'configuring';
 
-        return new Promise<string>( (resolve, reject)=>{
+        return new Promise<string>( (resolve, reject) => {
             this.roomPlugin.send({
                 message: {
-                    request: 'configure', 
+                    request: 'configure',
                     audio: !!this.mic,
                     video: true,
                     data: false,
                     bitrate: 1024 * 1000//kbits
                 },
-                error: (message)=>{
+                error: (message) => {
                     reject(message);
                     this._resolver = null;
                 },
                 jsep
-            })
+            });
             this._resolver = { resolve, reject };
-        })
+        });
     }
 
-    async handleResponse(jsep:string){
+    async handleResponse(jsep: string){
         this.state = 'setting_remote_description';
-        return new Promise( (resolve, reject)=>{
+        return new Promise( (resolve, reject) => {
             this.roomPlugin.handleRemoteJsep( {jsep} );
             this._resolver = { resolve, reject };
-        })
+        });
     }
 
-    async setBandwidth():Promise<string>{
+    async setBandwidth(): Promise<string>{
         this.state = 'bandwidthing';
 
-        return new Promise<string>( (resolve, reject)=>{
+        return new Promise<string>( (resolve, reject) => {
             this.roomPlugin.send({
                 message: {
-                    request: 'configure', 
+                    request: 'configure',
                     bitrate: 512 * 1000//kbits
                 },
-                error: (message)=>{
+                error: (message) => {
                     reject(message);
                     this._resolver = null;
                 }
-            })
+            });
             this._resolver = { resolve, reject };
-        })
+        });
     }
 
-    video:HTMLVideoElement;
+    video: HTMLVideoElement;
 
-    initializeElement( e:any ){
+    initializeElement(e: any){
         this.video = e as HTMLVideoElement;
-        this.video.onended = ()=>{
-            this.addLog( {event:"videoend"} );
-            this.janus.destroy( {} )
-        }
+        this.video.onended = () => {
+            this.addLog( {event: 'videoend'} );
+            this.janus.destroy( {} );
+        };
     }
 
-    handleMediaState( type: 'video' | 'audio', on:boolean ){
-        if ( 
+    handleMediaState( type: 'video' | 'audio', on: boolean ){
+        if(
             (this._state == 'setting_remote_description')
             &&
             type == 'video'
             &&
-            this._resolver 
+            this._resolver
         ){
             const {resolve, reject} = this._resolver;
             if( on ){
-                resolve()
+                resolve();
             } else {
-                reject()
+                reject();
             }
         } else {
-            this.addLog({event:"unhandledMediaState", type, on} );
+            this.addLog({event: 'unhandledMediaState', type, on} );
         }
     }
 
-    initializeTracks( stream:MediaStream ){
+    initializeTracks(stream: MediaStream){
         const vt = stream.getVideoTracks();
         if (vt.length == 0){
-            this.addLog( {event:"onLocalStream", name:"noVideoTrack"})
+            this.addLog( {event: 'onLocalStream', name: 'noVideoTrack'});
         } else {
             if (vt.length > 1){
-                this.addLog( {event:"onLocalStream", name:"tooManyVideoTracks", count: vt.length})
+                this.addLog( {event: 'onLocalStream', name: 'tooManyVideoTracks', count: vt.length});
             }
             this.videoTrack = stream.getVideoTracks()[0];
         }
 
         const at = stream.getAudioTracks();
         if (at.length == 0){
-            this.addLog( {event:"onLocalStream", name:"noAudioTrack"})
+            this.addLog( {event: 'onLocalStream', name: 'noAudioTrack'});
         } else {
             if (at.length > 1){
-                this.addLog( {event:"onLocalStream", name:"tooManyAudioTracks", count: at.length})
+                this.addLog( {event: 'onLocalStream', name: 'tooManyAudioTracks', count: at.length});
             }
             this.audioTrack = stream.getAudioTracks()[0];
         }
     }
 
-    attachCamera( stream:MediaStream ){
+    attachCamera(stream: MediaStream){
         if (!this.video){
             return;
         }
@@ -521,25 +519,25 @@ export class JanusCast extends Broadcast{
         }catch( e ){
             this.video.src = URL.createObjectURL(stream);
         }
-     
+
         //now set the cameraname to the one that's actually... the one.
         const d = new Devices();
-        stream.getTracks().forEach( track =>{
+        stream.getTracks().forEach( track => {
             switch( track.kind ){
-                case "video":
+                case 'video':
                     d.setCameraName( track.label );
                     break;
-                case "audio":
+                case 'audio':
                     d.setMicrophoneName( track.label );
                     break;
                 default:
-                    this.addLog({event:"unknownDeviceKind", kind:track.kind, label: track.label })
-            } 
+                    this.addLog({event: 'unknownDeviceKind', kind: track.kind, label: track.label });
+            }
         });
     }
 
-    onRoomMessage( message:JanusJS.Message, jsep?:JanusJS.JSEP ){        
-        const event:string = message['videoroom'] ;
+    onRoomMessage(message: JanusJS.Message, jsep?: JanusJS.JSEP){
+        const event: string = message['videoroom'] ;
         const { reject, resolve } = this._resolver || {} as any;
         if (message.error && reject){
             reject( message.error );
@@ -548,7 +546,7 @@ export class JanusCast extends Broadcast{
         }
 
         if (message.error){
-            this.addLog( {...message, ...{event:"unhandledRoomError"}})
+            this.addLog( {...message, ...{event: 'unhandledRoomError'}});
             //this.onError(message);
             return;
         }
@@ -560,30 +558,30 @@ export class JanusCast extends Broadcast{
                     this._resolver = null;
                 }
                 break;
-            case 'event': 
+            case 'event':
                 if (message['configured'] == 'ok'){
                     resolve && resolve(jsep);
                     this._resolver = null;
                 } else if( message['unpublished'] == 'ok'){
                     //ok het unpublishen is gebeurd, en nu..
                 } else {
-                    this.addLog( {...message, ...{event:"unhandledRoomMessage"} })
+                    this.addLog( {...message, ...{event: 'unhandledRoomMessage'} });
                 }
                 break;
 
             default:
-                this.addLog( {...message, ...{event:"unhandledRoomMessage"} });
+                this.addLog( {...message, ...{event: 'unhandledRoomMessage'} });
         }
     }
 
-    get state():string{
+    get state(): string{
         return this._state;
     }
-    set state(value:string){
-        this.addLog({event:"statechange", value});
+    set state(value: string){
+        this.addLog({event: 'statechange', value});
         //destroying is always alowed
         //otherwise, the order of states should be obeyed
-        if (value != "destroying"){
+        if (value != 'destroying'){
             const current = JanusCast.states.indexOf(this._state);
             const next = JanusCast.states.indexOf(value);
             if (next - current != 1){
@@ -595,7 +593,7 @@ export class JanusCast extends Broadcast{
         this.onStateChange( value );
     }
 
-    static states = [ 
+    static states = [
         'initializing',
         'probing',
         'connecting',
@@ -611,7 +609,7 @@ export class JanusCast extends Broadcast{
         'destroying'
     ];
 
-    private _resolver:{resolve:Function, reject:Function} | null = null;
+    private _resolver: {resolve: Function, reject: Function} | null = null;
 
     public onError(message: string){
         this.addLog({event:"error", message});
