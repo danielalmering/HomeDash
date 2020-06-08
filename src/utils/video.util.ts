@@ -56,7 +56,7 @@ export function webrtcPublishPossible(platform: Platform): boolean{
         {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
             //This needs te be fixed by Wowza!
             name: 'Safari',
-            version: '11'
+            version: '12.1'
         },
         {
             name: 'Chrome Mobile', //does not work for iOS
@@ -70,7 +70,7 @@ export function webrtcPublishPossible(platform: Platform): boolean{
         },
         {
             name: 'Microsoft Edge', //chrome engine is working
-            version: '14'
+            version: '77'
         }
     ];
 

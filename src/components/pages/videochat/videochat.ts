@@ -181,6 +181,12 @@ export default class VideoChat extends Vue {
             janusPercentage = 100;
         }
 
+        //disallow janus when performer is using the streamer..
+        const STREAMER = 3;
+        if (this.performer.mediaId == STREAMER){
+            janusPercentage = 0;
+        }
+
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
             //never enable janus on iphones
@@ -243,6 +249,7 @@ export default class VideoChat extends Vue {
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
+        
         return this.$store.state.session.activeSessionData.publishStream;
     }
 
@@ -490,13 +497,16 @@ export default class VideoChat extends Vue {
             msg = 'c2c-failed';
             setKPI('cl_camback_error');
         }
-        //remove the smallscreen
-        this.broadcasting.cam = false;
 
-        if (error.name == 'NotAllowedError' ){
-            this.$store.dispatch('errorMessage', 'videochat.alerts.permission-denied');
-        } else {
-            this.$store.dispatch('errorMessage', msg);
+        //remove the smallscreen and set error when NOT flash
+        if(this.broadcastType != 'rtmpBroadcast'){
+            this.broadcasting.cam = false;
+
+            if (error.name == 'NotAllowedError'){
+                this.$store.dispatch('errorMessage', 'videochat.alerts.permission-denied');
+            } else {
+                this.$store.dispatch('errorMessage', msg);
+            }
         }
     }
 
