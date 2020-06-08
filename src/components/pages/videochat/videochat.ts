@@ -183,7 +183,7 @@ export default class VideoChat extends Vue {
 
         //disallow janus when performer is using the streamer..
         const STREAMER = 3;
-        if (this.performer.mediaId == STREAMER){
+        if (this.performer.mediaId === STREAMER){
             janusPercentage = 0;
         }
 
