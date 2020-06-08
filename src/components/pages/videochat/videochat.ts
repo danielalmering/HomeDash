@@ -497,13 +497,16 @@ export default class VideoChat extends Vue {
             msg = 'c2c-failed';
             setKPI('cl_camback_error');
         }
-        //remove the smallscreen
-        this.broadcasting.cam = false;
 
-        if (error.name == 'NotAllowedError' ){
-            this.$store.dispatch('errorMessage', 'videochat.alerts.permission-denied');
-        } else {
-            this.$store.dispatch('errorMessage', msg);
+        //remove the smallscreen and set error when NOT flash
+        if(this.broadcastType != 'rtmpBroadcast'){
+            this.broadcasting.cam = false;
+
+            if (error.name == 'NotAllowedError'){
+                this.$store.dispatch('errorMessage', 'videochat.alerts.permission-denied');
+            } else {
+                this.$store.dispatch('errorMessage', msg);
+            }
         }
     }
 
