@@ -482,10 +482,6 @@ export default class VideoChat extends Vue {
     }
 
     broadcastError(error: any){
-        //some log is error'd from flash..
-        if (typeof error == 'string' && error.startsWith("wow:")){
-            return;
-        }
         this.stateMessages.push(error);
         let msg = '';
         if( typeof error == 'string'){
