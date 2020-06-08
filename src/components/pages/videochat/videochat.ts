@@ -181,6 +181,12 @@ export default class VideoChat extends Vue {
             janusPercentage = 100;
         }
 
+        //disallow janus when performer is using the streamer..
+        const STREAMER = 3;
+        if (this.performer.mediaId == STREAMER){
+            janusPercentage = 0;
+        }
+
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
             //never enable janus on iphones
