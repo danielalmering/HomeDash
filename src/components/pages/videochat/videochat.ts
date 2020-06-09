@@ -521,7 +521,7 @@ export default class VideoChat extends Vue {
     }
 
     viewerError(message: string){
-        console.log(message);
+        //console.log(message);
     }
 
     toggleSettings(){
@@ -551,7 +551,6 @@ export default class VideoChat extends Vue {
                 devices.getCameras().then( cams => {
                     this.cameras = cams;
                     const selected = this.cameras.find(cam => cam.selected);
-                    this.cameras.forEach( cam => console.log(cam.name, cam.id) );
                     if (selected && this.broadcasting.cam !== selected.id){
                         this.broadcasting.cam = selected.id;
                     }
