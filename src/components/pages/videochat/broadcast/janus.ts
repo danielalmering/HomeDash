@@ -155,25 +155,44 @@ export class JanusCast extends Broadcast{
     }
 
     beforeDestroy(){
-        this.destroy();
+        if (this.state != 'destroying'){
+            this.destroy();
+        }
     }
 
     destroy(){
-        this.state = 'destroying';
+        try{
+            this.state = 'destroying';
 
-        if (this.roomPlugin){
-            this.roomPlugin.send({
-                message: { request: 'unpublish' }
-            });
-        } else if (this.janus) {
-            this.janus.destroy( {unload: true} );
+            if (this.roomPlugin){
+                this.roomPlugin.send({
+                    message: { request: 'unpublish' }
+                });
+            } else if (this.janus) {
+                this.janus.destroy( {unload: true} );
+            }
+
+            //make sure the mic & cam are stopped..
+            this.audioTrack && this.audioTrack.stop();
+            this.videoTrack && this.videoTrack.stop();
+        } catch(error){
+            if (error instanceof Error){
+                this.addLog( {event: 'destroyError', message: error.message} );
+            } else if (typeof error == 'string'){
+                this.addLog( {event: 'destroyError', message: error} );
+            } else {
+                this.addLog( {event: 'destroyError', message: 'general error'} );
+            }
+        } finally {
+            this.flushLogs();
+        }
+    }
+
+    flushLogs(){
+        if (!this.logs.length){
+            return;
         }
 
-        //make sure the mic & cam are stopped..
-        this.audioTrack && this.audioTrack.stop();
-        this.videoTrack && this.videoTrack.stop();
-
-        //flushing the logs..
         //first add the first 5 characters of the room to each log line, add a 'scope' of 'camback' to each line.
         this.logs.forEach( (log) => { log.r = this.publishStream.substr(0, 5); log.s = 'cb'; } );
         socket.sendEvent({
@@ -237,7 +256,15 @@ export class JanusCast extends Broadcast{
             await this.setBandwidth();
             this.state = 'active';
         } catch( error ){
-            this.onError( error );
+
+            if (error instanceof Error){
+                this.onError( error.message );
+            } else if (typeof error == 'string'){
+                this.onError( error );
+            } else {
+                this.onError( 'General error');
+            }
+
             this.destroy();
         }
     }
@@ -394,7 +421,6 @@ export class JanusCast extends Broadcast{
         this.state = 'offering';
         return new Promise<string>( (resolve, reject) => {
             const d = new Devices();
-
             this.roomPlugin.createOffer({
                 media: {
                     audioRecv: false,
@@ -419,8 +445,7 @@ export class JanusCast extends Broadcast{
                     request: 'configure',
                     audio: !!this.mic,
                     video: true,
-                    data: false,
-                    bitrate: 1024 * 1000//kbits
+                    data: false
                 },
                 error: (message) => {
                     reject(message);
@@ -612,7 +637,7 @@ export class JanusCast extends Broadcast{
     private _resolver: {resolve: Function, reject: Function} | null = null;
 
     public onError(message: string){
-        this.addLog({event:"error", message});
+        this.addLog({event: 'error', message});
         this.$emit('error', message);
     }
 }
