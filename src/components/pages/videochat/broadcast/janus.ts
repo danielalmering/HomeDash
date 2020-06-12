@@ -44,7 +44,7 @@ export class JanusCast extends Broadcast{
         this.addLog( {event: 'micchange', old: oldValue, current: value} );
 
         //only select a specific device if the device id is given, and it's different from the current mic
-        if (typeof value == 'string' && value != d.selectedMicrophone){
+        if (typeof value === 'string' && value != d.selectedMicrophone){
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: { deviceId: { exact: value } }
             });
@@ -57,7 +57,7 @@ export class JanusCast extends Broadcast{
 
             const track = stream.getAudioTracks()[0];
             const pc: RTCPeerConnection = this.roomPlugin['webrtcStuff'].pc;
-            const sender = pc.getSenders().find( s => s.track.kind == track.kind);
+            const sender = pc.getSenders().find( s => s.track.kind === track.kind);
 
             if (!sender){
                 this.addLog({ event: 'micchange', name: 'sender not found' });
@@ -155,7 +155,7 @@ export class JanusCast extends Broadcast{
     }
 
     beforeDestroy(){
-        if (this.state != 'destroying'){
+        if (this.state !== 'destroying'){
             this.destroy();
         }
     }
@@ -177,8 +177,8 @@ export class JanusCast extends Broadcast{
             this.videoTrack && this.videoTrack.stop();
         } catch(error){
             if (error instanceof Error){
-                this.addLog( {event: 'destroyError', message: error.message} );
-            } else if (typeof error == 'string'){
+                this.addLog( {event: 'destroyError', message: `${error.name} ${error.message}`} );
+            } else if (typeof error === 'string'){
                 this.addLog( {event: 'destroyError', message: error} );
             } else {
                 this.addLog( {event: 'destroyError', message: 'general error'} );
@@ -258,7 +258,7 @@ export class JanusCast extends Broadcast{
         } catch( error ){
 
             if (error instanceof Error){
-                this.onError( error.message );
+                this.onError( `${error.name} ${error.message}` );
             } else if (typeof error == 'string'){
                 this.onError( error );
             } else {
