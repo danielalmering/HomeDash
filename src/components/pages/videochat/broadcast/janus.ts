@@ -180,8 +180,10 @@ export class JanusCast extends Broadcast{
                 this.addLog( {event: 'destroyError', message: `${error.name} ${error.message}`} );
             } else if (typeof error === 'string'){
                 this.addLog( {event: 'destroyError', message: error} );
+            } else if (typeof error === 'object'){
+                this.addLog( {...{event: 'destroyError'}, ...error } )
             } else {
-                this.addLog( {event: 'destroyError', message: 'general error'} );
+                this.addLog( {event: 'destroyError', message: 'General Error' })
             }
         } finally {
             this.flushLogs();
@@ -255,12 +257,20 @@ export class JanusCast extends Broadcast{
             await this.handleResponse( jsep );
             await this.setBandwidth();
             this.state = 'active';
+
+            this.flushLogs();
         } catch( error ){
 
             if (error instanceof Error){
                 this.onError( `${error.name} ${error.message}` );
             } else if (typeof error == 'string'){
                 this.onError( error );
+            } else if (typeof error === 'object'){
+                let msg = 'unknown-';
+                for(let prop in error){
+                    msg += `${prop}-${error[prop]}`;
+                }
+                this.onError( msg )
             } else {
                 this.onError( 'General error');
             }

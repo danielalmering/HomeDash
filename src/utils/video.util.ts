@@ -115,7 +115,7 @@ export function webrtcPossible(platform: Platform): boolean{
         },
         {
             name: 'Microsoft Edge', //chrome engine is working
-            version: '77.0'
+            version: '18'
         }
 
     ];
