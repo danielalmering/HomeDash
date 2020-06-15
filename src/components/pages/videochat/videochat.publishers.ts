@@ -44,9 +44,9 @@ export function flashPublisher(platform: any, sessionType: string){
         // }
 
         //if iOS device use nanocosmos else use jsmpeg
-        if(NanoCosmosPossible(platform) && isIOSNanoCosmos(platform)) {
-            return 'nanocosmos';
-        }
+        // if(NanoCosmosPossible(platform) && isIOSNanoCosmos(platform)) {
+        //     return 'nanocosmos';
+        // }
 
         if(isIE(platform)){
             return 'rtmp';
