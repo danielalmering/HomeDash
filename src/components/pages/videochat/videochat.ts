@@ -190,9 +190,9 @@ export default class VideoChat extends Vue {
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
             //never enable janus on iphones
-            //janus doesn't work well with nanoplayer (?)
+            //iPhone only works with janus....
             if(isIPhone(platform)){
-                return 'none';
+                return 'janusBroadcast';
             }
             //throw the dice to see if janus will be chosen as publisher
             if(Math.random() < (janusPercentage / 100)){
