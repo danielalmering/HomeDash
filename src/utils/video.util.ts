@@ -70,7 +70,7 @@ export function webrtcPublishPossible(platform: Platform): boolean{
         },
         {
             name: 'Microsoft Edge', //chrome engine is working
-            version: '18'
+            version: '77'
         }
     ];
 
