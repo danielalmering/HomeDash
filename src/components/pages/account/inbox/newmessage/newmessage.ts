@@ -52,7 +52,7 @@ export default class Newmessage extends Vue {
             return;
         }
 
-        return require('../../../../../assets/images/placeholder.png');
+        return require('../../../../../assets/images/placeholder.jpg');
     }
 
     get performersFilter(){
