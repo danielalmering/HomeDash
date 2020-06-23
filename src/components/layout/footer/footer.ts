@@ -24,7 +24,7 @@ export default class Footer extends Vue {
 
     get copyrightInfo(){
         const year = new Date().getFullYear();
-        return this.$t('footer.copyright') +  ' ' + year;
+        return `${this.$t('footer.copyright')} ${year}`;
     }
 
     created(){
