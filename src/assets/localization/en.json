@@ -488,7 +488,7 @@
         "sexstories": "Sex stories",
         "sexstoriesurl": "#",
         "webcamurl": "http://www.club-sense.com",
-        "copyright": "Copyright ",
+        "copyright": "Copyright {year}",
         "cookies": "<a href='/privacy-policy/'>The website works with cookies so we can improve the website and remember your settings. \nBy continuing to use this website you agree with this</a>",
         "agecheck": "This website contains explicit material. By using this website you agree to this",
         "olderthen": "Older than 18 years",

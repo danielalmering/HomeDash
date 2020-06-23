@@ -15,7 +15,7 @@
                 </ul>
 
                 <div class="footer__copyright-info">
-                    <span v-t="copyrightInfo"></span>
+                    <span v-t="$t('footer.copyright', { year: fullYear })"></span>
                     <span>|</span>
                     <span class="socket" :class="{ green: isSocketConnected }"></span>
                     <span>|</span>
