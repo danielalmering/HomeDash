@@ -55,7 +55,7 @@ export default class Cookies extends Vue {
         const originalPush = VueRouter.prototype.push;
         VueRouter.prototype.push = function push(location: any) {
             return originalPush.call(this, location).catch((err: any) => err);
-        }
+        };
 
         // Geo Safe check
         const geoResult = await fetch(`${config.BaseUrl}/loc`, { credentials: 'include'});

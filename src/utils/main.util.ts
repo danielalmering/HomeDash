@@ -13,7 +13,7 @@ export function getAvatarImage(performer: Performer, size: string){
         return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.avatar.name}`;
     }
 
-    return require('./../assets/images/placeholder.png');
+    return require('./../assets/images/placeholder.jpg');
 }
 
 export function getSliderImages(performer: Performer, photo: any, size: string){
@@ -25,7 +25,7 @@ export function getSliderImages(performer: Performer, photo: any, size: string){
         return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
     }
 
-    return require('./../assets/images/placeholder.png');
+    return require('./../assets/images/placeholder.jpg');
 }
 
 export function hasService(performer: Performer, serviceKey: string): boolean {
