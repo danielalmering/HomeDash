@@ -150,6 +150,10 @@ export default class Readmessages extends Vue {
                 class: 'error'
             });
 
+            if(error.statusCode === 400 && error.message == 'Failed to tax!') {
+                this.$router.push({name: 'Payment'});
+            }
+
             return;
         }
 
