@@ -374,7 +374,8 @@
         "dialog1on1Subtitle": "Möchtest du eine Privat Session mit {name}?",
         "alerts": {
             "successChatEnded": "Session beendet!",
-            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert"
+            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert",
+            "errorPerformerNotAvailable": "Leider ist der Darsteller nicht mehr verfügbar."
         }
     },
     "promos": {

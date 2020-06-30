@@ -4,7 +4,7 @@ import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
 import Confirmation from '../../layout/confirmations/confirmations';
 
-require('../../../../static/nanoplayer.4.0.7.min.js');
+require('../../../../static/nanoplayer.4.5.2.min.js');
 
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
@@ -211,6 +211,11 @@ export default class Voyeur extends Vue {
     }
 
     async startVideoChat(performerId: number){
+        if(this.performer(performerId) === undefined) {
+            this.$store.dispatch('errorMessage', 'voyeur.alerts.errorPerformerNotAvailable');
+            return;
+        }
+
         await this.$store.dispatch<RequestPayload>({
             type: 'startRequest',
             performer: this.performer(performerId),

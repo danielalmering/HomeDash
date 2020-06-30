@@ -3,6 +3,7 @@ import { initiateVoyeur, switchVoyeur } from 'sensejs/session/voyeur';
 
 import store from '../';
 import config from '../../config';
+import router from '../../router';
 import { initiate, end, SessionType } from 'sensejs/session';
 import { get, listBusy } from 'sensejs/performer';
 
@@ -25,6 +26,16 @@ const actions = {
                 content: error.message,
                 class: 'error'
             });
+
+            if(error.message == 'Onvoldoende credits') {
+                dispatch('end').then(() =>{
+                    router.push({ name: 'Payment' });
+                }).catch((ex) => {
+                    router.push({ name: 'Payment' });
+                });
+                
+                
+            }
         }
 
         if(payload.ivrCode){
