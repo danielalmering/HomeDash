@@ -31,7 +31,7 @@ export default class Cookies extends Vue {
     displayCookies: boolean = false;
     displayAgecheck: boolean = false;
     userSafeCountry: string | undefined = undefined;
-    userSafeCountries: Array<string> = ['DE', 'BE', 'NL', 'LU'];
+    userSafeCountries: Array<string> = ['DE', 'BE', 'NL', 'LU', ''];
     
     getParameterByName = getParameterByName;
 
