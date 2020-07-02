@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 
 import modalWrapper from './components/modal/modal-wrapper';
 import notificationSocket from './socket';
@@ -30,7 +30,14 @@ export default class Cookies extends Vue {
     localStorage: boolean = false;
     displayCookies: boolean = false;
     displayAgecheck: boolean = false;
+    userSafeCountry: string | undefined = undefined;
+    userSafeCountries: Array<string> = ['DE', 'BE', 'NL', 'LU'];
+    
     getParameterByName = getParameterByName;
+
+    get safeMode(){
+        return this.$store.state.safeMode;
+    }
 
     mounted(){
         // SafeMode
@@ -55,16 +62,12 @@ export default class Cookies extends Vue {
         const originalPush = VueRouter.prototype.push;
         VueRouter.prototype.push = function push(location: any) {
             return originalPush.call(this, location).catch((err: any) => err);
-        }
+        };
 
         // Geo Safe check
         const geoResult = await fetch(`${config.BaseUrl}/loc`, { credentials: 'include'});
-        const geoLocations = ['DE', 'BE', 'NL', 'LU'];
         const result = await geoResult.json();
-
-        if(geoResult.ok && geoLocations.indexOf(result.country_code) !== -1){
-            this.$store.commit('deactivateSafeMode');
-        }
+        this.userSafeCountry = result.country_code;
 
         try {
             // Localstorage check
@@ -118,6 +121,13 @@ export default class Cookies extends Vue {
                     category: 'data'
                 });
             }
+        }
+    }
+
+    @Watch('$route')
+    onRouteChange(){
+        if(this.safeMode && this.userSafeCountry && this.userSafeCountries.indexOf(this.userSafeCountry) !== -1){
+            this.$store.commit('deactivateSafeMode');
         }
     }
 }
