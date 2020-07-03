@@ -54,7 +54,7 @@
                     <div class="performers__image">
                         <img v-if="!performer" :src="loader" />
                         <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
-                            <img :src="getAvatarImage(performer, 'medium')" />
+                            <img loading="lazy" :src="getAvatarImage(performer, 'medium')" :alt="'Contact met ' + performer.nickname" />
                         </router-link>
                     </div>
                 </div>
