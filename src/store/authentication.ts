@@ -95,10 +95,11 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             await router.push({ name: 'Performers' });
             store.commit('setUser', undefined);
-            await store.dispatch('getSession', false);
 
             notificationSocket.disconnect();
             notificationSocket.connect();
+
+            await store.dispatch('getSession', true);
         },
         async register(store: AuthContext, payload: UserForm){
             const registerResult = await fetch(`${config.BaseUrl}/client/client_accounts`, {
