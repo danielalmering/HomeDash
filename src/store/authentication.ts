@@ -93,11 +93,12 @@ const authenticationStore: Module<AuthState, RootState> = {
                 credentials: 'include'
             });
 
-            await router.push({ name: 'Performers' });
             store.commit('setUser', undefined);
+            await router.push({ name: 'Performers' });
 
-            notificationSocket.disconnect();
-            notificationSocket.connect();
+            if(notificationSocket.isConnected()){
+                notificationSocket.disconnect();
+            }
 
             await store.dispatch('getSession', true);
         },
