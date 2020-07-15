@@ -151,7 +151,9 @@ export function isWebrtcMuted(platform: Platform): boolean{
             name: 'Safari'
         },
         {
-            name: 'Android'
+            os: {
+                family: 'Android'
+            }
         }
     ];
 
