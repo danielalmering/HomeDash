@@ -82,7 +82,7 @@ export class WebRTC extends Stream {
             streamName : this.playStream,
             element : video,
             useWebSockets : true,
-            debug : false,
+            debug : true,
             muted : muted // muted //mac os bug  (freeze frame if autoplay)
         };
 
