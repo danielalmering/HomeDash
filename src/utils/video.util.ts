@@ -149,6 +149,9 @@ export function isWebrtcMuted(platform: Platform): boolean{
     const supported = [
         {
             name: 'Safari'
+        },
+        {
+            name: 'Android'
         }
     ];
 
