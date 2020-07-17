@@ -4,6 +4,9 @@ import { State } from '../../../../models/Sessions';
 import config from '../../../../config';
 
 import Stream from './stream';
+import { thistle } from 'color-name';
+import { throws } from 'assert';
+import { errorMonitor } from 'events';
 
 declare const NanoPlayer: any;
 
@@ -21,17 +24,60 @@ export class H5Style {
     displayMutedAutoplay: boolean;
 }
 
+
+
 @Component({
-    template: '<div class="nanocosmos"  :id="id"></div>',
+    template: '<div class="nanocosmos" :id="id"></div>',
 })
 export default class NanoCosmos extends Stream {
+
+    static states = [
+        'initializing',
+        'switching',
+        'updating',
+        'failed',
+        'loading',
+        'playing',
+        'end',
+        'destroyed'
+    ];
+
+    private _state = NanoCosmos.states[0];
+
+    get state(): string{
+        return this._state;
+    }
+
+    set state(value: string){
+        
+        //destroying and erro is always alowed
+        //otherwise, the order of states should be obeyed
+        /*if (value != 'destroying'){
+            const current = NanoCosmos.states.indexOf(this._state);
+            const next = NanoCosmos.states.indexOf(value);
+            if (next - current != 1){
+                throw new Error(`invalid state change from ${this._state} to ${value}`);
+            }
+        }*/
+  
+        console.log(`${this.tile} changing state from ${this._state} to ${value}`);
+        this._state = value;
+        
+        
+        //this.onStateChange( value );
+    }
 
     constructor(){
         super();
         this.id = Math.round( Math.random() * Date.now() ).toString(16);
+        this.state = NanoCosmos.states[0];
     }
 
     private id: string;
+    
+
+    @Prop({ default: true, type: Boolean})
+    public isMain: Boolean;
 
     @Prop({ default: true, type: Boolean})
     public autoplay: Boolean;
@@ -58,7 +104,7 @@ export default class NanoCosmos extends Stream {
     @Prop({ default: 'letterbox', type: String})
     public scaling: String;
 
-    @Prop({ default: true, type: Boolean})
+    @Prop({ default: false, type: Boolean})
     public keepFrame: Boolean;
 
     @Prop({ default: true, type: Boolean })
@@ -79,26 +125,41 @@ export default class NanoCosmos extends Stream {
     @Prop({default: false, type: Boolean})
     public debug: Boolean;
 
+    @Prop({default: -1, type: Number})
+    public tile: Number;
+
     //TODO typescript declaration of NanoPlayer
     private player: any;
 
+    private playStreamSwitch: boolean = false;
+    private isFailed: boolean = false;
+
     @Watch('playStream')
     onPlaystreamSwitch(){
-        try{
-            this.end();
-            this.load();
+        //TODO: Hotze very complex should be states not booleans (but works for now!)
+        try {   
+            
+            if(this.isMain) {
+                this.state = 'switching';
+                this.playStreamSwitch = true;
+                this.end();      
+            } else {
+                
+                if(!this.isFailed) {
+                    this.updateSource();
+                } else {
+                    this.end();
+                }
+            }
         } catch(e) {
-             console.log('switching error!');
+             //this.state = 'error';
+             console.warn('switching error!', e);
         }
     }
 
     @Watch('wowza')
-    onWowzaSwitch(){
-        /*console.log("wowza switch");
-        this.end();
-        sleep(1000).then(() =>{
-            this.load();
-        });*/
+    onWowzaSwitch() {
+
     }
 
     private getStyle(): H5Style {
@@ -120,10 +181,11 @@ export default class NanoCosmos extends Stream {
     mounted(){
        if(!this.isSwitching){
            this.load();
-       }
+       } 
     }
 
     beforeDestroy(){
+        this.playStreamSwitch = false;
         this.end();
     }
 
@@ -137,8 +199,55 @@ export default class NanoCosmos extends Stream {
         return `https://${config.H5Server}:443/h5live/http/playlist.m3u8`;
     }
 
-    private load(){
+    private updateSource() {
 
+        this.state = 'updating';
+        let wowza = this.wowza;
+        if (this.playToken){
+            wowza = wowza.replace(/token=(.+)/i, `token=${this.playToken}`);
+        }
+
+        const source = {
+            'entries': [
+                    {
+                        'index': 0,
+                        'h5live': {
+                             // your rtmp stream
+                            'rtmp': {
+                                'url': wowza,
+                                'streamname': this.playStream
+                            },
+                            'server': {
+                                'websocket': this.getH5WebSocket(),
+                                'hls': this.getH5hls()
+                            },
+                        }
+                    }
+            ],
+            "options": {
+                "adaption": {
+                    "rule": "deviationOfMean"
+                },
+                "switch": {
+                    'method': 'server',
+                    'pauseOnError': false,
+                    'forcePlay': true,
+                    'fastStart': true,
+                    'timeout': 20
+                }
+            },
+        };
+
+        this.player.updateSource(source).then((s: any) => {
+            //na da?
+            //console.log('update source ok');
+        }).catch((ex : any) => {
+            console.log('nano error', ex.message);
+        });
+    }
+
+    private load(){
+        this.state = 'loading';
         this.player = new NanoPlayer(this.id);
 
         let wowza = this.wowza;
@@ -147,23 +256,29 @@ export default class NanoCosmos extends Stream {
         }
 
         const configH5LIVE = {
+            
             'source': {
-                'h5live': {
-                    'server': {
-                        'websocket': this.getH5WebSocket(),
-                        'hls': this.getH5hls()
-                    },
-                    'rtmp': {
-                        'url': wowza,
-                        'streamname': this.playStream
+                'entries': [
+                    {
+                        'index': 0,
+                        'h5live': {
+                            'server': {
+                                'websocket': this.getH5WebSocket(),
+                                'hls': this.getH5hls()
+                            },
+                            'rtmp': {
+                                'url': wowza,
+                                'streamname': this.playStream
+                            }
+                        }
                     }
-                }
+                ],
             },
             'events': {
                 onReady: (s: any) => { this.log(s); },
                 onPlay: (s: any) => { this.onPlay(s); },
-                onPause: (s: any) => { this.log(s); },
-                onLoading: (s: any) => { this.log(s); },
+                onPause: (s: any) => { this.onPause(s); },
+                onLoading: (s: any) => { this.onLoading(s); },
                 onStartBuffering: (s: any) => { this.log(s); },
                 onStopBuffering: (s: any) => { this.onStopBuffering(s); },
                 onError: (s: any) => { this.onNanoCosmosError(s); },
@@ -173,7 +288,12 @@ export default class NanoCosmos extends Stream {
                 onUnmuted: (s: any) => { this.log(s); },
                 onVolumeChange: (s: any) => { this.log(s); },
                 onStreamInfo: (s: any) => { this.log(s); },
-                onWarning: (s: any) => { this.log(s); }
+                onWarning: (s: any) => { this.log(s); },
+                onUpdateSourceInit: (s: any) => { this.updateSourceInit(s); },
+                onUpdateSourceSuccess: (s: any) => {this.updateSourceSuccess(s); },
+                onUpdateSourceFail: (event: any) => { this.updateSourceFail(event); },
+                onUpdateSourceAbort: (event: any) => { this.updateSourceAbort(event); },
+                onDestroy: (s: any) => { this.onDestroy(s) }
             },
             'playback': {
                 'autoplay': this.autoplay,
@@ -188,6 +308,11 @@ export default class NanoCosmos extends Stream {
                     maxDelay: 5,
                     delaySteps: 1,
                     maxRetries: 3
+                },
+                'timeouts': {
+                   loading: 10,
+                   buffering: 10,
+                   connecting: 5
                 }
             },
             tweaks: {
@@ -209,32 +334,88 @@ export default class NanoCosmos extends Stream {
 
         this.player.setup(configH5LIVE).then((s: any) => {
             //na da?
-        }, function (error: any) {
-            console.log('nano error', error.message);
+            this.isFailed = false;
+
+        }).catch((ex : any) => {
+            console.log('nano error', ex.message);
+            this.state = 'failed';
         });
 
     }
 
+    private updateSourceSuccess(event: any) {
+       // this.state = 'playing';
+    };
+
+
+    private updateSourceFail(event: any) {
+        this.isFailed = true;
+        this.state = 'failed';
+    }
+
+
+    private updateSourceAbort(event: any) {
+        //this.state = 'update_abort';
+    }
+
+    private updateSourceInit(event : any) {
+        this.state = 'loading';
+    };
+
+    private onDestroy(event: any) {
+        //console.log('destroyed, ', event);
+        this.state = 'destroy';
+
+        if(this.playStreamSwitch || this.isFailed){
+            console.debug(`switching playStreamSwitch: ${this.playStreamSwitch} or failed: ${this.isFailed} ${event}`);
+            
+            this.load();
+
+            this.playStreamSwitch = false;
+            this.isFailed = false;
+        } else {
+            //this.state = 'destroyed';
+        }
+        
+         
+    }
+
+    private onPause(s: any){
+         this.state = 'pause';
+    }
+
+    private onLoading(s: any) {
+         this.state = 'loading';
+    }
+
     private onPlay(s: any) {
+        this.state = 'playing';
         this.log(s);
         if(this.$store.state.session.activeState !== State.Active){
             this.onStateChange('active');
+
         }
     }
 
     private onStopBuffering(s: any){
-        /*this.end();
-        this.load();*/
         this.log(s);
     }
 
     private onNanoCosmosError(s: any){
+        this.state = 'failed';
+      
+       
+        this.isFailed = true;
+        //this.end();
         if(s.data && s.data.code === 2002){
+
            this.onStateChange('disconnected');
         } else {
            this.log(s);
-           this.onError(s);
         }
+
+        this.onError(s);
+
     }
 
     private log(val: any){
@@ -244,10 +425,17 @@ export default class NanoCosmos extends Stream {
     }
 
     private end(){
-        if(!this.player)
-          return false;
 
+        this.state = 'ending';
+        if(!this.player){
+            console.log('no player')
+            return false;
+        }
+          
+        console.log('destroying..');
         this.player.destroy();
+        //this.player = null;
+        //delete this.player;
 
         return true;
     }

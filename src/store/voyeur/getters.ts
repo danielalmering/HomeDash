@@ -24,6 +24,13 @@ const getters = {
             return state.performers.find(p =>  p.id === id );
         };
     },
+    getReplacementPerformer(state: VoyeurState) {
+        if(state.queue.length === 0){
+            return -1;
+        }
+
+        return state.queue[0];
+    },
     replacementTargetIndex(state: VoyeurState){
         if(state.activeTiles.length < maxTilesAllowed){
             return state.activeTiles.length;

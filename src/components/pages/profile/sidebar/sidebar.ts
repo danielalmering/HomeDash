@@ -117,6 +117,12 @@ export default class Sidebar extends Vue {
         this.setCategory(newValue ? 'voyeur' : this.defaultCategory);
     }
 
+    async voyeurPlayerError(index: any) {
+        console.warn(`Tile not loading `, index);
+        const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
+        await this.$store.dispatch('voyeur/loadTile', { performerId:  performerId, position: index });
+    }
+
     isWebRTCPerformer(performerId: number): boolean {
         const performer = this.performer(performerId);
 
@@ -272,7 +278,7 @@ export default class Sidebar extends Vue {
         //Switch to the peek tab when starting a peek session
         if(to.name === 'Peek' && this.category !== 'peek'){
 
-            this.setCategory('peek');
+            this.setCategory('peek'); 
         }
     }
 
