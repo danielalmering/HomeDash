@@ -182,7 +182,7 @@ const actions = {
 
             await store.dispatch('end');
 
-            await sleep(1000);
+            //await sleep(1000);
 
             await store.dispatch('startRequest', <RequestPayload>{
                 performer: performer,

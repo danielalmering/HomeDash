@@ -28,6 +28,8 @@ body {
     font-family: $default-font--regular;
 }
 
+.tagmanager { display: none; }
+
 .container-fluid {
     max-width: 990px;
     margin: 0 auto;
