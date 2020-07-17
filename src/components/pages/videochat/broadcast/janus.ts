@@ -155,12 +155,16 @@ export class JanusCast extends Broadcast{
     }
 
     beforeDestroy(){
-        if (this.state !== 'destroying'){
-            this.destroy();
-        }
+        this.addLog( {event: "beforeDestroy"} );
+        this.destroy();
     }
 
     destroy(){
+        //no need to detroy when already destroying..
+        if (this.state === 'destroying'){
+            return;
+        }
+
         try{
             this.state = 'destroying';
 
@@ -260,7 +264,6 @@ export class JanusCast extends Broadcast{
 
             this.flushLogs();
         } catch( error ){
-
             if (error instanceof Error){
                 this.onError( `${error.name} ${error.message}` );
             } else if (typeof error == 'string'){
@@ -294,11 +297,14 @@ export class JanusCast extends Broadcast{
         return new Promise( async (resolve, reject) => {
             //accessing mediaDevices while not over https is not supported
             if (!navigator.mediaDevices){
-                reject('no https conenction buster');
+                reject('no https connection buster');
                 return;
             }
 
-            navigator.mediaDevices.getUserMedia( { video: true, audio: true })
+            //make sure people without microphones get to at least use the cam...
+            const mics = await new Devices().getMicrophones();
+
+            navigator.mediaDevices.getUserMedia( { video: true, audio: mics.length > 0 })
             .then( (stream: MediaStream) => {
                 if (stream.stop){
                     stream.stop();
