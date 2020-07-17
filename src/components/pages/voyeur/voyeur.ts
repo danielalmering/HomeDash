@@ -211,6 +211,12 @@ export default class Voyeur extends Vue {
     }
 
     async startVideoChat(performerId: number){
+        //if performer is undefined or null stop the call
+        if(this.performer(performerId) == undefined) {
+            this.$store.dispatch('errorMessage', 'voyeur.alerts.errorPerformerNotAvailable');
+            return;
+        }
+
         await this.$store.dispatch<RequestPayload>({
             type: 'startRequest',
             performer: this.performer(performerId),

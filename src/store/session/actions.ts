@@ -11,7 +11,8 @@ import notificationSocket from '../../socket';
 import { tagHotjar, sleep } from '../../utils/main.util';
 import i18n from '../../localization';
 import { startRequest, deleteVideorequest, cancel, end, performerTimeout, startCall, endCall, initiate, InitiatePayload } from 'sensejs/session/index';
-
+import { errorMonitor } from 'events';
+ 
 const actions = {
     async startRequest(store: ActionContext<SessionState, RootState>, payload: RequestPayload){
         store.commit('setState', State.InRequest);
@@ -57,12 +58,19 @@ const actions = {
             store.state.activePerformer = store.state.activeSessionType = undefined;
             store.state.fromVoyeur = payload.fromVoyeur || false;
             store.commit('setState', State.Idle);
-
+            
             store.dispatch('openMessage', {
                 content: error.message,
                 class: 'error'
+            }).then(() => {
+                //redirect to payment page when there are no credits
+                if(error.message == 'Onvoldoende credits') {   //Backend error 
+                    router.push({ name: 'Payment' });
+                }
             });
 
+            
+           
             tagHotjar(`ERROR_${payload.sessionType.toUpperCase()}REQUEST`);
         }
     },

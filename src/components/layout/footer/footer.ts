@@ -22,6 +22,10 @@ export default class Footer extends Vue {
         return this.$store.getters.getBranding;
     }
 
+    get fullYear(){
+        return new Date().getFullYear();
+    }
+
     created(){
         window.setInterval(() => { this.isSocketConnected = notificationSocket.isConnected(); }, 3000);
     }
