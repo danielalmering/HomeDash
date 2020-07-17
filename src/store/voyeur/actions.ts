@@ -6,6 +6,7 @@ import config from '../../config';
 import router from '../../router';
 import { initiate, end, SessionType } from 'sensejs/session';
 import { get, listBusy } from 'sensejs/performer';
+import { warn, error as logError } from '../../utils/main.util';
 
 //Switcheroo interval callback
 let switcherooCb: number | undefined = undefined;
@@ -91,7 +92,7 @@ const actions = {
                     await dispatch('loadTile', { performerId: state.queue[0], position: tileToReplace });
                     break;
                 }catch{
-                    console.log('failed loading tile');
+                    logError('failed loading tile');
                 }
             } while(true);
         }, tileSwitchDelay);

@@ -4,7 +4,7 @@ import JSMpeg from '../videochat/streams/jsmpeg';
 import NanoCosmos from '../videochat/streams/nanocosmos';
 import Confirmation from '../../layout/confirmations/confirmations';
 
-require('../../../../static/nanoplayer.4.5.2.min.js');
+require('../../../../static/nanoplayer.4.5.6.min.js');
 
 import './voyeur.scss';
 import { SessionType, State } from '../../../models/Sessions';
@@ -16,6 +16,7 @@ import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import {NanoCosmosPossible, isIE} from '../../../utils/video.util';
 import {WebRTC} from '../videochat/streams/webrtc';
 import { webrtcPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
+import { log, error, warn } from '../../../utils/main.util';
 
 const Platform = require('platform');
 
@@ -38,8 +39,10 @@ export default class Voyeur extends Vue {
     removeFavourite = (performer: Performer) => removeFavourite(this.$store.state.authentication.user.id, performer.id).then(() => performer.isFavourite = false);
 
     get mainTile(){
+         //NOTE: Hotze This should not happen but it happens
         if(this.$store.state.voyeur.mainTile == undefined){
-            console.log('no main tile..');
+            error('Voyeur: mainTile is null or undefined');
+            return false;
         }
         return this.$store.state.voyeur.mainTile;
     }
@@ -57,7 +60,7 @@ export default class Voyeur extends Vue {
     }
 
     get performerData(){
-        
+        //this gets a replacement performer 
         const performerId = this.$store.state.voyeur.mainTile != undefined ? this.$store.state.voyeur.mainTile.performer  : this.$store.getters['voyeur/getReplacementPerformer'];
         return this.performer(performerId);
     }
@@ -66,15 +69,16 @@ export default class Voyeur extends Vue {
         return (id: number) => {
              
             const performer =  this.$store.getters['voyeur/performer'](id);
-            //fix
+            //check if performer is found if not get a replacement
             if(performer == undefined) {
                 const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
+                //if there are no replacements just close the voyeur 
                 if(performerId < 0) {
-                    console.log('closing...')
+                    warn('Voyeur: closing voyeur no found replacement')
                     this.close();
                     return -1;
                 } else {
-                    console.log('swaping...')
+                    log('swaping...')
                     this.swap(performerId);
                     return performerId;
                 }
@@ -170,7 +174,7 @@ export default class Voyeur extends Vue {
     }
 
     swap(performerId: number){
-        console.log('going to swap');
+        log('going to swap');
         this.$store.dispatch('voyeur/swap', {
             performerId
         });
@@ -254,7 +258,7 @@ export default class Voyeur extends Vue {
     }
 
     async viewerError(message: string){
-         console.log('viewer error', message);
+        warn('viewer error', message);
       
         const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
         this.swap(performerId);
@@ -262,7 +266,7 @@ export default class Voyeur extends Vue {
 
     @Watch('mainTile')
     async switcheroo(newState: boolean){
-        console.log('main tile changed', newState);
+        log('main tile changed', newState);
         if(newState === undefined) {
             //ended or switch ?
             this.close();

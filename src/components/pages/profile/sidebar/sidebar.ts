@@ -7,7 +7,8 @@ import {
     openTab,
     getAvatarImage,
     getPerformerStatus,
-    hasService
+    hasService,
+    warn
 } from '../../../../utils/main.util';
 import { webrtcPossible, NanoCosmosPossible } from '../../../../utils/video.util';
 import config, { logo } from '../../../../config';
@@ -118,7 +119,7 @@ export default class Sidebar extends Vue {
     }
 
     async voyeurPlayerError(index: any) {
-        console.warn(`Tile not loading `, index);
+        warn(`Tile not loading ${index}`);
         const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
         await this.$store.dispatch('voyeur/loadTile', { performerId:  performerId, position: index });
     }
