@@ -27,6 +27,12 @@ export class JanusCast extends Broadcast{
             return;
         }
 
+        if (value && !this.hasMic){
+            //I'm not even going to try to enable this microphone, since the user don't have any
+            this.addLog( {event: 'micchange', name: 'no mic available' })
+            return;
+        }
+
         //somehow the micChange can be triggered three times in a row.
         if (value === this.nextMic){
             return;
@@ -144,6 +150,8 @@ export class JanusCast extends Broadcast{
         this.nextCam = undefined;
     }
 
+    //does this user even have a mic?
+    private hasMic: boolean = true;
     private nextMic: string | boolean;
     private audioTrack: MediaStreamTrack;
     private nextCam: string | boolean;
@@ -241,6 +249,10 @@ export class JanusCast extends Broadcast{
             //initialize Janus..
             await this.init();
 
+            //make sure people without microphones get to at least use the cam...
+            const mics = await new Devices().getMicrophones();
+            this.hasMic = mics.length > 0;
+            
             //try accessing the cam / mic.. if the user refuses abort
             await this.probeDevices();
 
@@ -301,10 +313,8 @@ export class JanusCast extends Broadcast{
                 return;
             }
 
-            //make sure people without microphones get to at least use the cam...
-            const mics = await new Devices().getMicrophones();
 
-            navigator.mediaDevices.getUserMedia( { video: true, audio: mics.length > 0 })
+            navigator.mediaDevices.getUserMedia( { video: true, audio: this.hasMic })
             .then( (stream: MediaStream) => {
                 if (stream.stop){
                     stream.stop();
@@ -441,7 +451,7 @@ export class JanusCast extends Broadcast{
                 media: {
                     audioRecv: false,
                     videoRecv: false,
-                    audioSend: true,
+                    audioSend: this.hasMic,
                     videoSend: true,
                     audio: d.selectedMicrophone ? { deviceId: d.selectedMicrophone } : true,
                     video: d.selectedCamera ? { deviceId: d.selectedCamera } : true
