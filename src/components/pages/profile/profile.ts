@@ -2,7 +2,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Route, RawLocation } from 'vue-router';
 import Vue from 'vue';
 
-import { openModal, getAvatarImage, getPerformerLabel, hasService  } from '../../../utils/main.util';
+import { openModal, getAvatarImage, getPerformerLabel, hasService, error  } from '../../../utils/main.util';
 import { getViewerType } from '../../../utils/video.util';
 import { RequestPayload, SessionState } from '../../../store/session/';
 import { SessionType, State, PaymentType } from '../../../models/Sessions';
@@ -244,7 +244,7 @@ export default class Profile extends Vue {
                 }
             });
         } catch(ex){
-            console.log(ex);
+            error(ex);
         }
     }
 
