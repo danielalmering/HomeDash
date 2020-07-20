@@ -225,6 +225,7 @@ export default class NanoCosmos extends Stream {
     }
 
     private load(){
+        log('loading..');
         this.state = 'loading';
         this.player = new NanoPlayer(this.id);
 
@@ -350,8 +351,9 @@ export default class NanoCosmos extends Stream {
     };
 
     private onDestroy(event: any) {
-        //log('destroyed, ', event);
+        log('destroyed, ', event);
         this.state = 'destroy';
+        
 
         if(this.playStreamSwitch || this.isFailed){ 
             this.load();
@@ -404,6 +406,15 @@ export default class NanoCosmos extends Stream {
 
         this.state = 'ending';
         if(!this.player){
+            log('player not found');
+            //Bug fix for switching peek
+            if(this.playStreamSwitch){ 
+                log('player reload from end');
+                this.load();
+    
+                this.playStreamSwitch = false;
+            } 
+
             return false;
         }
           
