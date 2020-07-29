@@ -1,10 +1,14 @@
 {
     "BaseUrl": "/api",
-    "FullApiUrl": "http://www.thuis.nl",
+    "FullApiUrl": "https://www.thuis.nl",
     "ImageUrl": "//img.thuis.nl/files/",
     "SocketUrl": "wss://socket.thuis.nl/",
     "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
     "StorageKey": "thuis",
+    "H5Server": "stream01.thuis.nl",
+    "VodServer": "vod",
     "Country": "nl",
-    "H5Server": "stream01.thuis.nl"
-}
+    "FreeRegister": false,
+    "Banner": false,
+    "Janus": "webrtc01.thuis.nl"
+ }
