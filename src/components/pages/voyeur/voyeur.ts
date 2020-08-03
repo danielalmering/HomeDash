@@ -60,25 +60,24 @@ export default class Voyeur extends Vue {
     }
 
     get performerData(){
-        //this gets a replacement performer 
         const performerId = this.$store.state.voyeur.mainTile != undefined ? this.$store.state.voyeur.mainTile.performer  : this.$store.getters['voyeur/getReplacementPerformer'];
         return this.performer(performerId);
     }
 
     get performer(){
         return (id: number) => {
-             
+
             const performer =  this.$store.getters['voyeur/performer'](id);
             //check if performer is found if not get a replacement
-            if(performer == undefined) {
+            if(performer === undefined) {
                 const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
-                //if there are no replacements just close the voyeur 
+                //if there are no replacements just close the voyeur
                 if(performerId < 0) {
-                    warn('Voyeur: closing voyeur no found replacement')
+                    warn('Voyeur: closing voyeur no found replacement');
                     this.close();
                     return -1;
                 } else {
-                    log('swaping...')
+                    log('swaping...');
                     this.swap(performerId);
                     return performerId;
                 }
@@ -259,7 +258,6 @@ export default class Voyeur extends Vue {
 
     async viewerError(message: string){
         warn('viewer error', message);
-      
         const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
         this.swap(performerId);
     }

@@ -29,7 +29,7 @@ export class WebRTC extends Stream {
 
     @Watch('wowza')
     onWowzaSwitch(){
-       log("wowza switch");
+       log('wowza switch');
     }
 
     toggleMute(){
