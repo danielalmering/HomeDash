@@ -25,8 +25,6 @@ export class H5Style {
     displayMutedAutoplay: boolean;
 }
 
-
-
 @Component({
     template: '<div class="nanocosmos" :id="id"></div>',
 })
@@ -62,7 +60,7 @@ export default class NanoCosmos extends Stream {
     }
 
     private id: string;
-    
+
     @Prop({ default: true, type: Boolean})
     public isMain: Boolean;
 
@@ -111,19 +109,17 @@ export default class NanoCosmos extends Stream {
 
     private playStreamSwitch: boolean = false;
     private isFailed: boolean = false;
-    
-  
+
     @Watch('playStream')
     onPlaystreamSwitch(){
         //TODO: Hotze very complex should be states not booleans (but works for now!)
-        try {   
-            
-            if(this.isMain) {
+        try {
+
+            if(this.isMain){
                 this.state = 'switching';
                 this.playStreamSwitch = true;
-                this.end();      
+                this.end();
             } else {
-                
                 if(!this.isFailed) {
                     this.updateSource();
                 } else {
@@ -134,11 +130,6 @@ export default class NanoCosmos extends Stream {
              this.state = 'failed';
              warn('switching error!', e);
         }
-    }
-
-    @Watch('wowza')
-    onWowzaSwitch() {
-
     }
 
     private getStyle(): H5Style {
@@ -160,7 +151,7 @@ export default class NanoCosmos extends Stream {
     mounted(){
        if(!this.isSwitching){
            this.load();
-       } 
+       }
     }
 
     beforeDestroy(){
@@ -201,12 +192,12 @@ export default class NanoCosmos extends Stream {
                         }
                     }
             ],
-            "startIndex": 0,
-            "options": {
-                "adaption": {
-                    "rule": "deviationOfMean"
+            'startIndex': 0,
+            'options': {
+                'adaption': {
+                    'rule': 'deviationOfMean'
                 },
-                "switch": {
+                'switch': {
                     'method': 'server',
                     'pauseOnError': false,
                     'forcePlay': true,
@@ -235,7 +226,6 @@ export default class NanoCosmos extends Stream {
         }
 
         const configH5LIVE = {
-            
             'source': {
                 'entries': [
                     {
@@ -252,12 +242,12 @@ export default class NanoCosmos extends Stream {
                         }
                     }
                 ],
-                "startIndex": 0,
-                "options": {
-                    "adaption": {
-                        "rule": "deviationOfMean"
+                'startIndex': 0,
+                'options': {
+                    'adaption': {
+                        'rule': 'deviationOfMean'
                     },
-                    "switch": {
+                    'switch': {
                         'method': 'server',
                         'pauseOnError': false,
                         'forcePlay': true,
@@ -281,7 +271,7 @@ export default class NanoCosmos extends Stream {
                 onUpdateSourceSuccess: (s: any) => {this.updateSourceSuccess(s); },
                 onUpdateSourceFail: (event: any) => { this.updateSourceFail(event); },
                 onUpdateSourceAbort: (event: any) => { this.updateSourceAbort(event); },
-                onDestroy: (s: any) => { this.onDestroy(s) }
+                onDestroy: (s: any) => { this.onDestroy(s); }
             },
             'playback': {
                 'autoplay': this.autoplay,
@@ -333,7 +323,7 @@ export default class NanoCosmos extends Stream {
 
     private updateSourceSuccess(event: any) {
        // this.state = 'playing';
-    };
+    }
 
 
     private updateSourceFail(event: any) {
@@ -348,19 +338,18 @@ export default class NanoCosmos extends Stream {
 
     private updateSourceInit(event : any) {
         this.state = 'loading';
-    };
+    }
 
     private onDestroy(event: any) {
         log('destroyed, ', event);
         this.state = 'destroy';
-        
 
-        if(this.playStreamSwitch || this.isFailed){ 
+        if(this.playStreamSwitch || this.isFailed){
             this.load();
 
             this.playStreamSwitch = false;
             this.isFailed = false;
-        } 
+        }
     }
 
     private onPause(s: any){
@@ -377,7 +366,6 @@ export default class NanoCosmos extends Stream {
 
         if(this.$store.state.session.activeState !== State.Active){
             this.onStateChange('active');
-
         }
     }
 
@@ -387,19 +375,16 @@ export default class NanoCosmos extends Stream {
 
     private onNanoCosmosError(s: any){
         this.state = 'failed';
-      
-       
+
         this.isFailed = true;
         //this.end();
         if(s.data && s.data.code === 2002){
-
            this.onStateChange('disconnected');
         } else {
            log(s);
         }
 
         this.onError(s);
-
     }
 
     private end(){
@@ -408,19 +393,17 @@ export default class NanoCosmos extends Stream {
         if(!this.player){
             log('player not found');
             //Bug fix for switching peek
-            if(this.playStreamSwitch){ 
+            if(this.playStreamSwitch){
                 log('player reload from end');
                 this.load();
-    
-                this.playStreamSwitch = false;
-            } 
 
+                this.playStreamSwitch = false;
+            }
             return false;
         }
-          
+
         log('destroying..');
         this.player.destroy();
-
 
         return true;
     }

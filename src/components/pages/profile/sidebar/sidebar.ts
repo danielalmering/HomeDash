@@ -278,8 +278,7 @@ export default class Sidebar extends Vue {
 
         //Switch to the peek tab when starting a peek session
         if(to.name === 'Peek' && this.category !== 'peek'){
-
-            this.setCategory('peek'); 
+            this.setCategory('peek');
         }
     }
 

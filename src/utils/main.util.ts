@@ -161,11 +161,10 @@ export function urlValid() {
 
 export const isDev =  process.env.NODE_ENV === 'development';
 
-
 /**
  * Debug logging
- * @param message 
- * @param optionalParams 
+ * @param message
+ * @param optionalParams
  */
 export const log = (message?: any, ...optionalParams: any[]) : void => {
     if(isDev) {
@@ -173,26 +172,26 @@ export const log = (message?: any, ...optionalParams: any[]) : void => {
             console.log(message, optionalParams);
         }
     }
-}
+};
 
 /**
  * Warn logging
- * @param message 
- * @param optionalParams 
+ * @param message
+ * @param optionalParams
  */
 export const warn = (message?: any, ...optionalParams: any[]) : void => {
     if (typeof console !== 'undefined') {
         console.warn(message, optionalParams);
     }
-}
+};
 
 /**
  * Error logging
- * @param message 
- * @param optionalParams 
+ * @param message
+ * @param optionalParams
  */
 export const error = (message?: any, ...optionalParams: any[]) : void => {
     if (typeof console !== 'undefined') {
         console.error(message, optionalParams);
     }
-}
+};

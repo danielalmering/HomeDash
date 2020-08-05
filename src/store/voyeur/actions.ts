@@ -29,13 +29,11 @@ const actions = {
             });
 
             if(error.message == 'Onvoldoende credits') {
-                dispatch('end').then(() =>{
+                dispatch('end').then(() => {
                     router.push({ name: 'Payment' });
                 }).catch((ex) => {
                     router.push({ name: 'Payment' });
                 });
-                
-                
             }
         }
 

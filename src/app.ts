@@ -33,7 +33,7 @@ export default class Cookies extends Vue {
     userSafeCountry: string | undefined = undefined;
     //userSafeCountries: Array<string> = ['DE', 'BE', 'NL', 'LU'];
     userSafeCountries: Array<string> = ['NL'];
-    
+
     getParameterByName = getParameterByName;
 
     get safeMode(){
