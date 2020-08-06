@@ -17,9 +17,7 @@
             </div>
             <div class="col-xs-6 col-sm-3 col-lg-15 grid" v-for="performer in performers">
                 <div class="performers__block">
-                    <router-link v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}">
-                        <div class="label" v-if="performer" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></div>
-                    </router-link>
+                    <router-link tag="div" class="label" v-if="performer" :to="{ name: 'Profile', params: { id: performer.advertId }}" :class="getPerformerLabel(performer)" v-t="'performers.labels.' + getPerformerLabel(performer)"></router-link>
 
                     <div class="performers__info" v-if="performer">
                         <div class="performers__info-personal">

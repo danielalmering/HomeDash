@@ -249,7 +249,7 @@ export default class VideoChat extends Vue {
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
-        
+
         return this.$store.state.session.activeSessionData.publishStream;
     }
 
