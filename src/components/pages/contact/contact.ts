@@ -29,11 +29,6 @@ const faqData = require(`./faq.data.json`);
 export default class Contact extends Vue {
    
     contact: PostContactPayload;
-    faq: Faq = { intro_text: '', text: '' };
-
-    mounted() {
-        this.faq = this.getFaq();
-    }
     
     data(){                
         return {
@@ -46,11 +41,6 @@ export default class Contact extends Vue {
         };
     }
    
-    getFaq() {    
-        const country = (config.Country == 'at') ? 'de' : config.Country;
-        return faqData[country];
-    }
-
     @Validations()
     validations = {
         contact: {
