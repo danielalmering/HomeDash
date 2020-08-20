@@ -1,5 +1,5 @@
 import Broadcast from './broadcast';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Watch, Prop} from 'vue-property-decorator';
 import { JanusJS, default as Janus }  from 'janus-gateway';
 import { default as socket } from '../../../../socket';
 import { Devices } from 'typertc';
@@ -21,6 +21,9 @@ interface Room{
     template: '<video playsinline muted webkit-playsinline autoplay :cam="true" :mic="false"></video>'
 })
 export class JanusCast extends Broadcast{
+
+    @Prop( {default: false, required:false} ) shouldCreateRoom: boolean;
+    @Prop( { required: false } ) secret: string;
 
     @Watch('mic') async onMicChanged(value: boolean | string, oldValue: boolean | string) {
         if (value === oldValue){
@@ -176,7 +179,7 @@ export class JanusCast extends Broadcast{
         try{
             this.state = 'destroying';
 
-            if (this.roomPlugin){
+            if (this.room){
                 this.roomPlugin.send({
                     message: { request: 'unpublish' }
                 });
@@ -222,6 +225,7 @@ export class JanusCast extends Broadcast{
 
     janus: Janus;
     roomPlugin: JanusJS.PluginHandle;
+    room: Room;
 
     logs: {event: string, [rest: string]: any}[] = [];
 
@@ -265,8 +269,10 @@ export class JanusCast extends Broadcast{
             //attach the plugin...
             this.roomPlugin = await this.attachRoomPlugin();
 
-            await this.createRoom();
-            await this.joinRoom();
+            if (this.shouldCreateRoom){
+                await this.createRoom();
+            }
+            this.room = await this.joinRoom();
 
             let jsep = await this.createOffer();
             jsep = await this.configure(jsep);
@@ -340,7 +346,9 @@ export class JanusCast extends Broadcast{
                 destroyed: () => {
                     this.addLog({ event: 'JanusDestroyed'});
                 },
-                iceServers: []
+                iceServers: [],
+                token: this.publishToken,
+                apisecret: this.secret
             });
         } );
     }
@@ -435,7 +443,8 @@ export class JanusCast extends Broadcast{
                     request: 'join',
                     room: this.publishStream,
                     ptype: 'publisher',
-                    display: this.publishToken
+                    token: this.publishToken,
+                    id: this.publishToken
                 }
             });
             this._resolver = { resolve, reject };
@@ -630,18 +639,30 @@ export class JanusCast extends Broadcast{
     }
     set state(value: string){
         this.addLog({event: 'statechange', value});
-        //destroying is always alowed
-        //otherwise, the order of states should be obeyed
-        if (value != 'destroying'){
-            const current = JanusCast.states.indexOf(this._state);
-            const next = JanusCast.states.indexOf(value);
-            if (next - current != 1){
-                throw new Error(`invalid state change from ${this._state} to ${value}`);
-            }
+
+        if (!this.isStateChangeValid(value)){
+            throw new Error(`invalid state change from ${this._state} to ${value}`);
         }
 
         this._state = value;
         this.onStateChange( value );
+    }
+
+    //destroying is always alowed
+    //otherwise, the order of states should be obeyed
+    //except when skipping creating a room off course... these exceptions shal not pile up!
+    private isStateChangeValid(newState:string):boolean{
+        if (newState == "destroying") 
+            return true;
+        
+        if (newState == "joining" && this._state == "attaching"){
+            return true;
+        }
+
+        const current = JanusCast.states.indexOf(this._state);
+        const next = JanusCast.states.indexOf(newState);
+
+        return next - current == 1;
     }
 
     static states = [
