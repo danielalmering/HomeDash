@@ -166,7 +166,7 @@ export class JanusCast extends Broadcast{
     }
 
     beforeDestroy(){
-        this.addLog( {event: "beforeDestroy"} );
+        this.addLog( {event: 'beforeDestroy'} );
         this.destroy();
     }
 
@@ -215,7 +215,7 @@ export class JanusCast extends Broadcast{
         socket.sendEvent({
             content: this.logs,
             event: 'udplog',
-            receiverType: null
+            receiverType: undefined
         });
         this.logs = [];
     }
@@ -288,7 +288,7 @@ export class JanusCast extends Broadcast{
                 this.onError( error );
             } else if (typeof error === 'object'){
                 let msg = 'unknown-';
-                for(let prop in error){
+                for(const prop in error){
                     msg += `${prop}-${error[prop]}`;
                 }
                 this.onError( msg )
@@ -652,10 +652,10 @@ export class JanusCast extends Broadcast{
     //otherwise, the order of states should be obeyed
     //except when skipping creating a room off course... these exceptions shal not pile up!
     private isStateChangeValid(newState:string):boolean{
-        if (newState == "destroying") 
+        if (newState == 'destroying') 
             return true;
         
-        if (newState == "joining" && this._state == "attaching"){
+        if (newState == 'joining' && this._state == 'attaching'){
             return true;
         }
 
