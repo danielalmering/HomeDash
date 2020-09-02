@@ -47,7 +47,7 @@ $slidersmall-height: 275px;
 
         &-right, &-left {
             position: absolute;
-            display: table;
+            display: block;
             top: 0px;
             right: 0px;
             height: $slidersmall-height;
@@ -153,10 +153,10 @@ $slidersmall-height: 275px;
 
         &-right, &-left {
             position: absolute;
-            display: table;
-            top: 45px;
+            display: block;
+            top: calc(50% - 45px);
             right: 0px;
-            height: calc(100% - 45px);
+            //height: calc(100% - 45px);
             width: 39px;
             text-align: center;
             cursor: pointer;
