@@ -20,7 +20,7 @@ interface Room{
 }
 
 @Component({
-    template: '<div><video muted autoplay :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video></div>',
+    template: '<div><video autoplay :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video></div>',
 })
 export class JanusPlay extends Stream{
 
@@ -29,11 +29,10 @@ export class JanusPlay extends Stream{
 
     @Prop( { required: false } ) secret: string;
 
-    intialize( {wowza='bla', playStream='pub', playToken='tok', debug=false,element=false} = {}){
+    intialize( {wowza='bla', playStream='pub', playToken='tok', element=false} = {}){
         this.wowza = wowza;
         this.playStream = playStream;
         this.playToken = playToken;
-        this.debug = debug;
         if (element) this.initializeElement( element );
 
         this.iWannaPlay();
@@ -41,6 +40,7 @@ export class JanusPlay extends Stream{
 
     mounted(){
         this.initializeElement( this.$el.querySelector('.janus') );
+
         this.iWannaPlay();
     }
 
@@ -289,7 +289,7 @@ export class JanusPlay extends Stream{
         return new Promise( (resolve, reject)=>{
             this.publisherPlugin.createAnswer({
                 jsep,
-                media: { audioSend: false, videoSend: false, audioRecv: true, videoRecv: true },	// We want recvonly audio/video
+                media: { audioSend: false, videoSend: false, audioRecv: !this.muted, videoRecv: true },	// We want recvonly audio/video
                 success: (sdp:string)=>resolve(sdp),
                 error: (error:any)=>{
                     console.log( error );
