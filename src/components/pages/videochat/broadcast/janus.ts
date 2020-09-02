@@ -1,5 +1,5 @@
 import Broadcast from './broadcast';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Watch, Prop} from 'vue-property-decorator';
 import { JanusJS, default as Janus }  from 'janus-gateway';
 import { default as socket } from '../../../../socket';
 import { Devices } from 'typertc';
@@ -22,8 +22,17 @@ interface Room{
 })
 export class JanusCast extends Broadcast{
 
+    @Prop( {default: false, required:false} ) shouldCreateRoom: boolean;
+    @Prop( { required: false } ) secret: string;
+
     @Watch('mic') async onMicChanged(value: boolean | string, oldValue: boolean | string) {
         if (value === oldValue){
+            return;
+        }
+
+        if (value && !this.hasMic){
+            //I'm not even going to try to enable this microphone, since the user don't have any
+            this.addLog( {event: 'micchange', name: 'no mic available' })
             return;
         }
 
@@ -144,6 +153,8 @@ export class JanusCast extends Broadcast{
         this.nextCam = undefined;
     }
 
+    //does this user even have a mic?
+    private hasMic: boolean = true;
     private nextMic: string | boolean;
     private audioTrack: MediaStreamTrack;
     private nextCam: string | boolean;
@@ -155,16 +166,20 @@ export class JanusCast extends Broadcast{
     }
 
     beforeDestroy(){
-        if (this.state !== 'destroying'){
-            this.destroy();
-        }
+        this.addLog( {event: "beforeDestroy"} );
+        this.destroy();
     }
 
     destroy(){
+        //no need to detroy when already destroying..
+        if (this.state === 'destroying'){
+            return;
+        }
+
         try{
             this.state = 'destroying';
 
-            if (this.roomPlugin){
+            if (this.room){
                 this.roomPlugin.send({
                     message: { request: 'unpublish' }
                 });
@@ -210,6 +225,7 @@ export class JanusCast extends Broadcast{
 
     janus: Janus;
     roomPlugin: JanusJS.PluginHandle;
+    room: Room;
 
     logs: {event: string, [rest: string]: any}[] = [];
 
@@ -237,6 +253,10 @@ export class JanusCast extends Broadcast{
             //initialize Janus..
             await this.init();
 
+            //make sure people without microphones get to at least use the cam...
+            const mics = await new Devices().getMicrophones();
+            this.hasMic = mics.length > 0;
+            
             //try accessing the cam / mic.. if the user refuses abort
             await this.probeDevices();
 
@@ -249,8 +269,10 @@ export class JanusCast extends Broadcast{
             //attach the plugin...
             this.roomPlugin = await this.attachRoomPlugin();
 
-            await this.createRoom();
-            await this.joinRoom();
+            if (this.shouldCreateRoom){
+                await this.createRoom();
+            }
+            this.room = await this.joinRoom();
 
             let jsep = await this.createOffer();
             jsep = await this.configure(jsep);
@@ -260,7 +282,6 @@ export class JanusCast extends Broadcast{
 
             this.flushLogs();
         } catch( error ){
-
             if (error instanceof Error){
                 this.onError( `${error.name} ${error.message}` );
             } else if (typeof error == 'string'){
@@ -294,11 +315,12 @@ export class JanusCast extends Broadcast{
         return new Promise( async (resolve, reject) => {
             //accessing mediaDevices while not over https is not supported
             if (!navigator.mediaDevices){
-                reject('no https conenction buster');
+                reject('no https connection buster');
                 return;
             }
 
-            navigator.mediaDevices.getUserMedia( { video: true, audio: true })
+
+            navigator.mediaDevices.getUserMedia( { video: true, audio: this.hasMic })
             .then( (stream: MediaStream) => {
                 if (stream.stop){
                     stream.stop();
@@ -324,7 +346,9 @@ export class JanusCast extends Broadcast{
                 destroyed: () => {
                     this.addLog({ event: 'JanusDestroyed'});
                 },
-                iceServers: []
+                iceServers: [],
+                token: this.publishToken,
+                apisecret: this.secret
             });
         } );
     }
@@ -419,7 +443,8 @@ export class JanusCast extends Broadcast{
                     request: 'join',
                     room: this.publishStream,
                     ptype: 'publisher',
-                    display: this.publishToken
+                    token: this.publishToken,
+                    id: this.publishToken
                 }
             });
             this._resolver = { resolve, reject };
@@ -435,7 +460,7 @@ export class JanusCast extends Broadcast{
                 media: {
                     audioRecv: false,
                     videoRecv: false,
-                    audioSend: true,
+                    audioSend: this.hasMic,
                     videoSend: true,
                     audio: d.selectedMicrophone ? { deviceId: d.selectedMicrophone } : true,
                     video: d.selectedCamera ? { deviceId: d.selectedCamera } : true
@@ -614,18 +639,30 @@ export class JanusCast extends Broadcast{
     }
     set state(value: string){
         this.addLog({event: 'statechange', value});
-        //destroying is always alowed
-        //otherwise, the order of states should be obeyed
-        if (value != 'destroying'){
-            const current = JanusCast.states.indexOf(this._state);
-            const next = JanusCast.states.indexOf(value);
-            if (next - current != 1){
-                throw new Error(`invalid state change from ${this._state} to ${value}`);
-            }
+
+        if (!this.isStateChangeValid(value)){
+            throw new Error(`invalid state change from ${this._state} to ${value}`);
         }
 
         this._state = value;
         this.onStateChange( value );
+    }
+
+    //destroying is always alowed
+    //otherwise, the order of states should be obeyed
+    //except when skipping creating a room off course... these exceptions shal not pile up!
+    private isStateChangeValid(newState:string):boolean{
+        if (newState == "destroying") 
+            return true;
+        
+        if (newState == "joining" && this._state == "attaching"){
+            return true;
+        }
+
+        const current = JanusCast.states.indexOf(this._state);
+        const next = JanusCast.states.indexOf(newState);
+
+        return next - current == 1;
     }
 
     static states = [

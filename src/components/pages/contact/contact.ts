@@ -5,7 +5,6 @@ import './contact.scss';
 
 import WithRender from './contact.tpl.html';
 import { PostContactPayload, postContactMessage } from 'sensejs/admin';
-import config from '../../../config';
 
 import { Validations } from 'vuelidate-property-decorators';
 import { required, email } from 'vuelidate/lib/validators';
@@ -17,20 +16,18 @@ interface Message {
     subject: string;
 }
 
-interface Faq {
-    intro_text: string;
-    text: string;
-}
-
-const faqData = require(`./faq.data.json`);
-
 @WithRender
 @Component
 export default class Contact extends Vue {
-   
+
     contact: PostContactPayload;
+<<<<<<< HEAD
     
     data(){                
+=======
+
+    data(){
+>>>>>>> d3d3154bbd6766c0207d2bb639209aeb83c26813
         return {
             contact: {
                 email: '',
@@ -40,7 +37,11 @@ export default class Contact extends Vue {
             }
         };
     }
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> d3d3154bbd6766c0207d2bb639209aeb83c26813
     @Validations()
     validations = {
         contact: {
