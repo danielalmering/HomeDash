@@ -34,14 +34,17 @@
                 'Array.prototype.fill',
                 'Array.prototype.findIndex',
                 'Array.prototype.includes',
+                'Array.prototype.indexOf',
                 'Object.assign',
                 'Object.create',
+                'Object.getPrototypeOf',
                 'String.prototype.startsWith',
                 'String.prototype.includes',
-                'Number.isNaN'
+                'Number.isNaN',
+                'localStorage'
             ].join(','); 
 
-            var scriptUrl = 'https://cdn.polyfill.io/v3/polyfill.min.js?features=' + features;
+            var scriptUrl = 'https://cdn.polyfill.io/v3/polyfill.min.js?version=3.52.1&features=' + features;            
 
             if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
                 document.write('<script src="' + scriptUrl + '"><\/script>');
