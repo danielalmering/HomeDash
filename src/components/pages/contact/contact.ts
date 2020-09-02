@@ -21,13 +21,8 @@ interface Message {
 export default class Contact extends Vue {
 
     contact: PostContactPayload;
-<<<<<<< HEAD
-    
-    data(){                
-=======
 
     data(){
->>>>>>> d3d3154bbd6766c0207d2bb639209aeb83c26813
         return {
             contact: {
                 email: '',
@@ -37,11 +32,6 @@ export default class Contact extends Vue {
             }
         };
     }
-<<<<<<< HEAD
-   
-=======
-
->>>>>>> d3d3154bbd6766c0207d2bb639209aeb83c26813
     @Validations()
     validations = {
         contact: {
