@@ -28,34 +28,20 @@
 
         <script type="text/javascript">
             var features = [
-                'es5',
-                'es2015',
                 'fetch',
                 'Promise',
-                'Promise.prototype.finally',
                 'Array.prototype.find',
                 'Array.prototype.fill',
                 'Array.prototype.findIndex',
                 'Array.prototype.includes',
-                'Array.prototype.indexOf',
-                'Function.prototype.bind',
                 'Object.assign',
                 'Object.create',
-                'Object.getPrototypeOf',
-                'Object.defineProperties',
-                'Object.defineProperty',
                 'String.prototype.startsWith',
                 'String.prototype.includes',
-                'Number.isNaN',
-                'localStorage',
-                'Symbol.toStringTag',
-                'EventSource',
-                'Array.prototype.reduce',
-                'Element',
-                'Event'
+                'Number.isNaN'
             ].join(','); 
 
-            var scriptUrl = 'https://cdn.polyfill.io/v3/polyfill.min.js?version=3.52.1&features=' + features;            
+            var scriptUrl = 'https://cdn.polyfill.io/v3/polyfill.min.js?features=' + features;    
 
             if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
                 document.write('<script src="' + scriptUrl + '"><\/script>');
