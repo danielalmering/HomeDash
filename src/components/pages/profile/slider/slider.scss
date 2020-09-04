@@ -47,7 +47,7 @@ $slidersmall-height: 275px;
 
         &-right, &-left {
             position: absolute;
-            display: table;
+            display: block;
             top: 0px;
             right: 0px;
             height: $slidersmall-height;
