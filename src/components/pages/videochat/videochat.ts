@@ -578,7 +578,7 @@ export default class VideoChat extends Vue {
 
         if (autoLeaves.indexOf(this.activeState) > -1 || to.name === 'Voyeur' || to.name === 'Videochat' || to.name === 'Peek'){
             if(this.$store.state.session.fromVoyeur && to.name !== 'Voyeur'){
-                return this.gotoVoyeur(next);
+                //return this.gotoVoyeur(next);
             }
 
             return next();
