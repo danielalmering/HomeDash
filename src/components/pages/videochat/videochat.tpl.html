@@ -5,7 +5,7 @@
             streamTransportType"
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
-                :wowza="wowza"
+                :wowza="playServer"
                 :playStream="playStream"
                 :playToken="playToken"
                 :isSwitching="isSwitching"
@@ -18,18 +18,19 @@
             <component :is="broadcastType"
                 v-on:stateChange="broadcastStateChange"
                 v-on:error="broadcastError"
-                :wowza="wowza"
+                :wowza="castServer"
                 :publishStream="publishStream"
                 :publishToken="publishToken"
                 :mic="broadcasting.mic"
                 :cam="broadcasting.cam"
                 :videoCodec="broadcasting.videoCodec"
-                :quality="1" >
+                :quality="1" 
+                :debug="false">
             </component>
         </div>
 
         <div class="videochat__broadcast-buttons" v-if="broadcasting.cam">
-            <a v-on:click="toggleMic" class="fa fa-microphone" :class="{ active:broadcasting.mic }"></a>
+            <a v-on:click="toggleMic" v-if="userHasMic" class="fa fa-microphone" :class="{ active:broadcasting.mic }"></a>
             <a v-on:click="toggleSettings" class="fa fa-cogs" :class="{ active:broadcasting.settings }"></a>
         </div>
 
@@ -42,7 +43,7 @@
                     </option>
                 </select>
             </div>
-            <div class="videochat__devices-item">
+            <div class="videochat__devices-item" v-if="userHasMic">
                 <i class="fa fa-microphone"></i>
                 <select v-model="broadcasting.mic" v-on:change="setMicrophone">
                     <option v-for="mic in microphones" :value="mic.id ? mic.id : mic.name">
@@ -65,7 +66,7 @@
     <div class="videochat__chat">
 
         <div class="videochat__controls" v-if="performer">
-            <span class="videochat__controls-name">{{ performer.nickname }} 
+            <span class="videochat__controls-name">{{ performer.nickname }}
                 <i>({{ performer.advertId }})</i>
             </span>
 

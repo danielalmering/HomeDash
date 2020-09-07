@@ -335,6 +335,7 @@
             "errorinvalidEmail": "You did not enter a valid email address!",
             "errorinvalidPhone": "You have not entered a valid phone number!",
             "errorRemoveAccount": "An error occurred while removing!",
+            "errorinvalidUsername": "You have not entered a valid username!",
             "successRemoveAccount": "Your account has been successfully removed!"
         }
     },
@@ -373,7 +374,8 @@
         "dialog1on1Subtitle": "Do you want to start a private session with {name}?",
         "alerts": {
             "successChatEnded": "Session ended!",
-            "succesAddedreserve": "Successfully reserved the selected performer"
+            "succesAddedreserve": "Successfully reserved the selected performer",
+            "errorPerformerNotAvailable": "Unfortunately the performer is no longer available"
         }
     },
     "promos": {
@@ -453,7 +455,11 @@
         "message": "Message:*",
         "alerts": {
             "errorSend": "An error occurred while sending",
-            "successSend": "Message has been sent successfully"
+            "successSend": "Message has been sent successfully",
+            "errorinvalidName": "You have not entered a valid name!",
+            "errorinvalidEmail": "You did not enter a valid email address!",
+            "errorinvalidSubject": "You have not entered a valid subject!",
+            "errorinvalidMessage": "You have not entered a valid message!"
         }
     },
     "textpages": {
@@ -483,7 +489,7 @@
         "sexstories": "Sex stories",
         "sexstoriesurl": "#",
         "webcamurl": "http://www.club-sense.com",
-        "copyright": "Copyright 2018",
+        "copyright": "Copyright {year}",
         "cookies": "<a href='/privacy-policy/'>The website works with cookies so we can improve the website and remember your settings. \nBy continuing to use this website you agree with this</a>",
         "agecheck": "This website contains explicit material. By using this website you agree to this",
         "olderthen": "Older than 18 years",

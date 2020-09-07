@@ -335,6 +335,7 @@
             "errorinvalidEmail": "Sie haben keine gültige E-Mail-Adresse eingegeben!",
             "errorinvalidPhone": "Sie haben keine gültige Telefonnummer eingegeben!",
             "errorRemoveAccount": "Beim Entfernen ist ein Fehler aufgetreten!",
+            "errorinvalidUsername": "Es wurde kein gültiger Benutzername eingegeben!",
             "successRemoveAccount": "Ihr Konto wurde erfolgreich entfernt!"
         }
     },
@@ -373,7 +374,8 @@
         "dialog1on1Subtitle": "Möchtest du eine Privat Session mit {name}?",
         "alerts": {
             "successChatEnded": "Session beendet!",
-            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert"
+            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert",
+            "errorPerformerNotAvailable": "Leider ist der Darsteller nicht mehr verfügbar."
         }
     },
     "promos": {
@@ -453,7 +455,11 @@
         "message": "Nachricht:*",
         "alerts": {
             "errorSend": "Ein Fehler ist während des Versands aufgetreten",
-            "successSend": "Nachricht wurde erfolgreich gesendet"
+            "successSend": "Nachricht wurde erfolgreich gesendet",
+            "errorinvalidName": "Sie haben keinen gültigen Namen eingegeben!",
+            "errorinvalidEmail": "Sie haben keine gültige E-Mail-Adresse eingegeben!",
+            "errorinvalidSubject": "Sie haben keinen gültigen Betreff eingegeben!",
+            "errorinvalidMessage": "Sie haben keine gültige Nachricht eingegeben!"
         }
     },
     "textpages": {
@@ -483,7 +489,7 @@
         "sexstories": "Sex Stories",
         "sexstoriesurl": "#",
         "webcamurl": "http://www.club-sense.com",
-        "copyright": "Copyright 2018",
+        "copyright": "Copyright {year}",
         "cookies": "<a href='/privacy-policy/'>Durch die Verwendung von Cookies können wir die Webseite nutzerfreundlich gestalten und deine Einstellungen speichern. \nMit der Nutzung dieser Webseite erklärst du dich damit einverstanden, dass wir Cookies verwenden</a>",
         "agecheck": "Diese Webseite enthält explizite Inhalte. Mit der Nutzung der Webseite, akzeptiere ich die Geschäftsbedingungen.",
         "olderthen": "Ja, ich bin mindestens 18 Jahre alt",

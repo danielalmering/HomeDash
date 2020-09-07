@@ -1,11 +1,7 @@
 import { Performer } from 'sensejs/performer/performer.model';
 
 export function isWebRTCPerformer(performer: Performer){
-    if(performer == null){
-        return false;
-    }
-
-    if(!performer && performer === undefined){
+    if(performer === undefined || !performer ){
         return false;
     }
 
@@ -16,7 +12,7 @@ export function isWebRTCPerformer(performer: Performer){
     return performer.mediaId > 1;
 }
 
-export function getViewerType(platform:Platform, performer: Performer){
+export function getViewerType(platform: Platform, performer: Performer){
     if(webrtcPublishPossible(platform)){
         if(isIPhone(platform)){
             return '';
@@ -40,7 +36,7 @@ export function getViewerType(platform:Platform, performer: Performer){
     return 'rtmpViewer';
 }
 
-export function webrtcPublishPossible(platform:Platform):boolean{
+export function webrtcPublishPossible(platform: Platform): boolean{
     const supported = [
         {
             name: 'Chrome',
@@ -78,11 +74,11 @@ export function webrtcPublishPossible(platform:Platform):boolean{
         }
     ];
 
-    return supported.find( pattern => match(platform, pattern) ) != null;
+    return supported.find( pattern => match(platform, pattern) ) != undefined;
 }
 
 //Webrtc play back possible
-export function webrtcPossible(platform:Platform):boolean{
+export function webrtcPossible(platform: Platform): boolean{
     const supported = [
         {
             name: 'Chrome',
@@ -119,107 +115,112 @@ export function webrtcPossible(platform:Platform):boolean{
         },
         {
             name: 'Microsoft Edge', //chrome engine is working
-            version: '77.0'
+            version: '77'
         }
 
     ];
 
-    return supported.find( pattern => match(platform, pattern) ) != null;
+    return supported.find( pattern => match(platform, pattern) ) != undefined;
 }
 
-export function isIPhone(platform:Platform){
+export function isIPhone(platform: Platform){
     const supported = [
         {
             product: 'iPhone'
         }
     ];
 
-    return supported.find( pattern => match(platform, pattern) ) != null;
+    return supported.find( pattern => match(platform, pattern) ) != undefined;
 }
 
 //IE not killing flash for now, let it use the superior flash plugin
-export function isIE(platform:Platform){
+export function isIE(platform: Platform){
     const supported = [
         {
             name: 'IE'
         }
     ];
 
-    return supported.find( pattern => match(platform, pattern) ) != null;
+    return supported.find( pattern => match(platform, pattern) ) != undefined;
 }
 
 //Autoplay fix for safari
-export function isWebrtcMuted(platform:Platform): boolean{
+export function isWebrtcMuted(platform: Platform): boolean{
     const supported = [
         {
             name: 'Safari'
-        }
-    ];
-
-    return supported.find( pattern => match(platform, pattern) ) != null;
-}
-
-export function isSafari(platform:Platform): boolean{
-    const supported = [
-        {
-            name: 'Safari'
-        }
-    ];
-
-    return supported.find( pattern => match(platform, pattern) ) != null;
-}
-
-//No flash for mobile
-export function noFlash(platform:Platform):boolean{
-    const noFlashers = [
-        {
-            os:{
-                family: 'iOS'
-            }
         },
         {
-            os:{
+            os: {
                 family: 'Android'
             }
         }
     ];
 
-    return noFlashers.find( pattern => match(platform, pattern) ) != null;
+    return supported.find( pattern => match(platform, pattern) ) != undefined;
 }
 
-export function isApple(platform:Platform):boolean{
+export function isSafari(platform: Platform): boolean{
+    const supported = [
+        {
+            name: 'Safari'
+        }
+    ];
+
+    return supported.find( pattern => match(platform, pattern) ) != undefined;
+}
+
+//No flash for mobile
+export function noFlash(platform: Platform): boolean{
+    const noFlashers = [
+        {
+            os: {
+                family: 'iOS'
+            }
+        },
+        {
+            os: {
+                family: 'Android'
+            }
+        }
+    ];
+
+    return noFlashers.find( pattern => match(platform, pattern) ) != undefined;
+}
+
+export function isApple(platform: Platform): boolean{
     const apples = [
         {
-            os:{
+            os: {
                 family: 'iOS',
             }
         },
         {
-            os:{
+            os: {
                 family: 'OS X'
             }
         }
     ];
-    return apples.find( pattern => match(platform, pattern) ) != null;
+    return apples.find( pattern => match(platform, pattern) ) != undefined;
 }
 
-export function isIOS(platform:Platform):boolean{
+export function isIOS(platform: Platform): boolean{
     const apples = [
         {
-            os:{
+            os: {
                 family: 'iOS'
             }
         }
 
     ];
 
-    return apples.find( pattern => match(platform, pattern) ) != null;
+    return apples.find( pattern => match(platform, pattern) ) != undefined;
 }
 
-export function isIOSNanoCosmos(platform:Platform):boolean{
+export function isIOSNanoCosmos(platform: Platform): boolean{
     const apples = [
         {
-            os:{
+            os: {
                 family: 'iOS',
                 version: '10'
             }
@@ -227,7 +228,7 @@ export function isIOSNanoCosmos(platform:Platform):boolean{
 
     ];
 
-    return apples.find( pattern => match(platform, pattern) ) != null;
+    return apples.find( pattern => match(platform, pattern) ) != undefined;
 }
 
 export function NanoCosmosPossible(platform: Platform){
@@ -260,16 +261,16 @@ export function NanoCosmosPossible(platform: Platform){
         }
     ];
 
-    return supported.find( pattern => match(platform, pattern) ) != null;
+    return supported.find( pattern => match(platform, pattern) ) != undefined;
 }
 
-export function hasWebAudio():boolean{
+export function hasWebAudio(): boolean{
     return ('AudioContext' in window) || ('webkitAudioContext' in window);
 }
 
 // checks if 'pattern' is a subset of 'message'
 // eg match( {id:3, text:"bla"}, {text:"bla"} ) => true
-export function match(message:any, pattern:any):boolean{
+export function match(message: any, pattern: any): boolean{
     for(const prop in pattern){
         if (! (prop in message) ){
             return false;
@@ -293,7 +294,7 @@ export function match(message:any, pattern:any):boolean{
     return true;
 }
 
-function smaller(version:string, than:string):boolean{
+function smaller(version: string, than: string): boolean{
     const versionList: number[] = toInts(version);
     const thanList: number[] =  than.split('.').map(num => parseInt(num));
 
@@ -301,7 +302,7 @@ function smaller(version:string, than:string):boolean{
         return false;
     }
 
-    for(var k=0; k<thanList.length; k++){
+    for(var k = 0; k < thanList.length; k++){
         //happens eg. with version("48", "47.1")
         if (k >= versionList.length){
             return false;
@@ -314,14 +315,12 @@ function smaller(version:string, than:string):boolean{
         if (versionList[k] < thanList[k] ){
             return true;
         }
-
-        //on equal: go to the next option.
     }
 
     return false;
 }
 
-function toInts(version:string):number[]{
+function toInts(version: string): number[]{
     const result = version.split('.').map(num => parseInt(num));
     for(const num of result){
         if ( isNaN(num) ) return [];

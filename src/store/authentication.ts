@@ -12,7 +12,7 @@ import notificationSocket from '../socket';
 import { tagHotjar, getParameterByName, urlValid } from '../utils/main.util';
 import router from '../router';
 
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/browser';
 
 export interface AuthState {
     user: User | undefined;
@@ -41,8 +41,8 @@ const authenticationStore: Module<AuthState, RootState> = {
         setUser(state: AuthState, user: User | undefined){
             state.user = user;
 
-            Sentry.configureScope( (scope)=>{
-                if(state.user !== undefined ) scope.setUser( {id: state.user.id.toString()} )
+            Sentry.configureScope( (scope) => {
+                if(state.user !== undefined ) scope.setUser( {id: state.user.id.toString()} );
             });
 
             tagHotjar(`USER_${user ? user.id : 'NONE'}`);
@@ -69,7 +69,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                         username: loginData.username
                     }
                 });
-            } else {
+        } else {
                 store.dispatch('openMessage', {
                     content: 'auth.alerts.errorlogin',
                     class: 'error'
@@ -89,16 +89,21 @@ const authenticationStore: Module<AuthState, RootState> = {
             notificationSocket.connect();
         },
         async logout(store: AuthContext){
-            store.commit('setUser', undefined);
             const logoutResult = await fetch(`${config.BaseUrl}/auth/logout`, {
                 credentials: 'include'
             });
 
-            await store.dispatch('getSession', false);
-            router.push({ name: 'Performers' });
+            store.commit('setUser', undefined);
 
-            notificationSocket.disconnect();
-            notificationSocket.connect();
+            // Disconnect open WebSocket (if any)
+            if (notificationSocket.isConnected()) {
+                notificationSocket.disconnect();
+            }
+
+            // await anonconnect before proceeding (will spawn new socket)
+            await store.dispatch('getSession', true);
+            await router.push({ name: 'Performers' });
+
         },
         async register(store: AuthContext, payload: UserForm){
             const registerResult = await fetch(`${config.BaseUrl}/client/client_accounts`, {
@@ -168,14 +173,13 @@ const authenticationStore: Module<AuthState, RootState> = {
 
             await store.dispatch('setLanguage', sessionData.language);
 
-            
             if(!notificationSocket.isConnected() && urlValid()){
                 notificationSocket.connect();
             }
         },
         async updateUser(store: AuthContext, payload: { user: Consumer | any, notify: string | undefined}){
 
-            if(payload.notify){ 
+            if(payload.notify){
                 payload.user.notification_types = payload.user.notification_types ? payload.user.notification_types : { SSA: false, PRO: false, MSG: false };
                 payload.user.notification_types[payload.notify] = payload.user.notification_types[payload.notify] ? false : true;
                 const notificationmode = (payload.user.notification_mode === 0 && payload.user.notification_types[payload.notify] === true) ? store.dispatch('displayModal', { name: 'notifications', ref: payload.notify}) : '';

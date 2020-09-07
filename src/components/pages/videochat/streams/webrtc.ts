@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import {Component, Watch} from 'vue-property-decorator';
 
-import config from '../../../../config';
 import Stream from './stream';
 
 import {Player, WRTCUtils as utils } from 'typertc';
 
 import {isWebrtcMuted} from '../../../../utils/video.util';
-import {sleep} from '../../../../utils/main.util';
+import { isDev, log } from '../../../../utils/main.util';
 
 const Platform = require('platform');
 
@@ -16,9 +15,9 @@ const Platform = require('platform');
 })
 export class WebRTC extends Stream {
 
-    player:Player|null;
-    mutedClass: string = "";
-    isPeek:boolean = false;
+    player: Player | undefined;
+    mutedClass: string = '';
+    isPeek: boolean = false;
     poster: string = require('../../../../assets/images/videoloader-large.gif');
 
 
@@ -30,11 +29,7 @@ export class WebRTC extends Stream {
 
     @Watch('wowza')
     onWowzaSwitch(){
-        /*console.log("wowza switch");
-        this.end();
-        sleep(1000).then(() =>{
-            this.load();
-        });*/
+       log('wowza switch');
     }
 
     toggleMute(){
@@ -42,20 +37,20 @@ export class WebRTC extends Stream {
 
         if(video.muted){
             video.muted = false;
-            this.mutedClass  = "fa-volume-up";
+            this.mutedClass  = 'fa-volume-up';
         } else {
             video.muted = true;
-            this.mutedClass  = "fa-volume-off";
+            this.mutedClass  = 'fa-volume-off';
         }
     }
 
     mounted(){
 
         if(!this.isSwitching){
-            console.log("Loading on mount");
+            log('Loading on mount');
             this.load();
         } else {  //wait on playstream change
-            console.log("not loading on mount");
+            log('not loading on mount');
         }
 
     }
@@ -65,9 +60,9 @@ export class WebRTC extends Stream {
 
         this.isPeek = this.muted;
         //if there is sound check if its no safari
-        const muted:boolean = !this.muted ? isWebrtcMuted(platform) : this.muted;
+        const muted: boolean = !this.muted ? isWebrtcMuted(platform) : this.muted;
 
-        this.mutedClass =  muted ? "fa-volume-off" :  "fa-volume-up";
+        this.mutedClass =  muted ? 'fa-volume-off' :  'fa-volume-up';
 
         const video = <HTMLVideoElement>this.$el.querySelector('.webrtc');
         video.autoplay = true;
@@ -75,7 +70,7 @@ export class WebRTC extends Stream {
         const wowzaParts = utils.parseUrl(this.wowza);
         utils.validate(wowzaParts);
 
-        const webrtcWowzaHost = wowzaParts.host + '/webrtc-session.json';
+        const webrtcWowzaHost = `${wowzaParts.host}/webrtc-session.json`;
 
         const options = {
             wowza : webrtcWowzaHost,
@@ -84,7 +79,7 @@ export class WebRTC extends Stream {
             streamName : this.playStream,
             element : video,
             useWebSockets : true,
-            debug : false,
+            debug : isDev,
             muted : muted // muted //mac os bug  (freeze frame if autoplay)
         };
 
@@ -95,8 +90,9 @@ export class WebRTC extends Stream {
 
     private end(){
         if(this.player){
-            this.player.stop();
-            this.player = null;
+            this.player.destroy();
+            this.player = undefined;
+            delete this.player;
         }
     }
 

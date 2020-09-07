@@ -1,5 +1,3 @@
-import { setConfig } from "sensejs/core/config";
-
 export interface ProjectConfig {
     BaseUrl: string;
     FullApiUrl: string;
@@ -11,9 +9,9 @@ export interface ProjectConfig {
     H5Server: string;
     VodServer: string;
     H5FlashSwf: string;
+    Janus: string;
     FreeRegister: boolean;
     Banner: boolean;
-
     locale: LocaleConfig;
 }
 
@@ -23,7 +21,6 @@ interface LocaleConfig {
     AgeCheck: boolean;
     Hotjar: boolean;
     Services: any;
-
     Logo?: any;
     LogoDark?: any;
 }
@@ -34,8 +31,8 @@ interface LocaleConfig {
 const config = require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
 config.locale = require(`./locale/locale.${config.Country}.json`) as LocaleConfig;
 
-export const logo = require(`./assets/images/${config.Country}/logo.png`);
-export const logoDark = require(`./assets/images/${config.Country}/logo-dark.png`);
+export const logo = require(`./assets/images/${config.Country}/logo.gif`);
+export const logoDark = require(`./assets/images/${config.Country}/logo-dark.gif`);
 export const topbg = require(`./assets/images/${config.Country}/topbg.png`);
 export const voucher = require(`./assets/images/${config.Country}/voucher.png`);
 

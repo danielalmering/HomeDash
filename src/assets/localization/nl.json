@@ -337,6 +337,7 @@
             "errorinvalidEmail": "U heeft geen geldig e-mailadres ingevuld!",
             "errorinvalidPhone": "U heeft geen geldig telefoonnummer ingevuld!",
             "errorRemoveAccount": "Er is fout opgetreden bij het verwijderen!",
+            "errorinvalidUsername": "Er is geen geldige gebruikersnaam ingevuld!",
             "successRemoveAccount": "U account is succesvol verwijderd!"
         }
     },
@@ -362,7 +363,9 @@
                 "PLAYER_END": "U heeft de sessie beëindigd.",
                 "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd.",
                 "PEEK_SWITCH": "Gewisseld"
-            }
+            },
+            "c2c-failed": "Fout bij het terugcammen. Probeer het opnieuw.",
+            "permission-denied": "U heeft uw camera geblokkeerd."
         }
     },
     "voyeur": {
@@ -375,7 +378,8 @@
         "dialog1on1Subtitle": "Wil je een privésessie beginnen met {name}?",
         "alerts": {
             "successChatEnded": "Sessie is afgelopen!",
-            "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd"
+            "succesAddedreserve": "Succesvol de geselecteerde performer gereserveerd",
+            "errorPerformerNotAvailable": "Helaas is de performer niet meer beschikbaar"
         }
     },
     "promos": {
@@ -415,7 +419,7 @@
         "minutes": "{minutes} minuten cammen",
         "hours": "{minutes} uur cammen",
         "bonusdesc": "Om je gratis credits te krijgen moet een eenmalige aanschaf gedaan worden van tenminste €0,01.",
-        "alert": "Let op: je kan je saldo niet opwaarderen als je in een sessie bent. Je betaling kan verloren gaan.",
+        "alert": "Tip: tijdens een sessie kan je ook je saldo opwaarderen.",
         "packages": {
             "pack0": "Gratis",
             "pack1": "Basis",
@@ -455,7 +459,11 @@
         "message": "Bericht:*",
         "alerts": {
             "errorSend": "Er is een fout opgetreden bij het verzenden",
-            "successSend": "Bericht is met succes verzonden"
+            "successSend": "Bericht is met succes verzonden",
+            "errorinvalidName": "U heeft geen geldige naam ingevuld!",
+            "errorinvalidEmail": "U heeft geen geldig emailadres ingevuld!",
+            "errorinvalidSubject": "U heeft geen geldig onderwerp ingevuld!",
+            "errorinvalidMessage": "U heeft geen geldig bericht ingevuld!"
         }
     },
     "textpages": {
@@ -485,7 +493,7 @@
         "sexstories": "Sexverhalen",
         "sexstoriesurl": "https://www.thuis.nl/sexverhalen/",
         "webcamurl": "http://www.club-sense.nl",
-        "copyright": "Copyright 2018",
+        "copyright": "Copyright {year}",
         "cookies": "<a href='/privacy-policy/'>De website werkt met cookies. Hiermee kunnen we de website verbeteren en je instellingen onthouden. Door verder gebruik te maken van deze website ga je hiermee akkoord.</a>",
         "agecheck": "Deze website bevat expliciet materiaal. Door gebruik te maken van deze website ga je hiermee akkoord",
         "olderthen": "Ouder dan 18jaar",

@@ -15,7 +15,7 @@ import './readmessages.scss';
 @Component
 export default class Readmessages extends Vue {
 
-    firstThreadMessage: NotificationThreadsMessage;
+    firstThreadMessage: NotificationThreadsMessage | boolean = false;
     messages: any = [];
     message: any;
     performer: any;
@@ -37,27 +37,28 @@ export default class Readmessages extends Vue {
 
     get creditsPerType(){
         return (type: string) => {
-            return this.$store.state.info[`credits_per_${type.toLocaleLowerCase()}`];
-        }
+            const credits = this.$store.state.info ? this.$store.state.info[`credits_per_${type.toLocaleLowerCase()}`] : 0;
+            return credits;
+        };
     }
 
     get getAvatar(){
         return (performer: any, sent_by: string) => {
-            return (sent_by === 'PERFORMER') ? `${config.ImageUrl}pimg/${performer.id}/small/${performer.avatar.name}` : require('../../../../../assets/images/placeholder.png');
-        }
+            return (sent_by === 'PERFORMER') ? `${config.ImageUrl}pimg/${performer.id}/small/${performer.avatar.name}` : require('../../../../../assets/images/placeholder.jpg');
+        };
     }
 
     get getName(){
         return (sent_by: string) => {
             const client = this.client ? this.client.username : 'SMS';
             return (sent_by === 'PERFORMER') ? this.performer.nickname : client;
-        }
+        };
     }
 
     get maxCharacters(){
         return (type: string) => {
             return type === 'email' ? 1000 :  160;
-        }
+        };
     }
 
     loadMore(){
@@ -85,7 +86,7 @@ export default class Readmessages extends Vue {
 
         this.performer = result.performer;
         this.client = result.client;
-        this.total = + result.total
+        this.total = + result.total;
 
         if(inherit){
             this.firstThreadMessage = result.messages[0];
@@ -94,7 +95,7 @@ export default class Readmessages extends Vue {
             return;
         }
 
-        for (let message of result.messages) {
+        for (const message of result.messages) {
             this.messages.unshift(message);
         }
     }
@@ -104,7 +105,7 @@ export default class Readmessages extends Vue {
             return;
         }
 
-        let reply = {
+        const reply = {
             account_id: message.account_id,
             content: this.reply,
             type: message.type,
@@ -149,6 +150,10 @@ export default class Readmessages extends Vue {
                 class: 'error'
             });
 
+            if(error.statusCode === 400 && error.message == 'Failed to tax!') {
+                this.$router.push({name: 'Payment'});
+            }
+
             return;
         }
 
@@ -185,6 +190,6 @@ export default class Readmessages extends Vue {
         const removeIndex = this.messages.map(function(message: NotificationThreadsMessage) { return message.id; }).indexOf(notification.id);
         this.messages.splice(removeIndex, 1);
 
-        this.total = + result.total
+        this.total = + result.total;
     }
 }

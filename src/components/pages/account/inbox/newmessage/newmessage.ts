@@ -52,7 +52,7 @@ export default class Newmessage extends Vue {
             return;
         }
 
-        return require('../../../../../assets/images/placeholder.png');
+        return require('../../../../../assets/images/placeholder.jpg');
     }
 
     get performersFilter(){
@@ -89,7 +89,7 @@ export default class Newmessage extends Vue {
             return;
         }
 
-        let message = {
+        const message = {
             account_id: this.selectedPerformer,
             content: this.message.content,
             type: 'email',

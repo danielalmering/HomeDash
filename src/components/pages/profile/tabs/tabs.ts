@@ -51,31 +51,29 @@ export default class Tabs extends Vue {
             return 'none';
         }
 
-        const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat']; 
+        const ignoredServices = ['peek', 'voicemail', 'callconfirm', 'chat'];
 
         // Sidebar overwrites
         if(this.$route.params.category === 'teasers' && this.performer.isVoyeur){
             return 'voyeur';
         }
 
-        if (this.$route.params.category === 'peek' && hasService(this.performer,'peek') && this.performer.performerStatus === 'BUSY'){
+        if (this.$route.params.category === 'peek' && hasService(this.performer, 'peek') && this.performer.performerStatus === 'BUSY'){
             return 'cam';
         }
 
-        if (([PerformerStatus.OnCall].indexOf(this.performer.performerStatus)>-1 )){            
+        if (([PerformerStatus.OnCall].indexOf(this.performer.performerStatus) > -1)){
             return 'none';
         }
 
-        if (([PerformerStatus.Busy].indexOf(this.performer.performerStatus) > -1)) {
+        if (([PerformerStatus.Busy].indexOf(this.performer.performerStatus) > -1)){
             if(hasService(this.performer, 'peek')) {
                 return 'cam';
             } else if (hasService(this.performer, 'voyeur')) {
                 return 'voyeur';
-            }
-            else {
+            } else {
                 return 'none';
             }
-            
         }
 
         for (const service in this.performer.performer_services){
@@ -95,7 +93,7 @@ export default class Tabs extends Vue {
         return 'cam';
     }
 
-    get canPeek():boolean{
+    get canPeek(): boolean{
         if (!this.performer){
             return false;
         }
@@ -133,12 +131,12 @@ export default class Tabs extends Vue {
         }
     }
 
-    set displayName(value:string){
-        const usr = {...this.user, displayName:value };
-        this.$store.commit('setUser', {...this.user, displayName:value });
+    set displayName(value: string){
+        const usr = {...this.user, displayName: value };
+        this.$store.commit('setUser', {...this.user, displayName: value });
     }
 
-    get advertNumber():string{
+    get advertNumber(): string{
         if (!this.performer){
             return '0000';
         }
@@ -149,11 +147,11 @@ export default class Tabs extends Vue {
         return this.performer.advertId.toString();
     }
 
-    get ivrCode():string{
+    get ivrCode(): string{
         return this.$store.state.session.activeIvrCode;
     }
 
-    set ivrCode(value:string){
+    set ivrCode(value: string){
         this.$store.commit('setIvrCode', value);
     }
 
@@ -175,7 +173,7 @@ export default class Tabs extends Vue {
         }
     }
 
-    startSession(description:{ivrCode?:string, displayName?:string, payment?:string,sessionType:string}){
+    startSession(description: {ivrCode?: string, displayName?: string, payment?: string, sessionType: string}){
         this.$emit('startSession', description);
     }
 
@@ -194,7 +192,7 @@ export default class Tabs extends Vue {
             return;
         }
 
-        let message = {
+        const message = {
             account_id: this.performer.id,
             content: this.emailForm.content,
             type: 'email',

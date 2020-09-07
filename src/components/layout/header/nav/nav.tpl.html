@@ -15,8 +15,9 @@
 
             <div class="nav__search col-xs-8 col-sm-4">
                 <form class="nav__search-form" v-on:submit.prevent="search">
-                    <input type="text" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
-                    <button class="fa fa-search"></button>
+                    <label class="hidden" for="search">Zoeken</label> 
+                    <input type="text" name="search" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
+                    <button class="fa fa-search" aria-hidden="true"><span class="hidden">Zoeken</span></button>
                 </form>
             </div>
 
@@ -27,11 +28,9 @@
                     <router-link class="nav__info-item" :to="{ name: 'Promos' }"><i class="fa fa-bullhorn"></i><span v-t="'nav.info.actions'"></span></router-link>
                     
                     <a class="nav__info-item nav__info-item--last" v-on:click="authenticated ? toggleAccountMenu() : login()">
-                        <span>
-                            <i class="fa fa-user"><span v-if="authenticated && user.totalNotifications && user.totalNotifications !== 0" class="notify">{{ user.totalNotifications }}</span></i>
-                            <span v-t="authenticated ? 'nav.info.account' : 'nav.info.login'"></span>
-                        </span>
-                        <div class="nav__info-subitems" v-if="authenticated && showAccount" v-click-outside="{ cb: closeAccountMenu }">
+                        <i class="fa fa-user"><span v-if="authenticated && user.totalNotifications && user.totalNotifications !== 0" class="notify">{{ user.totalNotifications }}</span></i>
+                        <span v-t="authenticated ? 'nav.info.account' : 'nav.info.login'"></span>
+                        <div class="nav__info-subitems" v-if="authenticated && showAccount" v-click-outside="{ cb: closeAccountMenu, ignoreClass: ['nav__info-item'] }">
                             <router-link class="subitem" :to="{ name: 'Editdata'}" v-t="'nav.info.editdata'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Notifications'}" v-t="'nav.info.notifications'"></router-link>
                             <router-link class="subitem" :to="{ name: 'Inbox'}" v-t="'nav.info.inbox'" :class="{ 'active': authenticated && user.totalNotifications && user.totalNotifications !== 0 }"></router-link>
@@ -45,11 +44,9 @@
                     <a class="nav__info-item nav__info-item--high hidden-xs" v-if="!authenticated" v-on:click="openModal('register')"><i class="fa fa-pencil"></i><span v-t="'nav.info.joinforfree'"></span></a>
 
                     <a class="nav__info-item nav__info-item--last" v-on:click="showLang = !showLang">
-                        <span>
-                            <i :class="`flag flag-${language}`"></i>
-                            <span class="visible-xs" v-t="'nav.info.lang'"></span>
-                        </span>
-                        <ul class="nav__info-subitems" v-if="showLang && acceptedLanguages" v-click-outside="{ cb: closeLangMenu }">
+                        <i :class="`flag flag-${language}`"></i>
+                        <span class="visible-xs" v-t="'nav.info.lang'"></span>
+                        <ul class="nav__info-subitems" v-if="showLang && acceptedLanguages" v-click-outside="{ cb: closeLangMenu, ignoreClass: ['nav__info-item'] }">
                             <li class="subitem" v-for="lang in acceptedLanguages" v-on:click="changeLanguage(lang)">
                                 <span :class="`flag flag-${lang}`"></span> {{ lang.toUpperCase() }}
                             </li>

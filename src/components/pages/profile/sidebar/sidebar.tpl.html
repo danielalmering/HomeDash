@@ -63,7 +63,7 @@
                 </li>
 
                 <!-- Voyeurlist -->
-                <li class="sidebar__voyeur" v-if="category === 'voyeur' && voyeurTiles" v-for="tile in voyeurTiles">
+                <li class="sidebar__voyeur" v-if="category === 'voyeur' && voyeurTiles" v-for="(tile, index) in voyeurTiles">
                     <div class="sidebar__voyeur-click" v-on:click="swap(tile.performer)"></div>
                     <div>
                         <!-- <jsmpeg
@@ -83,13 +83,16 @@
                                    :wowza="tile.streamData.wowza"
                                    :interactive="false"
                                    :playStream="tile.streamData.playStream"
-                                   :muted="true">
+                                   v-on:error="voyeurPlayerError(index)"
+                                   :muted="true"
+                                   :tile="index"
+                                   :isMain="false">
                         </component>
                     </div>
                     <div class="sidebar__voyeur-misc">
-                        <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer).advertId }}</span>
+                        <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer) != undefined ? performer(tile.performer).advertId : 'Error' }}</span>
                         <span class="sidebar__voyeur-misc-favorite" v-on:click="toggleFavourite(tile.performer)">
-                            <i class="fa fa-star" :class="{ 'is-favourite': performer(tile.performer).isFavourite }"></i>
+                            <i class="fa fa-star" :class="{ 'is-favourite': performer(tile.performer) == undefined ? false : performer(tile.performer).isFavourite }"></i>
                         </span>
                     </div>
                     <div class="sidebar__voyeur-hover">

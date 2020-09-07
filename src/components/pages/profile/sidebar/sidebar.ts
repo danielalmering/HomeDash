@@ -7,7 +7,8 @@ import {
     openTab,
     getAvatarImage,
     getPerformerStatus,
-    hasService
+    hasService,
+    warn
 } from '../../../../utils/main.util';
 import { webrtcPossible, NanoCosmosPossible } from '../../../../utils/video.util';
 import config, { logo } from '../../../../config';
@@ -15,7 +16,6 @@ import config, { logo } from '../../../../config';
 import './sidebar.scss';
 import JSMpeg from '../../videochat/streams/jsmpeg';
 import NanoCosmos from '../../videochat/streams/nanocosmos';
-import { RequestPayload } from '../../../../store/session/';
 import { SessionType, State } from '../../../../models/Sessions';
 import notificationSocket from '../../../../socket';
 import WithRender from './sidebar.tpl.html';
@@ -25,7 +25,7 @@ import { listFavourites } from 'sensejs/performer/favourite';
 import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { isInSession, isOutOfSession } from 'sensejs/util/performer';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
-import {WebRTC} from "../../videochat/streams/webrtc";
+import { WebRTC } from '../../videochat/streams/webrtc';
 
 const Platform = require('platform');
 
@@ -97,7 +97,7 @@ export default class Sidebar extends Vue {
     }
 
     get InSession(){
-        return (this.$store.state.session.activeState === 'active') ? true : false; 
+        return (this.$store.state.session.activeState === 'active') ? true : false;
     }
 
     get performer(){
@@ -118,18 +118,16 @@ export default class Sidebar extends Vue {
         this.setCategory(newValue ? 'voyeur' : this.defaultCategory);
     }
 
+    async voyeurPlayerError(index: any) {
+        warn(`Tile not loading ${index}`);
+        const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
+        await this.$store.dispatch('voyeur/loadTile', { performerId:  performerId, position: index });
+    }
 
-    isWebRTCPerformer(performerId:number): boolean {
-        //disable webrtc play by returning false here!
-        //nst performerId = this.$store.state.voyeur.mainTile.performer;
-
+    isWebRTCPerformer(performerId: number): boolean {
         const performer = this.performer(performerId);
 
-        if(performer == null){
-            return false;
-        }
-
-        if(!performer && performer === undefined){
+        if(performer === undefined || !performer){
             return false;
         }
 
@@ -140,9 +138,7 @@ export default class Sidebar extends Vue {
         return performer.mediaId == 2;
     }
 
-
-    streamTransportType(performer:number): string | undefined{
-
+    streamTransportType(performer: number): string | undefined{
         const platform = Platform.parse(navigator.userAgent);
 
         if(this.isWebRTCPerformer(performer)){
@@ -282,7 +278,6 @@ export default class Sidebar extends Vue {
 
         //Switch to the peek tab when starting a peek session
         if(to.name === 'Peek' && this.category !== 'peek'){
-
             this.setCategory('peek');
         }
     }
@@ -320,6 +315,12 @@ export default class Sidebar extends Vue {
     }
 
     async startVideoChat(performerId: number){
+        //if performer is undefined or null stop the call
+        if(this.performer(performerId) == undefined) {
+            this.$store.dispatch('errorMessage', 'voyeur.alerts.errorPerformerNotAvailable');
+            return;
+        }
+
         await this.$store.dispatch('startRequest', {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,
@@ -357,7 +358,7 @@ export default class Sidebar extends Vue {
             return;
         }
 
-        const element = event.srcElement;
+        const element = event.srcElement as HTMLInputElement;
 
         const isAtBottom = (element.scrollTop + element.clientHeight) === element.scrollHeight;
 
