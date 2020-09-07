@@ -181,7 +181,7 @@ export class JanusCast extends Broadcast{
 
             if (this.room){
                 this.roomPlugin.send({
-                    message: { request: 'unpublish' }
+                    message: { request: 'leave' }
                 });
             } else if (this.janus) {
                 this.janus.destroy( {unload: true} );
@@ -345,6 +345,7 @@ export class JanusCast extends Broadcast{
                 },
                 destroyed: () => {
                     this.addLog({ event: 'JanusDestroyed'});
+                    this.destroy();
                 },
                 iceServers: [],
                 token: this.publishToken,
@@ -622,10 +623,13 @@ export class JanusCast extends Broadcast{
                 if (message['configured'] == 'ok'){
                     resolve && resolve(jsep);
                     this._resolver = null;
+                } else if( message['leaving'] == 'ok'){
+                    this.addLog( { event: 'roomLeft' });
+                    this.janus.destroy( {unload: true} );
                 } else if( message['unpublished'] == 'ok'){
-                    //ok het unpublishen is gebeurd, en nu..
+                    this.addLog( { ...message, ...{ event: 'roomUnpublished'} });
                 } else if( 'joining' in message){
-                    //ok iemand joint de room, en nu.. eerst maar negeren                    
+                    this.addLog( { ...message, ...{ event: 'roomJoining'} });            
                 } else {
                     this.addLog( {...message, ...{event: 'unhandledRoomMessage'} });
                 }
