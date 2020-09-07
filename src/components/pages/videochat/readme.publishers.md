@@ -5,7 +5,7 @@
  * Publisher codec used:
  * 
  * video: h264
- * audio: PCMU 8kbit mono
+ * audio: PCMU 8kbit mono / Janus using OPUS
  * 
  * Available codecs players:
  * 
@@ -29,7 +29,7 @@
  * 
  * - jsmpeg: (if all else fails , 'VHS' to the rescue)
  *      video: MPEG-1 (transcoded from h264 by server)
- *      audio: pcmu, pcma, aac
+ *      audio: pcmu, pcma, aac, opus?
  *      quality: okish
  *      latency: 100ms - 800ms
  * 
