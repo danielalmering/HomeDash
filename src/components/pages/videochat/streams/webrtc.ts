@@ -90,8 +90,9 @@ export class WebRTC extends Stream {
 
     private end(){
         if(this.player){
-            this.player.stop();
+            this.player.destroy();
             this.player = undefined;
+            delete this.player;
         }
     }
 

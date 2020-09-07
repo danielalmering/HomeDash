@@ -272,22 +272,31 @@ export default class VideoChat extends Vue {
     }
 
     public userHasCam: boolean = false;
+    public userHasMic: boolean = false;
 
-    private detectCam(){
+    private async detectDevices(){
         const platform = Platform.parse(navigator.userAgent);
-        //apples always have cameras. can't count the # of cameras until I ask permission to use the cameras :-(
+        //apples always have cameras & mics. can't count the # of cameras until I ask permission to use the cameras :-(
         if (isApple(platform)){
             this.userHasCam = true;
+            this.userHasMic = true;
             return;
         }
 
         //if webrtc is not possible, we'll try to use flash to do the determining
         if (!webrtcPossible(platform)){
             this.userHasCam = true;
+            this.userHasMic = true;
             return;
         }
 
-        new Devices().getCameras().then( cams => this.userHasCam = cams.length > 0 );
+        const d = new Devices();
+
+        const cams = await d.getCameras()
+        this.userHasCam = cams.length > 0;
+
+        const mics = await d.getMicrophones();
+        this.userHasMic = mics.length > 0;
     }
 
     get performer(): Performer {
@@ -341,7 +350,7 @@ export default class VideoChat extends Vue {
             return;
         }
 
-        this.detectCam();
+        this.detectDevices();
     }
 
     async close(){
@@ -578,7 +587,7 @@ export default class VideoChat extends Vue {
 
         if (autoLeaves.indexOf(this.activeState) > -1 || to.name === 'Voyeur' || to.name === 'Videochat' || to.name === 'Peek'){
             if(this.$store.state.session.fromVoyeur && to.name !== 'Voyeur'){
-                return this.gotoVoyeur(next);
+                //return this.gotoVoyeur(next);
             }
 
             return next();

@@ -7,6 +7,7 @@
     "StorageKey": "thuis",
     "H5Server": "accept-stream01.thuis.nl",
     "VodServer": "vod",
+    "WowzaUrl" : "accept-wow01.thuis.nl:1935",
     "Country": "nl",
     "FreeRegister": false,
     "Banner": false,
