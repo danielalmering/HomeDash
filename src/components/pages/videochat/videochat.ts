@@ -234,7 +234,7 @@ export default class VideoChat extends Vue {
         }
 
         if (this.streamTransportType === 'janus'){
-            return config.Janus; 
+            return config.Janus;
         }
 
         return this.$store.state.session.activeSessionData.wowza;
@@ -304,7 +304,7 @@ export default class VideoChat extends Vue {
 
         const d = new Devices();
 
-        const cams = await d.getCameras()
+        const cams = await d.getCameras();
         this.userHasCam = cams.length > 0;
 
         const mics = await d.getMicrophones();
