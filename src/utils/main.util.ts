@@ -114,7 +114,7 @@ export function openRoute(name: string){
 }
 
 export function openTab(url: string, desc?: string){
-    window.open(url, '_blank', desc);
+    setTimeout(() => window.open(url, '_blank', desc), 1000);
 }
 
 export function isInSession(status: PerformerStatus){
