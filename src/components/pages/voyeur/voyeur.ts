@@ -15,7 +15,7 @@ import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import {NanoCosmosPossible, isIE} from '../../../utils/video.util';
 import {WebRTC} from '../videochat/streams/webrtc';
-import { webrtcPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
+import { webrtcPublisher, clubsenseStreamerPublisher, janusPublisher } from '../videochat/videochat.publishers';
 import { log, error, warn } from '../../../utils/main.util';
 
 const Platform = require('platform');
@@ -124,6 +124,8 @@ export default class Voyeur extends Vue {
                 return webrtcPublisher(platform, 'PEEK');
             case 3: // OBS publisher (clubsense streamer)
                 return clubsenseStreamerPublisher(platform, 'PEEK');
+            case 4:
+                return janusPublisher(platform);
             default: //fallback encoder
                 return 'jsmpeg';
         }
