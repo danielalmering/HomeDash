@@ -172,7 +172,7 @@ export class JanusCast extends Broadcast{
 
     destroy(){
         //no need to detroy when already destroying..
-        if (this.state === 'destroying'){
+        if (this._state === 'destroying'){
             return;
         }
 
@@ -643,6 +643,7 @@ export class JanusCast extends Broadcast{
     get state(): string{
         return this._state;
     }
+
     set state(value: string){
         this.addLog({event: 'statechange', value});
 
