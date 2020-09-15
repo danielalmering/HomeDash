@@ -44,7 +44,7 @@ export default class Readmessages extends Vue {
 
     get getAvatar(){
         return (performer: any, sent_by: string) => {
-            return (sent_by === 'PERFORMER') ? `${config.ImageUrl}pimg/${performer.id}/small/${performer.avatar.name}` : require('../../../../../assets/images/placeholder.png');
+            return (sent_by === 'PERFORMER') ? `${config.ImageUrl}pimg/${performer.id}/small/${performer.avatar.name}` : require('../../../../../assets/images/placeholder.jpg');
         };
     }
 
@@ -149,6 +149,10 @@ export default class Readmessages extends Vue {
                 content: 'account.alerts.errorInboxMessagePay',
                 class: 'error'
             });
+
+            if(error.statusCode === 400 && error.message == 'Failed to tax!') {
+                this.$router.push({name: 'Payment'});
+            }
 
             return;
         }

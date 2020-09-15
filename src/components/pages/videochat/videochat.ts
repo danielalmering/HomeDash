@@ -234,7 +234,7 @@ export default class VideoChat extends Vue {
         }
 
         if (this.streamTransportType === 'janus'){
-            return config.Janus; 
+            return config.Janus;
         }
 
         return this.$store.state.session.activeSessionData.wowza;
@@ -254,7 +254,7 @@ export default class VideoChat extends Vue {
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         }
-        
+
         return this.$store.state.session.activeSessionData.publishStream;
     }
 
@@ -303,10 +303,8 @@ export default class VideoChat extends Vue {
         }
 
         const d = new Devices();
-
-        const cams = await d.getCameras()
+        const cams = await d.getCameras();
         this.userHasCam = cams.length > 0;
-
         const mics = await d.getMicrophones();
         this.userHasMic = mics.length > 0;
     }
@@ -600,7 +598,7 @@ export default class VideoChat extends Vue {
 
         if (autoLeaves.indexOf(this.activeState) > -1 || to.name === 'Voyeur' || to.name === 'Videochat' || to.name === 'Peek'){
             if(this.$store.state.session.fromVoyeur && to.name !== 'Voyeur'){
-                return this.gotoVoyeur(next);
+                //return this.gotoVoyeur(next);
             }
 
             return next();

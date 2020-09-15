@@ -7,7 +7,8 @@ import {
     openTab,
     getAvatarImage,
     getPerformerStatus,
-    hasService
+    hasService,
+    warn
 } from '../../../../utils/main.util';
 import { webrtcPossible, NanoCosmosPossible } from '../../../../utils/video.util';
 import config, { logo } from '../../../../config';
@@ -115,6 +116,12 @@ export default class Sidebar extends Vue {
     onVoyeurStateChange(newValue: boolean){
         //When voyeur gets activated switch the voyeur tab, when the session ends, switch back
         this.setCategory(newValue ? 'voyeur' : this.defaultCategory);
+    }
+
+    async voyeurPlayerError(index: any) {
+        warn(`Tile not loading ${index}`);
+        const performerId = this.$store.getters['voyeur/getReplacementPerformer'];
+        await this.$store.dispatch('voyeur/loadTile', { performerId:  performerId, position: index });
     }
 
     isWebRTCPerformer(performerId: number): boolean {
@@ -271,7 +278,6 @@ export default class Sidebar extends Vue {
 
         //Switch to the peek tab when starting a peek session
         if(to.name === 'Peek' && this.category !== 'peek'){
-
             this.setCategory('peek');
         }
     }
@@ -309,6 +315,12 @@ export default class Sidebar extends Vue {
     }
 
     async startVideoChat(performerId: number){
+        //if performer is undefined or null stop the call
+        if(this.performer(performerId) == undefined) {
+            this.$store.dispatch('errorMessage', 'voyeur.alerts.errorPerformerNotAvailable');
+            return;
+        }
+
         await this.$store.dispatch('startRequest', {
             performer: this.performer(performerId),
             sessionType: SessionType.Video,

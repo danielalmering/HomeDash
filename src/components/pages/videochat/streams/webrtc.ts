@@ -6,6 +6,7 @@ import Stream from './stream';
 import {Player, WRTCUtils as utils } from 'typertc';
 
 import {isWebrtcMuted} from '../../../../utils/video.util';
+import { isDev, log } from '../../../../utils/main.util';
 
 const Platform = require('platform');
 
@@ -28,11 +29,7 @@ export class WebRTC extends Stream {
 
     @Watch('wowza')
     onWowzaSwitch(){
-        /*console.log("wowza switch");
-        this.end();
-        sleep(1000).then(() =>{
-            this.load();
-        });*/
+       log('wowza switch');
     }
 
     toggleMute(){
@@ -50,10 +47,10 @@ export class WebRTC extends Stream {
     mounted(){
 
         if(!this.isSwitching){
-            console.log('Loading on mount');
+            log('Loading on mount');
             this.load();
         } else {  //wait on playstream change
-            console.log('not loading on mount');
+            log('not loading on mount');
         }
 
     }
@@ -82,7 +79,7 @@ export class WebRTC extends Stream {
             streamName : this.playStream,
             element : video,
             useWebSockets : true,
-            debug : false,
+            debug : isDev,
             muted : muted // muted //mac os bug  (freeze frame if autoplay)
         };
 
@@ -93,8 +90,9 @@ export class WebRTC extends Stream {
 
     private end(){
         if(this.player){
-            this.player.stop();
+            this.player.destroy();
             this.player = undefined;
+            delete this.player;
         }
     }
 

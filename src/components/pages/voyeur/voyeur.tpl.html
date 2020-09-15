@@ -4,9 +4,10 @@
             <component :is="streamTransportType"
                        v-on:stateChange="viewerStateChange"
                        v-on:error="viewerError"
-                       :wowza="mainTile.streamData.wowza"
+                       :wowza="playServer"
                        :playStream="mainTile.streamData.playStream"
-                       :muted="true">
+                       :muted="true"
+                       :isMain="true">
             </component>
         </div>
     </div>

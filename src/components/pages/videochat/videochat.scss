@@ -61,6 +61,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                  width: 100%;
                  height: 100%;
                  background: #000;
+                 margin: auto;
 
                  @include breakpoint(md) {
                      position: absolute;
@@ -87,6 +88,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
 
 
             .nanocosmos {
+                display: block;
                 div { width: 80px !important; height: 80px !important; }
                 video {
                     @media screen and (max-width: 992px) {
@@ -96,6 +98,10 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                         top: 0px !important;
                     }
                 }
+                &__loading {
+                    display: none !important;
+                }
+
             }
 
             div, video {

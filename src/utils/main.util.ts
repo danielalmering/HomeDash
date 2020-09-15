@@ -13,7 +13,7 @@ export function getAvatarImage(performer: Performer, size: string){
         return `${config.ImageUrl}pimg/${performer.id}/${size}/${performer.avatar.name}`;
     }
 
-    return require('./../assets/images/placeholder.png');
+    return require('./../assets/images/placeholder.jpg');
 }
 
 export function getSliderImages(performer: Performer, photo: any, size: string){
@@ -25,7 +25,7 @@ export function getSliderImages(performer: Performer, photo: any, size: string){
         return `${config.ImageUrl}pimg/${performer}/${size}/${photo.name}`;
     }
 
-    return require('./../assets/images/placeholder.png');
+    return require('./../assets/images/placeholder.jpg');
 }
 
 export function hasService(performer: Performer, serviceKey: string): boolean {
@@ -114,7 +114,7 @@ export function openRoute(name: string){
 }
 
 export function openTab(url: string, desc?: string){
-    window.open(url, '_blank', desc);
+    setTimeout(() => window.open(url, '_blank', desc), 1000);
 }
 
 export function isInSession(status: PerformerStatus){
@@ -159,3 +159,39 @@ export function urlValid() {
     return !(urludefined || agentphantom);
 }
 
+export const isDev =  process.env.NODE_ENV === 'development';
+
+/**
+ * Debug logging
+ * @param message
+ * @param optionalParams
+ */
+export const log = (message?: any, ...optionalParams: any[]) : void => {
+    if(isDev) {
+        if (typeof console !== 'undefined') {
+            console.log(message, optionalParams);
+        }
+    }
+};
+
+/**
+ * Warn logging
+ * @param message
+ * @param optionalParams
+ */
+export const warn = (message?: any, ...optionalParams: any[]) : void => {
+    if (typeof console !== 'undefined') {
+        console.warn(message, optionalParams);
+    }
+};
+
+/**
+ * Error logging
+ * @param message
+ * @param optionalParams
+ */
+export const error = (message?: any, ...optionalParams: any[]) : void => {
+    if (typeof console !== 'undefined') {
+        console.error(message, optionalParams);
+    }
+};

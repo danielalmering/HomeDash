@@ -330,8 +330,12 @@ $sidebar-top-height: 315px;
         }
 
         .nanocosmos {
+            display: block;
             width: 230px !important;
             height: 187px !important;
+            &__loading {
+                display: none;
+            }
         }
 
         &-click {

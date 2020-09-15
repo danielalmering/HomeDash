@@ -624,6 +624,8 @@ export class JanusCast extends Broadcast{
                     this._resolver = null;
                 } else if( message['unpublished'] == 'ok'){
                     //ok het unpublishen is gebeurd, en nu..
+                } else if( 'joining' in message){
+                    //ok iemand joint de room, en nu.. eerst maar negeren                    
                 } else {
                     this.addLog( {...message, ...{event: 'unhandledRoomMessage'} });
                 }

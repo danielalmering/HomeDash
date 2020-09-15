@@ -15,8 +15,9 @@
 
             <div class="nav__search col-xs-8 col-sm-4">
                 <form class="nav__search-form" v-on:submit.prevent="search">
-                    <input type="text" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
-                    <button class="fa fa-search"></button>
+                    <label class="hidden" for="search">Zoeken</label> 
+                    <input type="text" name="search" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
+                    <button class="fa fa-search" aria-hidden="true"><span class="hidden">Zoeken</span></button>
                 </form>
             </div>
 

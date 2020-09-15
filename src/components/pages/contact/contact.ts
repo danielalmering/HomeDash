@@ -32,7 +32,6 @@ export default class Contact extends Vue {
             }
         };
     }
-
     @Validations()
     validations = {
         contact: {

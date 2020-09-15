@@ -2,6 +2,7 @@
 // Main
 // --------------------------------------------------
 
+@import '_fonts.scss';
 @import '_bootstrap.scss';
 @import "_flags.scss";
 @import "_icons.scss";
@@ -26,6 +27,8 @@ body {
     position: relative;
     font-family: $default-font--regular;
 }
+
+.tagmanager { display: none; }
 
 .container-fluid {
     max-width: 990px;

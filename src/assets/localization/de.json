@@ -374,7 +374,8 @@
         "dialog1on1Subtitle": "Möchtest du eine Privat Session mit {name}?",
         "alerts": {
             "successChatEnded": "Session beendet!",
-            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert"
+            "succesAddedreserve": "Den ausgewählten Darsteller erfolgreich reserviert",
+            "errorPerformerNotAvailable": "Leider ist der Darsteller nicht mehr verfügbar."
         }
     },
     "promos": {
@@ -488,7 +489,7 @@
         "sexstories": "Sex Stories",
         "sexstoriesurl": "#",
         "webcamurl": "http://www.club-sense.com",
-        "copyright": "Copyright 2018",
+        "copyright": "Copyright {year}",
         "cookies": "<a href='/privacy-policy/'>Durch die Verwendung von Cookies können wir die Webseite nutzerfreundlich gestalten und deine Einstellungen speichern. \nMit der Nutzung dieser Webseite erklärst du dich damit einverstanden, dass wir Cookies verwenden</a>",
         "agecheck": "Diese Webseite enthält explizite Inhalte. Mit der Nutzung der Webseite, akzeptiere ich die Geschäftsbedingungen.",
         "olderthen": "Ja, ich bin mindestens 18 Jahre alt",
@@ -514,6 +515,7 @@
         "PROMO_CAMPAIGN_1": "Promotion Kauf",
         "PROMOTION_NEWGERMANY": "Werbeanmeldung",
         "PROMO_CAMPAIGN_DE_1": "Promotion Kauf",
+        "PROMO_CAMPAIGN_NL_VAKANTIE_20": "Promotion Mai",
         "IDEAL": "ideal",
         "BCMC": "bcmc",
         "CLICK_BUY": "Click and Buy",

@@ -69,7 +69,7 @@ const authenticationStore: Module<AuthState, RootState> = {
                         username: loginData.username
                     }
                 });
-            } else {
+        } else {
                 store.dispatch('openMessage', {
                     content: 'auth.alerts.errorlogin',
                     class: 'error'
@@ -93,12 +93,17 @@ const authenticationStore: Module<AuthState, RootState> = {
                 credentials: 'include'
             });
 
-            await router.push({ name: 'Performers' });
             store.commit('setUser', undefined);
-            await store.dispatch('getSession', false);
 
-            notificationSocket.disconnect();
-            notificationSocket.connect();
+            // Disconnect open WebSocket (if any)
+            if (notificationSocket.isConnected()) {
+                notificationSocket.disconnect();
+            }
+
+            // await anonconnect before proceeding (will spawn new socket)
+            await store.dispatch('getSession', true);
+            await router.push({ name: 'Performers' });
+
         },
         async register(store: AuthContext, payload: UserForm){
             const registerResult = await fetch(`${config.BaseUrl}/client/client_accounts`, {
