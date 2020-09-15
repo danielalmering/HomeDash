@@ -150,7 +150,8 @@ const actions = {
             streamData: {
                 id: result.id,
                 wowza: result.wowza,
-                playStream: result.playStream
+                playStream: result.playStream,
+                playToken: result.playToken
             }
         };
 
