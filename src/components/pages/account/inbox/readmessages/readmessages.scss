@@ -43,10 +43,6 @@
         width: 98%;
         cursor: pointer;
 
-        &:hover {
-            .readmessages__item-remove { display: block; }
-        }
-
         &.even {
             float: left;
             background: $pallete-9;
@@ -109,7 +105,6 @@
         }
 
         &-remove {
-            display: none;
             position: absolute;
             right: -10px;
             top: -8px;
