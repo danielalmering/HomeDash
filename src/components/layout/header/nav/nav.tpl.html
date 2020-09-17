@@ -3,6 +3,7 @@
         <div class="container-fluid">
             <div class="nav__info hidden-xs col-sm-1">
                 <router-link class="nav__info-item hidden-xs" :to="{ path: '/' }">
+                    <span class="hidden">Home</span>
                     <i class="fa fa-home only"></i>
                 </router-link>
             </div>
@@ -16,8 +17,8 @@
             <div class="nav__search col-xs-8 col-sm-4">
                 <form class="nav__search-form" v-on:submit.prevent="search">
                     <label class="hidden" for="search">Zoeken</label> 
-                    <input type="text" name="search" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
-                    <button class="fa fa-search" aria-hidden="true"><span class="hidden">Zoeken</span></button>
+                    <input id="search" type="text" name="search" class="col-xs-7 col-sm-9" v-model="searchQuery" :placeholder="$t('nav.search.input')">
+                    <button class="fa fa-search"><span class="hidden">Zoeken</span></button>
                 </form>
             </div>
 
