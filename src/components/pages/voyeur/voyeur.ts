@@ -15,8 +15,10 @@ import { clientSeen } from 'sensejs/session/index';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import {NanoCosmosPossible, isIE} from '../../../utils/video.util';
 import {WebRTC} from '../videochat/streams/webrtc';
-import { webrtcPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
+import { JanusPlay } from '../videochat/streams/janus';
+import { webrtcPublisher, clubsenseStreamerPublisher, janusPublisher } from '../videochat/videochat.publishers';
 import { log, error, warn } from '../../../utils/main.util';
+import config from '../../../config';
 
 const Platform = require('platform');
 
@@ -26,6 +28,7 @@ const Platform = require('platform');
         jsmpeg: JSMpeg,
         nanocosmos: NanoCosmos,
         webrtc: WebRTC,
+        janus: JanusPlay,
         confirmation: Confirmation,
     }
 })
@@ -44,7 +47,20 @@ export default class Voyeur extends Vue {
             error('Voyeur: mainTile is null or undefined');
             return false;
         }
+        
         return this.$store.state.voyeur.mainTile;
+    }
+
+    get playServer(): string | undefined {
+        if (!this.mainTile.streamData){
+            return undefined;
+        }
+
+        if (this.streamTransportType === 'janus'){
+            return config.Janus;
+        }
+
+        return this.mainTile.streamData.wowza;
     }
 
     get favoritePerformers(){
@@ -124,6 +140,8 @@ export default class Voyeur extends Vue {
                 return webrtcPublisher(platform, 'PEEK');
             case 3: // OBS publisher (clubsense streamer)
                 return clubsenseStreamerPublisher(platform, 'PEEK');
+            case 4:
+                return janusPublisher(platform);
             default: //fallback encoder
                 return 'jsmpeg';
         }

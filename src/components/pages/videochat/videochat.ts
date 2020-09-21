@@ -10,6 +10,7 @@ import {Rtmp as RTMPBroadcast} from './broadcast/rtmp';
 import NanoCosmos from './streams/nanocosmos';
 import {WebRTC as WRTCPlay} from './streams/webrtc';
 import {WebRTC as WRTCBroadcast} from './broadcast/webrtc';
+import { JanusPlay } from './streams/janus';
 import { JanusCast } from './broadcast/janus';
 import Confirmations from '../../layout/confirmations/confirmations';
 import {Devices, VideoCodec} from 'typertc';
@@ -35,7 +36,7 @@ import {Performer} from 'sensejs/performer/performer.model';
 import {addFavourite, removeFavourite} from 'sensejs/performer/favourite';
 import {clientSeen} from 'sensejs/session/index';
 import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscriptions';
-import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher } from '../videochat/videochat.publishers';
+import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher, janusPublisher } from '../videochat/videochat.publishers';
 import notificationSocket from '../../../socket';
 import { UserRole } from '../../../models/User';
 
@@ -62,6 +63,7 @@ Component.registerHooks([
         jsmpeg: Jsmpeg,
         rtmp: RTMPPlay,
         webrtc: WRTCPlay,
+        janus: JanusPlay,
         nanocosmos: NanoCosmos,
         confirmation: Confirmations,
         rtmpBroadcast: RTMPBroadcast,
@@ -76,7 +78,6 @@ export default class VideoChat extends Vue {
 
     intervalTimer: number;
     mutedClass: string = '';
-    playToken: string | boolean = false;
 
     broadcasting: BroadcastConfiguration = {
         cam: false,
@@ -132,7 +133,6 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        const playStream = this.playStream;
         const platform = Platform.parse(navigator.userAgent);
         const mediaId = this.performer.mediaId;
 
@@ -145,6 +145,8 @@ export default class VideoChat extends Vue {
                 return webrtcPublisher(platform, this.sessionType);
             case 3: // OBS publisher (clubsense streamer)
                 return clubsenseStreamerPublisher(platform, this.sessionType);
+            case 4:
+                return janusPublisher(platform);
             default: //fallback encoder
                 return 'jsmpeg';
         }
@@ -189,7 +191,6 @@ export default class VideoChat extends Vue {
 
         //check if it is possible to publish with webrtc
         if (webrtcPublishPossible(platform)){
-            //never enable janus on iphones
             //iPhone only works with janus....
             if(isIPhone(platform)){
                 return 'janusBroadcast';
@@ -232,6 +233,10 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
+        if (this.streamTransportType === 'janus'){
+            return config.Janus;
+        }
+
         return this.$store.state.session.activeSessionData.wowza;
     }
 
@@ -267,6 +272,13 @@ export default class VideoChat extends Vue {
         return this.$store.state.session.activeSessionData.playStream;
     }
 
+    get playToken() : string | boolean{
+        if (!this.$store.state.session.activeSessionData){
+            return false;
+        }
+        return this.$store.state.session.activeSessionData.playToken;
+    }
+
     get isSwitchModal(): boolean {
         return this.$store.state.session.isSwitchModal;
     }
@@ -291,10 +303,8 @@ export default class VideoChat extends Vue {
         }
 
         const d = new Devices();
-
-        const cams = await d.getCameras()
+        const cams = await d.getCameras();
         this.userHasCam = cams.length > 0;
-
         const mics = await d.getMicrophones();
         this.userHasMic = mics.length > 0;
     }
@@ -520,6 +530,7 @@ export default class VideoChat extends Vue {
     }
 
     viewerStateChange(state: string){
+        console.log( `new state: ${state}` );
         if (state === 'active'){
             this.$store.dispatch('setActive');
         }
@@ -530,7 +541,7 @@ export default class VideoChat extends Vue {
     }
 
     viewerError(message: string){
-        //console.log(message);
+        console.log(`error: ${message}`);
     }
 
     toggleSettings(){

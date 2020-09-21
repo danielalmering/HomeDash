@@ -57,3 +57,15 @@ export function flashPublisher(platform: any, sessionType: string){
 
     return 'jsmpeg';
 }
+
+export function janusPublisher( platform: any ){
+    if (!platform){
+        return 'jsmpeg';
+    }
+
+    if (!webrtcPossible(platform)){
+        return 'jsmpeg';
+    }
+
+    return 'janus';
+}
