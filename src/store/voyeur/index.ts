@@ -88,6 +88,7 @@ export interface PerformerTile {
         id: string;
         wowza: string;
         playStream: string;
+        playToken?: string;
     };
 }
 
