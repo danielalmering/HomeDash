@@ -1,6 +1,6 @@
 import { JanusJS, default as Janus }  from 'janus-gateway';
 import Stream from '../streams/stream';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 import { default as socket } from '../../../../socket';
 import spinner from '../../../../assets/images/loader.gif';
 
@@ -41,6 +41,13 @@ export class JanusPlay extends Stream{
 
     mounted(){
         this.initializeElement( this.$el.querySelector('.janus') );
+        this.iWannaPlay();
+    }
+
+    @Watch('playStream')
+    onPlaystreamSwitch(){
+        this.flushLogs();
+        this.janus.destroy({ unload:true });
         this.iWannaPlay();
     }
 
