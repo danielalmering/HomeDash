@@ -79,7 +79,7 @@ export class JanusPlay extends Stream{
         }
 
         //flushing the logs..
-        //first add the first 5 characters of the room to each log line, add a 'scope' of 'camback' to each line.
+        //first add the first 5 characters of the room to each log line, add a 'scope' of 'cam' to each line.
         this.logs.forEach( (log) => { log.r = this.playStream.substr(0,5); log.s='cam'; } );
         socket.sendEvent({
             content: this.logs,
