@@ -44,20 +44,9 @@ export class JanusPlay extends Stream{
         this.iWannaPlay();
     }
 
-    // @Watch('playStream')
-    // onPlaystreamSwitch(){
-    //     this.flushLogs();
-    //     this.janus.destroy({ unload:true });
-    //     this.iWannaPlay();
-    // }
-
     beforeDestroy(){
         this.flushLogs();
         this.janus.destroy({ unload:true });
-    }
-
-    destroyed(){
-        console.log('destroy');
     }
 
     logs:{event:string,[rest: string]: any}[] = [];

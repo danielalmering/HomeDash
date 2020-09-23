@@ -89,10 +89,6 @@
                                    :isMain="false">
                         </component>
                     </div>
-                    {{ tile.performer }}
-                    {{ tile.streamData }}
-                    {{ playServer(tile.performer, tile.streamData) }}
-                    {{ streamTransportType(tile.performer) }}
                     <div class="sidebar__voyeur-misc">
                         <span class="sidebar__voyeur-misc-advert">{{ performer(tile.performer) != undefined ? performer(tile.performer).advertId : 'Error' }}</span>
                         <span class="sidebar__voyeur-misc-favorite" v-on:click="toggleFavourite(tile.performer)">
