@@ -56,6 +56,10 @@ export class JanusPlay extends Stream{
         this.janus.destroy({ unload:true });
     }
 
+    destroyed(){
+        console.log('destroy');
+    }
+
     logs:{event:string,[rest: string]: any}[] = [];
 
     addLog( item:{event:string,[rest: string]: any} ){

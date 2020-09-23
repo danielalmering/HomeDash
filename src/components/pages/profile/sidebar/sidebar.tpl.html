@@ -78,7 +78,7 @@
                         :playStream="tile.streamData.playStream"
                         :muted="true">
                         </nanocosmos> -->
-                        <component v-if="tile.streamData" :is="streamTransportType(tile.performer)"
+                        <component v-if="tile.streamData" :key="tile.performer" :is="streamTransportType(tile.performer)"
                                    :wowza="playServer(tile.performer, tile.streamData)"
                                    :interactive="false"
                                    :playStream="tile.streamData.playStream"
