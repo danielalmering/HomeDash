@@ -19,21 +19,21 @@ interface Room{
     publishers?: Publisher[];
 }
 
+const debug = false;
+
 @Component({
     template: '<div><video muted autoplay :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video></div>',
 })
 export class JanusPlay extends Stream{
 
     spinner = spinner;
-    debug = false;
 
     @Prop( { required: false } ) secret: string;
 
-    intialize( {wowza='bla', playStream='pub', playToken='tok', debug=false,element=false} = {}){
+    intialize( {wowza='bla', playStream='pub', playToken='tok', element=false} = {}){
         this.wowza = wowza;
         this.playStream = playStream;
         this.playToken = playToken;
-        this.debug = debug;
         if (element) this.initializeElement( element );
 
         this.iWannaPlay();
@@ -44,12 +44,12 @@ export class JanusPlay extends Stream{
         this.iWannaPlay();
     }
 
-    @Watch('playStream')
-    onPlaystreamSwitch(){
-        this.flushLogs();
-        this.janus.destroy({ unload:true });
-        this.iWannaPlay();
-    }
+    // @Watch('playStream')
+    // onPlaystreamSwitch(){
+    //     this.flushLogs();
+    //     this.janus.destroy({ unload:true });
+    //     this.iWannaPlay();
+    // }
 
     beforeDestroy(){
         this.flushLogs();
@@ -63,7 +63,7 @@ export class JanusPlay extends Stream{
     logs:{event:string,[rest: string]: any}[] = [];
 
     addLog( item:{event:string,[rest: string]: any} ){
-        if (this.debug){
+        if (debug){
             console.log( item );
         }
 
@@ -151,7 +151,7 @@ export class JanusPlay extends Stream{
         this.state = 'initializing';
         return new Promise( resolve=>{
             Janus.init( {
-                debug: this.debug,
+                debug: debug,
                 callback: resolve
             } );
         } );
