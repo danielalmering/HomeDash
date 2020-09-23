@@ -10,7 +10,7 @@ import {
     hasService,
     warn
 } from '../../../../utils/main.util';
-import { webrtcPossible, NanoCosmosPossible } from '../../../../utils/video.util';
+import { webrtcPossible, NanoCosmosPossible, isIE } from '../../../../utils/video.util';
 import config, { logo } from '../../../../config';
 
 import './sidebar.scss';
@@ -26,6 +26,8 @@ import { Performer, PerformerStatus } from 'sensejs/performer/performer.model';
 import { isInSession, isOutOfSession } from 'sensejs/util/performer';
 import { addFavourite, removeFavourite } from 'sensejs/performer/favourite';
 import { WebRTC } from '../../videochat/streams/webrtc';
+import { JanusPlay } from '../../videochat/streams/janus';
+import { webrtcPublisher, clubsenseStreamerPublisher, janusPublisher } from '../../videochat/videochat.publishers';
 
 const Platform = require('platform');
 
@@ -38,7 +40,8 @@ type SidebarCategory = 'recommended' | 'teasers' | 'peek' | 'favourites' | 'voye
     components: {
         jsmpeg: JSMpeg,
         nanocosmos: NanoCosmos,
-        webrtc: WebRTC
+        webrtc: WebRTC,
+        janus: JanusPlay
     }
 })
 export default class Sidebar extends Vue {
@@ -124,38 +127,77 @@ export default class Sidebar extends Vue {
         await this.$store.dispatch('voyeur/loadTile', { performerId:  performerId, position: index });
     }
 
-    isWebRTCPerformer(performerId: number): boolean {
-        const performer = this.performer(performerId);
+    // isWebRTCPerformer(performerId: number): boolean {
+    //     const performer = this.performer(performerId);
 
-        if(performer === undefined || !performer){
-            return false;
-        }
+    //     if(performer === undefined || !performer){
+    //         return false;
+    //     }
 
-        if(!performer.mediaId  && performer.mediaId === undefined){
-            return false;
-        }
+    //     if(!performer.mediaId  && performer.mediaId === undefined){
+    //         return false;
+    //     }
 
-        return performer.mediaId == 2;
+    //     return performer.mediaId == 2;
+    // }
+
+    // streamTransportType(performer: number): string | undefined{
+    //     const platform = Platform.parse(navigator.userAgent);
+
+    //     if(this.isWebRTCPerformer(performer)){
+    //         if(webrtcPossible(platform)){
+    //             return 'webrtc';
+    //         } else {
+    //             return 'jsmpeg';
+    //         }
+
+    //     }
+
+    //     if(NanoCosmosPossible(platform)){
+    //         return 'nanocosmos';
+    //     }
+
+    //     //fallback on nanocosmos
+    //     return 'jsmpeg';
+    // }
+
+    get playServer() {
+        return (id: number, streamData: any) => {
+            const performer = this.$store.getters['voyeur/performer'](id);
+            return performer.mediaId === 4 ? config.Janus : streamData.wowza;
+        };
     }
 
-    streamTransportType(performer: number): string | undefined{
-        const platform = Platform.parse(navigator.userAgent);
+    get streamTransportType() {
+        return (id: number) => {
+            const performer = this.$store.getters['voyeur/performer'](id);
 
-        if(this.isWebRTCPerformer(performer)){
-            if(webrtcPossible(platform)){
-                return 'webrtc';
-            } else {
-                return 'jsmpeg';
+            if(performer === undefined || !performer){
+                return undefined;
             }
 
-        }
+            if (!performer.mediaId) {
+                return undefined;
+            }
 
-        if(NanoCosmosPossible(platform)){
-            return 'nanocosmos';
-        }
+            const playStream = performer.playStream ? performer.playStream : undefined;
+            const platform = Platform.parse(navigator.userAgent);
+            const mediaId = performer.mediaId;
 
-        //fallback on nanocosmos
-        return 'jsmpeg';
+            switch(mediaId) {
+                case 0:
+                case 1: // flash publisher
+                    return ((NanoCosmosPossible(platform) && !isIE(platform)) ? 'nanocosmos' : 'rtmp');
+                case 2: //webrtc publisher
+                    return webrtcPublisher(platform, 'PEEK');
+                case 3: // OBS publisher (clubsense streamer)
+                    return clubsenseStreamerPublisher(platform, 'PEEK');
+                case 4:
+                    return janusPublisher(platform);
+                default: //fallback encoder
+                    return 'jsmpeg';
+            }
+        };
     }
 
     mounted(){

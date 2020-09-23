@@ -116,7 +116,8 @@ const actions = {
             streamData: {
                 id: result.id,
                 wowza: result.wowza,
-                playStream: result.playStream
+                playStream: result.playStream,
+                playToken: result.playToken
             }
         };
 
@@ -159,6 +160,7 @@ const actions = {
     },
     async swap({ commit, dispatch, state, getters }: VoyeurContext, payload: { performerId: number }){
         //If the performer is already in the main screen, we can jsut ignore this
+        console.log('swap', payload);
 
         if(state.mainTile && state.mainTile.performer === payload.performerId){
             return;
