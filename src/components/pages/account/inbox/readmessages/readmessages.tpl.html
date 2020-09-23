@@ -20,7 +20,7 @@
 
             <div class="readmessages__item" v-for="message in messages" :class="{ 'even': message.sent_by === 'PERFORMER' }">
 
-                <div class="readmessages__item-remove" v-on:click.prevent="removeMessage(message)"></div>
+                <div class="readmessages__item-remove" v-if="message.billing_status != 'NOT PAID'" v-on:click.prevent="removeMessage(message)"></div>
 
                 <div class="readmessages__item-account" v-if="message.billing_status != 'NOT PAID'">
                     <div class="readmessages__item-account-img" :style="{ 'background-image': `url('${getAvatar(performer, message.sent_by)}')` }"></div>
@@ -34,7 +34,7 @@
         
                 <div class="readmessages__item-pay" v-if="message.billing_status === 'NOT PAID'">
                     <p class="highlight">{{ $t('account.paymessage', { credits: creditsPerType(message.type) }) }}</p>
-                    <a v-on:click="payMessage(message)" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
+                    <a v-on:click.prevent="payMessage(message)" class="btn btn-orange">{{ $t('account.viewmessage') }}</a>
                 </div>
 
             </div>
