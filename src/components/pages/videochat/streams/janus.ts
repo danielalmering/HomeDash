@@ -2,7 +2,7 @@ import { JanusJS, default as Janus }  from 'janus-gateway';
 import Stream from '../streams/stream';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { default as socket } from '../../../../socket';
-import spinner from '../../../../assets/images/loader.gif';
+import spinner from '../../../../assets/images/videoloader-large.gif';
 
 interface Publisher{
     id: number;
