@@ -46,15 +46,46 @@ export class JanusPlay extends Stream{
     }
 
     beforeDestroy(){
-        this.flushLogs();
-        this.janus.destroy({ unload:true });
+        this.addLog( {event: 'beforeDestroy'} );
+        this.destroy();
+    }
+
+    destroy(){
+        //no need to detroy when already destroying..
+        if (this._state === 'destroying'){
+            return;
+        }
+
+        try{
+            this.state = 'destroying';
+
+            if (this.room){
+                this.roomPlugin.send({
+                    message: { request: 'leave' }
+                });
+            } else if (this.janus) {
+                this.janus.destroy( {unload: true} );
+            }
+        } catch(error){
+            if (error instanceof Error){
+                this.addLog( {event: 'destroyError', message: `${error.name} ${error.message}`} );
+            } else if (typeof error === 'string'){
+                this.addLog( {event: 'destroyError', message: error} );
+            } else if (typeof error === 'object'){
+                this.addLog( {...{event: 'destroyError'}, ...error } )
+            } else {
+                this.addLog( {event: 'destroyError', message: 'General Error' })
+            }
+        } finally {
+            this.flushLogs();
+        }
     }
 
     logs:{event:string,[rest: string]: any}[] = [];
 
     addLog( item:{event:string,[rest: string]: any} ){
-        if (debug){
-            console.log( item );
+        if (true){
+            console.log( {...item, ...{id:this.opaqueId} } );
         }
 
         //let's first replace all spaces in the properties..
@@ -97,7 +128,7 @@ export class JanusPlay extends Stream{
 
     janus:Janus;
     roomPlugin:JanusJS.PluginHandle;
-
+    room:Room;
     publisherPlugin:JanusJS.PluginHandle;
 
     private async iWannaPlay(){
@@ -113,11 +144,11 @@ export class JanusPlay extends Stream{
             this.state = 'connected';
             //attach the plugin...
             this.roomPlugin = await this.attachRoom();
-            const room:Room = await this.joinRoom();
+            this.room = await this.joinRoom();
 
             this.publisherPlugin = await this.attachPublisher();
 
-            const jsep = await this.joinPublisher( room.publishers[0], room.private_id );
+            const jsep = await this.joinPublisher( this.room.publishers[0], this.room.private_id );
             const sdp  = await this.answer( jsep );
 
             await this.startFeed(sdp);
@@ -158,9 +189,9 @@ export class JanusPlay extends Stream{
                     Janus.error( error );
                     reject( error );
                 },
-                destroyed: ()=>{
-                    this.addLog({event:'JanusDestroyed'});
-                    this.flushLogs();
+                destroyed: () => {
+                    this.addLog({ event: 'JanusDestroyed'});
+                    this.destroy();
                 },
                 iceServers: [],
                 token: this.playToken,
@@ -247,7 +278,7 @@ export class JanusPlay extends Stream{
                     this.addLog({event:'PublisherCleanup'});
                     this.state = 'disconnected';
                     //sniff sniff what's that code-smell?
-                    setTimeout( ()=>this.janus.destroy( {unload: true} ));
+                    setTimeout( ()=>this.destroy() );
                 },
 
                 mediaState: ( state, on )=>{
@@ -336,6 +367,10 @@ export class JanusPlay extends Stream{
 
     initializeElement( e:unknown ){
         this.video = e as HTMLVideoElement;
+        this.video.onended = () => {
+            this.addLog( {event: 'videoend'} );
+            this.destroy( );
+        };
     }
 
     onRoomMessage( message:JanusJS.Message, jsep?:JanusJS.JSEP ){
@@ -377,6 +412,13 @@ export class JanusPlay extends Stream{
                 this.addLog({event});
                 this.state = 'disconnected';
                 break;
+            case 'event':
+                if( message['leaving'] == 'ok'){
+                    this.addLog( { event: 'roomLeft' });
+                    this.janus.destroy( {unload: true} );
+                } else if( message['unpublished'] == 'ok'){
+                    this.addLog( { ...message, ...{ event: 'roomUnpublished'} });
+                }
             default:
                 this.addLog( { ...{event:'UnhandledRoomMessage'}, ...message } );
         }
