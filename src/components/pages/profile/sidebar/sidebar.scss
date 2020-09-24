@@ -325,14 +325,10 @@ $sidebar-top-height: 315px;
         @include rem(margin, 10px);
         cursor: pointer;
 
-        .jsmpeg {
-            width: 230px;
-        }
-
-        .nanocosmos, .janus {
+        .nanocosmos, .janus, .jsmpeg {
             display: block;
             width: 230px !important;
-            height: 187px !important;
+            height: 175px !important;
             &__loading {
                 display: none;
             }
