@@ -40,6 +40,7 @@ export class JanusPlay extends Stream{
     }
 
     mounted(){
+        this._janusState = 'constructing';
         this.initializeElement( this.$el.querySelector('.janus') );
 
         this.iWannaPlay();
@@ -52,11 +53,13 @@ export class JanusPlay extends Stream{
 
     destroy(){
         //no need to detroy when already destroying..
-        if (this._state === 'destroying'){
+        if (this._janusState === 'destroying'){
             return;
         }
 
         try{
+            //just passing through the disconnected state to be compatible with prior players
+            this.state = 'disconnected';
             this.state = 'destroying';
 
             if (this.room){
@@ -122,7 +125,7 @@ export class JanusPlay extends Stream{
         this.logs = [];
     }
 
-    private _state = 'constructing';
+    private _janusState:string;
 
     private opaqueId = `vr-${Janus.randomString(12)}`;
 
@@ -163,7 +166,7 @@ export class JanusPlay extends Stream{
                 this.onError( 'General error');
             }
 
-            this.state = 'disconnected';
+            this.destroy();
         }
 
     }
@@ -276,7 +279,6 @@ export class JanusPlay extends Stream{
                 onlocalstream: (stream)=>this.addLog({event:'PublisherLocalStream'}),
                 oncleanup: ()=>{
                     this.addLog({event:'PublisherCleanup'});
-                    this.state = 'disconnected';
                     //sniff sniff what's that code-smell?
                     setTimeout( ()=>this.destroy() );
                 },
@@ -405,12 +407,12 @@ export class JanusPlay extends Stream{
                 break;
             case 'destroyed':
                 this.addLog({event});
-                this.state = 'disconnected';
+                this.destroy();
                 break;
             case 'hangup':
                 //well well well, what will we do then?
                 this.addLog({event});
-                this.state = 'disconnected';
+                this.destroy();
                 break;
             case 'event':
                 if( message['leaving'] == 'ok'){
@@ -439,7 +441,6 @@ export class JanusPlay extends Stream{
         const event = message['videoroom'];
         switch (event){
             case 'attached':{
-                console.log( this._state );
                 if (resolve) resolve( jsep );
                 this._resolver = undefined;
                 break;
@@ -460,26 +461,50 @@ export class JanusPlay extends Stream{
     }
 
     get state():string{
-        return this._state;
+        return this._janusState;
     }
     set state(value:string){
-        this._state = value;
-        this.addLog({event:'statechange', value});
+        this.addLog( { event:'statechange', value, oldValue:this._janusState } );
+
+        if (!this.isStateChangeValid(value)){
+            throw new Error(`invalid state change from ${this._janusState} to ${value}`);
+        }
+
+        this._janusState = value;
         this.onStateChange( value );
+    }
+
+    //disconnected is always alowed
+    //otherwise, the order of states should be obeyed
+    private isStateChangeValid(newState:string):boolean{
+        if (newState == 'disconnected'){
+            return true;
+        }
+
+        const next = JanusPlay.states.indexOf(newState);
+        if (next == -1){
+            throw new Error(`who knows about ${newState} antway??`);
+        }
+
+        const current = JanusPlay.states.indexOf(this._janusState);
+
+        return next - current == 1;
     }
 
     static states = [
         'constructing',
-        'initalizing',
+        'initializing',
         'connecting',
         'connected',
-        'attaching',
+        'attaching_room',
         'joining_room',
         'attaching_publisher',
         'joining_publisher',
         'answering',
         'starting_feed',
-        'active'
+        'active',
+        'disconnected',
+        'destroying'
     ];
 
     private _resolver: { resolve?:Function, reject?:Function }  = undefined;
