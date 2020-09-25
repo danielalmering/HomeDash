@@ -68,7 +68,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                  }
              }
 
-            .webrtc {
+            .webrtc, .janus {
 
                 @media screen and (max-width: 768px) {
                     height: auto !important;
