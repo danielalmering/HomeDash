@@ -120,7 +120,11 @@ const actions = {
             return;
         }
 
+
         store.commit('setState', State.Ending);
+        //sniff sniff.. what's that code smell?
+        //need to tick through one frame in order to dispatch the 'ending' state, otherwise only 'idle' will be dispatched
+        await sleep(0);
         store.commit('setState', State.Idle);
     },
     async end(store: ActionContext<SessionState, RootState>, reason?: string){
