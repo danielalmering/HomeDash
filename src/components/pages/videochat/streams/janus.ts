@@ -279,8 +279,6 @@ export class JanusPlay extends Stream{
                 onlocalstream: (stream)=>this.addLog({event:'PublisherLocalStream'}),
                 oncleanup: ()=>{
                     this.addLog({event:'PublisherCleanup'});
-                    //sniff sniff what's that code-smell?
-                    setTimeout( ()=>this.destroy() );
                 },
 
                 mediaState: ( state, on )=>{
@@ -386,7 +384,7 @@ export class JanusPlay extends Stream{
         }
 
         if (message.error){
-            this.onError(message.error.message);
+            this.onError(message.error_code);
             return;
         }
 
@@ -407,6 +405,9 @@ export class JanusPlay extends Stream{
                 break;
             case 'destroyed':
                 this.addLog({event});
+                //the room don't exist anymore...
+                //now destroying will actually destroy Janus
+                this.room = undefined;
                 this.destroy();
                 break;
             case 'hangup':
