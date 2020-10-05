@@ -536,7 +536,7 @@ export default class VideoChat extends Vue {
         }
 
         if (state === 'disconnected'){
-            this.$store.dispatch('disconnected');
+            //this.$store.dispatch('disconnected');
         }
     }
 
