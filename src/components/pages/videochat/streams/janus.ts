@@ -22,7 +22,7 @@ interface Room{
 const debug = false;
 
 @Component({
-    template: '<div><video autoplay :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video></div>',
+    template: '<div><video :muted="muted" autoplay :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video></div>',
 })
 export class JanusPlay extends Stream{
 
@@ -321,7 +321,7 @@ export class JanusPlay extends Stream{
         return new Promise( (resolve, reject)=>{
             this.publisherPlugin.createAnswer({
                 jsep,
-                media: { audioSend: false, videoSend: false, audioRecv: !this.muted, videoRecv: true },	// We want recvonly audio/video
+                media: { audioSend: false, videoSend: false, audioRecv: true, videoRecv: true },	// We want recvonly audio/video
                 success: (sdp:string)=>resolve(sdp),
                 error: (error:any)=>{
                     console.log( error );
