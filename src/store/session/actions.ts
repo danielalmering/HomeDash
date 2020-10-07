@@ -83,6 +83,12 @@ const actions = {
         store.dispatch('errorMessage', `videochat.alerts.socketErrors.PERFORMER_TIMEOUT`);
         tagHotjar(`ERROR_PERFORMERTIMEOUT`);
     },
+    async clientTimeout(store:ActionContext<SessionState, RootState>){
+        store.dispatch('errorMessage', `videochat.alerts.socketErrors.CLIENT_TIMEOUT`);
+        store.commit('setState', State.Ending);
+        await sleep(0);
+        store.commit('setState', State.Idle);
+    },
     async accepted(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Accepted);
     },
@@ -254,17 +260,17 @@ const actions = {
             return;
         }
 
-        notificationSocket.sendEvent({
-            receiverType: UserRole.Performer,
-            receiverId: store.state.activePerformer.id,
-            event: 'videoChat',
-            content: {
-                type: 'START_TIMER_DEVICE',
-                clientId: store.rootState.authentication.user.id,
-                performerId: store.state.activePerformer.id,
-                value: undefined
-            }
-        });
+        // notificationSocket.sendEvent({
+        //     receiverType: UserRole.Performer,
+        //     receiverId: store.state.activePerformer.id,
+        //     event: 'videoChat',
+        //     content: {
+        //         type: 'START_TIMER_DEVICE',
+        //         clientId: store.rootState.authentication.user.id,
+        //         performerId: store.state.activePerformer.id,
+        //         value: undefined
+        //     }
+        // });
     },
     async startCalling(store: ActionContext<SessionState, RootState>){
         if (!store.state.activePerformer){
