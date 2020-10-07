@@ -100,6 +100,7 @@ interface StateSocketMessage extends VideoEventSocketMessage{
 //translates a socket message to an action to be dispatched when the rule matches.
 //Rules are checked from top to bottom
 export function translate(socketMessage: StateSocketMessage): { action: string, label?: string } | undefined {
+    console.log( socketMessage );
     const rules = [
         {
             when: { type: 'VIDEOCALL_ANSWER' },
@@ -132,6 +133,10 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
         {
             when: { inState: State.Active, type: 'RESPONSE', message: 'BROKE' },
             result: { action: 'end', label: 'CLIENT_BROKE' }
+        },
+        {
+            when: { type: 'RESPONSE', value: true, message: 'TIMEOUT'},
+            result: { action: 'clientTimeout', label: 'CLIENT_TIMEOUT' }
         },
         {
             when: { inState: State.Pending, value: true },
