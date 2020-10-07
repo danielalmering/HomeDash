@@ -64,6 +64,7 @@
 
                 <!-- Voyeurlist -->
                 <li class="sidebar__voyeur" v-if="category === 'voyeur' && voyeurTiles" v-for="(tile, index) in voyeurTiles">
+
                     <div class="sidebar__voyeur-click" v-on:click="swap(tile.performer)"></div>
                     <div>
                         <!-- <jsmpeg
@@ -77,12 +78,11 @@
                         :playStream="tile.streamData.playStream"
                         :muted="true">
                         </nanocosmos> -->
-
-
-                        <component :is="streamTransportType(tile.performer)"
-                                   :wowza="tile.streamData.wowza"
+                        <component v-if="tile.streamData" :key="tile.streamData.playStream" :is="streamTransportType(tile.performer)"
+                                   :wowza="playServer(tile.performer, tile.streamData)"
                                    :interactive="false"
                                    :playStream="tile.streamData.playStream"
+                                   :playToken="tile.streamData.playToken"
                                    v-on:error="voyeurPlayerError(index)"
                                    :muted="true"
                                    :tile="index"

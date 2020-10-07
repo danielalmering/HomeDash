@@ -13,7 +13,7 @@ export default class Stream extends Vue {
     @Prop({
         required: false
     })
-    playToken: string | boolean;
+    playToken: string;
 
     @Prop({
         type: String,

@@ -1,11 +1,12 @@
 <div class="voyeur" v-if="performerData">
     <div class="voyeur__screen" v-if="mainTile">
         <div class="voyeur__screen-object">
-            <component :is="streamTransportType"
+            <component :key="mainTile.streamData.playStream" :is="streamTransportType"
                        v-on:stateChange="viewerStateChange"
                        v-on:error="viewerError"
-                       :wowza="mainTile.streamData.wowza"
+                       :wowza="playServer"
                        :playStream="mainTile.streamData.playStream"
+                       :playToken="mainTile.streamData.playToken"
                        :muted="true"
                        :isMain="true">
             </component>

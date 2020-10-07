@@ -1,7 +1,7 @@
 <div class="videochat">
     <div class="videochat__screen">
         <div class="videochat__screen-object">
-            <component :is="
+            <component :key="playStream" :is="
             streamTransportType"
                 v-on:stateChange="viewerStateChange"
                 v-on:error="viewerError"
@@ -9,7 +9,9 @@
                 :playStream="playStream"
                 :playToken="playToken"
                 :isSwitching="isSwitching"
-                :muted="sessionType == 'PEEK'">
+                :muted="sessionType == 'PEEK'"
+                :debug="true"
+                >
             </component>
         </div>
     </div>

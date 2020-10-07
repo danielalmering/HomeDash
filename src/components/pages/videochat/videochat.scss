@@ -15,16 +15,6 @@ $streamback-height: 229px;
 $streamback-width-small: calc(#{$streamback-width} / 2);
 $streamback-height-small: calc(#{$streamback-height} / 2);
 
-.webrtc{
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-
-}
-
-.webrtcFade {
-    transition: background-image 1s ease-in-out;
-}
 
 .videochat {
     position: fixed;
@@ -78,7 +68,7 @@ $streamback-height-small: calc(#{$streamback-height} / 2);
                  }
              }
 
-            .webrtc {
+            .webrtc, .janus {
 
                 @media screen and (max-width: 768px) {
                     height: auto !important;
