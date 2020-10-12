@@ -100,7 +100,6 @@ interface StateSocketMessage extends VideoEventSocketMessage{
 //translates a socket message to an action to be dispatched when the rule matches.
 //Rules are checked from top to bottom
 export function translate(socketMessage: StateSocketMessage): { action: string, label?: string } | undefined {
-    console.log( socketMessage );
     const rules = [
         {
             when: { type: 'VIDEOCALL_ANSWER' },
