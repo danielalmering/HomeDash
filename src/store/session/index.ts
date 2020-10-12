@@ -134,10 +134,6 @@ export function translate(socketMessage: StateSocketMessage): { action: string, 
             result: { action: 'end', label: 'CLIENT_BROKE' }
         },
         {
-            when: { type: 'RESPONSE', value: true, message: 'TIMEOUT'},
-            result: { action: 'clientTimeout', label: 'CLIENT_TIMEOUT' }
-        },
-        {
             when: { inState: State.Pending, value: true },
             result: { action: 'accepted' }
         },

@@ -83,12 +83,6 @@ const actions = {
         store.dispatch('errorMessage', `videochat.alerts.socketErrors.PERFORMER_TIMEOUT`);
         tagHotjar(`ERROR_PERFORMERTIMEOUT`);
     },
-    async clientTimeout(store:ActionContext<SessionState, RootState>){
-        store.dispatch('errorMessage', `videochat.alerts.socketErrors.CLIENT_TIMEOUT`);
-        store.commit('setState', State.Ending);
-        //await sleep(0);
-        store.commit('setState', State.Idle);
-    },
     async accepted(store: ActionContext<SessionState, RootState>){
         store.commit('setState', State.Accepted);
     },
