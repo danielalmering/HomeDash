@@ -241,6 +241,10 @@ export default class VideoChat extends Vue {
             return config.Janus;
         }
 
+        if (this.streamTransportType === 'jsmpeg'){
+            return this.performer.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;
+        }
+
         return this.$store.state.session.activeSessionData.wowza;
     }
 
