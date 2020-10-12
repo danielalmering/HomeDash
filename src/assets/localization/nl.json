@@ -362,6 +362,7 @@
                 "CANCEL": "Geannuleerd",
                 "PLAYER_END": "U heeft de sessie beëindigd.",
                 "PERFORMER_TIMEOUT": "De performer heeft niet gereageerd.",
+                "CLIENT_TIMEOUT": "De video kan niet worden gestart. Probeer het nog eens",
                 "PEEK_SWITCH": "Gewisseld"
             },
             "c2c-failed": "Fout bij het terugcammen. Probeer het opnieuw.",
