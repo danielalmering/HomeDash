@@ -60,6 +60,9 @@ export default class Profile extends Vue {
     displaySlider: boolean = true;
     services = config.locale.Services;
 
+    startSessionToggle: boolean = true;
+    startVoyeurToggle: boolean = true;
+
     private serviceSocketId: number;
     private statusSocketId: number;
     private voyeurSocketId: number;
@@ -205,6 +208,7 @@ export default class Profile extends Vue {
 
     @Watch('activeState') async onSessionStateChange(value: State, oldValue: State){
         if (value == State.Accepted){
+            this.startSessionToggle = true; // re-enable session btn
             await this.$store.dispatch('initiate');
             if (!this.performer){
                 return;
@@ -216,6 +220,10 @@ export default class Profile extends Vue {
                     id: this.performer.advertId.toString()
                 }
             });
+        }
+
+        if (value == State.Idle){
+            this.startSessionToggle = true; // re-enable session btn
         }
     }
 
@@ -235,7 +243,11 @@ export default class Profile extends Vue {
         }
 
         try {
+            this.startVoyeurToggle = false; // disable btn
+
             await this.$store.dispatch('voyeur/startVoyeur', { performerId: this.performer.id, ivrCode: payload.ivrCode });
+            
+            this.startVoyeurToggle = true; // enable btn
 
             this.$router.push({
                 name: 'Voyeur',
@@ -252,6 +264,8 @@ export default class Profile extends Vue {
         if(!this.performer){
             return;
         }
+
+        this.startSessionToggle = false; // disable btn
 
         //Uncomment if you need to offer the user the possibility to use flash
         //if you need the user to hear the performer
@@ -287,7 +301,6 @@ export default class Profile extends Vue {
             this.$store.dispatch<RequestPayload>( toSend );
         }
     }
-
 
     enableFlash: boolean = false;
 
