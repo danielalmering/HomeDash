@@ -164,7 +164,21 @@ export default class Sidebar extends Vue {
     get playServer() {
         return (id: number, streamData: any) => {
             const performer = this.$store.getters['voyeur/performer'](id);
-            return performer.mediaId === 4 ? config.Janus : streamData.wowza;
+            if (!performer){
+                return streamData.wowza;
+            }
+
+            //TODO change this to this.mainTile.streamData.wowza
+            const transport = this.streamTransportType(performer.id);
+            if (transport === 'janus'){
+                return config.Janus;
+            }
+
+            if (transport === 'jsmpeg'){
+                return performer.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;
+            }
+
+            return streamData.wowza;
         };
     }
 

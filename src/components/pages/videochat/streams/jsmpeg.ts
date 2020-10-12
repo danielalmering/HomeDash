@@ -49,9 +49,15 @@ export default class JSMpeg extends Stream {
     }
 
     private load(){
-        const token = this.playToken ? this.playToken : this.wowza.split('?token=')[1];
+        let token = this.playToken;
+        let server = this.wowza;
+        //do the old default if playtoken is not given.
+        if (!token){
+            token = this.wowza.split('?token=')[1];
+            server = config.JsmpegUrl;
+        }
 
-        const videoUrl = `${config.JsmpegUrl}?stream=${this.playStream}&token=${token}&hash=5B9F45B17A77831EA6C5346464BD2`;
+        const videoUrl = `${server}?stream=${this.playStream}&token=${token}&hash=5B9F45B17A77831EA6C5346464BD2`;
         const video = <HTMLCanvasElement>this.$el.querySelector('.jsmpeg');
         const poster = require('../../../../assets/images/videoloader.gif');
         const platform = Platform.parse(navigator.userAgent);
