@@ -22,7 +22,9 @@ interface Room{
 const debug = false;
 
 @Component({
-    template: '<div><video :muted="muted" autoplay :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video></div>',
+    template: `<div><video :muted="muted" :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video>
+    <span v-if="!muted" class="videochat__mute hidden-sm hidden-xs" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span>
+    <span v-if="!muted" class="videochat__mute-right hidden-md hidden-lg" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span></div>`,
 })
 export class JanusPlay extends Stream{
 
@@ -49,6 +51,18 @@ export class JanusPlay extends Stream{
     beforeDestroy(){
         this.addLog( {event: 'beforeDestroy'} );
         this.destroy();
+    }
+
+    mutedClass = 'fa-volume-up';
+
+    toggleMute(){
+        if(this.video.muted){
+            this.video.muted = false;
+            this.mutedClass  = 'fa-volume-up';
+        } else {
+            this.video.muted = true;
+            this.mutedClass  = 'fa-volume-off';
+        }
     }
 
     destroy(){
@@ -346,7 +360,7 @@ export class JanusPlay extends Stream{
 
     playing: boolean = false;
 
-    attachStream( stream:MediaStream ){
+    async attachStream( stream:MediaStream ){
         if (!this.video){
             return;
         }
@@ -356,13 +370,30 @@ export class JanusPlay extends Stream{
             return;
         }
 
-        this.playing = true;
-
         try{
             this.video.srcObject = stream;
         }catch( e ){
             this.video.src = URL.createObjectURL(stream);
         }
+
+        //detect if the browser blocks autoplaying of unmuted content
+        try{
+            await this.video.play();
+            this.playing = true;
+            this.mutedClass = 'fa-volume-up';
+        } catch(error){
+            if (error.name == 'NotAllowedError'){
+                this.video.muted = true;
+                await this.video.play();
+                this.playing = true;
+                this.mutedClass = 'fa-volume-off';
+            } else {
+                throw error;
+            }
+        }
+
+        
+
     }
 
     initializeElement( e:unknown ){
