@@ -480,6 +480,32 @@ export default class VideoChat extends Vue {
             }
         }
 
+         //some exceptions for Janus down here..
+         if (this._broadcastType == 'janusBroadcast'){
+            if (state == 'active' && actives.length == 1){
+                //notify the performer this room is ready for camming back..
+                // type: "ACTIVATED",
+                // value: ""
+                // data.clientType
+                notificationSocket.sendEvent(
+                    {
+                        receiverType: UserRole.Performer,
+                        receiverId: this.$store.state.session.activePerformer.id,
+                        event: 'clientstream',
+                        content: {
+                            type: 'ACTIVATED',
+                            value: null,
+                            clientType: 'janus'
+                        }
+                    }
+                );
+            } else if (state == 'connected' ){
+                //since there's no signaling of the media server to the client, notify a successfull connect here.. for compatibility's sake.
+                setKPI('cl_camback_connected');
+            }
+
+         }
+
     }
 
     broadcastError(error: any){
