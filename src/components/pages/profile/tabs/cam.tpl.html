@@ -27,14 +27,14 @@
                     <input type="text" class="col-xs-7 col-sm-9" v-model="$parent.displayName" :placeholder="$t('tabs.username')" required>
                 </div>
             </div>
-            <button class="btn btn-full btn-large btn-green" v-bind:disabled="!$parent.$parent.startSessionToggle" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></button>
+            <button class="btn btn-full btn-large btn-green" v-bind:disabled="$parent.activeSession" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'"></button>
         </form>
     </div>
 
     <div class="tabs__servicescontent-method">
         <h2 v-html="$t('tabs.paymentwithcredits')"></h2>
         <p><span v-t="$parent.authenticated ? 'tabs.webcamwithcreditsdesc' : 'tabs.registeraccount'"></span> <span v-if="$parent.authenticated && $parent.info">({{ $parent.info.credits_per_minute.split('.')[0] }} {{ $t('top.numbers.cpm') }})</span></p>
-        <button v-if="$parent.authenticated" v-bind:disabled="!$parent.$parent.startSessionToggle" class="btn btn-full btn-large btn-green" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'" v-on:click="$parent.startSession({sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'})"></button>
+        <button v-if="$parent.authenticated" v-bind:disabled="$parent.activeSession" class="btn btn-full btn-large btn-green" v-t="$parent.canPeek ? 'tabs.peekbtn' : 'tabs.webcambtn'" v-on:click="$parent.startSession({sessionType:$parent.canPeek ? 'PEEK' : 'VIDEO', payment:'CREDITS'})"></button>
         <button v-if="!$parent.authenticated" class="btn btn-full btn-large btn-orange" v-t="'modals.login.login'" v-on:click="$parent.openModal('login')"></button>
     </div>
 
