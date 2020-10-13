@@ -288,7 +288,6 @@ export default class Profile extends Vue {
         }
     }
 
-
     enableFlash: boolean = false;
 
     unNagFlash(){
