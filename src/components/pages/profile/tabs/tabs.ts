@@ -151,6 +151,14 @@ export default class Tabs extends Vue {
         return this.$store.state.session.activeIvrCode;
     }
 
+    get activeSession(): boolean{
+        return this.$store.state.session.activeState != 'idle' ? true : false;
+    }
+
+    get activeVoyeur(): boolean{
+        return this.$store.state.voyeur.isActive;
+    }
+
     set ivrCode(value: string){
         this.$store.commit('setIvrCode', value);
     }
