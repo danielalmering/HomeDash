@@ -117,7 +117,8 @@ const actions = {
                 id: result.id,
                 wowza: result.wowza,
                 playStream: result.playStream,
-                playToken: result.playToken
+                playToken: result.playToken,
+                streamTransportType: result.streamTransportType
             }
         };
 
@@ -152,7 +153,8 @@ const actions = {
                 id: result.id,
                 wowza: result.wowza,
                 playStream: result.playStream,
-                playToken: result.playToken
+                playToken: result.playToken,
+                streamTransportType: result.streamTransportType
             }
         };
 
