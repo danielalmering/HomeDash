@@ -123,32 +123,25 @@ export default class Voyeur extends Vue {
     }
 
     get streamTransportType(): string | undefined {
-        const mainPerformer = this.performerData;
-
-        if(mainPerformer === undefined || !mainPerformer){
+        if (!this.mainTile.streamData){
             return undefined;
         }
 
-        if (!mainPerformer.mediaId) {
-            return undefined;
-        }
-
-        const playStream = mainPerformer.playStream ? mainPerformer.playStream : undefined;
+        const type = this.mainTile.streamData.streamTransportType;
         const platform = Platform.parse(navigator.userAgent);
-        const mediaId = mainPerformer.mediaId;
 
-        switch(mediaId) {
-            case 0:
-            case 1: // flash publisher
+        switch(type) {
+            case 'RTMP': // flash publisher
                 return ((NanoCosmosPossible(platform) && !isIE(platform)) ? 'nanocosmos' : 'rtmp');
-            case 2: //webrtc publisher
+            case 'WEBRTC': //webrtc publisher
                 return webrtcPublisher(platform, 'PEEK');
-            case 3: // OBS publisher (clubsense streamer)
+            case 'STREAMER': // OBS publisher (clubsense streamer)
                 return clubsenseStreamerPublisher(platform, 'PEEK');
-            case 4:
+            case 'JANUS':
                 return janusPublisher(platform);
-            default: //fallback encoder
-                return 'jsmpeg';
+            default:
+                //no fallback, just fail when something really unexpected happens.
+                throw new Error(`${type} ain't no transport type I ever heard of`);
         }
     }
 
