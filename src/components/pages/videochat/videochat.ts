@@ -126,31 +126,22 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        //check integerty
-        if (!this.performer) {
-            return undefined;
-        }
-
-        if (!this.performer.mediaId) {
-            return undefined;
-        }
-
+        const type = this.$store.state.session.activeSessionData.streamTransportType;
         const platform = Platform.parse(navigator.userAgent);
-        const mediaId = this.performer.mediaId;
 
-        switch(mediaId) {
+        switch(type) {
             //flash publisher
-            case 0:
-            case 1:
+            case 'RTMP':
                 return flashPublisher(platform, this.sessionType);
-            case 2: //webrtc publisher
+            case 'WEBRTC': //webrtc publisher
                 return webrtcPublisher(platform, this.sessionType);
-            case 3: // OBS publisher (clubsense streamer)
+            case 'STREAMER': // OBS publisher (clubsense streamer)
                 return clubsenseStreamerPublisher(platform, this.sessionType);
-            case 4:
+            case 'JANUS':
                 return janusPublisher(platform);
-            default: //fallback encoder
-                return 'jsmpeg';
+            default: 
+                //no fallback, just fail when something really unexpected happens.
+                throw new Error(`${type} ain't no transport type I ever heard of`);
         }
     }
 
