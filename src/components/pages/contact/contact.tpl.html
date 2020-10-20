@@ -10,7 +10,9 @@
             <p v-html="$t('contact.desc')"></p>
         </div>
 
-        <div class="contact__form col-xs-4">
+        <br />
+
+        <div class="contact__form col-xs-12 col-sm-4">
             <div class="row">
                 <div class="contact__form-title">{{ $t('contact.contactform') }}</div>
                 <div class="contact__form-content">
@@ -40,19 +42,11 @@
                 </div>
             </div>
         </div>
-        <div class="contact__faq col-xs-8">
+        <div class="contact__faq col-xs-12 col-sm-8">
             <ul>
-                <li>
-                    <h2>Welke computer is vereist?</h2>
-                    <p>Quisque auctor, magna in vehicula sollicitudin, augue diam pellentesque quam, sit amet tincidunt purus ante id nulla. Quisque mattis consequat purus, ut aliquet ligula. Cras in velit dapibus, hendrerit dui at, tristique augue. Duis vel sapien non lorem efficitur vulputate. Praesent magna nibh, sodales quis odio vel, porta porta purus. Etiam lacinia dui vitae pretium blandit. Nunc sit amet scelerisque enim. In lacinia arcu enim. Proin dui turpis, tristique quis efficitur eu, congue sit amet turpis. Vestibulum scelerisque finibus euismod. Ut at purus sem. Proin quam lacus, condimentum eget consectetur sit amet, interdum accumsan nisi. Aenean quam urna, imperdiet et risus sed, consequat consequat lectus. Donec ac tellus neque. Cras tristique pretium sem, eu accumsan risus tincidunt non. In accumsan dictum turpis eu facilisis.</p>
-                </li>
-                <li>
-                    <h2>Wat zijn de dames types?</h2>
-                    <p>Quisque auctor, magna in vehicula sollicitudin, augue diam pellentesque quam, sit amet tincidunt purus ante id nulla. Quisque mattis consequat purus, ut aliquet ligula. Cras in velit dapibus, hendrerit dui at, tristique augue. Duis vel sapien non lorem efficitur vulputate. Praesent magna nibh, sodales quis odio vel, porta porta purus. Etiam lacinia dui vitae pretium blandit. Nunc sit amet scelerisque enim. In lacinia arcu enim. Proin dui turpis, tristique quis efficitur eu, congue sit amet turpis. Vestibulum scelerisque finibus euismod. Ut at purus sem. Proin quam lacus, condimentum eget consectetur sit amet, interdum accumsan nisi. Aenean quam urna, imperdiet et risus sed, consequat consequat lectus. Donec ac tellus neque. Cras tristique pretium sem, eu accumsan risus tincidunt non. In accumsan dictum turpis eu facilisis.</p>
-                </li>
-                <li>
-                    <h2>Waar staat de website voor?</h2>
-                    <p>Quisque auctor, magna in vehicula sollicitudin, augue diam pellentesque quam, sit amet tincidunt purus ante id nulla. Quisque mattis consequat purus, ut aliquet ligula. Cras in velit dapibus, hendrerit dui at, tristique augue. Duis vel sapien non lorem efficitur vulputate. Praesent magna nibh, sodales quis odio vel, porta porta purus. Etiam lacinia dui vitae pretium blandit. Nunc sit amet scelerisque enim. In lacinia arcu enim. Proin dui turpis, tristique quis efficitur eu, congue sit amet turpis. Vestibulum scelerisque finibus euismod. Ut at purus sem. Proin quam lacus, condimentum eget consectetur sit amet, interdum accumsan nisi. Aenean quam urna, imperdiet et risus sed, consequat consequat lectus. Donec ac tellus neque. Cras tristique pretium sem, eu accumsan risus tincidunt non. In accumsan dictum turpis eu facilisis.</p>
+                <li v-for="(question, index) in faq" :class="{active: activeQuestion === index}" v-on:click="activeQuestion = index">
+                    <h2>{{ question.name }}</h2>
+                    <p v-html="question.description"></p>
                 </li>
             </ul>
         </div>
