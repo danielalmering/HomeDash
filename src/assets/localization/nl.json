@@ -457,6 +457,7 @@
         "email": "E-mail:*",
         "name": "Name:*",
         "message": "Bericht:*",
+        "contactform": "Contact opnemen",
         "alerts": {
             "errorSend": "Er is een fout opgetreden bij het verzenden",
             "successSend": "Bericht is met succes verzonden",

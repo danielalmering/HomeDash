@@ -10,37 +10,51 @@
             <p v-html="$t('contact.desc')"></p>
         </div>
 
-        <div class="form">
-            <form v-on:submit.prevent="send">
-                <div class="col-xs-12">
-                    <div class="form__group" :class="{ 'form-group--error': $v.contact.name.$error }">
-                        <label v-t="'contact.name'"></label>
-                        <input v-model="$v.contact.name.$model" type="text" class="col-xs-12" required>
-                        <span class="form__group-alert" v-if="$v.contact.name.$dirty && !$v.contact.name.required" v-t="'contact.alerts.errorinvalidName'"></span>
-                    </div>
-                    <div class="form__group" :class="{ 'form-group--error': $v.contact.email.$error }">
-                        <label v-t="'contact.email'"></label>
-                        <input type="email" v-model="$v.contact.email.$model" name="email" class="col-xs-12" required>
-                        <span class="form__group-alert" v-if="$v.contact.email.$dirty && !$v.contact.email.email" v-t="'contact.alerts.errorinvalidEmail'"></span>
-                    </div>
-                    <div class="form__group" :class="{ 'form-group--error': $v.contact.subject.$error }">
-                        <label v-t="'contact.subject'"></label>
-                        <input v-model="$v.contact.subject.$model" type="text" class="col-xs-12" required>
-                        <span class="form__group-alert" v-if="$v.contact.subject.$dirty && !$v.contact.subject.required" v-t="'contact.alerts.errorinvalidSubject'"></span>
-                    </div>
-                    <div class="form__group" :class="{ 'form-group--error': $v.contact.message.$error }">
-                        <label v-t="'contact.message'"></label>
-                        <textarea rows="10" v-model="$v.contact.message.$model" required></textarea>
-                        <span class="form__group-alert" v-if="$v.contact.message.$dirty && !$v.contact.message.required" v-t="'contact.alerts.errorinvalidMessage'"></span>
-                    </div>
+        <div class="contact__form col-xs-4">
+            <div class="row">
+                <div class="contact__form-title">{{ $t('contact.contactform') }}</div>
+                <div class="contact__form-content">
+                    <form v-on:submit.prevent="send">
+                        <div class="col-xs-12">
+                            <div class="form__group" :class="{ 'form-group--error': $v.contact.name.$error }">
+                                <input :placeholder="$t('contact.name')" v-model="$v.contact.name.$model" type="text" class="col-xs-12" required>
+                                <span class="form__group-alert" v-if="$v.contact.name.$dirty && !$v.contact.name.required" v-t="'contact.alerts.errorinvalidName'"></span>
+                            </div>
+                            <div class="form__group" :class="{ 'form-group--error': $v.contact.email.$error }">
+                                <input :placeholder="$t('contact.email')" type="email" v-model="$v.contact.email.$model" name="email" class="col-xs-12" required>
+                                <span class="form__group-alert" v-if="$v.contact.email.$dirty && !$v.contact.email.email" v-t="'contact.alerts.errorinvalidEmail'"></span>
+                            </div>
+                            <div class="form__group" :class="{ 'form-group--error': $v.contact.subject.$error }">
+                                <input :placeholder="$t('contact.subject')" v-model="$v.contact.subject.$model" type="text" class="col-xs-12" required>
+                                <span class="form__group-alert" v-if="$v.contact.subject.$dirty && !$v.contact.subject.required" v-t="'contact.alerts.errorinvalidSubject'"></span>
+                            </div>
+                            <div class="form__group" :class="{ 'form-group--error': $v.contact.message.$error }">
+                                <textarea :placeholder="$t('contact.message')" rows="10" v-model="$v.contact.message.$model" required></textarea>
+                                <span class="form__group-alert" v-if="$v.contact.message.$dirty && !$v.contact.message.required" v-t="'contact.alerts.errorinvalidMessage'"></span>
+                            </div>
+                            <div class="form__group">
+                                <button class="btn btn-orange" v-t="'contact.send'"></button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-xs-12">
-                    <div class="form__group">
-                        <button class="btn btn-orange" v-t="'contact.send'"></button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
-
+        <div class="contact__faq col-xs-8">
+            <ul>
+                <li>
+                    <h2>Welke computer is vereist?</h2>
+                    <p>Quisque auctor, magna in vehicula sollicitudin, augue diam pellentesque quam, sit amet tincidunt purus ante id nulla. Quisque mattis consequat purus, ut aliquet ligula. Cras in velit dapibus, hendrerit dui at, tristique augue. Duis vel sapien non lorem efficitur vulputate. Praesent magna nibh, sodales quis odio vel, porta porta purus. Etiam lacinia dui vitae pretium blandit. Nunc sit amet scelerisque enim. In lacinia arcu enim. Proin dui turpis, tristique quis efficitur eu, congue sit amet turpis. Vestibulum scelerisque finibus euismod. Ut at purus sem. Proin quam lacus, condimentum eget consectetur sit amet, interdum accumsan nisi. Aenean quam urna, imperdiet et risus sed, consequat consequat lectus. Donec ac tellus neque. Cras tristique pretium sem, eu accumsan risus tincidunt non. In accumsan dictum turpis eu facilisis.</p>
+                </li>
+                <li>
+                    <h2>Wat zijn de dames types?</h2>
+                    <p>Quisque auctor, magna in vehicula sollicitudin, augue diam pellentesque quam, sit amet tincidunt purus ante id nulla. Quisque mattis consequat purus, ut aliquet ligula. Cras in velit dapibus, hendrerit dui at, tristique augue. Duis vel sapien non lorem efficitur vulputate. Praesent magna nibh, sodales quis odio vel, porta porta purus. Etiam lacinia dui vitae pretium blandit. Nunc sit amet scelerisque enim. In lacinia arcu enim. Proin dui turpis, tristique quis efficitur eu, congue sit amet turpis. Vestibulum scelerisque finibus euismod. Ut at purus sem. Proin quam lacus, condimentum eget consectetur sit amet, interdum accumsan nisi. Aenean quam urna, imperdiet et risus sed, consequat consequat lectus. Donec ac tellus neque. Cras tristique pretium sem, eu accumsan risus tincidunt non. In accumsan dictum turpis eu facilisis.</p>
+                </li>
+                <li>
+                    <h2>Waar staat de website voor?</h2>
+                    <p>Quisque auctor, magna in vehicula sollicitudin, augue diam pellentesque quam, sit amet tincidunt purus ante id nulla. Quisque mattis consequat purus, ut aliquet ligula. Cras in velit dapibus, hendrerit dui at, tristique augue. Duis vel sapien non lorem efficitur vulputate. Praesent magna nibh, sodales quis odio vel, porta porta purus. Etiam lacinia dui vitae pretium blandit. Nunc sit amet scelerisque enim. In lacinia arcu enim. Proin dui turpis, tristique quis efficitur eu, congue sit amet turpis. Vestibulum scelerisque finibus euismod. Ut at purus sem. Proin quam lacus, condimentum eget consectetur sit amet, interdum accumsan nisi. Aenean quam urna, imperdiet et risus sed, consequat consequat lectus. Donec ac tellus neque. Cras tristique pretium sem, eu accumsan risus tincidunt non. In accumsan dictum turpis eu facilisis.</p>
+                </li>
+            </ul>
+        </div>
     </div>
 </main>
