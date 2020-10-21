@@ -42,6 +42,96 @@
         }
     }
 
+    &__form {
+        @include rem(margin-bottom, 20px);
+        &-title {
+            float: left;
+            width: 100%;
+            color: $pallete-2;
+            font-weight: 700;
+            @include rem(font-size, 15px);
+            @include rem(padding, 15px 15px);
+            @include gradient($pallete-8, $pallete-11, vertical);
+            border-bottom: 1px solid #000;
+        }
+
+        &-content {
+            float: left;
+            width: 100%;
+            background: $pallete-11;
+            border-top: 1px solid $pallete-0;
+            @include rem(padding, 10px 0px);
+            
+            .form__group {
+                float: left;
+                @include rem(margin, -5px 0);
+                width: 100%;
+            }
+
+            input, textarea {
+                background: $pallete-11;
+                border: none;
+                color: $pallete-18;
+                width: 100%;
+                @include rem(padding, 10px 10px);
+                border-bottom: 1px solid $pallete-0;
+                &:focus {
+                    background: $pallete-11;
+                    border: none;
+                    border-bottom: 1px solid $pallete-5;
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    &__faq {
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        li {
+            display: block;
+            @include rem(margin, 0px 0px 5px 0px);
+
+            h2 {
+                color: $pallete-7;
+                margin: 0;
+                cursor: pointer;
+                @include rem(font-size, 15px);
+                @include rem(padding, 10px 10px);
+                @include gradient($pallete-14, $pallete-11, vertical);
+                border-bottom: 2px solid $pallete-5;
+                &:before {
+                    float: left;
+                    font: normal normal normal 26px/1 FontAwesome;
+                    content: "\f107";
+                    font-weight: 700;
+                    line-height: 70%;
+                    color: $pallete-2;
+                    @include rem(padding, 0px 10px 0px 0px);
+                }
+            }
+            p {
+                display: none;
+                color: $pallete-2;
+                line-height: 180%;
+                @include rem(font-size, 13px);
+                @include rem(padding, 0px 10px);
+            }
+
+            &.active {
+                h2:before {
+                    content: "\f106";
+                }
+                p {
+                    display: block;
+                }
+            }
+        }
+    }
+
     &__content {
         @include rem(padding, 0px 10px);
     }
