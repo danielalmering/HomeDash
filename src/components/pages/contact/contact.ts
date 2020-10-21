@@ -5,6 +5,7 @@ import './contact.scss';
 
 import WithRender from './contact.tpl.html';
 import { PostContactPayload, postContactMessage } from 'sensejs/admin';
+import config from './../../../config';
 
 import { Validations } from 'vuelidate-property-decorators';
 import { required, email } from 'vuelidate/lib/validators';
@@ -21,6 +22,14 @@ interface Message {
 export default class Contact extends Vue {
 
     contact: PostContactPayload;
+    activeQuestion: number = 0;
+
+    get faq(){
+        let country = config.Country;
+        if(country === 'at') country = 'de';
+        const faqdata = require(`./questions/questions.${country}.json`);
+        return faqdata.items;
+    }
 
     data(){
         return {
