@@ -39,22 +39,18 @@ export default class Removal extends Vue {
         if(!questionResult.ok){
             return;
         }
-    
-        const result = await questionResult.json();
 
-        console.log('memo', result);
+        const { error, result } = await removeConsumer(this.user);
 
-        // const { error, result } = await removeConsumer(this.user);
+        if(error){
+            this.$store.dispatch('errorMessage', 'account.alerts.errorRemoveAccount');
+            return;
+        }
 
-        // if(error){
-        //     this.$store.dispatch('errorMessage', 'account.alerts.errorRemoveAccount');
-        //     return;
-        // }
+        this.$store.dispatch('successMessage', 'account.alerts.successRemoveAccount');
 
-        // this.$store.dispatch('successMessage', 'account.alerts.successRemoveAccount');
-
-        // this.$store.dispatch('logout');
-        // this.openRoute('Performers');
+        this.$store.dispatch('logout');
+        this.openRoute('Performers');
     }
 
 }
