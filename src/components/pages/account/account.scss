@@ -231,11 +231,9 @@
         &-alert {
             display: table;
             width: 100%;
-            @include rem(padding, 10px 15px);
+            @include rem(padding, 0px 15px);
             background: $pallete-3;
             @include border-radius(3px);
-            .col-1 { float: left; width: calc(100% - 160px); }
-            .col-2 { float: left; width: 160px; }
             
             p {
                 color: $pallete-2;

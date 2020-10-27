@@ -65,6 +65,8 @@ main {
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
+.left { float: left; }
+.right { float: right; }
 .rowpad { @include rem(padding, 0px 5px); }
 .rowmar { 
     @include rem(margin-left, 10px); 
