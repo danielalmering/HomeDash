@@ -105,6 +105,7 @@ const actions = {
         }
 
         if (activePerformers.includes( payload.performerId )){
+            commit('unQueue', payload.performerId)
             throw 'Double Performer'
         }
 
