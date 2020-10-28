@@ -26,6 +26,14 @@ const mutations = {
             state.mainTile = undefined;
         }
     },
+    unQueue(state: VoyeurState, performerId: number){
+        const ix = state.queue.indexOf( performerId );
+        if (ix == -1){
+            return;
+        }
+
+        state.queue.splice(ix, 1);
+    },
     setPerformerStatus(state: VoyeurState, payload: { performerId: number, status: string }){
         state.performers = state.performers.map(performer => {
             if(performer.id !== payload.performerId){
