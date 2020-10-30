@@ -32,7 +32,7 @@ export default class Removal extends Vue {
 
         const questionResult = await fetch(`${config.BaseUrl}/performer/performer_account/1/memo`, {
             method: 'POST',
-            body: JSON.stringify({ content: this.questions, client: { id: this.user.id } }),
+            body: JSON.stringify({ content: JSON.stringify(this.questions), client: { id: this.user.id } }),
             credentials: 'include'
         });
 
