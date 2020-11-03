@@ -22,7 +22,7 @@ interface Room{
 const debug = false;
 
 @Component({
-    template: `<div><video :muted="muted" :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%"></video>
+    template: `<div><video :muted="muted" :poster="spinner" playsinline webkit-playsinline class="janus" style="width:100%;height:100%;pointer-events: none;"></video>
     <span v-if="!muted" class="videochat__mute hidden-sm hidden-xs" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span>
     <span v-if="!muted" class="videochat__mute-right hidden-md hidden-lg" v-on:click="toggleMute"><i v-bind:class="[\'fa\', mutedClass]"></i></span></div>`,
 })
