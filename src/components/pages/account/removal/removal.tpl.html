@@ -9,14 +9,14 @@
                 <div class="account__view-alert" v-if="credits > 0">
                     <p>{{ $t('account.removeuser-approval-1') }} {{ $t('account.removeuser-approval-2', { credits: credits }) }}</p>
                 </div>
-                <div class="form__group" v-for="(question, index) in questions" :key="index" v-if="index != 'quest-8'">
-                    <div class="checkbox">
-                        <input :id="'question-' + index" type="checkbox" v-model="questions[index]">
-                        <label :for="'question-' + index">{{ $t('account.removal-questions.' + index) }}</label>
+                <div class="form__group" v-for="(question, index) in questions" :key="index">
+                    <div class="radio">
+                        <input type="radio" :id="'question-' + index" name="questions" :value="questions[index]" v-model="chosenAnsfer">
+                        <label :for="'question-' + index">{{ $t('account.removal-questions.' + question) }}</label>
                     </div>
                 </div>
-                <div class="form__group" v-if="questions['quest-7']">
-                    <textarea :placeholder="$t('contact.message')" v-model="questions['quest-8']" rows="5"></textarea>
+                <div class="form__group" v-if="chosenAnsfer === 'quest-7'">
+                    <textarea :placeholder="$t('contact.message')" v-model="openAnsfer" rows="5"></textarea>
                 </div>
             </div>
             <div class="col-xs-12">

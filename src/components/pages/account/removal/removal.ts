@@ -14,7 +14,10 @@ export default class Removal extends Vue {
 
     openRoute = openRoute;
 
-    questions: Object = {"quest-1": false, "quest-2": false, "quest-3": false, "quest-4": false, "quest-5": false, "quest-6": false, "quest-7": false, "quest-8": ""};
+    questions: Array<string> = ["quest-1", "quest-2", "quest-3", "quest-4", "quest-5", "quest-6", "quest-7"];
+
+    chosenAnsfer: string | boolean = false;
+    openAnsfer: string = '';
 
     get user(){
         return this.$store.state.authentication.user;
@@ -25,14 +28,13 @@ export default class Removal extends Vue {
     }
 
     async removeUser(){
-        const questionfilled = Object.values(this.questions).some(val => val === true);
-        if(!this.user && !questionfilled){ 
-            return; 
+        if(!this.chosenAnsfer || !this.user){ 
+            return;
         }
 
         const questionResult = await fetch(`${config.BaseUrl}/performer/performer_account/1/memo`, {
             method: 'POST',
-            body: JSON.stringify({ content: JSON.stringify(this.questions), client: { id: this.user.id } }),
+            body: JSON.stringify({ content: JSON.stringify({question: this.chosenAnsfer, other: this.openAnsfer}), client: { id: this.user.id } }),
             credentials: 'include'
         });
 
