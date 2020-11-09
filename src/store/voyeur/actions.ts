@@ -99,15 +99,15 @@ const actions = {
         const advertId = getters.performer(payload.performerId).advertId;
         if(!advertId){ return; }
 
-        const activePerformers = state.activeTiles.map( tile => tile.performer );
-        if (state.mainTile){
-            activePerformers.push(state.mainTile.performer);
-        }
+        // const activePerformers = state.activeTiles.map( tile => tile.performer );
+        // if (state.mainTile){
+        //     activePerformers.push(state.mainTile.performer);
+        // }
 
-        if (activePerformers.includes( payload.performerId )){
-            commit('unQueue', payload.performerId)
-            throw 'Double Performer'
-        }
+        // if (activePerformers.includes( payload.performerId )){
+        //     commit('unQueue', payload.performerId)
+        //     throw 'Double Performer'
+        // }
 
 
         const { result, error } = await initiate(SessionType.Video, advertId, {
