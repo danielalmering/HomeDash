@@ -226,13 +226,18 @@ const actions = {
         }
     },
     async initiate(store: ActionContext<SessionState, RootState>){
+        const advertNumber = store.state.activePerformer.advertId;
+        if(!advertNumber){
+            store.dispatch('errorMessage', 'voyeur.alerts.errorPerformerNotAvailable');
+            return; 
+        }
+
         store.commit('setState', State.Initializing);
 
         if(!store.state.activePerformer || !store.state.activeSessionType){
             return; //Do something else
         }
 
-        const advertNumber = store.state.activePerformer.advertId;
         const payload: InitiatePayload = {
             chatroomName: store.state.activeDisplayName
         };

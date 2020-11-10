@@ -170,9 +170,6 @@ export default class Sidebar extends Vue {
 
             //TODO change this to this.mainTile.streamData.wowza
             const transport = this.streamTransportType(streamData.streamTransportType);
-            if (transport === 'janus'){
-                return config.Janus;
-            }
 
             if (transport === 'jsmpeg'){
                 return performer.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;

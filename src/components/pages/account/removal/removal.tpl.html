@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <h1>
+        <i class="fa fa-times hidden-xs"></i><span v-t="'nav.info.removal'"></span>
+    </h1>
+    <div class="form">
+        <form class="row" v-on:submit.prevent="removeUser">
+            <div class="col-xs-12">
+                <h2>{{ $t('account.removeuser-why') }}</h2>
+                <div class="account__view-alert" v-if="credits > 0">
+                    <p>{{ $t('account.removeuser-approval-1') }} {{ $t('account.removeuser-approval-2', { credits: credits }) }}</p>
+                </div>
+                <div class="form__group" v-for="(question, index) in questions" :key="index">
+                    <div class="radio">
+                        <input type="radio" :id="'question-' + index" name="questions" :value="questions[index]" v-model="chosenAnsfer">
+                        <label :for="'question-' + index">{{ $t('account.removal-questions.' + question) }}</label>
+                    </div>
+                </div>
+                <div class="form__group" v-if="chosenAnsfer === 'quest-7'">
+                    <textarea :placeholder="$t('contact.message')" v-model="openAnsfer" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form__group">
+                    <button type="submit" class="btn btn-orange" v-t="'account.here'"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -7,6 +7,7 @@ import Performers from '../components/pages/performers/performers';
 import Favourites from '../components/pages/performers/favourites';
 import Account from '../components/pages/account/account';
 import Editdata from '../components/pages/account/editdata/editdata';
+import Removal from '../components/pages/account/removal/removal';
 import Notifications from '../components/pages/account/notifications/notifications';
 import History from '../components/pages/account/history/history';
 import Inbox from '../components/pages/account/inbox/inbox';
@@ -44,6 +45,11 @@ const routes = [{
                         path: 'edit-data/',
                         name: 'Editdata',
                         component: Editdata
+                    },
+                    {
+                        path: 'removal/',
+                        name: 'Removal',
+                        component: Removal
                     },
                     {
                         path: 'notifications/',
