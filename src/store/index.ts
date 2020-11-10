@@ -60,7 +60,7 @@ const rootStore = new Vuex.Store<RootState>({
 
                 const numbers = [];
                 if(info.ivr1){
-                    const ivr1 = info.ivr1.marketing != 0 ? numbers.push({number: marketing[activeCampaign].phone_number, cpm: marketing[activeCampaign].phone_cpm, marketing: 1}) : numbers.push({number: info.ivr1.phone_number, cpm: info.ivr1.phone_cpm, marketing: 0});
+                    const ivr1 = info.ivr1.marketing != 0 ? numbers.push({number: marketing[activeCampaign].phone_number, cpm: marketing[activeCampaign].phone_cpm, marketing: 1,}) : numbers.push({number: info.ivr1.phone_number, cpm: info.ivr1.phone_cpm, marketing: 0});
                 }
                 if(info.ivr2){
                     const ivr1 = info.ivr2.marketing != 0 ? numbers.push({number: marketing[activeCampaign].phone_number, cpm: marketing[activeCampaign].phone_cpm, marketing: 1}) : numbers.push({number: info.ivr2.phone_number, cpm: info.ivr2.phone_cpm, marketing: 0});

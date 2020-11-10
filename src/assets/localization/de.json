@@ -22,7 +22,15 @@
             "seeactionpage": "Unsere Aktions-Seite",
             "extra": "Extra",
             "credits": "Credits",
-            "purchase": "beim Kauf von"
+            "purchase": "beim Kauf von",
+            "promos": {
+                "action_55": "ACTION55",
+                "action_70": "ACTION70",
+                "action_90": "ACTION90",
+                "happy_days": "HAPPYDAYS",
+                "happy_hour": "HAPPYHOUR",
+                "single_65": "SINGLES DAY"
+            }
         },
         "noie11": "Willst du gerne weiter unseren Service genießen? Wechsel dann deinen Browser! Zum Beispiel zu <a rel='nofollow' href='https://www.google.com/intl/en_us/chrome/'> Google Chrome </a> oder <a rel='nofollow' href='https://www.mozilla.org/en-US/firefox/new/> Mozilla Firefox </a>"
     },
