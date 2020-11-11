@@ -22,7 +22,15 @@
             "seeactionpage": "See action page",
             "extra": "extra",
             "credits": "credits",
-            "purchase": "from"
+            "purchase": "from",
+            "promos": {
+                "action_55": "ACTION55",
+                "action_70": "ACTION70",
+                "action_90": "ACTION90",
+                "happy_days": "HAPPYDAYS",
+                "happy_hour": "HAPPYHOUR",
+                "single_65": "SINGLES DAY"
+            }
         },
         "noie11": "Do you want to enjoy our services? switch your browser to <a rel='nofollow' href='https://www.google.com/intl/en_us/chrome/'>Google Chrome</a> or <a rel='nofollow' href='https://www.mozilla.org/en-US/firefox/new/'>Mozilla Firefox</a>"
     },
