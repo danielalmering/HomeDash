@@ -228,10 +228,6 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        if (this.streamTransportType === 'janus'){	
-            return config.Janus;	
-        }
-
         if (this.streamTransportType === 'jsmpeg'){
             return this.performer.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;
         }
@@ -240,9 +236,7 @@ export default class VideoChat extends Vue {
     }
 
     get castServer(): string | undefined {
-        if (this._broadcastType == 'janusBroadcast'){
-            return config.Janus;
-        } else if (!this.$store.state.session.activeSessionData){
+        if (!this.$store.state.session.activeSessionData){
             return undefined;
         } else {
             return this.$store.state.session.activeSessionData.wowza;

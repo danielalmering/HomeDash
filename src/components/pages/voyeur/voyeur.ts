@@ -55,10 +55,6 @@ export default class Voyeur extends Vue {
         if (!this.mainTile.streamData){
             return undefined;
         }
-        
-        if (this.streamTransportType === 'janus'){	
-            return config.Janus;	
-        }
 
         if (this.streamTransportType === 'jsmpeg'){
             return this.performerData.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;

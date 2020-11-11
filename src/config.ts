@@ -5,7 +5,6 @@ export interface ProjectConfig {
     ImageUrl: string;
     JsmpegUrl: string;
     JanusmpegUrl:string;
-    Janus: string;
     StorageKey: string;
     Country: string;
     H5Server: string;
