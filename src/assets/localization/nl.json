@@ -24,7 +24,15 @@
             "seeactionpage": "Zie actie pagina",
             "extra": "extra",
             "credits": "credits",
-            "purchase": "vanaf"
+            "purchase": "vanaf",
+            "promos": {
+                "action_55": "ACTIE55",
+                "action_70": "ACTIE70",
+                "action_90": "ACTIE90",
+                "happy_days": "HAPPYDAYS",
+                "happy_hour": "HAPPYHOUR",
+                "single_65": "SINGLES DAY"
+            }
         },
         "noie11": "Wilt u blijven genieten van onze diensten? Gebruik dan de volgende browsers: <a rel='nofollow' href='https://www.google.com/intl/en_us/chrome/'> Google Chrome </a> of <a rel='nofollow' href='https://www.mozilla.org/en-US/firefox/new/'> Mozilla Firefox </a>"
     },
@@ -43,6 +51,7 @@
             "register": "Registreer",
             "joinforfree": "Registreer",
             "favourites": "Favo",
+            "removal": "Verwijder account",
             "inbox": "Inbox",
             "upgradebalance": "Saldo opwaarderen",
             "logout": "Log uit",
@@ -311,8 +320,18 @@
         "phones": "Telefoonnummers", 
         "ip": "IP-adres",
         "removeuser": "Uw account verwijderen? ",
-        "removeuser-approval-1": "Weet je zeker dat je uw account wilt verwijderen?",
+        "removeuser-approval-1": "Let op weet je zeker dat je uw account wilt verwijderen?",
         "removeuser-approval-2": ", je hebt nog {credits} credit(s)!",
+        "removeuser-why": "Waarom wil je je account opzeggen?",
+        "removal-questions": {
+            "quest-1": "Ik vind de diensten te duur",
+            "quest-2": "De dames zijn niet naar mijn zin",
+            "quest-3": "Ik krijg geen verbinding",
+            "quest-4": "Mijn verbinding is van slechte kwaliteit",
+            "quest-5": "Niet gemakkelijk in gebruik",
+            "quest-6": "Ik heb niet langer behoefte aan de diensten",
+            "quest-7": "Anders:"
+        },
         "here": "Verwijderen",
         "yes": "Ja",
         "no": "Nee",

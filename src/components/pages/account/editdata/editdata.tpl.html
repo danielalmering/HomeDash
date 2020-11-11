@@ -50,8 +50,8 @@
         </form>
         <hr></hr>
         <div class="text-right">
-            <p v-on:click.prevent="removeUser(true)" v-html="$t('account.removeuser')"></p> &nbsp;
-            <a class="btn btn-orange btn-small" v-on:click.prevent="removeUser(true)" v-html="$t('account.here')"></a>
+            <p v-html="$t('account.removeuser')"></p> &nbsp;
+            <router-link class="btn btn-orange btn-small" :to="{ name: 'Removal'}" v-html="$t('account.here')"></router-link>
         </div>
     </div>
 </div>

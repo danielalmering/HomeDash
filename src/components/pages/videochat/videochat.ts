@@ -228,8 +228,8 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        if (this.streamTransportType === 'janus'){
-            return config.Janus;
+        if (this.streamTransportType === 'janus'){	
+            return config.Janus;	
         }
 
         if (this.streamTransportType === 'jsmpeg'){

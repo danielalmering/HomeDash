@@ -5,12 +5,12 @@ export interface ProjectConfig {
     ImageUrl: string;
     JsmpegUrl: string;
     JanusmpegUrl:string;
+    Janus: string;
     StorageKey: string;
     Country: string;
     H5Server: string;
     VodServer: string;
     H5FlashSwf: string;
-    Janus: string;
     FreeRegister: boolean;
     Banner: boolean;
     locale: LocaleConfig;

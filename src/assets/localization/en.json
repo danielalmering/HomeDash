@@ -22,7 +22,15 @@
             "seeactionpage": "See action page",
             "extra": "extra",
             "credits": "credits",
-            "purchase": "from"
+            "purchase": "from",
+            "promos": {
+                "action_55": "ACTION55",
+                "action_70": "ACTION70",
+                "action_90": "ACTION90",
+                "happy_days": "HAPPYDAYS",
+                "happy_hour": "HAPPYHOUR",
+                "single_65": "SINGLES DAY"
+            }
         },
         "noie11": "Do you want to enjoy our services? switch your browser to <a rel='nofollow' href='https://www.google.com/intl/en_us/chrome/'>Google Chrome</a> or <a rel='nofollow' href='https://www.mozilla.org/en-US/firefox/new/'>Mozilla Firefox</a>"
     },
@@ -41,6 +49,7 @@
             "register": "Register",
             "joinforfree": "Join now for FREE",
             "favourites": "Favo",
+            "removal": "Remove account",
             "inbox": "Inbox",
             "upgradebalance": "Upgrade balance",
             "logout": "Logout",
@@ -311,6 +320,16 @@
         "removeuser": "Do you want to permanently remove your account?, Click",
         "removeuser-approval-1": "Are you sure you want to remove your account?",
         "removeuser-approval-2": ", you still have {credits} credit(s)!",
+        "removeuser-why": "Why do you want to cancel your account?",
+        "removal-questions": {
+            "quest-1": "I think the services are too expensive",
+            "quest-2": "The ladies are not to my liking",
+            "quest-3": "I can not get a good connection",
+            "quest-4": "My connection is of poor quality",
+            "quest-5": "Not easy in usability",
+            "quest-6": "I no longer need the services",
+            "quest-7": "Other:"
+        },
         "here": "here",
         "yes": "Yes",
         "no": "No",
