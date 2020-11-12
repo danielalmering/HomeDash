@@ -44,6 +44,7 @@ export default class Cookies extends Vue {
         // SafeMode
         const safeMode = this.getParameterByName('safe');
         const gotsafe = safeMode ? this.$store.commit('activateSafeMode') : this.$store.commit('deactivateSafeMode');
+        document.documentElement.setAttribute('lang', config.Country);
     }
 
     async created(){

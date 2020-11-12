@@ -6,7 +6,7 @@
         </ul>
         <div v-for="seoTab in seoTabs" class="footer__tabs-desc col-xs-12 col-sm-10" v-show="selectedTab == seoTab.id">
             <span class="col-xs-12 col-sm-9" v-if="seoTab.description" v-html="seoTab.description"></span>
-            <span class="col-xs-12 col-sm-3"><img v-if="seoTab.image_location" :src="setImages(seoTab.image_location)"></span>
+            <span class="col-xs-12 col-sm-3"><img v-if="seoTab.image_location" :alt="seoTab.image_alt" :src="setImages(seoTab.image_location)"></span>
         </div>
     </div>
 </div>
