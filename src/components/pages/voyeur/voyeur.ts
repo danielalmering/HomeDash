@@ -47,7 +47,7 @@ export default class Voyeur extends Vue {
             error('Voyeur: mainTile is null or undefined');
             return false;
         }
-        
+
         return this.$store.state.voyeur.mainTile;
     }
 
@@ -55,9 +55,9 @@ export default class Voyeur extends Vue {
         if (!this.mainTile.streamData){
             return undefined;
         }
-        
-        if (this.streamTransportType === 'janus'){	
-            return config.Janus;	
+
+        if (this.streamTransportType === 'janus'){
+            return config.Janus;
         }
 
         if (this.streamTransportType === 'jsmpeg'){

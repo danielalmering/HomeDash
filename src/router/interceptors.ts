@@ -96,7 +96,7 @@ export async function confirmInterceptor(to: Route, previous: Route, next: (to?:
 }
 
 export function seoInterceptor(to: Route, previous: Route){
-    setCanonical(to.fullPath);
+    setCanonical(`${location.protocol}//${location.host}${to.fullPath}`);
 
     if(to.meta.title){
         setTitle(i18n.t(to.meta.title).toString());
