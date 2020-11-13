@@ -55,7 +55,7 @@ export default class Nav extends Vue {
 
         switch(this.country) {
             case 'nl':
-                return {active: (this.$store.state.info && this.$store.state.info.marketing.current === 'single_65' ? true : false), img: img};
+                return {active: (this.$store.state.info && this.$store.state.info.marketing.current === 'bfridaysale_65' ? true : false), img: img};
             case 'uk':
                 return {active: false, img: img};
             case 'de':
