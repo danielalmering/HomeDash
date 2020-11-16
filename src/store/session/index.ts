@@ -15,8 +15,8 @@ import actions from './actions';
 export interface SessionData {
     playStream: string;
     playToken: string;
-    playWowza:string;
-    playStreamTransportType: string;
+    playWowza?:string;
+    playStreamTransportType?: string;
     publishStream?: string;
     publishToken?: string;
     publishWowza?:string;
