@@ -126,7 +126,7 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        const type = this.$store.state.session.activeSessionData.streamTransportType;
+        const type = this.$store.state.session.activeSessionData.playStreamTransportType;
         const platform = Platform.parse(navigator.userAgent);
 
         switch(type) {
@@ -232,14 +232,14 @@ export default class VideoChat extends Vue {
             return this.performer.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;
         }
 
-        return this.$store.state.session.activeSessionData.wowza;
+        return this.$store.state.session.activeSessionData.playWowza;
     }
 
     get castServer(): string | undefined {
         if (!this.$store.state.session.activeSessionData){
             return undefined;
         } else {
-            return this.$store.state.session.activeSessionData.wowza;
+            return this.$store.state.session.activeSessionData.publishWowza;
         }
     }
 

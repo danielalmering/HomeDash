@@ -3,9 +3,7 @@ import { Module, ActionContext } from 'vuex';
 
 import rootState, { RootState } from '../index';
 import { Performer } from 'sensejs/performer/performer.model';
-import { UserRole } from '../../models/User';
 import { SessionType, State, PaymentType } from '../../models/Sessions';
-import config from '../../config';
 import { match } from 'sensejs/util/platform';
 
 import notificationSocket from '../../socket';
@@ -17,10 +15,15 @@ import actions from './actions';
 export interface SessionData {
     playStream: string;
     playToken: string;
+    playWowza:string;
+    playStreamTransportType: string;
     publishStream?: string;
     publishToken?: string;
-    streamTransportType: string;
+    publishWowza?:string;
+    publishStreamTransportType?: string;
+    streamTransportType: string; // webrtc | rtmp | janus viewer
     wowza: string;
+    id: string;
 }
 
 export interface RequestPayload extends Payload {
