@@ -53,10 +53,9 @@ export function webrtcPublishPossible(platform: Platform): boolean{
         {
             name: 'Firefox for Android'
         },
-        {   //Publish has te be done by using vp8 codec because of the profile-level-id used on h264
-            //This needs te be fixed by Wowza!
+        {   
             name: 'Safari',
-            version: '12.1'
+            version: '11'
         },
         {
             name: 'Chrome Mobile', //does not work for iOS
@@ -66,15 +65,15 @@ export function webrtcPublishPossible(platform: Platform): boolean{
         },
         {
             name: 'Opera',
-            version: '60'
+            version: '18'
         },
         {
             name: 'Microsoft Edge', //chrome engine is working
-            version: '77'
+            version: '18'
         }
     ];
 
-    return supported.find( pattern => match(platform, pattern) ) != undefined;
+    return supported.some( pattern => match(platform, pattern) );
 }
 
 //Webrtc play back possible

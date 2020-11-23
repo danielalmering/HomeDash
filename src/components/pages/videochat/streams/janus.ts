@@ -101,9 +101,6 @@ export class JanusPlay extends Stream{
     logs:{event:string,[rest: string]: any}[] = [];
 
     addLog( item:{event:string,[rest: string]: any} ){
-        if (true){
-            console.log( {...item, ...{id:this.opaqueId} } );
-        }
 
         //let's first replace all spaces in the properties..
         for(const prop in item){
