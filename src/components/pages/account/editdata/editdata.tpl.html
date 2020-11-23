@@ -33,7 +33,7 @@
             <div class="col-xs-12 col-sm-6">
                 <div class="form__group" :class="{ 'form-group--error': $v.user.email.$error }">
                     <label v-t="'account.email'"></label>
-                    <input type="email" v-model.trim="$v.user.email.$model" name="email" class="col-xs-12">
+                    <input type="email" v-model.trim="$v.user.email.$model" name="email" class="col-xs-12" readonly>
                     <div class="form__group-alert" v-if="!$v.user.email.email" v-t="'account.alerts.errorinvalidEmail'"></div>
                 </div>
                 <div class="form__group" :class="{ 'form-group--error': $v.user.mobile_number.$error }">
