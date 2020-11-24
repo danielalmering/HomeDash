@@ -127,40 +127,6 @@ export default class Sidebar extends Vue {
         await this.$store.dispatch('voyeur/loadTile', { performerId:  performerId, position: index });
     }
 
-    // isWebRTCPerformer(performerId: number): boolean {
-    //     const performer = this.performer(performerId);
-
-    //     if(performer === undefined || !performer){
-    //         return false;
-    //     }
-
-    //     if(!performer.mediaId  && performer.mediaId === undefined){
-    //         return false;
-    //     }
-
-    //     return performer.mediaId == 2;
-    // }
-
-    // streamTransportType(performer: number): string | undefined{
-    //     const platform = Platform.parse(navigator.userAgent);
-
-    //     if(this.isWebRTCPerformer(performer)){
-    //         if(webrtcPossible(platform)){
-    //             return 'webrtc';
-    //         } else {
-    //             return 'jsmpeg';
-    //         }
-
-    //     }
-
-    //     if(NanoCosmosPossible(platform)){
-    //         return 'nanocosmos';
-    //     }
-
-    //     //fallback on nanocosmos
-    //     return 'jsmpeg';
-    // }
-
     get playServer() {
         return (id: number, streamData: any) => {
             const performer = this.$store.getters['voyeur/performer'](id);
@@ -170,9 +136,6 @@ export default class Sidebar extends Vue {
 
             //TODO change this to this.mainTile.streamData.wowza
             const transport = this.streamTransportType(streamData.streamTransportType);
-            if (transport === 'janus'){	
-                return config.Janus;	
-            }
 
             if (transport === 'jsmpeg'){
                 return performer.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;

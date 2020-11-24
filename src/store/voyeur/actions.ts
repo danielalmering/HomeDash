@@ -126,10 +126,10 @@ const actions = {
             performer: payload.performerId,
             streamData: {
                 id: result.id,
-                wowza: result.wowza,
+                wowza: result.playWowza,
                 playStream: result.playStream,
                 playToken: result.playToken,
-                streamTransportType: result.streamTransportType
+                streamTransportType: result.playStreamTransportType
             }
         };
 
@@ -162,10 +162,10 @@ const actions = {
             performer: payload.performerId,
             streamData: {
                 id: result.id,
-                wowza: result.wowza,
+                wowza: result.playWowza,
                 playStream: result.playStream,
                 playToken: result.playToken,
-                streamTransportType: result.streamTransportType
+                streamTransportType: result.playStreamTransportType
             }
         };
 

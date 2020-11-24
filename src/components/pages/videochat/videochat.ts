@@ -39,6 +39,7 @@ import {addSubscriptions, removeSubscriptions} from 'sensejs/performer/subscript
 import { webrtcPublisher, flashPublisher, clubsenseStreamerPublisher, janusPublisher } from '../videochat/videochat.publishers';
 import notificationSocket from '../../../socket';
 import { UserRole } from '../../../models/User';
+import { NONAME } from 'dns';
 
 const Platform = require('platform');
 //import Platform from 'platform';
@@ -126,7 +127,7 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        const type = this.$store.state.session.activeSessionData.streamTransportType;
+        const type = this.$store.state.session.activeSessionData.playStreamTransportType;
         const platform = Platform.parse(navigator.userAgent);
 
         switch(type) {
@@ -170,57 +171,21 @@ export default class VideoChat extends Vue {
 
         const platform = Platform.parse(navigator.userAgent);
 
-        let janusPercentage = parseInt(this.$store.state.session.activeSessionData.streamJanusBackProc);
-        //let janusPercentage = 100;
-        if (janusPercentage < 0){
-            janusPercentage = 0;
-        } else if ( janusPercentage > 100){
-            janusPercentage = 100;
-        }
-
-        //disallow janus when performer is using the streamer..
-        const STREAMER = 3;
-        if (this.performer.mediaId === STREAMER){
-            janusPercentage = 0;
-        }
-
-        //check if it is possible to publish with webrtc
-        if (webrtcPublishPossible(platform)){
-            //iPhone only works with janus....
-            if(isIPhone(platform)){
-                return 'janusBroadcast';
-            }
-            //throw the dice to see if janus will be chosen as publisher
-            if(Math.random() < (janusPercentage / 100)){
-                return 'janusBroadcast';
+        if ( this.$store.state.session.activeSessionData.publishStreamTransportType == "JANUS" ){
+            if (webrtcPublishPossible(platform)){
+                return 'janusBroadcast'
             } else {
-
-                //use vp8 if the browser is safari and above > 12.1
-                if(isSafari(platform)){
-                    if(isWebRTCPerformer(this.performer)){ //performer needs to use the webrtc transport
-                        this.broadcasting.videoCodec = VideoCodec.VP8;
-                    } else { //else old skool flash if available
-                        if(noFlash(platform)) {
-                            return 'none';
-                        }
-
-                        return 'rtmpBroadcast';
-                    }
-                }
-                //end apple fixes
-
-                return 'webrtcBroadcast';
+                return 'none'
             }
-
+        } else {
+            if (webrtcPublishPossible(platform)){
+                return 'webrtcBroadcast'
+            } else if (noFlash(platform)){
+                return 'none';
+            } else {
+                return 'rtmpBroadcast'
+            }
         }
-
-        //disabled camback on mobile for now
-        //move to below webrtcPossible, and those platforms that support webrtc will cam back.
-        if (noFlash(platform)){
-            return 'none';
-        }
-
-        return 'rtmpBroadcast';
     }
 
     get playServer(): string | undefined {
@@ -228,24 +193,18 @@ export default class VideoChat extends Vue {
             return undefined;
         }
 
-        if (this.streamTransportType === 'janus'){	
-            return config.Janus;	
-        }
-
         if (this.streamTransportType === 'jsmpeg'){
             return this.performer.mediaId === 4 ? config.JanusmpegUrl : config.JsmpegUrl;
         }
 
-        return this.$store.state.session.activeSessionData.wowza;
+        return this.$store.state.session.activeSessionData.playWowza;
     }
 
     get castServer(): string | undefined {
-        if (this._broadcastType == 'janusBroadcast'){
-            return config.Janus;
-        } else if (!this.$store.state.session.activeSessionData){
+        if (!this.$store.state.session.activeSessionData){
             return undefined;
         } else {
-            return this.$store.state.session.activeSessionData.wowza;
+            return this.$store.state.session.activeSessionData.publishWowza;
         }
     }
 
