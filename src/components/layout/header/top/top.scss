@@ -197,7 +197,7 @@
             .h1 {
                 text-transform: uppercase;
                 font-style: italic;
-                @include rem(font-size, 26px);
+                @include rem(font-size, 25px);
                 color: $pallete-2;
                 line-height: 70%;
                 font-weight: 700;
