@@ -1,0 +1,35 @@
+//
+// Webcams
+// --------------------------------------------------
+
+@import "../../styles/_settings.scss";
+@import "../../styles/_mixins.scss";
+
+.webcams {
+    display: block;
+
+    &__cams {
+        @include rem(margin, 10px -10px); 
+        &-feed {
+            position: relative;
+            width: calc(100% - 20px);
+            @include rem(margin, 10px 10px 10px 10px);
+            float: left;
+            border: 5px solid $pallete-2;
+            @include border-radius(5px);
+
+            label {
+                position: absolute;
+                top: -22px;
+                right: -5px;
+                background: $pallete-2;
+                @include border-top-radius(5px);
+                @include rem(padding, 2px 8px 2px 8px);
+                font-weight: 700;
+                text-transform: uppercase;
+                @include rem(font-size, 12px);
+            }
+            canvas { display: table; margin: 0 auto; }
+        }
+    }
+}

@@ -1,0 +1,125 @@
+//
+// Weather
+// --------------------------------------------------
+
+@import "../../styles/_settings.scss";
+@import "../../styles/_mixins.scss";
+
+.weather {
+    &__top {
+        display: table;
+        width: 100%;
+        background: rgba(0,0,0,0.25);
+        @include border-top-radius(5px);
+        @include rem(padding, 10px 15px);
+        border-bottom: 1px solid rgba(255,255,255,0.50);
+        @include rem(padding-bottom, 15px);
+
+        h3 {
+            color: $pallete-1;
+            @include rem(font-size, 20px);
+            @include rem(margin, 0px);
+            text-shadow: 0px 1px rgba(255,255,255,0.20);
+            @include breakpoint(lg) {
+                @include rem(font-size, 24px);
+            }
+        }
+
+        &-temp {
+            position: relative;
+            @include rem(font-size, 52px);
+            color: $pallete-0;
+            line-height: 100%;
+            @include breakpoint(lg) {
+                @include rem(font-size, 72px);
+            }
+            i {
+                position: absolute;
+                top: 28px;
+                right: -20px;
+                @include rem(font-size, 20px);
+                font-weight: 700;
+            }
+        }
+
+        &-time {
+            float: right;
+            text-align: right;
+            color: $pallete-1;
+            font-weight: 700;
+            @include rem(font-size, 24px);
+            text-shadow: 0px 1px rgba(255,255,255,0.20);
+        }
+
+        &-date {
+            float: right;
+            text-align: right;
+            clear: both;
+            color: $pallete-0;
+            font-weight: 700;
+            @include rem(font-size, 20px);
+            @include breakpoint(lg) {
+                @include rem(font-size, 24px);
+            }
+        }
+    }
+
+    &__bottom {
+        @include rem(padding, 10px 15px);
+
+        &-day {
+            float: left;
+            width: 33%;
+            @include rem(padding-bottom, 15px);
+            line-height: 300%;
+            @include breakpoint(lg) {
+                width: 25%;
+            }
+        }
+
+        &-icon {
+            display: block;
+            width: 100%;
+            img {
+                display: table;
+                margin: 0 auto;
+                -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+                filter: grayscale(100%);
+            }
+        }
+
+        &-temp {
+            position: relative;
+            display: table;
+            width: auto;
+            margin: -5px auto;
+            text-align: center;
+            font-weight: 700;
+            color: $pallete-0;
+            @include rem(font-size, 32px);
+            text-shadow: 0px 1px rgba(0,0,0,0.35);
+            i {
+                position: absolute;
+                top: 12px;
+                right: -12px;
+                @include rem(font-size, 10px);
+                font-weight: 700;
+            }
+        }
+
+        &-date {
+            display: table;
+            text-align: center;
+            font-weight: 700;
+            color: $pallete-1;
+            width: 100%;
+            @include rem(font-size, 12px);
+            text-transform: uppercase;
+            text-shadow: 0px 1px rgba(255,255,255,0.35);
+            line-height: 200%;
+            @include breakpoint(lg) {
+                @include rem(font-size, 16px);
+            }
+        }
+    }
+}

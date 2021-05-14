@@ -1,0 +1,13 @@
+<div class="devices">
+    <div v-if="devices" class="devices__device">
+        <div class="devices__device-button button" v-for="device in devices" :class="device.Type">
+            <div class="button__icon fa" v-on:click="switchDevice(device)" :class="[{ active: device.Data != 'Off' }, icon(device)]"></div>
+            <div class="button__info">
+                <label>{{ device.Name }}</label>
+                <div class="devices__device-slider visible-lg" v-if="device.SwitchType === 'Dimmer' && device.Data != 'Off'">
+                    <vue-slider v-if="device.SwitchType === 'Dimmer' && device.Data != 'Off'" :change="dimDevice(device)" v-model="device.Level" :lazy="true" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

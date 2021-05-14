@@ -1,0 +1,76 @@
+//
+// Devices
+// --------------------------------------------------
+
+@import "../../styles/_settings.scss";
+@import "../../styles/_mixins.scss";
+
+.devices {
+    &__device {
+        @include rem(margin, 10px -10px);
+
+        &-button {
+            float: left;
+            height: 44px;
+            width: calc(100% - 10px);
+            @include rem(margin, 0px 5px 5px 5px);
+            background: $pallete-0;
+            @include border-radius(5px);
+            border: none;
+            @include rem(padding, 5px);
+            box-shadow: 0px 1px 0px rgba(0,0,0,0.15);
+            &:last-child { margin-bottom: 0; }
+
+            @include breakpoint(lg) {
+                height: 70px;
+            }
+        }
+
+        .button {
+            &__icon {
+                float: left;
+                @include rem(padding, 2px 0px);
+                @include rem(margin, 0px);
+                background: $pallete-3;
+                @include border-radius(5px);
+                width: 35px; 
+                text-align: center;
+                border: 2px solid rgba(0,0,0,0.01);
+                cursor: pointer;
+
+                &:before {
+                    font: normal normal normal 26px/1 FontAwesome;
+                    color: $pallete-2;
+                    text-shadow: 0px -1px 0px rgba(0,0,0,0.35);
+                }
+                &.active {
+                    background: $pallete-0;
+                    border-color: $pallete-3;
+                    &:before { color: $pallete-4; }
+                }
+
+                @include breakpoint(lg) {
+                    width: 45px; 
+                    @include rem(padding, 10px 0px);
+                    &:before {
+                        font: normal normal normal 36px/1 FontAwesome;
+                    }
+                }
+            }
+
+            &__info {
+                float: left;
+                width: calc(100% - 45px);
+                @include rem(padding, 3px 15px 3px 15px);
+
+                label { @include rem(font-size, 20px); font-weight: 700; }
+
+                @include breakpoint(lg) {
+                    label { @include rem(font-size, 22px); }
+                    width: calc(100% - 45px);
+                    @include rem(padding, 5px 15px 0px 15px);
+                }
+            }
+        }
+    }
+}

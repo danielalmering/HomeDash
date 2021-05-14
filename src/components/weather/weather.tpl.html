@@ -1,0 +1,27 @@
+<div class="weather">
+    <div class="weather__top" v-if="weather.location">
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>{{ weather.location.name }}</h3>
+                <span class="weather__top-temp">{{ weather.current.temp_c }} <i class="fa fa-circle-o" aria-hidden="true"></i></span>
+            </div>
+            <div class="col-xs-6">
+                <span class="weather__top-time">{{ time }}</span>
+                <span class="weather__top-date">{{ date(weather.location.localtime_epoch) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="weather__bottom" v-if="weather.location">
+        <div class="weather__bottom-day" v-for="day in weather.forecast.forecastday">
+            <span class="weather__bottom-icon">
+                <img :src="icon(day.day.condition.icon)">
+            </span>
+            <span class="weather__bottom-temp">
+                {{ Math.round(day.day.avgtemp_c) }} <i class="fa fa-circle-o" aria-hidden="true"></i>
+            </span>
+            <span class="weather__bottom-date">
+                {{ dayWeek(day.date_epoch ) }}
+            </span>
+        </div>
+    </div>
+</div>

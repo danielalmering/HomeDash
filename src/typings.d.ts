@@ -17,15 +17,3 @@ declare module "*.json" {
     const value: any;
     export default value;
 }
-
-interface Window {
-    flashCallbacks: any;
-    flashCheckCallback():void;
-
-    _pcq: any[]; //Pushcrew actions
-    pushcrew: any;
-
-    loadTagManager: any;
-
-    hj: (action: string, path: string | string[]) => void;
-}

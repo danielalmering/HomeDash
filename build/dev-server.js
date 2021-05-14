@@ -10,7 +10,7 @@ const opn = require('opn')
 const path = require('path')
 const express = require('express')
 const webpack = require('webpack')
-const https = require('https')
+const http = require('http')
 const fs = require('fs')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV === 'production')
@@ -88,7 +88,7 @@ devMiddleware.waitUntilValid(() => {
       _reject(err)
     }
     process.env.PORT = port
-    var uri = 'https://localhost:' + port
+    var uri = 'http://localhost:' + port
     console.log('> Listening at ' + uri + '\n')
     // when env is testing, don't need open it
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
@@ -98,7 +98,7 @@ devMiddleware.waitUntilValid(() => {
       key: fs.readFileSync('./config/key.pem'),
       cert: fs.readFileSync('./config/cert.pem')
     }
-    server = https.createServer(options, app).listen(port)
+    server = http.createServer(options, app).listen(port)
     _resolve()
   })
 })

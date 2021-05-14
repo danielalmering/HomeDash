@@ -1,7 +1,22 @@
-<div id="app">
-    <modal-wrapper></modal-wrapper>
-    <cookies v-if="displayCookies" v-on:close="displayCookies = false"></cookies>
-    <router-view/>
-    <agecheck v-if="displayAgecheck" v-on:close="displayAgecheck = false"></agecheck>
-    <alerts></alerts>
+<div id="app" class="main">
+    <div class="main__blocks">
+        <div :class="colums[0]">
+            <div class="main__blocks-block" v-for="(block, index) in colum1" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/' + block.image + ')' }">
+                <h2>{{ block.name }}</h2>
+                <component v-bind:is="block.module" :key="index"></component>
+            </div>
+        </div>
+        <div :class="colums[1]">
+            <div class="main__blocks-block" v-for="(block, index) in colum2" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/' + block.image + ')' }">
+                <h2>{{ block.name }}</h2>
+                <component v-bind:is="block.module" :key="index"></component>
+            </div>
+        </div>
+        <div :class="colums[2]">
+            <div class="main__blocks-block" v-for="(block, index) in colum3" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/' + block.image + ')' }">
+                <h2>{{ block.name }}</h2>
+                <component v-bind:is="block.module" :key="index"></component>
+            </div>
+        </div>
+    </div>
 </div>

@@ -33,13 +33,6 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: settings.FullApiUrl,
-        changeOrigin: true
-      },
-      '/mocks': {
-        target: 'http://localhost:3000'
-      }
     },
     logLevel: 'debug',
     // CSS Sourcemaps off by default because relative paths are "buggy"

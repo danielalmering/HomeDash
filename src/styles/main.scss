@@ -2,139 +2,63 @@
 // Main
 // --------------------------------------------------
 
-@import '_fonts.scss';
 @import '_bootstrap.scss';
-@import "_flags.scss";
-@import "_icons.scss";
+//@import "_icons.scss";
 @import "_mixins.scss";
 @import "_settings.scss";
-@import "_buttons.scss";
-@import "_form.scss";
-@import "_modals.scss";
-@import "_components.scss";
-@import "_emoticons.scss";
+//@import "_buttons.scss";
+//@import "_modals.scss";
+//@import "_components.scss";
 
 // Main
 
-$sidebar-width: 250px;
-
-html { height: 100%; }
+html { 
+    background: url('../assets/images/bg1.png') no-repeat center center fixed; 
+    background-size: cover;
+    min-height: 100%;
+    height: 100%;
+}
 
 body {
-    background-color: $pallete-0;
-    //min-height: 100%;
-    //height: 100%;
-    position: relative;
-    font-family: $default-font--regular;
+    background: none;
 }
 
-.tagmanager { display: none; }
+.main {
+    &__blocks {
+        @include rem(margin, 15px 0);
 
-.container-fluid {
-    max-width: 990px;
-    margin: 0 auto;
-    @include rem(padding-left, 5px);
-    @include rem(padding-right, 5px);
-}
+        &-block {
+            display: block;
+            background-color: rgba(255,255,255, 0.25);
+            @include border-radius(5px);
+            border: 1px solid $pallete-0;
+            @include rem(padding, 5px 10px);
+            background-repeat: no-repeat;
+            background-position: top right;
+            @include rem(margin-bottom, 20px);
+            box-shadow: 0px 1px 0px rgba(0,0,0,0.08);
 
-.page, .profileview {
-    &.fixed {
-        position: fixed;
-        width: 100%;
-    }
-}
+            h2 { 
+                color: $pallete-0;
+                @include rem(font-size, 20px);
+                @include rem(margin, 0);
+                text-shadow: 0px 1px rgba(0,0,0,0.25);
+            }
 
-main {
-    &.profileview { 
-        display:table; 
-        width: 100%;
+            &.weather { @include rem(padding, 0); }
 
-        &.collapse {
-            .sidebar {
-                left: 0px;
+            @include breakpoint(lg) {
+                @include rem(padding, 10px 20px);
+                h2 { @include rem(font-size, 30px); }
             }
         }
     }
-    &.index, &.account, &.promos, &.payment { display: block; }
-    min-height: 100vh;
 }
 
-.nopad  { padding: 0; }
-.nomar { margin: 0; }
-.noposition { position: initial; }
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
-.left { float: left; }
-.right { float: right; }
-.rowpad { @include rem(padding, 0px 5px); }
-.rowmar { 
-    @include rem(margin-left, 10px); 
-    @include rem(margin-right, 10px); 
-}
+// Slider
 
-a {
-    cursor: pointer;
-    color: $pallete-3;
-    &:hover {
-        color: $pallete-3;
-        text-decoration: none;
-    }
-    &:active, &:focus {
-        color: $pallete-3;
-        text-decoration: none;
-    }
-}
-
-p {
-    color: $pallete-2;
-}
-
-h1, h3 {
-    font-weight: 400;
-    color: $pallete-2;
-    @include rem(font-size, 24px);
-    @include rem(padding, 20px 0 10px);
-
-    i {
-        color: $pallete-3;
-        @include rem(margin-right, 10px); 
-    }
-}
-
-h3 {
-    @include rem(padding, 0);
-    @include rem(font-size, 22px);
-}
-
-hr {
-    border-top: 1px solid $pallete-14;
-    border-bottom: none;
-}
-
-.table {
-    display: table;
-    width: 100%;
-    color: $pallete-2;
-    border: 1px solid rgba(255,255,255,0.1);
-
-    th, td {
-        text-align: left;
-        @include rem(padding, 10px);
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        border-right: 1px solid rgba(255,255,255,0.1);
-        vertical-align: top;
-        i { color: $pallete-3; }
-    }
-
-}
-
-.text {
-    &-right { float: right; }
-}
-
-img.resize { width: 100%; }
-
-html, body, h1, h2, h3, h4, input, textarea, select, button {
-  -webkit-font-smoothing: antialiased;
+.vue-slider-process, .vue-slider-dot-handle, .vue-slider:hover .vue-slider-process, .vue-slider-dot-tooltip-inner {
+    background: $pallete-4;
+    border-color:  $pallete-4;
+    box-shadow: none;
 }

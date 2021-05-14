@@ -1,0 +1,8 @@
+<div class="webcams">
+    <div v-if="cams" class="webcams__cams">
+        <div class="webcams__cams-feed" v-for="canvas in cams">
+            <label>{{ canvas.name }}</label>
+            <canvas width="640" height="480" :id="canvas.id"></canvas>
+        </div>
+    </div>
+</div>

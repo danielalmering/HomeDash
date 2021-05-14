@@ -1,14 +1,19 @@
-{
-    "BaseUrl": "/api",
-    "FullApiUrl": "https://www.thuis.nl",
-    "ImageUrl": "//img.thuis.nl/files/",
-    "SocketUrl": "wss://socket.thuis.nl/",
-    "JsmpegUrl": "wss://push02.thuis.nl/jsmpeg",
-    "StorageKey": "thuis",
-    "H5Server": "stream01.thuis.nl",
-    "VodServer": "vod",
-    "Country": "nl",
-    "FreeRegister": false,
-    "Banner": false,
-    "Janus": "webrtc01.thuis.nl"
- }
+{    
+    "Host": "server.dycati.nl",
+    "Localhost": "192.168.178.25",
+    "Username": "YWRtaW4=",
+    "Password": "YXJjaG9udGFraQ==",
+    "Weather_api": "919e14be814d49eaafd173752202611",
+    "Weather_location": "Almere-Haven",
+    "Weather_country": "nl",
+    "Colums": ["col-xs-12 col-md-4", "col-xs-12 col-md-5", "col-xs-12 col-md-3"],
+    "Blocks": [
+        {"type": "Devices", "name": "Lampen", "class": "col-xs-12 col-sm-12", "colum": "colum1", "image": "lampen.png", "module": "devices"},
+        {"type": "Cameras", "name": "Beveiliging", "class": "col-xs-12 col-sm-12", "colum": "colum2", "image": "webcams.png", "module": "cameras"},
+        {"type": "Weather", "name": "", "class": "col-xs-12 col-sm-12", "colum": "colum3", "image": "", "module": "weather"}
+    ],
+    "Cameras": [
+        {"name": "Voordeur", "id": "cam01", "url": "/cam01"},
+        {"name": "Woonkamer", "id": "cam02", "url": "/cam02"}
+    ]
+}
