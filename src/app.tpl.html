@@ -1,19 +1,24 @@
 <div id="app" class="main">
-    <div class="main__blocks">
-        <div :class="colums[0]">
-            <div class="main__blocks-block" v-for="(block, index) in colum1" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/' + block.image + ')' }">
+    <div class="main__sidebar">
+        <span v-for="(section, index) in sections" :class="{'active': section.status }" v-on:click="switchSection(index)">
+            <i :class="'fa ' + section.icon"></i>
+        </span>
+    </div>
+    <div class="main__blocks" v-for="section in sections" v-if="section.status === 'active'">
+        <div id="left" class="col-xs-12 col-md-6">
+            <div class="main__blocks-block" v-for="(block, index) in section.blocks" v-if="'left' === block.position" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/images/' + block.image + ')' }">
                 <h2>{{ block.name }}</h2>
                 <component v-bind:is="block.module" :key="index"></component>
             </div>
         </div>
-        <div :class="colums[1]">
-            <div class="main__blocks-block" v-for="(block, index) in colum2" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/' + block.image + ')' }">
+        <div id="right" class="col-xs-12 col-md-6">
+            <div class="main__blocks-block" v-for="(block, index) in section.blocks" v-if="'right' === block.position" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/images/' + block.image + ')' }">
                 <h2>{{ block.name }}</h2>
                 <component v-bind:is="block.module" :key="index"></component>
             </div>
         </div>
-        <div :class="colums[2]">
-            <div class="main__blocks-block" v-for="(block, index) in colum3" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/' + block.image + ')' }">
+        <div id="full" class="col-xs-12 col-md-12">
+            <div class="main__blocks-block" v-for="(block, index) in section.blocks" v-if="'full' === block.position" :class="block.class + ' ' + block.module" v-bind:style="{ 'background-image': 'url(../static/images/' + block.image + ')' }">
                 <h2>{{ block.name }}</h2>
                 <component v-bind:is="block.module" :key="index"></component>
             </div>

@@ -20,34 +20,15 @@ import WithRender from './app.tpl.html';
 })
 export default class App extends Vue {
 
-    colums = config.Colums;
-    blocks = config.Blocks;
-
-    colum1: any = [];
-    colum2: any = [];
-    colum3: any = [];
-
-    mounted(){
-        this.createBlocks();
-    }
+    sections = config.Sections;
 
     async created(){
         this.$store.dispatch('getDevices');
     }
 
-    createBlocks(){
-        for (let i = 0; i < this.blocks.length; i++) {
-            switch (this.blocks[i].colum) {
-                case 'colum1':
-                    this.colum1.push(this.blocks[i]);
-                    break;
-                case 'colum2':
-                    this.colum2.push(this.blocks[i]);
-                    break;
-                case 'colum3':
-                    this.colum3.push(this.blocks[i]);
-                    break;
-            }
-        }
+    switchSection(sectionIndex: number){
+        const oldSection = this.sections.find((x: any) => x.status === 'active');
+        oldSection.status = '';
+        this.sections[sectionIndex].status = 'active';
     }
 }

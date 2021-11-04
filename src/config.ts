@@ -3,6 +3,7 @@ export interface ProjectConfig {
     Localhost: string;
     Username: string;
     Password: string;
+    Sections: any;
     Colums: any;
     Blocks: any;
     Cameras: any;
@@ -13,6 +14,7 @@ export interface ProjectConfig {
 
 const config = require(`./private.${process.env.NODE_ENV}.json`) as ProjectConfig;
 export const login = `username=${config.Username}&password=${config.Password}&`;
-export const host = location.hostname === 'localhost' ? `http://${config.Localhost}:8084` : `https://${config.Host}:8443`;
+export const host = (location.hostname === 'localhost' || location.hostname === '192.168.178.25') ? `http://${config.Localhost}:8080` : `http://${config.Host}:8080
+`;
 
 export default config;
